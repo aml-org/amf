@@ -50,10 +50,10 @@ class Async20CycleTest extends FunSuiteCycleTests {
                 "components/async-components.yaml",
                 "components/async-components.jsonld"),
     FixtureData("Operation traits", "components/operation-traits.yaml", "components/operation-traits.jsonld"),
-    FixtureData("Operation with inline external traits", "components/external-operation-traits.yaml", "components/external-operation-traits.jsonld"),
-    FixtureData("Message traits",
-                "components/message-traits.yaml",
-                "components/message-traits.jsonld")
+    FixtureData("Operation with inline external traits",
+                "components/external-operation-traits.yaml",
+                "components/external-operation-traits.jsonld"),
+    FixtureData("Message traits", "components/message-traits.yaml", "components/message-traits.jsonld")
   )
 
   def cyclesAsyncAsync: Seq[FixtureData] = Seq(
@@ -104,6 +104,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("RAML type - simple object", "raml-types/simple-object.yaml", "raml-types/simple-object.yaml"),
     FixtureData("RAML type - simple scalar", "raml-types/simple-scalar.yaml", "raml-types/simple-scalar.yaml"),
     FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.yaml"),
-//    FixtureData("Channel params with refs", "references/channel-params.yaml", "references/channel-params.yaml"),
+    FixtureData("Draft 7 schemas cycle", "draft-7-schemas-cycle.yaml", "draft-7-schemas-output.yaml")
+    //    FixtureData("Channel params with refs", "references/channel-params.yaml", "references/channel-params.yaml"),
   )
 }

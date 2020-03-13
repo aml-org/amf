@@ -31,16 +31,16 @@ channels:
             properties:
               postal_code:
                 pattern: "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]"
-#          examples field is also new to draft 7
+          #          examples field is also new to draft 7
           examples: [
-            {
-              "country": "United States of America",
-              "postal_code": "20500"
-            },
-            {
-              "country": "Canada",
-              "postal_code": "K1M 1M4"
-            }
+          {
+            "country": "United States of America",
+            "postal_code": "20500"
+          },
+          {
+            "country": "Canada",
+            "postal_code": "K1M 1M4"
+          }
           ]
 
   property-names-restriction:
@@ -65,13 +65,13 @@ channels:
         payload:
           type: array
           items: [
-            {
-              "type": "number"
-            },
-            {
-              "type": "string",
-              "enum": ["Street", "Avenue", "Boulevard"]
-            }
+          {
+            "type": "number"
+          },
+          {
+            "type": "string",
+            "enum": ["Street", "Avenue", "Boulevard"]
+          }
           ]
           additionalItems:
             type: string
@@ -110,3 +110,20 @@ channels:
               type: number
               exclusiveMinimum: 0
               maximum: 100
+
+  exclusiveWithDraft4:
+    subscribe:
+      message:
+        schemaFormat: application/vnd.oai.openapi;version=3.0.0
+        payload:
+          type: object
+          properties:
+            a:
+              type: number
+              minimum: 0
+              exclusiveMinimum: true
+            b:
+              type: number
+              exclusiveMaximum: true
+              maximum: 100
+

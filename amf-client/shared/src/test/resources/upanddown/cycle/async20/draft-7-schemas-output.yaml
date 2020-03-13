@@ -1,16 +1,15 @@
-asyncapi: '2.0.0'
+asyncapi: 2.0.0
 info:
   title: new fields of draft 7
-  version: '1.0.0'
-
+  version: 1.0.0
 channels:
   const-key-word:
     subscribe:
       message:
         payload:
           type: string
-          const: some value
-
+          enum:
+            - some value
   conditional-subschemas:
     subscribe:
       message:
@@ -18,39 +17,42 @@ channels:
           type: object
           properties:
             country:
-              enum: ["United States of America", "Canada"]
+              enum:
+                - United States of America
+                - Canada
           if:
             properties:
               country:
-                const: United States of America
+                enum:
+                  - United States of America
+            type: object
           then:
             properties:
               postal_code:
                 pattern: "[0-9]{5}(-[0-9]{4})?"
+                type: string
+            type: object
           else:
             properties:
               postal_code:
                 pattern: "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]"
-#          examples field is also new to draft 7
-          examples: [
-            {
-              "country": "United States of America",
-              "postal_code": "20500"
-            },
-            {
-              "country": "Canada",
-              "postal_code": "K1M 1M4"
-            }
-          ]
-
+                type: string
+            type: object
+          examples:
+            -
+              country: United States of America
+              postal_code: "20500"
+            -
+              country: Canada
+              postal_code: K1M 1M4
   property-names-restriction:
     subscribe:
       message:
         payload:
           type: object
           propertyNames:
-            pattern: "^[A-Za-z_][A-Za-z0-9_]*$"
-
+            pattern: ^[A-Za-z_][A-Za-z0-9_]*$
+            type: string
   contains-key:
     subscribe:
       message:
@@ -58,31 +60,29 @@ channels:
           type: array
           contains:
             type: number
-
+          items: {}
   additional-items:
     subscribe:
       message:
         payload:
           type: array
-          items: [
-            {
-              "type": "number"
-            },
-            {
-              "type": "string",
-              "enum": ["Street", "Avenue", "Boulevard"]
-            }
-          ]
           additionalItems:
             type: string
-
+          items:
+            -
+              type: number
+            -
+              enum:
+                - Street
+                - Avenue
+                - Boulevard
+              type: string
   using-comments:
     subscribe:
       message:
         payload:
           type: object
-          "$comment": some comment
-
+          $comment: some comment
   readOnly-writeOnly-schema-level:
     subscribe:
       message:
@@ -95,7 +95,6 @@ channels:
               type: string
               writeOnly: true
               readOnly: true
-
   exclusiveWithValues:
     subscribe:
       message:
@@ -109,4 +108,19 @@ channels:
             b:
               type: number
               exclusiveMinimum: 0
+              maximum: 100
+  exclusiveWithDraft4:
+    subscribe:
+      message:
+        schemaFormat: application/vnd.oai.openapi;version=3.0.0
+        payload:
+          type: object
+          properties:
+            a:
+              type: number
+              minimum: 0
+              exclusiveMinimum: true
+            b:
+              type: number
+              exclusiveMaximum: true
               maximum: 100

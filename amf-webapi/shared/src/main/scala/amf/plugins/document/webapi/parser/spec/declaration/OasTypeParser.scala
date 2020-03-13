@@ -750,7 +750,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   }
 
-  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
+  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit)
+      extends DataArrangementShapeParser() {
 
     override def parse(): AnyShape = {
       adopt(shape)
@@ -801,7 +802,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
+  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit)
+      extends DataArrangementShapeParser() {
     override def parse(): AnyShape = {
       checkJsonIdentity(shape, map, adopt, ctx.declarations.futureDeclarations)
       super.parse()
@@ -1013,7 +1015,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     required
       .foreach {
         case (name, nodes) if nodes.size > 1 =>
-          ctx.eh.violation(DuplicateRequiredItem, shape.id, s"'$name' is duplicated in 'required' property", nodes.last)
+          ctx.eh.violation(DuplicateRequiredItem,
+                           shape.id,
+                           s"'$name' is duplicated in 'required' property",
+                           nodes.last)
         case _ => // ignore
       }
 
@@ -1168,7 +1173,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       )
 
       map.key("enum", ShapeModel.Values in shape using dataNodeParser)
-      map.key("externalDocs", AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
+      map.key("externalDocs",
+              AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 
       map.key(
@@ -1185,10 +1191,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       XoneConstraintParser(map, shape).parse()
       InnerShapeParser("not", ShapeModel.Not, map, shape).parse()
 
-      map.key("readOnly", PropertyShapeModel.ReadOnly in shape)
+      map.key("readOnly", ShapeModel.ReadOnly in shape)
 
       if (version.isInstanceOf[OAS30SchemaVersion] || version == JSONSchemaDraft7SchemaVersion) {
-        map.key("writeOnly", PropertyShapeModel.WriteOnly in shape)
+        map.key("writeOnly", ShapeModel.WriteOnly in shape)
         map.key("deprecated", ShapeModel.Deprecated in shape)
       }
 
