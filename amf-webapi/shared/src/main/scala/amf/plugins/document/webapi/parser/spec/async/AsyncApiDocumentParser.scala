@@ -72,10 +72,13 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
         api.setArray(WebApiModel.Documentations, Seq(OasLikeCreativeWorkParser(entry.value, api.id).parse()))
       }
     )
-    map.key("servers", entry => {
-      val servers = AsyncServersParser(entry.value.as[YMap], api).parse()
-      api.withServers(servers)
-    })
+    map.key(
+      "servers",
+      entry => {
+        val servers = AsyncServersParser(entry.value.as[YMap], api).parse()
+        api.set(WebApiModel.Servers, AmfArray(servers, Annotations(entry.value)), Annotations(entry))
+      }
+    )
     map.key("tags", entry => {
       val tags = OasLikeTagsParser(api.id, entry).parse()
       api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
@@ -102,7 +105,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     val paths = entry.value.as[YMap]
     val endpoints = paths.entries.foldLeft(List[EndPoint]())((acc, curr) =>
       acc ++ ctx.factory.endPointParser(curr, api.withEndPoint, acc).parse())
-    api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
+    api.set(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
   }
 
   override protected val definitionsKey: String = "schemas"
