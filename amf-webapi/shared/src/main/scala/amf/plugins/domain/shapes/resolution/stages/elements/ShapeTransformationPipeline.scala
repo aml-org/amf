@@ -5,12 +5,16 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.Shape
 import amf.core.resolution.pipelines.elements.ElementTransformationPipeline
 import amf.core.resolution.stages.elements.resolution.ElementStageTransformer
-import amf.plugins.domain.shapes.resolution.stages.{ShapeLinksTransformer, ShapeTransformer}
+import amf.plugins.domain.shapes.resolution.stages.{
+  ShapeChainLinksTransformer,
+  ShapeLinksTransformer,
+  ShapeTransformer
+}
 
-class ShapeTransformationPipeline(shape: Shape, errorHandler: ErrorHandler, profileName: ProfileName)
+class CompleteShapeTransformationPipeline(shape: Shape, errorHandler: ErrorHandler, profileName: ProfileName)
     extends ElementTransformationPipeline[Shape](shape, errorHandler: ErrorHandler) {
   override val steps: Seq[ElementStageTransformer[Shape]] = Seq(
-    new ShapeLinksTransformer(),
+    new ShapeChainLinksTransformer(),
     ShapeTransformer(errorHandler, keepEditingInfo = false, profileName)
   )
 }
