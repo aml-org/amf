@@ -4,6 +4,7 @@ import amf.core.annotations.SourceVendor
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.{BaseUnit, Document}
+import amf.core.parser.FieldEntry
 import amf.core.remote.{AsyncApi20, Vendor}
 import amf.plugins.document.webapi.contexts.emitter.async.AsyncSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.async.emitters.{
@@ -61,7 +62,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
       _.obj { b =>
         versionEntry(b)
 //        traverse(ordering.sorted(api ++ extension ++ usage ++ declares :+ references), b)
-        traverse(ordering.sorted(api), b)
+        traverse(ordering.sorted(api ++ declares), b)
       }
     }
   }
@@ -90,7 +91,10 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
       fs.entry(WebApiModel.Documentations)
         .map(f => result += new AsyncApiCreativeWorksEmitter(f.arrayValues[CreativeWork].head, ordering))
 
-      fs.entry(WebApiModel.EndPoints).map(f => result += new AsyncApiEndpointsEmitter(f, ordering))
+      fs.entry(WebApiModel.EndPoints) match {
+        case Some(f: FieldEntry) => result += new AsyncApiEndpointsEmitter(f, ordering)
+        case None                => result += EntryPartEmitter("channels", EmptyMapEmitter())
+      }
 
       fs.entry(WebApiModel.Security).map(f => result += SecurityRequirementsEmitter("security", f, ordering))
 

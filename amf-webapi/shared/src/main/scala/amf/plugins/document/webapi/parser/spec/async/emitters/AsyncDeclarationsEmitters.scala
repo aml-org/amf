@@ -22,6 +22,8 @@ case class AsyncDeclarationsEmitters(declares: Seq[DomainElement], ordering: Spe
     if (declarations.shapes.nonEmpty)
       result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, references, ordering)
 
+    if (declarations.securitySchemes.nonEmpty)
+      result += new AsyncSecuritySchemesEmitter(declarations.securitySchemes.values.toSeq, ordering)
     result
   }
 }
