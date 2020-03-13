@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/oas3/invalid-ref-inside-paths-object.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+  Message: Property '$ref' not supported in a OAS 3.0 paths node
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-ref-inside-paths-object.json#/web-api
+  Property:
+  Position: Some(LexicalInformation([(8,4)-(8,42)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-ref-inside-paths-object.json

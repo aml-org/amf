@@ -1,0 +1,28 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Dropbox API",
+    "version": "1"
+  },
+  "host": "api.dropbox.com",
+  "basePath": "/{version}",
+  "schemes": [
+    "https"
+  ],
+  "paths": {},
+  "securityDefinitions": {
+    "oauth_2_0": {
+      "type": "oauth2",
+      "description": "Dropbox supports OAuth 2.0 for authenticating all API requests.\n",
+      "authorizationUrl": "https://www.dropbox.com/1/oauth2/authorize",
+      "tokenUrl": "https://api.dropbox.com/1/oauth2/token",
+      "x-amf-settings": {
+        "authorizationGrants": [
+          "authorization_code",
+          "implicit",
+          "urn:ietf:params:oauth:grant-type:saml2-bearer"
+        ]
+      }
+    }
+  }
+}

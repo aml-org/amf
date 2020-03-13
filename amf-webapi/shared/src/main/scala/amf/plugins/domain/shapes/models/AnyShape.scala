@@ -87,24 +87,16 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
     with JsonSchemaSerializer
     with RamlDatatypeSerializer
     with ExternalSourceElement
-    with InheritanceChain {
+    with InheritanceChain
+    with ExemplifiedDomainElement {
 
   def documentation: CreativeWork     = fields.field(Documentation)
   def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
-  def examples: Seq[Example]          = fields.field(Examples)
   def comment: StrField               = fields.field(Comment)
 
   def withDocumentation(documentation: CreativeWork): this.type        = set(Documentation, documentation)
   def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = set(XMLSerialization, xmlSerialization)
-  def withExamples(examples: Seq[Example]): this.type                  = setArray(Examples, examples)
   def withComment(comment: String): this.type                          = set(Comment, comment)
-
-  def withExample(name: Option[String]): Example = {
-    val example = Example()
-    name.foreach { example.withName(_) }
-    add(Examples, example)
-    example
-  }
 
   override def linkCopy(): AnyShape = AnyShape().withId(id)
 

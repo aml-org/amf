@@ -1,0 +1,36 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/my-endpoint": {
+      "get": {
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "description": "request instance",
+            "schema": {
+              "$ref": "#/definitions/MyType"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+
+  },
+  "definitions": {
+    "MyType": {
+      "type": "string"
+    }
+  }
+}

@@ -1,8 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations.LexicalInformation
-import amf.core.parser.{Annotations, Range, YMapOps, SearchScope}
-import org.yaml.model.{YType, YMap, YPart, YNode}
+import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
+import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorSecurityScheme
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.toRaml
@@ -10,11 +11,10 @@ import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations.{
-  MissingSecuritySchemeErrorSpecification,
-  CrossSecurityWarningSpecification
+  CrossSecurityWarningSpecification,
+  MissingSecuritySchemeErrorSpecification
 }
-import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+import org.yaml.model.{YMap, YNode, YPart, YType}
 
 abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(
     implicit ctx: OasLikeWebApiContext)
@@ -53,21 +53,21 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
     map.key("type", SecuritySchemeModel.Type in scheme)
 
     scheme.`type`.option() match {
-      case Some(s) if s.startsWith("x-") =>
-        ctx.eh.warning(
-          CrossSecurityWarningSpecification,
-          scheme.id,
-          Some(SecuritySchemeModel.Type.value.iri()),
-          s"RAML 1.0 extension security scheme type '$s' detected in ${ctx.vendor.name} spec",
-          scheme.`type`.annotations().find(classOf[LexicalInformation]),
-          Some(ctx.rootContextDocument)
-        )
       case Some("OAuth 1.0" | "OAuth 2.0" | "Basic Authentication" | "Digest Authentication" | "Pass Through") =>
         ctx.eh.warning(
           CrossSecurityWarningSpecification,
           scheme.id,
           Some(SecuritySchemeModel.Type.value.iri()),
           s"RAML 1.0 security scheme type detected in OAS 2.0 spec",
+          scheme.`type`.annotations().find(classOf[LexicalInformation]),
+          Some(ctx.rootContextDocument)
+        )
+      case Some(s) if s.startsWith("x-") =>
+        ctx.eh.warning(
+          CrossSecurityWarningSpecification,
+          scheme.id,
+          Some(SecuritySchemeModel.Type.value.iri()),
+          s"RAML 1.0 extension security scheme type '$s' detected in ${ctx.vendor.name} spec",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
           Some(ctx.rootContextDocument)
         )

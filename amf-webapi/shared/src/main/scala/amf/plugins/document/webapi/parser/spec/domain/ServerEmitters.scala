@@ -200,7 +200,7 @@ private case class OasServerEmitter(server: Server, ordering: SpecOrdering)(impl
   override def position(): Position = pos(server.annotations)
 }
 
-private case class OasServerVariablesEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+case class OasServerVariablesEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val all                 = f.arrayValues(classOf[Parameter])

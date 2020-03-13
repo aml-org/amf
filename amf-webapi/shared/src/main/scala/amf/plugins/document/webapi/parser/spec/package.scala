@@ -34,7 +34,7 @@ package object spec {
     val responsesDefinitionsPrefix = "#/responses/"
 
     def stripDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
-      if (ctx.vendor == Vendor.OAS30) url.stripPrefix(oas3DefinitionsPrefix)
+      if (ctx.vendor == Vendor.OAS30 || ctx.vendor == Vendor.ASYNC20) url.stripPrefix(oas3DefinitionsPrefix)
       else url.stripPrefix(oas2DefinitionsPrefix)
     }
 
@@ -63,14 +63,14 @@ package object spec {
     }
 
     def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
-        implicit spec: OasSpecEmitterContext): String = {
+        implicit spec: SpecEmitterContext): String = {
       if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
         appendOas3ComponentsPrefix(url, "parameters")
       else
         appendPrefix(parameterDefinitionsPrefix, url)
     }
 
-    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: OasSpecEmitterContext): String = {
+    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: SpecEmitterContext): String = {
       if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
         appendOas3ComponentsPrefix(url, "responses")
       else

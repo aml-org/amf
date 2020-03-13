@@ -1,18 +1,20 @@
 package amf.plugins.domain.webapi.models.bindings
 import amf.core.metamodel.Obj
 import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable, DataNode}
+import amf.core.model.domain.{DataNode, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.bindings.{DynamicBindingModel, EmptyBindingModel}
 import amf.plugins.domain.webapi.metamodel.bindings.DynamicBindingModel._
 import amf.core.utils.AmfStrings
+import amf.plugins.domain.webapi.models.Key
 
 class DynamicBinding(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
     with ServerBinding
     with ChannelBinding
     with OperationBinding
-    with MessageBinding {
+    with MessageBinding
+    with Key {
   override def meta: Obj = DynamicBindingModel
 
   def definition: DataNode = fields.field(Definition)
@@ -25,6 +27,8 @@ class DynamicBinding(override val fields: Fields, override val annotations: Anno
   override def linkCopy(): DynamicBinding = DynamicBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = DynamicBinding.apply
+
+  override def key: StrField = fields.field(DynamicBindingModel.key)
 }
 
 object DynamicBinding {
@@ -41,11 +45,14 @@ class EmptyBinding(override val fields: Fields, override val annotations: Annota
     with ServerBinding
     with ChannelBinding
     with OperationBinding
-    with MessageBinding {
+    with MessageBinding
+    with Key {
 
   override def meta: Obj = EmptyBindingModel
 
   def `type`: StrField = fields.field(Type)
+
+  override def key: StrField = fields.field(EmptyBindingModel.key)
 
   def withType(`type`: String): this.type = set(Type, `type`)
 

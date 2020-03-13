@@ -7,7 +7,7 @@ import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, Mode
 import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
-import amf.plugins.domain.webapi.metamodel.bindings.MessageBindingModel
+import amf.plugins.domain.webapi.metamodel.bindings.{MessageBindingModel, MessageBindingsModel}
 
 trait MessageModel
     extends TagsModel
@@ -41,7 +41,7 @@ trait MessageModel
     Core + "summary",
     ModelDoc(ModelVocabularies.Core, "summary", "Human readable short description of the request/response"))
 
-  val Bindings = Field(Array(MessageBindingModel),
+  val Bindings = Field(MessageBindingsModel,
                        ApiBinding + "binding",
                        ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this request/response"))
 

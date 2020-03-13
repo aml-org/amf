@@ -4,9 +4,9 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.core.vocabulary.Namespace.{ApiContract, Core, ApiBinding}
+import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.domain.webapi.metamodel.bindings.ServerBindingModel
+import amf.plugins.domain.webapi.metamodel.bindings.{ServerBindingModel, ServerBindingsModel}
 import amf.plugins.domain.webapi.metamodel.security.SecurityRequirementModel
 import amf.plugins.domain.webapi.models.Server
 
@@ -39,7 +39,7 @@ object ServerModel extends DomainElementModel with NameFieldSchema with Descript
   )
 
   val Bindings = Field(
-    Array(ServerBindingModel),
+    ServerBindingsModel,
     ApiBinding + "binding",
     ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this server")
   )

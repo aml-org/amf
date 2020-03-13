@@ -2,9 +2,8 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.metamodel.domain.ExternalSourceElementModel
-import amf.core.model.domain.{AmfScalar, Annotation, DataNode}
+import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DataNode}
 import amf.core.parser.errorhandler.WarningOnlyHandler
-import amf.core.model.domain.{DataNode, AmfScalar, Annotation}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.ParsedJSONExample
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -12,14 +11,15 @@ import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorNamedExample
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, DataNodeParser}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.{ScalarShape, Example, AnyShape}
+import amf.plugins.domain.shapes.metamodel.common.ExamplesField
+import amf.plugins.domain.shapes.models.{AnyShape, Example, ExemplifiedDomainElement, ScalarShape}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations.{
-  ExclusivePropertiesSpecification,
   ExamplesMustBeAMap,
+  ExclusivePropertiesSpecification,
   InvalidFragmentType
 }
 import org.mulesoft.lexer.Position
@@ -45,25 +45,33 @@ case class OasResponseExamplesParser(entry: YMapEntry)(implicit ctx: WebApiConte
   }
 }
 
-case class OasExamplesParser(map: YMap, parentId: String)(implicit ctx: WebApiContext) {
-  def parse(): Seq[Example] = {
+case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDomainElement)(
+    implicit ctx: WebApiContext) {
+  def parse(): Unit = {
     (map.key("example"), map.key("examples")) match {
-      case (Some(exampleEntry), None)  => List(parseExample(exampleEntry.value))
-      case (None, Some(examplesEntry)) => Oas3NamedExamplesParser(examplesEntry, parentId).parse()
+      case (Some(exampleEntry), None) =>
+        val examples = List(parseExample(exampleEntry.value))
+        exemplifiedDomainElement.set(ExamplesField.Examples,
+                                     AmfArray(examples, Annotations(exampleEntry)),
+                                     Annotations(exampleEntry))
+      case (None, Some(examplesEntry)) =>
+        val examples = Oas3NamedExamplesParser(examplesEntry, exemplifiedDomainElement.id).parse()
+        exemplifiedDomainElement.set(ExamplesField.Examples,
+                                     AmfArray(examples, Annotations(examplesEntry.value)),
+                                     Annotations(examplesEntry))
       case (Some(_), Some(_)) =>
         ctx.eh.violation(
           ExclusivePropertiesSpecification,
-          parentId,
+          exemplifiedDomainElement.id,
           s"Properties 'example' and 'examples' are exclusive and cannot be declared together",
           map
         )
-        Nil
-      case _ => Nil
+      case _ => // ignore
     }
   }
 
   private def parseExample(yNode: YNode) = {
-    val example = Example(yNode).adopted(parentId)
+    val example = Example(yNode).adopted(exemplifiedDomainElement.id)
     RamlExampleValueAsString(yNode, example, Oas3ExampleOptions).populate()
   }
 }
@@ -88,20 +96,29 @@ case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiCo
 case class RamlExamplesParser(map: YMap,
                               singleExampleKey: String,
                               multipleExamplesKey: String,
-                              parentId: Option[String],
-                              producer: Option[String] => Example,
+                              exemplified: ExemplifiedDomainElement,
                               options: ExampleOptions)(implicit ctx: WebApiContext) {
-  def parse(): Seq[Example] = {
-    if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined && parentId.isDefined) {
+  def parse(): Unit = {
+    if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined && exemplified.id.nonEmpty) {
       ctx.eh.violation(
         ExclusivePropertiesSpecification,
-        parentId.get,
+        exemplified.id,
         s"Properties '$singleExampleKey' and '$multipleExamplesKey' are exclusive and cannot be declared together",
         map
       )
     }
-    RamlMultipleExampleParser(multipleExamplesKey, map, producer, options).parse() ++
-      RamlSingleExampleParser(singleExampleKey, map, producer, options).parse()
+    val examples = RamlMultipleExampleParser(multipleExamplesKey, map, exemplified.withExample, options).parse() ++
+      RamlSingleExampleParser(singleExampleKey, map, exemplified.withExample, options).parse()
+
+    map
+      .key(multipleExamplesKey)
+      .orElse(map.key(singleExampleKey)) match {
+      case Some(e) =>
+        exemplified.set(ExamplesField.Examples, AmfArray(examples), Annotations(e))
+      case _ if examples.nonEmpty =>
+        exemplified.set(ExamplesField.Examples, AmfArray(examples))
+      case _ => // ignore
+    }
   }
 }
 

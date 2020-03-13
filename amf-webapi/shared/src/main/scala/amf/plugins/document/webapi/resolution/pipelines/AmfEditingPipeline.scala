@@ -20,7 +20,7 @@ class AmfEditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean =
     new ShapeNormalizationStage(profileName, keepEditingInfo = true),
     new SecurityResolutionStage(),
     new ParametersNormalizationStage(profileName),
-    new ServersNormalizationStage(profileName),
+    new ServersNormalizationStage(profileName, keepEditingInfo = true),
     new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
     new MediaTypeResolutionStage(profileName, keepEditingInfo = true),
     new ResponseExamplesResolutionStage(),

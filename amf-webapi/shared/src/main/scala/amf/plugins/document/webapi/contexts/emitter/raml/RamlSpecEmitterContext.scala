@@ -98,7 +98,7 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
     : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
     RamlParametrizedSecuritySchemeEmitter.apply
 
-  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => SecurityRequirementEmitter =
+  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => AbstractSecurityRequirementEmitter =
     RamlSecurityRequirementEmitter.apply
 
   def payloadsEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlPayloadsEmitter
@@ -319,6 +319,9 @@ abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
   import BaseEmitters._
 
   override def localReference(reference: Linkable): PartEmitter = RamlLocalReferenceEmitter(reference)
+
+  def localReferenceEntryEmitter(key: String, reference: Linkable): EntryEmitter =
+    new RamlLocalReferenceEntryEmitter(key, reference)
 
   def externalReference(location: String, reference: Linkable): PartEmitter =
     new PartEmitter {

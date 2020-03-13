@@ -1,0 +1,17 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Example API",
+    "version": "1.0"
+  },
+  "paths": {},
+  "components": {
+    "securitySchemes": {
+      "digest_auth": {
+        "type": "http",
+        "description": "This API supports DigestSecurityScheme Authentication.",
+        "scheme": "digest"
+      }
+    }
+  }
+}

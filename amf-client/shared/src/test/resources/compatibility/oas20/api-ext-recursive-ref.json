@@ -1,0 +1,22 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Test external file recursion",
+    "version": "1.0"
+  },
+  "paths": {
+    "/someEndpoint": {
+      "get": {
+        "operationId": "someId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "../json-schema/recursive-definition.json#/definitions/ApiOk"
+            }
+          }
+        }
+      }
+    }
+  }
+}

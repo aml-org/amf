@@ -1,31 +1,34 @@
 package amf.client.model.domain
 
-import amf.client.convert.WebApiClientConverters._
 import amf.client.model.{BoolField, StrField}
 import amf.plugins.domain.webapi.models.{Message => InternalMessage}
-
-import scala.scalajs.js.annotation.JSExportAll
+import amf.client.convert.WebApiClientConverters._
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * Message model class.
   */
 @JSExportAll
-trait Message extends NamedDomainElement with DomainElement with Linkable {
+class Message(override private[amf] val _internal: InternalMessage)
+    extends NamedDomainElement
+    with DomainElement
+    with Linkable {
 
-  override private[amf] val _internal: InternalMessage
+  @JSExportTopLevel("model.domain.Message")
+  def this() = this(InternalMessage())
 
-  override def name: StrField              = _internal.name
-  def description: StrField                = _internal.description
-  def isAbstract: BoolField                = _internal.isAbstract
-  def documentation: CreativeWork          = _internal.documentation
-  def tags: ClientList[Tag]                = _internal.tags.asClient
-  def examples: ClientList[Example]        = _internal.examples.asClient
-  def payloads: ClientList[Payload]        = _internal.payloads.asClient
-  def correlationId: CorrelationId         = _internal.correlationId
-  def displayName: StrField                = _internal.displayName
-  def title: StrField                      = _internal.title
-  def summary: StrField                    = _internal.summary
-  def bindings: ClientList[MessageBinding] = _internal.bindings.asClient
+  override def name: StrField       = _internal.name
+  def description: StrField         = _internal.description
+  def isAbstract: BoolField         = _internal.isAbstract
+  def documentation: CreativeWork   = _internal.documentation
+  def tags: ClientList[Tag]         = _internal.tags.asClient
+  def examples: ClientList[Example] = _internal.examples.asClient
+  def payloads: ClientList[Payload] = _internal.payloads.asClient
+  def correlationId: CorrelationId  = _internal.correlationId
+  def displayName: StrField         = _internal.displayName
+  def title: StrField               = _internal.title
+  def summary: StrField             = _internal.summary
+  def bindings: MessageBindings     = _internal.bindings
 
   /** Set name property of this Response. */
   override def withName(name: String): this.type = {
@@ -74,8 +77,8 @@ trait Message extends NamedDomainElement with DomainElement with Linkable {
     this
   }
 
-  def withBindings(bindings: ClientList[MessageBinding]): this.type = {
-    _internal.withBindings(bindings.asInternal)
+  def withBindings(bindings: MessageBindings): this.type = {
+    _internal.withBindings(bindings)
     this
   }
 
@@ -83,4 +86,5 @@ trait Message extends NamedDomainElement with DomainElement with Linkable {
 
   def withPayload(): Payload = _internal.withPayload()
 
+  override def linkCopy(): Message = _internal.linkCopy()
 }

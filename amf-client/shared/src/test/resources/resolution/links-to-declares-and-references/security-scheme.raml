@@ -1,0 +1,17 @@
+#%RAML 1.0 SecurityScheme
+type: OAuth 1.0
+settings:
+  requestTokenUri: http://api.domain.com/oauth1/request_token
+  authorizationUri: http://api.domain.com/oauth1/authorize
+  tokenCredentialsUri: http://api.domain.com/oauth1/access_token
+  signatures: [RSA-SHA1, HMAC-SHA1]
+describedBy:
+  queryParameters:
+    token:
+      type: string
+  headers:
+    Authorization:
+      type: string
+  responses:
+    403:
+      description: Server understood the request but says no to it.

@@ -191,7 +191,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/xmlexample.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/xmlexample.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "file://amf-client/shared/src/test/resources/resolution/externalfragment/xmlexample.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema"
@@ -200,6 +200,19 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(7,6)-(8,47)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/xmlexample.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/source-map/lexical/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/apiContract#examples"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(8,8)-(8,47)]"
                                       }
                                     ]
                                   }
@@ -391,7 +404,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

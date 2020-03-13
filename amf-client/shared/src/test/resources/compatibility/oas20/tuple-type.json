@@ -1,0 +1,30 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "description": "Get list of users from github",
+        "responses": {
+          "200": {
+            "description": "Successfully got users",
+            "schema": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

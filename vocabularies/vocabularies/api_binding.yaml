@@ -20,6 +20,8 @@ classTerms:
     extends: OperationBinding
   ChannelBinding:
     displayName: ChannelBinding
+  ChannelBindings:
+    displayName: ChannelBindings
   DynamicBinding:
     displayName: DynamicBinding
     extends:
@@ -50,6 +52,8 @@ classTerms:
     extends: OperationBinding
   MessageBinding:
     displayName: MessageBinding
+  MessageBindings:
+    displayName: MessageBindings
   MqttMessageBinding:
     displayName: MqttMessageBinding
     extends: MessageBinding
@@ -63,8 +67,12 @@ classTerms:
     displayName: MqttServerLastWill
   OperationBinding:
     displayName: OperationBinding
+  OperationBindings:
+    displayName: OperationBindings
   ServerBinding:
     displayName: ServerBinding
+  ServerBindings:
+    displayName: ServerBindings
   WebSocketsChannelBinding:
     displayName: WebSocketsChannelBinding
     extends: ChannelBinding
@@ -83,8 +91,8 @@ propertyTerms:
     range: string
   binding:
     displayName: binding
-    description: Bindings for this server
-    range: ServerBinding
+    description: List of operation bindings
+    range: OperationBinding
   bindingVersion:
     displayName: bindingVersion
     description: The version of this binding
@@ -145,10 +153,6 @@ propertyTerms:
     displayName: keepAlive
     description: Interval in seconds of the longest period of time the broker and the client can endure without sending a message
     range: integer
-  key:
-    displayName: key
-    description: The message key
-    range: string
   lastWill:
     displayName: lastWill
     description: Last Will and Testament configuration
@@ -157,6 +161,10 @@ propertyTerms:
     displayName: mandatory
     description: Whether the message is mandatory or not
     range: boolean
+  messageKey:
+    displayName: key
+    description: The message key
+    range: string
   messageType:
     displayName: messageType
     description: Application-specific message type
@@ -164,6 +172,10 @@ propertyTerms:
   method:
     displayName: method
     description: The HTTP method to use when establishing the connection
+    range: string
+  operationType:
+    displayName: type
+    description: Type of operation
     range: string
   priority:
     displayName: priority
@@ -199,7 +211,7 @@ propertyTerms:
     range: string
   type:
     displayName: type
-    description: The type of the exchange
+    description: binding for a corresponding known type
     range: string
   userId:
     displayName: userId

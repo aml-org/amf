@@ -42,7 +42,7 @@ case class EmptyBinding(override private[amf] val _internal: InternalEmptyBindin
   @JSExportTopLevel("model.domain.EmptyBinding")
   def this() = this(InternalEmptyBinding())
 
-  def `type`: StrField     = _internal.`type`
+  def `type`: StrField = _internal.`type`
 
   def withType(`type`: String): this.type = {
     _internal.withType(`type`)

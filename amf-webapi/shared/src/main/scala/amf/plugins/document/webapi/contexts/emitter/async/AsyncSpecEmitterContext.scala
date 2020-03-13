@@ -4,16 +4,21 @@ import amf.core.emitter.BaseEmitters.MapEntryEmitter
 import amf.core.emitter.{EntryEmitter, PartEmitter, ShapeRenderOptions, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
+import amf.core.model.domain.extensions.{CustomDomainProperty, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote.{AsyncApi20, Vendor}
-import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.plugins.document.webapi.contexts.{RefEmitter, TagToReferenceEmitter}
+import amf.plugins.document.webapi.parser.spec.async.emitters.AsyncApiExampleEmitters
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.parser.spec.domain.{
+  AbstractSecurityRequirementEmitter,
+  ParametrizedSecuritySchemeEmitter
+}
+import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasLikeExampleEmitters, OasSecurityRequirementEmitter}
 import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, OasTypeDefStringValueMatcher}
+import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.Parameter
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement}
 import org.yaml.model.YDocument.PartBuilder
@@ -21,6 +26,11 @@ import org.yaml.model.YDocument.PartBuilder
 abstract class AsyncSpecEmitterFactory(override implicit val spec: AsyncSpecEmitterContext)
     extends OasLikeSpecEmitterFactory {
   // TODO ASYNC complete this
+
+  override def exampleEmitter
+    : (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters =
+    (_, exampleOption, ordering, extensions, references) =>
+      AsyncApiExampleEmitters.apply(exampleOption.toSeq ++ extensions, ordering, references)
 }
 
 case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
@@ -32,12 +42,11 @@ case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
 
   override def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter = ???
 
-  override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = ???
-
   override def parametrizedSecurityEmitter
     : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter = ???
 
-  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => SecurityRequirementEmitter = ???
+  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => AbstractSecurityRequirementEmitter =
+    OasSecurityRequirementEmitter.apply
 
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter = ???
 
@@ -59,9 +68,6 @@ abstract class AsyncSpecEmitterContext(eh: ErrorHandler,
   override val factory: AsyncSpecEmitterFactory
 
   val typeDefMatcher: OasTypeDefStringValueMatcher = CommonOasTypeDefMatcher
-
-  // TODO ASYNC check this
-  val anyOfKey: String = "union".asAsyncExtension
 }
 
 class Async20SpecEmitterContext(eh: ErrorHandler,

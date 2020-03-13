@@ -20,7 +20,7 @@ import scala.collection.mutable.ListBuffer
 case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
   def parse(): Option[Request] = {
     val request = new Lazy[Request](() => {
-      val req = Request().add(VirtualObject())
+      val req = Request(map).add(VirtualObject())
       adopt(req)
       req
     })
@@ -32,7 +32,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
       .foreach { entry =>
         entries += entry
         parameters = parameters.add(
-          OasParametersParser(entry.value.as[Seq[YNode]], request.getOrCreate.id).parse(inRequest = true))
+          OasParametersParser(entry.value.as[Seq[YNode]], request.getOrCreate.id).parse(inRequestOrEndpoint = true))
       }
 
     map
@@ -100,13 +100,18 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
 
     map.key(
       "requestPayloads".asOasExtension,
-      entry =>
+      entry => {
+        entries += entry
         entry.value
           .as[Seq[YNode]]
           .map(value => payloads += OasPayloadParser(value, request.getOrCreate.withPayload).parse())
+      }
     )
 
-    if (payloads.nonEmpty) request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads))
+    if (payloads.nonEmpty)
+      request.getOrCreate.set(RequestModel.Payloads,
+                              AmfArray(payloads, Annotations(entries.head.value)),
+                              Annotations(entries.head))
 
     map.key(
       "queryString".asOasExtension,

@@ -3,7 +3,7 @@ import amf.core.remote.{Hint, OasYamlHint}
 import amf.{Oas20Profile, Oas30Profile}
 import org.scalatest.Matchers
 
-class UniquePlatformOasUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
+class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/oas3/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/oas3/"
   override val hint: Hint          = OasYamlHint
@@ -64,5 +64,13 @@ class UniquePlatformOasUnitValidationsTest extends UniquePlatformReportGenTest w
 
   test("invalid query parameter schema") {
     validate("invalid-query-parameter-schema.json", Some("invalid-query-parameter-schema.report"), Oas30Profile)
+  }
+
+  test("invalid ref inside paths object") {
+    validate("invalid-ref-inside-paths-object.json", Some("invalid-ref-inside-paths-object.report"), Oas30Profile)
+  }
+
+  test("Invalid ref with missing slash") {
+    validate("invalid-ref-missing-slash.json", Some("invalid-ref-missing-slash.report"), Oas30Profile)
   }
 }

@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "SDEDocument Site Specific",
+  "type": "object",
+  "properties": {
+    "countryCode": {
+      "description": "The country code",
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2
+    },
+    "countryName": {
+      "description": "The country name",
+      "type": "string"
+    },
+    "siteNumber": {
+      "description": "The site number",
+      "type": "string"
+    },
+    "systemId": {
+      "description": "The system ID",
+      "type": "string"
+    },
+    "systemName": {
+      "description": "The system name",
+      "type": "string"
+    },
+    "sdeDocId": {
+      "description": "The sdeDocId",
+      "type": "string"
+    },
+    "fileName": {
+      "description": "The file Name",
+      "type": "string"
+    },
+    "content": {
+      "description": "The content",
+      "type": "string"
+    },
+    "sponsor": {
+      "description": "The sponsor",
+      "type": "string"
+    },
+    "ctmsProtocol": {
+      "description": "The ctms protocol",
+      "type": "string"
+    },
+    "ctmsProtocolId": {
+      "description": "The ctms protocol ID",
+      "type": "string"
+    },
+    "docZone": {
+      "description": "The document zone",
+      "type": "string"
+    },
+    "docSection": {
+      "description": "The document section",
+      "type": "string"
+    },
+    "docArtifact": {
+      "description": "The document artifact",
+      "type": "string"
+    },    
+    "functionalGroup": {
+      "description": "The site number",
+      "type": "string"
+    },
+    "receivedDate": {
+      "description": "The received date",
+      "type": "string",
+      "format": "date"
+    },
+    "scanUser": {
+      "description": "The scan user",
+      "type": "string"
+    }
+  }, 
+  "anyOf": [
+    {
+      "$ref": "language_english.schema.json"
+    },
+    {
+      "$ref": "language_nonenglish.schema.json"
+    }
+  ],
+  "required": [   
+    "systemId",
+    "systemName",
+    "sdeDocId",
+    "fileName",
+    "content",
+    "ctmsProtocolId",
+    "docZone",
+    "docSection",
+    "docArtifact",
+    "functionalGroup",
+    "receivedDate",
+    "scanUser"
+  ]
+}

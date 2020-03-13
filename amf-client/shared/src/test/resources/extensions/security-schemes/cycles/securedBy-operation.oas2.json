@@ -1,0 +1,42 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Dropbox API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/anEndpoint": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "asdasdasdasd"
+          }
+        },
+        "security": [
+          {
+            "basic": []
+          }
+        ],
+        "x-amf-security": [
+          {
+            "custom_auth": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic",
+      "description": "This API supports Basic Authentication.\n"
+    }
+  },
+  "x-amf-securitySchemes": {
+    "custom_auth": {
+      "type": "x-custom",
+      "x-amf-settings": {
+        "custom": "Setting"
+      }
+    }
+  }
+}

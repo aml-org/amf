@@ -14,12 +14,18 @@ import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, 
 import amf.plugins.document.webapi.contexts.{RefEmitter, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.parser.spec.oas.emitters.{
+  OasExampleEmitters,
+  OasLikeExampleEmitters,
+  OasSecurityRequirementEmitter
+}
 import amf.plugins.document.webapi.parser.{
   CommonOasTypeDefMatcher,
   JsonSchemaTypeDefMatcher,
   OasTypeDefStringValueMatcher
 }
-import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement}
+import amf.plugins.domain.shapes.models.Example
+import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, WebApi}
 import org.yaml.model.YDocument.PartBuilder
 
@@ -37,9 +43,7 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
   override def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter =
     OasFacetsInstanceEmitter.apply
 
-  override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
-
-  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => SecurityRequirementEmitter =
+  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => AbstractSecurityRequirementEmitter =
     OasSecurityRequirementEmitter.apply
 
   override def parametrizedSecurityEmitter
@@ -48,6 +52,8 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
 
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter =
     OasAnnotationTypeEmitter.apply
+
+  def securitySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering): OasSecuritySchemesEmitters
 
   def serversEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): OasServersEmitter
 
@@ -66,16 +72,9 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
   override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
     OasDeclaredTypesEmitters.apply
 
-  def typeEmitters(shape: Shape,
-                   ordering: SpecOrdering,
-                   ignored: Seq[Field] = Nil,
-                   references: Seq[BaseUnit],
-                   pointer: Seq[String] = Nil,
-                   schemaPath: Seq[(String, String)] = Nil): Seq[Emitter] =
-    OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
-
-  def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter =
-    OasRecursiveShapeEmitter.apply
+  override def exampleEmitter
+    : (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters =
+    OasExampleEmitters.apply
 }
 
 class Oas2SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {
@@ -96,6 +95,10 @@ class Oas2SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends O
                               ordering: SpecOrdering,
                               references: Seq[BaseUnit]): OasServersEmitter =
     Oas3EndPointServersEmitter(endpoint, f, ordering, references)(spec)
+
+  override def securitySchemesEmitters(securitySchemes: Seq[SecurityScheme],
+                                       ordering: SpecOrdering): OasSecuritySchemesEmitters =
+    new Oas2SecuritySchemesEmitters(securitySchemes, ordering)(spec)
 }
 
 case class CompactJsonSchemaEmitterFactory()(override implicit val spec: CompactJsonSchemaEmitterContext)
@@ -133,6 +136,10 @@ case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) exte
                               ordering: SpecOrdering,
                               references: Seq[BaseUnit]): OasServersEmitter =
     Oas3EndPointServersEmitter(endpoint, f, ordering, references)(spec)
+
+  override def securitySchemesEmitters(securitySchemes: Seq[SecurityScheme],
+                                       ordering: SpecOrdering): OasSecuritySchemesEmitters =
+    new Oas3SecuritySchemesEmitters(securitySchemes, ordering)(spec)
 }
 
 abstract class OasSpecEmitterContext(eh: ErrorHandler,
@@ -148,8 +155,6 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler,
   override val factory: OasSpecEmitterFactory
 
   val typeDefMatcher: OasTypeDefStringValueMatcher = CommonOasTypeDefMatcher
-
-  val anyOfKey: String = "union".asOasExtension
 }
 
 class JsonSchemaEmitterContext(override val eh: ErrorHandler,

@@ -33,7 +33,7 @@ abstract class RamlSpecVersionFactory(implicit val ctx: RamlWebApiContext) exten
 
   def documentParser: (Root) => RamlDocumentParser
 
-  def typeParser: (YMapEntry, Shape => Shape, Boolean, DefaultType) => RamlTypeParser
+  def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser
 
   def payloadParser: (YMapEntry, Option[String] => Payload, Boolean) => RamlPayloadParser
 }
@@ -54,7 +54,7 @@ class Raml10VersionFactory(implicit override val ctx: RamlWebApiContext) extends
 
   override def documentParser: (Root) => RamlDocumentParser = Raml10DocumentParser.apply
 
-  override def typeParser: (YMapEntry, Shape => Shape, Boolean, DefaultType) => RamlTypeParser =
+  override def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
     (entry, f, isAnnotation, default) => Raml10TypeParser(entry, f, TypeInfo(isAnnotation = isAnnotation), default)
 
   override def payloadParser: (YMapEntry, Option[String] => Payload, Boolean) => RamlPayloadParser =
@@ -77,7 +77,7 @@ class Raml08VersionFactory(implicit override val ctx: RamlWebApiContext) extends
 
   override def documentParser: (Root) => RamlDocumentParser = Raml08DocumentParser.apply
 
-  override def typeParser: (YMapEntry, Shape => Shape, Boolean, DefaultType) => RamlTypeParser = Raml08TypeParser.apply
+  override def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser = Raml08TypeParser.apply
 
   override def payloadParser: (YMapEntry, Option[String] => Payload, Boolean) => RamlPayloadParser =
     Raml08PayloadParser.apply

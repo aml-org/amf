@@ -1,0 +1,28 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/my-endpoint": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "",
+              "type": "string"
+            },
+            "examples": {
+              "application/json": "hello"
+            },
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}

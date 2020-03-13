@@ -11,7 +11,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, Value}
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
-import amf.plugins.document.webapi.annotations.ParsedJSONSchema
+import amf.plugins.document.webapi.annotations.{Inferred, ParsedJSONSchema}
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
@@ -198,7 +198,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   protected def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
-    computeNarrowRestrictions(ScalarShapeModel.fields, baseScalar, superScalar)
+    computeNarrowRestrictions(ScalarShapeModel.fields,
+                              baseScalar,
+                              superScalar,
+                              filteredFields = Seq(ScalarShapeModel.Examples))
     baseScalar
   }
 
@@ -536,16 +539,24 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
-    val newRange = context.minShape(baseProperty.range, superProperty.range)
+    if (isExactlyAny(baseProperty.range) && !isInferred(baseProperty) && isSubtypeOfAny(superProperty.range)) {
+      context.errorHandler.violation(
+        InvalidTypeInheritanceErrorSpecification,
+        baseProperty,
+        Some(ShapeModel.Inherits.value.iri()),
+        s"Resolution error: Invalid scalar inheritance base type 'any' can't override"
+      )
+    } else {
+      val newRange = context.minShape(baseProperty.range, superProperty.range)
+      baseProperty.fields.setWithoutId(PropertyShapeModel.Range,
+                                       newRange,
+                                       baseProperty.fields.getValue(PropertyShapeModel.Range).annotations)
 
-    baseProperty.fields.setWithoutId(PropertyShapeModel.Range,
-                                     newRange,
-                                     baseProperty.fields.getValue(PropertyShapeModel.Range).annotations)
-
-    computeNarrowRestrictions(PropertyShapeModel.fields,
-                              baseProperty,
-                              superProperty,
-                              filteredFields = Seq(PropertyShapeModel.Range))
+      computeNarrowRestrictions(PropertyShapeModel.fields,
+                                baseProperty,
+                                superProperty,
+                                filteredFields = Seq(PropertyShapeModel.Range))
+    }
 
     baseProperty
   }
@@ -554,6 +565,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     computeNarrowRestrictions(FileShapeModel.fields, baseFile, superFile)
     baseFile
   }
+
+  private def isExactlyAny(shape: Shape)       = shape.meta == AnyShapeModel
+  private def isSubtypeOfAny(shape: Shape)     = shape.meta != AnyShapeModel && shape.isInstanceOf[AnyShape]
+  private def isInferred(shape: PropertyShape) = shape.range.annotations.contains(classOf[Inferred])
 
   override val keepEditingInfo: Boolean = context.keepEditingInfo
 }

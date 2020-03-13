@@ -142,6 +142,9 @@ object PayloadValidationPluginsHandler {
       Future(AMFValidationReport("", ProfileName(""), Seq(results)))
     }
 
+    override def syncValidate(mediaType: String, payload: String): AMFValidationReport =
+      AMFValidationReport("", ProfileName(""), Seq())
+
     override def isValid(mediaType: String, payload: String): Future[Boolean] =
       validate(mediaType, payload).map(_.conforms)
     override val validationMode: ValidationMode = StrictValidationMode

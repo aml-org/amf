@@ -25,6 +25,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
+  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Async20Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
@@ -44,6 +45,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
       case Payload                      => "application/amf+json"
       case Raml10 | Raml08 | Raml | Aml => "application/yaml"
       case Oas | Oas20 | Oas30          => "application/json"
+      case AsyncApi20 | AsyncApi        => "application/json"
       case _                            => "text/plain"
     })({
       case Json => "application/json"

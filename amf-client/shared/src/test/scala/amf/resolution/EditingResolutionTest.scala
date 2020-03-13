@@ -359,6 +359,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Resolving parameter without type doesnt throw NPE") {
+    cycle(
+      "parameter-without-type.json",
+      "parameter-without-type.jsonld",
+      OasJsonHint,
+      Amf,
+      resolutionPath + "parameter-without-type/"
+    )
+  }
+
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")
@@ -419,6 +429,34 @@ class EditingResolutionTest extends FunSuiteCycleTests {
       RamlYamlHint,
       Amf,
       resolutionPath + "example-in-resource-type/"
+    )
+  }
+
+  test("recursivity in additional properties") {
+    cycle("recursive-additional-properties.yaml",
+          "recursive-additional-properties.jsonld",
+          OasYamlHint,
+          Amf,
+          s"${resolutionPath}recursive-additional-properties/")
+  }
+
+  test("types with properties that must not be extracted to declares") {
+    cycle(
+      "avoid-extract-to-declares.raml",
+      "avoid-extract-to-declares.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "links-to-declares-and-references/"
+    )
+  }
+
+  test("jsonld with links to declares and references") {
+    cycle(
+      "link-to-declares-and-refs.raml",
+      "link-to-declares-and-refs-editing.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "links-to-declares-and-references/"
     )
   }
 

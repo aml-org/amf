@@ -59,10 +59,11 @@ abstract class WebApiContext(val loc: String,
 
   protected def normalizedJsonPointer(url: String): String = if (url.endsWith("/")) url.dropRight(1) else url
 
-  def findJsonSchema(url: String): Option[AnyShape] = globalSpace.get(normalizedJsonPointer(url)) match {
-    case Some(shape: AnyShape) => Some(shape)
-    case _                     => None
-  }
+  def findJsonSchema(url: String): Option[AnyShape] =
+    globalSpace.get(normalizedJsonPointer(url)) match {
+      case Some(shape: AnyShape) => Some(shape)
+      case _                     => None
+    }
   def registerJsonSchema(url: String, shape: AnyShape): Unit = {
     globalSpace.update(normalizedJsonPointer(url), shape)
   }
@@ -166,7 +167,7 @@ abstract class WebApiContext(val loc: String,
   private def normalizeJsonPath(path: String): String = {
     if (path == "#" || path == "" || path == "/") "/" // exception root cases
     else {
-      val s = if (path.startsWith("#")) path.replace("#", "") else path
+      val s = if (path.startsWith("#/")) path.replace("#/", "") else path
       if (s.startsWith("/")) s.stripPrefix("/") else s
     }
   }

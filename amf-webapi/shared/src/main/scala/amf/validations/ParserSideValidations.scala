@@ -38,6 +38,11 @@ object ParserSideValidations extends Validations {
     "Invalid shape format"
   )
 
+  val InvalidSecuritySchemeType = validation(
+    "invalid-security-scheme-type",
+    "Invalid security scheme type"
+  )
+
   val InvalidDatetimeFormat = validation(
     "invalid-datetime-format",
     "Invalid format value for datetime"
@@ -591,6 +596,11 @@ object ParserSideValidations extends Validations {
   val ExeededMaxYamlReferences = validation(
     "max-yaml-references",
     "Exceeded maximum yaml references threshold"
+  )
+
+  val MissingParameterType = validation(
+    "missing-parameter-type",
+    "Missing parameter type"
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(

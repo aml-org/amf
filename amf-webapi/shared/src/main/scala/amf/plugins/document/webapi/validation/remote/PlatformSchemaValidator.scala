@@ -16,7 +16,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, RefCounter}
+import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models._
@@ -33,6 +33,7 @@ import scala.concurrent.Future
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
+class InvalidJsonValue(e: Throwable)        extends RuntimeException(e)
 class UnknownDiscriminator()                extends RuntimeException
 class UnsupportedMediaType(msg: String)     extends Exception(msg)
 
@@ -52,6 +53,10 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
 
   override def validate(fragment: PayloadFragment): Future[AMFValidationReport] = {
     Future(validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
+  }
+
+  override def syncValidate(mediaType: String, payload: String): AMFValidationReport = {
+    validateForPayload(mediaType, payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
   }
 
   type LoadedObj
@@ -83,6 +88,7 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
       performValidation(buildCandidate(fragment), validationProcessor)
     } catch {
       case e: InvalidJsonObject => validationProcessor.processException(e, Some(fragment.encodes))
+      case e: InvalidJsonValue  => validationProcessor.processException(e, Some(fragment.encodes))
     }
   }
 
@@ -107,8 +113,8 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
       try {
         performValidation(buildCandidate(mediaType, payload), validationProcessor)
       } catch {
-        case e: InvalidJsonObject =>
-          validationProcessor.processException(e, None)
+        case e: InvalidJsonObject => validationProcessor.processException(e, None)
+        case e: InvalidJsonValue  => validationProcessor.processException(e, None)
       }
 
     }

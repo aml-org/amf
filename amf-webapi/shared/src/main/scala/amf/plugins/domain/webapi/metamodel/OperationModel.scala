@@ -8,7 +8,7 @@ import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, Mode
 import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.metamodel.common.DocumentationField
-import amf.plugins.domain.webapi.metamodel.bindings.OperationBindingModel
+import amf.plugins.domain.webapi.metamodel.bindings.OperationBindingsModel
 import amf.plugins.domain.webapi.metamodel.security.SecurityRequirementModel
 import amf.plugins.domain.webapi.models.Operation
 
@@ -81,7 +81,7 @@ object OperationModel
           ModelDoc(ModelVocabularies.ApiContract, "server", "server information"))
 
   val Bindings = Field(
-    Array(OperationBindingModel),
+    OperationBindingsModel,
     ApiBinding + "binding",
     ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this operation")
   )

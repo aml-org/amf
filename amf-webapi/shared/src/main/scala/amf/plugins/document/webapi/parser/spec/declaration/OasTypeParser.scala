@@ -40,27 +40,6 @@ import org.yaml.model._
 import scala.collection.mutable
 import scala.util.Try
 
-abstract class JSONSchemaVersion(val name: String)
-class OASSchemaVersion(override val name: String, val position: String)(implicit eh: ErrorHandler)
-    extends JSONSchemaVersion(name) {
-  if (position != "schema" && position != "parameter")
-    eh.violation(CoreValidations.ResolutionValidation,
-                 "",
-                 s"Invalid schema position '$position', only 'schema' and 'parameter' are valid")
-}
-class OAS20SchemaVersion(override val position: String)(implicit eh: ErrorHandler)
-    extends OASSchemaVersion("oas2.0", position)
-object OAS20SchemaVersion { def apply(position: String)(implicit eh: ErrorHandler) = new OAS20SchemaVersion(position) }
-class OAS30SchemaVersion(override val position: String)(implicit eh: ErrorHandler)
-    extends OASSchemaVersion("oas3.0.0", position)
-object OAS30SchemaVersion {
-  def apply(position: String)(implicit eh: ErrorHandler) = new OAS30SchemaVersion(position)(eh)
-}
-object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3")
-object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4")
-object JSONSchemaDraft7SchemaVersion extends JSONSchemaVersion("draft-7")
-object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("")
-
 /**
   * OpenAPI Type Parser.
   */
@@ -77,6 +56,7 @@ object OasTypeParser {
       entry.value.as[YMap],
       adopt,
       if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion("schema")(ctx.eh)
+      else if (ctx.vendor == Vendor.ASYNC20) JSONSchemaDraft7SchemaVersion
       else OAS20SchemaVersion("schema")(ctx.eh)
     )
 
@@ -86,7 +66,6 @@ object OasTypeParser {
 
   def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(Right(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx.eh))
-
 }
 
 case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
@@ -622,7 +601,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.Or, unionNodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.Or, unionNodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidOrType,
                                shape.id,
@@ -651,7 +630,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.And, andNodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.And, andNodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidAndType,
                                shape.id,
@@ -680,7 +659,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.Xone, nodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.Xone, nodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidXoneType,
                                shape.id,
@@ -868,14 +847,12 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
 
     private def parseExample() = {
-      val examples: Seq[Example] =
-        if (version == JSONSchemaDraft7SchemaVersion)
-          parseExamplesArray()
-        else
-          RamlExamplesParser(map, "example", "examples".asOasExtension, None, shape.withExample, options).parse()
 
-      if (examples.nonEmpty)
-        shape.setArray(AnyShapeModel.Examples, examples)
+      if (version == JSONSchemaDraft7SchemaVersion || version == JSONSchemaDraft6SchemaVersion)
+        parseExamplesArray()
+      else
+        RamlExamplesParser(map, "example", "examples".asOasExtension, shape, options)
+          .parse()
     }
 
     private def parseExamplesArray(): Seq[Example] =

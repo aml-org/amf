@@ -10,17 +10,6 @@ securitySchemes:
       scopes:
         - profile
         - history
-    describedBy:
-      headers:
-        Authorization:
-          description: Used to send a valid OAuth 2 access token.
-          type: string
-      queryParameters:
-        access_token:
-          description: Used to send a valid OAuth 2 access token.
-      responses:
-        401:
-          description: Authorization error.
   basic_auth:
     type: Basic Authentication
   digest_auth:
@@ -34,3 +23,5 @@ securitySchemes:
     type: x-custom
     settings:
       custom: Setting
+
+securedBy: [oauth_2_0, basic_auth, digest_auth, api_key, custom_auth, null]

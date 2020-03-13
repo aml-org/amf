@@ -8,9 +8,9 @@ import amf.core.utils.AmfStrings
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
-import amf.plugins.domain.webapi.models.bindings.ChannelBinding
+import amf.plugins.domain.webapi.models.bindings.{ChannelBinding, ChannelBindings}
 import amf.plugins.domain.webapi.models.security.SecurityRequirement
-import amf.plugins.domain.webapi.models.templates.{ParametrizedTrait, ParametrizedResourceType}
+import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 
 /**
   * EndPoint internal model
@@ -28,7 +28,7 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
   def payloads: Seq[Payload]             = fields.field(Payloads)
   def servers: Seq[Server]               = fields.field(Servers)
   def security: Seq[SecurityRequirement] = fields.field(Security)
-  def bindings: Seq[ChannelBinding]      = fields.field(Bindings)
+  def bindings: ChannelBindings          = fields.field(Bindings)
 
   def parent: Option[EndPoint] = annotations.find(classOf[ParentEndPoint]).flatMap(_.parent)
 
@@ -46,7 +46,7 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
   def withSecurity(security: Seq[SecurityRequirement]): this.type = setArray(Security, security)
   def withPayloads(payloads: Seq[Payload]): this.type             = setArray(Payloads, payloads)
   def withServers(servers: Seq[Server]): this.type                = setArray(Servers, servers)
-  def withBindings(bindings: Seq[ChannelBinding]): this.type      = setArray(Bindings, bindings)
+  def withBindings(bindings: ChannelBindings): this.type          = set(Bindings, bindings)
 
   override def removeServers(): Unit = fields.removeField(EndPointModel.Servers)
 

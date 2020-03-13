@@ -59,6 +59,11 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "myName"
+                          }
+                        ],
                         "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
@@ -400,6 +405,21 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
+                            "http://a.ml/vocabularies/document-source-maps#body-parameter": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application%2Fjson/source-map/body-parameter/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application%2Fjson"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request/application%2Fjson/source-map/lexical/element_0",
@@ -738,7 +758,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

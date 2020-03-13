@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.VirtualObject
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, SearchScope}
 import amf.core.utils.IdCounter
@@ -56,29 +57,27 @@ case class OasLikeSecurityRequirementParser(node: YNode,
 
     private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme, schemeEntry: YMapEntry) = {
       if (declaration.`type`.is("OAuth 2.0")) {
-        val settings = OAuth2Settings().adopted(scheme.id)
+        val settings = OAuth2Settings().adopted(scheme.id).add(Annotations(schemeEntry))
         val scopes   = getScopes(schemeEntry)
         val flows = Seq(
           settings
             .withFlow()
+            .add(VirtualObject())
             .setArray(OAuth2FlowModel.Scopes, scopes, Annotations(schemeEntry.value)))
 
-        scheme.set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows))
+        scheme.set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows)).add(Annotations(schemeEntry))
       } else if (declaration.`type`.is("openIdConnect")) {
         val settings = OpenIdConnectSettings().adopted(scheme.id)
         val scopes   = getScopes(schemeEntry)
         scheme.set(ParametrizedSecuritySchemeModel.Settings,
                    settings.setArray(OpenIdConnectSettingsModel.Scopes, scopes, Annotations(schemeEntry.value)))
-      } else
-        schemeEntry.value.tag.tagType match {
-          case YType.Seq if schemeEntry.value.as[Seq[YNode]].nonEmpty =>
-            val msg = declaration.`type`.option() match {
-              case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
-              case None             => "Scopes array must be empty for given security scheme"
-            }
-            ctx.eh.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
-          case _ =>
+      } else if (schemeEntry.value.as[Seq[YNode]].nonEmpty) {
+        val msg = declaration.`type`.option() match {
+          case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
+          case None             => "Scopes array must be empty for given security scheme"
         }
+        ctx.eh.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
+      }
     }
 
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {

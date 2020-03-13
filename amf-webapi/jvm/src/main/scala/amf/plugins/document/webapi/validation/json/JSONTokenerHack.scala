@@ -40,10 +40,15 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
 
   private def checkNumber(s: String): Option[Object] =
     try {
-      if (isDecimalNotation(s)) checkDouble(s) else checkLong(s)
+      if (isDecimalNotation(s) || isBiggerThanLong(s)) checkDouble(s) else checkLong(s)
     } catch {
       case _: Exception => None
     }
+
+  private def isBiggerThanLong(s: String): Boolean = java.lang.Double.valueOf(s) match {
+    case num if num < Long.MinValue || Long.MaxValue < num => true
+    case _                                                 => false
+  }
 
   private def checkLong(s: String) = java.lang.Long.valueOf(s) match {
     case l if s == l.toString => Some(if (l.longValue == l.intValue) Integer.valueOf(l.intValue) else l)
@@ -52,6 +57,7 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
 
   private def checkDouble(s: String) = java.lang.Double.valueOf(s) match {
     case d if !d.isInfinite && !d.isNaN => Some(d)
+    case d if d.isInfinite              => Some(new java.math.BigDecimal(s))
     case _                              => None
   }
 
@@ -67,7 +73,7 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
     case _ =>
       numberOption(string) match {
         case Some(o) => o
-        case _       => throw this.syntaxError("Unquoted string value")
+        case _       => throw new InvalidJSONValueException("Unquoted string value")
       }
   }
 
@@ -81,11 +87,11 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
 
   private def hackDouble(d: java.lang.Double): Object = {
     val pattern = "[0-9]+(\\.0+)".r
-    val str = d.toString
+    val str     = d.toString
 
     str match {
       case pattern(group) => Integer.valueOf(str.stripSuffix(group))
-      case _ => d
+      case _              => d
     }
   }
 

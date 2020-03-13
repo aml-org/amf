@@ -103,6 +103,8 @@ class MediaTypeResolutionStage(profile: ProfileName,
           val parsedPayload = Payload(payload.annotations)
             .withMediaType(mediaType)
             .adopted(parent)
+          // TODO: Evaluate using a custom copy function in Payload
+          payload.name.option().foreach(name => parsedPayload.withName(name))
           if (Option(payload.schema).isDefined)
             parsedPayload.fields
               .setWithoutId(PayloadModel.Schema, replaceTrackedAnnotation(payload, parsedPayload.id))

@@ -8,8 +8,9 @@ import amf.core.utils.{IdCounter, _}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.parser.spec.async.AsyncHelper
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncOperationBindingsParser
 import amf.plugins.document.webapi.parser.spec.oas.{
@@ -18,7 +19,8 @@ import amf.plugins.document.webapi.parser.spec.oas.{
   Oas30ParametersParser,
   Oas30RequestParser
 }
-import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel}
+import amf.plugins.domain.webapi.metamodel.OperationModel.Method
+import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Operation, Request, Response}
 import amf.validations.ParserSideValidations.DuplicatedOperationId
 import org.yaml.model._
@@ -32,7 +34,9 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
   def parse(): Operation = {
 
     val operation: Operation = producer(ScalarNode(entry.key).string().value.toString).add(Annotations(entry))
-    val map                  = entry.value.as[YMap]
+    operation.set(Method, ScalarNode(entry.key).string()) // add lexical info
+
+    val map = entry.value.as[YMap]
 
     ctx.closedShape(operation.id, map, "operation")
 
@@ -85,19 +89,14 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
       }
     )
 
-    map.key(
-      "security",
-      entry => {
-        val idCounter = new IdCounter()
-        // TODO check for empty array for resolution ?
-        val securedBy = entry.value
-          .as[Seq[YNode]]
-          .map(s => OasLikeSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
-          .collect { case Some(s) => s }
+    map.key("security", entry => {
+      operation.set(WebApiModel.Security, AmfArray(Seq(), Annotations(entry.value)), Annotations(entry))
+      parseSecurity(operation, entry)
+    })
 
-        operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-      }
-    )
+    map.key("security".asOasExtension, entry => {
+      parseSecurity(operation, entry)
+    })
 
     map.key(
       "responses",
@@ -123,6 +122,14 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
     )
 
     operation
+  }
+
+  private def parseSecurity(operation: Operation, entry: YMapEntry): Unit = {
+    val idCounter = new IdCounter()
+    // TODO check for empty array for resolution ?
+    entry.value
+      .as[Seq[YNode]]
+      .foreach(s => OasLikeSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
   }
 }
 
@@ -205,30 +212,21 @@ case class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)
 
     map.key(
       "message",
-      entry =>
-        messageType() foreach { msgType =>
-          val messages = AsyncMessageParser(operation.id, entry.value.as[YMap], msgType).parse()
-          operation.setArray(msgType.field, messages, Annotations(entry.value))
+      messageEntry =>
+        AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
+          val messages = AsyncMultipleMessageParser(messageEntry.value.as[YMap], operation.id, msgType).parse()
+          operation.setArray(msgType.field, messages, Annotations(messageEntry.value))
       }
     )
 
     map.key("bindings").foreach { entry =>
-      val bindings = AsyncOperationBindingsParser.parse(entry.value.as[YMap], operation.id)
-      operation.setArray(OperationModel.Bindings, bindings, Annotations(entry))
+      val bindings = AsyncOperationBindingsParser(YMapEntryLike(entry.value), operation.id).parse()
+      operation.set(OperationModel.Bindings, bindings, Annotations(entry))
 
       AnnotationParser(operation, map).parseOrphanNode("bindings")
     }
 
 //    map.key("traits", OperationModel. in operation)
-
     operation
   }
-
-  private def messageType(): Option[MessageType] =
-    entry.key.value match {
-      case scalar: YScalar if scalar.text == "publish"   => Some(Publish)
-      case scalar: YScalar if scalar.text == "subscribe" => Some(Subscribe)
-      // invalid message type is validated with closed shape of pathItem
-      case _ => None
-    }
 }

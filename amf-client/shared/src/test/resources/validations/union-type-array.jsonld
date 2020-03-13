@@ -33,7 +33,7 @@
     ],
     "doc:version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "doc:root": [
@@ -150,7 +150,7 @@
         ],
         "raml-shapes:items": [
           {
-            "@id": "#1/link--2056959564",
+            "@id": "#1",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -158,16 +158,93 @@
               "raml-shapes:Shape",
               "doc:DomainElement"
             ],
-            "doc:link-target": [
+            "shacl:closed": [
               {
-                "@id": "#1"
+                "@value": false
               }
             ],
-            "doc:link-label": [
+            "shacl:property": [
+              {
+                "@id": "#2",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#user-id"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#3",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "user-id"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "#3": "[(8,8)-(8,12)]"
+                      },
+                      "lexical": {
+                        "shacl:datatype": "[(8,8)-(9,0)]",
+                        "#3": "[(7,6)-(9,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "user-id"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#2": "[(7,6)-(9,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:name": [
               {
                 "@value": "user"
               }
-            ]
+            ],
+            "smaps": {
+              "resolved-link-target": {
+                "#1": "amf://id#5"
+              },
+              "declared-element": {
+                "#1": ""
+              },
+              "lexical": {
+                "shacl:name": "[(5,2)-(5,6)]",
+                "#1": "[(5,2)-(9,0)]"
+              },
+              "resolved-link": {
+                "#1": "amf://id#6"
+              }
+            }
           }
         ],
         "shacl:name": [
@@ -208,7 +285,7 @@
         ],
         "raml-shapes:anyOf": [
           {
-            "@id": "#1/link--2056959564",
+            "@id": "#1",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -216,19 +293,96 @@
               "raml-shapes:Shape",
               "doc:DomainElement"
             ],
-            "doc:link-target": [
+            "shacl:closed": [
               {
-                "@id": "#1"
+                "@value": false
               }
             ],
-            "doc:link-label": [
+            "shacl:property": [
+              {
+                "@id": "#2",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#user-id"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#3",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "user-id"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "#3": "[(8,8)-(8,12)]"
+                      },
+                      "lexical": {
+                        "shacl:datatype": "[(8,8)-(9,0)]",
+                        "#3": "[(7,6)-(9,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "user-id"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#2": "[(7,6)-(9,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:name": [
               {
                 "@value": "user"
               }
-            ]
+            ],
+            "smaps": {
+              "resolved-link-target": {
+                "#1": "amf://id#5"
+              },
+              "declared-element": {
+                "#1": ""
+              },
+              "lexical": {
+                "shacl:name": "[(5,2)-(5,6)]",
+                "#1": "[(5,2)-(9,0)]"
+              },
+              "resolved-link": {
+                "#1": "amf://id#6"
+              }
+            }
           },
           {
-            "@id": "#7/link-830537977",
+            "@id": "#7",
             "@type": [
               "raml-shapes:ArrayShape",
               "raml-shapes:AnyShape",
@@ -236,16 +390,131 @@
               "raml-shapes:Shape",
               "doc:DomainElement"
             ],
-            "doc:link-target": [
+            "raml-shapes:items": [
               {
-                "@id": "#7"
+                "@id": "#1",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:property": [
+                  {
+                    "@id": "#2",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#user-id"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#3",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "user-id"
+                          }
+                        ],
+                        "smaps": {
+                          "type-property-lexical-info": {
+                            "#3": "[(8,8)-(8,12)]"
+                          },
+                          "lexical": {
+                            "shacl:datatype": "[(8,8)-(9,0)]",
+                            "#3": "[(7,6)-(9,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "user-id"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#2": "[(7,6)-(9,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "user"
+                  }
+                ],
+                "smaps": {
+                  "resolved-link-target": {
+                    "#1": "amf://id#5"
+                  },
+                  "declared-element": {
+                    "#1": ""
+                  },
+                  "lexical": {
+                    "shacl:name": "[(5,2)-(5,6)]",
+                    "#1": "[(5,2)-(9,0)]"
+                  },
+                  "resolved-link": {
+                    "#1": "amf://id#6"
+                  }
+                }
               }
             ],
-            "doc:link-label": [
+            "shacl:name": [
               {
                 "@value": "users"
               }
-            ]
+            ],
+            "smaps": {
+              "inherited-shapes": {
+                "#7": "amf://id#9"
+              },
+              "resolved-link": {
+                "#7": "amf://id#8"
+              },
+              "type-property-lexical-info": {
+                "#7": "[(10,4)-(10,8)]"
+              },
+              "lexical": {
+                "shacl:name": "[(9,2)-(9,7)]",
+                "#7": "[(9,2)-(12,0)]"
+              },
+              "declared-element": {
+                "#7": ""
+              },
+              "resolved-link-target": {
+                "#7": "amf://id#7"
+              }
+            }
           }
         ],
         "shacl:name": [

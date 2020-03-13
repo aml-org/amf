@@ -68,47 +68,84 @@
                     ],
                     "http://a.ml/vocabularies/apiBinding#binding": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/mqtt-message",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings",
                         "@type": [
-                          "http://a.ml/vocabularies/apiBinding#MqttMessageBinding",
-                          "http://a.ml/vocabularies/apiBinding#MessageBinding",
+                          "http://a.ml/vocabularies/apiBinding#MessageBindings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+                        "http://a.ml/vocabularies/apiBinding#binding": [
                           {
-                            "@value": "31.07.92"
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/mqtt-message",
+                            "@type": [
+                              "http://a.ml/vocabularies/apiBinding#MqttMessageBinding",
+                              "http://a.ml/vocabularies/apiBinding#MessageBinding",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+                              {
+                                "@value": "31.07.92"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/apiBinding#type": [
+                              {
+                                "@value": "mqtt"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/mqtt-message/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/mqtt-message/source-map/lexical/element_1",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/mqtt-message"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(11,10)-(12,36)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/mqtt-message/source-map/lexical/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(12,12)-(12,36)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/mqtt-message/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/mqtt-message/source-map/lexical/element_1",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/mqtt-message"
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(11,10)-(12,36)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/mqtt-message/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,12)-(12,36)]"
+                                    "@value": "[(11,0)-(12,36)]"
                                   }
                                 ]
                               }
@@ -299,7 +336,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

@@ -1,22 +1,20 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.core.emitter.BaseEmitters.{pos, traverse, EntryPartEmitter}
-import amf.core.emitter.{SpecOrdering, EntryEmitter}
+import amf.core.emitter.BaseEmitters.{EntryPartEmitter, pos, traverse}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Position}
-import amf.core.parser.{Annotations, Position, FieldEntry, EmptyFutureDeclarations}
+import amf.core.parser.{Annotations, EmptyFutureDeclarations, Position}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.webapi.models.{Parameter, Response, Payload}
+import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import amf.plugins.features.validation.CoreValidations._
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -47,8 +45,7 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
       result += AbstractDeclarationsEmitter("traits".asOasExtension, declarations.traits.values.toSeq, ordering, Nil)
 
     if (declarations.securitySchemes.nonEmpty)
-      result += OasSecuritySchemesEmitters(declarations.securitySchemes.values.toSeq, ordering)
-
+      result += spec.factory.securitySchemesEmitters(declarations.securitySchemes.values.toSeq, ordering)
     val oasParams = declarations.parameters.values.map(OasParameter(_)) ++ declarations.payloads.values
       .map(OasParameter(_))
     if (oasParams.nonEmpty)
@@ -180,34 +177,6 @@ case class OasNamedPropertyTypeEmitter(annotationType: CustomDomainProperty, ord
   def emitAnnotationFields(): Unit = {}
 
   override def position(): Position = pos(annotationType.annotations)
-}
-
-case class OasUserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext) {
-  def emitters(): Seq[EntryEmitter] = {
-
-    val documents: List[CreativeWork] = f.array.values.collect({ case c: CreativeWork => c }).toList
-
-    documents match {
-      case head :: Nil => Seq(OasEntryCreativeWorkEmitter("externalDocs", head, ordering))
-      case head :: tail =>
-        Seq(OasEntryCreativeWorkEmitter("externalDocs", head, ordering), OasCreativeWorkEmitters(tail, ordering))
-      case _ => Nil
-    }
-
-  }
-}
-
-case class OasCreativeWorkEmitters(documents: Seq[CreativeWork], ordering: SpecOrdering)(
-    implicit spec: OasSpecEmitterContext)
-    extends EntryEmitter {
-  override def emit(b: EntryBuilder): Unit = {
-    b.entry(
-      "userDocumentation".asOasExtension,
-      _.list(traverse(ordering.sorted(documents.map(RamlCreativeWorkEmitter(_, ordering, withExtension = false))), _))
-    )
-  }
-
-  override def position(): Position = documents.headOption.map(_.annotations).map(pos).getOrElse(Position.ZERO)
 }
 
 case class OasDeclaredResponsesEmitter(key: String,

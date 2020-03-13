@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: Example API
+securitySchemes:
+  pass_through:
+    type: Pass Through
+    description: This API supports DigestSecurityScheme Authentication.
+    describedBy:
+      queryParameters:
+        query:
+          type: string
+      headers:
+        api_key:
+          type: string
