@@ -2,27 +2,24 @@ package amf.plugins.domain.shapes.resolution.stages
 
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.domain.{AmfArray, Shape}
+import amf.core.model.domain.{AmfArray, DomainElement, Shape}
 import amf.core.parser.Value
 import amf.core.resolution.stages.elements.resolution.ElementStageTransformer
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models.{ArrayShape, NodeShape, UnionShape}
 
-class ShapeLinksTransformer extends ElementStageTransformer[Shape] {
+abstract class ShapeLinksTransformer extends ElementStageTransformer[Shape] {
   override def transform(element: Shape): Option[Shape] = {
     Some(resolveLink(element, Seq.empty))
   }
 
-  private def resolveInherits(s: Shape) = {
-    val newInherits = s.inherits.map { i =>
-      if (i.isLink) i.effectiveLinkTarget()
-      else i
-    }
+  protected def applies(element: Shape): Boolean
+
+  private def resolveInherits(s: Shape, traversed: Seq[String]) = {
     s.fields.getValueAsOption(ShapeModel.Inherits) match {
       case Some(Value(arr: AmfArray, ann)) =>
-        val newInhetirs = arr.values.collect({ case s: Shape => s }).map { i =>
-          if (i.isLink) i.effectiveLinkTarget()
-          else i
+        val newInhetirs: Seq[Shape] = arr.values.collect({ case s: Shape => s }).map { i =>
+          resolveLink(i, s.id +: traversed)
         }
         s.set(ShapeModel.Inherits, AmfArray(newInhetirs, arr.annotations), ann)
       case _ => // ignore
@@ -31,17 +28,17 @@ class ShapeLinksTransformer extends ElementStageTransformer[Shape] {
 
   private def resolveLink(s: Shape, traversed: Seq[String]): Shape = {
     if (traversed.contains(s.id)) s
-    else {
+    else if (applies(s)) {
       val newS =
         if (s.isLink) s.effectiveLinkTarget().asInstanceOf[Shape]
         else s
 
-      resolveInherits(newS)
+      resolveInherits(newS, traversed)
       newS match {
         case a: ArrayShape =>
           a.fields.getValueAsOption(ArrayShapeModel.Items) match {
             case Some(Value(s: Shape, ann)) =>
-              a.set(ArrayShapeModel.Items, resolveLink(a.items, traversed :+ newS.id), ann)
+              a.set(ArrayShapeModel.Items, resolveLink(a.items, newS.id +: traversed), ann)
             case _ => // ignore
           }
           a
@@ -49,7 +46,7 @@ class ShapeLinksTransformer extends ElementStageTransformer[Shape] {
           o.properties.foreach { ps =>
             ps.fields.getValueAsOption(PropertyShapeModel.Range) match {
               case Some(Value(e: Shape, ann)) =>
-                ps.set(PropertyShapeModel.Range, resolveLink(e, traversed :+ o.id), ann)
+                ps.set(PropertyShapeModel.Range, resolveLink(e, o.id +: traversed), ann)
               case _ => // ignore
             }
           }
@@ -58,7 +55,7 @@ class ShapeLinksTransformer extends ElementStageTransformer[Shape] {
           s.fields.getValueAsOption(UnionShapeModel.AnyOf) match {
             case Some(Value(arr: AmfArray, ann)) =>
               val newAnyOf = arr.values.collect({ case s: Shape => s }).map { i =>
-                resolveLink(i, traversed :+ u.id)
+                resolveLink(i, u.id +: traversed)
               }
               s.set(UnionShapeModel.AnyOf, AmfArray(newAnyOf, arr.annotations), ann)
             case _ => // ignore
@@ -66,6 +63,6 @@ class ShapeLinksTransformer extends ElementStageTransformer[Shape] {
           u
         case other => other
       }
-    }
+    } else s
   }
 }
