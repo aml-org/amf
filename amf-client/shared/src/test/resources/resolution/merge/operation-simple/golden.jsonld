@@ -1,0 +1,50 @@
+[
+  {
+    "@id": "testId",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "testId/subscribe",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#Operation",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/apiContract#method": [
+          {
+            "@value": "subscribe"
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "traitOperationId"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "traitDescription"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#guiSummary": [
+          {
+            "@value": "baseSummary"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": false
+      }
+    ]
+  }
+]

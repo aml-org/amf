@@ -1,0 +1,12 @@
+asyncapi: 2.0.0
+info:
+  title: aTitle
+  version: aVersion
+channels: {}
+components:
+  securitySchemes:
+    oauthFlow:
+      type: oauth2
+    validOauthFlow:
+      type: oauth2
+      flows: {}

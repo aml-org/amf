@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/async20/validations/required-security-scheme-type.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-type-minCount
+  Message: Type is mandatory in a Security Scheme Object
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/required-security-scheme-type.yaml#/declarations/securitySchemes/withValidType
+  Property: http://a.ml/vocabularies/security#type
+  Position: Some(LexicalInformation([(8,4)-(8,21)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/required-security-scheme-type.yaml

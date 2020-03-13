@@ -4,14 +4,14 @@ import amf.core.annotations.SourceVendor
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.remote.{AsyncApi, AsyncApi20, Oas, Vendor}
+import amf.core.remote.{AsyncApi20, Vendor}
 import amf.plugins.document.webapi.contexts.emitter.async.AsyncSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.async.emitters.{
   AsyncApiCreativeWorksEmitter,
   AsyncApiEndpointsEmitter,
   AsyncApiServersEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasEntryCreativeWorkEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.domain.SecurityRequirementsEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{InfoEmitter, TagsEmitter}
 import amf.plugins.domain.shapes.models.CreativeWork
@@ -84,7 +84,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
         .map(f => result += TagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
 
       fs.entry(WebApiModel.Documentations)
-        .map(f => result += new AsyncApiCreativeWorksEmitter(f.element.asInstanceOf[CreativeWork], ordering))
+        .map(f => result += new AsyncApiCreativeWorksEmitter(f.arrayValues[CreativeWork].head, ordering))
 
       fs.entry(WebApiModel.EndPoints).map(f => result += new AsyncApiEndpointsEmitter(f, ordering))
 

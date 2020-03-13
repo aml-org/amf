@@ -1,0 +1,15 @@
+asyncapi: 2.0.0
+info:
+  title: aTitle
+  version: aVersion
+channels: {}
+components:
+  securitySchemes:
+    invalidType:
+      type: apiKey
+    anotherInvalidType:
+      type: httpApiKey
+      name: aaaaaaa
+    aValidType:
+      type: http
+      scheme: bearer

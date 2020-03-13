@@ -1,0 +1,25 @@
+asyncapi: 2.0.0
+info:
+  title: asasd
+  version: asd
+channels:
+  /employees:
+    subscribe:
+      bindings:
+        mqtt:
+          qos: 0
+  /managers:
+    subscribe:
+      bindings:
+        mqtt:
+          qos: 1
+  /valid:
+    subscribe:
+      bindings:
+        mqtt:
+          qos: 2
+  /invalid:
+    subscribe:
+      bindings:
+        mqtt:
+          qos: 3

@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain.binding
 import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.Field
 import amf.core.model.domain.{AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, SearchScope, YMapOps}
+import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorChannelBindings
@@ -12,6 +12,7 @@ import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091ChannelBindingModel,
   Amqp091ChannelExchangeModel,
   Amqp091QueueModel,
+  ChannelBindingsModel,
   WebSocketsChannelBindingModel
 }
 import amf.plugins.domain.webapi.models.bindings.amqp.{Amqp091ChannelBinding, Amqp091ChannelExchange, Amqp091Queue}
@@ -24,11 +25,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
   override type Binding            = ChannelBinding
   override protected type Bindings = ChannelBindings
-
-  protected def parseBindings(obj: ChannelBindings, map: YMap): ChannelBindings = {
-    val bindings: Seq[ChannelBinding] = parseElements(map, obj.id)
-    obj.withBindings(bindings)
-  }
+  override protected val bindingsField: Field = ChannelBindingsModel.Bindings
 
   override protected def createBindings(map: YMap): ChannelBindings = ChannelBindings(map)
 
@@ -51,7 +48,6 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val binding = Amqp091ChannelBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(Amqp091ChannelBindingModel.Type, "amqp")
     map.key("is", Amqp091ChannelBindingModel.Is in binding)
 
     // Default channel type is 'routingKey'.
@@ -74,7 +70,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     ctx.closedShape(binding.id, map, "amqpIsExchangeChannelBinding")
     map.key(
       "exchange", { entry =>
-        val exchange    = Amqp091ChannelExchange(Annotations(entry)).adopted(binding.id)
+        val exchange    = Amqp091ChannelExchange(Annotations(entry.key)).adopted(binding.id)
         val exchangeMap = entry.value.as[YMap]
 
         exchangeMap.key("name", Amqp091ChannelExchangeModel.Name in exchange) // TODO validate maxlength 255
@@ -86,7 +82,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
         ctx.closedShape(exchange.id, exchangeMap, "amqpExchangeChannelBinding")
 
-        binding.set(Amqp091ChannelBindingModel.Exchange, exchange)
+        binding.set(Amqp091ChannelBindingModel.Exchange, exchange, Annotations(entry))
       }
     )
   }
@@ -95,7 +91,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     ctx.closedShape(binding.id, map, "amqpIsQueueChannelBinding")
     map.key(
       "queue", { entry =>
-        val queue    = Amqp091Queue(Annotations(entry)).adopted(binding.id)
+        val queue    = Amqp091Queue(Annotations(entry.value)).adopted(binding.id)
         val queueMap = entry.value.as[YMap]
 
         queueMap.key("name", Amqp091QueueModel.Name in queue) // TODO validate maxlength 255
@@ -107,7 +103,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
         ctx.closedShape(queue.id, queueMap, "amqpQueueChannelBinding")
 
-        binding.set(Amqp091ChannelBindingModel.Queue, queue)
+        binding.set(Amqp091ChannelBindingModel.Queue, queue, Annotations(entry))
       }
     )
   }
@@ -125,7 +121,6 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val binding = WebSocketsChannelBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(WebSocketsChannelBindingModel.Type, "ws")
     map.key("method", WebSocketsChannelBindingModel.Method in binding)
     map.key("query", entry => parseSchema(WebSocketsChannelBindingModel.Query, binding, entry, parent))     // TODO validate as object
     map.key("headers", entry => parseSchema(WebSocketsChannelBindingModel.Headers, binding, entry, parent)) // TODO validate as object

@@ -4,10 +4,12 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
-import amf.plugins.domain.webapi.metamodel.bindings.{MessageBindingModel, MessageBindingsModel}
+import amf.plugins.domain.webapi.metamodel.bindings.MessageBindingsModel
+import amf.plugins.domain.webapi.models.Message
 
 trait MessageModel
     extends TagsModel
@@ -17,6 +19,7 @@ trait MessageModel
     with NameFieldSchema
     with DescriptionField
     with LinkableElementModel
+    with DomainElementModel
     with ParametersFieldModel {
   val Payloads = Field(Array(PayloadModel),
                        ApiContract + "payload",
@@ -70,4 +73,6 @@ object MessageModel extends MessageModel {
     "Message",
     ""
   )
+
+  override def modelInstance: AmfObject = Message()
 }

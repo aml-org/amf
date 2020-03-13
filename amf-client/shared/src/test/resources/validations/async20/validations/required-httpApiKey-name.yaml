@@ -1,0 +1,10 @@
+asyncapi: 2.0.0
+info:
+  title: aTitle
+  version: aVersion
+channels: {}
+components:
+  securitySchemes:
+    some:
+      type: httpApiKey
+      in: user

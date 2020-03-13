@@ -1,0 +1,34 @@
+asyncapi: 2.0.0
+info:
+  title: asasd
+  version: asd
+channels: {}
+servers:
+  employees:
+    url: adda
+    protocol: amqp
+    bindings:
+      mqtt:
+        lastWill:
+          qos: 0
+  managers:
+    url: adda
+    protocol: amqp
+    bindings:
+      mqtt:
+        lastWill:
+          qos: 1
+  valid:
+    url: adda
+    protocol: amqp
+    bindings:
+      mqtt:
+        lastWill:
+          qos: 2
+  invalid:
+    url: something
+    protocol: http
+    bindings:
+      mqtt:
+        lastWill:
+          qos: 5

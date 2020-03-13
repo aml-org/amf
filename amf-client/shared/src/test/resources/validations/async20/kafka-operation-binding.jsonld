@@ -107,7 +107,20 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/kafka-operation/source-map/lexical/element_2",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/kafka-operation/source-map/lexical/element_3",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiBinding#clientId"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(12,10)-(12,38)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/kafka-operation/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiBinding#groupId"
@@ -123,17 +136,17 @@
                                 "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/kafka-operation/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/apiBinding#clientId"
+                                    "@value": "http://a.ml/vocabularies/apiBinding#type"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(12,10)-(12,38)]"
+                                    "@value": "[(10,8)-(10,13)]"
                                   }
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/kafka-operation/source-map/lexical/element_1",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/kafka-operation/source-map/lexical/element_2",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/kafka-operation"
@@ -158,10 +171,23 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(10,0)-(12,38)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/apiBinding#binding"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [

@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations._
+import amf.core.metamodel.domain.{ShapeModel, LinkableElementModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.model.DataType
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.model.domain.extensions.PropertyShape
@@ -17,6 +17,10 @@ import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Ra
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common._
+import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{
+  RamlJsonSchemaExpression,
+  RamlXmlSchemaExpression
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
