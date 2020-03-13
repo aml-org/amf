@@ -7,6 +7,7 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec
+import amf.plugins.document.webapi.parser.spec.async.parser.AsyncParametersParser
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncChannelBindingsParser
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}

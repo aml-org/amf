@@ -1,14 +1,14 @@
-package amf.plugins.document.webapi.parser.spec.domain
+package amf.plugins.document.webapi.parser.spec.async.parser
 
+import amf.core.parser.{ScalarNode, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorCorrelationId
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.domain.webapi.metamodel.CorrelationIdModel
 import amf.plugins.domain.webapi.models.CorrelationId
-import org.yaml.model.{YMap, YNode}
-import amf.core.parser.{ScalarNode, SearchScope, YMapOps}
-import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorCorrelationId
 import amf.plugins.features.validation.CoreValidations
+import org.yaml.model.{YMap, YNode}
 
 case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(implicit val ctx: AsyncWebApiContext)
     extends SpecParserOps {

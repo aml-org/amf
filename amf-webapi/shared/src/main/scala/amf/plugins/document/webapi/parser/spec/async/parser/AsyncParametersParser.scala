@@ -1,4 +1,4 @@
-package amf.plugins.document.webapi.parser.spec.domain
+package amf.plugins.document.webapi.parser.spec.async.parser
 
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.AmfScalar

@@ -1,0 +1,15 @@
+subscribe:
+  operationId: "baseOperationId"
+  bindings:
+    http:
+      bindingVersion: baseVersion
+      type: baseVersion
+      query:
+        type: object
+        properties:
+          some:
+            type: string
+          another:
+            type: object
+            properties:
+              aProperty: string

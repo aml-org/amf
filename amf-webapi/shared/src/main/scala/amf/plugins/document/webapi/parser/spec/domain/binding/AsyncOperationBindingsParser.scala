@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain.binding
 
+import amf.core.metamodel.Field
 import amf.core.parser.{Annotations, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -9,7 +10,8 @@ import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091OperationBindingModel,
   HttpOperationBindingModel,
   KafkaOperationBindingModel,
-  MqttOperationBindingModel
+  MqttOperationBindingModel,
+  OperationBindingsModel
 }
 import amf.plugins.domain.webapi.models.bindings.amqp.Amqp091OperationBinding
 import amf.plugins.domain.webapi.models.bindings.http.HttpOperationBinding
@@ -22,11 +24,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     extends AsyncBindingsParser(entryLike, parent) {
   override type Binding  = OperationBinding
   override type Bindings = OperationBindings
-
-  protected def parseBindings(obj: OperationBindings, map: YMap): OperationBindings = {
-    val bindings: Seq[OperationBinding] = parseElements(map, obj.id)
-    obj.withBindings(bindings)
-  }
+  override val bindingsField: Field = OperationBindingsModel.Bindings
 
   override protected def createBindings(map: YMap): OperationBindings = OperationBindings(map)
 
@@ -49,7 +47,6 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     val binding = HttpOperationBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(HttpOperationBindingModel.Type, "http")
     map.key("type", HttpOperationBindingModel.OperationType in binding)
     if (binding.operationType.is("request")) map.key("method", HttpOperationBindingModel.Method in binding)
     map.key("query", entry => parseSchema(HttpOperationBindingModel.Query, binding, entry, parent)) // TODO validate as object
@@ -65,7 +62,6 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     val binding = Amqp091OperationBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(Amqp091OperationBindingModel.Type, "amqp")
     map.key("expiration", Amqp091OperationBindingModel.Expiration in binding)
     map.key("userId", Amqp091OperationBindingModel.UserId in binding)
     map.key("cc", Amqp091OperationBindingModel.CC in binding)
@@ -89,7 +85,6 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     val binding = KafkaOperationBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(KafkaOperationBindingModel.Type, "kafka")
     map.key("groupId", KafkaOperationBindingModel.GroupId in binding)
     map.key("clientId", KafkaOperationBindingModel.ClientId in binding)
     parseBindingVersion(binding, KafkaOperationBindingModel.BindingVersion, map)
@@ -104,7 +99,6 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     val binding = MqttOperationBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(MqttOperationBindingModel.Type, "mqtt")
     map.key("qos", MqttOperationBindingModel.Qos in binding)
     map.key("retain", MqttOperationBindingModel.Retain in binding)
     parseBindingVersion(binding, MqttOperationBindingModel.BindingVersion, map)

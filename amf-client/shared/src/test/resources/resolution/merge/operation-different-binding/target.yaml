@@ -1,0 +1,16 @@
+subscribe:
+  operationId: "baseOperationId"
+  bindings:
+    amqp:
+      bindingVersion: 31.07.92
+      expiration: 32
+      userId: some
+      cc:
+        - some
+      priority: 3
+      deliveryMode: 2
+      mandatory: true
+      bcc:
+        - some
+      replyTo: some
+      timestamp: true

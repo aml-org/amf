@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.contexts.parser.async
 
 import amf.plugins.document.webapi.contexts.SpecAwareContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeSpecVersionFactory
-import amf.plugins.document.webapi.parser.spec.async.parser.AsyncOperationParser
+import amf.plugins.document.webapi.parser.spec.async.parser.{AsyncOperationParser, AsyncServerVariableParser}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   Async2SecuritySchemeParser,
   Async2SecuritySettingsParser,
@@ -22,7 +22,7 @@ trait AsyncSpecVersionFactory extends OasLikeSpecVersionFactory {}
 
 case class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends AsyncSpecVersionFactory {
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
-    domain.AsyncServerVariableParser(entry, parent)(ctx)
+    AsyncServerVariableParser(entry, parent)(ctx)
 
   override def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser =
     AsyncOperationParser(entry, producer)(ctx)
