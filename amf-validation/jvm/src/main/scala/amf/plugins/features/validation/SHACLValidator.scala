@@ -13,6 +13,7 @@ import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
 import org.apache.commons.io.IOUtils
 import org.apache.commons.lang3.StringUtils
+import org.apache.jena.query.{QueryExecutionFactory, QueryFactory}
 import org.apache.jena.rdf.model.{Model, Resource}
 import org.apache.jena.util.FileUtils
 import org.topbraid.jenax.util.JenaUtil
@@ -100,7 +101,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
         ExecutionLog.log(
           s"SHACLValidator#validate: Number of shapes triples -> ${shapesModel.model.listStatements().toList.size()}")
 
-        /*
+/*
     dataModel.dump()
     println("\n\n=======> SHAPES")
     println(shapesModel.toN3())
@@ -127,7 +128,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
         println(s"$varName -> ${solution.get(varName)}")
       }
     }
-         */
+*/
         ExecutionLog.log(s"SHACLValidator#validate: validating...")
         report = Some(SHACL.validate(dataModel.model, shapesModel.model))
       } finally {
