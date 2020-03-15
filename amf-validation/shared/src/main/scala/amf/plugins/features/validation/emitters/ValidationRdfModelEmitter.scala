@@ -143,6 +143,15 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         genCustomPropertyConstraintValue(constraintId, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
       constraint.pattern.foreach(v => genPropertyConstraintValue(constraintId, "pattern", v))
       constraint.node.foreach(genPropertyConstraintValue(constraintId, "node", _))
+      if (constraint.atLeast.isDefined) {
+        rdfModel.addTriple(constraintId, (Namespace.Shacl + "qualifiedMinCount").iri(), constraint.atLeast.get._1.toString, Some((Namespace.Xsd + "integer").iri()))
+        link(constraintId, (Namespace.Shacl + "qualifiedValueShape").iri(), constraint.atLeast.get._2)
+      }
+      if (constraint.atMost.isDefined) {
+        rdfModel.addTriple(constraintId, (Namespace.Shacl + "qualifiedMaxCount").iri(), constraint.atMost.get._1.toString, Some((Namespace.Xsd + "integer").iri()))
+        link(constraintId, (Namespace.Shacl + "qualifiedValueShape").iri(), constraint.atMost.get._2)
+      }
+
       constraint.datatype.foreach { v =>
         if (v.endsWith("#integer")) {
           link(constraintId, (Namespace.Shacl + "datatype").iri(), DataType.Long)

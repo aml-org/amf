@@ -181,6 +181,14 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
         constraint.minExclusive.foreach(genNumericPropertyConstraintValue(b, "minExclusive", _, Some(constraint)))
         constraint.maxInclusive.foreach(genNumericPropertyConstraintValue(b, "maxInclusive", _, Some(constraint)))
         constraint.minInclusive.foreach(genNumericPropertyConstraintValue(b, "minInclusive", _, Some(constraint)))
+        if (constraint.atLeast.isDefined) {
+          genNumericPropertyConstraintValue(b, "qualifiedMinCount", constraint.atLeast.get._1.toString, Some(constraint))
+          b.entry((Namespace.Shacl + "qualifiedValueShape").iri(), link(_, constraint.atLeast.get._2))
+        }
+        if (constraint.atMost.isDefined) {
+          genNumericPropertyConstraintValue(b, "qualifiedMaxCount", constraint.atLeast.get._1.toString, Some(constraint))
+          b.entry((Namespace.Shacl + "qualifiedValueShape").iri(), link(_, constraint.atLeast.get._2))
+        }
         constraint.multipleOf.foreach(
           genCustomPropertyConstraintValue(b, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
         constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", v))
@@ -412,7 +420,7 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
         b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value.toDouble.toString, Some(DataType.Float)))
       case Some(scalarType) if scalarType == DataType.Integer =>
         b.entry((Namespace.Shacl + constraintName).iri(),
-                genValue(_, value.toDouble.floor.toInt.toString, Some(DataType.Integer)))
+          genValue(_, value.toDouble.floor.toInt.toString, Some(DataType.Integer)))
 
     }
   }
