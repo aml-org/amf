@@ -4,13 +4,16 @@ import amf.core.annotations.SourceVendor
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.{BaseUnit, Document}
+import amf.core.parser.FieldEntry
 import amf.core.remote.{AsyncApi20, Vendor}
 import amf.plugins.document.webapi.contexts.emitter.async.AsyncSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.async.emitters.{
   AsyncApiCreativeWorksEmitter,
   AsyncApiEndpointsEmitter,
-  AsyncApiServersEmitter
+  AsyncApiServersEmitter,
+  AsyncDeclarationsEmitters
 }
+import amf.plugins.document.webapi.parser.spec.common.DeclarationsEmitterWrapper
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.domain.SecurityRequirementsEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{InfoEmitter, TagsEmitter}
@@ -48,9 +51,8 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
     val ordering = SpecOrdering.ordering(AsyncApi20, doc.encodes.annotations)
 
 //    val references = ReferencesEmitter(document, ordering)
-//    val declares =
-//      wrapDeclarations(OasDeclarationsEmitter(doc.declares, ordering, document.references).emitters, ordering)
-//    val api = emitWebApi(ordering, document.references)
+    val declares =
+      wrapDeclarations(AsyncDeclarationsEmitters(doc.declares, ordering, document.references).emitters, ordering)
     val api = emitWebApi(ordering)
 //    val extension = extensionEmitter()
 //    val usage: Option[ValueEmitter] =
@@ -60,10 +62,13 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
       _.obj { b =>
         versionEntry(b)
 //        traverse(ordering.sorted(api ++ extension ++ usage ++ declares :+ references), b)
-        traverse(ordering.sorted(api), b)
+        traverse(ordering.sorted(api ++ declares), b)
       }
     }
   }
+
+  def wrapDeclarations(emitters: Seq[EntryEmitter], ordering: SpecOrdering): Seq[EntryEmitter] =
+    Seq(DeclarationsEmitterWrapper(emitters, ordering))
 
   def versionEntry(b: YDocument.EntryBuilder): Unit =
     b.asyncapi = YNode(YScalar("2.0.0"), YType.Str) // this should not be necessary but for use the same logic
@@ -86,7 +91,10 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
       fs.entry(WebApiModel.Documentations)
         .map(f => result += new AsyncApiCreativeWorksEmitter(f.arrayValues[CreativeWork].head, ordering))
 
-      fs.entry(WebApiModel.EndPoints).map(f => result += new AsyncApiEndpointsEmitter(f, ordering))
+      fs.entry(WebApiModel.EndPoints) match {
+        case Some(f: FieldEntry) => result += new AsyncApiEndpointsEmitter(f, ordering)
+        case None                => result += EntryPartEmitter("channels", EmptyMapEmitter())
+      }
 
       fs.entry(WebApiModel.Security).map(f => result += SecurityRequirementsEmitter("security", f, ordering))
 

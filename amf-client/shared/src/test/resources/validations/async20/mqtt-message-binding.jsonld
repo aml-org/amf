@@ -70,7 +70,7 @@
                       {
                         "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings",
                         "@type": [
-                          "http://a.ml/vocabularies/apiContract#MessageBindings",
+                          "http://a.ml/vocabularies/apiBinding#MessageBindings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/apiBinding#binding": [
@@ -338,7 +338,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,9)-(12,36)]"
+                    "@value": "[(6,0)-(12,36)]"
                   }
                 ]
               },

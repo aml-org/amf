@@ -7,7 +7,7 @@ import amf.core.parser.{FieldEntry, Position}
 import amf.core.remote.Vendor
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.oas.OasSecuritySchemeTypeMapping
+import amf.plugins.document.webapi.parser.spec.oas.OasLikeSecuritySchemeTypeMappings
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.security.{
   OAuth2Settings,
@@ -55,7 +55,7 @@ case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEnt
       Option(s.scheme).exists { s =>
         {
           val schemeType = s.`type`.option().getOrElse("")
-          OasSecuritySchemeTypeMapping.validTypesFor(vendor).contains(schemeType)
+          OasLikeSecuritySchemeTypeMappings.validTypesFor(vendor).contains(schemeType)
         }
       }
     })
@@ -72,7 +72,6 @@ case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEnt
 
 abstract class AbstractSecurityRequirementEmitter(securityRequirement: SecurityRequirement, ordering: SpecOrdering)
     extends PartEmitter
-
 
 case class RamlSecurityRequirementEmitter(requirement: SecurityRequirement, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)

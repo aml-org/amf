@@ -14,6 +14,7 @@ import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
+import amf.plugins.document.webapi.parser.spec.oas.emitters.OasSecuritySchemeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
@@ -140,7 +141,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     val emitters: Seq[EntryEmitter] =
       new OasSecuritySchemeEmitter(
         securityScheme.encodes,
-        OasSecuritySchemeTypeMapping.mapsTo(spec.vendor, securityScheme.encodes.`type`.value()),
+        OasLikeSecuritySchemeTypeMappings.mapsTo(spec.vendor, securityScheme.encodes.`type`.value()),
         ordering).emitters()
   }
 

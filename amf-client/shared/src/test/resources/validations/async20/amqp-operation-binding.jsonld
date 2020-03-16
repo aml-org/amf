@@ -53,7 +53,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/amqp-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings",
                     "@type": [
-                      "http://a.ml/vocabularies/apiContract#OperationBindings",
+                      "http://a.ml/vocabularies/apiBinding#OperationBindings",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiBinding#binding": [
@@ -377,7 +377,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/amqp-operation-binding.yaml#/web-api/end-points/some-channel/subscribe/operation-bindings",
                     "@type": [
-                      "http://a.ml/vocabularies/apiContract#OperationBindings",
+                      "http://a.ml/vocabularies/apiBinding#OperationBindings",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiBinding#binding": [
@@ -627,7 +627,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,9)-(24,19)]"
+                    "@value": "[(6,0)-(24,19)]"
                   }
                 ]
               },

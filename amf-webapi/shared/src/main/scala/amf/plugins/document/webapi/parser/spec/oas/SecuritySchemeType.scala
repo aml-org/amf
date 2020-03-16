@@ -6,7 +6,7 @@ class SecuritySchemeType(val text: String)
 case class OasSecuritySchemeType(override val text: String)     extends SecuritySchemeType(text)
 case class UnknownSecuritySchemeType(override val text: String) extends SecuritySchemeType(text)
 
-object OasSecuritySchemeTypeMapping {
+object OasLikeSecuritySchemeTypeMappings {
 
   private val OAuth20       = OasSecuritySchemeType("oauth2")
   private val ApiKeyOas     = OasSecuritySchemeType("apiKey")
@@ -15,8 +15,8 @@ object OasSecuritySchemeTypeMapping {
   private val BasicAuth     = OasSecuritySchemeType("basic")
 
   val mappings = Map(
-    Vendor.OAS20 -> Oas2SchemeMappings,
-    Vendor.OAS30 -> Oas3SchemeMappings
+    Vendor.OAS20   -> Oas2SchemeMappings,
+    Vendor.OAS30   -> Oas3SchemeMappings
   )
 
   def mapsTo(vendor: Vendor, text: String): SecuritySchemeType = mappings(vendor).mapsTo(text)
