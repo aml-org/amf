@@ -19,11 +19,6 @@
             "@value": "subscribe"
           }
         ],
-        "http://a.ml/vocabularies/core#name": [
-          {
-            "@value": "traitOperationId"
-          }
-        ],
         "http://a.ml/vocabularies/core#documentation": [
           {
             "@id": "target/creative-work/aTraitUrl",
@@ -41,6 +36,11 @@
                 "@value": "aTraitDescription"
               }
             ]
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#operationId": [
+          {
+            "@value": "traitOperationId"
           }
         ]
       }

@@ -125,6 +125,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     operationGet
       .withName("Some title")
       .withDescription("Some description")
+      .withOperationId("Some title")
       .withDeprecated(true)
       .withSummary("This is a summary")
       .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
@@ -132,6 +133,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     endpointOne
       .withOperation("post")
       .withName("Some title")
+      .withOperationId("Some title")
       .withDescription("Some description")
       .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
       .withSchemes(List("http", "https"))
@@ -244,6 +246,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
           Operation()
             .withMethod("get")
             .withName("Some title")
+            .withOperationId("Some title")
             .withRequest(
               Request()
                 .withQueryParameters(
@@ -274,6 +277,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
           Operation()
             .withMethod("post")
             .withName("Some title")
+            .withOperationId("Some title")
             .withDescription("Some description")
             .withRequest(
               Request()
@@ -372,6 +376,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
             Operation()
               .withMethod("get")
               .withName("Some title")
+              .withOperationId("Some title")
               .withRequest(
                 Request()
                   .withPayloads(List(Payload()
@@ -482,6 +487,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withDescription("and this description!")
       .withOperation("get")
       .withName("Some title")
+      .withOperationId("Some title")
 
     val request = operation
       .withRequest()
@@ -617,6 +623,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     api
       .withEndPoint("/scalar_array")
       .withOperation("get")
+      .withOperationId("scalar_array")
       .withName("scalar_array")
       .withRequest()
       .withPayload(None)
@@ -633,6 +640,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withEndPoint("/object_array")
       .withOperation("get")
       .withName("object_array")
+      .withOperationId("object_array")
       .withRequest()
       .withPayload(None)
       .withName("object_array")

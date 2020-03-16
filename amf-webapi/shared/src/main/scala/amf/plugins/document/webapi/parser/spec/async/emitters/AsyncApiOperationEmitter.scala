@@ -3,6 +3,9 @@ package amf.plugins.document.webapi.parser.spec.async.emitters
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.core.emitter.BaseEmitters.ValueEmitter
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.parser.Fields
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.async.AsyncHelper
@@ -11,11 +14,14 @@ import amf.plugins.document.webapi.parser.spec.oas.emitters.{
   OasLikeOperationPartEmitter,
   TagsEmitter
 }
+import amf.plugins.document.webapi.parser.spec.async.AsyncHelper
+import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasLikeOperationEmitter, TagsEmitter}
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.models.{Operation, Tag}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.core.emitter.BaseEmitters._
+import amf.plugins.domain.webapi.models.{Operation, Tag}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -59,6 +65,12 @@ case class AsyncOperationPartEmitter(operation: Operation, isTrait: Boolean, ord
     val label   = operation.linkLabel.option().getOrElse("default")
     val fullRef = OasDefinitions.appendOas3ComponentsPrefix(label, "operationTraits")
     b.obj(_.entry("$ref", fullRef))
+  }
+
+  override protected def emitOperationId(fs: Fields, result: ListBuffer[EntryEmitter]): Unit = {
+    fs.entry(OperationModel.OperationId).foreach { f =>
+      result += ValueEmitter("operationId", f)
+    }
   }
 
   def emitMessage(fs: Fields): Option[EntryEmitter] = {

@@ -54,6 +54,10 @@ abstract class AsyncOperationParser(entry: YMapEntry, producer: String => Operat
     operation
   }
 
+  override def parseOperationId(map: YMap, operation: Operation): Unit = {
+    map.key("operationId", OperationModel.OperationId in operation)
+  }
+
   protected def parseMessages(map: YMap, operation: Operation)
 
   protected def parseTraits(map: YMap, operation: Operation)

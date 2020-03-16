@@ -36,6 +36,7 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   def servers: ClientList[Server]               = _internal.servers.asClient
   def isAbstract: BoolField                     = _internal.isAbstract
   def bindings: OperationBindings               = _internal.bindings
+  def operationId: StrField                     = _internal.operationId
 
   /** Set method property of this Operation. */
   def withMethod(method: String): this.type = {
@@ -158,6 +159,11 @@ case class Operation(override private[amf] val _internal: InternalOperation)
 
   def withBindings(bindings: OperationBindings): this.type = {
     _internal.withBindings(bindings)
+    this
+  }
+
+  def withOperationId(operationId: String): this.type = {
+    _internal.withOperationId(operationId)
     this
   }
 

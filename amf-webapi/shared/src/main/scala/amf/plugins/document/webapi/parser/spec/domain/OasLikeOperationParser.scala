@@ -43,7 +43,8 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
         ctx.eh.violation(DuplicatedOperationId, operation.id, s"Duplicated operation id '$operationId'", entry.value)
     }
 
-    map.key("operationId", OperationModel.Name in operation)
+    parseOperationId(map, operation)
+
     map.key("description", OperationModel.Description in operation)
     map.key("summary", OperationModel.Summary in operation)
     map.key("externalDocs",
@@ -53,6 +54,11 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
     AnnotationParser(operation, map).parse()
 
     operation
+  }
+
+  def parseOperationId(map: YMap, operation: Operation) = {
+    map.key("operationId", OperationModel.Name in operation)
+    map.key("operationId", OperationModel.OperationId in operation)
   }
 }
 
