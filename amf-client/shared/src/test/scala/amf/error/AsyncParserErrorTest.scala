@@ -25,4 +25,15 @@ class AsyncParserErrorTest extends ParserErrorTest {
       }
     )
   }
+
+  test("Empty parameters") {
+    validate(
+      "/error/invalid-empty-parameters.yaml",
+      violation => {
+        violation.level should be("Violation")
+        violation.message should be("YAML map expected")
+        violation.position.map(_.range) should be(Some(Range((7, 15), (7, 15))))
+      }
+    )
+  }
 }
