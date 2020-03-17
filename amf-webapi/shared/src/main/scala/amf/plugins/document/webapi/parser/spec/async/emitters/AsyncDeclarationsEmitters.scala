@@ -37,6 +37,9 @@ case class AsyncDeclarationsEmitters(declares: Seq[DomainElement], ordering: Spe
     if (declarations.parameters.nonEmpty)
       result += new AsyncApiParametersEmitter(declarations.parameters.values.toSeq, ordering)
 
+    if (declarations.correlationIds.nonEmpty)
+      result += AsyncCorrelationIdDeclarationsEmitter(declarations.correlationIds.values.toSeq, ordering)
+
     result
   }
 }

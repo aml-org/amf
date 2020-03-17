@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
-import amf.core.parser.{ScalarNode, SearchScope, YMapOps}
+import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorCorrelationId
@@ -18,7 +18,7 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
       case Left(fullRef) =>
         handleRef(map, fullRef)
       case Right(_) =>
-        val correlationId = CorrelationId(map)
+        val correlationId = CorrelationId()
         nameAndAdopt(correlationId, entryLike.key)
         CorrelationIdPopulator(map, correlationId).populate()
     }
@@ -29,7 +29,7 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
       k =>
         correlationId
           .set(CorrelationIdModel.Name, ScalarNode(k).string()))
-    correlationId.adopted(parentId)
+    correlationId.adopted(parentId).add(Annotations(entryLike.asMap))
   }
 
   private def handleRef(map: YMap, fullRef: String) = {

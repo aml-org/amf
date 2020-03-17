@@ -7,6 +7,8 @@ components:
     someMessage:
       headers:
         $ref: "#/components/schemas/someSchema"
+      correlationId:
+        $ref: "#/components/correlationIds/someId"
       payload:
         type: string
       schemaFormat: application/schema+json;version=draft-07
@@ -27,6 +29,10 @@ components:
       location: $message.payload#/user/id
       schema:
         type: string
+  correlationIds:
+    someId:
+      description: Default Correlation ID
+      location: $message.header#/correlationId
 channels:
   smartylighting/streetlights/1/0/event/lighting/measured:
     parameters:
