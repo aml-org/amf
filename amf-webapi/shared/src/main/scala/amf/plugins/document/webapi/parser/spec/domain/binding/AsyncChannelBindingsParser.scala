@@ -70,7 +70,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     ctx.closedShape(binding.id, map, "amqpIsExchangeChannelBinding")
     map.key(
       "exchange", { entry =>
-        val exchange    = Amqp091ChannelExchange(Annotations(entry.key)).adopted(binding.id)
+        val exchange    = Amqp091ChannelExchange(Annotations(entry.value)).adopted(binding.id)
         val exchangeMap = entry.value.as[YMap]
 
         exchangeMap.key("name", Amqp091ChannelExchangeModel.Name in exchange) // TODO validate maxlength 255
