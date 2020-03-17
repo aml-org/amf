@@ -12,6 +12,11 @@ import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  Raml10TypePartEmitter,
+  RamlNamedTypeEmitter,
+  RamlTypePartEmitter
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.Oas3RequestBodyEmitter
 import amf.plugins.domain.shapes.models.AnyShape

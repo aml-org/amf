@@ -12,6 +12,11 @@ import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.{CompactJsonSchemaEmitterContext, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  OasNamedTypeEmitter,
+  RamlNamedTypeEmitter,
+  RamlRecursiveShapeTypeEmitter
+}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.EntryBuilder
@@ -51,9 +56,8 @@ case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit]
     b.entry(
       if (definedInComponents) "schemas" else "definitions",
       _.obj(
-        traverse(
-          ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq("definitions")))),
-          _))
+        traverse(ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq("definitions")))),
+                 _))
     )
   }
 }
@@ -81,11 +85,13 @@ case class CompactJsonSchemaTypesEmitters(types: Seq[Shape], references: Seq[Bas
           val labeledShape = definitionsQueue.dequeue()
           // used to force shape to be emitted with OasTypeEmitter, and not as a ref
           spec.forceEmission = Some(labeledShape.shape.id)
-          OasNamedTypeEmitter(labeledShape.shape,
-                              ordering,
-                              references,
-                              pointer = Seq("definitions"),
-                              Some(labeledShape.label)).emit(entryBuilder)
+          emitters
+            .OasNamedTypeEmitter(labeledShape.shape,
+                                 ordering,
+                                 references,
+                                 pointer = Seq("definitions"),
+                                 Some(labeledShape.label))
+            .emit(entryBuilder)
         }
       }
     )

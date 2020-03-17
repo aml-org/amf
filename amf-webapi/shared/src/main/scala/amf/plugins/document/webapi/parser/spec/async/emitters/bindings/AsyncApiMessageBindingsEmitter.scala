@@ -5,7 +5,8 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.Shape
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.AsyncSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.AsyncSchemaEmitter
 import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091MessageBindingModel,
   HttpMessageBindingModel,
@@ -51,7 +52,8 @@ class HttpMessageEmitter(binding: HttpMessageBinding, ordering: SpecOrdering)(
         val fs     = binding.fields
 
         fs.entry(HttpMessageBindingModel.Headers)
-          .foreach(f => result += AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq()))
+          .foreach(f =>
+            result += emitters.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq()))
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

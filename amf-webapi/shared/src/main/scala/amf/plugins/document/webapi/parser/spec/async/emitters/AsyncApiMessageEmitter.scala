@@ -7,7 +7,8 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.declaration.AsyncSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.AsyncSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NamedMultipleExampleEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.TagsEmitter
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
@@ -145,8 +146,8 @@ private class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean =
   }
 
   def emitLink(b: PartBuilder): Unit = {
-    val label = OasDefinitions.appendOas3ComponentsPrefix(message.linkLabel.value(),
-                                                          if (isTrait) "messageTraits" else "messages")
+    val label =
+      OasDefinitions.appendOas3ComponentsPrefix(message.linkLabel.value(), if (isTrait) "messageTraits" else "messages")
     spec.ref(b, label)
   }
 
@@ -157,7 +158,7 @@ private class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean =
   private def emitHeader(result: ListBuffer[EntryEmitter], field: FieldEntry): Unit = {
     field.arrayValues[Parameter].headOption.foreach { param =>
       val toEmit = param.schema
-      result += AsyncSchemaEmitter("headers", toEmit, ordering, Seq())
+      result += emitters.AsyncSchemaEmitter("headers", toEmit, ordering, Seq())
     }
   }
 
@@ -168,13 +169,9 @@ private class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean =
       fs.entry(PayloadModel.MediaType).map(field => result += ValueEmitter("contentType", field))
       fs.entry(PayloadModel.SchemaMediaType).map(field => result += ValueEmitter("schemaFormat", field))
       fs.entry(PayloadModel.Schema)
-        .map(
-          field =>
-            result += AsyncSchemaEmitter("payload",
-                                         field.element.asInstanceOf[Shape],
-                                         ordering,
-                                         List(),
-                                         schemaMediaType))
+        .map(field =>
+          result += emitters
+            .AsyncSchemaEmitter("payload", field.element.asInstanceOf[Shape], ordering, List(), schemaMediaType))
     }
   }
 

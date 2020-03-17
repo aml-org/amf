@@ -8,6 +8,7 @@ import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{Raml10TypePartEmitter, RamlNamedTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.security._
@@ -158,7 +159,8 @@ case class RamlSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(im
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class RamlSecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+case class RamlSecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext) {
   def emitters: Seq[EntryEmitter] = {
     val settings = f.value.value.asInstanceOf[Settings]
     val results  = ListBuffer[EntryEmitter]()
