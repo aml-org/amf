@@ -67,7 +67,8 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
                          "",
                          s"Cannot find link reference $fullRef",
                          entryLike.asMap)
-        nameAndAdopt(errorBindings(fullRef, entryLike).link(fullRef), entryLike.key)
+        val errorBinding = errorBindings(fullRef, entryLike)
+        nameAndAdopt(errorBinding.link(fullRef, errorBinding.annotations), entryLike.key)
     }
   }
 
