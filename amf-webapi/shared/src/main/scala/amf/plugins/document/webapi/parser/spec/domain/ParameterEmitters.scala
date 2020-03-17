@@ -2,32 +2,42 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{SpecOrdering, EntryEmitter, PartEmitter}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{Shape, AmfScalar}
-import amf.core.parser.{Position, FieldEntry, Value, Fields}
+import amf.core.model.domain.{AmfScalar, Shape}
+import amf.core.parser.{FieldEntry, Fields, Position, Value}
 import amf.core.remote.Vendor
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.annotations.{ParameterNameForPayload, RequiredParamPayload, FormBodyParameter}
+import amf.plugins.document.webapi.annotations.{FormBodyParameter, ParameterNameForPayload, RequiredParamPayload}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.contexts.emitter.oas.{OasSpecEmitterContext, Oas3SpecEmitterFactory}
-import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext, XRaml10SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.raml.{
+  RamlScalarEmitter,
+  RamlSpecEmitterContext,
+  XRaml10SpecEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
-import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.{emitters, _}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  OasSchemaEmitter,
+  OasTypeEmitter,
+  Raml08TypePartEmitter,
+  Raml10TypeEmitter
+}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.webapi.annotations.{ParameterBindingInBodyLexicalInfo, InvalidBinding}
-import amf.plugins.domain.webapi.metamodel.{PayloadModel, ParameterModel, ResponseModel}
+import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType.Bool
-import org.yaml.model.{YType, YNode}
+import org.yaml.model.{YNode, YType}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -96,7 +106,9 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
                   result += EntryPartEmitter("type", h.asInstanceOf[PartEmitter])
                 }
             case Some(shape: AnyShape) =>
-              result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references).entries()
+              result ++= emitters
+                .Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references)
+                .entries()
             case Some(other) =>
               spec.eh.violation(ResolutionValidation,
                                 other.id,
@@ -304,10 +316,8 @@ case class OasParametersEmitter(key: String,
   }
 }
 
-case class ParameterEmitter(parameter: Parameter,
-                            ordering: SpecOrdering,
-                            references: Seq[BaseUnit],
-                            asHeader: Boolean)(implicit val spec: OasSpecEmitterContext)
+case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit], asHeader: Boolean)(
+    implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
 
   private def emitLink(b: PartBuilder): Unit = {
@@ -432,8 +442,11 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
         .map(f => result += RamlScalarEmitter("x-amf-required", f))
 
       fs.entry(ParameterModel.Schema)
-        .map(_ =>
-          result ++= OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references).entries())
+        .map(
+          _ =>
+            result ++= emitters
+              .OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references)
+              .entries())
 
       traverse(ordering.sorted(result), b)
     }
@@ -529,7 +542,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
       }
       payload.fields
         .entry(PayloadModel.Schema)
-        .map(f => result += OasSchemaEmitter(f, ordering, references))
+        .map(f => result += emitters.OasSchemaEmitter(f, ordering, references))
       result ++= AnnotationsEmitter(payload, ordering).emitters
 
       traverse(ordering.sorted(result), b)
@@ -557,7 +570,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
 
       fs.entry(FileShapeModel.Description).map(f => result += ValueEmitter("description", f))
       result += MapEntryEmitter("in", "formData", position = bindingPos(file))
-      result ++= OasTypeEmitter(file, ordering, Seq(ShapeModel.Description), references).entries()
+      result ++= emitters.OasTypeEmitter(file, ordering, Seq(ShapeModel.Description), references).entries()
       result ++= AnnotationsEmitter(payload, ordering).emitters
 
       traverse(ordering.sorted(result), b)
@@ -602,7 +615,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
         }
 
         result += MapEntryEmitter("in", "formData", position = bindingPos(schema))
-        result ++= OasTypeEmitter(schema, ordering, references = references).entries()
+        result ++= emitters.OasTypeEmitter(schema, ordering, references = references).entries()
         result ++= AnnotationsEmitter(payload, ordering).emitters
       }
 

@@ -2,20 +2,21 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{SpecOrdering, EntryEmitter, PartEmitter}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DomainElement, AmfArray, AmfScalar}
-import amf.core.parser.{Position, FieldEntry, Value}
+import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts._
-import amf.plugins.document.webapi.contexts.emitter.oas.{OasSpecEmitterContext, Oas3SpecEmitterFactory}
+import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, EnumValuesEmitter, DataNodeEmitter}
-import amf.plugins.document.webapi.parser.spec.{toRaml, BaseUriSplitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.EnumValuesEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
+import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, toRaml}
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ScalarShape
-import amf.plugins.domain.webapi.metamodel.{WebApiModel, ServerModel}
+import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
 import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
@@ -56,20 +57,16 @@ case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references:
     if (servers.nonEmpty) result += ServersEmitters("servers".asRamlAnnotation, servers, ordering)
 }
 
-abstract class OasServersEmitter(elem: DomainElement,
-                                 f: FieldEntry,
-                                 ordering: SpecOrdering,
-                                 references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext) {
+abstract class OasServersEmitter(elem: DomainElement, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[EntryEmitter]
 
   protected def asExtension(key: String, servers: Seq[Server], result: ListBuffer[EntryEmitter]): Unit =
     if (servers.nonEmpty) result += ServersEmitters(key, servers, ordering)
 }
 
-abstract class Oas3ServersEmitter(elem: DomainElement,
-                                  f: FieldEntry,
-                                  ordering: SpecOrdering,
-                                  references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+abstract class Oas3ServersEmitter(elem: DomainElement, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext)
     extends OasServersEmitter(elem, f, ordering, references) {
 
   override protected def asExtension(key: String, servers: Seq[Server], result: ListBuffer[EntryEmitter]): Unit = {

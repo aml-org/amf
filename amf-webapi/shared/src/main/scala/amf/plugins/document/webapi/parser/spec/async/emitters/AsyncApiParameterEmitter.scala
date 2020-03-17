@@ -3,14 +3,14 @@ package amf.plugins.document.webapi.parser.spec.async.emitters
 import amf.core.annotations.SynthesizedField
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position, Value}
-import amf.plugins.document.webapi.contexts.emitter.async.AsyncSpecEmitterContext
-import org.yaml.model.{YDocument, YNode, YScalar}
+import org.yaml.model.{YDocument, YNode}
 import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.model.domain.Shape
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, AsyncSchemaEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.AsyncSchemaEmitter
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
 import org.yaml.model.YDocument.PartBuilder

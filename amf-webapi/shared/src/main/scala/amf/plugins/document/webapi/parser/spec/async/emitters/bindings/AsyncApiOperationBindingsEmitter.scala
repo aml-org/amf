@@ -5,7 +5,8 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.Shape
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.AsyncSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.AsyncSchemaEmitter
 import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091OperationBindingModel,
   HttpOperationBindingModel,
@@ -53,7 +54,7 @@ class HttpOperationBindingEmitter(binding: HttpOperationBinding, ordering: SpecO
         fs.entry(HttpOperationBindingModel.OperationType).foreach(f => result += ValueEmitter("type", f))
         fs.entry(HttpOperationBindingModel.Method).foreach(f => result += ValueEmitter("method", f))
         fs.entry(HttpOperationBindingModel.Query)
-          .foreach(f => result += AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq()))
+          .foreach(f => result += emitters.AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq()))
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

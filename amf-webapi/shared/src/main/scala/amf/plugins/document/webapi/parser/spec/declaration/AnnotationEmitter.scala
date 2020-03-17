@@ -13,6 +13,12 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  OasSchemaEmitter,
+  Raml10TypeEmitter,
+  RamlRecursiveShapeEmitter,
+  RamlTypeExpressionEmitter
+}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
