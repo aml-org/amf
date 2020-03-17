@@ -105,7 +105,8 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("RAML type - simple scalar", "raml-types/simple-scalar.yaml", "raml-types/simple-scalar.yaml"),
     FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.yaml"),
     FixtureData("Draft 7 schemas cycle", "draft-7-schemas-cycle.yaml", "draft-7-schemas-output.yaml"),
-    FixtureData("Security schemes", "security-schemes.yaml", "security-schemes.yaml")
-    //    FixtureData("Channel params with refs", "references/channel-params.yaml", "references/channel-params.yaml"),
+    FixtureData("Security schemes", "security-schemes.yaml", "security-schemes.yaml"),
+    FixtureData("Operation and message traits", "operation-message-traits.yaml", "operation-message-traits.yaml")
+//    FixtureData("Channel params with refs", "references/channel-params.yaml", "references/channel-params.yaml"),
   )
 }

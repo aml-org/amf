@@ -19,11 +19,18 @@ case class AsyncDeclarationsEmitters(declares: Seq[DomainElement], ordering: Spe
 
     val result = ListBuffer[EntryEmitter]()
 
-    if (declarations.shapes.nonEmpty)
-      result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, references, ordering)
-
     if (declarations.securitySchemes.nonEmpty)
       result += new AsyncSecuritySchemesEmitter(declarations.securitySchemes.values.toSeq, ordering)
+
+    if (declarations.messageTraits.nonEmpty)
+      result += AsyncMessageDeclarationsEmitter(declarations.messageTraits.values.toList, isTrait = true, ordering)
+
+    if (declarations.operationTraits.nonEmpty)
+      result += AsyncOperationTraitsDeclarationEmitter(declarations.operationTraits.values.toList, ordering)
+
+    if (declarations.shapes.nonEmpty) // TODO verificar que va bien
+      result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, references, ordering)
+
     result
   }
 }

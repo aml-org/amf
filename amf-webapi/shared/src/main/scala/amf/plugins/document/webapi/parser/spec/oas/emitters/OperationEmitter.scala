@@ -1,13 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.oas.emitters
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.utils._
 import amf.plugins.document.webapi.annotations.FormBodyParameter
+import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -18,9 +19,9 @@ import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
 import amf.plugins.domain.webapi.models.{Callback, Operation, Request, Tag}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import org.yaml.model.YDocument.PartBuilder
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
 class OperationEmitter(operation: Operation,
                        ordering: SpecOrdering,
@@ -28,40 +29,55 @@ class OperationEmitter(operation: Operation,
                        references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
     extends OasLikeOperationEmitter(operation, ordering) {
 
-  override def emitSpecific(fs: Fields, result: ListBuffer[EntryEmitter]): ListBuffer[EntryEmitter] = {
-    fs.entry(OperationModel.Tags)
-      .map(f => result += StringArrayTagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
-    fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
-    fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
-    fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes", f, ordering))
-    fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces", f, ordering))
-    fs.entry(DomainElementModel.Extends)
-      .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true)(spec.eh).emitters())
-    Option(operation.request).foreach(req => result ++= requestEmitters(req, ordering, references))
-    // Annotations collected from the "responses" element that has no direct representation in any model element
-    // They will be passed to the ResponsesEmitter
-    val orphanAnnotations =
-      operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
-    fs.entry(OperationModel.Responses)
-      .fold(result += EntryPartEmitter("responses", EmptyMapEmitter()))(f =>
-        result += new ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
+  override def operationPartEmitter(): PartEmitter =
+    OasOperationPartEmitter(operation, ordering, endpointPayloadEmitted, references)
+}
 
-    fs.entry(OperationModel.Security)
-      .map(f => result += OasWithExtensionsSecurityRequirementsEmitter("security", f, ordering))
+case class OasOperationPartEmitter(operation: Operation,
+                                   ordering: SpecOrdering,
+                                   endpointPayloadEmitted: Boolean,
+                                   references: Seq[BaseUnit])(override implicit val spec: OasSpecEmitterContext)
+    extends OasLikeOperationPartEmitter(operation, ordering) {
 
-    if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
-      operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
-        val callbacks: Seq[Callback] = f.arrayValues
-        val annotations              = f.value.annotations
-        result += EntryPartEmitter("callbacks",
-                                   OasCallbacksEmitter(callbacks, ordering, references, annotations)(spec))
+  override def emit(p: PartBuilder): Unit = {
+    p.obj { eb =>
+      val fs     = operation.fields
+      val result = mutable.ListBuffer[EntryEmitter]()
+
+      fs.entry(OperationModel.Tags)
+        .map(f => result += StringArrayTagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
+      fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
+      fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
+      fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes", f, ordering))
+      fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces", f, ordering))
+      fs.entry(DomainElementModel.Extends)
+        .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true)(spec.eh).emitters())
+      Option(operation.request).foreach(req => result ++= requestEmitters(req, ordering, references))
+      // Annotations collected from the "responses" element that has no direct representation in any model element
+      // They will be passed to the ResponsesEmitter
+      val orphanAnnotations =
+        operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+      fs.entry(OperationModel.Responses)
+        .fold(result += EntryPartEmitter("responses", EmptyMapEmitter()))(f =>
+          result += new ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
+
+      fs.entry(OperationModel.Security)
+        .map(f => result += OasWithExtensionsSecurityRequirementsEmitter("security", f, ordering))
+
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+        operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
+          val callbacks: Seq[Callback] = f.arrayValues
+          val annotations              = f.value.annotations
+          result += EntryPartEmitter("callbacks",
+                                     OasCallbacksEmitter(callbacks, ordering, references, annotations)(spec))
+        }
+
+        fs.entry(OperationModel.Servers)
+          .map(f => result ++= spec.factory.serversEmitter(operation, f, ordering, references).emitters())
+
       }
-
-      fs.entry(OperationModel.Servers)
-        .map(f => result ++= spec.factory.serversEmitter(operation, f, ordering, references).emitters())
-
+      traverse(ordering.sorted(super.commonEmitters ++ result), eb)
     }
-    result
   }
 
   def requestEmitters(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
