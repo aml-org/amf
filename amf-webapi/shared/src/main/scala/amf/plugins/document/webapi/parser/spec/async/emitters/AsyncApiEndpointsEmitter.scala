@@ -44,7 +44,8 @@ private class AsyncApiSingleEndpointEmitter(channel: EndPoint, ordering: SpecOrd
       channel.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
     fs.entry(EndPointModel.Description).foreach(f => result += ValueEmitter("description", f))
     fs.entry(EndPointModel.Operations).foreach(f => result ++= operations(f))
-    fs.entry(EndPointModel.Parameters).foreach(f => result += new AsyncApiParametersEmitter(f, ordering))
+    fs.entry(EndPointModel.Parameters)
+      .foreach(f => result += new AsyncApiParametersEmitter(f.arrayValues[Parameter], ordering))
     fs.entry(EndPointModel.Bindings)
       .foreach(f => result += new AsyncApiBindingsEmitter(f, ordering, bindingOrphanAnnotations))
     b.entry(

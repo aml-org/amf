@@ -25,7 +25,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
 
   private def nameAndAdopt(param: Parameter): Parameter = {
     entryLike.key.foreach(k => param.set(ParameterModel.Name, ScalarNode(k).string()))
-    param.adopted(parentId)
+    param.adopted(parentId).add(Annotations(entryLike.asMap))
   }
 
   def parse(): Parameter = {
@@ -34,7 +34,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
       case Left(fullRef) =>
         handleRef(map, fullRef)
       case Right(_) =>
-        val param = Parameter(map)
+        val param = Parameter()
         nameAndAdopt(param)
         populateParam(param, map)
     }

@@ -21,8 +21,17 @@ components:
           type: number
           minimum: 0
           exclusiveMaximum: 100
+  parameters:
+    userId:
+      description: id of the user
+      location: $message.payload#/user/id
+      schema:
+        type: string
 channels:
   smartylighting/streetlights/1/0/event/lighting/measured:
+    parameters:
+      someId:
+        $ref: "#/components/parameters/userId"
     publish:
       message:
         $ref: "#/components/messages/someMessage"

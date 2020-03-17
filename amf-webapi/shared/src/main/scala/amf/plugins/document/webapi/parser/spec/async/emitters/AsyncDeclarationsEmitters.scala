@@ -34,6 +34,9 @@ case class AsyncDeclarationsEmitters(declares: Seq[DomainElement], ordering: Spe
     if (declarations.shapes.nonEmpty)
       result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, references, ordering)
 
+    if (declarations.parameters.nonEmpty)
+      result += new AsyncApiParametersEmitter(declarations.parameters.values.toSeq, ordering)
+
     result
   }
 }
