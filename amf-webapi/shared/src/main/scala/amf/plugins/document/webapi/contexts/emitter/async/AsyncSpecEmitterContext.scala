@@ -29,7 +29,10 @@ import org.yaml.model.YDocument.PartBuilder
 
 abstract class AsyncSpecEmitterFactory(override implicit val spec: AsyncSpecEmitterContext)
     extends OasLikeSpecEmitterFactory {
-  // TODO ASYNC complete this
+
+  override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
+    AsyncDeclaredTypesEmitters.obtainEmitter
+
 }
 
 case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
@@ -50,8 +53,6 @@ case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter = ???
 
   override def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = ???
-
-  override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter = ???
 }
 
 abstract class AsyncSpecEmitterContext(eh: ErrorHandler,

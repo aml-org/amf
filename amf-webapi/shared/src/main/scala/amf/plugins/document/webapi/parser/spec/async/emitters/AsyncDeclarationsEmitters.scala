@@ -25,10 +25,13 @@ case class AsyncDeclarationsEmitters(declares: Seq[DomainElement], ordering: Spe
     if (declarations.messageTraits.nonEmpty)
       result += AsyncMessageDeclarationsEmitter(declarations.messageTraits.values.toList, isTrait = true, ordering)
 
+    if (declarations.messages.nonEmpty)
+      result += AsyncMessageDeclarationsEmitter(declarations.messages.values.toList, isTrait = false, ordering)
+
     if (declarations.operationTraits.nonEmpty)
       result += AsyncOperationTraitsDeclarationEmitter(declarations.operationTraits.values.toList, ordering)
 
-    if (declarations.shapes.nonEmpty) // TODO verificar que va bien
+    if (declarations.shapes.nonEmpty)
       result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, references, ordering)
 
     result
