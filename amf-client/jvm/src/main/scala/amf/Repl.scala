@@ -33,6 +33,7 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
       case Raml08.name             => Some(new Raml08Renderer)
       case Oas30.name              => Some(new Oas30Renderer)
       case Oas20.name              => Some(new Oas20Renderer)
+      case AsyncApi20.name         => Some(new Async20Renderer)
       case Amf.name                => Some(new AmfGraphRenderer)
       case _ =>
         out.println(s"Unsupported generation for: $syntax")
@@ -57,23 +58,25 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
   private object Parse {
     def unapply(line: String): Option[(Vendor, String)] = {
       line match {
-        case s if s.startsWith(":raml ") => Some((Raml, s.stripPrefix(":raml ")))
-        case s if s.startsWith(":oas ")  => Some((Oas, s.stripPrefix(":oas ")))
-        case s if s.startsWith(":amf ")  => Some((Amf, s.stripPrefix(":amf ")))
-        case _                           => None
+        case s if s.startsWith(":raml ")  => Some((Raml, s.stripPrefix(":raml ")))
+        case s if s.startsWith(":oas ")   => Some((Oas, s.stripPrefix(":oas ")))
+        case s if s.startsWith(":async ") => Some((AsyncApi, s.stripPrefix(":async ")))
+        case s if s.startsWith(":amf ")   => Some((Amf, s.stripPrefix(":amf ")))
+        case _                            => None
       }
     }
   }
 
   private def parser(vendor: Vendor) = vendor match {
-    case Raml10  => new Raml10Parser
-    case Raml08  => new Raml08Parser
-    case Raml    => new RamlParser
-    case Oas30   => new Oas30Parser
-    case Oas     => new Oas20Parser
-    case Amf     => new AmfGraphParser
-    case Payload => throw new Exception("Cannot find a parser for Payload vendor")
-    case _       => throw new Exception("Cannot find a parser for Unknown vendor")
+    case Raml10     => new Raml10Parser
+    case Raml08     => new Raml08Parser
+    case Raml       => new RamlParser
+    case Oas30      => new Oas30Parser
+    case Oas        => new Oas20Parser
+    case AsyncApi20 => new Async20Parser
+    case Amf        => new AmfGraphParser
+    case Payload    => throw new Exception("Cannot find a parser for Payload vendor")
+    case _          => throw new Exception("Cannot find a parser for Unknown vendor")
   }
 
   private object Generate {
