@@ -20,7 +20,7 @@ import amf.core.emitter.BaseEmitters._
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class AsyncApiOperationEmitter(operation: Operation, isTrait: Boolean = false, ordering: SpecOrdering)(
+class AsyncApiOperationEmitter(operation: Operation, ordering: SpecOrdering, isTrait: Boolean = false)(
     implicit spec: OasLikeSpecEmitterContext)
     extends OasLikeOperationEmitter(operation, ordering) {
 
@@ -81,7 +81,7 @@ case class AsyncOperationTraitsDeclarationEmitter(operations: Seq[Operation], or
       "operationTraits",
       _.obj(entryBuilder => {
         val entryEmitters = operations.map { op =>
-          new AsyncApiOperationEmitter(op, isTrait = true, ordering)
+          new AsyncApiOperationEmitter(op, ordering, isTrait = true)
         }
         traverse(ordering.sorted(entryEmitters), entryBuilder)
       })

@@ -56,7 +56,7 @@ private class AsyncApiSingleEndpointEmitter(channel: EndPoint, ordering: SpecOrd
   def operations(f: FieldEntry): Seq[AsyncApiOperationEmitter] =
     f.arrayValues[Operation]
       .filter(e => e.method.value().matches("subscribe|publish"))
-      .map(o => new AsyncApiOperationEmitter(o, ordering = ordering)(spec))
+      .map(o => new AsyncApiOperationEmitter(o, ordering)(spec))
 
   override def position(): Position = pos(channel.annotations)
 }
