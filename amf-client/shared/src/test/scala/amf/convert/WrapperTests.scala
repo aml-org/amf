@@ -242,11 +242,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
   test("Render / parse test Async 2.0") {
     for {
-      _    <- AMF.init().asFuture
-      unit <- new Async20Parser().parseFileAsync(async2).asFuture
+      _      <- AMF.init().asFuture
+      unit   <- new Async20Parser().parseFileAsync(async2).asFuture
+      output <- new Async20Renderer().generateString(unit).asFuture
     } yield {
-      assert(unit.isInstanceOf[Document])
-      assert(unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].name.value() == "Correlation ID Example")
+      output should include("Correlation ID Example")
     }
   }
 
