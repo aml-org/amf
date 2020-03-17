@@ -16,6 +16,7 @@ import amf.plugins.document.webapi.parser.spec.async.parser.{AsyncMessageParser,
 import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncKeyCriteria, JsonMergePatch}
+import amf.plugins.domain.webapi.metamodel.AbstractModel
 import amf.plugins.domain.webapi.models.{Message, Operation}
 import org.mulesoft.common.io.Fs
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
@@ -92,7 +93,7 @@ trait JsonMergePatchTest
   trait DocumentHandler extends BaseUnitConverter {
 
     def build(targetFile: String, patchFile: String): Document
-    def getMerger: JsonMergePatch = JsonMergePatch(_ => false, AsyncKeyCriteria())
+    def getMerger: JsonMergePatch = JsonMergePatch(_ => false, AsyncKeyCriteria(), Seq(AbstractModel.IsAbstract))
     def getBogusParserCtx: AsyncWebApiContext =
       new Async20WebApiContext("loc", Seq(), ParserContext(eh = DefaultParserErrorHandler()))
     def getGolden(basePath: String, folder: String) = basePath + "/" + folder + "/golden.jsonld"

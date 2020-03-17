@@ -184,6 +184,11 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "GET_examples"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2Fexamples/get/source-map",
@@ -192,7 +197,20 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2Fexamples/get/source-map/lexical/element_2",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2Fexamples/get/source-map/lexical/element_3",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(36,8)-(49,9)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2Fexamples/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -208,17 +226,17 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2Fexamples/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                            "@value": "http://a.ml/vocabularies/apiContract#operationId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(36,8)-(49,9)]"
+                            "@value": "[(32,8)-(32,37)]"
                           }
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2Fexamples/get/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2Fexamples/get/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2Fexamples/get"
@@ -412,6 +430,11 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "GET_exampleType"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleType/get/source-map",
@@ -420,7 +443,20 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleType/get/source-map/lexical/element_2",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleType/get/source-map/lexical/element_3",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(58,8)-(65,9)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleType/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -436,17 +472,17 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleType/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                            "@value": "http://a.ml/vocabularies/apiContract#operationId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(58,8)-(65,9)]"
+                            "@value": "[(54,8)-(54,40)]"
                           }
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleType/get/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleType/get/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleType/get"
@@ -640,6 +676,11 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "GET_exampleInTypeAndResource"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleInTypeAndResource/get/source-map",
@@ -648,7 +689,20 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleInTypeAndResource/get/source-map/lexical/element_2",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleInTypeAndResource/get/source-map/lexical/element_3",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(74,8)-(87,9)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleInTypeAndResource/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -664,17 +718,17 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleInTypeAndResource/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                            "@value": "http://a.ml/vocabularies/apiContract#operationId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(74,8)-(87,9)]"
+                            "@value": "[(70,8)-(70,53)]"
                           }
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleInTypeAndResource/get/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleInTypeAndResource/get/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleInTypeAndResource/get"
@@ -1684,6 +1738,11 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "GET_examplesInResource"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/source-map",
@@ -1692,7 +1751,20 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/source-map/lexical/element_2",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/source-map/lexical/element_3",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(96,8)-(125,9)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -1708,17 +1780,17 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                            "@value": "http://a.ml/vocabularies/apiContract#operationId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(96,8)-(125,9)]"
+                            "@value": "[(92,8)-(92,47)]"
                           }
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get"
@@ -1912,6 +1984,11 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "GET_examplesInResourceAndType"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResourceAndType/get/source-map",
@@ -1920,7 +1997,20 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResourceAndType/get/source-map/lexical/element_2",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResourceAndType/get/source-map/lexical/element_3",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(134,8)-(153,9)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResourceAndType/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -1936,17 +2026,17 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResourceAndType/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                            "@value": "http://a.ml/vocabularies/apiContract#operationId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(134,8)-(153,9)]"
+                            "@value": "[(130,8)-(130,54)]"
                           }
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResourceAndType/get/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResourceAndType/get/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResourceAndType/get"

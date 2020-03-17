@@ -80,5 +80,4 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
         }
       case _ =>
     }
-
 }

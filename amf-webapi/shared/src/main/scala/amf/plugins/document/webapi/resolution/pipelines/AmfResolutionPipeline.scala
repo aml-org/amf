@@ -13,13 +13,15 @@ class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPip
 
   protected def references = new ReferenceResolutionStage(keepEditingInfo = false)
 
+  protected def parameterNormalizationStage: ParametersNormalizationStage = new AmfParametersNormalizationStage()
+
   override val steps: Seq[ResolutionStage] = Seq(
     references,
     new ExternalSourceRemovalStage,
     new ExtensionsResolutionStage(profileName, keepEditingInfo = false),
     new ShapeNormalizationStage(profileName, keepEditingInfo = false),
     new SecurityResolutionStage(),
-    new ParametersNormalizationStage(profileName),
+    parameterNormalizationStage,
     new ServersNormalizationStage(profileName),
     new PathDescriptionNormalizationStage(profileName),
     new MediaTypeResolutionStage(profileName),

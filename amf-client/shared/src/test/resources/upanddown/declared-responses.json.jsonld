@@ -122,6 +122,11 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "Some title"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get/source-map",
@@ -130,7 +135,20 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_2",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_3",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(14,8)-(18,9)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#name"
@@ -146,17 +164,17 @@
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                            "@value": "http://a.ml/vocabularies/apiContract#operationId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(14,8)-(18,9)]"
+                            "@value": "[(13,8)-(13,35)]"
                           }
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get"

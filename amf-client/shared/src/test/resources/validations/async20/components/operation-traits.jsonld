@@ -49,7 +49,7 @@
                     "@value": "publish"
                   }
                 ],
-                "http://a.ml/vocabularies/core#name": [
+                "http://a.ml/vocabularies/apiContract#operationId": [
                   {
                     "@value": "something"
                   }
@@ -107,7 +107,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/operation-traits.yaml#/web-api/end-points/someChannel/publish/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/core#name"
+                            "@value": "http://a.ml/vocabularies/apiContract#operationId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -242,7 +242,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(14,23)]"
+                    "@value": "[(1,0)-(15,29)]"
                   }
                 ]
               }
@@ -288,6 +288,11 @@
             "@value": true
           }
         ],
+        "http://a.ml/vocabularies/apiContract#operationId": [
+          {
+            "@value": "traitThing"
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/operation-traits.yaml#/declarations/operationTraits/firstTrait/source-map",
@@ -311,6 +316,32 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/operation-traits.yaml#/declarations/operationTraits/firstTrait/source-map/lexical/element_2",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiContract#guiSummary"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(14,6)-(15,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/operation-traits.yaml#/declarations/operationTraits/firstTrait/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiContract#operationId"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(15,6)-(15,29)]"
+                  }
+                ]
+              },
+              {
                 "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/operation-traits.yaml#/declarations/operationTraits/firstTrait/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
@@ -319,20 +350,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(13,4)-(14,23)]"
-                  }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/operation-traits.yaml#/declarations/operationTraits/firstTrait/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/apiContract#guiSummary"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(14,6)-(14,23)]"
+                    "@value": "[(13,4)-(15,29)]"
                   }
                 ]
               }

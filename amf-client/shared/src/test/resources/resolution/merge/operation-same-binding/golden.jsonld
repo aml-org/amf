@@ -19,11 +19,6 @@
             "@value": "subscribe"
           }
         ],
-        "http://a.ml/vocabularies/core#name": [
-          {
-            "@value": "traitOperationId"
-          }
-        ],
         "http://a.ml/vocabularies/apiBinding#binding": [
           {
             "@id": "target/operation-bindings",
@@ -126,6 +121,11 @@
                 ]
               }
             ]
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#operationId": [
+          {
+            "@value": "traitOperationId"
           }
         ]
       }

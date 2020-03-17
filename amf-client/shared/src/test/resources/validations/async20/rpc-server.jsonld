@@ -142,11 +142,6 @@
                     "@value": "subscribe"
                   }
                 ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "sendSumResult"
-                  }
-                ],
                 "http://a.ml/vocabularies/apiContract#returns": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/default-response",
@@ -727,6 +722,11 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "sendSumResult"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/source-map",
@@ -736,6 +736,19 @@
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_3",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiBinding#binding"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(29,6)-(32,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/apiContract#returns"
@@ -748,28 +761,15 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/core#name"
+                            "@value": "http://a.ml/vocabularies/apiContract#operationId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(28,6)-(29,0)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/apiBinding#binding"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(29,6)-(32,0)]"
                           }
                         ]
                       },
@@ -1240,11 +1240,6 @@
                 "http://a.ml/vocabularies/apiContract#method": [
                   {
                     "@value": "publish"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "sum"
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
@@ -1980,6 +1975,11 @@
                     ]
                   }
                 ],
+                "http://a.ml/vocabularies/apiContract#operationId": [
+                  {
+                    "@value": "sum"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/source-map",
@@ -1991,12 +1991,12 @@
                         "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/core#name"
+                            "@value": "http://a.ml/vocabularies/apiContract#expects"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(50,6)-(51,0)]"
+                            "@value": "[(51,14)-(65,23)]"
                           }
                         ]
                       },
@@ -2004,12 +2004,12 @@
                         "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#expects"
+                            "@value": "http://a.ml/vocabularies/apiContract#operationId"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(51,14)-(65,23)]"
+                            "@value": "[(50,6)-(51,0)]"
                           }
                         ]
                       },
