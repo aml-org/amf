@@ -27,7 +27,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
   override protected type Bindings = ChannelBindings
   override protected val bindingsField: Field = ChannelBindingsModel.Bindings
 
-  override protected def createBindings(map: YMap): ChannelBindings = ChannelBindings(map)
+  override protected def createBindings(): ChannelBindings = ChannelBindings()
 
   override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
     AsyncChannelBindingsParser(entryLike, parent)

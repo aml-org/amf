@@ -40,6 +40,26 @@ case class AsyncDeclarationsEmitters(declares: Seq[DomainElement], ordering: Spe
     if (declarations.correlationIds.nonEmpty)
       result += AsyncCorrelationIdDeclarationsEmitter(declarations.correlationIds.values.toSeq, ordering)
 
+    if (declarations.serverBindings.nonEmpty)
+      result += AsyncApiBindingsDeclarationEmitter("serverBindings",
+                                                   declarations.serverBindings.values.toSeq,
+                                                   ordering)
+
+    if (declarations.messageBindings.nonEmpty)
+      result += AsyncApiBindingsDeclarationEmitter("messageBindings",
+                                                   declarations.messageBindings.values.toSeq,
+                                                   ordering)
+
+    if (declarations.channelBindings.nonEmpty)
+      result += AsyncApiBindingsDeclarationEmitter("channelBindings",
+                                                   declarations.channelBindings.values.toSeq,
+                                                   ordering)
+
+    if (declarations.operationBindings.nonEmpty)
+      result += AsyncApiBindingsDeclarationEmitter("operationBindings",
+                                                   declarations.operationBindings.values.toSeq,
+                                                   ordering)
+
     result
   }
 }

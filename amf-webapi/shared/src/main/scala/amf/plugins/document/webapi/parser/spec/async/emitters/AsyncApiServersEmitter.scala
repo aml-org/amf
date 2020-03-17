@@ -1,18 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.async.emitters
 
 import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.async.emitters.bindings.AsyncApiServerBindingsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.domain.{OasServerVariablesEmitter, SecurityRequirementsEmitter}
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel.ServerModel
 import amf.plugins.domain.webapi.models.Server
-import amf.plugins.domain.webapi.models.bindings.ServerBinding
-import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
@@ -52,7 +48,7 @@ private class AsyncApiSingleServerEmitter(server: Server, ordering: SpecOrdering
     fs.entry(ServerModel.Variables).foreach(f => result += OasServerVariablesEmitter(f, ordering))
     fs.entry(ServerModel.Security).foreach(f => result += SecurityRequirementsEmitter("security", f, ordering))
     fs.entry(ServerModel.Bindings)
-      .foreach(f => result += new AsyncApiBindingsEmitter(f, ordering, bindingOrphanAnnotations))
+      .foreach(f => result += AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
 
     result ++= AnnotationsEmitter(server, ordering).emitters
 

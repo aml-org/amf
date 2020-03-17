@@ -57,7 +57,7 @@ case class AsyncMessageDeclarationsEmitter(messages: Seq[Message], isTrait: Bool
       if (isTrait) "messageTraits" else "messages",
       _.obj(entryBuilder => {
         messages.foreach(msg => {
-          val emitter = new AsyncApiMessageContentEmitter(msg, declared = true, isTrait = isTrait, ordering)
+          val emitter = new AsyncApiMessageContentEmitter(msg, isTrait = isTrait, ordering)
           entryBuilder.entry(msg.name.value(), b => emitter.emit(b))
         })
       })
@@ -75,7 +75,7 @@ case class AsyncTraitMessagesEmitter(messages: Seq[Message], ordering: SpecOrder
       "traits",
       _.list(partBuilder => {
         messages.foreach(msg => {
-          val emitter = new AsyncApiMessageContentEmitter(msg, declared = false, isTrait = true, ordering)
+          val emitter = new AsyncApiMessageContentEmitter(msg, isTrait = true, ordering)
           emitter.emit(partBuilder)
         })
       })
@@ -99,10 +99,8 @@ private class AsyncApiOneOfMessageEmitter(fieldEntry: FieldEntry, ordering: Spec
   override def position(): Position = pos(fieldEntry.value.annotations)
 }
 
-private class AsyncApiMessageContentEmitter(message: Message,
-                                            declared: Boolean = false,
-                                            isTrait: Boolean = false,
-                                            ordering: SpecOrdering)(implicit val spec: OasLikeSpecEmitterContext)
+private class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, ordering: SpecOrdering)(
+    implicit val spec: OasLikeSpecEmitterContext)
     extends PartEmitter {
 
   override def emit(b: YDocument.PartBuilder): Unit = {
@@ -116,7 +114,7 @@ private class AsyncApiMessageContentEmitter(message: Message,
           emitter =>
             {
               val result = ListBuffer[EntryEmitter]()
-              if (!declared) fs.entry(MessageModel.DisplayName).map(f => result += ValueEmitter("name", f))
+              fs.entry(MessageModel.DisplayName).map(f => result += ValueEmitter("name", f))
               val bindingOrphanAnnotations =
                 message.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
               fs.entry(MessageModel.Headers).foreach(emitHeader(result, _))
@@ -130,7 +128,7 @@ private class AsyncApiMessageContentEmitter(message: Message,
               fs.entry(MessageModel.Documentation)
                 .map(f => result += new AsyncApiCreativeWorksEmitter(f.element.asInstanceOf[CreativeWork], ordering))
               fs.entry(MessageModel.Bindings)
-                .foreach(f => result += new AsyncApiBindingsEmitter(f, ordering, bindingOrphanAnnotations))
+                .foreach(f => result += new AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
               fs.entry(MessageModel.Examples)
                 .foreach(f =>
                   result += NamedMultipleExampleEmitter("examples", f.arrayValues[Example], ordering, Seq())) // TODO: references
