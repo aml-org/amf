@@ -41,8 +41,8 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
     } else {
 
       val additionalEmitters: Seq[EntryEmitter] =
-        (RamlRequiredShapeEmitter(shape = property.range, property.fields.entry(PropertyShapeModel.MinCount))
-          .emitter())
+        RamlRequiredShapeEmitter(shape = property.range, property.fields.entry(PropertyShapeModel.MinCount))
+          .emitter()
           .toSeq
 
       property.range match {

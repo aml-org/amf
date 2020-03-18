@@ -13,7 +13,8 @@ case class RamlNotConstraintEmitter(shape: Shape, ordering: SpecOrdering, refere
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitter = Raml10TypePartEmitter(shape.not.asInstanceOf[AnyShape], ordering, None, Nil, references)
+  val emitter: Raml10TypePartEmitter =
+    Raml10TypePartEmitter(shape.not.asInstanceOf[AnyShape], ordering, None, Nil, references)
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(

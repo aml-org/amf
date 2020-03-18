@@ -21,7 +21,7 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
     with EntryEmitter {
 
   val propertyName: String = property.patternName.option().getOrElse(property.name.value())
-  val propertyKey          = YNode(YScalar(propertyName), YType.Str)
+  val propertyKey: YNode   = YNode(YScalar(propertyName), YType.Str)
 
   val computedEmitters: Either[PartEmitter, Seq[EntryEmitter]] =
     emitter(pointer ++ Seq(propertiesKey, propertyName), schemaPath)
