@@ -10,9 +10,10 @@ object RamlUnionEmitterHelper {
   def inlinedEmission(shape: UnionShape): Option[String] = {
     val union: Seq[String] = shape.anyOf.map {
       case scalar: ScalarShape if isSimpleScalar(scalar) =>
-        RamlTypeDefStringValueMatcher
+        val typeName = RamlTypeDefStringValueMatcher
           .matchType(TypeDefXsdMapping.typeDef(scalar.dataType.value()), scalar.format.option())
-          ._1
+        typeName.format
+          .getOrElse(typeName.typeDef)
       case s: Shape if s.isLink && s.linkLabel.option().isDefined => s.linkLabel.value()
       case n: NilShape if n.fields.fields().isEmpty               => "nil"
       case a: ArrayShape if a.fields.fields().isEmpty             => "array"

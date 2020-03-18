@@ -9,7 +9,12 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.webapi.annotations.Inferred
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.NumberTypeToYTypeConverter
-import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.document.webapi.parser.{
+  OasTypeDefMatcher,
+  RamlTypeDefMatcher,
+  RamlTypeDefStringValueMatcher,
+  TypeName
+}
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping}
@@ -23,8 +28,8 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     extends RamlAnyShapeEmitter(scalar, ordering, references)
     with RamlCommonOASFieldsEmitter {
 
-  private val rawTypeDef: TypeDef = TypeDefXsdMapping.typeDef(scalar.dataType.value())
-  private val (typeDef, format)   = RamlTypeDefStringValueMatcher.matchType(rawTypeDef, scalar.format.option())
+  private val rawTypeDef: TypeDef       = TypeDefXsdMapping.typeDef(scalar.dataType.value())
+  private val TypeName(typeDef, format) = RamlTypeDefStringValueMatcher.matchType(rawTypeDef, scalar.format.option())
 
   override protected val valuesTag: YType = TypeDefYTypeMapping(rawTypeDef)
 
@@ -67,47 +72,42 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     result
   }
 
-  def emitFormat(rawTypeDef: TypeDef, fs: Fields, format: String): Option[EntryEmitter] = {
+  def emitFormat(rawTypeDef: TypeDef, fs: Fields, format: Option[String]): Option[EntryEmitter] = {
     val formatKey =
       if (rawTypeDef.isNumber | rawTypeDef.isDate) "format"
       else "format".asRamlAnnotation
 
-    val translationFormats: Set[String] = OasTypeDefMatcher.knownFormats.diff(RamlTypeDefMatcher.knownFormats)
-    var explictFormatFound              = false
-    val explicitFormat = fs.entry(ScalarShapeModel.Format) match {
-      case Some(entry) if entry.value.value.isInstanceOf[AmfScalar] =>
+    // this formats are here just because we parsed from OAS, the type in RAML has enough
+    // information, we don't need the annotation with this format.
+    // They will be re-generated correctly when translating into OAS
+    val translationFormats = OasTypeDefMatcher.knownFormats.diff(RamlTypeDefMatcher.knownFormats)
+
+    val explicitFormatOption = fs.entry(ScalarShapeModel.Format) flatMap {
+      case entry if entry.value.value.isInstanceOf[AmfScalar] =>
         val entryFormat = entry.value.value.asInstanceOf[AmfScalar].value.toString
-        if (translationFormats(entryFormat)) {
-          // this formats are here just because we parsed from OAS, the type in RAML has enough
-          // information, we don't need the annotation with this format.
-          // They will be re-generated correctly when translating into OAS
-          format
-        } else {
-          explictFormatFound = true
-          entryFormat
-        }
-      case _ => format
+        Some(entryFormat).filter(fmt => !translationFormats(fmt))
+      case _ => None
     }
-    val finalFormat = if (explicitFormat != format) {
-      explicitFormat
-    } else {
-      format
-    }
+
+    val finalFormatOption = explicitFormatOption.orElse(format)
 
     val annotations = fs.entry(ScalarShapeModel.Format) match {
       case Some(entry) if entry.value.value.isInstanceOf[AmfScalar] => entry.value.annotations
       case _                                                        => Annotations()
     }
 
-    if (finalFormat.nonEmpty && finalFormat != "float" && finalFormat != "int32") {
-      Some(RawValueEmitter(formatKey, ScalarShapeModel.Format, finalFormat, annotations))
-    } else if (finalFormat.nonEmpty && (finalFormat == "float" || finalFormat == "int32") && explictFormatFound) {
-      // we always mapping 'number' in RAML to xsd:float, if we are to emit 'float'
-      // as the format must be because it has been explicitly set in this way, not because
-      // we are adding that through the number -> xsd:float mapping
-      Some(RawValueEmitter(formatKey, ScalarShapeModel.Format, finalFormat, annotations))
-    } else {
-      None
+    val isExplicit = explicitFormatOption.isDefined
+
+    // we always mapping 'number' in RAML to xsd:float, if we are to emit 'float'
+    // as the format must be because it has been explicitly set in this way, not because
+    // we are adding that through the number -> xsd:float mapping
+    finalFormatOption map {
+      case "float" if isExplicit =>
+        RawValueEmitter(formatKey, ScalarShapeModel.Format, "float", annotations)
+      case "int32" if isExplicit =>
+        RawValueEmitter(formatKey, ScalarShapeModel.Format, "int32", annotations)
+      case otherFormat =>
+        RawValueEmitter(formatKey, ScalarShapeModel.Format, otherFormat, annotations)
     }
   }
 
