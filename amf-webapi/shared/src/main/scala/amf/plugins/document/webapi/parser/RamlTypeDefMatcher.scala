@@ -20,10 +20,8 @@ object RamlTypeDefMatcher {
     case _         => None
   }
 
-  def matchType(ramlType: String,
-                format: String = "",
-                default: TypeDef = ObjectType,
-                isRef: Boolean = false): TypeDef =
+  def matchType(typeName: TypeName, default: TypeDef = ObjectType, isRef: Boolean = false): TypeDef = {
+    val TypeName(ramlType, format) = typeName
     ramlType match {
       case XMLSchema(_) if !isRef      => XMLSchemaType
       case JSONSchema(_) if !isRef     => JSONSchemaType
@@ -32,22 +30,22 @@ object RamlTypeDefMatcher {
       case "any"                       => AnyType
       case "string" =>
         format match {
-          case "byte"     => ByteType
-          case "binary"   => BinaryType
-          case "password" => PasswordType
-          case _          => StrType
+          case Some("byte")     => ByteType
+          case Some("binary")   => BinaryType
+          case Some("password") => PasswordType
+          case _                => StrType
         }
       case "number" =>
         format match {
-          case "int"    => IntType
-          case "int8"   => IntType
-          case "int16"  => IntType
-          case "int32"  => IntType
-          case "int64"  => LongType
-          case "long"   => LongType
-          case "float"  => FloatType
-          case "double" => DoubleType
-          case _        => NumberType
+          case Some("int")    => IntType
+          case Some("int8")   => IntType
+          case Some("int16")  => IntType
+          case Some("int32")  => IntType
+          case Some("int64")  => LongType
+          case Some("long")   => LongType
+          case Some("float")  => FloatType
+          case Some("double") => DoubleType
+          case _              => NumberType
         }
       case "integer"       => IntType
       case "boolean"       => BoolType
@@ -61,6 +59,7 @@ object RamlTypeDefMatcher {
       case "file"          => FileType
       case _               => default
     }
+  }
 
   private def ltrim(s: String) =
     s.replaceAll("^(\\s+|[\uFEFF-\uFFFF])", "")
@@ -92,40 +91,45 @@ object RamlTypeDefMatcher {
   }
 }
 
+case class TypeName(typeDef: String, format: Option[String] = None)
+object TypeName {
+  def apply(typeDef: String, format: String): TypeName = new TypeName(typeDef, Some(format))
+}
+
 object RamlTypeDefStringValueMatcher {
 
-  def matchType(typeDef: TypeDef, format: Option[String]): (String, String) = typeDef match {
+  def matchType(typeDef: TypeDef, format: Option[String]): TypeName = typeDef match {
 
-    case ByteType     => ("string", "byte")
-    case BinaryType   => ("string", "binary")
-    case PasswordType => ("string", "password")
-    case StrType      => ("string", "")
+    case ByteType     => TypeName("string", "byte")
+    case BinaryType   => TypeName("string", "binary")
+    case PasswordType => TypeName("string", "password")
+    case StrType      => TypeName("string")
     case IntType =>
       format match {
-        case Some("int")   => ("number", "int")
-        case Some("int8")  => ("number", "int8")
-        case Some("int16") => ("number", "int16")
-        case Some("int32") => ("number", "int32")
-        case _             => ("integer", "")
+        case Some("int")   => TypeName("number", "int")
+        case Some("int8")  => TypeName("number", "int8")
+        case Some("int16") => TypeName("number", "int16")
+        case Some("int32") => TypeName("number", "int32")
+        case _             => TypeName("integer")
       }
     case LongType =>
       format match {
-        case Some("int64") => ("number", "int64")
-        case Some("long")  => ("number", "long")
-        case _             => ("integer", "long")
+        case Some("int64") => TypeName("number", "int64")
+        case Some("long")  => TypeName("number", "long")
+        case _             => TypeName("integer", "long")
       }
-    case FloatType        => ("number", "float")
-    case DoubleType       => ("number", "double")
-    case BoolType         => ("boolean", "")
-    case DateTimeType     => ("datetime", "")
-    case DateTimeOnlyType => ("datetime-only", "")
-    case TimeOnlyType     => ("time-only", "")
-    case DateOnlyType     => ("date-only", "")
-    case ArrayType        => ("array", "")
-    case ObjectType       => ("object", "")
-    case FileType         => ("file", "")
-    case NilType          => ("nil", "")
-    case NumberType       => ("number", "")
+    case FloatType        => TypeName("number", "float")
+    case DoubleType       => TypeName("number", "double")
+    case BoolType         => TypeName("boolean")
+    case DateTimeType     => TypeName("datetime")
+    case DateTimeOnlyType => TypeName("datetime-only")
+    case TimeOnlyType     => TypeName("time-only")
+    case DateOnlyType     => TypeName("date-only")
+    case ArrayType        => TypeName("array")
+    case ObjectType       => TypeName("object")
+    case FileType         => TypeName("file")
+    case NilType          => TypeName("nil")
+    case NumberType       => TypeName("number")
     case UndefinedType    => throw new RuntimeException("Undefined type def")
   }
 }

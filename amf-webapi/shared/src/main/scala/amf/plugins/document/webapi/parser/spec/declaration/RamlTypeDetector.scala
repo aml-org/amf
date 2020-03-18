@@ -6,9 +6,9 @@ import amf.core.parser._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, matchType, XMLSchema}
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
-import amf.plugins.document.webapi.parser.{RamlTypeDefStringValueMatcher, RamlTypeDefMatcher}
+import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher, TypeName}
 import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
@@ -92,7 +92,7 @@ case class RamlTypeDetector(parent: String,
 
         case t if t.endsWith("?") => Some(NilUnionType)
 
-        case t: String if matchType(t, default = UndefinedType) == UndefinedType =>
+        case t: String if matchType(TypeName(t), default = UndefinedType) == UndefinedType =>
           // it might be a named type
           // its for identify the type, so i can search in all the scope, no need to difference between named ref and includes.
 
@@ -105,8 +105,8 @@ case class RamlTypeDetector(parent: String,
         case _ => // todo add if well known type?
           val t = scalar.text
           //      val f = map.key("format".asRamlAnnotation).map(_.value.value.toScalar.text).getOrElse("")
-          if (format.isDefined) format.map(f => matchType(t, f))
-          else Some(matchType(t))
+          if (format.isDefined) format.map(f => matchType(TypeName(t, f)))
+          else Some(matchType(TypeName(t)))
       }
   }
 
@@ -216,9 +216,9 @@ case class RamlTypeDetector(parent: String,
           }
         case _: NilShape => Some(NilType)
         case s: ScalarShape =>
-          val (typeDef, format) =
+          val TypeName(typeDef, format) =
             RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(s.dataType.value()), s.format.option())
-          Some(matchType(typeDef, format))
+          Some(matchType(TypeName(typeDef, format)))
         case union: UnionShape => if (plainUnion) InheritsUnionMatcher(union, part) else Some(UnionType)
         case _: NodeShape      => Some(ObjectType)
         case _: ArrayShape     => Some(ArrayType)
