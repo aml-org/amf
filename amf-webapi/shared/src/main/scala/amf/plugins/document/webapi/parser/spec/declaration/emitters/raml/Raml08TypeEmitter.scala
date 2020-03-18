@@ -1,4 +1,4 @@
-package amf.plugins.document.webapi.parser.spec.raml
+package amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
 
 import amf.core.emitter.BaseEmitters.{MapEntryEmitter, pos}
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
@@ -6,8 +6,8 @@ import amf.core.model.domain.Shape
 import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ExamplesEmitter, SimpleTypeEmitter}
+import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
