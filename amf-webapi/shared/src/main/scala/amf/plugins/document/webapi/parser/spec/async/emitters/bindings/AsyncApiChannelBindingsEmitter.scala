@@ -7,7 +7,8 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.AsyncSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.async
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.async.AsyncSchemaEmitter
 import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091ChannelBindingModel,
   Amqp091ChannelExchangeModel,
@@ -52,11 +53,11 @@ class WebSocketChannelBindingEmitter(binding: WebSocketsChannelBinding, ordering
         fs.entry(WebSocketsChannelBindingModel.Method).foreach(f => result += ValueEmitter("method", f))
         fs.entry(WebSocketsChannelBindingModel.Query)
           .foreach(
-            f => result += emitters.AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq())
+            f => result += async.AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq())
           )
         fs.entry(WebSocketsChannelBindingModel.Headers)
           .foreach(
-            f => result += emitters.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq())
+            f => result += async.AsyncSchemaEmitter("headers", f.element.asInstanceOf[Shape], ordering, Seq())
           )
         emitBindingVersion(fs, result)
 

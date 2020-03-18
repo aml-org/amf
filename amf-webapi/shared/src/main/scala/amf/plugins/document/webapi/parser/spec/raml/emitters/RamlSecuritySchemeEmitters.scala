@@ -8,7 +8,7 @@ import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{Raml10TypePartEmitter, RamlNamedTypeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{Raml10TypePartEmitter, RamlNamedTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.security._

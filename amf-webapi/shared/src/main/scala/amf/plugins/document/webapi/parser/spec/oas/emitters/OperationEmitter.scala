@@ -5,14 +5,13 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.core.parser.FieldEntry
 import amf.core.utils._
 import amf.plugins.document.webapi.annotations.FormBodyParameter
-import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
   Raml10TypePartEmitter,
   RamlNamedTypeEmitter,
   RamlTypePartEmitter

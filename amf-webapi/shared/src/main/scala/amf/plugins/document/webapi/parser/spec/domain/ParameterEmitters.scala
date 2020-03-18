@@ -21,13 +21,9 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{
 }
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
-import amf.plugins.document.webapi.parser.spec.declaration.{emitters, _}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  OasSchemaEmitter,
-  OasTypeEmitter,
-  Raml08TypePartEmitter,
-  Raml10TypeEmitter
-}
+import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasSchemaEmitter, OasTypeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{Raml08TypePartEmitter, Raml10TypeEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
 import amf.plugins.domain.shapes.models._
@@ -106,8 +102,7 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
                   result += EntryPartEmitter("type", h.asInstanceOf[PartEmitter])
                 }
             case Some(shape: AnyShape) =>
-              result ++= emitters
-                .Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references)
+              result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references)
                 .entries()
             case Some(other) =>
               spec.eh.violation(ResolutionValidation,
@@ -371,7 +366,8 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
               result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape],
                                         ordering,
                                         Seq(ShapeModel.Description, ShapeModel.DisplayName),
-                                        references).entries()
+                                        references)
+                .entries()
             }
           }
         if (spec.vendor == Vendor.OAS30) result ++= oas3Emitters(fs)
@@ -442,11 +438,9 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
         .map(f => result += RamlScalarEmitter("x-amf-required", f))
 
       fs.entry(ParameterModel.Schema)
-        .map(
-          _ =>
-            result ++= emitters
-              .OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references)
-              .entries())
+        .map(_ =>
+          result ++= OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references)
+            .entries())
 
       traverse(ordering.sorted(result), b)
     }
@@ -542,7 +536,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
       }
       payload.fields
         .entry(PayloadModel.Schema)
-        .map(f => result += emitters.OasSchemaEmitter(f, ordering, references))
+        .map(f => result += OasSchemaEmitter(f, ordering, references))
       result ++= AnnotationsEmitter(payload, ordering).emitters
 
       traverse(ordering.sorted(result), b)
@@ -570,7 +564,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
 
       fs.entry(FileShapeModel.Description).map(f => result += ValueEmitter("description", f))
       result += MapEntryEmitter("in", "formData", position = bindingPos(file))
-      result ++= emitters.OasTypeEmitter(file, ordering, Seq(ShapeModel.Description), references).entries()
+      result ++= OasTypeEmitter(file, ordering, Seq(ShapeModel.Description), references).entries()
       result ++= AnnotationsEmitter(payload, ordering).emitters
 
       traverse(ordering.sorted(result), b)
@@ -615,7 +609,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
         }
 
         result += MapEntryEmitter("in", "formData", position = bindingPos(schema))
-        result ++= emitters.OasTypeEmitter(schema, ordering, references = references).entries()
+        result ++= OasTypeEmitter(schema, ordering, references = references).entries()
         result ++= AnnotationsEmitter(payload, ordering).emitters
       }
 

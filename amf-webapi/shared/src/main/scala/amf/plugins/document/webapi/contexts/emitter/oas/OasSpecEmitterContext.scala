@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.DefinitionsEmissionHelpe
 import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.plugins.document.webapi.contexts.{RefEmitter, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.schema.json.{
   CompactJsonSchemaRecursiveShapeEmitter,
   CompactJsonSchemaTypeEmitter
 }

@@ -5,6 +5,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.RamlCommonOASFieldsEmitter
 import amf.plugins.document.webapi.parser.spec.domain.SingleExampleEmitter
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ScalarShape
@@ -13,6 +14,7 @@ import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 
 import scala.collection.mutable.ListBuffer
 
+// TODO is this for RAML only?
 case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends RamlCommonOASFieldsEmitter {
 

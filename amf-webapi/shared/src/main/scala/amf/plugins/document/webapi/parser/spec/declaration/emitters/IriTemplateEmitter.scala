@@ -7,6 +7,7 @@ import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
 import org.yaml.model.YDocument.EntryBuilder
 
+// TODO: is this for OAS only?
 case class IriTemplateEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(

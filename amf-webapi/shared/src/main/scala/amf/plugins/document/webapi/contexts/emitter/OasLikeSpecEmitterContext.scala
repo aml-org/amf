@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.OasRefEmitter
 import amf.plugins.document.webapi.contexts.{RefEmitter, SpecEmitterContext, SpecEmitterFactory}
 import amf.plugins.document.webapi.parser.OasTypeDefStringValueMatcher
 import amf.plugins.document.webapi.parser.spec.async.emitters.Draft7ExampleEmitters
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasRecursiveShapeEmitter, OasTypeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasRecursiveShapeEmitter, OasTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   AnnotationEmitter,
   JSONSchemaDraft7SchemaVersion,

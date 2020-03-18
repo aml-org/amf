@@ -8,7 +8,8 @@ import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration.emitters
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.AsyncSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.async
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.async.AsyncSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NamedMultipleExampleEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.TagsEmitter
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
@@ -158,7 +159,7 @@ private class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean =
   private def emitHeader(result: ListBuffer[EntryEmitter], field: FieldEntry): Unit = {
     field.arrayValues[Parameter].headOption.foreach { param =>
       val toEmit = param.schema
-      result += emitters.AsyncSchemaEmitter("headers", toEmit, ordering, Seq())
+      result += async.AsyncSchemaEmitter("headers", toEmit, ordering, Seq())
     }
   }
 
@@ -170,7 +171,7 @@ private class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean =
       fs.entry(PayloadModel.SchemaMediaType).map(field => result += ValueEmitter("schemaFormat", field))
       fs.entry(PayloadModel.Schema)
         .map(field =>
-          result += emitters
+          result += async
             .AsyncSchemaEmitter("payload", field.element.asInstanceOf[Shape], ordering, List(), schemaMediaType))
     }
   }

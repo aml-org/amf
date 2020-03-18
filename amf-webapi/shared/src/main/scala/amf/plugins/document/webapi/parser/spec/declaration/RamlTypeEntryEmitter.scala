@@ -6,7 +6,8 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.Raml10TypeEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
 case class RamlTypeEntryEmitter(key: String, shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -15,7 +16,7 @@ case class RamlTypeEntryEmitter(key: String, shape: Shape, ordering: SpecOrderin
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(key, _.obj { b =>
-      val emitters = Raml10TypeEmitter(shape, ordering, references = references).entries()
+      val emitters = raml.Raml10TypeEmitter(shape, ordering, references = references).entries()
       traverse(ordering.sorted(emitters), b)
     })
   }
