@@ -13,7 +13,8 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
   OasSpecEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.OasSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -55,7 +56,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
 
         fs.entry(PayloadModel.Schema).map { f =>
           if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
-            result += OasSchemaEmitter(f, ordering, references)
+            result += oas.OasSchemaEmitter(f, ordering, references)
           }
         }
 

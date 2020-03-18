@@ -17,7 +17,8 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas3SpecEmitterFactory,
   OasSpecEmitterContext
 }
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.OasSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
 
 import scala.collection.mutable
 
@@ -73,7 +74,7 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
                       .entry(PayloadModel.Schema)
                       .map { f =>
                         if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
-                          result += OasSchemaEmitter(f, ordering, references)
+                          result += oas.OasSchemaEmitter(f, ordering, references)
                         }
                       }
                   })

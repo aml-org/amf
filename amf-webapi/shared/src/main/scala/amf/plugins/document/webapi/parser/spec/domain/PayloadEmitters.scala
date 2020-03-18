@@ -9,13 +9,14 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.{emitters, _}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
   Raml08TypePartEmitter,
   Raml10TypeEmitter,
   Raml10TypePartEmitter,
-  RequiredShapeEmitter
+  RamlRequiredShapeEmitter
 }
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
@@ -38,10 +39,12 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
           .foreach(mediaType => {
             b.complexEntry(
               ScalarEmitter(mediaType.scalar).emit(_),
-              Raml10TypePartEmitter(shape,
-                                    ordering,
-                                    Some(AnnotationsEmitter(payload, ordering)),
-                                    references = references).emit(_)
+              raml
+                .Raml10TypePartEmitter(shape,
+                                       ordering,
+                                       Some(AnnotationsEmitter(payload, ordering)),
+                                       references = references)
+                .emit(_)
             )
           })
       case Some(other) =>
@@ -56,11 +59,10 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
           .foreach(mediaType => {
             b.complexEntry(
               ScalarEmitter(mediaType.scalar).emit(_),
-              emitters
-                .Raml10TypePartEmitter(null,
-                                       ordering,
-                                       Some(AnnotationsEmitter(payload, ordering)),
-                                       references = references)
+              Raml10TypePartEmitter(null,
+                                    ordering,
+                                    Some(AnnotationsEmitter(payload, ordering)),
+                                    references = references)
                 .emit(_)
             )
           })
@@ -174,11 +176,11 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
                   ob.entry(
                     p.name.value(),
                     pb => {
-                      emitters.Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emitter match {
+                      Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emitter match {
                         case Left(prop) => prop.emit(pb)
                         case Right(entries) =>
                           val additionalEmitters: Seq[EntryEmitter] =
-                            RequiredShapeEmitter(shape = p.range, p.fields.entry(PropertyShapeModel.MinCount))
+                            RamlRequiredShapeEmitter(shape = p.range, p.fields.entry(PropertyShapeModel.MinCount))
                               .emitter() match {
                               case Some(emitter) => Seq(emitter)
                               case None          => Nil

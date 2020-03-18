@@ -12,8 +12,8 @@ import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.{CompactJsonSchemaEmitterContext, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  OasNamedTypeEmitter,
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasNamedTypeEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
   RamlNamedTypeEmitter,
   RamlRecursiveShapeTypeEmitter
 }
@@ -85,12 +85,11 @@ case class CompactJsonSchemaTypesEmitters(types: Seq[Shape], references: Seq[Bas
           val labeledShape = definitionsQueue.dequeue()
           // used to force shape to be emitted with OasTypeEmitter, and not as a ref
           spec.forceEmission = Some(labeledShape.shape.id)
-          emitters
-            .OasNamedTypeEmitter(labeledShape.shape,
-                                 ordering,
-                                 references,
-                                 pointer = Seq("definitions"),
-                                 Some(labeledShape.label))
+          OasNamedTypeEmitter(labeledShape.shape,
+                              ordering,
+                              references,
+                              pointer = Seq("definitions"),
+                              Some(labeledShape.label))
             .emit(entryBuilder)
         }
       }

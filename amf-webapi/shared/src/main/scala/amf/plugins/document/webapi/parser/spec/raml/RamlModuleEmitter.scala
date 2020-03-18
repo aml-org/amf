@@ -11,7 +11,8 @@ import amf.core.remote.Raml
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.Raml10TypeEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
 import amf.plugins.document.webapi.parser.spec.raml.emitters.Raml10SecuritySchemeEmitter
 import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
@@ -88,7 +89,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
 
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
       Option(dataType.encodes) match {
-        case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = Nil).entries()
+        case Some(shape: AnyShape) => raml.Raml10TypeEmitter(shape, ordering, references = Nil).entries()
         case Some(other) =>
           spec.eh.violation(ResolutionValidation,
                             other.id,

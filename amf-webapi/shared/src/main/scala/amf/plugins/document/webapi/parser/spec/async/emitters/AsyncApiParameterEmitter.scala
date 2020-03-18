@@ -10,7 +10,7 @@ import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.AsyncSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.async
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
 import org.yaml.model.YDocument.PartBuilder
@@ -50,7 +50,7 @@ class AsyncApiSingleParameterEmitter(parameter: Parameter, ordering: SpecOrderin
               val result = ListBuffer[EntryEmitter]()
               fs.entry(ParameterModel.Description).foreach(f => result += ValueEmitter("description", f))
               fs.entry(ParameterModel.Schema)
-                .foreach(f => result += AsyncSchemaEmitter("schema", f.element.asInstanceOf[Shape], ordering, Seq())) // TODO: add references
+                .foreach(f => result += async.AsyncSchemaEmitter("schema", f.element.asInstanceOf[Shape], ordering, Seq())) // TODO: add references
               fs.entry(ParameterModel.Binding).foreach(f => emitLocation(f, result))
               result ++= AnnotationsEmitter(parameter, ordering).emitters
               traverse(ordering.sorted(result), emitter)

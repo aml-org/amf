@@ -10,7 +10,8 @@ import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasPropertyShapeEmitter, RamlPropertyShapeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasPropertyShapeEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.RamlPropertyShapeEmitter
 
 case class RamlCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
