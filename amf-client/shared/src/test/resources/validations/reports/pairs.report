@@ -1,0 +1,70 @@
+Model: file://amf-client/shared/src/test/resources/validations/pairs.raml
+Profile: pairs
+Conforms? false
+Number of results: 8
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/data#test-equals
+  Message: Min and max length must match in scalar
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/pairs.raml#/declarations/types/ClassA/property/property1/scalar/property1
+  Property: http://www.w3.org/ns/shacl#maxLength
+  Position: Some(LexicalInformation([(18,27)-(18,30)]))
+  Location: file://amf-client/shared/src/test/resources/validations/pairs.raml
+
+- Source: http://a.ml/vocabularies/data#test-equals
+  Message: Min and max length must match in scalar
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/pairs.raml#/declarations/types/ClassA/property/property1/scalar/property1
+  Property: http://www.w3.org/ns/shacl#maxLength
+  Position: Some(LexicalInformation([(18,27)-(18,30)]))
+  Location: file://amf-client/shared/src/test/resources/validations/pairs.raml
+
+- Source: http://a.ml/vocabularies/data#test-less-than
+  Message: Min and max length must be <
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/pairs.raml#/declarations/types/ClassA/property/property2/scalar/property2%3F
+  Property: http://www.w3.org/ns/shacl#minLength
+  Position: Some(LexicalInformation([(22,27)-(22,30)]))
+  Location: file://amf-client/shared/src/test/resources/validations/pairs.raml
+
+- Source: http://a.ml/vocabularies/data#test-disjoint
+  Message: Min and max length must not be equal
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/pairs.raml#/declarations/types/ClassA/property/property2/scalar/property2%3F
+  Property: http://www.w3.org/ns/shacl#maxLength
+  Position: Some(LexicalInformation([(23,27)-(23,30)]))
+  Location: file://amf-client/shared/src/test/resources/validations/pairs.raml
+
+- Source: http://a.ml/vocabularies/data#test-less-than
+  Message: Min and max length must be <
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/pairs.raml#/declarations/types/ClassA/property/property3/scalar/property3
+  Property: http://www.w3.org/ns/shacl#minLength
+  Position: Some(LexicalInformation([(26,27)-(26,30)]))
+  Location: file://amf-client/shared/src/test/resources/validations/pairs.raml
+
+- Source: http://a.ml/vocabularies/data#test-less-than-equal
+  Message: Min and max length must be <=
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/pairs.raml#/declarations/types/ClassA/property/property3/scalar/property3
+  Property: http://www.w3.org/ns/shacl#minLength
+  Position: Some(LexicalInformation([(26,27)-(26,30)]))
+  Location: file://amf-client/shared/src/test/resources/validations/pairs.raml
+
+- Source: http://a.ml/vocabularies/data#test-equals
+  Message: Min and max length must match in scalar
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/pairs.raml#/declarations/types/ClassA/property/property3/scalar/property3
+  Property: http://www.w3.org/ns/shacl#maxLength
+  Position: Some(LexicalInformation([(27,27)-(27,30)]))
+  Location: file://amf-client/shared/src/test/resources/validations/pairs.raml
+
+- Source: http://a.ml/vocabularies/data#test-equals
+  Message: Min and max length must match in scalar
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/pairs.raml#/declarations/types/ClassA/property/property3/scalar/property3
+  Property: http://www.w3.org/ns/shacl#maxLength
+  Position: Some(LexicalInformation([(27,27)-(27,30)]))
+  Location: file://amf-client/shared/src/test/resources/validations/pairs.raml

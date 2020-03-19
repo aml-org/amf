@@ -68,16 +68,28 @@ object ValidationDialectText {
       |      in:
       |        propertyTerm: shacl.in
       |        allowMultiple: true
-      |        range: string
+      |        range: any
       |      nested:
       |        propertyTerm: shacl.node
-      |        range: shapeValidationNode
+      |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
       |      atLeast:
       |        propertyTerm: shacl.atLeastNode
       |        range: qualifiedShapeValidationNode
       |      atMost:
       |        propertyTerm: shacl.atMostNode
       |        range: qualifiedShapeValidationNode
+      |      equalsToProperty:
+      |        propertyTerm: shacl.equals
+      |        range: string
+      |      disjointWithProperty:
+      |        propertyTerm: shacl.disjoint
+      |        range: string
+      |      lessThanProperty:
+      |        propertyTerm: shacl.lessThan
+      |        range: string
+      |      lessThanOrEqualsToProperty:
+      |        propertyTerm: shacl.lessThanOrEquals
+      |        range: string
       |  functionValidationNode:
       |    classTerm: validation.FunctionValidation
       |    mapping:
@@ -119,6 +131,10 @@ object ValidationDialectText {
       |        propertyTerm: validation.ramlClassId
       |        range: string
       |        allowMultiple: true
+      |      classConstraints:
+      |        propertyTerm: shacl.class
+      |        range: string
+      |        allowMultiple: true
       |      propertyConstraints:
       |        mandatory: true
       |        propertyTerm: shacl.property
@@ -139,7 +155,7 @@ object ValidationDialectText {
       |        allowMultiple: true
       |      and:
       |        propertyTerm: shacl.and
-      |        range: shapeValidationNode
+      |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
       |        allowMultiple: true
       |  notShapeValidationNode:
       |    classTerm: validation.NotShapeValidation

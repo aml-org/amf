@@ -201,7 +201,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-cross-overlay/invalid-cross-overlay.raml", Some("invalid-cross-overlay.report"))
   }
 
-  test("Invalid xml wrapped scalar") {
+  test("HERE_HERE Invalid xml wrapped scalar") {
     validate("invalidXmlWrappedScalar.raml", Some("invalidXmlWrappedScalar.report"))
   }
 

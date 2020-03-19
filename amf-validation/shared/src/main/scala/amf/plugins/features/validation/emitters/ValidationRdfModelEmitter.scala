@@ -4,6 +4,7 @@ import amf._
 import amf.core.model.DataType
 import amf.core.rdf.RdfModel
 import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
+import amf.core.validation.model.{AlternatePath, PredicatePath, PropertyPath, PropertyPathParser, SequencePath}
 import amf.core.vocabulary.Namespace
 
 class ValidationRdfModelEmitter(targetProfile: ProfileName,
@@ -93,7 +94,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
 
     if (validation.propertyConstraints.nonEmpty) {
       for {
-        constraint <- validation.propertyConstraints
+        (constraint,i) <- validation.propertyConstraints.zipWithIndex
       } yield {
         // processed properties will always include with /prop, this is a CONVENTION
         // can be tricking to follow when debugging
@@ -105,27 +106,71 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         } else {
           // this happens when the constraint comes from a profile document
           // an alias for a model element is all the name we provide
-          val constraintSegment = if (constraint.name.indexOf("#") > -1) {
-            constraint.name.split("#").last.replace(".", "-")
-          } else {
-            constraint.name.replace(".", "-")
-          }
-          val constraintId = s"$validationId/prop/$constraintSegment"
+          val constraintId = s"$validationId/prop/$i"
           rdfModel.addTriple(validationId, (Namespace.Shacl + "property").iri(), constraintId)
           emitConstraint(constraintId, constraint)
         }
       }
     }
   }
-
   private def isPropertyConstraintUri(name: String): Boolean = {
-    (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) &&
-    name.indexOf("/prop") > -1
+    (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) && name.indexOf("/prop") > -1
+  }
+
+
+  /**
+   * Builds a path property in a property constraint parsing a provided constraint path
+   * @param constraintId
+   * @param constraint
+   */
+  protected def assertPropertyPath(constraintId: String, constraint: PropertyConstraint): Unit = {
+    val parsedPath = constraint.path.get
+    val pathId = buildPath(constraintId + "_path", parsedPath)
+    link(constraintId, (Namespace.Shacl + "path").iri(), pathId)
+  }
+
+  /**
+   * Emits the triples
+   * @param base
+   * @param parsedPath
+   * @return
+   */
+  def buildPath(base: String, parsedPath: PropertyPath): String = {
+    parsedPath match {
+      case PredicatePath(p, false, false) =>
+        p
+      case PredicatePath(p, true, false) =>
+        val uri = base + "_neg"
+        link(uri, (Namespace.Shacl + "inversePath").iri(), p)
+        uri
+      case PredicatePath(p, false, true) =>
+        val uri = base + "_neg"
+        link(uri, (Namespace.Shacl + "zeroOrMorePath").iri(), p)
+        uri
+      case SequencePath(elements)        =>
+        val uri = base + "_seq"
+        val nestedIds = elements.zipWithIndex.map { case (path, i) =>  buildPath(s"${uri}$i", path) }
+        emitAnonList(nestedIds, link)
+        // emitList(nestedIds, link)
+      case AlternatePath(elements)       =>
+        val uri = base + "_alt"
+        val nestedIds = elements.zipWithIndex.map { case (path, i) =>  buildPath(s"${uri}$i", path) }
+        val listId = emitAnonList(nestedIds, link)
+        val altId = rdfModel.nextAnonId()
+        link(altId, (Namespace.Shacl + "alternativePath").iri(), listId)
+        altId
+      case other                         => throw new Exception(s"""Cannote emit path, unsupported type of path token $other""")// ignore
+    }
   }
 
   private def emitConstraint(constraintId: String, constraint: PropertyConstraint): Unit = {
     if (Option(constraint.ramlPropertyId).isDefined) {
-      link(constraintId, (Namespace.Shacl + "path").iri(), expandRamlId(constraint.ramlPropertyId))
+
+      if (constraint.path.isDefined) {
+        assertPropertyPath(constraintId, constraint)
+      } else {
+        link(constraintId, (Namespace.Shacl + "path").iri(), expandRamlId(constraint.ramlPropertyId))
+      }
 
       constraint.maxCount.foreach(genPropertyConstraintValue(constraintId, "maxCount", _, Some(constraint)))
       constraint.minCount.foreach(genPropertyConstraintValue(constraintId, "minCount", _, Some(constraint)))
@@ -143,6 +188,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         genCustomPropertyConstraintValue(constraintId, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
       constraint.pattern.foreach(v => genPropertyConstraintValue(constraintId, "pattern", v))
       constraint.node.foreach(genPropertyConstraintValue(constraintId, "node", _))
+      constraint.value.foreach(genPropertyConstraintValue(constraintId, "hasValue", _, Some(constraint)))
       if (constraint.atLeast.isDefined) {
         rdfModel.addTriple(constraintId, (Namespace.Shacl + "qualifiedMinCount").iri(), constraint.atLeast.get._1.toString, Some((Namespace.Xsd + "integer").iri()))
         link(constraintId, (Namespace.Shacl + "qualifiedValueShape").iri(), constraint.atLeast.get._2)
@@ -151,7 +197,18 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         rdfModel.addTriple(constraintId, (Namespace.Shacl + "qualifiedMaxCount").iri(), constraint.atMost.get._1.toString, Some((Namespace.Xsd + "integer").iri()))
         link(constraintId, (Namespace.Shacl + "qualifiedValueShape").iri(), constraint.atMost.get._2)
       }
-
+      if (constraint.equalToProperty.isDefined) {
+        link(constraintId, (Namespace.Shacl + "equals").iri(), constraint.equalToProperty.get)
+      }
+      if (constraint.disjointWithProperty.isDefined) {
+        link(constraintId, (Namespace.Shacl + "disjoint").iri(), constraint.disjointWithProperty.get)
+      }
+      if (constraint.lessThanProperty.isDefined) {
+        link(constraintId, (Namespace.Shacl + "lessThan").iri(), constraint.lessThanProperty.get)
+      }
+      if (constraint.lessThanOrEqualsToProperty.isDefined) {
+        link(constraintId, (Namespace.Shacl + "lessThanOrEquals").iri(), constraint.lessThanOrEqualsToProperty.get)
+      }
       constraint.datatype.foreach { v =>
         if (v.endsWith("#integer")) {
           link(constraintId, (Namespace.Shacl + "datatype").iri(), DataType.Long)
@@ -279,17 +336,35 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
 
   def emitList(listValues: Seq[String], generator: (String, String, String) => Unit): String = {
     val baseListId = rdfModel.nextAnonId()
-    var c          = 1
-    var listId     = baseListId + s"_$c"
+    var listId     = baseListId
     val origListId = listId
 
     val totalElements = listValues.length
     listValues.zipWithIndex.foreach {
       case (value, i) =>
         generator(listId, (Namespace.Rdf + "first").iri(), value)
-        c += 1
         if (i < totalElements - 1) {
-          val nextListId = baseListId + s"_$c"
+          val nextListId = baseListId + s"_$i"
+          link(listId, (Namespace.Rdf + "rest").iri(), nextListId)
+          listId = nextListId
+        } else {
+          link(listId, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
+        }
+    }
+
+    origListId
+  }
+
+  def emitAnonList(listValues: Seq[String], generator: (String, String, String) => Unit): String = {
+    var listId = rdfModel.nextAnonId()
+    val origListId = listId
+
+    val totalElements = listValues.length
+    listValues.zipWithIndex.foreach {
+      case (value, i) =>
+        generator(listId, (Namespace.Rdf + "first").iri(), value)
+        if (i < totalElements - 1) {
+          val nextListId = rdfModel.nextAnonId()
           link(listId, (Namespace.Rdf + "rest").iri(), nextListId)
           listId = nextListId
         } else {

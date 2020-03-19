@@ -1,0 +1,46 @@
+Model: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+Profile: amf_extended
+Conforms? false
+Number of results: 5
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/data#xml-wrapped-scalar-extended
+  Message: XML property 'wrapped' must be false for scalar types
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property1/scalar/property1
+  Property: 
+  Position: Some(LexicalInformation([(14,12)-(19,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/data#xml-non-scalar-attribute-extended
+  Message: XML property 'attribute' must be false for non-scalar types"
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property2/array/property2%3F
+  Property: 
+  Position: Some(LexicalInformation([(19,12)-(25,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/data#path-parameter-required-extended
+  Message: Path parameters must have the required property set to true
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/parameter/resource_id
+  Property: 
+  Position: Some(LexicalInformation([(28,10)-(31,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/data#path-parameter-required-extended
+  Message: Path parameters must have the required property set to true
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/get/request/parameter/expand_param
+  Property: 
+  Position: Some(LexicalInformation([(35,16)-(42,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/data#file-parameter-in-form-data-extended
+  Message: Parameter of type file must set property 'in' to formData
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/post/request/parameter/upload
+  Property: 
+  Position: Some(LexicalInformation([(62,14)-(66,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
