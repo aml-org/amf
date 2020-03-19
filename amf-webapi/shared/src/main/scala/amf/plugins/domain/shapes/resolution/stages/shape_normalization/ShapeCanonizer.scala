@@ -136,8 +136,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
         // we save this information to connect the references once we have computed the minShape
         if (hasDiscriminator(canonicalSuperNode))
-          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(
-            canonicalSuperNode.asInstanceOf[NodeShape])
+          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(canonicalSuperNode.asInstanceOf[NodeShape])
 
         canonicalSuperNode match {
           case chain: InheritanceChain => inheritedIds ++= (Seq(canonicalSuperNode.id) ++ chain.inheritedIds)
@@ -405,21 +404,13 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       canonicalInheritance(union)
     } else {
       val anyOfAcc: ListBuffer[Shape] = ListBuffer()
-      union.anyOf.foreach { shape: Shape =>
-        normalizeWithoutCaching(shape) match {
+      union.anyOf.foreach { unionMember: Shape =>
+        val normalizedUnionMember = normalizeWithoutCaching(unionMember)
+        context.handleClosures(normalizedUnionMember, union)
+        normalizedUnionMember match {
           case nestedUnion: UnionShape =>
-            union.closureShapes ++= nestedUnion.closureShapes
-            context.cache.addClosures(nestedUnion.closureShapes.toSeq, union)
             nestedUnion.anyOf.foreach(e => anyOfAcc += e)
-          case rec: RecursiveShape =>
-            rec.fixpointTarget.foreach(target => {
-              union.closureShapes ++= Seq(target).filter(_.id != union.id)
-              context.cache.cacheClosure(target.id, union)
-            })
-            anyOfAcc += rec
           case other: Shape =>
-            context.cache.addClosures(other.closureShapes.toSeq, union)
-            union.closureShapes ++= other.closureShapes
             anyOfAcc += other
         }
       }
