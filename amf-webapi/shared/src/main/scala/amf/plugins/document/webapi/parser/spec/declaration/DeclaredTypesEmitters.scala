@@ -47,9 +47,9 @@ case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit]
     implicit spec: OasLikeSpecEmitterContext)
     extends DeclaredTypesEmitters(types, references, ordering) {
   override def emitTypes(b: EntryBuilder): Unit = {
-    val definedInCompoents = spec.vendor == Vendor.OAS30 || spec.vendor == Vendor.ASYNC20
+    val definedInComponents = spec.vendor == Vendor.OAS30 || spec.vendor == Vendor.ASYNC20
     b.entry(
-      if (definedInCompoents) "schemas" else "definitions",
+      if (definedInComponents) "schemas" else "definitions",
       _.obj(
         traverse(
           ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq("definitions")))),
