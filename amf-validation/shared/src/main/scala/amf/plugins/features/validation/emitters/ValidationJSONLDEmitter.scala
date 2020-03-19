@@ -6,6 +6,7 @@ import amf.core.emitter.PartEmitter
 import amf.core.model.DataType
 import amf.core.parser.Position
 import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
+import amf.core.validation.model.{AlternatePath, PredicatePath, PropertyPath, PropertyPathParser, SequencePath}
 import amf.core.vocabulary.Namespace
 import org.yaml.model.YDocument._
 import org.yaml.model.{YDocument, YType}
@@ -167,11 +168,84 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
     name.indexOf("/prop") > -1
   }
 
+  /**
+   * Emits the triples
+   * @param base
+   * @param parsedPath
+   * @return
+   */
+  def emitPath(b: PartBuilder, base: String, parsedPath: PropertyPath): Unit = {
+    parsedPath match {
+      case PredicatePath(p, true, false) =>
+        val uri = base + "_inv"
+        b.obj { e =>
+          e.entry("@id", uri)
+          e.entry((Namespace.Shacl + "inversePath").iri(), genValue(_, p))
+        }
+
+      case PredicatePath(p, false, true) =>
+        val uri = base + "_neg"
+        b.obj { e =>
+          e.entry("@id", uri)
+          e.entry((Namespace.Shacl + "zerOrMorePath").iri(), genValue(_, p))
+        }
+
+      case PredicatePath(p, false, false) =>
+        link(b, p)
+
+      case SequencePath(elements)        =>
+        val uri = base + "_seq"
+        b.obj { e =>
+          e.entry("@list", { l =>
+            l.list( p => {
+              elements.zipWithIndex.foreach { case (e, i) =>
+                emitPath(p, s"${uri}$i", e)
+              }
+            })
+          })
+        }
+      case AlternatePath(elements)        =>
+        val uri = base + "_alt"
+        b.obj { e =>
+          e.entry(
+            (Namespace.Shacl + "alternativePath").iri(), { e =>
+              e.obj { e =>
+                e.entry("@list", { l =>
+                  l.list( p => {
+                    elements.zipWithIndex.foreach { case (e, i) =>
+                      emitPath(p, s"${uri}$i", e)
+                    }
+                  })
+                })
+              }
+            }
+          )
+        }
+
+      case other =>  throw new Exception(s"""Cannot emit path, unsupported type of path token $other""")// ignore
+    }
+  }
+
+  /**
+   * Builds a path property in a property constraint parsing a provided constraint path
+   * @param constraintId
+   * @param constraint
+   */
+  protected def assertPropertyPath(b: EntryBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
+    val parsedPath = constraint.path.get
+    b.entry((Namespace.Shacl + "path").iri(), emitPath(_, constraintId + "_path", parsedPath))
+  }
+
   private def emitConstraint(b: PartBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
     if (Option(constraint.ramlPropertyId).isDefined) {
       b.obj { b =>
         b.entry("@id", constraintId)
-        b.entry((Namespace.Shacl + "path").iri(), link(_, expandRamlId(constraint.ramlPropertyId)))
+
+        if (constraint.path.isDefined) {
+          assertPropertyPath(b, constraintId, constraint)
+        } else {
+          b.entry((Namespace.Shacl + "path").iri(), link(_, expandRamlId(constraint.ramlPropertyId)))
+        }
 
         constraint.maxCount.foreach(genPropertyConstraintValue(b, "maxCount", _, Some(constraint)))
         constraint.minCount.foreach(genPropertyConstraintValue(b, "minCount", _, Some(constraint)))
@@ -189,10 +263,23 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
           genNumericPropertyConstraintValue(b, "qualifiedMaxCount", constraint.atLeast.get._1.toString, Some(constraint))
           b.entry((Namespace.Shacl + "qualifiedValueShape").iri(), link(_, constraint.atLeast.get._2))
         }
+        if (constraint.equalToProperty.isDefined) {
+          b.entry((Namespace.Shacl + "equals").iri(), link(_, constraint.equalToProperty.get))
+        }
+        if (constraint.disjointWithProperty.isDefined) {
+          b.entry((Namespace.Shacl + "disjoint").iri(), link(_, constraint.disjointWithProperty.get))
+        }
+        if (constraint.lessThanProperty.isDefined) {
+          b.entry((Namespace.Shacl + "lessThan").iri(), link(_, constraint.lessThanProperty.get))
+        }
+        if (constraint.lessThanOrEqualsToProperty.isDefined) {
+          b.entry((Namespace.Shacl + "lessThanOrEquals").iri(), link(_, constraint.lessThanOrEqualsToProperty.get))
+        }
         constraint.multipleOf.foreach(
           genCustomPropertyConstraintValue(b, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
         constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", v))
         constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
+        constraint.value.foreach(genPropertyConstraintValue(b, "hasValue", _, Some(constraint)))
         constraint.datatype.foreach { v =>
           if (!v.endsWith("#float") && !v.endsWith("#number")) {
             // raml/oas 'number' are actually the union of integers and floats
@@ -461,7 +548,7 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
           p.entry("@type", dt)
         })
       case None =>
-        if (s.matches("[1-9][\\d]*")) { // if the number starts with 0, its a string and should be quoted
+        if (s.matches("^-?[1-9]\\d*$|^0$")) { // if the number starts with 0 (and is not 0), its a string and should be quoted
           b.obj(_.entry("@value", raw(_, s, YType.Int)))
         } else if (s == "true" || s == "false") {
           b.obj(_.entry("@value", raw(_, s, YType.Bool)))

@@ -70,7 +70,7 @@ object DefaultAMFValidations extends ImportUtils {
     }.toList
 
   private def parseValidation(validations: Seq[AMFValidation]): Seq[ValidationSpecification] = {
-    validations.map { validation =>
+    validations.flatMap { validation =>
       val uri = validation.uri match {
         case Some(s) => s.trim
         case _       => validationId(validation)
@@ -92,17 +92,21 @@ object DefaultAMFValidations extends ImportUtils {
           } else Namespace.expand(validation.constraint)
           valueType match {
             case sh @ ValueType(Namespace.Shacl, _) =>
-              spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation, sh)))
+              Seq(spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation, sh))))
             case sh @ ValueType(Namespace.Shapes, _) =>
-              spec.copy(functionConstraint = Option(parseFunctionConstraint(validation, sh)))
-            case _ => spec
+              findComplexShaclConstraint(sh) match {
+                case Some(specs) => specs
+                case _           => Seq(spec.copy(functionConstraint = Option(parseFunctionConstraint(s"$uri/prop", validation, sh))))
+              }
+
+            case _ => Seq(spec)
           }
 
         case "http://www.w3.org/ns/shacl#targetObjectsOf" =>
-          spec.copy(
+          Seq(spec.copy(
             targetObject = Seq(validation.owlProperty),
             nodeConstraints = Seq(NodeConstraint(validation.constraint, validation.value))
-          )
+          ))
         case _ => throw new Exception(s"Unknown validation target ${validation.target}")
       }
     }
@@ -142,6 +146,350 @@ object DefaultAMFValidations extends ImportUtils {
       internalFunction = Some(sh.name)
     )
   }
+
+  private def findComplexShaclConstraint(sh: ValueType): Option[Seq[ValidationSpecification]] = {
+    complexShaclCustomValidations.defintions.get(sh.name)
+  }
+}
+
+object complexShaclCustomValidations {
+
+  val xmlWrappedScalar = List(
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar",
+      message = "XML property 'wrapped' must be false for scalar types",
+      ramlMessage = Some("XML property 'wrapped' must be false for scalar types"),
+      oasMessage = Some("XML property 'wrapped' must be false for scalar types"),
+      targetClass = List("http://a.ml/vocabularies/shapes#ScalarShape"),
+      unionConstraints = List(
+        "http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar_or_0",
+        "http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar_or_1"
+      ),
+      replacesFunctionConstraint = Some("xmlWrappedScalar")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar_or_0",
+      message = "XML property 'wrapped' must be false for scalar types",
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "raml-shapes.xmlSerialization",
+          name = "raml-shapes.xmlSerialization",
+          node = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar_or_0_raml-shapes.xmlSerialization_node")
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar_or_1",
+      message = "XML property 'wrapped' must be false for scalar types",
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "raml-shapes.xmlSerialization",
+          name = "raml-shapes.xmlSerialization",
+          node = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar_or_1_raml-shapes.xmlSerialization_node"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar_or_0_raml-shapes.xmlSerialization_node",
+      message = "XML property 'wrapped' must be false for scalar types",
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "raml-shapes.xmlWrapped",
+          name = "raml-shapes.xmlWrapped",
+          in = ArrayBuffer("false"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar_or_1_raml-shapes.xmlSerialization_node",
+      message = "XML property 'wrapped' must be false for scalar types",
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "raml-shapes.xmlWrapped",
+          name = "raml-shapes.xmlWrapped",
+          maxCount = Some("0"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar")
+    )
+  )
+  val xmlNonScalarAttribute = List(
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute",
+      message = "XML property 'attribute' must be false for non-scalar types",
+      ramlMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      oasMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      targetClass = List("http://www.w3.org/ns/shacl#Shape"),
+      unionConstraints = List(
+        "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_0",
+        "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_1",
+        "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_2"
+      ),
+      replacesFunctionConstraint = Some("xmlNonScalarAttribute")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_0",
+      message = "XML property 'attribute' must be false for non-scalar types",
+      ramlMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      oasMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "rdf.type",
+          name = "rdf.type",
+          value = Some("http://a.ml/vocabularies/shapes#ScalarShape")
+        )
+      ),
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_1",
+      message = "XML property 'attribute' must be false for non-scalar types",
+      ramlMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      oasMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "raml-shapes.xmlSerialization",
+          name = "raml-shapes.xmlSerialization",
+          node = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_1_raml-shapes.xmlSerialization_node")
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_2",
+      message = "XML property 'attribute' must be false for non-scalar types",
+      ramlMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      oasMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "raml-shapes.xmlSerialization",
+          name = "raml-shapes.xmlSerialization",
+          node = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_2_raml-shapes.xmlSerialization_node"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_1_raml-shapes.xmlSerialization_node",
+      message = "XML property 'attribute' must be false for non-scalar types",
+      ramlMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      oasMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "raml-shapes.xmlAttribute",
+          name = "raml-shapes.xmlAttribute",
+          maxCount = Some("0"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute"),
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_2_raml-shapes.xmlSerialization_node",
+      message = "XML property 'attribute' must be false for non-scalar types",
+      ramlMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      oasMessage = Some("XML property 'attribute' must be false for non-scalar types"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "raml-shapes.xmlAttribute",
+          name = "raml-shapes.xmlAttribute",
+          in = ArrayBuffer("false"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute")
+    )
+  )
+  val fileParameterMustBeInFormData = List(
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data",
+      message = "Parameter of type file must set property 'in' to formData",
+      ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      targetClass = List("http://a.ml/vocabularies/apiContract#Parameter"),
+      unionConstraints = List(
+        "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0",
+        "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1"
+      ),
+      replacesFunctionConstraint = Some("fileParameterMustBeInFormData")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0",
+      message = "Parameter of type file must set property 'in' to formData",
+      ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      notConstraint = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not"),
+      nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1",
+      message = "Parameter of type file must set property 'in' to formData",
+      ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      andConstraints = List(
+        "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_0",
+        "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1"
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not",
+      message = "Parameter of type file must set property 'in' to formData",
+      ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "http://a.ml/vocabularies/shapes#schema",
+          name = "raml-shapes.schema",
+          node = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not_raml-shapes.schema_node"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not_raml-shapes.schema_node",
+      message = "Parameter of type file must set property 'in' to formData",
+      ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      propertyConstraints = List(
+        PropertyConstraint(
+          ramlPropertyId = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          name = "rdf.type_0",
+          value = Some("http://a.ml/vocabularies/shapes#FileShape")
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_0",
+      message = "Parameter of type file must set property 'in' to formData",
+      ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "http://a.ml/vocabularies/apiContract#binding",
+          name = "apiContract.binding",
+          in = ArrayBuffer("formData"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1",
+      message = "Parameter of type file must set property 'in' to formData",
+      ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "http://a.ml/vocabularies/shapes#schema",
+          name = "raml-shapes.schema",
+          node = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1_raml-shapes.schema_node"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1_raml-shapes.schema_node",
+      message = "Parameter of type file must set property 'in' to formData",
+      ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      propertyConstraints = List(
+        PropertyConstraint(
+          ramlPropertyId = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          name = "rdf.type_0",
+          value = Some("http://a.ml/vocabularies/shapes#FileShape")
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
+    )
+  )
+  val pathParameterRequiredProperty = List(
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#path-parameter-required",
+      message = "Path parameters must have the required property set to true",
+      ramlMessage = Some("Path parameters must have the required property set to true"),
+      oasMessage = Some("Path parameters must have the required property set to true"),
+      targetClass = List("http://a.ml/vocabularies/apiContract#Parameter"),
+      unionConstraints = List(
+        "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_0",
+        "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_1"),
+      replacesFunctionConstraint = Some("pathParameterRequiredProperty")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_0",
+      message = "Path parameters must have the required property set to true",
+      ramlMessage = Some("Path parameters must have the required property set to true"),
+      oasMessage = Some("Path parameters must have the required property set to true"),
+      notConstraint = Some("http://a.ml/vocabularies/amf/parser#path-parameter-required_or_0_not"),
+      nested = Some("http://a.ml/vocabularies/amf/parser#path-parameter-required")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_1",
+      message = "Path parameters must have the required property set to true",
+      ramlMessage = Some("Path parameters must have the required property set to true"),
+      oasMessage = Some("Path parameters must have the required property set to true"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "http://a.ml/vocabularies/apiContract#required",
+          name = "apiContract.required",
+          in = ArrayBuffer("true"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#path-parameter-required")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_0_not",
+      message = "Path parameters must have the required property set to true",
+      ramlMessage = Some("Path parameters must have the required property set to true"),
+      oasMessage = Some("Path parameters must have the required property set to true"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "apiContract:binding",
+          name = "apiContract:binding",
+          in = ArrayBuffer("path"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#path-parameter-required")
+    )
+  )
+  val exampleMutuallyExclusiveFields = List(
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#example-mutually-exclusive-fields",
+      message = "Example 'value' and 'externalValue' fields are mutually exclusive",
+      targetClass = List("http://a.ml/vocabularies/apiContract#Example"),
+      notConstraint = Some("http://a.ml/vocabularies/amf/parser#example-mutually-exclusive-fields_not"),
+      replacesFunctionConstraint = Some("exampleMutuallyExclusiveFields")
+    ),
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#example-mutually-exclusive-fields_not",
+      message = "Example 'value' and 'externalValue' fields are mutually exclusive",
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "http://a.ml/vocabularies/document#externalValue",
+          name = "doc.externalValue",
+          minCount = Some("1"),
+        ),
+        PropertyConstraint(
+          ramlPropertyId = "http://a.ml/vocabularies/document#structuredValue",
+          name = "doc.structuredValue",
+          minCount = Some("1"),
+        )
+      ),
+      nested = Some("http://a.ml/vocabularies/amf/parser#example-mutually-exclusive-fields")
+    )
+  )
+
+
+
+  val defintions: Map[String, Seq[ValidationSpecification]] = Map(
+    "xmlWrappedScalar" -> xmlWrappedScalar,
+    "xmlNonScalarAttribute" -> xmlNonScalarAttribute,
+    "fileParameterMustBeInFormData" -> fileParameterMustBeInFormData,
+    "pathParameterRequiredProperty" -> pathParameterRequiredProperty,
+    "exampleMutuallyExclusiveFields" -> exampleMutuallyExclusiveFields
+  )
+
 }
 
 object JsCustomValidations {
@@ -153,30 +501,6 @@ object JsCustomValidations {
          |  var maximum = shape["shacl:maxInclusive"];
          |  if (minimum == undefined || maximum == undefined) return true;
          |  else return (parseFloat(minimum) <= parseFloat(maximum));
-         |}
-      """.stripMargin,
-    "pathParameterRequiredProperty" ->
-      """|function(parameter) {
-         |  var binding = parameter["apiContract:binding"];
-         |  var requiredValue = parameter["apiContract:required"];
-         |  if (binding == 'path' && requiredValue != 'true') {
-         |    return false;
-         |  }
-         |  else {
-         |    return true;
-         |  }
-         |}
-      """.stripMargin,
-    "fileParameterMustBeInFormData" ->
-      """|function(parameter) {
-         |  var binding = parameter["apiContract:binding"];
-         |  var schema = parameter["raml-shapes:schema"];
-         |  var typeList = schema[0]["@type"];
-         |  if(Array.isArray(typeList) && typeList.indexOf("raml-shapes:FileShape") != -1){
-         |    return binding == 'formData';
-         |  } else {
-         |    return true;
-         |  }
          |}
       """.stripMargin,
     "minMaxItemsValidation" ->
@@ -216,45 +540,11 @@ object JsCustomValidations {
          |  }
          |}
       """.stripMargin,
-    "xmlWrappedScalar" ->
-      """
-        |function(shape) {
-        |  var xmlSerialization = shape["raml-shapes:xmlSerialization"];
-        |  if (!xmlSerialization) return true;
-        |  else {
-        |    var wrapped_ = xmlSerialization[0]["raml-shapes:xmlWrapped"];
-        |    var isWrapped = (wrapped_)? wrapped_[0] : false;
-        |    var isScalar = shape["@type"].indexOf("raml-shapes:ScalarShape") !== -1;
-        |    return !(isWrapped && isScalar);
-        |  }
-        |}
-      """.stripMargin, // TODO
-    "xmlNonScalarAttribute" ->
-      """
-        |function(shape) {
-        |  var xmlSerialization = shape["raml-shapes:xmlSerialization"];
-        |  if (!xmlSerialization) return true;
-        |  else {
-        |    var attribute_ = xmlSerialization[0]["raml-shapes:xmlAttribute"];
-        |    var isAttribute = (attribute_)? attribute_[0] : false;
-        |    var isNonScalar = shape["@type"].indexOf("raml-shapes:ScalarShape") === -1;
-        |    return !(isAttribute && isNonScalar);
-        |  }
-        |}
-      """.stripMargin, // TODO
     "nonEmptyListOfProtocols" ->
       """
         |function(shape) {
         |  var protocolsArray = shape["apiContract:scheme"];
         |  return !Array.isArray(protocolsArray) || protocolsArray.length > 0;
-        |}
-      """.stripMargin,
-    "exampleMutuallyExclusiveFields" ->
-      """
-        |function(shape) {
-        |  var externalValue = shape["doc:externalValue"];
-        |  var value = shape["doc:structuredValue"];
-        |  return !(externalValue != null && value != null);
         |}
       """.stripMargin,
     "requiredFlowsInOAuth2" ->

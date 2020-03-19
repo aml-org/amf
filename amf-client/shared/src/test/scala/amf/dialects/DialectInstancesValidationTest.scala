@@ -145,7 +145,7 @@ class DialectInstancesValidationTest extends DialectInstanceValidation {
                                 "eng_demos_instance1.raml",
                                 ProfileName("eng_demos_profile.raml"),
                                 "Custom Eng-Demos Validation",
-                                6)
+                                4)
   }
 
   test("custom validation profile for dialect default profile") {

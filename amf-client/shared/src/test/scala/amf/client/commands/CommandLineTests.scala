@@ -121,8 +121,8 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       "-mime-in",
       "application/yaml",
       "-cp",
-      "file://amf-client/shared/src/test/resources/validations/data/custom_function_validation_error.raml",
-      "file://amf-client/shared/src/test/resources/validations/data/error1.raml"
+      "file://amf-client/shared/src/test/resources/validations/profiles/mercury.yaml",
+      "file://amf-client/shared/src/test/resources/validations/mercury.raml"
     )
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
@@ -139,7 +139,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       )) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")
-      assert(proc.successful)
+      assert(!proc.successful)
     }
   }
 

@@ -1,0 +1,111 @@
+#%RAML 1.0
+---
+title: Test Raml File
+version: v1
+mediaType: application/json
+protocols: https
+description: This is a description of the API spec
+
+types:
+    ClassA:
+        type: object
+        description: Class A type
+        properties:
+            property1:
+                type: string
+                description: String type property.
+                xml:
+                  wrapped: true
+            property2?:
+                type: integer[]
+                description: Number data type property.
+                xml:
+                  attribute: true
+
+/resource:
+    /{resource_id}:
+        uriParameters:
+          resource_id:
+            type: string
+            required: false
+        get:
+            displayName: getResource
+            description: Get this resource
+            queryParameters:
+                expand_param:
+                    description: The expand parameter. A comma separated list with the allowed values (availability, links, promotions, options, images, prices, variations)
+                    type: array
+                    items:
+                        type: string
+                    example: [availability,links,promotions,options,images,prices,variations]
+                    required: false
+            responses:
+                200:
+                    description: OK
+                    body:
+                        application/json:
+                            description: Document representing a site.
+                            additionalProperties: true
+                            properties:
+                                allowed_currencies:
+                                    description: The list of allowed currencies.
+                                    type: array
+                                    items:
+                                        type: string
+                                    required: false
+                404:
+                    description: Resource not found
+        post:
+            displayName: createResource
+            description: TODO Create this resource
+            queryParameters:
+              upload:
+                type: file
+                fileTypes: ['*/*'] # any file type allowed
+                maxLength: 1048576
+            responses:
+                201:
+                    description: Created
+                404:
+                    description: Resource not found
+        put:
+            displayName: updateResource
+            description: Update this resource
+            responses:
+                404:
+                    description: Resource not found
+        patch:
+            displayName: patchResource
+            description: Patch this resource
+            responses:
+                202:
+                    description: Accepted
+                404:
+                    description: Resource not found
+        head:
+            displayName: checkResource
+            description: Check presene of this resource
+            responses:
+                200:
+                    description: Ok
+                404:
+                    description: Resource not found
+        delete:
+            displayName: patchResource
+            description: Patch this resource
+            responses:
+                202:
+                    description: Accepted
+                404:
+                    description: Resource not found
+/resource2:
+    /{id}:
+        get:
+            displayName: getResource2
+            description: Get the resource?
+            responses:
+                200:
+                    description: Successfully retrieved products
+                    body:
+                        application/json:
+                            type: ClassA

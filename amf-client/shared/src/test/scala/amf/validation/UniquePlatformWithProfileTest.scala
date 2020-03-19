@@ -23,13 +23,6 @@ class UniquePlatformWithProfileTest extends UniquePlatformReportGenTest {
     validate("data/error1.raml", "Test Profile", Some("data/custom_function_validation_success.raml"))
   }
 
-  test("Custom function validation failure test") {
-    validate("data/error1.raml",
-             Some("custom-validation-error.report"),
-             ProfileName("Test Profile"),
-             Some("data/custom_function_validation_error.raml"))
-  }
-
   test("Validation test, custom validation profile") {
     validate("data/error1.raml",
              Some("error1-custom-validation.report"),
@@ -41,24 +34,5 @@ class UniquePlatformWithProfileTest extends UniquePlatformReportGenTest {
     validate("banking/api.raml", Some("baking-api.report"), ProfileName("Banking"), Some("banking/profile.raml"))
   }
 
-  ignore("Example JS library validations") {
-    validate("libraries/api.raml",
-             Some("libraries-profile.report"),
-             ProfileName("Test"),
-             Some("libraries/profile.raml"))
-//      assert(!report.conforms)
-//      assert(report.results.length == 1)
-  }
-
-  test("JSON API Validation positive case") {
-    validate("jsonapi/correct.raml", None, ProfileName("JSON API"), Some("jsonapi/jsonapi_profile.raml"))
-  }
-
-  test("JSON API Validation negative case") {
-    validate("jsonapi/incorrect.raml",
-             Some("jsonapi-incorrect.report"),
-             ProfileName("JSON API 1.0"),
-             Some("jsonapi/jsonapi_profile.raml"))
-  }
   override val hint: Hint = RamlYamlHint
 }

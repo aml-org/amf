@@ -138,7 +138,6 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
       ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
       val shapesModel = new RdflibRdfModel()
       new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
-
       validator.validateFroModels(
         dataModel.model,
         shapesModel.model, { (e: js.Dynamic, r: js.Dynamic) =>
