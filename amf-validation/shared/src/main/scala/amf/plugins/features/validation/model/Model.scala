@@ -2,6 +2,8 @@ package amf.plugins.features.validation.model
 
 import amf.ProfileName
 import amf.core.validation.core._
+import amf.core.validation.model.PropertyPathParser
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 
 import scala.collection.mutable
@@ -55,6 +57,12 @@ trait DialectWrapper {
       }
       case _ =>
     }
+    Namespace.ns.foreach { case (p, v) =>
+      prefixMap.get(p) match {
+        case Some(x) => // ignore
+        case _       => prefixMap.put(p, v.base)
+      }
+    }
     prefixMap
   }
 
@@ -81,16 +89,18 @@ object ParsedPropertyConstraint extends DialectWrapper {
   val validationNs = "http://a.ml/vocabularies/amf-validation#"
 
   def apply(node: DialectDomainElement, prefixes: mutable.Map[String,String], nameForNestedValidation: String, message: Option[String] = None, nested: String): (PropertyConstraint, Seq[ValidationSpecification]) = {
-    val name = extractString(node, "name")
+    val name = mandatory("name in property constraint", extractString(node, "name"))
+    val path = PropertyPathParser(name, s => expand(s, prefixes))
 
-    val (nestedNode, nestedConstraints) = mapEntity(node, "nested", ParsedValidationSpecification(_, prefixes, Some(s"${nameForNestedValidation}_${name.getOrElse("")}_node"), message, None, Some(nested))).map { case (v, nested) => (Seq(v), nested) } getOrElse((Nil, Nil))
-    val atLeastTuple = mapEntity(node, "atLeast", ParsedQualifiedValidationSpecification(_, prefixes, Some(s"${nameForNestedValidation}_${name.getOrElse("")}_atLeast_"), message, None, Some(nested)))
-    val atMostTuple = mapEntity(node, "atMost", ParsedQualifiedValidationSpecification(_, prefixes, Some(s"${nameForNestedValidation}_${name.getOrElse("")}_atLeast_"), message, None, Some(nested)))
+    val (nestedNode, nestedConstraints) = mapEntity(node, "nested", ParsedValidationSpecification(_, prefixes, Some(s"${nameForNestedValidation}_${name}_node"), message, None, Some(nested))).map { case (v, nested) => (Seq(v), nested) } getOrElse((Nil, Nil))
+    val atLeastTuple = mapEntity(node, "atLeast", ParsedQualifiedValidationSpecification(_, prefixes, Some(s"${nameForNestedValidation}_${name}_atLeast_"), message, None, Some(nested)))
+    val atMostTuple = mapEntity(node, "atMost", ParsedQualifiedValidationSpecification(_, prefixes, Some(s"${nameForNestedValidation}_${name}_atLeast_"), message, None, Some(nested)))
 
 
     val property = PropertyConstraint(
-      ramlPropertyId      = expand(mandatory("ramlID in property constraint", name), prefixes),
-      name                = mandatory("name in property constraint", name),
+      ramlPropertyId      = expand(mandatory("ramlID in property constraint", Some(name)), prefixes),
+      name                = name,
+      path                = Some(path),
       message             = extractString(node, "message"),
       pattern             = extractString(node, "pattern"),
       maxCount            = extractString(node, "maxCount"),
@@ -103,6 +113,11 @@ object ParsedPropertyConstraint extends DialectWrapper {
       minInclusive        = extractString(node, "minInclusive"),
       in                  = extractStrings(node, "in"),
       node                = nestedNode.headOption.map(_.id),
+      equalToProperty            = extractString(node, "equalsToProperty").map(s => expand(s, prefixes)),
+      disjointWithProperty       = extractString(node, "disjointWithProperty").map(s => expand(s, prefixes)),
+      lessThanProperty           = extractString(node, "lessThanProperty").map(s => expand(s, prefixes))      ,
+      lessThanOrEqualsToProperty = extractString(node, "lessThanOrEqualsToProperty").map(s => expand(s, prefixes))      ,
+//      `class`             = extractString(node, "class").map(s => Seq(expand(s, prefixes))).getOrElse(Nil),
       atLeast = atLeastTuple.map { t => (t._1, t._2.id)},
       atMost = atMostTuple.map { t => (t._1, t._2.id)},
     )
@@ -136,11 +151,20 @@ object ParsedValidationSpecification extends DialectWrapper {
     val propertyConstraints = propsTuples.map(_._1)
     val nestedProperties = propsTuples.flatMap(_._2)
 
+    val additionalPropertyConstraints: Seq[PropertyConstraint] = extractStrings(node, "classConstraints").map(s => expand(s, prefixes)).zipWithIndex.map { case (id, i) =>
+      PropertyConstraint(
+        ramlPropertyId = expand("rdf.type", prefixes),
+        name = s"rdf.type_$i",
+        path = Some(PropertyPathParser("rdf.type", s => expand(s, prefixes))),
+        value = Some(expand(id, prefixes))
+      )
+    }
+
     val base = ValidationSpecification(
       name                = name,
       message             = finalMessage,
       targetClass         = targetClasses,
-      propertyConstraints = propertyConstraints,
+      propertyConstraints = propertyConstraints ++ additionalPropertyConstraints,
       functionConstraint  = mapEntity(node, "functionConstraint", ParsedFunctionConstraint.apply),
       nested              = nested
     )
@@ -194,9 +218,11 @@ object ParsedValidationProfile extends DialectWrapper {
   }
 
   protected def collectValidations(nestedValidations: Seq[(ValidationSpecification, Seq[ValidationSpecification])]): Seq[ValidationSpecification] = {
-    nestedValidations.foldLeft(Seq[ValidationSpecification]()) { case (validationsAcc, (validation, nested)) =>
+    val validations = nestedValidations.foldLeft(Seq[ValidationSpecification]()) { case (validationsAcc, (validation, nested)) =>
       validationsAcc ++ Seq(validation) ++ nested
     }
+    // println(validations)
+    validations
   }
 
 }

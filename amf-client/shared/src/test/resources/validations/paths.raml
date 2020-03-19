@@ -1,0 +1,27 @@
+#%RAML 1.0
+---
+title: Test Raml File
+version: v1
+mediaType: application/json
+protocols: https
+description: This is a description of the API spec
+
+types:
+    ClassA:
+        type: object
+        description: Class A type
+        properties:
+            property1:
+                type: string
+
+
+/resource2:
+  get:
+    displayName: getResource2
+    description: Get the resource?
+    responses:
+      200:
+        description: Successfully retrieved products
+        body:
+          application/json:
+            type: ClassA

@@ -27,11 +27,15 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
   lazy val rdf: js.Dynamic    = RDF.instance
   lazy val jsonld: js.Dynamic = JSONLD.instance
 
+  override def nextAnonId(): String = synchronized {
+    rdf.blankNode().toString
+  }
+
   override def addTriple(subject: String, predicate: String, objResource: String): RdfModel = {
     nodesCache = nodesCache - subject
-    val s = rdf.namedNode(subject)
+    val s = checkAnon(subject)
     val p = rdf.namedNode(predicate)
-    val o = rdf.namedNode(objResource)
+    val o = checkAnon(objResource)
 
     model.add(s, p, o)
 
@@ -43,7 +47,7 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
                          objLiteralValue: String,
                          objLiteralType: Option[String]): RdfModel = {
     nodesCache = nodesCache - subject
-    val s = rdf.namedNode(subject)
+    val s = checkAnon(subject)
     val p = rdf.namedNode(predicate)
     val o = objLiteralType match {
       case Some(literalType) => rdf.literal(objLiteralValue, literalType)
@@ -54,6 +58,23 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
 
     this
   }
+
+  protected def checkAnon(s: String): js.Any = {
+    if (s.startsWith("_:n")) {
+      try {
+        val idString = s.replace("_:n", "")
+        val id = Integer.parseInt(idString)
+        val node = rdf.blankNode(idString)
+        node.id = id
+        node
+      } catch {
+        case _: Throwable => rdf.namedNode(s)
+      }
+    } else {
+      rdf.namedNode(s)
+    }
+  }
+
 
   override def toN3(): String = (model.toNT() + "").drop(1).dropRight(1)
 

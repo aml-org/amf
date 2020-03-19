@@ -1,0 +1,90 @@
+#%Validation Profile 1.0
+
+profile: amf_extended
+
+violation:
+  - xml-wrapped-scalar-extended
+  - xml-non-scalar-attribute-extended
+  - file-parameter-in-form-data-extended
+  - path-parameter-required-extended
+  - example-mutually-exclusive-fields
+
+validations:
+
+  xml-non-scalar-attribute-extended:
+    message: XML property 'attribute' must be false for non-scalar types"
+    targetClass: shacl.Shape
+    or:
+      - classConstraints: raml-shapes.ScalarShape
+        propertyConstraints: {}
+      - propertyConstraints:
+          raml-shapes.xmlSerialization:
+            nested:
+              propertyConstraints:
+                raml-shapes.xmlAttribute:
+                  maxCount: 0
+      - propertyConstraints:
+          raml-shapes.xmlSerialization:
+            nested:
+              propertyConstraints:
+                raml-shapes.xmlAttribute:
+                  in: [ false ]
+
+  xml-wrapped-scalar-extended:
+    message: XML property 'wrapped' must be false for scalar types
+    targetClass: raml-shapes.ScalarShape
+    or:
+      - propertyConstraints:
+          raml-shapes.xmlSerialization:
+            nested:
+              propertyConstraints:
+                raml-shapes.xmlWrapped:
+                  in: [false ]
+      - propertyConstraints:
+          raml-shapes.xmlSerialization:
+            nested:
+              propertyConstraints:
+                raml-shapes.xmlWrapped:
+                  maxCount: 0
+
+  file-parameter-in-form-data-extended:
+    message: Parameter of type file must set property 'in' to formData
+    targetClass: apiContract.Parameter
+    or:
+      - not:
+          propertyConstraints:
+            raml-shapes.schema:
+              nested:
+                classConstraints: raml-shapes.FileShape
+                propertyConstraints: {}
+      - and:
+          - propertyConstraints:
+              apiContract.binding:
+                in: [ "formData" ]
+          - propertyConstraints:
+              raml-shapes.schema:
+                nested:
+                  classConstraints: raml-shapes.FileShape
+                  propertyConstraints: {}
+
+  path-parameter-required-extended:
+    message: Path parameters must have the required property set to true
+    targetClass: apiContract.Parameter
+    or:
+      - not:
+          propertyConstraints:
+            apiContract:binding:
+              in: [ "path" ]
+      - propertyConstraints:
+          apiContract.required:
+            in: [ true ]
+
+  example-mutually-exclusive-fields:
+    message: Path parameters must have the required property set to true
+    targetClass: apiContract.Example
+    not:
+      propertyConstraints:
+        doc.externalValue:
+          minCount: 1
+        doc.structuredValue:
+          minCount: 1

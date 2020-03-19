@@ -1,0 +1,24 @@
+#%Validation Profile 1.0
+
+profile: logical
+
+violation:
+  - patch-xor-put
+
+validations:
+
+  patch-xor-put:
+    message: Any operation must optionally support either support put or post
+    targetClass: apiContract.EndPoint
+    propertyConstraints:
+      apiContract.supportedOperation:
+        atMost:
+          count: 1
+          validation:
+            xone:
+              - propertyConstraints:
+                  apiContract.method:
+                    in: [ put ]
+              - propertyConstraints:
+                  apiContract.method:
+                    in: [ patch ]
