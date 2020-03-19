@@ -33,7 +33,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
 
   def buildAndPopulate(): Bindings = {
     val map: YMap          = entryLike.asMap
-    val bindings: Bindings = createBindings(map)
+    val bindings: Bindings = createBindings()
     nameAndAdopt(bindings, entryLike.key)
     parseBindings(bindings, map)
   }
@@ -43,7 +43,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
     obj.set(bindingsField, AmfArray(bindings, Annotations(map)), Annotations(map))
   }
 
-  protected def createBindings(map: YMap): Bindings
+  protected def createBindings(): Bindings
 
   protected def handleRef(fullRef: String): Bindings
 
@@ -51,7 +51,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
     key foreach { k =>
       m.withName(k.as[YScalar].text, Annotations(k))
     }
-    m.adopted(parent)
+    m.adopted(parent).add(Annotations(entryLike.asMap))
   }
 
   protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): Bindings

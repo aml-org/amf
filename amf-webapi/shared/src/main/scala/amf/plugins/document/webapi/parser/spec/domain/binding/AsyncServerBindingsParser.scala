@@ -25,7 +25,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
   override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
     AsyncServerBindingsParser(entryLike, parent)
 
-  override protected def createBindings(map: YMap): ServerBindings = ServerBindings(map)
+  override protected def createBindings(): ServerBindings = ServerBindings()
 
   def handleRef(fullRef: String): ServerBindings = {
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "serverBindings")

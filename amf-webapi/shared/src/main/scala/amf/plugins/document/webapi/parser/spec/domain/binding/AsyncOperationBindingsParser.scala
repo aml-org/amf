@@ -26,7 +26,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
   override type Bindings = OperationBindings
   override val bindingsField: Field = OperationBindingsModel.Bindings
 
-  override protected def createBindings(map: YMap): OperationBindings = OperationBindings(map)
+  override protected def createBindings(): OperationBindings = OperationBindings()
 
   protected def createParser(entryOrMap: YMapEntryLike): AsyncBindingsParser =
     AsyncOperationBindingsParser(entryOrMap, parent)

@@ -25,11 +25,40 @@ case class AsyncDeclarationsEmitters(declares: Seq[DomainElement], ordering: Spe
     if (declarations.messageTraits.nonEmpty)
       result += AsyncMessageDeclarationsEmitter(declarations.messageTraits.values.toList, isTrait = true, ordering)
 
+    if (declarations.messages.nonEmpty)
+      result += AsyncMessageDeclarationsEmitter(declarations.messages.values.toList, isTrait = false, ordering)
+
     if (declarations.operationTraits.nonEmpty)
       result += AsyncOperationTraitsDeclarationEmitter(declarations.operationTraits.values.toList, ordering)
 
-    if (declarations.shapes.nonEmpty) // TODO verificar que va bien
+    if (declarations.shapes.nonEmpty)
       result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, references, ordering)
+
+    if (declarations.parameters.nonEmpty)
+      result += new AsyncApiParametersEmitter(declarations.parameters.values.toSeq, ordering)
+
+    if (declarations.correlationIds.nonEmpty)
+      result += AsyncCorrelationIdDeclarationsEmitter(declarations.correlationIds.values.toSeq, ordering)
+
+    if (declarations.serverBindings.nonEmpty)
+      result += AsyncApiBindingsDeclarationEmitter("serverBindings",
+                                                   declarations.serverBindings.values.toSeq,
+                                                   ordering)
+
+    if (declarations.messageBindings.nonEmpty)
+      result += AsyncApiBindingsDeclarationEmitter("messageBindings",
+                                                   declarations.messageBindings.values.toSeq,
+                                                   ordering)
+
+    if (declarations.channelBindings.nonEmpty)
+      result += AsyncApiBindingsDeclarationEmitter("channelBindings",
+                                                   declarations.channelBindings.values.toSeq,
+                                                   ordering)
+
+    if (declarations.operationBindings.nonEmpty)
+      result += AsyncApiBindingsDeclarationEmitter("operationBindings",
+                                                   declarations.operationBindings.values.toSeq,
+                                                   ordering)
 
     result
   }

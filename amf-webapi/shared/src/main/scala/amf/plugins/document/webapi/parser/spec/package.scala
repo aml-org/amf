@@ -56,7 +56,7 @@ package object spec {
     }
 
     def appendDefinitionsPrefix(url: String, vendor: Option[Vendor] = None): String = vendor match {
-      case Some(Vendor.OAS30) =>
+      case Some(Vendor.OAS30) | Some(Vendor.ASYNC20) =>
         if (!url.startsWith(oas3DefinitionsPrefix)) appendPrefix(oas3DefinitionsPrefix, url) else url
       case _ =>
         if (!url.startsWith(oas2DefinitionsPrefix)) appendPrefix(oas2DefinitionsPrefix, url) else url

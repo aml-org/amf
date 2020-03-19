@@ -125,7 +125,7 @@ channels:
         $ref: '#/components/parameters/userId'
     subscribe:
       bindings:
-        $ref: '#/components/serverBindings/someOperationBinding'
+        $ref: '#/components/operationBindings/someOperationBinding'
       message:
         oneOf:
           - $ref: '#/components/messages/someMessage'
