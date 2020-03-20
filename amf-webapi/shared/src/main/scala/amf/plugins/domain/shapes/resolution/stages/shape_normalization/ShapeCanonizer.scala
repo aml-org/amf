@@ -406,7 +406,6 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       val anyOfAcc: ListBuffer[Shape] = ListBuffer()
       union.anyOf.foreach { unionMember: Shape =>
         val normalizedUnionMember = normalizeWithoutCaching(unionMember)
-        context.handleClosures(normalizedUnionMember, union)
         normalizedUnionMember match {
           case nestedUnion: UnionShape =>
             nestedUnion.anyOf.foreach(e => anyOfAcc += e)
