@@ -1,0 +1,14 @@
+#%Validation Profile 1.0
+
+profile: Test1
+
+violation:
+  - version-format
+
+validations:
+
+  version-format:
+    targetClass: apiContract.WebAPI
+    propertyConstraints:
+      core.version:
+        pattern: ^v[0-9]+\.[0-9]+\.[0-9]+$

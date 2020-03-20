@@ -1,0 +1,14 @@
+#%Validation Profile 1.0
+
+profile: Test5
+
+violation:
+  - allowed-protocols
+
+validations:
+
+  allowed-protocols:
+    targetClass: apiContract.WebAPI
+    propertyConstraints:
+      apiContract.scheme:
+        in: [ http, https ]
