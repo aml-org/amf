@@ -11,7 +11,7 @@ import amf.{AmfProfile, ProfileName}
 
 class AmfEditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean = true) extends ResolutionPipeline(eh) {
 
-  protected def references                   = new ReferenceResolutionStage(keepEditingInfo = true)
+  protected def references                   = new WebApiReferenceResolutionStage(keepEditingInfo = true)
   private def url: Option[UrlShortenerStage] = if (urlShortening) Some(new UrlShortenerStage()) else None
 
   protected def parameterNormalizationStage: ParametersNormalizationStage = new AmfParametersNormalizationStage()
