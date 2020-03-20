@@ -1,0 +1,14 @@
+#%Validation Profile 1.0
+
+profile: Test3a
+
+violation:
+  - mandatory-operation-name
+
+validations:
+
+  mandatory-operation-name:
+    targetClass: apiContract.Operation
+    propertyConstraints:
+      core.name:
+        minCount: 1
