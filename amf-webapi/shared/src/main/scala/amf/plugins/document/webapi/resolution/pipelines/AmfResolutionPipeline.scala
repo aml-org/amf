@@ -11,7 +11,7 @@ import amf.{AmfProfile, ProfileName}
 class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
   override def profileName: ProfileName = AmfProfile
 
-  protected def references = new ReferenceResolutionStage(keepEditingInfo = false)
+  protected def references = new WebApiReferenceResolutionStage(keepEditingInfo = false)
 
   protected def parameterNormalizationStage: ParametersNormalizationStage = new AmfParametersNormalizationStage()
 

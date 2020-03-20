@@ -4,6 +4,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Yaml
+import amf.core.remote.Vendor.AMF
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
@@ -458,6 +459,10 @@ class EditingResolutionTest extends FunSuiteCycleTests {
       Amf,
       resolutionPath + "links-to-declares-and-references/"
     )
+  }
+
+  test("References to message definitions") {
+    cycle("message-references.yaml", "message-references.jsonld", AsyncYamlHint, AMF, resolutionPath + "async20/")
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =

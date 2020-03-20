@@ -65,7 +65,8 @@ class Request(override val fields: Fields, override val annotations: Annotations
 
 object Request {
 
-  def apply(): Request                         = apply(Annotations())
-  def apply(ast: YPart): Request               = apply(Annotations(ast))
-  def apply(annotations: Annotations): Request = new Request(Fields(), annotations)
+  def apply(): Request                                         = apply(Annotations())
+  def apply(ast: YPart): Request                               = apply(Annotations(ast))
+  def apply(annotations: Annotations): Request                 = new Request(Fields(), annotations)
+  def apply(fields: Fields, annotations: Annotations): Request = new Request(fields, annotations)
 }

@@ -31,6 +31,10 @@ class Async20ResolutionTest extends FunSuiteCycleTests {
     cycle("operation-trait-merging.yaml", "operation-trait-merging.jsonld", AsyncYamlHint, AMF)
   }
 
+  test("Named parameter with reference to parameter in components") {
+    cycle("named-parameter-with-ref.yaml", "named-parameter-with-ref.jsonld", AsyncYamlHint, AMF)
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     Async20Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
 
