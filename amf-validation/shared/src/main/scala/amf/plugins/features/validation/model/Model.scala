@@ -84,6 +84,17 @@ object ParsedFunctionConstraint extends DialectWrapper {
   }
 }
 
+object ParsedQueryConstraint extends DialectWrapper {
+
+  def apply(query: String, prefixes: mutable.Map[String,String]): QueryConstraint = {
+    val ns = prefixes.toMap
+    QueryConstraint(
+      prefixes = ns,
+      query = query
+    )
+  }
+
+}
 
 object ParsedPropertyConstraint extends DialectWrapper {
   val validationNs = "http://a.ml/vocabularies/amf-validation#"
@@ -92,7 +103,7 @@ object ParsedPropertyConstraint extends DialectWrapper {
     val name = mandatory("name in property constraint", extractString(node, "name"))
     val path = PropertyPathParser(name, s => expand(s, prefixes))
 
-    val (nestedNode, nestedConstraints) = mapEntity(node, "nested", ParsedValidationSpecification(_, prefixes, Some(s"${nameForNestedValidation}_${name}_node"), message, None, Some(nested))).map { case (v, nested) => (Seq(v), nested) } getOrElse((Nil, Nil))
+    val (nestedNode, nestedConstraints) = mapEntity(node, "nested", ParsedValidationSpecification(_, prefixes, Some(s"${nameForNestedValidation}_nested_node"), message, None, Some(nested))).map { case (v, nested) => (Seq(v), nested) } getOrElse((Nil, Nil))
     val atLeastTuple = mapEntity(node, "atLeast", ParsedQualifiedValidationSpecification(_, prefixes, Some(s"${nameForNestedValidation}_${name}_atLeast_"), message, None, Some(nested)))
     val atMostTuple = mapEntity(node, "atMost", ParsedQualifiedValidationSpecification(_, prefixes, Some(s"${nameForNestedValidation}_${name}_atLeast_"), message, None, Some(nested)))
 
@@ -147,7 +158,9 @@ object ParsedValidationSpecification extends DialectWrapper {
     val finalMessage: String = message.getOrElse(extractString(node, "message").getOrElse(s"Unsatisfied constraint ${name}"))
     val finalNested: Option[String] = Some(nested.getOrElse(name))
 
-    val propsTuples: Seq[(PropertyConstraint, Seq[ValidationSpecification])] = mapEntities(node, "propertyConstraints", ParsedPropertyConstraint(_, prefixes, name, Some(finalMessage), finalNested.get))
+    val propsTuples: Seq[(PropertyConstraint, Seq[ValidationSpecification])] = mapIndexedEntities(node, "propertyConstraints", { case (e, i) =>
+      ParsedPropertyConstraint(e, prefixes, name + s"_prop${i}", Some(finalMessage), finalNested.get)
+    })
     val propertyConstraints = propsTuples.map(_._1)
     val nestedProperties = propsTuples.flatMap(_._2)
 
@@ -160,15 +173,21 @@ object ParsedValidationSpecification extends DialectWrapper {
       )
     }
 
+    // optional query constraint
+    val queryConstraint = extractString(node, "query").map { query =>
+      ParsedQueryConstraint(query, prefixes)
+    }
+
+    // the base validation
     val base = ValidationSpecification(
       name                = name,
       message             = finalMessage,
       targetClass         = targetClasses,
       propertyConstraints = propertyConstraints ++ additionalPropertyConstraints,
       functionConstraint  = mapEntity(node, "functionConstraint", ParsedFunctionConstraint.apply),
-      nested              = nested
+      nested              = nested,
+      query               = queryConstraint
     )
-
 
     // compute nested shapes
     val (andConstraints, nestedAndConstraints) = collectNestedValidations(mapIndexedEntities(node, "and", { case (n: DialectDomainElement,i: Int) =>
@@ -218,11 +237,9 @@ object ParsedValidationProfile extends DialectWrapper {
   }
 
   protected def collectValidations(nestedValidations: Seq[(ValidationSpecification, Seq[ValidationSpecification])]): Seq[ValidationSpecification] = {
-    val validations = nestedValidations.foldLeft(Seq[ValidationSpecification]()) { case (validationsAcc, (validation, nested)) =>
+    nestedValidations.foldLeft(Seq[ValidationSpecification]()) { case (validationsAcc, (validation, nested)) =>
       validationsAcc ++ Seq(validation) ++ nested
     }
-    // println(validations)
-    validations
   }
 
 }

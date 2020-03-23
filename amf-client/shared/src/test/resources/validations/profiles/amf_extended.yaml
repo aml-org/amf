@@ -2,12 +2,18 @@
 
 profile: amf_extended
 
+extends: RAML
+
 violation:
   - xml-wrapped-scalar-extended
   - xml-non-scalar-attribute-extended
   - file-parameter-in-form-data-extended
   - path-parameter-required-extended
-  - example-mutually-exclusive-fields
+  - example-mutually-exclusive-fields-extended
+  - min-max-inclusive-extended
+  - min-max-items-extended
+  - min-max-length-extended
+  - min-max-properties-extended
 
 validations:
 
@@ -79,7 +85,7 @@ validations:
           apiContract.required:
             in: [ true ]
 
-  example-mutually-exclusive-fields:
+  example-mutually-exclusive-fields-extended:
     message: Path parameters must have the required property set to true
     targetClass: apiContract.Example
     not:
@@ -88,3 +94,31 @@ validations:
           minCount: 1
         doc.structuredValue:
           minCount: 1
+
+  min-max-inclusive-extended:
+    message: Maximum must be greater than or equal to minimum
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraints:
+      shacl.minInclusive:
+        lessThanOrEqualsToProperty: shacl.maxInclusive
+
+  min-max-items-extended:
+    message: MaxItems must be greater than or equal to minItems
+    targetClass: raml-shapes.ArrayShape
+    propertyConstraints:
+      shacl.minCount:
+        lessThanOrEqualsToProperty: shacl.maxCount
+
+  min-max-length-extended:
+    message: MaxLength must be greater than or equal to minLength
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraints:
+      shacl.minLength:
+        lessThanOrEqualsToProperty: shacl.maxLength
+
+  min-max-properties-extended:
+    message: MaxProperties must be greater than or equal to minProperties
+    targetClass: shacl.NodeShape
+    propertyConstraints:
+      raml-shapes.minProperties:
+        lessThanOrEqualsToProperty: raml-shapes.maxProperties

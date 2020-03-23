@@ -76,7 +76,21 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
 
     if (validation.notConstraint.isDefined) {
       link(validationId, (Namespace.Shacl + "not").iri(), validation.notConstraint.get)
+    }
 
+    if (validation.query.isDefined) {
+      val queryValidationId = validationId + "/query"
+      link(validationId, (Namespace.Shacl + "sparql").iri(), queryValidationId)
+      rdfModel.addTriple(queryValidationId, (Namespace.Shacl + "message").iri(), validation.message, Some(DataType.String))
+      rdfModel.addTriple(queryValidationId, (Namespace.Shacl + "select").iri(), validation.query.get.query, Some(DataType.String))
+      val ontologyId = validationId + "/query/ontology"
+      rdfModel.addTriple(queryValidationId, (Namespace.Shacl + "prefixes").iri(), ontologyId)
+      validation.query.get.prefixes.foreach { case (alias, ns) =>
+        val declarationId = rdfModel.nextAnonId()
+        rdfModel.addTriple(ontologyId, (Namespace.Shacl + "declare").iri(), declarationId)
+        rdfModel.addTriple(declarationId, (Namespace.Shacl + "prefix").iri(), alias, Some(DataType.AnyUri))
+        rdfModel.addTriple(declarationId, (Namespace.Shacl + "namespace").iri(), ns, Some(DataType.String))
+      }
     }
 
     validation.functionConstraint match {
@@ -98,7 +112,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
       } yield {
         // processed properties will always include with /prop, this is a CONVENTION
         // can be tricking to follow when debugging
-        if (isPropertyConstraintUri(constraint.name)) {
+        if (constraint.path.isEmpty && isPropertyConstraintUri(constraint.name)) {
           rdfModel.addTriple(validationId, (Namespace.Shacl + "property").iri(), constraint.name)
           // These are the standard constraints for AMF/RAML/OAS they have already being sanitised
           emitConstraint(constraint.name, constraint)
@@ -296,7 +310,8 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
             }
             genValue(validatorId, (Namespace.Shacl + "jsFunctionName").iri(), f.computeFunctionName(validationId))
 
-          case _ => throw new Exception("Cannot emit validator without JS code or JS function name")
+          case _ =>
+            throw new Exception("Cannot emit validator without JS code or JS function name")
         }
     }
   }

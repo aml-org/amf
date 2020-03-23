@@ -197,4 +197,6 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
   }
 
   override def emptyRdfModel(): RdfModel = new RdflibRdfModel()
+
+  override def supportsJSFunctions: Boolean = true
 }
