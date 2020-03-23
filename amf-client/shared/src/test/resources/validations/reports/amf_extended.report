@@ -1,16 +1,48 @@
 Model: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
 Profile: amf_extended
 Conforms? false
-Number of results: 5
+Number of results: 15
 
 Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#xml-wrapped-scalar
+  Message: XML property 'wrapped' must be false for scalar types
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property1/scalar/property1
+  Property: 
+  Position: Some(LexicalInformation([(14,12)-(21,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
 
 - Source: http://a.ml/vocabularies/data#xml-wrapped-scalar-extended
   Message: XML property 'wrapped' must be false for scalar types
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property1/scalar/property1
   Property: 
-  Position: Some(LexicalInformation([(14,12)-(19,0)]))
+  Position: Some(LexicalInformation([(14,12)-(21,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#min-max-length
+  Message: MaxLength must be greater than or equal to minLength
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property1/scalar/property1
+  Property: http://www.w3.org/ns/shacl#minLength
+  Position: Some(LexicalInformation([(19,27)-(19,29)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/data#min-max-length-extended
+  Message: MaxLength must be greater than or equal to minLength
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property1/scalar/property1
+  Property: http://www.w3.org/ns/shacl#minLength
+  Position: Some(LexicalInformation([(19,27)-(19,29)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute
+  Message: XML property 'attribute' must be false for non-scalar types
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property2/array/property2%3F
+  Property: 
+  Position: Some(LexicalInformation([(21,12)-(28,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
 
 - Source: http://a.ml/vocabularies/data#xml-non-scalar-attribute-extended
@@ -18,7 +50,39 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property2/array/property2%3F
   Property: 
-  Position: Some(LexicalInformation([(19,12)-(25,0)]))
+  Position: Some(LexicalInformation([(21,12)-(28,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#min-max-items
+  Message: MaxItems must be greater than or equal to minItems
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property2/array/property2%3F
+  Property: http://www.w3.org/ns/shacl#minCount
+  Position: Some(LexicalInformation([(24,26)-(24,28)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/data#min-max-items-extended
+  Message: MaxItems must be greater than or equal to minItems
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property2/array/property2%3F
+  Property: http://www.w3.org/ns/shacl#minCount
+  Position: Some(LexicalInformation([(24,26)-(24,28)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#min-max-inclusive
+  Message: Maximum must be greater than or equal to minimum
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property3/scalar/property3
+  Property: http://www.w3.org/ns/shacl#minInclusive
+  Position: Some(LexicalInformation([(30,25)-(30,29)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/data#min-max-inclusive-extended
+  Message: Maximum must be greater than or equal to minimum
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/declarations/types/ClassA/property/property3/scalar/property3
+  Property: http://www.w3.org/ns/shacl#minInclusive
+  Position: Some(LexicalInformation([(30,25)-(30,29)]))
   Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
 
 - Source: http://a.ml/vocabularies/data#path-parameter-required-extended
@@ -26,7 +90,7 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/parameter/resource_id
   Property: 
-  Position: Some(LexicalInformation([(28,10)-(31,0)]))
+  Position: Some(LexicalInformation([(36,10)-(39,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
 
 - Source: http://a.ml/vocabularies/data#path-parameter-required-extended
@@ -34,7 +98,23 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/get/request/parameter/expand_param
   Property: 
-  Position: Some(LexicalInformation([(35,16)-(42,0)]))
+  Position: Some(LexicalInformation([(43,16)-(50,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#min-max-properties
+  Message: MaxProperties must be greater than or equal to minProperties
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/get/200/application%2Fjson/schema
+  Property: http://a.ml/vocabularies/shapes#minProperties
+  Position: Some(LexicalInformation([(57,43)-(57,45)]))
+  Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
+
+- Source: http://a.ml/vocabularies/data#min-max-properties-extended
+  Message: MaxProperties must be greater than or equal to minProperties
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/get/200/application%2Fjson/schema
+  Property: http://a.ml/vocabularies/shapes#minProperties
+  Position: Some(LexicalInformation([(57,43)-(57,45)]))
   Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml
 
 - Source: http://a.ml/vocabularies/data#file-parameter-in-form-data-extended
@@ -42,5 +122,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/amf_extended.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/post/request/parameter/upload
   Property: 
-  Position: Some(LexicalInformation([(62,14)-(66,0)]))
+  Position: Some(LexicalInformation([(72,14)-(76,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/amf_extended.raml

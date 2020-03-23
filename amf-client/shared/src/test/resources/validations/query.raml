@@ -1,0 +1,15 @@
+#%RAML 1.0
+
+title: Test API todo
+
+/endpoint1:
+  get:
+    description: another todo
+    queryParameters:
+      a:
+        minLength: 1
+    body:
+      application/json:
+        properties:
+          b:
+            minLength: 1
