@@ -1,0 +1,17 @@
+#%Validation Profile 1.0
+
+profile: query
+
+violation:
+  - todo-query
+
+validations:
+
+  todo-query:
+    targetClass: doc.DomainElement
+    message: No todo references in the spec
+    query: |
+      SELECT $this ?value {
+        ?this core:name|core:description|shacl:name ?value .
+        FILTER regex(?value, "TODO", "i")
+      }

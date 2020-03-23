@@ -479,56 +479,74 @@ object complexShaclCustomValidations {
       nested = Some("http://a.ml/vocabularies/amf/parser#example-mutually-exclusive-fields")
     )
   )
-
-
+  val minimumMaximumValidation = List(
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#min-max-inclusive",
+      message = "Maximum must be greater than or equal to minimum",
+      ramlMessage = Some("Maximum must be greater than or equal to minimum"),
+      oasMessage = Some("Maximum must be greater than or equal to minimum"),
+      targetClass = List("http://a.ml/vocabularies/shapes#ScalarShape"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "http://www.w3.org/ns/shacl#minInclusive",
+          name = "shacl.minInclusive",
+          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxInclusive"))),
+      replacesFunctionConstraint = Some("minimumMaximumValidation")))
+  val minMaxItemsValidation = List(
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#min-max-items",
+      message = "MaxItems must be greater than or equal to minItems",
+      ramlMessage = Some("MaxItems must be greater than or equal to minItems"),
+      oasMessage = Some("MaxItems must be greater than or equal to minItems"),
+      targetClass = List("http://a.ml/vocabularies/shapes#ArrayShape"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "http://www.w3.org/ns/shacl#minCount",
+          name = "shacl.minCount",
+          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxCount"))),
+      replacesFunctionConstraint = Some("minMaxItemsValidation")))
+  val minMaxLengthValidation = List(
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#min-max-length",
+      message = "MaxItems must be greater than or equal to minItems",
+      ramlMessage = Some("MaxLength must be greater than or equal to minLength"),
+      oasMessage = Some("MaxLength must be greater than or equal to minLength"),
+      targetClass = List("http://a.ml/vocabularies/shapes#Shape"),
+      propertyConstraints = ArrayBuffer(
+        PropertyConstraint(
+          ramlPropertyId = "http://www.w3.org/ns/shacl#minLength",
+          name = "shacl.minLength",
+          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxLength"))),
+      replacesFunctionConstraint = Some("minMaxLengthValidation")))
+  val minMaxPropertiesValidation = List(ValidationSpecification(
+    name = "http://a.ml/vocabularies/amf/parser#min-max-properties",
+    message = "MaxProperties must be greater than or equal to minProperties",
+    ramlMessage = Some("MaxProperties must be greater than or equal to minProperties"),
+    oasMessage = Some("MaxProperties must be greater than or equal to minProperties"),
+    targetClass = List("http://www.w3.org/ns/shacl#NodeShape"),
+    propertyConstraints = ArrayBuffer(
+      PropertyConstraint(
+        ramlPropertyId = "http://a.ml/vocabularies/shapes#minProperties",
+        name = "shapes.minProperties",
+        lessThanOrEqualsToProperty = Some("http://a.ml/vocabularies/shapes#maxProperties"))),
+    replacesFunctionConstraint = Some("minMaxPropertiesValidation")))
 
   val defintions: Map[String, Seq[ValidationSpecification]] = Map(
     "xmlWrappedScalar" -> xmlWrappedScalar,
     "xmlNonScalarAttribute" -> xmlNonScalarAttribute,
     "fileParameterMustBeInFormData" -> fileParameterMustBeInFormData,
     "pathParameterRequiredProperty" -> pathParameterRequiredProperty,
-    "exampleMutuallyExclusiveFields" -> exampleMutuallyExclusiveFields
+    "exampleMutuallyExclusiveFields" -> exampleMutuallyExclusiveFields,
+    "minimumMaximumValidation" -> minimumMaximumValidation,
+    "minMaxItemsValidation" -> minMaxItemsValidation,
+    "minMaxLengthValidation" -> minMaxLengthValidation,
+    "minMaxPropertiesValidation" -> minMaxPropertiesValidation
   )
 
 }
 
 object JsCustomValidations {
   val functions: Map[String, String] = Map(
-    "minimumMaximumValidation" ->
-      """|function(shape) {
-         |  //console.log(JSON.stringify(shape));
-         |  var minimum = shape["shacl:minInclusive"];
-         |  var maximum = shape["shacl:maxInclusive"];
-         |  if (minimum == undefined || maximum == undefined) return true;
-         |  else return (parseFloat(minimum) <= parseFloat(maximum));
-         |}
-      """.stripMargin,
-    "minMaxItemsValidation" ->
-      """|function(shape) {
-         |  //console.log(JSON.stringify(shape));
-         |  var minCount = shape["shacl:minCount"];
-         |  var maxCount = shape["shacl:maxCount"];
-         |  if (minCount == undefined || maxCount == undefined) return true;
-         |  else return (parseInt(minCount) <= parseInt(maxCount));
-         |}
-      """.stripMargin,
-    "minMaxLengthValidation" ->
-      """|function(shape) {
-         |  //console.log(JSON.stringify(shape));
-         |  var minLength = shape["shacl:minLength"];
-         |  var maxLength = shape["shacl:maxLength"];
-         |  if (minLength == undefined || maxLength == undefined) return true;
-         |  else return (parseInt(minLength) <= parseInt(maxLength));
-         |}
-      """.stripMargin,
-    "minMaxPropertiesValidation" ->
-      """|function(shape) {
-         |  var minProperties = shape["raml-shapes:minProperties"];
-         |  var maxProperties = shape["raml-shapes:maxProperties"];
-         |  if (minProperties == undefined || maxProperties == undefined) return true;
-         |  else return (parseInt(minProperties) <= parseInt(maxProperties));
-         |}
-      """.stripMargin,
     "patternValidation" ->
       """|function(shape) {
          |  var pattern = shape["shacl:pattern"];

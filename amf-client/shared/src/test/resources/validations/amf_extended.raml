@@ -16,11 +16,19 @@ types:
                 description: String type property.
                 xml:
                   wrapped: true
+                minLength: 10
+                maxLength: 3
             property2?:
                 type: integer[]
                 description: Number data type property.
+                minItems: 10
+                maxItems: 3
                 xml:
                   attribute: true
+            property3:
+                type: number
+                minimum: 10.0
+                maximum: 3.0
 
 /resource:
     /{resource_id}:
@@ -46,6 +54,8 @@ types:
                         application/json:
                             description: Document representing a site.
                             additionalProperties: true
+                            minProperties: 10
+                            maxProperties: 3
                             properties:
                                 allowed_currencies:
                                     description: The list of allowed currencies.

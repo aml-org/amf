@@ -220,15 +220,10 @@ object ValidationDialectText {
       |        propertyTerm: validation.ramlClassId
       |        range: string
       |        allowMultiple: true
-      |      propertyConstraints:
-      |        propertyTerm: shacl.property
-      |        mapKey: name
-      |        range: propertyConstraintNode
-      |      targetQuery:
+      |      query:
       |        mandatory: true
       |        propertyTerm: validation.targetQuery
       |        range: string
-      |
       |  ramlPrefixNode:
       |    classTerm: validation.RamlPrefix
       |    mapping:

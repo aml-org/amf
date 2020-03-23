@@ -29,8 +29,13 @@ class CustomValidationTest extends UniquePlatformReportGenTest {
     validate("paths2.raml", Some("paths2.report"), ProfileName("paths2"), Some("profiles/paths2.yaml"))
   }
 
-  test("HERE_HERE Logical constraints") {
+  test("Logical constraints") {
     validate("logical.raml", Some("logical.report"), ProfileName("logical"), Some("profiles/logical.yaml"))
   }
 
+  if (platform.name == "jvm") { // not supported in JS yet
+    test("Query constraints") {
+      validate("query.raml", Some("query.report"), ProfileName("query"), Some("profiles/query.yaml"))
+    }
+  }
 }

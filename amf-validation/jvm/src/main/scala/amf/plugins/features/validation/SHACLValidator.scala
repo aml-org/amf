@@ -129,4 +129,6 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
   }
 
   override def emptyRdfModel(): RdfModel = new JenaRdfModel()
+
+  override def supportsJSFunctions: Boolean = false
 }
