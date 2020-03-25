@@ -120,26 +120,28 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
     }
   }
 
-  private def generateShape(
+  private def generateSchema(
       fragmentShape: Shape,
       validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
+
     val dataType = DataTypeFragment()
     dataType.fields
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-    val unparsedDocOption = SYamlSyntaxPlugin
-      .unparse(
-        "application/json",
-        SyamlParsedDocument(
-          document = new JsonSchemaValidationFragmentEmitter(dataType)(
-            new JsonSchemaEmitterContext(dataType.errorHandler(), new ShapeRenderOptions().withoutDocumentation))
-            .emitFragment())
-      )
+    val schemaOption: Option[CharSequence] = generateSchemaString(dataType)
 
-    unparsedDocOption match {
+    schemaOption match {
       case Some(charSequence) => loadSchema(charSequence, fragmentShape, validationProcessor)
       case None               => Right(None)
     }
+  }
+
+  private def generateSchemaString(dataType: DataTypeFragment): Option[CharSequence] = {
+    val renderOptions = new ShapeRenderOptions().withoutDocumentation
+    val context       = new JsonSchemaEmitterContext(dataType.errorHandler(), renderOptions)
+    val emitter       = new JsonSchemaValidationFragmentEmitter(dataType)(context)
+    val document      = SyamlParsedDocument(document = emitter.emitFragment())
+    SYamlSyntaxPlugin.unparse("application/json", document)
   }
 
   protected def literalRepresentation(payload: PayloadFragment): Option[String] = {
@@ -168,13 +170,13 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
     }
   }
 
-  private def getOrCreateObj(
+  private def getOrCreateSchema(
       s: AnyShape,
       validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
     schemas.get(s.id) match {
       case Some(json) => Right(Some(json))
       case _ =>
-        generateShape(s, validationProcessor) match {
+        generateSchema(s, validationProcessor) match {
           case Right(maybeSchema) =>
             maybeSchema.foreach { schemas.put(s.id, _) }
             Right(maybeSchema)
@@ -218,7 +220,8 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
                     mediaType)
   }
 
-  protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+  protected def buildPayloadNode(mediaType: String,
+                                 payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
     val fixedResult = parsePayloadWithErrorHandler(payload, mediaType, env, shape) match {
       case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
         val frag = ScalarPayloadForParam(result.fragment, shape)
@@ -239,7 +242,7 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
           {
             resultOption match {
               case _ if shape.isInstanceOf[AnyShape] =>
-                getOrCreateObj(shape.asInstanceOf[AnyShape], validationProcessor)
+                getOrCreateSchema(shape.asInstanceOf[AnyShape], validationProcessor)
               case _ =>
                 Left(
                   validationProcessor.processResults(Seq(AMFValidationResult(
@@ -291,8 +294,7 @@ object ScalarPayloadForParam {
 
       fragment.encodes match {
         case s: ScalarNode if !s.dataType.option().exists(_.equals(DataType.String)) =>
-          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations),
-                          fragment.mediaType.value())
+          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations), fragment.mediaType.value())
         case _ => fragment
       }
     } else fragment
