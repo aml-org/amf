@@ -91,7 +91,7 @@ case class JsonSchemaEmitter(root: Shape,
   private def sortedTypeEntries = {
     val context =
       if (options.isWithCompactedEmission) CompactJsonSchemaEmitterContext(options.errorHandler, options)
-      else new JsonSchemaEmitterContext(options.errorHandler, options)
+      else JsonSchemaEmitterContext(options.errorHandler, options)
     ordering.sorted(OasDeclarationsEmitter(declarations, SpecOrdering.Lexical, Seq())(context).emitters)
   } // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
 

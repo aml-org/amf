@@ -17,6 +17,7 @@ import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
+import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
 import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models._
@@ -138,7 +139,7 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
 
   private def generateSchemaString(dataType: DataTypeFragment): Option[CharSequence] = {
     val renderOptions = new ShapeRenderOptions().withoutDocumentation
-    val context       = new JsonSchemaEmitterContext(dataType.errorHandler(), renderOptions)
+    val context       = new JsonSchemaEmitterContext(dataType.errorHandler(), renderOptions, JSONSchemaDraft7SchemaVersion)
     val emitter       = new JsonSchemaValidationFragmentEmitter(dataType)(context)
     val document      = SyamlParsedDocument(document = emitter.emitFragment())
     SYamlSyntaxPlugin.unparse("application/json", document)
