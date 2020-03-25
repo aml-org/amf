@@ -84,7 +84,8 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
                          "",
                          s"Cannot find link reference $fullRef",
                          Annotations(entryLike.asMap))
-        nameAndAdopt(new ErrorMessage(fullRef, entryLike.asMap).link(fullRef), entryLike.key)
+        val errorMessage = new ErrorMessage(fullRef, entryLike.asMap)
+        nameAndAdopt(errorMessage.link(fullRef, errorMessage.annotations), entryLike.key)
     }
   }
 

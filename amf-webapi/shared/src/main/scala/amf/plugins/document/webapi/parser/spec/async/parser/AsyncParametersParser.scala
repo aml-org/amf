@@ -86,7 +86,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
         nameAndAdopt(external.link(fullRef))
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
-        nameAndAdopt(ErrorParameter(fullRef, map).link(fullRef))
+        nameAndAdopt(ErrorParameter(fullRef, map).link(fullRef, annotations = Annotations(map)))
     }
   }
 }
