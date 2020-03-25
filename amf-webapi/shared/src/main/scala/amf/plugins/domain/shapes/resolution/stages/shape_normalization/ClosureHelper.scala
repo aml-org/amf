@@ -26,7 +26,7 @@ trait ClosureHelper {
 
   def handleClosures(source: Shape,
                      target: Shape,
-                     propagateRecursionClosures: RecursiveShape => Boolean = REJECT_ALL): Unit = {
+                     propagateRecursionClosures: RecursiveShape => Boolean = ACCEPT_ALL): Unit = {
     source match {
       case rec: RecursiveShape if propagateRecursionClosures(rec) =>
         addFixpointToClosures(rec, target)

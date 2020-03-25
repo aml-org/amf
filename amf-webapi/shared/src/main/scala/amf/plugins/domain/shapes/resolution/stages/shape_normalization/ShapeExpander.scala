@@ -76,14 +76,14 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       // in this case i use the father shape id and position, because the inheritance could be a recursive shape already
       val newInherits = shape.inherits.map {
         case r: RecursiveShape if r.fixpoint.option().exists(_.equals(shape.id)) =>
-          context.handleClosures(r, shape, RecursionPropagation.ACCEPT_ALL)
+          context.handleClosures(r, shape)
           recursionRegister.recursionError(shape, r, traversal) // direct recursion
         case r: RecursiveShape =>
-          context.handleClosures(r, shape, RecursionPropagation.ACCEPT_ALL)
+          context.handleClosures(r, shape)
           r
         case parent =>
           val normalizedParent = recursiveNormalization(parent)
-          context.handleClosures(normalizedParent, shape)
+          context.handleClosures(normalizedParent, shape, RecursionPropagation.REJECT_ALL)
           normalizedParent
       }
       shape.setArrayWithoutId(ShapeModel.Inherits, newInherits, oldInherits.annotations)
@@ -153,7 +153,6 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
         traverseOptionalShapeFacet(array.items)
       }
 
-      // dealing with recursion and closure
       context.handleClosures(newItems, array)
 
       array.fields.setWithoutId(ArrayShapeModel.Items, newItems, oldItems.annotations)
@@ -191,14 +190,14 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (Option(oldProperties).isDefined) {
       val newProperties = node.properties.map { prop =>
         val newPropertyShape = recursiveNormalization(prop).asInstanceOf[PropertyShape]
-        context.handleClosures(newPropertyShape.range, node, RecursionPropagation.ACCEPT_ALL)
+        context.handleClosures(newPropertyShape.range, node)
         newPropertyShape
       }
       node.setArrayWithoutId(NodeShapeModel.Properties, newProperties, oldProperties.annotations)
     }
     Option(node.additionalPropertiesSchema).foreach(x => {
       val resultantShape = traverseOptionalShapeFacet(x)
-      context.handleClosures(resultantShape, node, RecursionPropagation.ACCEPT_ALL)
+      context.handleClosures(resultantShape, node)
     })
 
     expandInherits(node)
