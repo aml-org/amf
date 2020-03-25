@@ -13,7 +13,17 @@ import amf.validations.PayloadValidations.{
   ExampleValidationErrorSpecification,
   SchemaException => InternalSchemaException
 }
-import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidator, URIFormatValidator}
+import org.everit.json.schema.internal.{
+  DateFormatValidator,
+  DateTimeFormatValidator,
+  EmailFormatValidator,
+  HostnameFormatValidator,
+  IPV4Validator,
+  IPV6Validator,
+  RegexFormatValidator,
+  URIFormatValidator,
+  URIV4FormatValidator
+}
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
@@ -60,23 +70,26 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
         val schemaBuilder = SchemaLoader
           .builder()
           .schemaJson(schemaNode)
+          .draftV7Support()
           .regexpFactory(CustomJavaUtilRegexpFactory())
           .addFormatValidator(DateTimeOnlyFormatValidator)
           .addFormatValidator(Rfc2616Attribute)
           .addFormatValidator(Rfc2616AttributeLowerCase)
-          .addFormatValidator(new DateFormatValidator())
-          .addFormatValidator(new URIFormatValidator())
-          .addFormatValidator(new RegexFormatValidator())
           .addFormatValidator(PartialTimeFormatValidator)
+          // the following are everit format validators
+          .addFormatValidator(new URIV4FormatValidator())
+          .addFormatValidator(new DateFormatValidator())
+          .addFormatValidator(new RegexFormatValidator())
+          .addFormatValidator(new HostnameFormatValidator())
+          .addFormatValidator(new IPV4Validator())
+          .addFormatValidator(new DateTimeFormatValidator())
+          .addFormatValidator(new IPV6Validator())
+          .addFormatValidator(new EmailFormatValidator())
 
         try {
-          Right(
-            Some(
-              schemaBuilder
-                .build()
-                .load()
-                .build())
-          )
+          // does not use schemaBuilder.build() as this causes formats of schema version to override custom format validators
+          val loader = new SchemaLoader(schemaBuilder);
+          Right(Some(loader.load().build()))
         } catch {
           case e: SchemaException =>
             Left(validationProcessor.processException(e, Some(element)))
