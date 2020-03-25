@@ -8,6 +8,7 @@ import amf.core.validation.core.{ValidationProfile, ValidationResult, Validation
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
+import amf.plugins.document.webapi.validation.runner.{ValidationContext, WebApiValidationsRunner}
 
 import scala.concurrent.Future
 
