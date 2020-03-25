@@ -47,7 +47,8 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
         nameAndAdopt(external.link(fullRef), entryLike.key)
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
-        nameAndAdopt(new ErrorCorrelationId(fullRef, map).link(fullRef), entryLike.key)
+        val errorCorrelation = new ErrorCorrelationId(fullRef, map)
+        nameAndAdopt(errorCorrelation.link(fullRef, errorCorrelation.annotations), entryLike.key)
     }
   }
 }
