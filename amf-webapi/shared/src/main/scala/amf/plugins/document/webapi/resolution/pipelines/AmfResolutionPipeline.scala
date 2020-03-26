@@ -30,7 +30,6 @@ class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPip
     new CleanReferencesStage(),
     new DeclarationsRemovalStage()
   )
-
 }
 
 object AmfResolutionPipeline {

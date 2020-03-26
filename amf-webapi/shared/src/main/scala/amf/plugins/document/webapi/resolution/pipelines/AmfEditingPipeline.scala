@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.resolution.pipelines
 import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.pipelines.ResolutionPipeline.EDITING_PIPELINE
-import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage, UrlShortenerStage}
+import amf.core.resolution.stages.{ResolutionStage, UrlShortenerStage}
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages._
@@ -11,8 +11,8 @@ import amf.{AmfProfile, ProfileName}
 
 class AmfEditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean = true) extends ResolutionPipeline(eh) {
 
-  protected def references                   = new WebApiReferenceResolutionStage(keepEditingInfo = true)
-  private def url: Option[UrlShortenerStage] = if (urlShortening) Some(new UrlShortenerStage()) else None
+  protected def references                     = new WebApiReferenceResolutionStage(keepEditingInfo = true)
+  protected def url: Option[UrlShortenerStage] = if (urlShortening) Some(new UrlShortenerStage()) else None
 
   protected def parameterNormalizationStage: ParametersNormalizationStage = new AmfParametersNormalizationStage()
 
