@@ -45,16 +45,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     }
   }
 
-  private def mergeClosures(derived: Shape, superShape: Shape): Unit = {
-    superShape.closureShapes.foreach { scs =>
-      derived.closureShapes += scs
-      context.cache.addClosures(Seq(scs), derived)
-    }
-  }
   def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
     val superShape   = copy(superShapeOri)
     val derivedShape = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
-    mergeClosures(derivedShape, superShape)
+    context.propagateClosures(superShape, derivedShape)
 //    context.cache.updateRecursiveTargets(derivedShape)
     try {
       derivedShape match {
@@ -455,10 +449,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                                   AmfArray(newUnionItems),
                                   baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
-    computeNarrowRestrictions(UnionShapeModel.fields,
-                              baseUnion,
-                              superNode,
-                              filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }

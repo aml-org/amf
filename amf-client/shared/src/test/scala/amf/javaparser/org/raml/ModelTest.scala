@@ -20,17 +20,18 @@ import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 
 import scala.concurrent.Future
 
+// TODO remove default Raml hints and vendors
 trait ModelValidationTest extends DirectoryTest {
 
-  override def ignorableExtention: String = ".ignore"
+  def hint: Hint = RamlYamlHint
+
+  override def ignorableExtension: String = ".ignore"
 
   override def runDirectory(d: String): Future[(String, Boolean)] = {
     for {
       validation <- Validation(platform)
-      model <- AMFCompiler(s"file://${d + inputFileName}",
-                           platform,
-                           RamlYamlHint,
-                           eh = DefaultParserErrorHandler.withRun()).build()
+      model <- AMFCompiler(s"file://${d + inputFileName}", platform, hint, eh = DefaultParserErrorHandler.withRun())
+        .build()
       report <- { validation.validate(model, profileFromModel(model)) }
       output <- { renderOutput(d, model, report) }
     } yield {
@@ -64,6 +65,7 @@ trait ModelValidationTest extends DirectoryTest {
       .flatMap(_.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor))
     maybeVendor match {
       case Some(Raml08) => Raml08Profile
+      case Some(Oas20)  => Oas20Profile
       case _            => RamlProfile
     }
   }
@@ -119,57 +121,4 @@ trait ModelResolutionTest extends ModelValidationTest {
     case Oas     => OasJsonHint
     case _       => AmfJsonHint
   }
-}
-
-trait DirectoryTest extends ResolutionTest {
-
-  def path: String
-  def inputFileName: String
-  def outputFileName: String
-  def ignorableExtention: String
-  def directories: List[String] = getDirectoriesWithFiles(Fs.syncFile(path)).map(_.path + "/")
-
-  /** returns a list of contained directories including the given one if contains the corresponding files */
-  private def getDirectoriesWithFiles(directory: SyncFile): List[SyncFile] = {
-    val (files, directories) = directory.list.map(l => Fs.syncFile(directory.path + "/" + l)).partition(_.isFile)
-    val sons                 = directories.flatMap(d => getDirectoriesWithFiles(d)).toList
-    val result =
-      if (validDir(files.toList)) List(directory) ++ sons
-      else sons
-    result
-  }
-
-  def runDirectory(d: String): Future[(String, Boolean)]
-
-  case class directoryResult(outputFile: String, goldenFile: String)
-
-  private def validDir(files: List[SyncFile]): Boolean = {
-    val fileNames = files.map(_.name)
-    files.nonEmpty && fileNames.contains(inputFileName) && (fileNames.contains(outputFileName) || fileNames.contains(
-      outputFileName concat ignorableExtention) || fileNames.contains(outputFileName + s".${platform.name}"))
-  }
-
-  private def testFunction(d: String): Future[Assertion] = {
-    runDirectory(d).flatMap {
-      case (t, usePlatform) =>
-        val finalOutputFileName = if (usePlatform) outputFileName + s".${platform.name}" else outputFileName
-        writeTemporaryFile(finalOutputFileName)(t)
-          .flatMap(assertDifferences(_, s"${d + finalOutputFileName}"))
-    }
-  }
-  directories.foreach(d => {
-    if (ignoreDir(d)) {
-      ignore("DirectoryTest for dir: " + d) {
-        testFunction(d)
-      }
-    } else {
-      test("DirectoryTest for dir: " + d) {
-        testFunction(d)
-      }
-    }
-  })
-
-  protected def ignoreDir(d: String): Boolean =
-    Fs.syncFile(d).list.exists(_.equals(outputFileName concat ignorableExtention))
-
 }

@@ -11,7 +11,7 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Oas20Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.exception.UnsupportedVendorException
@@ -1659,7 +1659,6 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit <- new RamlParser(environment).parseStringAsync(input).asFuture
       v    <- AMF.validate(unit, Raml10Profile, RAMLStyle).asFuture
     } yield {
-      //println("report: " + v.toString)
       v.conforms should be(true)
       val declarations = unit.asInstanceOf[Document].declares.asSeq
       declarations should have size 1
@@ -1767,8 +1766,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseFileAsync(file).asFuture
     } yield {
-      assert(
-        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+      assert(unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 
@@ -1791,8 +1789,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit     <- new RamlParser().parseStringAsync(api).asFuture
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
-      json <- Future(
-        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
+      json     <- Future(resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
     } yield {
       val golden = """{
                      |  "$schema": "http://json-schema.org/draft-04/schema#",
@@ -2020,8 +2017,106 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
-      println(report.toString())
       assert(!report.conforms)
+    }
+  }
+
+  test("Test API with recursive type in array items") {
+    val api =
+      """
+        |{
+        |  "swagger": "2.0",
+        |  "info": {
+        |    "title": "api",
+        |    "version": "1.0.0"
+        |  },
+        |  "paths": {},
+        |  "definitions": {
+        |    "APTransactionType": {
+        |      "properties": {
+        |        "GLTransaction": {
+        |          "items": {
+        |            "$ref": "#/definitions/GLTransactionType"
+        |          },
+        |          "type": "array"
+        |        }
+        |      },
+        |      "type": "object"
+        |    },
+        |    "ARTransactionType": {
+        |      "properties": {
+        |        "GLTransaction": {
+        |          "items": {
+        |            "$ref": "#/definitions/GLTransactionType"
+        |          },
+        |          "type": "array"
+        |        }
+        |      },
+        |      "type": "object"
+        |    },
+        |    "GLTransactionType": {
+        |      "properties": {
+        |        "APTransaction": {
+        |          "$ref": "#/definitions/APTransactionType"
+        |        },
+        |        "ARTransaction": {
+        |          "$ref": "#/definitions/ARTransactionType"
+        |        }
+        |      },
+        |      "type": "object"
+        |    },
+        |    "root": {
+        |      "properties": {
+        |        "ARTransaction": {
+        |          "items": {
+        |            "$ref": "#/definitions/ARTransactionType"
+        |          },
+        |          "type": "array"
+        |        }
+        |      },
+        |      "type": "object"
+        |    }
+        |  }
+        |}
+        |""".stripMargin
+    val payload =
+      """
+        |{
+        |  "ARTransaction": [
+        |    {
+        |      "GLTransaction": [
+        |        {
+        |          "APTransaction": {
+        |            "GLTransaction": []
+        |          },
+        |          "ARTransaction": {
+        |            "GLTransaction": []
+        |          }
+        |        }
+        |      ]
+        |    }
+        |  ]
+        |}
+        |""".stripMargin
+    for {
+      _        <- AMF.init().asFuture
+      parsed   <- new Oas20Parser().parseStringAsync(api).asFuture
+      resolved <- Future(new Oas20Resolver().resolve(parsed, ResolutionPipeline.EDITING_PIPELINE))
+      shape <- {
+        Future.successful {
+          val declarations = resolved.asInstanceOf[Document].declares.asSeq
+          val shape = declarations.find {
+            case s: Shape => s.name.value() == "root"
+            case _        => false
+          }
+          shape.get.asInstanceOf[AnyShape]
+        }
+      }
+      report <- {
+        shape.validate(payload).asFuture
+      }
+    } yield {
+      assert(report.conforms)
     }
   }
 
