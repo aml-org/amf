@@ -2,8 +2,6 @@
 dialect: ABOUT
 version: "0.1"
 documents:
-  root:
-    encodes: ProjectNode
   library:
     declares:
       licenses: LicenseNode
@@ -12,6 +10,8 @@ documents:
     encodes:
       Contributor: ContributorNode
       License: LicenseNode
+  root:
+    encodes: ProjectNode
 nodeMappings:
   ProjectNode:
     classTerm: about.SoftwareProject
