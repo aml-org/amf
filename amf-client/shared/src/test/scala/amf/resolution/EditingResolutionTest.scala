@@ -465,8 +465,27 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     cycle("message-references.yaml", "message-references.jsonld", AsyncYamlHint, AMF, resolutionPath + "async20/")
   }
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    config.target match {
+  test("raml with declared element link of link") {
+    cycle("link-of-link.raml",
+          "link-of-link.jsonld",
+          RamlYamlHint,
+          target = Amf,
+          directory = resolutionPath,
+          transformWith = Some(Raml10))
+  }
+
+  test("raml with declared element link of link of link") {
+    cycle("link-of-link-of-link.raml",
+          "link-of-link-of-link.jsonld",
+          RamlYamlHint,
+          target = Amf,
+          directory = resolutionPath,
+          transformWith = Some(Raml10))
+  }
+
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+    val vendor = config.transformWith.getOrElse(config.target)
+    vendor match {
       case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
       case Raml | Raml10 => Raml10Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
       case Oas30         => Oas30Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
@@ -474,6 +493,7 @@ class EditingResolutionTest extends FunSuiteCycleTests {
       case Amf           => AmfEditingPipeline.unhandled.resolve(unit)
       case target        => throw new Exception(s"Cannot resolve $target")
     }
+  }
 
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit,

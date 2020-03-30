@@ -1,0 +1,16 @@
+#%RAML 1.0 Library
+types:
+
+  RestrictedObject:
+    type: object
+    additionalProperties: false
+
+  AnotherUser: User
+
+  User: Identifier
+
+  Identifier:
+    type: RestrictedObject
+    properties:
+      identifier:
+        type: string

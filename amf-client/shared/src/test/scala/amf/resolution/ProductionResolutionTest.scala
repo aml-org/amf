@@ -452,29 +452,4 @@ class ProductionServiceTest extends RamlResolutionTest {
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }
-
-//  private def cycle(source: String, directory: String): Future[Assertion] = {
-//
-//    val config = CycleConfig(source, source+".jsonld", RamlYamlHint, Amf, directory)
-//
-//    for{
-//      v <- Validation(platform).map(_.withEnabledValidation(true))
-//      model <- build(config, Some(v))
-//      tr <- Future.successful(transform(model,config))
-//      jsonLd <- AMFRenderer(tr,Amf,Json,RenderOptions()).renderToString
-//      resolvedRaml <- AMFRenderer(tr,Raml,Yaml,RenderOptions()).renderToString
-//      parsedRaml <- AMFCompiler("", TrunkPlatform(jsonLd),AmfJsonHint,v).build()
-//      resolvedParsedRaml <- Future.successful({
-//        val unit = new ValidationResolutionPipeline(RAMLProfile, parsedRaml).resolve()
-//        unit.fields.removeField(DocumentModel.Declares)
-//        unit
-//      })
-//      renderedRaml <-  AMFRenderer(resolvedParsedRaml,Raml,Yaml,RenderOptions()).renderToString
-//      resolvedFile <- writeTemporaryFile("resolved.raml")(resolvedRaml)
-//      renderedFile <- writeTemporaryFile("rendered.raml")(renderedRaml)
-//      r <- Tests.checkDiff(resolvedFile,renderedFile)
-//    } yield {
-//      r
-//    }
-//  }
 }

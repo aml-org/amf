@@ -3,18 +3,18 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.Root
 import amf.core.annotations._
 import amf.core.metamodel.Field
-import amf.core.metamodel.document.{ExtensionLikeModel, BaseUnitModel}
+import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.contexts.parser.raml.{
-  RamlWebApiContext,
   ExtensionLikeWebApiContext,
+  RamlWebApiContext,
   RamlWebApiContextType
 }
 import amf.plugins.document.webapi.model.{Extension, Overlay}
@@ -23,10 +23,11 @@ import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
-import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.shapes.annotations.TypeAlias
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.webapi.metamodel.{WebApiModel, ResponseModel}
+import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
+import amf.plugins.domain.webapi.metamodel.{ResponseModel, WebApiModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
@@ -387,6 +388,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
             parser.parse() match {
               case Some(shape) =>
                 if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
+                if (isDirectTypeAlias(shape)) shape.annotations += TypeAlias()
                 ctx.declarations += shape.add(DeclaredElement())
               case None => ctx.eh.violation(UnableToParseShape, parent, s"Error parsing shape '$entry'", entry)
             }
@@ -396,6 +398,10 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
         case t          => ctx.eh.violation(InvalidTypesType, parent, s"Invalid type $t for 'types' node.", e.value)
       }
     }
+  }
+
+  private def isDirectTypeAlias(shape: Shape) = {
+    shape.isInstanceOf[NodeShape] && shape.isLink
   }
 
   /** Get types or schemas facet. If both are available, default to types facet and throw a validation error. */
