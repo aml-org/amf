@@ -56,6 +56,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
+          branch 'support/4.0.6'
         }
       }
       steps {
