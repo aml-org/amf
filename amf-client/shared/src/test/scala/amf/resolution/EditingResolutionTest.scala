@@ -466,8 +466,8 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   }
 
   test("raml with declared element link of link") {
-    cycle("link-of-link.raml",
-          "link-of-link.jsonld",
+    cycle("link-of-link/link-of-link.raml",
+          "link-of-link/link-of-link.jsonld",
           RamlYamlHint,
           target = Amf,
           directory = resolutionPath,
@@ -475,12 +475,25 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   }
 
   test("raml with declared element link of link of link") {
-    cycle("link-of-link-of-link.raml",
-          "link-of-link-of-link.jsonld",
-          RamlYamlHint,
-          target = Amf,
-          directory = resolutionPath,
-          transformWith = Some(Raml10))
+    cycle(
+      "link-of-link/link-of-link-of-link.raml",
+      "link-of-link/link-of-link-of-link.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
+  test("raml with declared element link of link in api") {
+    cycle(
+      "link-of-link/in-api/link-of-link-in-api.raml",
+      "link-of-link/in-api/link-of-link-in-api.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10)
+    )
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
