@@ -44,7 +44,7 @@ class ExtendsResolutionStage(
 
   /** Default to raml10 context. */
   private val parserErrorHandler = DefaultParserErrorHandler.fromErrorHandler(errorHandler)
-  def ctx(parserRun: Int): RamlWebApiContext = profile match {
+  def ctx(): RamlWebApiContext = profile match {
     case Raml08Profile =>
       new Raml08WebApiContext("", Nil, ParserContext(eh = parserErrorHandler))
     case _ => new Raml10WebApiContext("", Nil, ParserContext(eh = parserErrorHandler))
@@ -132,7 +132,7 @@ class ExtendsResolutionStage(
       .add("resourcePathName", resourcePathName(endpoint))
 
     val tree           = EndPointTreeBuilder(endpoint).build()
-    val extendsContext = ctx(context.model.parserRun.get)
+    val extendsContext = ctx()
     val resourceTypes  = collectResourceTypes(endpoint, context, extendsContext, tree)
     apply(endpoint, resourceTypes)(extendsContext) // Apply ResourceTypes to EndPoint
 
