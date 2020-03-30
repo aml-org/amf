@@ -11,7 +11,7 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Oas20Resolver, Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Oas20Resolver, Async20Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.exception.UnsupportedVendorException
@@ -1766,7 +1766,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseFileAsync(file).asFuture
     } yield {
-      assert(unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+      assert(
+        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 
@@ -1789,7 +1790,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit     <- new RamlParser().parseStringAsync(api).asFuture
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
-      json     <- Future(resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
+      json <- Future(
+        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
     } yield {
       val golden = """{
                      |  "$schema": "http://json-schema.org/draft-04/schema#",
@@ -2117,6 +2119,85 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       }
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("Test emission of json schema with specified version") {
+    val api = "file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new Async20Parser().parseFileAsync(api).asFuture
+      resolved <- Future(new Async20Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+    } yield {
+      val golden  = """{
+                        |  "$schema": "http://json-schema.org/draft-07/schema#",
+                        |  "$ref": "#/definitions/conditional-subschemas",
+                        |  "definitions": {
+                        |    "conditional-subschemas": {
+                        |      "type": "object",
+                        |      "if": {
+                        |        "properties": {
+                        |          "country": {
+                        |            "enum": [
+                        |              "United States of America"
+                        |            ]
+                        |          }
+                        |        },
+                        |        "type": "object"
+                        |      },
+                        |      "then": {
+                        |        "properties": {
+                        |          "postal_code": {
+                        |            "pattern": "[0-9]{5}(-[0-9]{4})?",
+                        |            "type": "string"
+                        |          }
+                        |        },
+                        |        "type": "object"
+                        |      },
+                        |      "else": {
+                        |        "properties": {
+                        |          "postal_code": {
+                        |            "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]",
+                        |            "type": "string"
+                        |          }
+                        |        },
+                        |        "type": "object"
+                        |      },
+                        |      "examples": [
+                        |        {
+                        |          "country": "United States of America",
+                        |          "postal_code": "dlkfjslfj"
+                        |        },
+                        |        {
+                        |          "country": "United States of America",
+                        |          "postal_code": "20500"
+                        |        },
+                        |        {
+                        |          "country": "Canada",
+                        |          "postal_code": "K1M 1M4"
+                        |        },
+                        |        {
+                        |          "country": "Canada",
+                        |          "postal_code": "K1M NOT"
+                        |        }
+                        |      ],
+                        |      "additionalProperties": true,
+                        |      "properties": {
+                        |        "country": {
+                        |          "enum": [
+                        |            "United States of America",
+                        |            "Canada"
+                        |          ]
+                        |        }
+                        |      }
+                        |    }
+                        |  }
+                        |}
+                        |""".stripMargin
+      val options = new ShapeRenderOptions().withSchemaVersion(JSONSchemaVersions.DRAFT_07)
+      val generated =
+        resolved.asInstanceOf[Document].declares.asSeq(3).asInstanceOf[NodeShape].buildJsonSchema(options)
+      assert(generated == golden)
     }
   }
 
