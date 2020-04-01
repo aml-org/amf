@@ -71,10 +71,6 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
 
   override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
     OasDeclaredTypesEmitters.apply
-
-  override def exampleEmitter
-    : (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters =
-    OasExampleEmitters.apply
 }
 
 class Oas2SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {
