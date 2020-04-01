@@ -412,6 +412,8 @@ object WebApiDeclarations {
   case class ErrorTrait(idPart: String, ast: YPart) extends Trait(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorTrait/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = ErrorTrait(idPart, ast)
   }
 
   case class ErrorResourceType(idPart: String, ast: YPart)
@@ -421,6 +423,8 @@ object WebApiDeclarations {
     withId(idPart)
 
     override def dataNode: DataNode = ObjectNode()
+
+    override def newErrorInstance: ErrorDeclaration = ErrorResourceType(idPart, ast)
   }
 
   case class ErrorEndPoint(idPart: String, ast: YPart)
@@ -428,6 +432,8 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorEndPoint/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = ErrorEndPoint(idPart, ast)
   }
 
   case class ErrorSecurityScheme(idPart: String, ast: YPart)
@@ -435,29 +441,39 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorSecurityScheme/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = ErrorSecurityScheme(idPart, ast)
   }
   case class ErrorNamedExample(idPart: String, ast: YPart)
       extends Example(Fields(), Annotations(ast))
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorNamedExample/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = ErrorNamedExample(idPart, ast)
   }
   case class ErrorCreativeWork(idPart: String, ast: YPart)
       extends CreativeWork(Fields(), Annotations(ast))
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorCrativeWork/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = ErrorCreativeWork(idPart, ast)
   }
   case class ErrorParameter(idPart: String, ast: YPart)
       extends Parameter(Fields(), Annotations(ast))
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorParameter/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = ErrorParameter(idPart, ast)
   }
 
   class ErrorLink(idPart: String, ast: YPart) extends TemplatedLink(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorTemplateLink/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = new ErrorLink(idPart, ast)
   }
 
   class ErrorCorrelationId(idPart: String, ast: YPart)
@@ -465,11 +481,15 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorCorrelationId/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = new ErrorCorrelationId(idPart, ast)
   }
 
   class ErrorMessage(idPart: String, ast: YPart) extends Message(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorMessage/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = new ErrorMessage(idPart, ast)
   }
 
   class ErrorServerBindings(idPart: String, ast: YPart)
@@ -477,6 +497,8 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#serverBindings/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = new ErrorServerBindings(idPart, ast)
   }
 
   class ErrorOperationBindings(idPart: String, ast: YPart)
@@ -484,6 +506,8 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#operationBindings/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = new ErrorOperationBindings(idPart, ast)
   }
 
   class ErrorChannelBindings(idPart: String, ast: YPart)
@@ -491,6 +515,8 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#channelBindings/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = new ErrorChannelBindings(idPart, ast)
   }
 
   class ErrorMessageBindings(idPart: String, ast: YPart)
@@ -498,17 +524,32 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#messageBindings/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = new ErrorMessageBindings(idPart, ast)
+  }
+
+  class ErrorOperationTrait(idPart: String, ast: YPart)
+      extends Operation(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#operationTraits/"
+    withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = new ErrorOperationTrait(idPart, ast)
   }
 
   class ErrorCallback(idPart: String, ast: YPart) extends Callback(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorCallback/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = new ErrorCallback(idPart, ast)
   }
   case class ErrorResponse(idPart: String, ast: YPart)
       extends Response(Fields(), Annotations(ast))
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorResponse/"
     withId(idPart).withStatusCode("200")
+
+    override def newErrorInstance: ErrorDeclaration = ErrorResponse(idPart, ast)
   }
 
   case class ErrorRequest(idPart: String, ast: YPart)
@@ -516,6 +557,8 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorRequest/"
     withId(idPart)
+
+    override def newErrorInstance: ErrorDeclaration = ErrorRequest(idPart, ast)
   }
 }
 
