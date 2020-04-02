@@ -264,6 +264,7 @@ object ExtendsHelper {
 
   private def getDeclaringUnit(refs: List[BaseUnit], sourceName: String): Option[BaseUnit] = refs match {
     case (f: Fragment) :: _ if sourceNameMatch(f, sourceName) => Some(f)
+    case (m: Module) :: _ if sourceNameMatch(m, sourceName)   => Some(m)
     case unit :: tail =>
       getDeclaringUnit(tail, sourceName) match {
         case ref @ Some(_) => ref
@@ -272,7 +273,7 @@ object ExtendsHelper {
     case _ => None
   }
 
-  private def sourceNameMatch(f: Fragment, sourceName: String): Boolean =
+  private def sourceNameMatch(f: AmfElement, sourceName: String): Boolean =
     f.annotations
       .find(classOf[AmfSourceLocation])
       .map(_.location)
@@ -297,21 +298,20 @@ object ExtendsHelper {
         processDeclaration(declaration, ctx, unit)
     }
 
-    addNestedDeclarations(ctx, declaringUnit)
-    if (declaringUnit != root) addNestedDeclarations(ctx, root)
+    // gives priority to references of fragments or modules over those in root file, this order can be adjusted
+    if (declaringUnit != root) processRefsToDeclarations(ctx, root)
+    processRefsToDeclarations(ctx, declaringUnit)
   }
 
-  private def addNestedDeclarations(ctx: RamlWebApiContext, model: BaseUnit): Unit = {
+  private def processRefsToDeclarations(ctx: RamlWebApiContext, model: BaseUnit): Unit = {
     model.references.foreach {
       // Declarations of traits and resourceTypes are contextual, so should skip it
       case f: Fragment if !f.isInstanceOf[ResourceTypeFragment] && !f.isInstanceOf[TraitFragment] =>
         ctx.declarations += (f.location().getOrElse(f.id), f)
-        addNestedDeclarations(ctx, f)
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
           case (alias, (fullUrl, _)) =>
-            // If the library alias is already in the context, skip it
-            if (m.id == fullUrl && !ctx.declarations.libraries.exists(_._1 == alias)) {
+            if (m.id == fullUrl) {
               val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(eh = ctx.eh))
               m.declares.foreach { declaration =>
                 processDeclaration(declaration, nestedCtx, m)
@@ -319,7 +319,6 @@ object ExtendsHelper {
               ctx.declarations.libraries += (alias -> nestedCtx.declarations)
             }
         }
-        addNestedDeclarations(ctx, m)
       case _: Fragment => // Trait or RT, nothing to do
       case other =>
         ctx.eh.violation(
