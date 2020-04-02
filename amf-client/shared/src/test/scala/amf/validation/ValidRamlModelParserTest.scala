@@ -235,5 +235,13 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("special-chars.raml")
   }
 
+  test("Prioritize library alias defined in fragment over root file") {
+    checkValid("library-alias-repeated-in-root/root.raml")
+  }
+
+  test("Resolve correct library alias defined in root file") {
+    checkValid("libraries-resolve-correct-alias/promotions.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
