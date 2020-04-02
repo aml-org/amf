@@ -25,8 +25,8 @@ import org.yaml.model._
 abstract class WebApiContext(val loc: String,
                              refs: Seq[ParsedReference],
                              val options: ParsingOptions,
-                             private val wrapped: ParserContext,
-                             private val ds: Option[WebApiDeclarations] = None)
+                             wrapped: ParserContext,
+                             declarationsOption: Option[WebApiDeclarations] = None)
     extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
     with SpecAwareContext
     with PlatformSecrets {
@@ -34,8 +34,8 @@ abstract class WebApiContext(val loc: String,
   val syntax: SpecSyntax
   val vendor: Vendor
 
-  val declarations: WebApiDeclarations =
-    ds.getOrElse(new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
+  val declarations: WebApiDeclarations = declarationsOption.getOrElse(
+    new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
@@ -53,7 +53,6 @@ abstract class WebApiContext(val loc: String,
   }
 
   globalSpace = wrapped.globalSpace
-  reportDisambiguation = wrapped.reportDisambiguation
 
   // JSON Schema has a global namespace
 
@@ -64,6 +63,7 @@ abstract class WebApiContext(val loc: String,
       case Some(shape: AnyShape) => Some(shape)
       case _                     => None
     }
+
   def registerJsonSchema(url: String, shape: AnyShape): Unit = {
     globalSpace.update(normalizedJsonPointer(url), shape)
   }

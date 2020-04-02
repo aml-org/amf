@@ -7,8 +7,8 @@ import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSynta
 
 class Oas2WebApiContext(loc: String,
                         refs: Seq[ParsedReference],
-                        private val wrapped: ParserContext,
-                        private val ds: Option[OasWebApiDeclarations] = None,
+                        wrapped: ParserContext,
+                        ds: Option[OasWebApiDeclarations] = None,
                         options: ParsingOptions = ParsingOptions())
     extends OasWebApiContext(loc, refs, options, wrapped, ds) {
   override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
