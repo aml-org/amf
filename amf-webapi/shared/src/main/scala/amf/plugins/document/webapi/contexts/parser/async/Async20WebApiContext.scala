@@ -18,4 +18,7 @@ class Async20WebApiContext(loc: String,
   override val factory: Async20VersionFactory = Async20VersionFactory()(this)
   override val vendor: Vendor                 = AsyncApi20
   override val syntax: SpecSyntax             = Async20Syntax
+
+  override def makeCopy(): Async20WebApiContext =
+    new Async20WebApiContext(rootContextDocument, refs, this, Some(declarations), operationIds, options)
 }

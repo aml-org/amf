@@ -8,10 +8,16 @@ import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
 
 import scala.collection.mutable
 
-class JsonSchemaAstIndex(root: YNode)(implicit val ctx: WebApiContext) {
+object JsonSchemaAstIndex {
+  def apply(root: YNode)(implicit ctx: WebApiContext) =
+    new JsonSchemaAstIndex(root, AliasCounter(ctx.options.getMaxYamlReferences))
+  def apply(root: YNode, refsCounter: AliasCounter)(implicit ctx: WebApiContext) =
+    new JsonSchemaAstIndex(root, refsCounter)
+}
+
+class JsonSchemaAstIndex(root: YNode, val refsCounter: AliasCounter)(implicit val ctx: WebApiContext) {
 
   private val index: mutable.Map[String, YNode] = mutable.Map.empty
-  private val refsCounter: AliasCounter         = AliasCounter(ctx.options.getMaxYamlReferences)
 
   init()
   def init(): Unit = root.to[YMap] match {

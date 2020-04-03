@@ -14,4 +14,7 @@ class Oas2WebApiContext(loc: String,
   override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
   override val vendor: Vendor              = Oas20
   override val syntax: SpecSyntax          = Oas2Syntax
+
+  override def makeCopy(): Oas2WebApiContext =
+    new Oas2WebApiContext(rootContextDocument, refs, this, Some(declarations), options)
 }

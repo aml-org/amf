@@ -47,9 +47,11 @@ abstract class WebApiContext(val loc: String,
     case _                  => None
   }
 
+  var jsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(this)
+
   def setJsonSchemaAST(value: YNode): Unit = {
     localJSONSchemaContext = Some(value)
-    jsonSchemaIndex = Some(new JsonSchemaAstIndex(value)(this))
+    jsonSchemaIndex = Some(JsonSchemaAstIndex(value)(this))
   }
 
   globalSpace = wrapped.globalSpace
@@ -69,27 +71,6 @@ abstract class WebApiContext(val loc: String,
   }
 
   // TODO this should not have OasWebApiContext as a dependency
-  def parseRemoteJSONPath(fileUrl: String)(implicit ctx: OasLikeWebApiContext): Option[AnyShape] = {
-    val referenceUrl =
-      fileUrl.split("#") match {
-        case s: Array[String] if s.size > 1 => Some(s.last)
-        case _                              => None
-      }
-    val baseFileUrl = fileUrl.split("#").head
-    val res: Option[Option[AnyShape]] = refs
-      .filter(r => r.unit.location().isDefined)
-      .filter(_.unit.location().get == baseFileUrl) collectFirst {
-      case ref if ref.unit.isInstanceOf[ExternalFragment] =>
-        val jsonFile = ref.unit.asInstanceOf[ExternalFragment]
-        JsonSchemaPlugin.parseFragment(jsonFile, referenceUrl)
-      case ref if ref.unit.isInstanceOf[RecursiveUnit] =>
-        val jsonFile = ref.unit.asInstanceOf[RecursiveUnit]
-        JsonSchemaPlugin.parseFragment(jsonFile, referenceUrl)
-    }
-    res.flatten
-  }
-
-  // TODO this should not have OasWebApiContext as a dependency
   def parseRemoteOasParameter(fileUrl: String, parentId: String)(
       implicit ctx: OasWebApiContext): Option[OasParameter] = {
     val referenceUrl = getReferenceUrl(fileUrl)
@@ -99,11 +80,7 @@ abstract class WebApiContext(val loc: String,
   }
 
   def obtainRemoteYNode(ref: String)(implicit ctx: WebApiContext): Option[YNode] = {
-    val fileUrl      = ctx.resolvedPath(ctx.rootContextDocument, ref)
-    val referenceUrl = getReferenceUrl(fileUrl)
-    obtainFragment(fileUrl) flatMap { fragment =>
-      JsonSchemaPlugin.obtainRootAst(fragment, referenceUrl)
-    }
+    jsonSchemaRefGuide.obtainRemoteYNode(ref)
   }
 
   private def obtainFragment(fileUrl: String): Option[Fragment] = {

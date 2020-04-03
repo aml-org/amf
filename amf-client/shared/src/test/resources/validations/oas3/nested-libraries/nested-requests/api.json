@@ -1,0 +1,21 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "paths": {
+    "/something": {
+      "post": {
+        "requestBody": {
+          "$ref": "./libraries/first-lib.json#/definitions/firstRequest"
+        },
+        "responses": {
+          "default": {
+            "description": "something"
+          }
+        }
+      }
+    }
+  }
+}

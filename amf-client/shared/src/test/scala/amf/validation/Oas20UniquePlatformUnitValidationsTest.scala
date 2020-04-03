@@ -28,4 +28,8 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Duplicated body parameter at endpoint level") {
     validate("invalid-duplicated-body-parameter.json", Some("invalid-duplicated-body-parameter.report"), Oas20Profile)
   }
+
+  test("Recursive responses") {
+    validate("recursive-responses/api.json", Some("recursive-responses.report"), Oas20Profile)
+  }
 }

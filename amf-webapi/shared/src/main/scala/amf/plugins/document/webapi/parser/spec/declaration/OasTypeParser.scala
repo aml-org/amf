@@ -314,30 +314,38 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         e.value.tagType match {
           case YType.Null => Some(AnyShape(e))
           case _ =>
-            val ref: String = e.value
-            val text        = OasDefinitions.stripDefinitionsPrefix(ref)
-            ctx.declarations.findType(text, SearchScope.All) match { // normal declaration to be used from raml or oas
-              case Some(s) =>
-                val copied =
-                  s.link(text, Annotations(ast))
-                    .asInstanceOf[AnyShape]
-                    .withName(name, nameAnnotations)
-                    .withSupportsRecursion(true)
-                adopt(copied)
-                Some(copied)
-              case _ => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
-                // now we work with canonical JSON schema pointers, not local refs
-                val referencedShape = ctx.findLocalJSONPath(ref) match {
-                  case Some((_, _)) =>
-                    searchLocalJsonSchema(ref, if (!ctx.linkTypes) ref else text, e)
-                  case _ =>
-                    searchRemoteJsonSchema(ref, if (!ctx.linkTypes) ref else text, e)
-                }
-                referencedShape.foreach(adopt(_))
-                referencedShape
-            }
+            findDeclarationAndParse(e)
         }
       }
+  }
+
+  private def findDeclarationAndParse(e: YMapEntry) = {
+    val ref: String = e.value
+    val text        = OasDefinitions.stripDefinitionsPrefix(ref)
+
+    def createLinkToDeclaration(s: AnyShape) = {
+      val link =
+        s.link(text, Annotations(ast))
+          .asInstanceOf[AnyShape]
+          .withName(name, nameAnnotations)
+          .withSupportsRecursion(true)
+      adopt(link)
+      Some(link)
+    }
+
+    ctx.declarations.findType(text, SearchScope.All) match { // normal declaration to be used from raml or oas
+      case Some(s) => createLinkToDeclaration(s)
+      case _       => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
+        // now we work with canonical JSON schema pointers, not local refs
+        val referencedShape = ctx.findLocalJSONPath(ref) match {
+          case Some((_, _)) =>
+            searchLocalJsonSchema(ref, if (!ctx.linkTypes) ref else text, e)
+          case _ =>
+            searchRemoteJsonSchema(ref, if (!ctx.linkTypes) ref else text, e)
+        }
+        referencedShape.foreach(adopt(_))
+        referencedShape
+    }
   }
 
   private def searchLocalJsonSchema(r: String, t: String, e: YMapEntry): Option[AnyShape] = {
@@ -407,9 +415,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullRef, e, u)
       case Some(shape)              => createLinkToParsedShape(ref, shape)
       case _ =>
-        val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fullRef)
-        parseAndRegisterRemoteSchema(fullRef) match {
+        val fileUrl = ctx.jsonSchemaRefGuide.getFileUrl(ref)
+        parseAndRegisterRemoteSchema(ref) match {
           case None =>
+            val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fileUrl)
             // it might still be resolvable at the RAML (not JSON Schema) level
             tmpShape.unresolved(text, e, "warning").withSupportsRecursion(true)
             Some(tmpShape)
