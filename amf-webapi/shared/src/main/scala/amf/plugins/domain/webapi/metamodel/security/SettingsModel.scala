@@ -1,16 +1,18 @@
 package amf.plugins.domain.webapi.metamodel.security
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Str, Array}
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, DataNodeModel, DomainElementModel}
+import amf.core.metamodel.Type.{Array, Str}
+import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.plugins.domain.webapi.models.security.{
-  Settings,
   ApiKeySettings,
   HttpApiKeySettings,
+  HttpSettings,
   OAuth1Settings,
-  OAuth2Settings
+  OAuth2Settings,
+  OpenIdConnectSettings,
+  Settings
 }
-import amf.core.vocabulary.Namespace.{Security, Core}
+import amf.core.vocabulary.Namespace.{Core, Security}
 import amf.core.vocabulary.ValueType
 
 trait SettingsModel extends DomainElementModel
@@ -129,7 +131,7 @@ object HttpSettingsModel extends SettingsModel {
 
   override val fields: List[Field] = List(Scheme, BearerFormat) ++ SettingsModel.fields
 
-  override def modelInstance = ApiKeySettings()
+  override def modelInstance = HttpSettings()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
@@ -148,7 +150,7 @@ object OpenIdConnectSettingsModel extends SettingsModel {
 
   override def fields: List[Field] = List(Url, Scopes) ++ SettingsModel.fields
 
-  override def modelInstance = ApiKeySettings()
+  override def modelInstance = OpenIdConnectSettings()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
