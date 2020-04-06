@@ -154,4 +154,22 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
              Some("amqp-operation-binding-deliveryMode.report"),
              Async20Profile)
   }
+
+  ignore("Nested external correlationId refs") {
+    validate("nested-libraries/nested-correlationIds/api.yaml", None, Async20Profile)
+  }
+
+  test("Nested external operation refs") {
+    validate("nested-libraries/nested-operation-traits/api.yaml",
+             Some("nested-libraries/nested-external-operation-trait-refs.report"),
+             Async20Profile)
+  }
+
+  ignore("Nested external message refs with traits") {
+    validate("nested-libraries/nested-messages-traits/api.yaml", None, Async20Profile)
+  }
+
+  ignore("Nested external message refs") {
+    validate("nested-libraries/nested-messages/api.yaml", None, Async20Profile)
+  }
 }

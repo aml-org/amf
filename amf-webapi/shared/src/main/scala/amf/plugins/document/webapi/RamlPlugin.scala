@@ -50,7 +50,6 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
       ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.eh)
     val clean = context(cleanNested, root, options)
     clean.globalSpace = wrapped.globalSpace
-    clean.reportDisambiguation = wrapped.reportDisambiguation
     clean
   }
 

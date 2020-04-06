@@ -940,7 +940,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#items": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/link--429836988",
+                                "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/link--429836921",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -955,7 +955,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
                                   {
-                                    "@value": "item0"
+                                    "@value": "items"
                                   }
                                 ]
                               }
@@ -1492,7 +1492,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/link--429836988",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/link--429836921",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1507,7 +1507,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
                               {
-                                "@value": "item0"
+                                "@value": "items"
                               }
                             ]
                           }
@@ -2185,7 +2185,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/link--429836988",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/link--429836921",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2200,7 +2200,7 @@
                             ],
                             "http://a.ml/vocabularies/document#link-label": [
                               {
-                                "@value": "item0"
+                                "@value": "items"
                               }
                             ]
                           }
@@ -3688,7 +3688,7 @@
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
-            "@value": "item0"
+            "@value": "items"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -4166,7 +4166,7 @@
         ],
         "http://www.w3.org/ns/shacl#and": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema",
+            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4181,7 +4181,7 @@
             ],
             "http://www.w3.org/ns/shacl#property": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id",
+                "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -4195,7 +4195,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/scalar/id",
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/scalar/id",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4220,16 +4220,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/scalar/id/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/scalar/id/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/scalar/id/source-map/type-property-lexical-info/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/scalar/id/source-map/type-property-lexical-info/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/scalar/id"
+                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/scalar/id"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4241,7 +4241,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/scalar/id/source-map/lexical/element_2",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/scalar/id/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -4254,7 +4254,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/scalar/id/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/scalar/id/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/shapes#format"
@@ -4267,10 +4267,10 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/scalar/id/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/scalar/id/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/scalar/id"
+                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/scalar/id"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4296,16 +4296,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id"
+                            "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4315,7 +4315,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/id/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -4332,7 +4332,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name",
+                "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -4346,7 +4346,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/scalar/name",
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name/scalar/name",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4366,16 +4366,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/scalar/name/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name/scalar/name/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/scalar/name"
+                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name/scalar/name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4387,10 +4387,10 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/scalar/name/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name/scalar/name/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/scalar/name"
+                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name/scalar/name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4400,7 +4400,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/scalar/name/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name/scalar/name/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -4429,16 +4429,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name"
+                            "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4448,7 +4448,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/name/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -4465,7 +4465,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag",
+                "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag",
                 "@type": [
                   "http://www.w3.org/ns/shacl#PropertyShape",
                   "http://www.w3.org/ns/shacl#Shape",
@@ -4479,7 +4479,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag/scalar/tag",
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag/scalar/tag",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -4499,16 +4499,16 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag/scalar/tag/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag/scalar/tag/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag/scalar/tag/source-map/type-property-lexical-info/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag/scalar/tag/source-map/type-property-lexical-info/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag/scalar/tag"
+                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag/scalar/tag"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4520,10 +4520,10 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag/scalar/tag/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag/scalar/tag/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag/scalar/tag"
+                                "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag/scalar/tag"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4533,7 +4533,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag/scalar/tag/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag/scalar/tag/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -4562,16 +4562,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag"
+                            "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/property/tag"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4585,43 +4585,23 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#recursive": [
-              {
-                "@value": true
-              }
-            ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "item0"
+                "@value": "schema"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#inline-element": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/source-map/inline-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/source-map/type-property-lexical-info/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/source-map/type-property-lexical-info/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema"
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4633,30 +4613,15 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema"
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/and/0/schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(1,0)-(19,1)]"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/source-map/auto-generated-name/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": ""
                       }
                     ]
                   }

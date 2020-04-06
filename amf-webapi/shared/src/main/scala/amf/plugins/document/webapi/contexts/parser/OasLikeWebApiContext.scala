@@ -3,15 +3,17 @@ package amf.plugins.document.webapi.contexts.parser
 import amf.core.client.ParsingOptions
 import amf.core.model.document.ExternalFragment
 import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
+import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.contexts.{SpecVersionFactory, WebApiContext}
-import amf.plugins.document.webapi.parser.spec.OasLikeWebApiDeclarations
+import amf.plugins.document.webapi.parser.spec.{OasLikeWebApiDeclarations, toOas}
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeSecuritySettingsParser
 import amf.plugins.document.webapi.parser.spec.domain.{
   OasLikeEndpointParser,
   OasLikeOperationParser,
   OasLikeServerVariableParser
 }
+import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Server, WebApi}
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
@@ -35,6 +37,13 @@ abstract class OasLikeWebApiContext(loc: String,
     extends WebApiContext(loc, refs, options, wrapped, ds) {
 
   val factory: OasLikeSpecVersionFactory
+
+  protected def makeCopy(): OasLikeWebApiContext
+  private def makeCopyWithJsonPointerContext() = {
+    val copy = makeCopy()
+    copy.jsonSchemaRefGuide = this.jsonSchemaRefGuide
+    copy
+  }
 
   override val declarations: OasLikeWebApiDeclarations =
     ds.getOrElse(
@@ -77,4 +86,32 @@ abstract class OasLikeWebApiContext(loc: String,
   /** Used for accumulating operation ids.
     * returns true if id was not present, and false if operation being added is already present. */
   def registerOperationId(id: String): Boolean = operationIds.add(id)
+
+  def navigateToRemoteYNode[T <: OasLikeWebApiContext](ref: String)(implicit ctx: T): Option[RemoteNodeNavigation[T]] = {
+    val nodeOption = jsonSchemaRefGuide.obtainRemoteYNode(ref)
+    nodeOption.map { node =>
+      val newCtx = ctx.makeCopyWithJsonPointerContext().moveToReference(node.location.sourceName).asInstanceOf[T]
+      RemoteNodeNavigation(node, newCtx)
+    }
+  }
+
+  def parseRemoteJSONPath(ref: String): Option[AnyShape] = {
+    jsonSchemaRefGuide.withFragmentAndInFileReference(ref) { (fragment, referenceUrl) =>
+      val newCtx = makeCopyWithJsonPointerContext().moveToReference(fragment.location().get)
+      JsonSchemaPlugin.parseFragment(fragment, referenceUrl)(newCtx)
+    }
+  }
+
+  def moveToReference(loc: String): this.type = {
+    jsonSchemaRefGuide = jsonSchemaRefGuide.changeJsonSchemaSearchDestination(loc)
+    this
+  }
+}
+
+case class RemoteNodeNavigation[T <: OasLikeWebApiContext](remoteNode: YNode, context: T)
+
+object RemoteNodeNavigation {
+
+  def unapply[T <: OasLikeWebApiContext](arg: RemoteNodeNavigation[T]): Option[(YNode, T)] =
+    Some((arg.remoteNode, arg.context))
 }

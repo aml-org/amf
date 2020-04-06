@@ -141,7 +141,7 @@ case class AsyncOperationRefParser(node: YNode)(implicit val ctx: AsyncWebApiCon
   private def remote(url: String, node: YNode): Operation = {
     ctx.obtainRemoteYNode(url) match {
       case Some(correlationIdNode) =>
-        AsyncOperationParser(YMapEntry(url, correlationIdNode), name => Operation().withName(name))
+        AsyncOperationParser(YMapEntry(url, correlationIdNode), name => Operation().withName(name), isTrait = true)
           .parse()
       case None => linkError(url, node)
     }

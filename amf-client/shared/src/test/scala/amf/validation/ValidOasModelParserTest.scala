@@ -73,6 +73,14 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("oas-security/api-with-security-requirements.json", OasProfile)
   }
 
+  test("Nested responses") {
+    checkValid("oas2/nested-libraries/response-response/api.json", OasProfile)
+  }
+
+  test("Nested responses type") {
+    checkValid("oas2/nested-libraries/response-type/api.json", OasProfile)
+  }
+
   // Check http inner reference.
   ignore("Http with # reference") {
     checkValid("/http-with-hashtag/http-with-hashtag.json", OasProfile)

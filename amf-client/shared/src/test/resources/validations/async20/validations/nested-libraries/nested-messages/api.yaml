@@ -1,0 +1,10 @@
+asyncapi: '2.0.0'
+info:
+  title: aTitle
+  version: '1.0.0'
+channels:
+  aChannel:
+    publish:
+      message:
+        oneOf:
+          - $ref: './libraries/first-lib.json#/definitions/aMessage'

@@ -25,8 +25,8 @@ import org.yaml.model._
 abstract class WebApiContext(val loc: String,
                              refs: Seq[ParsedReference],
                              val options: ParsingOptions,
-                             private val wrapped: ParserContext,
-                             private val ds: Option[WebApiDeclarations] = None)
+                             wrapped: ParserContext,
+                             declarationsOption: Option[WebApiDeclarations] = None)
     extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
     with SpecAwareContext
     with PlatformSecrets {
@@ -34,8 +34,8 @@ abstract class WebApiContext(val loc: String,
   val syntax: SpecSyntax
   val vendor: Vendor
 
-  val declarations: WebApiDeclarations =
-    ds.getOrElse(new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
+  val declarations: WebApiDeclarations = declarationsOption.getOrElse(
+    new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
@@ -47,13 +47,14 @@ abstract class WebApiContext(val loc: String,
     case _                  => None
   }
 
+  var jsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(this)
+
   def setJsonSchemaAST(value: YNode): Unit = {
     localJSONSchemaContext = Some(value)
-    jsonSchemaIndex = Some(new JsonSchemaAstIndex(value)(this))
+    jsonSchemaIndex = Some(JsonSchemaAstIndex(value)(this))
   }
 
   globalSpace = wrapped.globalSpace
-  reportDisambiguation = wrapped.reportDisambiguation
 
   // JSON Schema has a global namespace
 
@@ -64,29 +65,9 @@ abstract class WebApiContext(val loc: String,
       case Some(shape: AnyShape) => Some(shape)
       case _                     => None
     }
+
   def registerJsonSchema(url: String, shape: AnyShape): Unit = {
     globalSpace.update(normalizedJsonPointer(url), shape)
-  }
-
-  // TODO this should not have OasWebApiContext as a dependency
-  def parseRemoteJSONPath(fileUrl: String)(implicit ctx: OasLikeWebApiContext): Option[AnyShape] = {
-    val referenceUrl =
-      fileUrl.split("#") match {
-        case s: Array[String] if s.size > 1 => Some(s.last)
-        case _                              => None
-      }
-    val baseFileUrl = fileUrl.split("#").head
-    val res: Option[Option[AnyShape]] = refs
-      .filter(r => r.unit.location().isDefined)
-      .filter(_.unit.location().get == baseFileUrl) collectFirst {
-      case ref if ref.unit.isInstanceOf[ExternalFragment] =>
-        val jsonFile = ref.unit.asInstanceOf[ExternalFragment]
-        JsonSchemaPlugin.parseFragment(jsonFile, referenceUrl)
-      case ref if ref.unit.isInstanceOf[RecursiveUnit] =>
-        val jsonFile = ref.unit.asInstanceOf[RecursiveUnit]
-        JsonSchemaPlugin.parseFragment(jsonFile, referenceUrl)
-    }
-    res.flatten
   }
 
   // TODO this should not have OasWebApiContext as a dependency
@@ -99,11 +80,7 @@ abstract class WebApiContext(val loc: String,
   }
 
   def obtainRemoteYNode(ref: String)(implicit ctx: WebApiContext): Option[YNode] = {
-    val fileUrl      = ctx.resolvedPath(ctx.rootContextDocument, ref)
-    val referenceUrl = getReferenceUrl(fileUrl)
-    obtainFragment(fileUrl) flatMap { fragment =>
-      JsonSchemaPlugin.obtainRootAst(fragment, referenceUrl)
-    }
+    jsonSchemaRefGuide.obtainRemoteYNode(ref)
   }
 
   private def obtainFragment(fileUrl: String): Option[Fragment] = {

@@ -143,7 +143,6 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     val cleanNested =
       ParserContext(url, document.references, EmptyFutureDeclarations(), parentContext.eh)
     cleanNested.globalSpace = parentContext.globalSpace
-    cleanNested.reportDisambiguation = parentContext.reportDisambiguation
 
     // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
     val inheritedDeclarations =
