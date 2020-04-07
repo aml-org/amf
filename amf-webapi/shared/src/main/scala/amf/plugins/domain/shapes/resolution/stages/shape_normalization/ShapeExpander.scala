@@ -198,6 +198,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     Option(node.additionalPropertiesSchema).foreach(x => {
       val resultantShape = traverseOptionalShapeFacet(x)
       context.handleClosures(resultantShape, node)
+      node.set(NodeShapeModel.AdditionalPropertiesSchema, resultantShape)
     })
 
     expandInherits(node)

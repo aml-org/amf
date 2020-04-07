@@ -441,6 +441,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           s"${resolutionPath}recursive-additional-properties/")
   }
 
+  test("recursivity in additional properties 2") {
+    cycle(
+      "recursive-additional-properties-2.yaml",
+      "recursive-additional-properties-2.jsonld",
+      OasYamlHint,
+      Amf,
+      s"${resolutionPath}recursive-additional-properties/"
+    )
+  }
+
   test("types with properties that must not be extracted to declares") {
     cycle(
       "avoid-extract-to-declares.raml",

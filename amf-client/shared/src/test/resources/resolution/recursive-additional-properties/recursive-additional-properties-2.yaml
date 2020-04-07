@@ -1,0 +1,20 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: Something API
+paths: {}
+definitions:
+  Something.DataContracts.Push.PushOption:
+    type: object
+    properties:
+      options:
+        type: array
+        items:
+          $ref: '#/definitions/Something.DataContracts.Push.PushOptionChoice'
+  Something.DataContracts.Push.PushOptionChoice:
+    type: object
+    properties:
+      properties:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/Something.DataContracts.Push.PushOption'

@@ -1,0 +1,448 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#11",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "Something API"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "v1"
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#11": "OAS 2.0"
+          },
+          "lexical": {
+            "core:version": "[(3,2)-(4,0)]",
+            "#11": "[(1,0)-(20,71)]",
+            "core:name": "[(4,2)-(5,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#2",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#options"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "raml-shapes:ArrayShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "raml-shapes:items": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "shacl:NodeShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:closed": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "shacl:property": [
+                      {
+                        "@id": "#5",
+                        "@type": [
+                          "shacl:PropertyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#properties"
+                          }
+                        ],
+                        "raml-shapes:range": [
+                          {
+                            "@id": "#6",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:additionalPropertiesSchema": [
+                              {
+                                "@id": "#7",
+                                "@type": [
+                                  "raml-shapes:RecursiveShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "raml-shapes:fixPoint": [
+                                  {
+                                    "@id": "#1"
+                                  }
+                                ],
+                                "doc:recursive": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "Something.DataContracts.Push.PushOption"
+                                  }
+                                ],
+                                "smaps": {
+                                  "resolved-link-target": {
+                                    "#7": "amf://id#1"
+                                  },
+                                  "declared-element": {
+                                    "#7": ""
+                                  },
+                                  "lexical": {
+                                    "#7": "[(7,2)-(14,0)]"
+                                  },
+                                  "type-property-lexical-info": {
+                                    "#7": "[(8,4)-(8,8)]"
+                                  },
+                                  "resolved-link": {
+                                    "#7": "amf://id#8"
+                                  }
+                                }
+                              }
+                            ],
+                            "shacl:property": [],
+                            "shacl:name": [
+                              {
+                                "@value": "properties"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "#6": "[(18,8)-(18,12)]"
+                              },
+                              "lexical": {
+                                "#6": "[(17,6)-(20,71)]"
+                              }
+                            }
+                          }
+                        ],
+                        "shacl:minCount": [
+                          {
+                            "@value": 0
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "properties"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#5": "[(17,6)-(20,71)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "Something.DataContracts.Push.PushOptionChoice"
+                      }
+                    ],
+                    "smaps": {
+                      "resolved-link-target": {
+                        "#4": "amf://id#10"
+                      },
+                      "declared-element": {
+                        "#4": ""
+                      },
+                      "lexical": {
+                        "shacl:name": "[(14,2)-(14,47)]",
+                        "#4": "[(14,2)-(20,71)]"
+                      },
+                      "type-property-lexical-info": {
+                        "#4": "[(15,4)-(15,8)]"
+                      },
+                      "resolved-link": {
+                        "#4": "amf://id#9"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "options"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#3": "[(11,8)-(11,12)]"
+                  },
+                  "lexical": {
+                    "#3": "[(10,6)-(14,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "options"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#2": "[(10,6)-(14,0)]"
+              }
+            }
+          }
+        ],
+        "doc:recursive": [
+          {
+            "@value": true
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Something.DataContracts.Push.PushOption"
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#1": "amf://id#1"
+          },
+          "declared-element": {
+            "#1": ""
+          },
+          "lexical": {
+            "shacl:name": "[(7,2)-(7,41)]",
+            "#1": "[(7,2)-(14,0)]"
+          },
+          "type-property-lexical-info": {
+            "#1": "[(8,4)-(8,8)]"
+          },
+          "resolved-link": {
+            "#1": "amf://id#8"
+          }
+        }
+      },
+      {
+        "@id": "#4",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#5",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#properties"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#6",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:additionalPropertiesSchema": [
+                  {
+                    "@id": "#7",
+                    "@type": [
+                      "raml-shapes:RecursiveShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "raml-shapes:fixPoint": [
+                      {
+                        "@id": "#1"
+                      }
+                    ],
+                    "doc:recursive": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "Something.DataContracts.Push.PushOption"
+                      }
+                    ],
+                    "smaps": {
+                      "resolved-link-target": {
+                        "#7": "amf://id#1"
+                      },
+                      "declared-element": {
+                        "#7": ""
+                      },
+                      "lexical": {
+                        "#7": "[(7,2)-(14,0)]"
+                      },
+                      "type-property-lexical-info": {
+                        "#7": "[(8,4)-(8,8)]"
+                      },
+                      "resolved-link": {
+                        "#7": "amf://id#8"
+                      }
+                    }
+                  }
+                ],
+                "shacl:property": [],
+                "shacl:name": [
+                  {
+                    "@value": "properties"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#6": "[(18,8)-(18,12)]"
+                  },
+                  "lexical": {
+                    "#6": "[(17,6)-(20,71)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "properties"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#5": "[(17,6)-(20,71)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Something.DataContracts.Push.PushOptionChoice"
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#4": "amf://id#10"
+          },
+          "declared-element": {
+            "#4": ""
+          },
+          "lexical": {
+            "shacl:name": "[(14,2)-(14,47)]",
+            "#4": "[(14,2)-(20,71)]"
+          },
+          "type-property-lexical-info": {
+            "#4": "[(15,4)-(15,8)]"
+          },
+          "resolved-link": {
+            "#4": "amf://id#9"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]
