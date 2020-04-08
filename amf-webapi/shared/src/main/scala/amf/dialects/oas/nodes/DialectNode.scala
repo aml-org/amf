@@ -9,13 +9,16 @@ trait DialectNode {
   def name: String
   def id: String = location + "/#declarations/" + name
   def nodeTypeMapping: String
+  def isAbstract = false
 
   def properties: Seq[PropertyMapping]
+
+  private def getTypeMappingUri: String = if (isAbstract) nodeTypeMapping + "Abstract" else nodeTypeMapping
 
   lazy val Obj: NodeMapping = NodeMapping()
     .withId(id)
     .withName(name)
-    .withNodeTypeMapping(nodeTypeMapping)
+    .withNodeTypeMapping(getTypeMappingUri)
     .withPropertiesMapping(properties)
 
 }
