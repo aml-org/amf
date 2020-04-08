@@ -11,9 +11,10 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Oas20Resolver, Async20Resolver, Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Async20Resolver, Oas20Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
+import amf.core.errorhandling.StaticErrorCollector
 import amf.core.exception.UnsupportedVendorException
 import amf.core.model.document.{Document => InternalDocument}
 import amf.core.model.domain.{
@@ -2198,6 +2199,29 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       val generated =
         resolved.asInstanceOf[Document].declares.asSeq(3).asInstanceOf[NodeShape].buildJsonSchema(options)
       assert(generated == golden)
+    }
+  }
+
+  test("Empty static validations collector") {
+    val api = """#%RAML 1.0
+                |title: API
+                |types:
+                |  SomeType:
+                |    type: string
+                |    required: true
+                |""".stripMargin
+    for {
+      _     <- AMF.init().asFuture
+      unit1 <- new RamlParser().parseStringAsync(api).asFuture
+      unit2 <- new RamlParser().parseStringAsync(api).asFuture
+    } yield {
+      val validations1 = unit1._internal.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil)
+      val validation2  = unit2._internal.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil)
+      assert(validations1.nonEmpty && validation2.nonEmpty)
+      StaticErrorCollector.clean()
+      val postCleaning1 = unit1._internal.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil)
+      val postCleaning2 = unit2._internal.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil)
+      assert(postCleaning1.isEmpty && postCleaning2.isEmpty)
     }
   }
 
