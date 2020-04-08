@@ -32,4 +32,8 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Recursive responses") {
     validate("recursive-responses/api.json", Some("recursive-responses.report"), Oas20Profile)
   }
+
+  test("Endpoint outside paths node") {
+    validate("endpoint-outside-paths.json", Some("endpoint-outside-paths.report"), Oas20Profile)
+  }
 }

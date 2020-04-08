@@ -81,7 +81,7 @@ abstract class OasLikeWebApiContext(loc: String,
 
   override def ignore(shape: String, property: String): Boolean =
     property.startsWith("x-") || (property == "$ref" && !shapesThatDontPermitRef.contains(shape)) || (property
-      .startsWith("/") && (shape == "webApi" || shape == "paths"))
+      .startsWith("/") && shape == "paths")
 
   /** Used for accumulating operation ids.
     * returns true if id was not present, and false if operation being added is already present. */
