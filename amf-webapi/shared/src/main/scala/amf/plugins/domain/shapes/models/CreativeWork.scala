@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
@@ -25,7 +26,7 @@ class CreativeWork(override val fields: Fields, override val annotations: Annota
 
   override def linkCopy(): Linkable = CreativeWork().withId(id)
 
-  override def meta = CreativeWorkModel
+  override def meta: Obj = CreativeWorkModel
 
   private def searchIdPart: Option[String] = linkTarget match {
     case Some(target: CreativeWork) => target.title.option().orElse(target.url.option()).map(_.urlComponentEncoded)

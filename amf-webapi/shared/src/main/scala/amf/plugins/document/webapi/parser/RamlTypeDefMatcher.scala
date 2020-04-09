@@ -141,6 +141,7 @@ object RamlShapeTypeBeautifier {
     case "anyShape"          => "any"
     case "arrayShape"        => "array"
     case "dateScalarShape"   => "date"
+    case "unresolvedShape"   => "unresolved"
     case "endPoint"          => "endpoint"
     case "example"           => "example"
     case "fileShape"         => "file"
