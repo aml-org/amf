@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models.templates
 
+import amf.core.metamodel.Obj
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
@@ -17,7 +18,7 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
     Trait().withId(id)
   }
 
-  override def meta: AbstractDeclarationModel = TraitModel
+  override def meta: Obj = TraitModel
 
   /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
   def asOperation[T <: BaseUnit](unit: T, profile: ProfileName = RamlProfile): Operation = {

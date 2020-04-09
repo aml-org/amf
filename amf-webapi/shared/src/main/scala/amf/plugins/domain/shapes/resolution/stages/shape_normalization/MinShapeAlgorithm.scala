@@ -124,7 +124,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
 
         // Any => is explicitly Any, we are comparing the meta-model because now
         //      all shapes inherit from Any, cannot check with instanceOf
-        case _ if derivedShape.meta == AnyShapeModel || superShape.meta == AnyShapeModel =>
+        case _
+            if derivedShape.meta.`type`.headOption
+              .exists(_.iri() == AnyShapeModel.`type`.head.iri()) || superShape.meta.`type`.headOption
+              .exists(_.iri() == AnyShapeModel.`type`.head.iri()) =>
           derivedShape match {
             case shape: AnyShape =>
               restrictShape(shape, superShape)
@@ -449,7 +452,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                                   AmfArray(newUnionItems),
                                   baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
-    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields,
+                              baseUnion,
+                              superNode,
+                              filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }

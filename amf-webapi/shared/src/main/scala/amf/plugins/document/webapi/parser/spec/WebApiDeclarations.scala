@@ -2,6 +2,8 @@ package amf.plugins.document.webapi.parser.spec
 
 import amf.core.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
 import amf.core.errorhandling.ErrorHandler
+import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.{ModelDefaultBuilder, Obj}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
@@ -17,7 +19,27 @@ import amf.core.parser.{
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
+import amf.plugins.domain.shapes.metamodel.{CreativeWorkModel, ExampleModel}
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
+import amf.plugins.domain.webapi.metamodel.bindings.{
+  ChannelBindingsModel,
+  MessageBindingsModel,
+  OperationBindingsModel,
+  ServerBindingsModel
+}
+import amf.plugins.domain.webapi.metamodel.{
+  CallbackModel,
+  CorrelationIdModel,
+  EndPointModel,
+  MessageModel,
+  OperationModel,
+  ParameterModel,
+  RequestModel,
+  ResponseModel,
+  TemplatedLinkModel
+}
+import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
+import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
@@ -419,7 +441,9 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#errorTrait/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = ErrorTrait(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = ErrorTrait(idPart, ast)
+
+    override protected def originalMeta: DomainElementModel = TraitModel
   }
 
   case class ErrorResourceType(idPart: String, ast: YPart)
@@ -430,7 +454,9 @@ object WebApiDeclarations {
 
     override def dataNode: DataNode = ObjectNode()
 
-    override def newErrorInstance: ErrorDeclaration = ErrorResourceType(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = ErrorResourceType(idPart, ast)
+
+    override protected def originalMeta: DomainElementModel = ResourceTypeModel
   }
 
   case class ErrorEndPoint(idPart: String, ast: YPart)
@@ -439,7 +465,9 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#errorEndPoint/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = ErrorEndPoint(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = ErrorEndPoint(idPart, ast)
+
+    override protected def originalMeta: DomainElementModel = EndPointModel
   }
 
   case class ErrorSecurityScheme(idPart: String, ast: YPart)
@@ -448,7 +476,9 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#errorSecurityScheme/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = ErrorSecurityScheme(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = ErrorSecurityScheme(idPart, ast)
+
+    override protected def originalMeta: DomainElementModel = SecuritySchemeModel
   }
   case class ErrorNamedExample(idPart: String, ast: YPart)
       extends Example(Fields(), Annotations(ast))
@@ -456,7 +486,8 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#errorNamedExample/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = ErrorNamedExample(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = ErrorNamedExample(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = ExampleModel
   }
   case class ErrorCreativeWork(idPart: String, ast: YPart)
       extends CreativeWork(Fields(), Annotations(ast))
@@ -464,7 +495,8 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#errorCrativeWork/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = ErrorCreativeWork(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = ErrorCreativeWork(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = CreativeWorkModel
   }
   case class ErrorParameter(idPart: String, ast: YPart)
       extends Parameter(Fields(), Annotations(ast))
@@ -472,14 +504,16 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#errorParameter/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = ErrorParameter(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = ErrorParameter(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = ParameterModel
   }
 
   class ErrorLink(idPart: String, ast: YPart) extends TemplatedLink(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorTemplateLink/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = new ErrorLink(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = new ErrorLink(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = TemplatedLinkModel
   }
 
   class ErrorCorrelationId(idPart: String, ast: YPart)
@@ -488,14 +522,16 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#errorCorrelationId/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = new ErrorCorrelationId(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = new ErrorCorrelationId(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = CorrelationIdModel
   }
 
   class ErrorMessage(idPart: String, ast: YPart) extends Message(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorMessage/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = new ErrorMessage(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = new ErrorMessage(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = MessageModel
   }
 
   class ErrorServerBindings(idPart: String, ast: YPart)
@@ -504,7 +540,8 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#serverBindings/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = new ErrorServerBindings(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = new ErrorServerBindings(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = ServerBindingsModel
   }
 
   class ErrorOperationBindings(idPart: String, ast: YPart)
@@ -513,7 +550,8 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#operationBindings/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = new ErrorOperationBindings(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = new ErrorOperationBindings(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = OperationBindingsModel
   }
 
   class ErrorChannelBindings(idPart: String, ast: YPart)
@@ -522,7 +560,8 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#channelBindings/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = new ErrorChannelBindings(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = new ErrorChannelBindings(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = ChannelBindingsModel
   }
 
   class ErrorMessageBindings(idPart: String, ast: YPart)
@@ -531,7 +570,8 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#messageBindings/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = new ErrorMessageBindings(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = new ErrorMessageBindings(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = MessageBindingsModel
   }
 
   class ErrorOperationTrait(idPart: String, ast: YPart)
@@ -540,14 +580,16 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#operationTraits/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = new ErrorOperationTrait(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = new ErrorOperationTrait(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = OperationModel
   }
 
   class ErrorCallback(idPart: String, ast: YPart) extends Callback(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorCallback/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = new ErrorCallback(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = new ErrorCallback(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = CallbackModel
   }
   case class ErrorResponse(idPart: String, ast: YPart)
       extends Response(Fields(), Annotations(ast))
@@ -555,7 +597,8 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#errorResponse/"
     withId(idPart).withStatusCode("200")
 
-    override def newErrorInstance: ErrorDeclaration = ErrorResponse(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = ErrorResponse(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = ResponseModel
   }
 
   case class ErrorRequest(idPart: String, ast: YPart)
@@ -564,7 +607,8 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#errorRequest/"
     withId(idPart)
 
-    override def newErrorInstance: ErrorDeclaration = ErrorRequest(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = ErrorRequest(idPart, ast)
+    override protected def originalMeta: DomainElementModel   = RequestModel
   }
 }
 
