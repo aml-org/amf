@@ -58,13 +58,6 @@ object AMF extends PlatformSecrets {
                env: Environment): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle, env)
 
-  def validate(model: BaseUnit,
-               profileName: ProfileName,
-               messageStyle: MessageStyle,
-               env: ClientOption[Environment],
-               executionEnvironment: BaseExecutionEnvironment): ClientFuture[ValidationReport] =
-    Core.validateWithExecutionEnvironment(model, profileName, messageStyle, env, executionEnvironment)
-
   /**
     * This method receives a resolved model. Don't use it with an unresolved one.
     */
@@ -82,23 +75,10 @@ object AMF extends PlatformSecrets {
                        env: Environment): ClientFuture[ValidationReport] =
     Core.validateResolved(model, profileName, messageStyle, env)
 
-  def validateResolved(model: BaseUnit,
-                       profileName: ProfileName,
-                       messageStyle: MessageStyle,
-                       env: ClientOption[Environment],
-                       executionEnvironment: BaseExecutionEnvironment): ClientFuture[ValidationReport] =
-    Core.validateResolvedWithExecutionEnvironment(model, profileName, messageStyle, env, executionEnvironment)
-
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 
   def loadValidationProfile(url: String, env: Environment): ClientFuture[ProfileName] =
     Core.loadValidationProfile(url, env)
-
-  def loadValidationProfileWithExecutionEnvironment(
-      url: String,
-      env: ClientOption[Environment],
-      executionEnvironment: BaseExecutionEnvironment): ClientFuture[ProfileName] =
-    Core.loadValidationProfileWithExecutionEnvironment(url, env, executionEnvironment)
 
   def emitShapesGraph(profileName: ProfileName): String =
     Core.emitShapesGraph(profileName)
