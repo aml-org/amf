@@ -1,22 +1,17 @@
 package amf.plugins.domain.shapes.validation
 
 import amf.core.metamodel.document.PayloadFragmentModel
-import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ScalarNode, Shape}
-import amf.core.parser.Value
 import amf.core.utils.MediaTypeMatcher
 import amf.core.validation.{AMFValidationReport, ValidationCandidate}
 import amf.internal.environment.Environment
 
-import scala.collection.mutable
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 object ShapesNodesValidator {
-  import scala.concurrent.ExecutionContext.Implicits.global
 
-  def validateAll(candidates: Seq[ValidationCandidate],
-                  severity: String,
-                  env: Environment): Future[AMFValidationReport] = {
+  def validateAll(candidates: Seq[ValidationCandidate], severity: String, env: Environment)(
+      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
 
     validateEnums(candidates, severity, env).flatMap { r =>
       if (!r.conforms) Future.successful(r)
@@ -29,7 +24,8 @@ object ShapesNodesValidator {
     }
   }
 
-  private def validateEnums(validationCandidates: Seq[ValidationCandidate], severity: String, env: Environment) = {
+  private def validateEnums(validationCandidates: Seq[ValidationCandidate], severity: String, env: Environment)(
+      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     val enumsCandidates = validationCandidates
       .groupBy(_.shape)
       .keys

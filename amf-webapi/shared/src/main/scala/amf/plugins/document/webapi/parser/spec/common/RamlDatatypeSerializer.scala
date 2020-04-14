@@ -1,32 +1,37 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.client.execution.BaseExecutionEnvironment
 import amf.core.AMFSerializer
-import amf.core.emitter.BaseEmitters._
 import amf.core.model.document.Module
 import amf.core.remote.Raml10
 import amf.core.services.RuntimeSerializer
+import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.{GeneratedRamlDatatype, ParsedRamlDatatype}
 import amf.plugins.domain.shapes.models.AnyShape
 
+import scala.concurrent.ExecutionContext
+
 /** Serializes AnyShape to RAML Data Type. */
-trait RamlDatatypeSerializer {
+trait RamlDatatypeSerializer extends PlatformSecrets {
 
   /** Delegates generation of a new RAML Data Type or returns cached
     * one if it was generated before.
     */
-  protected def toRamlDatatype(element: AnyShape): String = {
+  protected def toRamlDatatype(element: AnyShape, exec: BaseExecutionEnvironment): String = {
     element.annotations.find(classOf[ParsedRamlDatatype]) match {
       case Some(a) => a.rawText
       case _ =>
         element.annotations.find(classOf[GeneratedRamlDatatype]) match {
           case Some(g) => g.rawText
-          case _       => generateRamlDatatype(element)
+          case _       => generateRamlDatatype(element, exec)
         }
     }
   }
 
   /** Generates a new RAML Data Type included in RAML 1.0 Library. */
-  protected def generateRamlDatatype(element: AnyShape): String = {
+  protected def generateRamlDatatype(element: AnyShape, exec: BaseExecutionEnvironment): String = {
+    implicit val executionContext: ExecutionContext = exec.executionContext
+
     AMFSerializer.init()
     val ramlDatatype =
       RuntimeSerializer(Module().withDeclaredElement(fixNameIfNeeded(element)), "application/raml", Raml10.name)

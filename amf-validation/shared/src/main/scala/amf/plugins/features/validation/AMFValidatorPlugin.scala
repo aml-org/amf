@@ -1,6 +1,7 @@
 package amf.plugins.features.validation
 
 import amf._
+import amf.client.execution.BaseExecutionEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{AMFDocumentPlugin, AMFFeaturePlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.annotations.SourceVendor
@@ -13,7 +14,6 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.services.{RuntimeCompiler, RuntimeValidator, ValidationOptions}
-import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, ValidationResultProcessor}
 import amf.internal.environment.Environment
@@ -25,24 +25,19 @@ import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSO
 import amf.plugins.features.validation.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-object AMFValidatorPlugin
-    extends AMFFeaturePlugin
-    with RuntimeValidator
-    with ValidationResultProcessor
-    with PlatformSecrets {
+object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with ValidationResultProcessor {
 
   override val ID = "AMF Validation"
 
-  override def init(): Future[AMFPlugin] = {
+  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
     ExecutionLog.log("Register RDF framework")
     platform.rdfFramework = Some(PlatformValidator.instance)
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
-    AMLPlugin.registry.registerDialect(url, ValidationDialectText.text) map { _ =>
+    AMLPlugin.registry.registerDialect(url, ValidationDialectText.text, executionContext) map { _ =>
       ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
       this
     }
@@ -77,9 +72,13 @@ object AMFValidatorPlugin
   private def errorHandlerToParser(eh: ErrorHandler): AmfParserErrorHandler =
     DefaultParserErrorHandler.fromErrorHandler(eh)
 
-  override def loadValidationProfile(validationProfilePath: String,
-                                     env: Environment = Environment(),
-                                     errorHandler: ErrorHandler): Future[ProfileName] = {
+  override def loadValidationProfile(
+      validationProfilePath: String,
+      env: Environment = Environment(),
+      errorHandler: ErrorHandler,
+      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[ProfileName] = {
+
+    implicit val executionContext: ExecutionContext = exec.executionContext
 
     RuntimeCompiler(
       validationProfilePath,
@@ -139,22 +138,23 @@ object AMFValidatorPlugin
     }
   }
 
-  override def shaclValidation(model: BaseUnit,
-                               validations: EffectiveValidations,
-                               customFunctions: CustomShaclFunctions,
-                               options: ValidationOptions): Future[ValidationReport] =
+  override def shaclValidation(
+      model: BaseUnit,
+      validations: EffectiveValidations,
+      customFunctions: CustomShaclFunctions,
+      options: ValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] =
     if (options.isPartialValidation) partialShaclValidation(model, validations, customFunctions, options)
     else fullShaclValidation(model, validations, options)
 
-  def partialShaclValidation(model: BaseUnit,
-                             validations: EffectiveValidations,
-                             customFunctions: CustomShaclFunctions,
-                             options: ValidationOptions): Future[ValidationReport] =
+  def partialShaclValidation(
+      model: BaseUnit,
+      validations: EffectiveValidations,
+      customFunctions: CustomShaclFunctions,
+      options: ValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] =
     new CustomShaclValidator(model, validations, customFunctions, options).run
 
-  def fullShaclValidation(model: BaseUnit,
-                          validations: EffectiveValidations,
-                          options: ValidationOptions): Future[ValidationReport] = {
+  def fullShaclValidation(model: BaseUnit, validations: EffectiveValidations, options: ValidationOptions)(
+      implicit executionContext: ExecutionContext): Future[ValidationReport] = {
     ExecutionLog.log(
       s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
@@ -209,30 +209,35 @@ object AMFValidatorPlugin
     case _           => None
   }
 
-  override def validate(model: BaseUnit,
-                        given: ProfileName,
-                        messageStyle: MessageStyle,
-                        env: Environment,
-                        resolved: Boolean = false): Future[AMFValidationReport] = {
+  override def validate(
+      model: BaseUnit,
+      given: ProfileName,
+      messageStyle: MessageStyle,
+      env: Environment,
+      resolved: Boolean = false,
+      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
 
     val profileName = profileForUnit(model, given)
     val report      = new AmfStaticReportBuilder(model, profileName).buildFromStatic()
 
     if (!report.conforms) Future.successful(report)
-    else modelValidation(model, profileName, messageStyle, env, resolved)
+    else modelValidation(model, profileName, messageStyle, env, resolved, exec)
   }
 
   private def modelValidation(model: BaseUnit,
                               profileName: ProfileName,
                               messageStyle: MessageStyle,
                               env: Environment,
-                              resolved: Boolean): Future[AMFValidationReport] = {
+                              resolved: Boolean,
+                              exec: BaseExecutionEnvironment): Future[AMFValidationReport] = {
+
+    implicit val executionContext: ExecutionContext = exec.executionContext
 
     profilesPlugins.get(profileName.profile) match {
       case Some(domainPlugin: AMFValidationPlugin) =>
         val validations = computeValidations(profileName)
         domainPlugin
-          .validationRequest(model, profileName, validations, platform, env, resolved)
+          .validationRequest(model, profileName, validations, platform, env, resolved, exec)
       case _ =>
         Future {
           profileNotFoundWarningReport(model, profileName)

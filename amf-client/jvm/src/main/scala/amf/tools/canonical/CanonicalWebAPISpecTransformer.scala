@@ -24,7 +24,7 @@ import amf.tools.{CanonicalWebAPISpecDialectExporter, PropertyNodeModel}
 import org.apache.jena.rdf.model.{Model, RDFNode, Resource, Statement}
 
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext.Implicits.global // TODO Should implement ExecutionEnvironment here?
 import scala.concurrent.Future
 
 object CanonicalWebAPISpecTransformer extends PlatformSecrets {

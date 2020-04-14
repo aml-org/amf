@@ -21,7 +21,7 @@ import amf.core.utils._
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import org.yaml.model._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class JsonRefsReferenceHandler extends ReferenceHandler {
 
@@ -122,7 +122,7 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
 
   override def dependencies(): Seq[AMFPlugin] = Nil
 
-  override def init(): Future[AMFPlugin] = Future.successful(this)
+  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
 
   /**
     * Does references in this type of documents be recursive?
