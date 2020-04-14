@@ -23,7 +23,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportTopLevel("AMF")
 object AMF extends PlatformSecrets {
 
-  def init(executionEnvironment: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): ClientFuture[Unit] = {
+  def init(): ClientFuture[Unit] = init(platform.defaultExecutionEnvironment)
+
+  def init(executionEnvironment: BaseExecutionEnvironment): ClientFuture[Unit] = {
     WebApi.register(executionEnvironment)
     Vocabularies.register()
     AMFValidation.register()
