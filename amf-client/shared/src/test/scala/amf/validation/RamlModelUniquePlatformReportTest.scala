@@ -433,4 +433,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Optional responses in traits with RAML 0.8") {
     validate("optional-responses/optional-responses-08.raml", profile = Raml08Profile)
   }
+
+  test("Long number format is valid with number type in RAML 1.0") {
+    validate("raml/valid-number-format.raml", None, profile = Raml10Profile)
+  }
 }

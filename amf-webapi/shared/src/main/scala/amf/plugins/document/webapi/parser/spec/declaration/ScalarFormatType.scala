@@ -18,11 +18,12 @@ object FormatValidator {
         case TypeDef.IntType if !List("int", "int8", "int16", "int32", "int64", "long").contains(format) => false
         case FloatType if format.equals("double")                                                        => false // should no be possible
         case LongType if List("double", "float").contains(format)                                        => false // should not be possible either
-        case other if !List("int", "int8", "int16", "int32", "int64", "float", "double").contains(format) =>
-          false
-        case _ => true
-      } else !List("int", "int8", "int16", "int32", "int64", "long", "float", "double").contains(format)
+        case _ if !VALID_NUMBER_FORMATS.contains(format)                                                 => false
+        case _                                                                                           => true
+      } else !VALID_NUMBER_FORMATS.contains(format)
   }
+
+  val VALID_NUMBER_FORMATS = List("int", "int8", "int16", "int32", "int64", "long", "float", "double")
 }
 
 case class ScalarFormatType(shape: Shape, typeDef: TypeDef)(implicit ctx: WebApiContext) extends SpecParserOps {
