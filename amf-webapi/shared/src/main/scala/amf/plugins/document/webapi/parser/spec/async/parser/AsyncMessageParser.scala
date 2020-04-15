@@ -30,7 +30,7 @@ object AsyncMessageParser {
       implicit ctx: AsyncWebApiContext): AsyncMessageParser = {
     val populator = if (isTrait) AsyncMessageTraitPopulator() else AsyncConcreteMessagePopulator(parent)
     val finder    = if (isTrait) MessageTraitFinder() else MessageFinder()
-    new AsyncMessageParser(entryLike, parent, messageType, populator, finder)(ctx)
+    new AsyncMessageParser(entryLike, parent, messageType, populator, finder, isTrait)(ctx)
   }
 }
 
@@ -38,7 +38,8 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
                          parent: String,
                          messageType: Option[MessageType],
                          populator: AsyncMessagePopulator,
-                         finder: Finder[Message])(implicit val ctx: AsyncWebApiContext)
+                         finder: Finder[Message],
+                         isTrait: Boolean)(implicit val ctx: AsyncWebApiContext)
     extends SpecParserOps {
 
   def parse(): Message = {
@@ -84,7 +85,7 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
                          "",
                          s"Cannot find link reference $fullRef",
                          Annotations(entryLike.asMap))
-        val errorMessage = new ErrorMessage(fullRef, entryLike.asMap)
+        val errorMessage = new ErrorMessage(fullRef, entryLike.asMap, isTrait)
         nameAndAdopt(errorMessage.link(fullRef, errorMessage.annotations), entryLike.key)
     }
   }

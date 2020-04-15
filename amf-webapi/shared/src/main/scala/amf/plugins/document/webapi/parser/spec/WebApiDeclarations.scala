@@ -526,11 +526,14 @@ object WebApiDeclarations {
     override protected def originalMeta: DomainElementModel   = CorrelationIdModel
   }
 
-  class ErrorMessage(idPart: String, ast: YPart) extends Message(Fields(), Annotations(ast)) with ErrorDeclaration {
+  class ErrorMessage(idPart: String, ast: YPart, isAbstract: Boolean = false)
+      extends Message(Fields(), Annotations(ast))
+      with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorMessage/"
     withId(idPart)
+    isAbstract(isAbstract)
 
-    override protected def newErrorInstance: ErrorDeclaration = new ErrorMessage(idPart, ast)
+    override protected def newErrorInstance: ErrorDeclaration = new ErrorMessage(idPart, ast, isAbstract)
     override protected def originalMeta: DomainElementModel   = MessageModel
   }
 
@@ -579,6 +582,7 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#operationTraits/"
     withId(idPart)
+    withAbstract(true)
 
     override protected def newErrorInstance: ErrorDeclaration = new ErrorOperationTrait(idPart, ast)
     override protected def originalMeta: DomainElementModel   = OperationModel
