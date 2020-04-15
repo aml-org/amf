@@ -231,9 +231,22 @@ object ParsedValidationProfile extends DialectWrapper {
       infoLevel       = extractStrings(node, "info"),
       warningLevel    = extractStrings(node, "warning"),
       disabled        = extractStrings(node, "disabled"),
-      validations     = collectValidations(mapEntities(node, "validations", ParsedValidationSpecification(_, prfx))),
+      validations     = collectValidations(mapEntities(node, "validations", (v) => ParsedValidationSpecification(deref(v), prfx))),
       prefixes        = prfx
     )
+  }
+
+  protected def deref(v: DialectDomainElement): DialectDomainElement = {
+    v.linkTarget match {
+      case Some(linked: DialectDomainElement) =>
+        val nameFieldEntry = v.fields.fields().find(_.field.value.name == "name").get
+        val nameValue = nameFieldEntry.scalar.value.asInstanceOf[String]
+        linked.set(nameFieldEntry.field, nameValue)
+        linked
+      case _       =>
+        v
+
+    }
   }
 
   protected def collectValidations(nestedValidations: Seq[(ValidationSpecification, Seq[ValidationSpecification])]): Seq[ValidationSpecification] = {

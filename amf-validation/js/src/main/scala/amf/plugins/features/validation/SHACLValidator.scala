@@ -23,10 +23,10 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
   var functionCode: Option[String] = None
 
   def nativeShacl: js.Dynamic =
-    if (js.isUndefined(js.Dynamic.global.SHACLValidator)) {
+    if (js.isUndefined(js.Dynamic.global.GlobalSHACLValidator)) {
       throw new Exception("Cannot find global SHACLValidator object")
     } else {
-      js.Dynamic.global.SHACLValidator
+      js.Dynamic.global.GlobalSHACLValidator
     }
 
   /**
