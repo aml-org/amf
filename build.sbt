@@ -21,6 +21,8 @@ lazy val sonarUrl = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
 lazy val sonarToken = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")
 lazy val branch = sys.env.getOrElse("BRANCH_NAME", "develop")
 
+//enablePlugins(ScalaJSBundlerPlugin)
+
 sonarProperties ++= Map(
   "sonar.login" -> sonarToken,
   "sonar.projectKey" -> "mulesoft.amf",
@@ -148,7 +150,15 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     assemblyMergeStrategy in assembly := {
       case x if x.toString.contains("commons/logging") => MergeStrategy.discard
       case x if x.toString.endsWith("JS_DEPENDENCIES") => MergeStrategy.discard
-      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => MergeStrategy.discard
+      case PathList(ps @ _*) if ps.last endsWith "module-info.class" => {
+        MergeStrategy.first
+      }
+      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => {
+        MergeStrategy.discard
+      }
+      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => {
+        MergeStrategy.discard
+      }
       case x =>
         val oldStrategy = (assemblyMergeStrategy in assembly).value
         oldStrategy(x)

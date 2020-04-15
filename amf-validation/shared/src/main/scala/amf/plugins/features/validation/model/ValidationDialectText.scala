@@ -272,6 +272,16 @@ object ValidationDialectText {
       |        propertyTerm: validation.validations
       |        mapKey: name
       |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
+
+      |  validationShapesUnion:
+      |    union:
+      |      - shapeValidationNode
+      |      - queryValidationNode
+      |      - xoneShapeValidationNode
+      |      - orShapeValidationNode
+      |      - notShapeValidationNode
+      |      - andShapeValidationNode
+      |
       |documents:
       |  fragments:
       |    encodes:
@@ -280,7 +290,7 @@ object ValidationDialectText {
       |
       |  library:
       |    declares:
-      |      shapes: queryValidationNode
+      |      validations: validationShapesUnion
       |      functions: functionValidationNode
       |
       |  root:

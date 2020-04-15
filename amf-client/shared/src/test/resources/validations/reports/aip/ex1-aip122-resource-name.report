@@ -1,0 +1,38 @@
+Model: file://amf-client/shared/src/test/resources/validations/aip/ex1.raml
+Profile: AIP
+Conforms? false
+Number of results: 3
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/data#aip-122-fields-representing-resource-names
+  Message: When defining a resource, the first field should be the resource name, which must be of
+type string and must be called name for the resource name. The message should include a
+google.api.resource annotation declaring the type (see AIP-123 for more on this).
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/aip/ex1.raml#/web-api/end-points/%2Fendpoint2/get/request/application%2Fjson
+  Property: 
+  Position: Some(LexicalInformation([(21,6)-(25,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/aip/ex1.raml
+
+- Source: http://a.ml/vocabularies/data#aip-122-fields-representing-resource-names
+  Message: When defining a resource, the first field should be the resource name, which must be of
+type string and must be called name for the resource name. The message should include a
+google.api.resource annotation declaring the type (see AIP-123 for more on this).
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/aip/ex1.raml#/web-api/end-points/%2Fendpoint3/get/request/application%2Fjson
+  Property: 
+  Position: Some(LexicalInformation([(29,6)-(32,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/aip/ex1.raml
+
+- Source: http://a.ml/vocabularies/data#aip-122-collection-resource-names
+  Message: - Collection identifiers must be in camelCase.
+- Collection identifiers must begin with a lower-cased letter and contain only ASCII letters and numbers (/[a-z][a-zA-Z0-9]*/).
+
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/aip/ex1.raml#/web-api/end-points/%2Fendpoint4
+  Property: 
+  Position: Some(LexicalInformation([(32,0)-(38,22)]))
+  Location: file://amf-client/shared/src/test/resources/validations/aip/ex1.raml

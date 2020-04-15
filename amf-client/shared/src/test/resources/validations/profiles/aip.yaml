@@ -2,29 +2,28 @@
 
 profile: AIP
 
-info:
+uses:
+  aip122: aip122lib.yaml
+  aip126: aip126lib.yaml
+
+violation:
+  - aip-122-unique-resource-names
+  - aip-122-fields-representing-resource-names
+  - aip-122-collection-resource-names
+  - aip-126-enumeration-upper-snake-case
+
 warning:
-violations:
+  - aip-122-ascii-characters-resource-names
+  - aip-126-enumeration-unspecified-starting-value
 
 validations:
 
-  aip-121-resource-oriented-design:
-    targetClass: apiContract.WebAPI
-    message: See <https://aip.dev/121>
+  # AIP.122 Resource Names
+  aip-122-unique-resource-names: aip122.unique-resource-names
+  aip-122-ascii-characters-resource-names: aip122.ascii-characters-resource-names
+  aip-122-fields-representing-resource-names: aip122.fields-representing-resource-names
+  aip-122-collection-resource-names: aip122.collection-resource-names
 
-
-  aip-122-resources:
-    targetClass: apiContract.EndPoint
-    message: |
-      A resource-oriented API should generally be modeled as a resource
-      hierarchy, where each node is either a simple resource or a collection
-      of resources.
-      A collection contains resources of the same type. For example, a
-      publisher has the collection of books that it publishes. A resource
-      usually has fields, and resources may have any number of sub-resources
-      (usually collections).
-
-  aip-121-methods:
-    targetClass: apiContract.EndPoint
-    message: |
-
+  # AIP.126 Enumerations
+  aip-126-enumeration-upper-snake-case: aip126.enumeration-upper-snake-case
+  aip-126-enumeration-unspecified-starting-value: aip126.enumeration-unspecified-starting-value

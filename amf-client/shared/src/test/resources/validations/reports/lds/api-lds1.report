@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/lds/api.raml
+Profile: LDS
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/data#keys-must-be-in-payload
+  Message: Key declaration not found in payload schema
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/lds/api.raml#/web-api/end-points/%2Fendpoint1/get
+  Property: 
+  Position: Some(LexicalInformation([(9,2)-(20,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/lds/api.raml
