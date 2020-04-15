@@ -1,10 +1,12 @@
 package amf.plugins.domain.shapes.validation
 
 import amf.ProfileName
+import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins._
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
 import amf.core.registries.AMFPluginsRegistry
+import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
@@ -12,14 +14,12 @@ import amf.internal.environment.Environment
 import amf.validations.{ParserSideValidations, PayloadValidations}
 
 import scala.collection.mutable
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
 
-object PayloadValidationPluginsHandler {
+object PayloadValidationPluginsHandler extends PlatformSecrets {
 
-  def validateAll(candidates: Seq[ValidationCandidate],
-                  severity: String,
-                  env: Environment): Future[AMFValidationReport] = {
+  def validateAll(candidates: Seq[ValidationCandidate], severity: String, env: Environment)(
+      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     val validators: mutable.Map[(Shape, String), PayloadValidator] = mutable.Map()
 
     val futures: Seq[Future[AMFValidationReport]] = candidates.map { c =>
@@ -41,31 +41,38 @@ object PayloadValidationPluginsHandler {
     }
   }
 
-  def validateFragment(shape: Shape,
-                       fragment: PayloadFragment,
-                       severity: String,
-                       env: Environment = Environment(),
-                       validationMode: ValidationMode = StrictValidationMode): Future[AMFValidationReport] = {
-    val p = plugin(fragment.mediaType.value(), shape, env, severity)
+  def validateFragment(
+      shape: Shape,
+      fragment: PayloadFragment,
+      severity: String,
+      env: Environment = Environment(),
+      validationMode: ValidationMode = StrictValidationMode,
+      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
+    implicit val executionContext: ExecutionContext = exec.executionContext
+    val p                                           = plugin(fragment.mediaType.value(), shape, env, severity)
 
     p.validator(shape, env, validationMode).validate(fragment)
   }
 
-  def validateWithGuessing(shape: Shape,
-                           payload: String,
-                           severity: String,
-                           env: Environment = Environment(),
-                           validationMode: ValidationMode = StrictValidationMode): Future[AMFValidationReport] =
-    validate(shape, payload.guessMediaType(isScalar = false), payload, severity, env, validationMode)
+  def validateWithGuessing(
+      shape: Shape,
+      payload: String,
+      severity: String,
+      env: Environment = Environment(),
+      validationMode: ValidationMode = StrictValidationMode,
+      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] =
+    validate(shape, payload.guessMediaType(isScalar = false), payload, severity, env, validationMode, exec)
 
   def validate(shape: Shape,
                mediaType: String,
                payload: String,
                severity: String,
                env: Environment = Environment(),
-               validationMode: ValidationMode = StrictValidationMode): Future[AMFValidationReport] = {
+               validationMode: ValidationMode = StrictValidationMode,
+               exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
+    implicit val executionContext: ExecutionContext = exec.executionContext
+    val p                                           = plugin(mediaType, shape, env, severity)
 
-    val p = plugin(mediaType, shape, env, severity)
     p.validator(shape, env, validationMode).validate(mediaType, payload)
   }
 
@@ -103,13 +110,14 @@ object PayloadValidationPluginsHandler {
 
     override def dependencies(): Seq[AMFPlugin] = Nil
 
-    override def init(): Future[AMFPlugin] = Future.successful(this)
+    override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
     override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator =
       AnyMathPayloadValidator(s, defaultSeverity)
   }
 
   case class AnyMathPayloadValidator(shape: Shape, defaultSeverity: String) extends PayloadValidator {
-    override def validate(payload: String, mediaType: String): Future[AMFValidationReport] = {
+    override def validate(payload: String, mediaType: String)(
+        implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
 
       val results = AMFValidationResult(
         s"Unsupported validation for mediatype: $mediaType and shape ${shape.id}",
@@ -126,7 +134,8 @@ object PayloadValidationPluginsHandler {
       Future(AMFValidationReport("", ProfileName(""), Seq(results)))
     }
 
-    override def validate(payloadFragment: PayloadFragment): Future[AMFValidationReport] = {
+    override def validate(payloadFragment: PayloadFragment)(
+        implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
       val results = AMFValidationResult(
         s"Unsupported validation for mediatype: ${payloadFragment.mediaType.value()} and shape ${shape.id}",
         defaultSeverity,
@@ -141,11 +150,10 @@ object PayloadValidationPluginsHandler {
       )
       Future(AMFValidationReport("", ProfileName(""), Seq(results)))
     }
-
     override def syncValidate(mediaType: String, payload: String): AMFValidationReport =
       AMFValidationReport("", ProfileName(""), Seq())
-
-    override def isValid(mediaType: String, payload: String): Future[Boolean] =
+    override def isValid(mediaType: String, payload: String)(
+        implicit executionContext: ExecutionContext): Future[Boolean] =
       validate(mediaType, payload).map(_.conforms)
     override val validationMode: ValidationMode = StrictValidationMode
     override val env: Environment               = Environment()

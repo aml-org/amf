@@ -1,6 +1,7 @@
 package amf.plugins.document
 
 import amf.client.convert.WebApiRegister
+import amf.client.execution.BaseExecutionEnvironment
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi._
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
@@ -11,7 +12,7 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 object WebApi extends PlatformSecrets {
 
-  def register(): Unit = {
+  def register(executionEnvironment: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Unit = {
 
     WebApiRegister.register(platform)
 

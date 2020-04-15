@@ -38,7 +38,7 @@ import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model._
 import org.yaml.parser.{JsonParser, YParser, YamlParser}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   override val vendors: Seq[String] = Seq(JsonSchema.name)
@@ -268,7 +268,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   override def dependencies(): Seq[AMFPlugin] = Nil
 
-  override def init(): Future[AMFPlugin] = Future.successful(this)
+  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
 
   /**
     * Does references in this type of documents be recursive?

@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.validation
 
 import amf._
+import amf.client.execution.BaseExecutionEnvironment
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.validation._
@@ -30,14 +31,15 @@ trait WebApiValidations extends ValidationResultProcessor {
                                               messageStyle: MessageStyle,
                                               platform: Platform,
                                               env: Environment,
-                                              resolved: Boolean): Future[AMFValidationReport] = {
+                                              resolved: Boolean,
+                                              exec: BaseExecutionEnvironment): Future[AMFValidationReport] = {
 
     // Before validating we need to resolve to get all the model information
     val baseUnit =
       if (resolved) unit
       else ValidationResolutionPipeline(profile, unit)
 
-    WebApiValidationsRunner(ValidationContext(baseUnit, profile, platform, messageStyle, validations, env)).runSteps
+    WebApiValidationsRunner(ValidationContext(baseUnit, profile, platform, messageStyle, validations, env), exec).runSteps
   }
 
   protected def buildPayloadValidationResult(model: BaseUnit,

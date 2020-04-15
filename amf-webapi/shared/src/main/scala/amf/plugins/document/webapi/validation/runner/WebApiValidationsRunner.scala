@@ -1,12 +1,15 @@
 package amf.plugins.document.webapi.validation.runner
 
+import amf.client.execution.BaseExecutionEnvironment
+import amf.core.unsafe.PlatformSecrets
 import amf.core.validation._
 import amf.plugins.document.webapi.validation.runner.steps._
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-case class WebApiValidationsRunner(validationContext: ValidationContext) {
+case class WebApiValidationsRunner private (validationContext: ValidationContext, exec: BaseExecutionEnvironment) {
+
+  implicit val executionContext: ExecutionContext = exec.executionContext
 
   private val modelStep: ValidationStep    = ModelValidationStep(validationContext)
   private val examplesStep: ValidationStep = ExamplesValidationStep(validationContext)
@@ -27,6 +30,13 @@ case class WebApiValidationsRunner(validationContext: ValidationContext) {
       AMFValidationReport(rc.valid, validationContext.baseUnit.id, validationContext.profile, rc.results)
     }
   }
+}
+
+object WebApiValidationsRunner extends PlatformSecrets {
+  def apply(validationContext: ValidationContext): WebApiValidationsRunner =
+    new WebApiValidationsRunner(validationContext, platform.defaultExecutionEnvironment)
+  def apply(validationContext: ValidationContext, exec: BaseExecutionEnvironment): WebApiValidationsRunner =
+    new WebApiValidationsRunner(validationContext, exec)
 }
 
 object EmptyResultContainer extends ResultContainer(Nil)

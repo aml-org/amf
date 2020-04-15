@@ -10,11 +10,9 @@ import amf.internal.environment.Environment
 import amf.plugins.domain.shapes.validation.ShapesNodesValidator
 import amf.validations.PayloadValidations
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
-
-  import scala.concurrent.ExecutionContext.Implicits.global
 
   val candidates: Seq[ValidationCandidate] = PayloadsInApiCollector(baseUnit) ++
     ShapeFacetsCandidatesCollector(baseUnit, platform) ++
@@ -27,7 +25,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
     DataNodeIndex(nodes)
   }
 
-  def validate(env: Environment): Future[Seq[AMFValidationResult]] = {
+  def validate(env: Environment)(implicit executionContext: ExecutionContext): Future[Seq[AMFValidationResult]] = {
     ExecutionLog.log(s"UnitPayloadsValidation#validate: Validating all candidates ${candidates.size}")
     ShapesNodesValidator.validateAll(candidates, SeverityLevels.WARNING, env).map(groupResults)
   }

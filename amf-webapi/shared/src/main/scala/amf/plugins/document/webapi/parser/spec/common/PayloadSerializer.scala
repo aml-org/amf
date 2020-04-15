@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.client.execution.BaseExecutionEnvironment
 import amf.core.AMFSerializer
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.ErrorHandler
@@ -7,14 +8,19 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.DataNode
 import amf.core.remote.Payload
 import amf.core.services.RuntimeSerializer
+import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YDocument
 
-trait PayloadSerializer {
+import scala.concurrent.ExecutionContext
 
-  protected def toJson(example: Example): String = {
+trait PayloadSerializer extends PlatformSecrets {
+
+  protected def toJson(example: Example,
+                       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String = {
+    implicit val executionContext: ExecutionContext = exec.executionContext
     example.raw.option().map(_.guessMediaType(false)) match {
       case Some("application/json") => example.raw.value()
       case Some("application/xml")  => ""
@@ -22,7 +28,9 @@ trait PayloadSerializer {
     }
   }
 
-  protected def toYaml(example: Example): String = {
+  protected def toYaml(example: Example,
+                       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String = {
+    implicit val executionContext: ExecutionContext = exec.executionContext
     example.raw.option().map(_.guessMediaType(false)) match {
       case Some("application/json") => dump(example.structuredValue)
       case Some("application/xml")  => ""
@@ -38,7 +46,7 @@ trait PayloadSerializer {
     }
   }
 
-  private def dump(dataNode: DataNode): String = {
+  private def dump(dataNode: DataNode)(implicit executionContext: ExecutionContext): String = {
     AMFSerializer.init()
     RuntimeSerializer(PayloadFragment(dataNode, "application/json"), "application/payload+json", Payload.name)
   }
