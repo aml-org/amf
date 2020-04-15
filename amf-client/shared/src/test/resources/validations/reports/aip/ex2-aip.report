@@ -1,0 +1,32 @@
+Model: file://amf-client/shared/src/test/resources/validations/aip/ex2.raml
+Profile: AIP
+Conforms? false
+Number of results: 3
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/data#aip-126-enumeration-upper-snake-case
+  Message: All enum values must use UPPER_SNAKE_CASE
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/aip/ex2.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson/schema/property/incorrect/scalar/incorrect
+  Property: 
+  Position: Some(LexicalInformation([(15,10)-(20,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/aip/ex2.raml
+
+- Source: http://a.ml/vocabularies/data#aip-126-enumeration-upper-snake-case
+  Message: All enum values must use UPPER_SNAKE_CASE
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/aip/ex2.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson/schema/property/incorrect/scalar/incorrect
+  Property: 
+  Position: Some(LexicalInformation([(15,10)-(20,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/aip/ex2.raml
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/data#aip-126-enumeration-unspecified-starting-value
+  Message: The first value of the enum should be the name of the enum itself followed by the suffix _UNSPECIFIED.
+  Level: Warning
+  Target: file://amf-client/shared/src/test/resources/validations/aip/ex2.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson/schema/property/incorrect/scalar/incorrect
+  Property: 
+  Position: Some(LexicalInformation([(15,10)-(20,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/aip/ex2.raml

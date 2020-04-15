@@ -1,0 +1,32 @@
+#%RAML 1.0
+
+uses:
+  std: ./standards.raml
+
+title: Test API
+
+/endpoint1:
+  (std.resource): Resource1
+  get:
+    body:
+      application/json:
+        properties:
+          name: string
+          incorrect:
+            type: string
+            enum:
+              - a
+              - b
+/endpoint2:
+  (std.resource): Resource1
+  get:
+    body:
+      application/json:
+        properties:
+          name: string
+          correct:
+            type: string
+            enum:
+              - NAME_UNSPECIFIED
+              - A_B
+              - A

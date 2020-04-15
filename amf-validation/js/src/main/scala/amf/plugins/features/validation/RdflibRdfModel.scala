@@ -7,10 +7,10 @@ import org.mulesoft.common.io.Output
 import scala.scalajs.js
 
 object RDF {
-  lazy val instance: js.Dynamic = if (js.isUndefined(js.Dynamic.global.SHACLValidator)) {
+  lazy val instance: js.Dynamic = if (js.isUndefined(js.Dynamic.global.GlobalSHACLValidator)) {
     throw new Exception("Cannot find global SHACLValidator object")
   } else {
-    js.Dynamic.global.SHACLValidator.`$rdf`
+    js.Dynamic.global.GlobalSHACLValidator.`$rdf`
   }
 }
 

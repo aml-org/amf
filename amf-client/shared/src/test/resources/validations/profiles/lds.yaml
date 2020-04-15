@@ -1,0 +1,37 @@
+#%Validation Profile 1.0
+
+profile: LDS
+
+prefixes:
+  lds-annotations: "file://amf-client/shared/src/test/resources/validations/lds/lds-annotations.raml#/declarations/annotations/"
+
+
+violation:
+  - keys-must-be-in-payload
+
+validations:
+
+  keys-must-be-in-payload:
+    message: Key declaration not found in payload schema
+    targetClass: apiContract.Operation
+    query: |
+      SELECT $this (?key AS ?value) {
+
+          $this lds-annotations:key [
+               ?annotationProperty [
+                   core:name ?key
+               ]
+             ] .
+          OPTIONAL {
+            $this apiContract:returns [
+                 apiContract:statusCode "200" ;
+                 apiContract:payload / shapes:schema / sh:property [
+                     sh:name ?propertyName
+                 ]
+             ]
+
+             FILTER (?key = ?propertyName)
+          }
+          FILTER (!BOUND(?propertyName))
+      }
+
