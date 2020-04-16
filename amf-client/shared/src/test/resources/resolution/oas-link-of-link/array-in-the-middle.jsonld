@@ -1,108 +1,303 @@
 [
   {
-    "@id": "",
+    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml",
     "@type": [
-      "doc:Document",
-      "doc:Fragment",
-      "doc:Module",
-      "doc:Unit"
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
     ],
-    "doc:encodes": [
+    "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "#/web-api",
+        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api",
         "@type": [
-          "apiContract:WebAPI",
-          "doc:RootDomainElement",
-          "doc:DomainElement"
+          "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/document#RootDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "core:name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "GitHub"
           }
         ],
-        "core:version": [
+        "http://a.ml/vocabularies/core#version": [
           {
             "@value": "v3"
           }
         ],
-        "apiContract:endpoint": [
+        "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-            "@id": "#/web-api/end-points/%2FendPoint",
+            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint",
             "@type": [
-              "apiContract:EndPoint",
-              "doc:DomainElement"
+              "http://a.ml/vocabularies/apiContract#EndPoint",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "apiContract:path": [
+            "http://a.ml/vocabularies/apiContract#path": [
               {
                 "@value": "/endPoint"
               }
             ],
-            "apiContract:supportedOperation": [
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
-                "@id": "#/web-api/end-points/%2FendPoint/get",
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get",
                 "@type": [
-                  "apiContract:Operation",
-                  "doc:DomainElement"
+                  "http://a.ml/vocabularies/apiContract#Operation",
+                  "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "apiContract:method": [
+                "http://a.ml/vocabularies/apiContract#method": [
                   {
                     "@value": "get"
                   }
                 ],
-                "apiContract:returns": [
+                "http://a.ml/vocabularies/apiContract#returns": [
                   {
-                    "@id": "#/web-api/end-points/%2FendPoint/get/200",
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200",
                     "@type": [
-                      "apiContract:Response",
-                      "apiContract:Message",
-                      "doc:DomainElement"
+                      "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
+                      "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "apiContract:statusCode": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "core:name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "core:description": [
+                    "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "a description"
                       }
                     ],
-                    "apiContract:payload": [
+                    "http://a.ml/vocabularies/apiContract#payload": [
                       {
-                        "@id": "#/web-api/end-points/%2FendPoint/get/200/default",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/default",
                         "@type": [
-                          "apiContract:Payload",
-                          "doc:DomainElement"
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "raml-shapes:schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "#/declarations/types/E/link--878155660",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/any/E/link--519695509",
                             "@type": [
-                              "raml-shapes:ArrayShape",
-                              "raml-shapes:AnyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
+                              "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "doc:link-target": [
+                            "http://a.ml/vocabularies/document#link-target": [
                               {
-                                "@id": "#/declarations/types/E"
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/any/E"
                               }
                             ],
-                            "doc:link-label": [
+                            "http://a.ml/vocabularies/document#link-label": [
                               {
                                 "@value": "E"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/default/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/default/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/default"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(23,10)-(24,35)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(21,8)-(24,35)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/core#description"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(22,10)-(23,0)]"
                               }
                             ]
                           }
                         ]
                       }
                     ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/source-map/lexical/element_1",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(19,4)-(24,35)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#returns"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(20,6)-(24,35)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(18,2)-(24,35)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/source-map/source-vendor/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "OAS 2.0"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#version"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,2)-(6,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/source-map/lexical/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,2)-(4,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(17,6)-(24,35)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/source-map/lexical/element_2",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(1,0)-(24,35)]"
                   }
                 ]
               }
@@ -111,66 +306,290 @@
         ]
       }
     ],
-    "doc:version": [
+    "http://a.ml/vocabularies/document#version": [
       {
         "@value": "2.1.0"
       }
     ],
-    "doc:root": [
+    "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
       }
     ],
-    "doc:declares": [
+    "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "#/declarations/types/E",
+        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/any/E",
         "@type": [
-          "raml-shapes:ArrayShape",
-          "raml-shapes:AnyShape",
-          "shacl:Shape",
-          "raml-shapes:Shape",
-          "doc:DomainElement"
+          "http://a.ml/vocabularies/shapes#ArrayShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
+          "http://www.w3.org/ns/shacl#Shape",
+          "http://a.ml/vocabularies/shapes#Shape",
+          "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "raml-shapes:items": [
+        "http://a.ml/vocabularies/shapes#items": [
           {
-            "@id": "#/declarations/types/array/D/items/items/recursive",
+            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C",
             "@type": [
-              "raml-shapes:RecursiveShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "raml-shapes:fixPoint": [
+            "http://www.w3.org/ns/shacl#closed": [
               {
-                "@id": "#/declarations/types/E"
+                "@value": false
               }
             ],
-            "doc:recursive": [
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#parent"
+                  }
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/scalar/parent",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "parent"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/scalar/parent/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/scalar/parent/source-map/type-property-lexical-info/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/scalar/parent"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(12,8)-(12,12)]"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/scalar/parent/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/scalar/parent"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(11,6)-(13,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/scalar/parent/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://www.w3.org/ns/shacl#datatype"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(12,8)-(13,0)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "parent"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(11,6)-(13,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#recursive": [
               {
                 "@value": true
               }
             ],
-            "shacl:name": [
+            "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "items"
+                "@value": "C"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/declared-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,2)-(13,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,2)-(9,3)]"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
         ],
-        "shacl:name": [
+        "http://a.ml/vocabularies/document#recursive": [
+          {
+            "@value": true
+          }
+        ],
+        "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "E"
           }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/any/E/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/any/E/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/any/E"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/any/E/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/any/E"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(13,2)-(17,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/any/E/source-map/type-property-lexical-info/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/any/E"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(14,4)-(14,8)]"
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
-    ],
-    "@context": {
-      "@base": "file:///Users/tfernandez/mulesoft/amf-runner-pure/api/APIMF-1921-cases/oas-case1.yaml",
-      "shacl": "http://www.w3.org/ns/shacl#",
-      "raml-shapes": "http://a.ml/vocabularies/shapes#",
-      "doc": "http://a.ml/vocabularies/document#",
-      "apiContract": "http://a.ml/vocabularies/apiContract#",
-      "core": "http://a.ml/vocabularies/core#"
-    }
+    ]
   }
 ]
