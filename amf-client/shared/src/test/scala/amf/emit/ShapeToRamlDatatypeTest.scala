@@ -3,7 +3,6 @@ package amf.emit
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.OasJsonHint
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
@@ -43,7 +42,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
     cycle("json-expression.json",
           "json-expression-new.raml",
           generalFindShapeFunc,
-          (a: AnyShape) => a.buildRamlDatatype())
+          (a: AnyShape) => a.buildRamlDatatype)
   }
 
   // https://github.com/aml-org/amf/issues/441
@@ -61,13 +60,13 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
   private def cycle(sourceFile: String,
                     goldenFile: String,
                     findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
-                    renderFn: AnyShape => String = (a: AnyShape) => a.toRamlDatatype()): Future[Assertion] = {
+                    renderFn: AnyShape => String = (a: AnyShape) => a.toRamlDatatype): Future[Assertion] = {
     val ramlDatatype: Future[String] = for {
       _ <- Validation(platform)
       sourceUnit <- AMFCompiler(basePath + sourceFile, platform, OasJsonHint, eh = DefaultParserErrorHandler.withRun())
         .build()
     } yield {
-      findShapeFunc(Oas20Plugin.resolve(sourceUnit, UnhandledErrorHandler)).map(_.toRamlDatatype()).getOrElse("")
+      findShapeFunc(Oas20Plugin.resolve(sourceUnit, UnhandledErrorHandler)).map(_.toRamlDatatype).getOrElse("")
     }
     ramlDatatype.flatMap { writeTemporaryFile(goldenFile) }.flatMap(assertDifferences(_, goldenPath + goldenFile))
   }

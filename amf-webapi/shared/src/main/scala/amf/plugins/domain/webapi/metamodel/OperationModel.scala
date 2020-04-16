@@ -30,9 +30,10 @@ object OperationModel
                      ApiContract + "method",
                      ModelDoc(ModelVocabularies.ApiContract, "method", "HTTP method required to invoke the operation"))
 
-  val OperationId = Field(Str,
-                          ApiContract + "operationId",
-                          ModelDoc(ModelVocabularies.ApiContract, "operation ID", "Identifier of the operation"))
+  val OperationId = Field(
+    Str,
+    ApiContract + "operationId",
+    ModelDoc(ModelVocabularies.ApiContract, "operation ID", "Identifier of the target operation"))
 
   val Deprecated = Field(Bool,
                          Core + "deprecated",

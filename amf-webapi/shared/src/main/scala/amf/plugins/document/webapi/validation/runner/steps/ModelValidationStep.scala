@@ -6,12 +6,13 @@ import amf.core.validation.AMFValidationResult
 import amf.core.validation.core.ValidationResult
 import amf.plugins.document.webapi.validation.runner.{FilterDataNodeOptions, ValidationContext}
 import amf.validations.CustomShaclFunctions
-import scala.concurrent.ExecutionContext.Implicits.global
 import amf._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-case class ModelValidationStep(override val validationContext: ValidationContext) extends ValidationStep {
+case class ModelValidationStep(override val validationContext: ValidationContext)(
+    implicit executionContext: ExecutionContext)
+    extends ValidationStep {
 
   override protected def validate(): Future[Seq[AMFValidationResult]] = {
     val baseOptions = FilterDataNodeOptions().withMessageStyle(validationContext.messageStyle)

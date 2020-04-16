@@ -12,7 +12,9 @@ import scala.scalajs.js.annotation.JSExportAll
 @JSExportAll
 object WebApi extends PlatformSecrets {
 
-  def register(executionEnvironment: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Unit = {
+  def register(): Unit = this.register(platform.defaultExecutionEnvironment)
+
+  def register(executionEnvironment: BaseExecutionEnvironment): Unit = {
 
     WebApiRegister.register(platform)
 

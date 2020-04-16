@@ -223,8 +223,7 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
                     mediaType)
   }
 
-  protected def buildPayloadNode(mediaType: String,
-                                 payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+  protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
     val fixedResult = parsePayloadWithErrorHandler(payload, mediaType, env, shape) match {
       case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
         val frag = ScalarPayloadForParam(result.fragment, shape)
@@ -297,7 +296,8 @@ object ScalarPayloadForParam {
 
       fragment.encodes match {
         case s: ScalarNode if !s.dataType.option().exists(_.equals(DataType.String)) =>
-          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations), fragment.mediaType.value())
+          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations),
+                          fragment.mediaType.value())
         case _ => fragment
       }
     } else fragment

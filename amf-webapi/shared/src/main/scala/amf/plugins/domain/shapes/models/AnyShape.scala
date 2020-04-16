@@ -103,11 +103,13 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   override def meta: AnyShapeModel = AnyShapeModel
 
-  def toJsonSchema(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    toJsonSchema(this, exec)
+  def toJsonSchema: String = this.toJsonSchema(platform.defaultExecutionEnvironment)
 
-  def buildJsonSchema(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    generateJsonSchema(this, exec = exec)
+  def toJsonSchema(exec: BaseExecutionEnvironment): String = toJsonSchema(this, exec)
+
+  def buildJsonSchema(): String = this.buildJsonSchema(platform.defaultExecutionEnvironment)
+
+  def buildJsonSchema(exec: BaseExecutionEnvironment): String = generateJsonSchema(this, exec = exec)
 
   def buildJsonSchema(options: ShapeRenderOptions): String =
     generateJsonSchema(this, options, platform.defaultExecutionEnvironment)
@@ -118,12 +120,12 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
   /** Delegates generation of a new RAML Data Type or returns cached
     * one if it was generated before.
     */
-  def toRamlDatatype(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    toRamlDatatype(this, exec)
+  def toRamlDatatype: String                                 = this.toRamlDatatype(platform.defaultExecutionEnvironment)
+  def toRamlDatatype(exec: BaseExecutionEnvironment): String = toRamlDatatype(this, exec)
 
   /** Generates a new RAML Data Type. */
-  def buildRamlDatatype(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    generateRamlDatatype(this, exec)
+  def buildRamlDatatype: String                                 = this.buildRamlDatatype(platform.defaultExecutionEnvironment)
+  def buildRamlDatatype(exec: BaseExecutionEnvironment): String = generateRamlDatatype(this, exec)
 
   def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =
     AnyShape(fields, annotations).withId(id)

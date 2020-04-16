@@ -37,7 +37,7 @@ class RamlTypeToNormalJsonSchemaTest extends TypeToJsonSchemaTest {
   override def path: String                         = "amf-client/shared/src/test/resources/org/raml/json_schema/"
   override def inputFileName: String                = "input.raml"
   override def outputFileName: String               = "output.json"
-  override def renderShape(shape: AnyShape): String = shape.toJsonSchema()
+  override def renderShape(shape: AnyShape): String = shape.toJsonSchema
 }
 
 class RamlTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {

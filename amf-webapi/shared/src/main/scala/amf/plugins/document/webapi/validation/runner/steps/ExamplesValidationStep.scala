@@ -3,11 +3,12 @@ package amf.plugins.document.webapi.validation.runner.steps
 import amf.core.validation.AMFValidationResult
 import amf.plugins.document.webapi.validation.UnitPayloadsValidation
 import amf.plugins.document.webapi.validation.runner.ValidationContext
-import scala.concurrent.ExecutionContext.Implicits.global
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-case class ExamplesValidationStep(override val validationContext: ValidationContext) extends ValidationStep {
+case class ExamplesValidationStep(override val validationContext: ValidationContext)(
+    implicit executionContext: ExecutionContext)
+    extends ValidationStep {
 
   override protected def validate(): Future[Seq[AMFValidationResult]] = {
     UnitPayloadsValidation(validationContext.baseUnit, validationContext.platform)
