@@ -435,7 +435,7 @@ nodeMappings:
 
 
   ChannelBindings:
-    classTerm: apiContract.ChannelBindings
+    classTerm: apiBinding.ChannelBindings
     mapping:
       name:
         propertyTerm: core.name
@@ -1016,7 +1016,7 @@ nodeMappings:
 
 
   MessageBindings:
-    classTerm: apiContract.MessageBindings
+    classTerm: apiBinding.MessageBindings
     mapping:
       name:
         propertyTerm: core.name
@@ -1309,6 +1309,9 @@ nodeMappings:
       isAbstract:
         propertyTerm: apiContract.isAbstract
         range: boolean
+      operationID:
+        propertyTerm: apiContract.operationId
+        range: string
       designLink:
         propertyTerm: doc.design-link-target
         range: link
@@ -1331,7 +1334,7 @@ nodeMappings:
 
 
   OperationBindings:
-    classTerm: apiContract.OperationBindings
+    classTerm: apiBinding.OperationBindings
     mapping:
       name:
         propertyTerm: core.name
@@ -1798,7 +1801,7 @@ nodeMappings:
 
 
   ServerBindings:
-    classTerm: apiContract.ServerBindings
+    classTerm: apiBinding.ServerBindings
     mapping:
       name:
         propertyTerm: core.name

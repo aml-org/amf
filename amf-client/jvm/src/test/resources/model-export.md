@@ -1262,7 +1262,7 @@ Action that can be executed using a particular HTTP invocation
  | server | [[Server](#server)] | Information about the network accessible locations where the API is available | http://a.ml/vocabularies/apiContract#server |
  | binding | [OperationBindings](#operationbindings) |  | http://a.ml/vocabularies/apiBinding#binding |
  | isAbstract | boolean | Defines a model as abstract | http://a.ml/vocabularies/apiContract#isAbstract |
- | operationId | string | Identifier of the operation | http://a.ml/vocabularies/apiContract#operationId |
+ | operationId | string | Identifier of the target operation | http://a.ml/vocabularies/apiContract#operationId |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
