@@ -1,0 +1,26 @@
+swagger: '2.0'
+info:
+  title: GitHub
+  version: v3
+
+definitions:
+  E:
+    $ref: '#/definitions/D'
+  C:
+    properties:
+      parent:
+        allOf:
+          - $ref: '#/definitions/C'
+          - description: some description blablabla
+  D:
+    type: array
+    items:
+        $ref: '#/definitions/C'
+paths:
+  '/endPoint':
+    get:
+      responses:
+        '200':
+          description: a description
+          schema:
+            $ref: '#/definitions/E'

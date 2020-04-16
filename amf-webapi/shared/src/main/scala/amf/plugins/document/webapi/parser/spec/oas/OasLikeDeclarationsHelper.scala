@@ -5,10 +5,11 @@ import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, O
 import amf.validations.ParserSideValidations.UnableToParseShape
 import org.yaml.model.{YMap, YScalar}
 import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain.AmfScalar
+import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.domain.shapes.models.NodeShape
+import amf.plugins.domain.shapes.annotations.TypeAlias
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 trait OasLikeDeclarationsHelper {
   protected val definitionsKey: String
@@ -27,6 +28,7 @@ trait OasLikeDeclarationsHelper {
               shape.adopted(typesPrefix)
             })(ctx).parse() match {
               case Some(shape) =>
+                if (isDirectTypeAlias(shape)) shape.add(TypeAlias())
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>
                 ctx.eh.violation(UnableToParseShape,
@@ -38,4 +40,6 @@ trait OasLikeDeclarationsHelper {
       }
     )
   }
+
+  private def isDirectTypeAlias(shape: Shape) = shape.isInstanceOf[AnyShape] && shape.isLink
 }

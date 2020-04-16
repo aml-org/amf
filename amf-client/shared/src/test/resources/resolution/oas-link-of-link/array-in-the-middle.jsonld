@@ -1,0 +1,176 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/web-api",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "GitHub"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "v3"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#/web-api/end-points/%2FendPoint",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/endPoint"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/web-api/end-points/%2FendPoint/get",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#/web-api/end-points/%2FendPoint/get/200",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:description": [
+                      {
+                        "@value": "a description"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#/web-api/end-points/%2FendPoint/get/200/default",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#/declarations/types/E/link--878155660",
+                            "@type": [
+                              "raml-shapes:ArrayShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#/declarations/types/E"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "E"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declarations/types/E",
+        "@type": [
+          "raml-shapes:ArrayShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "raml-shapes:items": [
+          {
+            "@id": "#/declarations/types/array/D/items/items/recursive",
+            "@type": [
+              "raml-shapes:RecursiveShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "raml-shapes:fixPoint": [
+              {
+                "@id": "#/declarations/types/E"
+              }
+            ],
+            "doc:recursive": [
+              {
+                "@value": true
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "items"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "E"
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "file:///Users/tfernandez/mulesoft/amf-runner-pure/api/APIMF-1921-cases/oas-case1.yaml",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

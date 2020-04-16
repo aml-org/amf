@@ -1,0 +1,328 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/web-api",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "GitHub"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "v3"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#/web-api/end-points/%2FendPoint",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/endPoint"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/web-api/end-points/%2FendPoint/get",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#/web-api/end-points/%2FendPoint/get/200",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:description": [
+                      {
+                        "@value": "a description"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#/web-api/end-points/%2FendPoint/get/200/default",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#/declarations/types/E/link-220071304",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#/declarations/types/E"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "E"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#/web-api/end-points/%2FendPoint/get/200/default": "[(24,10)-(25,35)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "core:description": "[(23,10)-(24,0)]",
+                        "#/web-api/end-points/%2FendPoint/get/200": "[(22,8)-(25,35)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:returns": "[(21,6)-(25,35)]",
+                    "#/web-api/end-points/%2FendPoint/get": "[(20,4)-(25,35)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#/web-api/end-points/%2FendPoint": "[(19,2)-(25,35)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#/web-api": "OAS 2.0"
+          },
+          "lexical": {
+            "apiContract:endpoint": "[(18,6)-(25,35)]",
+            "core:name": "[(3,2)-(4,0)]",
+            "#/web-api": "[(1,0)-(25,35)]",
+            "core:version": "[(4,2)-(6,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declarations/types/E",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declarations/types/D/property/c",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#c"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declarations/types/C",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:property": [
+                  {
+                    "@id": "#/declarations/types/C/property/d",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#d"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#/declarations/types/C/property/d/scalar/d",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "d"
+                          }
+                        ],
+                        "smaps": {
+                          "type-property-lexical-info": {
+                            "#/declarations/types/C/property/d/scalar/d": "[(12,8)-(12,12)]"
+                          },
+                          "lexical": {
+                            "shacl:datatype": "[(12,8)-(13,0)]",
+                            "#/declarations/types/C/property/d/scalar/d": "[(11,6)-(13,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "d"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#/declarations/types/C/property/d": "[(11,6)-(13,0)]"
+                      }
+                    }
+                  }
+                ],
+                "doc:recursive": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "C"
+                  }
+                ],
+                "smaps": {
+                  "declared-element": {
+                    "#/declarations/types/C": ""
+                  },
+                  "lexical": {
+                    "shacl:name": "[(9,2)-(9,3)]",
+                    "#/declarations/types/C": "[(9,2)-(13,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "c"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#/declarations/types/D/property/c": "[(16,6)-(18,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "E"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#/declarations/types/E": ""
+          },
+          "lexical": {
+            "#/declarations/types/E": "[(13,2)-(18,0)]"
+          },
+          "type-property-lexical-info": {
+            "#/declarations/types/E": "[(14,4)-(14,8)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]
