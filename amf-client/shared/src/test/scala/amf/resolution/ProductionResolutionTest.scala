@@ -22,21 +22,6 @@ abstract class RamlResolutionTest extends ResolutionTest {
   }
 }
 
-abstract class OasResolutionTest extends ResolutionTest {
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    val res = config.target match {
-      case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler)
-      case Raml | Raml10 => Raml10Plugin.resolve(unit, UnhandledErrorHandler)
-      case Oas30         => Oas30Plugin.resolve(unit, UnhandledErrorHandler)
-      case Oas | Oas20   => Oas20Plugin.resolve(unit, UnhandledErrorHandler)
-      case Amf           => Oas20Plugin.resolve(unit, UnhandledErrorHandler)
-      case target        => throw new Exception(s"Cannot resolve $target")
-      //    case _ => unit
-    }
-    res
-  }
-}
-
 class ProductionValidationTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   override def build(config: CycleConfig,
@@ -283,9 +268,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 }
 
-class OASProductionResolutionTest extends OasResolutionTest {
+class OASProductionResolutionTest extends ResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
+
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+    if (config.target.equals(Amf) && config.transformWith.isEmpty) Oas20Plugin.resolve(unit, UnhandledErrorHandler)
+    else super.transform(unit, config)
+  }
 
   test("OAS Response parameters resolution") {
     cycle("oas_response_declaration.yaml",
@@ -324,8 +314,9 @@ class OASProductionResolutionTest extends OasResolutionTest {
       "description-applied-to-operations.json",
       "description-applied-to-operations-resolution.jsonld",
       OasJsonHint,
-      Oas30,
-      completeCyclePath + "oas3/summary-description-in-path/"
+      Amf,
+      completeCyclePath + "oas3/summary-description-in-path/",
+      transformWith = Some(Oas30)
     )
   }
 }

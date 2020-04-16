@@ -195,6 +195,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
   test("Test complex trait with infered type") {
     cycle("trait-infered-case.raml", "trait-infered-case.raml.raml", RamlYamlHint, Raml, basePath)
   }
+
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     val target = config.target
     new AMFRenderer(unit, target, RenderOptions().withSourceMaps.withPrettyPrint, config.syntax).renderToString
