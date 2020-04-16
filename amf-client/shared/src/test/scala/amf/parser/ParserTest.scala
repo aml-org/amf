@@ -10,7 +10,7 @@ import org.scalatest.Matchers._
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.language.postfixOps
 
 class ParserTest extends FunSuite {
@@ -130,27 +130,22 @@ class ParserTest extends FunSuite {
     include(content.entries(3))
 
     class TestValidator extends SHACLValidator {
-      override def validate(data: String,
-                            dataMediaType: String,
-                            shapes: String,
-                            shapesMediaType: String): Future[String] = throw new Exception("Validation not supported")
+      override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
+          implicit executionContext: ExecutionContext): Future[String] =
+        throw new Exception("Validation not supported")
 
-      override def report(data: String,
-                          dataMediaType: String,
-                          shapes: String,
-                          shapesMediaType: String): Future[ValidationReport] =
+      override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
+          implicit executionContext: ExecutionContext): Future[ValidationReport] =
         throw new Exception("Validation not supported")
 
       override def registerLibrary(url: String, code: String): Unit = throw new Exception("Validation not supported")
 
-      override def validate(data: BaseUnit,
-                            shapes: Seq[ValidationSpecification],
-                            options: ValidationOptions): Future[String] =
+      override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
+          implicit executionContext: ExecutionContext): Future[String] =
         throw new Exception("Validation not supported")
 
-      override def report(data: BaseUnit,
-                          shapes: Seq[ValidationSpecification],
-                          options: ValidationOptions): Future[ValidationReport] =
+      override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
+          implicit executionContext: ExecutionContext): Future[ValidationReport] =
         throw new Exception("Validation not supported")
 
       override def emptyRdfModel(): RdfModel = throw new Exception("Validation not supported")

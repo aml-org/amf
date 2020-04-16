@@ -15,4 +15,6 @@ trait ExemplifiedDomainElement extends DomainElement {
     add(Examples, example)
     example
   }
+
+  def removeExamples(): Unit = fields.removeField(Examples)
 }

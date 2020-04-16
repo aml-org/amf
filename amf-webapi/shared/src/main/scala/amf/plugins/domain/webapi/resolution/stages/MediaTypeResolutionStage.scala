@@ -24,14 +24,14 @@ class MediaTypeResolutionStage(profile: ProfileName,
   override def resolve[T <: BaseUnit](model: T): T = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        resolvePayloads(doc.encodes.asInstanceOf[WebApi])
+        propagatePayloads(doc.encodes.asInstanceOf[WebApi])
         resolveMediaTypes(doc.encodes.asInstanceOf[WebApi])
       case _ =>
     }
     model.asInstanceOf[T]
   }
 
-  def resolvePayloads(api: WebApi): Unit = {
+  def propagatePayloads(api: WebApi): Unit = {
     api.endPoints.foreach { endpoint =>
       val payloads = endpoint.payloads
       endpoint.fields.removeField(EndPointModel.Payloads)
@@ -50,17 +50,17 @@ class MediaTypeResolutionStage(profile: ProfileName,
   }
 
   def resolveMediaTypes(api: WebApi): Unit = {
-    val rootAccepts     = field(api, WebApiModel.Accepts)
-    val rootContentType = field(api, WebApiModel.ContentType)
+    val rootAccepts     = getAndRemove(api, WebApiModel.Accepts, keepMediaTypesInModel)
+    val rootContentType = getAndRemove(api, WebApiModel.ContentType, keepMediaTypesInModel)
 
     api.endPoints.foreach { endPoint =>
       endPoint.operations.foreach { operation =>
         // I need to know if this is an empty array or if it's not defined.
-        val opAccepts     = field(operation, OperationModel.Accepts)
-        val opContentType = field(operation, OperationModel.ContentType)
+        val opAccepts     = getAndRemove(operation, OperationModel.Accepts, keepMediaTypesInModel)
+        val opContentType = getAndRemove(operation, OperationModel.ContentType, keepMediaTypesInModel)
 
-        val accepts     = merge(rootAccepts, opAccepts)
-        val contentType = merge(rootContentType, opContentType)
+        val accepts     = overrideWith(rootAccepts, opAccepts)
+        val contentType = overrideWith(rootContentType, opContentType)
 
         Option(operation.request).foreach { request =>
           // Use accepts field.
@@ -86,10 +86,11 @@ class MediaTypeResolutionStage(profile: ProfileName,
     }
   }
 
-  /** Get and remove field from domain element */
-  private def field(element: DomainElement, field: Field) = {
+  private def keepMediaTypesInModel = () => !isValidation && !keepEditingInfo
+
+  private def getAndRemove(element: DomainElement, field: Field, removeCondition: () => Boolean) = {
     val result = element.fields.entry(field).map(_.array.values.map(v => v.asInstanceOf[AmfScalar].toString))
-    if (!isValidation && !keepEditingInfo) element.fields.removeField(field)
+    if (removeCondition()) element.fields.removeField(field)
     result
   }
 
@@ -128,8 +129,8 @@ class MediaTypeResolutionStage(profile: ProfileName,
   private def replaceTrackedAnnotation(payload: Payload, newPayloadId: String): Shape =
     ExampleTracking.replaceTracking(payload.schema, newPayloadId, payload.id)
 
-  def merge(root: Option[Seq[String]], op: Option[Seq[String]]): Option[Seq[String]] =
-    op.orElse(root).filter(_.nonEmpty)
+  def overrideWith(root: Option[Seq[String]], overrider: Option[Seq[String]]): Option[Seq[String]] =
+    overrider.orElse(root).filter(_.nonEmpty)
 
   /** Oas 2.0 violation in which all file parameters must comply with specific consumes property */
   private def validateFilePayloads(request: Request): Unit = {

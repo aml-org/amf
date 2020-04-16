@@ -1,5 +1,7 @@
 package amf.plugins.domain.shapes.models
 
+import amf.core.metamodel.Field
+import amf.core.metamodel.domain.ModelDoc
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields, UnresolvedReference}
 import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
@@ -33,7 +35,14 @@ case class UnresolvedShape(override val fields: Fields,
   /** Resolve [[UnresolvedShape]] as link to specified target. */
   def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name.value())
 
-  override val meta: AnyShapeModel = AnyShapeModel
+  override val meta: AnyShapeModel = new AnyShapeModel {
+    override def fields: List[Field] = AnyShapeModel.fields
+    override val doc: ModelDoc       = AnyShapeModel.doc
+
+    override def modelInstance: UnresolvedShape = UnresolvedShape(Fields(), Annotations(), reference = reference)
+  }
+
+  override def ramlSyntaxKey: String = "unresolvedShape"
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/unresolved"

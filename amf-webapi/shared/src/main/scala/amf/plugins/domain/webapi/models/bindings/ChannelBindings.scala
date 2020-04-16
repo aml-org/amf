@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models.bindings
 
-import amf.core.metamodel.Field
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.bindings.ChannelBindingsModel
@@ -13,7 +13,7 @@ case class ChannelBindings(fields: Fields, annotations: Annotations) extends Nam
   def bindings: Seq[ChannelBinding]                          = fields.field(Bindings)
   def withBindings(bindings: Seq[ChannelBinding]): this.type = setArray(Bindings, bindings)
 
-  override def meta: ChannelBindingsModel.type = ChannelBindingsModel
+  override def meta: Obj = ChannelBindingsModel
 
   override protected def nameField: Field = Name
 

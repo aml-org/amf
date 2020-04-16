@@ -1,9 +1,11 @@
 package amf.facades
 
+import amf.client.execution.BaseExecutionEnvironment
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
+import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.internal.environment.Environment
@@ -21,12 +23,11 @@ import amf.validation.DialectValidations
 import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
 import amf.{MessageStyle, ProfileName, RAMLStyle, RamlProfile}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class Validation(platform: Platform) {
 
-  def init(): Future[Unit] = {
+  def init()(implicit executionContext: ExecutionContext): Future[Unit] = {
     platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
     platform.registerValidations(DialectValidations.validations, DialectValidations.levels)
     platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
@@ -89,9 +90,10 @@ class Validation(platform: Platform) {
                profileName: ProfileName,
                messageStyle: MessageStyle = RAMLStyle,
                env: Environment = Environment(),
-               resolved: Boolean = false): Future[AMFValidationReport] = {
+               resolved: Boolean = false,
+               exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
 
-    validator.validate(model, profileName, messageStyle, env, resolved)
+    validator.validate(model, profileName, messageStyle, env, resolved, exec)
   }
 
   def computeValidations(profileName: ProfileName): EffectiveValidations = validator.computeValidations(profileName)
@@ -100,9 +102,11 @@ class Validation(platform: Platform) {
     validator.shapesGraph(validations, profileName)
 }
 
-object Validation {
-  def apply(platform: Platform): Future[Validation] = {
-    val validation = new Validation(platform)
+object Validation extends PlatformSecrets {
+  def apply(platform: Platform,
+            exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[Validation] = {
+    implicit val executionContext: ExecutionContext = exec.executionContext
+    val validation                                  = new Validation(platform)
     validation.init().map(_ => validation)
   }
 }

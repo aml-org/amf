@@ -353,6 +353,9 @@ Model defining the information for a HTTP callback/ webhook
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
  | binding | [[ChannelBinding](#channelbinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
+ | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
+ | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
+ | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## ClassTerm
@@ -1000,6 +1003,9 @@ Data shape containing nested multi-dimensional collection shapes
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
  | binding | [[MessageBinding](#messagebinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
+ | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
+ | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
+ | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## Module
@@ -1256,6 +1262,7 @@ Action that can be executed using a particular HTTP invocation
  | server | [[Server](#server)] | Information about the network accessible locations where the API is available | http://a.ml/vocabularies/apiContract#server |
  | binding | [OperationBindings](#operationbindings) |  | http://a.ml/vocabularies/apiBinding#binding |
  | isAbstract | boolean | Defines a model as abstract | http://a.ml/vocabularies/apiContract#isAbstract |
+ | operationId | string | Identifier of the target operation | http://a.ml/vocabularies/apiContract#operationId |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1276,6 +1283,9 @@ Action that can be executed using a particular HTTP invocation
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
  | binding | [[OperationBinding](#operationbinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
+ | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
+ | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
+ | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## Organization
@@ -1749,6 +1759,9 @@ Information about the network accessible locations where the API is available
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
  | binding | [[ServerBinding](#serverbinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
+ | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
+ | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
+ | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## Settings

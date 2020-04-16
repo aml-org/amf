@@ -1,0 +1,79 @@
+[
+  {
+    "@id": "testId",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "testId/message",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#Response",
+          "http://a.ml/vocabularies/apiContract#Message",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "message"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#payload": [
+          {
+            "@id": "target/message/default",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#Payload",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/apiBinding#binding": [
+          {
+            "@id": "target/message/message-bindings",
+            "@type": [
+              "http://a.ml/vocabularies/apiBinding#MessageBindings",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiBinding#binding": [
+              {
+                "@id": "target/message/message-bindings/kafka-message",
+                "@type": [
+                  "http://a.ml/vocabularies/apiBinding#KafkaMessageBinding",
+                  "http://a.ml/vocabularies/apiBinding#MessageBinding",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiBinding#messageKey": [
+                  {
+                    "@value": "traitKey"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+                  {
+                    "@value": "latest"
+                  }
+                ],
+                "http://a.ml/vocabularies/apiBinding#type": [
+                  {
+                    "@value": "kafka"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": false
+      }
+    ]
+  }
+]

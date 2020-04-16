@@ -1,6 +1,5 @@
 package amf.cycle
 import amf.client.parse.DefaultParserErrorHandler
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{AmfJsonHint, Hint}
 import amf.io.BuildCycleTests

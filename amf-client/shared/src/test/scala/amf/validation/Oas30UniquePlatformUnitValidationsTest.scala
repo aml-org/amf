@@ -73,4 +73,12 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Invalid ref with missing slash") {
     validate("invalid-ref-missing-slash.json", Some("invalid-ref-missing-slash.report"), Oas30Profile)
   }
+
+  test("Nested callback external refs") {
+    validate("nested-libraries/nested-callbacks/api.json", None, Oas30Profile)
+  }
+
+  test("Nested request external refs") {
+    validate("nested-libraries/nested-requests/api.json", None, Oas30Profile)
+  }
 }

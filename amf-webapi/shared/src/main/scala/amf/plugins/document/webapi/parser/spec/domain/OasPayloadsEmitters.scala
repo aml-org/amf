@@ -2,13 +2,19 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{SpecOrdering, EntryEmitter, PartEmitter}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.annotations.ParameterNameForPayload
-import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext, Oas2SpecEmitterFactory}
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasSchemaEmitter}
+import amf.plugins.document.webapi.contexts.emitter.oas.{
+  Oas2SpecEmitterFactory,
+  Oas3SpecEmitterFactory,
+  OasSpecEmitterContext
+}
+import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -31,8 +37,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
             .map(f => result += OasResponseExamplesEmitter("examples", f, ordering))
 
           fs.entry(PayloadModel.Encoding)
-            .map(f =>
-              result += OasEncodingsEmitter("encoding", f, ordering, references))
+            .map(f => result += OasEncodingsEmitter("encoding", f, ordering, references))
         }
 
         // OAS 2.0
@@ -51,7 +56,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
 
         fs.entry(PayloadModel.Schema).map { f =>
           if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
-            result += OasSchemaEmitter(f, ordering, references)
+            result += oas.OasSchemaEmitter(f, ordering, references)
           }
         }
 

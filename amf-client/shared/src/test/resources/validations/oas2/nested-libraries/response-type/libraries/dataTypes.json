@@ -1,0 +1,16 @@
+{
+  "definitions": {
+    "Error": {
+      "required": [
+        "code"
+      ],
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Error code"
+        }
+      }
+    }
+  }
+}

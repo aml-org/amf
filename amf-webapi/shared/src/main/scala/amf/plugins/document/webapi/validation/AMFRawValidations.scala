@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.validation
 import amf._
 import amf.core.remote._
 import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.document.webapi.validation.AMFRawValidations.Oas30Validations.urlValidation
 
 object AMFRawValidations {
 
@@ -1710,6 +1711,151 @@ object AMFRawValidations {
       AMFValidation(
         AsyncApi20.name,
         "Domain",
+        "apiContract:WebAPI",
+        "core:version",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "API version is mandatory",
+        "Info object 'version' is mandatory",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "core:CreativeWork",
+        "core:url",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "Documentation 'url' field is mandatory",
+        "Documentation 'url' field is mandatory",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "core:License",
+        "core:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "License 'name' is mandatory",
+        "License 'name' is mandatory",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiContract:Parameter",
+        "core:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        """^[A-Za-z0-9_\-]+$""".stripMargin,
+        """Parameter name must comply with regex '^[A-Za-z0-9_\-]+$'""",
+        """Parameter name must comply with regex '^[A-Za-z0-9_\-]+$'""",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiContract:Server",
+        "core:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        """^[A-Za-z0-9_\-]+$""".stripMargin,
+        """Server name must comply with regex '^[A-Za-z0-9_\-]+$'""",
+        """Server name must comply with regex '^[A-Za-z0-9_\-]+$'""",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiContract:Server",
+        "apiContract:protocol",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "Server 'protocol' field is mandatory",
+        "Server 'protocol' field is mandatory",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "security:HttpApiKeySettings",
+        "core:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "'name' field is mandatory in httpApiKey security scheme",
+        "'name' field is mandatory in httpApiKey security scheme",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "core:CorrelationId",
+        "core:location",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "'location' field is mandatory in CorrelationId",
+        "'location' field is mandatory in CorrelationId",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "security:HttpApiKeySettings",
+        "security:in",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "'in' field is mandatory in ApiKey scheme",
+        "'in' field is mandatory in ApiKey scheme",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "security:ApiKeySettings",
+        "security:in",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "'in' field is mandatory in HttpApiKey scheme",
+        "'in' field is mandatory in HttpApiKey scheme",
+        "Violation"
+      ),
+      urlValidation(AsyncApi20.name, "core:Organization", "core:url"),
+      urlValidation(AsyncApi20.name, "core:License", "core:url"),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "security:HttpSettings",
+        "security:scheme",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "'scheme' field is mandatory in http security scheme",
+        "'scheme' field is mandatory in http security scheme",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
         "apiBinding:WebSocketsChannelBinding",
         "apiBinding:method",
         "PropertyShape",
@@ -1727,8 +1873,8 @@ object AMFRawValidations {
         "apiBinding:qos",
         "PropertyShape",
         "sh:path",
-        "sh:in",
-        "0,1,2",
+        "sh:pattern",
+        "0|1|2",
         "",
         "'qos' for mqtt operation binding object must be one of 0, 1 or 2",
         "Violation"
@@ -1776,13 +1922,78 @@ object AMFRawValidations {
         AsyncApi20.name,
         "Domain",
         "apiBinding:HttpOperationBinding",
-        "apiBinding:type",
+        "apiBinding:operationType",
         "PropertyShape",
         "sh:path",
         "sh:minCount",
         "1",
         "",
         "'type' for http operation binding is required",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:Amqp091ChannelExchange",
+        "apiBinding:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:maxLength",
+        "255",
+        "",
+        "'type' for http operation binding is required",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:Amqp091ChannelExchange",
+        "core:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:maxLength",
+        "255",
+        "",
+        "Amqp channel binding name can't be longer than 255 characters",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:Amqp091ChannelQueue",
+        "core:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:maxLength",
+        "255",
+        "",
+        "Amqp channel binding name can't be longer than 255 characters",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:HttpOperationBinding",
+        "apiBinding:operationType",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        """^(request|response)$""".stripMargin,
+        "",
+        "Http operation binding must be either 'request' or 'response'",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:Amqp091ChannelExchange",
+        "apiBinding:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        """^(request|response)$""".stripMargin,
+        "",
+        "Http operation binding must be either 'request' or 'response'",
         "Violation"
       ),
       AMFValidation(
@@ -1805,8 +2016,8 @@ object AMFRawValidations {
         "apiBinding:qos",
         "PropertyShape",
         "sh:path",
-        "sh:in",
-        "0,1,2",
+        "sh:pattern",
+        "0|1|2",
         "",
         "'qos' for mqtt server binding last will object must be one of 0, 1 or 2",
         "Violation"
@@ -1818,10 +2029,23 @@ object AMFRawValidations {
         "apiBinding:deliveryMode",
         "PropertyShape",
         "sh:path",
-        "sh:in",
-        "1,2",
+        "sh:pattern",
+        "1|2",
         "",
         "'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:MqttServerLastWill",
+        "apiBinding:qos",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        "0|1|2",
+        "",
+        "'qos' for mqtt server last will binding object must be one 0, 1 or 2",
         "Violation"
       ),
       AMFValidation(
@@ -1836,9 +2060,35 @@ object AMFRawValidations {
         "",
         "'expiration' must be greater than 0",
         "Violation"
-      )
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "security:SecurityScheme",
+        "security:settings",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:requiredFlowsInOAuth2",
+        "0",
+        "'flows' field is mandatory in OAuth2 security scheme",
+        "'flows' field is mandatory in OAuth2 security scheme",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "security:SecurityScheme",
+        "security:settings",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:requiredOpenIdConnectUrl",
+        "0",
+        "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",
+        "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",
+        "Violation"
+      ),
     )
-
+    
     override def validations(): Seq[AMFValidation] = result
   }
 

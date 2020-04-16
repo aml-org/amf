@@ -32,9 +32,9 @@ case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String,
             }
           }
           .getOrElse {
-            ctx.obtainRemoteYNode(fullRef) match {
-              case Some(callbackNode) =>
-                Oas30CallbackParser(callbackNode.as[YMap], adopt, name, rootEntry).parse()
+            ctx.navigateToRemoteYNode(fullRef) match {
+              case Some(navigation) =>
+                Oas30CallbackParser(navigation.remoteNode.as[YMap], adopt, name, rootEntry)(navigation.context).parse()
               case None =>
                 ctx.eh.violation(CoreValidations.UnresolvedReference,
                                  "",

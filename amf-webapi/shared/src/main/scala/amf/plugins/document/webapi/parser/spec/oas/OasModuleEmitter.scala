@@ -13,7 +13,10 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{JsonSchemaEmitterContex
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
+import amf.plugins.document.webapi.parser.spec.oas.emitters.OasSecuritySchemeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
@@ -90,7 +93,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     override val header: OasHeaderEmitter = OasHeaderEmitter(OasHeader.Oas20DataType)
 
     val emitters: Seq[EntryEmitter] =
-      OasTypeEmitter(dataType.encodes, ordering, references = dataType.references).entries()
+      oas.OasTypeEmitter(dataType.encodes, ordering, references = dataType.references).entries()
   }
 
   case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclarationFragment, ordering: SpecOrdering)
@@ -140,7 +143,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     val emitters: Seq[EntryEmitter] =
       new OasSecuritySchemeEmitter(
         securityScheme.encodes,
-        OasSecuritySchemeTypeMapping.mapsTo(spec.vendor, securityScheme.encodes.`type`.value()),
+        OasLikeSecuritySchemeTypeMappings.mapsTo(spec.vendor, securityScheme.encodes.`type`.value()),
         ordering).emitters()
   }
 

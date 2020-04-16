@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models.bindings
 
-import amf.core.metamodel.Field
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.bindings.OperationBindingsModel
@@ -13,7 +13,7 @@ case class OperationBindings(fields: Fields, annotations: Annotations) extends N
   def bindings: Seq[OperationBinding]                          = fields.field(Bindings)
   def withBindings(bindings: Seq[OperationBinding]): this.type = setArray(Bindings, bindings)
 
-  override def meta: OperationBindingsModel.type = OperationBindingsModel
+  override def meta: Obj = OperationBindingsModel
 
   override protected def nameField: Field = Name
 

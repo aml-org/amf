@@ -35,8 +35,7 @@ import amf.plugins.domain.webapi.metamodel.templates.{
   TraitModel
 }
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object WebAPIDomainPlugin extends AMFDomainPlugin {
 
@@ -106,5 +105,5 @@ object WebAPIDomainPlugin extends AMFDomainPlugin {
     "invalid-binding"                        -> InvalidBinding
   )
 
-  override def init(): Future[AMFPlugin] = Future { this }
+  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future { this }
 }

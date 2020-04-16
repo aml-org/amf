@@ -1,17 +1,9 @@
 Model: file://amf-client/shared/src/test/resources/validations/ymap-exception/api.yaml
 Profile: OAS 2.0
 Conforms? false
-Number of results: 3
+Number of results: 2
 
 Level: Violation
-
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
-  Message: Syntax error : Unexpected ''
-  Level: Violation
-  Target: 
-  Property: 
-  Position: None
-  Location: file://amf-client/shared/src/test/resources/validations/ymap-exception/parameters.yaml
 
 - Source: http://a.ml/vocabularies/amf/core#syaml-error
   Message: YAML map expected

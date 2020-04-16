@@ -1,22 +1,23 @@
 package amf.plugins.features.validation
 
 import amf.AmfProfile
+import amf.client.execution.BaseExecutionEnvironment
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfModel, RdfModelEmitter}
 import amf.core.services.ValidationOptions
+import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{Future, Promise}
+import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
 @JSExportTopLevel("SHACLValidator")
-class SHACLValidator extends amf.core.validation.core.SHACLValidator {
+class SHACLValidator extends amf.core.validation.core.SHACLValidator with PlatformSecrets {
 
   var functionUrl: Option[String]  = None
   var functionCode: Option[String] = None
@@ -37,13 +38,17 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     * @return
     */
   @JSExport("validate")
-  def validateJS(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): js.Promise[String] =
+  def validateJS(data: String,
+                 dataMediaType: String,
+                 shapes: String,
+                 shapesMediaType: String,
+                 exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): js.Promise[String] = {
+    implicit val executionContext: ExecutionContext = exec.executionContext
     validate(data, dataMediaType, shapes, shapesMediaType).toJSPromise
+  }
 
-  override def report(data: String,
-                      dataMediaType: String,
-                      shapes: String,
-                      shapesMediaType: String): Future[ValidationReport] = {
+  override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
+      implicit executionContext: ExecutionContext): Future[ValidationReport] = {
     val promise   = Promise[ValidationReport]()
     val validator = js.Dynamic.newInstance(nativeShacl)()
     loadLibrary(validator)
@@ -75,8 +80,11 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
   def reportJS(data: String,
                dataMediaType: String,
                shapes: String,
-               shapesMediaType: String): js.Promise[ValidationReport] =
+               shapesMediaType: String,
+               exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): js.Promise[ValidationReport] = {
+    implicit val executionContext: ExecutionContext = exec.executionContext
     report(data, dataMediaType, shapes, shapesMediaType).toJSPromise
+  }
 
   /**
     * Registers a library in the validator
@@ -90,7 +98,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     this.functionCode = Some(code)
   }
 
-  override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String] = {
+  override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
+      implicit executionContext: ExecutionContext): Future[String] = {
     val promise   = Promise[String]()
     val validator = js.Dynamic.newInstance(nativeShacl)()
     loadLibrary(validator)
@@ -115,9 +124,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     }
   }
 
-  override def validate(data: BaseUnit,
-                        shapes: Seq[ValidationSpecification],
-                        options: ValidationOptions): Future[String] = {
+  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
+      implicit executionContext: ExecutionContext): Future[String] = {
     val promise = Promise[String]()
     try {
       ExecutionLog.log("SHACLValidator#validate: Creating SHACL-JS instance and loading JS libraries")
@@ -149,9 +157,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     }
   }
 
-  override def report(data: BaseUnit,
-                      shapes: Seq[ValidationSpecification],
-                      options: ValidationOptions): Future[ValidationReport] = {
+  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
+      implicit executionContext: ExecutionContext): Future[ValidationReport] = {
     val promise = Promise[ValidationReport]()
     try {
       ExecutionLog.log("SHACLValidator#validate: Creating SHACL-JS instance and loading JS libraries")

@@ -5,20 +5,18 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Raml10
 import amf.plugins.document.webapi.Raml10Plugin
 
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.annotation.JSExportTopLevel
 
 /**
-  * Raml parser.
+  * Raml 1.0 parser.
   */
-@JSExportAll
-class Raml10Parser private (private val env: Option[Environment] = None)
+class Raml10Parser private (private val env: Option[Environment])
     extends Parser(Raml10.name, "application/yaml", env) {
 
   @JSExportTopLevel("Raml10Parser")
   def this() = this(None)
-
   @JSExportTopLevel("Raml10Parser")
-  def this(env: Environment) = this(Some(env))
+  def this(environment: Environment) = this(Some(environment))
 
   AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
 }

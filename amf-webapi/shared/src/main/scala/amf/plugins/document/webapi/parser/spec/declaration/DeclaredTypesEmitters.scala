@@ -8,8 +8,15 @@ import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.{CompactJsonSchemaEmitterContext, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasNamedTypeEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
+  RamlNamedTypeEmitter,
+  RamlRecursiveShapeTypeEmitter
+}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.EntryBuilder
@@ -42,18 +49,27 @@ case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
 }
 
 case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
-    implicit spec: OasSpecEmitterContext)
+    implicit spec: OasLikeSpecEmitterContext)
     extends DeclaredTypesEmitters(types, references, ordering) {
   override def emitTypes(b: EntryBuilder): Unit = {
-    val isOas3 = spec.vendor == Vendor.OAS30
+    val definedInComponents = spec.vendor == Vendor.OAS30 || spec.vendor == Vendor.ASYNC20
     b.entry(
-      if (isOas3) "schemas" else "definitions",
+      if (definedInComponents) "schemas" else "definitions",
       _.obj(
-        traverse(
-          ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq("definitions")))),
-          _))
+        traverse(ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq("definitions")))),
+                 _))
     )
   }
+}
+
+object AsyncDeclaredTypesEmitters {
+
+  def obtainEmitter(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
+      implicit spec: OasLikeSpecEmitterContext): EntryEmitter = {
+    val newCtx = new Async20SpecEmitterContext(spec.eh, schemaVersion = JSONSchemaDraft7SchemaVersion)
+    OasDeclaredTypesEmitters(types, references, ordering)(newCtx)
+  }
+
 }
 
 case class CompactJsonSchemaTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
@@ -73,7 +89,8 @@ case class CompactJsonSchemaTypesEmitters(types: Seq[Shape], references: Seq[Bas
                               ordering,
                               references,
                               pointer = Seq("definitions"),
-                              Some(labeledShape.label)).emit(entryBuilder)
+                              Some(labeledShape.label))
+            .emit(entryBuilder)
         }
       }
     )

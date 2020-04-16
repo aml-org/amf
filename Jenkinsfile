@@ -11,6 +11,8 @@ pipeline {
   environment {
     NEXUS = credentials('exchange-nexus')
     NEXUSIQ = credentials('nexus-iq')
+    GITHUB_ORG = 'mulesoft'
+    GITHUB_REPO = 'amf'
   }
   stages {
     stage('Test') {
@@ -63,10 +65,40 @@ pipeline {
           script {
             try{
               if (failedStage.isEmpty()) {
-                sh 'sbt publish'
+              sh '''
+                  echo "about to publish in sbt"
+                  sbt publish
+                  echo "sbt publishing successful"
+              '''
               }
             } catch(ignored) {
               failedStage = failedStage + " PUBLISH "
+              unstable "Failed publication"
+            }
+          }
+        }
+      }
+    }
+    stage('Tag version') {
+      when {
+        branch 'master'
+      }
+      steps {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-exchange', passwordVariable: 'GITHUB_PASS', usernameVariable: 'GITHUB_USER']]) {
+          script {
+            try{
+              if (failedStage.isEmpty()) {
+                sh '''#!/bin/bash
+                      echo "about to tag the commit with the new version:"
+                      version=$(sbt version | tail -n 1 | grep -o '[0-9].[0-9].[0-9].*')
+                      url="https://${GITHUB_USER}:${GITHUB_PASS}@github.com/${GITHUB_ORG}/${GITHUB_REPO}"
+                      git tag $version
+                      git push $url $version
+                      echo "tagging successful"
+                '''
+              }
+            } catch(ignored) {
+              failedStage = failedStage + " TAGGING "
               unstable "Failed publication"
             }
           }

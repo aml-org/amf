@@ -20,7 +20,17 @@ import amf.plugins.document.webapi.contexts.{RefEmitter, SpecEmitterContext, Spe
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
+  Raml08TypePartEmitter,
+  Raml10TypePartEmitter,
+  RamlTypePartEmitter
+}
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.parser.spec.raml.emitters.{
+  Raml08NamedSecuritySchemeEmitter,
+  Raml10NamedSecuritySchemeEmitter,
+  RamlNamedSecuritySchemeEmitter
+}
 import amf.plugins.document.webapi.parser.spec.raml.{
   Raml08RootLevelEmitters,
   Raml10RootLevelEmitters,

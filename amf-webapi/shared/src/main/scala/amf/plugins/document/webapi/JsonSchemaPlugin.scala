@@ -36,9 +36,9 @@ import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model._
-import org.yaml.parser.JsonParser
+import org.yaml.parser.{JsonParser, YParser, YamlParser}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   override val vendors: Seq[String] = Seq(JsonSchema.name)
@@ -104,18 +104,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   private def getYNode(inputFragment: Fragment, ctx: WebApiContext): YNode = {
     inputFragment match {
-      case fragment: ExternalFragment =>
-        fragment.encodes.parsed.getOrElse(
-          JsonParser
-            .withSource(fragment.encodes.raw.value(), fragment.location().getOrElse(""))(ctx.eh)
-            .document()
-            .node)
-
-      case fragment: RecursiveUnit if fragment.raw.isDefined =>
-        JsonParser
-          .withSource(fragment.raw.get, fragment.location().getOrElse(""))(ctx.eh)
-          .document()
-          .node
+      case fragment: ExternalFragment                        => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, ctx.eh))
+      case fragment: RecursiveUnit if fragment.raw.isDefined => parsedFragment(inputFragment, ctx.eh)
       case _ =>
         ctx.eh.violation(UnableToParseJsonSchema,
                          inputFragment,
@@ -124,6 +114,9 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
         YNode(YMap(IndexedSeq(), ""))
     }
   }
+
+  private def parsedFragment(inputFragment: Fragment, eh: ParseErrorHandler) =
+    JsonSchemaParser(inputFragment)(eh).document().node
 
   private def getRoot(inputFragment: Fragment, pointer: Option[String], encoded: YNode): Root = {
     Root(
@@ -143,7 +136,6 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     val cleanNested =
       ParserContext(url, document.references, EmptyFutureDeclarations(), parentContext.eh)
     cleanNested.globalSpace = parentContext.globalSpace
-    cleanNested.reportDisambiguation = parentContext.reportDisambiguation
 
     // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
     val inheritedDeclarations =
@@ -276,12 +268,28 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   override def dependencies(): Seq[AMFPlugin] = Nil
 
-  override def init(): Future[AMFPlugin] = Future.successful(this)
+  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
 
   /**
     * Does references in this type of documents be recursive?
     */
   override val allowRecursiveReferences: Boolean = true
+}
+
+object JsonSchemaParser {
+  def apply(fragment: Fragment)(implicit errorHandler: ParseErrorHandler): YParser = {
+    val location = fragment.location().getOrElse("")
+    if (isYaml(location)) YamlParser(getRaw(fragment), location)
+    else JsonParser.withSource(getRaw(fragment), fragment.location().getOrElse(""))
+  }
+
+  private def isYaml(location: String) = location.endsWith(".yaml") || location.endsWith(".yml")
+
+  private def getRaw(inputFragment: Fragment): String = inputFragment match {
+    case fragment: ExternalFragment => fragment.encodes.raw.value()
+    case fragment: RecursiveUnit    => fragment.raw.get
+    case _                          => ""
+  }
 }
 
 object JsonSchemaPlugin extends JsonSchemaPlugin

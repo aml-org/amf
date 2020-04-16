@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models.bindings
 
-import amf.core.metamodel.Field
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.bindings.MessageBindingsModel
@@ -13,7 +13,7 @@ case class MessageBindings(fields: Fields, annotations: Annotations) extends Nam
   def bindings: Seq[MessageBinding]                          = fields.field(Bindings)
   def withBindings(bindings: Seq[MessageBinding]): this.type = setArray(Bindings, bindings)
 
-  override def meta: MessageBindingsModel.type = MessageBindingsModel
+  override def meta: Obj = MessageBindingsModel
 
   override protected def nameField: Field = Name
 

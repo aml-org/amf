@@ -41,7 +41,8 @@ class DialectSHACLTest extends FunSuiteCycleTests with PlatformSecrets {
                         target: Vendor = Amf,
                         directory: String = basePath,
                         syntax: Option[Syntax] = None,
-                        pipeline: Option[String] = None): Future[Assertion] = {
+                        pipeline: Option[String] = None,
+                        transformWith: Option[Vendor] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 

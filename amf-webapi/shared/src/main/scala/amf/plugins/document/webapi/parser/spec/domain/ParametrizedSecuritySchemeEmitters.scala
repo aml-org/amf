@@ -6,7 +6,7 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.{AmfElement, AmfScalar}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.RamlSecuritySettingsValuesEmitters
+import amf.plugins.document.webapi.parser.spec.raml.emitters.RamlSecuritySettingsValuesEmitters
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.security.{OAuth2Settings, OpenIdConnectSettings, ParametrizedSecurityScheme}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

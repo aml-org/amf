@@ -1,7 +1,7 @@
-asyncapi: '2.0.0'
+asyncapi: 2.0.0
 info:
   title: Security Schemes Example
-  version: '1.0.0'
+  version: 1.0.0
 channels: {}
 components:
   securitySchemes:
@@ -39,27 +39,27 @@ components:
           authorizationUrl: https://a.ml/
           refreshUrl: https://a.ml/
           scopes:
-            "write:pets": modify pets in your account
-            "read:pets": read your pets
+            write:pets: modify pets in your account
+            read:pets: read your pets
         password:
           tokenUrl: https://a.ml/
           refreshUrl: https://a.ml/
           scopes:
-            "write:pets": modify pets in your account
-            "read:pets": read your pets
+            write:pets: modify pets in your account
+            read:pets: read your pets
         clientCredentials:
           tokenUrl: https://a.ml/
           refreshUrl: https://a.ml/
           scopes:
-            "write:pets": modify pets in your account
-            "read:pets": read your pets
+            write:pets: modify pets in your account
+            read:pets: read your pets
         authorizationCode:
           authorizationUrl: https://a.ml/
           tokenUrl: https://a.ml/
           refreshUrl: https://a.ml/
           scopes:
-            "write:pets": modify pets in your account
-            "read:pets": read your pets
+            write:pets: modify pets in your account
+            read:pets: read your pets
     openIdConnect:
       type: openIdConnect
       description: openIdConnect security scheme
@@ -69,11 +69,20 @@ servers:
     url: https://google.com
     protocol: amqp
     security:
-      - userPassword: []
-      - apiKey: []
+      -
+        userPassword: []
+      -
+        apiKey: []
+      -
         httpApiKey: []
-      - X509: []
-      - symmetricEncryption: []
-      - http: []
-      - oauth2: ['write:pets']
-      - openIdConnect: []
+      -
+        X509: []
+      -
+        symmetricEncryption: []
+      -
+        http: []
+      -
+        oauth2:
+          - write:pets
+      -
+        openIdConnect: []

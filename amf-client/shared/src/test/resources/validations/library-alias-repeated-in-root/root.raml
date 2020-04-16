@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Promotions
+version: v1
+protocols: HTTPS
+mediaType: application/json
+
+uses:
+  SomeLibraryAlias: library-from-root.raml
+
+traits:
+  PromotionNotFound: !include external-trait.raml
+
+'/organizations/{organizationId}/promotions':
+  get:
+    is:
+      - PromotionNotFound:
+    responses:
+      '200':
+        description: Retrieved promotion information successfully.
+        body:
+          application/json:
+            type: object

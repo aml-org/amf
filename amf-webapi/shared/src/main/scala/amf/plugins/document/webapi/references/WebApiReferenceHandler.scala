@@ -17,8 +17,7 @@ import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 
 class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends ReferenceHandler {
@@ -34,7 +33,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   }
 
   /** Update parsed reference if needed. */
-  override def update(reference: ParsedReference, compilerContext: CompilerContext): Future[ParsedReference] =
+  override def update(reference: ParsedReference, compilerContext: CompilerContext)(
+      implicit executionContext: ExecutionContext): Future[ParsedReference] =
     vendor match {
       case Raml10.name | Raml08.name | Raml.name if reference.isExternalFragment =>
         handleRamlExternalFragment(reference, compilerContext)
@@ -177,8 +177,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def handleRamlExternalFragment(reference: ParsedReference,
-                                         compilerContext: CompilerContext): Future[ParsedReference] = {
+  private def handleRamlExternalFragment(reference: ParsedReference, compilerContext: CompilerContext)(
+      implicit executionContext: ExecutionContext): Future[ParsedReference] = {
     resolveUnitDocument(reference, compilerContext.parserContext) match {
       case Right(document) =>
         val parsed = SyamlParsedDocument(document)

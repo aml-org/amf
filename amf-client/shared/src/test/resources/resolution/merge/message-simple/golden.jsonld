@@ -1,0 +1,97 @@
+[
+  {
+    "@id": "testId",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "testId/message",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#Response",
+          "http://a.ml/vocabularies/apiContract#Message",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "message"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "traitDescription"
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#payload": [
+          {
+            "@id": "target/message/traitContentType",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#Payload",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#mediaType": [
+              {
+                "@value": "traitContentType"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#schemaMediaType": [
+              {
+                "@value": "baseSchemaFormat"
+              }
+            ],
+            "http://a.ml/vocabularies/shapes#schema": [
+              {
+                "@id": "target/message/default/scalar/schema",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "schema"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/core#displayName": [
+          {
+            "@value": "traitName"
+          }
+        ],
+        "http://a.ml/vocabularies/core#title": [
+          {
+            "@value": "traitTitle"
+          }
+        ],
+        "http://a.ml/vocabularies/core#summary": [
+          {
+            "@value": "baseSummary"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": false
+      }
+    ]
+  }
+]

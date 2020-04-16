@@ -16,7 +16,9 @@ import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.AsyncHeader
 import amf.plugins.document.webapi.parser.AsyncHeader.Async20Header
 import amf.plugins.document.webapi.parser.spec.AsyncWebApiDeclarations
-import amf.plugins.document.webapi.parser.spec.async.{AsyncApi20DocumentParser, AsyncApi20DocumentEmitter}
+import amf.plugins.document.webapi.parser.spec.async.{AsyncApi20DocumentEmitter, AsyncApi20DocumentParser}
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
+import amf.plugins.document.webapi.resolution.pipelines.{Async20EditingPipeline, Async20ResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
 import amf.{Async20Profile, AsyncProfile, ProfileName}
 import org.yaml.model.YDocument
@@ -116,14 +118,15 @@ object Async20Plugin extends AsyncPlugin {
     */
   override def resolve(unit: BaseUnit,
                        errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = null
-//  pipelineId match {
-//    case ResolutionPipeline.DEFAULT_PIPELINE       => new OasResolutionPipeline(errorHandler).resolve(unit)
-//    case ResolutionPipeline.EDITING_PIPELINE       => new OasEditingPipeline(errorHandler).resolve(unit)
-//    case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler, OasProfile).resolve(unit)
-//    case ResolutionPipeline.CACHE_PIPELINE         => new OasEditingPipeline(errorHandler, false).resolve(unit)
-//    case _                                         => super.resolve(unit, errorHandler, pipelineId)
-//  }
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
+    pipelineId match {
+      case ResolutionPipeline.DEFAULT_PIPELINE => new Async20ResolutionPipeline(errorHandler).resolve(unit)
+      case ResolutionPipeline.EDITING_PIPELINE => new Async20EditingPipeline(errorHandler).resolve(unit)
+      // case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler, OasProfile).resolve(unit)
+      case ResolutionPipeline.CACHE_PIPELINE => new Async20EditingPipeline(errorHandler, false).resolve(unit)
+      case _                                 => super.resolve(unit, errorHandler, pipelineId)
+    }
+  }
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],

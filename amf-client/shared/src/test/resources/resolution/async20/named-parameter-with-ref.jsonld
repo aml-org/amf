@@ -1,0 +1,218 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/web-api",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "components"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "1.0.0"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "smartylighting/streetlights/1/0/event/lighting/measured"
+              }
+            ],
+            "apiContract:parameter": [
+              {
+                "@id": "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId",
+                "@type": [
+                  "apiContract:Parameter",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "someId"
+                  }
+                ],
+                "core:description": [
+                  {
+                    "@value": "id of the user"
+                  }
+                ],
+                "apiContract:binding": [
+                  {
+                    "@value": "$message.payload#/user/id"
+                  }
+                ],
+                "raml-shapes:schema": [
+                  {
+                    "@id": "#/declarations/parameters/parameter/userId/scalar/schema",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "schema"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "#/declarations/parameters/parameter/userId/scalar/schema": "[(12,8)-(12,12)]"
+                      },
+                      "lexical": {
+                        "shacl:datatype": "[(12,8)-(15,0)]",
+                        "#/declarations/parameters/parameter/userId/scalar/schema": "[(11,6)-(15,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "resolved-link-target": {
+                    "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId": "file://amf-client/shared/src/test/resources/resolution/async20/named-parameter-with-ref.yaml#/declarations/parameters/parameter/userId"
+                  },
+                  "declared-element": {
+                    "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId": ""
+                  },
+                  "lexical": {
+                    "raml-shapes:schema": "[(11,6)-(15,0)]",
+                    "core:description": "[(9,6)-(10,0)]",
+                    "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId": "[(9,0)-(15,0)]",
+                    "apiContract:binding": "[(10,6)-(11,0)]"
+                  },
+                  "resolved-link": {
+                    "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId": "file://amf-client/shared/src/test/resources/resolution/async20/named-parameter-with-ref.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "apiContract:parameter": "[(17,15)-(19,46)]",
+                "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured": "[(16,2)-(19,46)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#/web-api": "ASYNC 2.0"
+          },
+          "lexical": {
+            "apiContract:endpoint": "[(15,0)-(19,46)]",
+            "core:name": "[(3,2)-(4,0)]",
+            "#/web-api": "[(1,0)-(19,46)]",
+            "core:version": "[(4,2)-(6,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declarations/parameters/parameter/userId",
+        "@type": [
+          "apiContract:Parameter",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "userId"
+          }
+        ],
+        "core:description": [
+          {
+            "@value": "id of the user"
+          }
+        ],
+        "apiContract:binding": [
+          {
+            "@value": "$message.payload#/user/id"
+          }
+        ],
+        "raml-shapes:schema": [
+          {
+            "@id": "#/declarations/parameters/parameter/userId/scalar/schema",
+            "@type": [
+              "raml-shapes:ScalarShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "schema"
+              }
+            ],
+            "smaps": {
+              "type-property-lexical-info": {
+                "#/declarations/parameters/parameter/userId/scalar/schema": "[(12,8)-(12,12)]"
+              },
+              "lexical": {
+                "shacl:datatype": "[(12,8)-(15,0)]",
+                "#/declarations/parameters/parameter/userId/scalar/schema": "[(11,6)-(15,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#/declarations/parameters/parameter/userId": ""
+          },
+          "lexical": {
+            "raml-shapes:schema": "[(11,6)-(15,0)]",
+            "core:description": "[(9,6)-(10,0)]",
+            "#/declarations/parameters/parameter/userId": "[(9,0)-(15,0)]",
+            "apiContract:binding": "[(10,6)-(11,0)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-client/shared/src/test/resources/resolution/async20/named-parameter-with-ref.yaml",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

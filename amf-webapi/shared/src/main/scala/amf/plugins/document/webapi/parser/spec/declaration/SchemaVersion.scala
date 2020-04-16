@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.client.render.{JSONSchemaVersions => ClientJSONSchemaVersions, JSONSchemaVersion => ClientJSONSchemaVersion}
 import amf.core.errorhandling.ErrorHandler
 import amf.plugins.features.validation.CoreValidations
 
@@ -26,3 +27,10 @@ object JSONSchemaDraft6SchemaVersion extends JSONSchemaVersion("draft-6")
 object JSONSchemaDraft7SchemaVersion extends JSONSchemaVersion("draft-7")
 object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("")
 case class RAML10SchemaVersion()     extends RAMLSchemaVersion("raml1.0")
+
+object JSONSchemaVersion {
+  def fromClientOptions(schema: ClientJSONSchemaVersion): JSONSchemaVersion = schema match {
+    case ClientJSONSchemaVersions.DRAFT_07 => JSONSchemaDraft7SchemaVersion
+    case _                                 => JSONSchemaDraft4SchemaVersion
+  }
+}

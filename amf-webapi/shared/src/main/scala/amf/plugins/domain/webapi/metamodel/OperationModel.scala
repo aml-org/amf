@@ -30,6 +30,11 @@ object OperationModel
                      ApiContract + "method",
                      ModelDoc(ModelVocabularies.ApiContract, "method", "HTTP method required to invoke the operation"))
 
+  val OperationId = Field(
+    Str,
+    ApiContract + "operationId",
+    ModelDoc(ModelVocabularies.ApiContract, "operation ID", "Identifier of the target operation"))
+
   val Deprecated = Field(Bool,
                          Core + "deprecated",
                          ModelDoc(ModelVocabularies.Core, "deprecated", "Marks the operation as deprecated"))
@@ -107,7 +112,8 @@ object OperationModel
     Callbacks,
     Servers,
     Bindings,
-    IsAbstract
+    IsAbstract,
+    OperationId
   ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = Operation()

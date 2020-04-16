@@ -2,14 +2,10 @@ package amf.plugins.document.webapi.parser.spec.async.emitters
 
 import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.domain.AmfElement
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.contexts.emitter.async.AsyncSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.async.emitters.bindings.AsyncApiChannelBindingsEmitter
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel.EndPointModel
-import amf.plugins.domain.webapi.models.bindings.ChannelBinding
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import org.yaml.model.{YDocument, YNode}
 
@@ -44,9 +40,10 @@ private class AsyncApiSingleEndpointEmitter(channel: EndPoint, ordering: SpecOrd
       channel.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
     fs.entry(EndPointModel.Description).foreach(f => result += ValueEmitter("description", f))
     fs.entry(EndPointModel.Operations).foreach(f => result ++= operations(f))
-    fs.entry(EndPointModel.Parameters).foreach(f => result += new AsyncApiParametersEmitter(f, ordering))
+    fs.entry(EndPointModel.Parameters)
+      .foreach(f => result += new AsyncApiParametersEmitter(f.arrayValues[Parameter], ordering))
     fs.entry(EndPointModel.Bindings)
-      .foreach(f => result += new AsyncApiBindingsEmitter(f, ordering, bindingOrphanAnnotations))
+      .foreach(f => result += AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
     b.entry(
       YNode(channelPath),
       _.obj(traverse(ordering.sorted(result), _))

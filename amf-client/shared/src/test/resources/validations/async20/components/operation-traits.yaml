@@ -1,0 +1,15 @@
+asyncapi: 2.0.0
+info:
+  title: anOperation
+  version: 1.0.0
+channels:
+  someChannel:
+    publish:
+      operationId: something
+      traits:
+        - $ref: "#/components/operationTraits/firstTrait"
+components:
+  operationTraits:
+    firstTrait:
+      summary: aSummary
+      operationId: traitThing

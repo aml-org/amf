@@ -6,13 +6,10 @@ import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.{IdCounter, _}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
-import amf.plugins.document.webapi.parser.spec.async.AsyncHelper
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
-import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
-import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncOperationBindingsParser
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkParser
 import amf.plugins.document.webapi.parser.spec.oas.{
   Oas20RequestParser,
   Oas30CallbackParser,
@@ -46,7 +43,8 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
         ctx.eh.violation(DuplicatedOperationId, operation.id, s"Duplicated operation id '$operationId'", entry.value)
     }
 
-    map.key("operationId", OperationModel.Name in operation)
+    parseOperationId(map, operation)
+
     map.key("description", OperationModel.Description in operation)
     map.key("summary", OperationModel.Summary in operation)
     map.key("externalDocs",
@@ -56,6 +54,11 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
     AnnotationParser(operation, map).parse()
 
     operation
+  }
+
+  def parseOperationId(map: YMap, operation: Operation) = {
+    map.key("operationId", OperationModel.Name in operation)
+    map.key("operationId", OperationModel.OperationId in operation)
   }
 }
 
@@ -193,40 +196,4 @@ case class Oas30OperationParser(entry: YMapEntry, producer: String => Operation)
     operation
   }
 
-}
-
-case class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)(
-    override implicit val ctx: AsyncWebApiContext)
-    extends OasLikeOperationParser(entry, producer) {
-  override def parse(): Operation = {
-    val operation = super.parse()
-    val map       = entry.value.as[YMap]
-
-    map.key(
-      "tags",
-      entry => {
-        val tags = OasLikeTagsParser(operation.id, entry).parse()
-        operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
-      }
-    )
-
-    map.key(
-      "message",
-      messageEntry =>
-        AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
-          val messages = AsyncMultipleMessageParser(messageEntry.value.as[YMap], operation.id, msgType).parse()
-          operation.setArray(msgType.field, messages, Annotations(messageEntry.value))
-      }
-    )
-
-    map.key("bindings").foreach { entry =>
-      val bindings = AsyncOperationBindingsParser(YMapEntryLike(entry.value), operation.id).parse()
-      operation.set(OperationModel.Bindings, bindings, Annotations(entry))
-
-      AnnotationParser(operation, map).parseOrphanNode("bindings")
-    }
-
-//    map.key("traits", OperationModel. in operation)
-    operation
-  }
 }

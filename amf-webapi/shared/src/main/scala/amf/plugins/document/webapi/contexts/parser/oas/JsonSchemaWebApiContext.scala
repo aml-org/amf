@@ -20,4 +20,7 @@ class JsonSchemaWebApiContext(loc: String,
     case _: OasWebApiContext  => true // definitions tag
     case _                    => false
   } // oas definitions
+
+  override def makeCopy(): JsonSchemaWebApiContext =
+    new JsonSchemaWebApiContext(rootContextDocument, refs, this, Some(declarations), options)
 }

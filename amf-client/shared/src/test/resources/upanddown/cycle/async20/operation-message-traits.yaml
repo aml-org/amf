@@ -1,0 +1,27 @@
+asyncapi: 2.0.0
+info:
+  title: operation and message
+  version: 1.0.0
+components:
+  operationTraits:
+    someOperationTrait:
+      operationId: someOperationTrait
+      summary: aSummary
+  messageTraits:
+    someMessageTrait:
+      title: something
+      description: some description
+channels:
+  someChannel:
+    publish:
+      operationId: something
+      traits:
+        -
+          $ref: "#/components/operationTraits/someOperationTrait"
+      message:
+        name: aMessage
+        traits:
+          -
+            $ref: "#/components/messageTraits/someMessageTrait"
+        payload:
+          type: string

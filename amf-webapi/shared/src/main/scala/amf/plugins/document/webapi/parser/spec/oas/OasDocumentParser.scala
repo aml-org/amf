@@ -147,7 +147,9 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
     def validateSchemeType(scheme: SecurityScheme): Unit = {
       val schemeType = scheme.`type`
-      if (schemeType.nonEmpty && !OasSecuritySchemeTypeMapping.validTypesFor(ctx.vendor).contains(schemeType.value()))
+      if (schemeType.nonEmpty && !OasLikeSecuritySchemeTypeMappings
+            .validTypesFor(ctx.vendor)
+            .contains(schemeType.value()))
         ctx.eh.violation(
           InvalidSecuritySchemeType,
           scheme.id,

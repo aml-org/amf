@@ -21,8 +21,8 @@ class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInf
   override def resolve[T <: BaseUnit](model: T): T = {
     profile match {
       // TODO should run for Amf too
-      case Oas30Profile => normalizeDescriptions(model).asInstanceOf[T]
-      case _            => model
+      case Oas30Profile | Async20Profile => normalizeDescriptions(model).asInstanceOf[T]
+      case _                             => model
     }
   }
 

@@ -233,6 +233,29 @@
                   {
                     "@value": "someServerBinding"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/rabbitmq.example.org/someServerBinding/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/rabbitmq.example.org/someServerBinding/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/rabbitmq.example.org/someServerBinding"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(117,0)-(119,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -428,19 +451,47 @@
                 ],
                 "http://a.ml/vocabularies/apiBinding#binding": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/subscribe/operation-bindings",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/subscribe/someOperationBinding",
                     "@type": [
                       "http://a.ml/vocabularies/apiBinding#OperationBindings",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "someOperationBinding"
+                      }
+                    ],
                     "http://a.ml/vocabularies/document#link-target": [
                       {
-                        "@id": "http://amferror.com/#operationBindings/#/components/serverBindings/someOperationBinding"
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding"
                       }
                     ],
                     "http://a.ml/vocabularies/document#link-label": [
                       {
-                        "@value": "#/components/serverBindings/someOperationBinding"
+                        "@value": "someOperationBinding"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/subscribe/someOperationBinding/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/subscribe/someOperationBinding/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/subscribe/someOperationBinding"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(128,0)-(129,0)]"
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }
@@ -538,6 +589,29 @@
                         "http://a.ml/vocabularies/document#link-label": [
                           {
                             "@value": "someId"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/default-id/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/default-id/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/default-id"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(138,0)-(139,0)]"
+                                  }
+                                ]
+                              }
+                            ]
                           }
                         ]
                       }
@@ -660,6 +734,29 @@
                           {
                             "@value": "someMessageBinding"
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/someMessageBinding/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/someMessageBinding/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/someMessageBinding"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(140,0)-(140,65)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       }
                     ],
@@ -671,7 +768,20 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_2",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_3",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/apiContract#header"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(135,8)-(137,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#correlationId"
@@ -697,7 +807,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request"
@@ -778,6 +888,29 @@
                   {
                     "@value": "userId"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(125,0)-(126,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -801,6 +934,29 @@
                 "http://a.ml/vocabularies/document#link-label": [
                   {
                     "@value": "someChannelBinding"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/someChannelBinding/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/someChannelBinding/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/someChannelBinding"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(122,0)-(123,0)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -879,7 +1035,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/source-map/lexical/element_3",
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/source-map/lexical/element_4",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#version"
@@ -888,32 +1044,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(4,2)-(6,0)]"
-                  }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/source-map/lexical/element_1",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/core#name"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(3,2)-(4,0)]"
-                  }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/source-map/lexical/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(119,9)-(140,65)]"
                   }
                 ]
               },
@@ -927,6 +1057,45 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(1,0)-(140,65)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(119,0)-(140,65)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/source-map/lexical/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiContract#server"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(110,0)-(119,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/web-api/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,2)-(4,0)]"
                   }
                 ]
               }
@@ -2123,6 +2292,21 @@
                   }
                 ]
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/parameters/parameter/external-param/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/parameters/parameter/external-param"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(42,0)-(44,0)]"
+                  }
+                ]
+              }
             ]
           }
         ]
@@ -2353,6 +2537,21 @@
                   }
                 ]
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/correlationIds/external-example/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/correlationIds/external-example"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(68,0)-(70,0)]"
+                  }
+                ]
+              }
             ]
           }
         ]
@@ -2394,6 +2593,32 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/mqtt-message/source-map/lexical/element_2",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(73,8)-(74,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/mqtt-message/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#type"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(72,6)-(72,10)]"
+                      }
+                    ]
+                  },
+                  {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/mqtt-message/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
@@ -2403,19 +2628,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(72,6)-(74,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/mqtt-message/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(73,8)-(74,0)]"
                       }
                     ]
                   }
@@ -2468,6 +2680,32 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/kafka-message/source-map/lexical/element_2",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#messageKey"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(75,8)-(76,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/kafka-message/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#type"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(74,6)-(74,11)]"
+                      }
+                    ]
+                  },
+                  {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/kafka-message/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
@@ -2477,19 +2715,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(74,6)-(76,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/kafka-message/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/apiBinding#messageKey"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(75,8)-(76,0)]"
                       }
                     ]
                   }
@@ -2521,10 +2746,23 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(72,0)-(76,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiBinding#binding"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2575,6 +2813,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/externalMessageBinding/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/externalMessageBinding"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(77,0)-(79,0)]"
                   }
                 ]
               }
@@ -2824,33 +3077,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_4",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/apiBinding#query"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(95,8)-(100,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_2",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(91,6)-(100,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_5",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
@@ -2863,20 +3090,46 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_3",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiBinding#method"
+                        "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(94,8)-(95,0)]"
+                        "@value": "[(91,6)-(100,0)]"
                       }
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_3",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#query"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(95,8)-(100,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#type"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(91,6)-(91,10)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiBinding#operationType"
@@ -2885,6 +3138,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(93,8)-(94,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation/source-map/lexical/element_4",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#method"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(94,8)-(95,0)]"
                       }
                     ]
                   }
@@ -2916,10 +3182,23 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(91,0)-(100,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiBinding#binding"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2973,6 +3252,21 @@
                   }
                 ]
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/externalOperationBinding/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/externalOperationBinding"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(101,0)-(103,0)]"
+                  }
+                ]
+              }
             ]
           }
         ]
@@ -3014,6 +3308,32 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/someChannelBinding/web-socket-channel/source-map/lexical/element_2",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(106,8)-(107,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/someChannelBinding/web-socket-channel/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#type"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(105,6)-(105,8)]"
+                      }
+                    ]
+                  },
+                  {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/someChannelBinding/web-socket-channel/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
@@ -3023,19 +3343,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(105,6)-(107,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/someChannelBinding/web-socket-channel/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(106,8)-(107,0)]"
                       }
                     ]
                   }
@@ -3067,10 +3374,23 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/someChannelBinding/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/someChannelBinding/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/someChannelBinding"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(105,0)-(107,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/someChannelBinding/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiBinding#binding"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3121,6 +3441,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/externalChannelBinding/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/externalChannelBinding"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(108,0)-(110,0)]"
                   }
                 ]
               }
@@ -3180,33 +3515,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_4",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/apiBinding#keepAlive"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(84,8)-(85,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_2",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(81,6)-(86,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_5",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
@@ -3219,20 +3528,46 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_3",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiBinding#cleanSession"
+                        "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(83,8)-(84,0)]"
+                        "@value": "[(81,6)-(86,0)]"
                       }
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_3",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#keepAlive"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(84,8)-(85,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#type"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(81,6)-(81,10)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/apiBinding#clientId"
@@ -3241,6 +3576,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(82,8)-(83,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server/source-map/lexical/element_4",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiBinding#cleanSession"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(83,8)-(84,0)]"
                       }
                     ]
                   }
@@ -3272,10 +3620,23 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(81,0)-(86,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiBinding#binding"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3326,6 +3687,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": ""
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/externalServerBinding/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/externalServerBinding"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(87,0)-(89,0)]"
                   }
                 ]
               }
@@ -3880,33 +4256,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messages/someMessage/source-map/lexical/element_3",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/core#title"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(58,6)-(59,0)]"
-                  }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messages/someMessage/source-map/lexical/element_1",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/core#displayName"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(57,6)-(58,0)]"
-                  }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messages/someMessage/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messages/someMessage/source-map/lexical/element_4",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#summary"
@@ -3928,6 +4278,45 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(46,0)-(60,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messages/someMessage/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiContract#header"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(46,6)-(53,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messages/someMessage/source-map/lexical/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#title"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(58,6)-(59,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messages/someMessage/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#displayName"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(57,6)-(58,0)]"
                   }
                 ]
               }

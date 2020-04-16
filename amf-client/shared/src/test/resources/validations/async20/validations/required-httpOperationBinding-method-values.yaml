@@ -1,0 +1,23 @@
+asyncapi: 2.0.0
+info:
+  title: asasd
+  version: asd
+channels:
+  /employees:
+    subscribe:
+      bindings:
+        http:
+          type: request
+          method: GET
+  /managers:
+    subscribe:
+      bindings:
+        http:
+          type: response
+          method: DONT CARE AS RESPONSE IS NOT PARSED
+  /invalid:
+    subscribe:
+      bindings:
+        http:
+          type: request
+          method: DO CARE

@@ -3,15 +3,18 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
-import amf.core.emitter.{SpecOrdering, EntryEmitter}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.document.BaseUnitModel
-import amf.core.model.document.{Module, BaseUnit, _}
+import amf.core.model.document.{BaseUnit, Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.remote.Raml
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
+import amf.plugins.document.webapi.parser.spec.raml.emitters.Raml10SecuritySchemeEmitter
 import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
@@ -86,7 +89,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
 
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
       Option(dataType.encodes) match {
-        case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = Nil).entries()
+        case Some(shape: AnyShape) => raml.Raml10TypeEmitter(shape, ordering, references = Nil).entries()
         case Some(other) =>
           spec.eh.violation(ResolutionValidation,
                             other.id,

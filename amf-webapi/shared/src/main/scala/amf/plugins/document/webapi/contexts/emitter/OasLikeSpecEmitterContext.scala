@@ -10,11 +10,13 @@ import amf.core.utils._
 import amf.plugins.document.webapi.contexts.emitter.oas.OasRefEmitter
 import amf.plugins.document.webapi.contexts.{RefEmitter, SpecEmitterContext, SpecEmitterFactory}
 import amf.plugins.document.webapi.parser.OasTypeDefStringValueMatcher
+import amf.plugins.document.webapi.parser.spec.async.emitters.Draft7ExampleEmitters
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasRecursiveShapeEmitter, OasTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   AnnotationEmitter,
-  OasAnnotationEmitter,
-  OasRecursiveShapeEmitter,
-  OasTypeEmitter
+  JSONSchemaDraft7SchemaVersion,
+  JSONSchemaVersion,
+  OasAnnotationEmitter
 }
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasExampleEmitters, OasLikeExampleEmitters}
 import amf.plugins.domain.shapes.models.Example
@@ -34,7 +36,12 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
   def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter =
     OasRecursiveShapeEmitter.apply
 
-  def exampleEmitter: (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters
+  def exampleEmitter: (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters =
+    (isHeader, exampleOption, ordering, extensions, references) =>
+      if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion)
+        Draft7ExampleEmitters.apply(exampleOption.toSeq ++ extensions, ordering, references)
+      else
+        OasExampleEmitters.apply(isHeader, exampleOption, ordering, extensions, references)
 
   override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
 }
@@ -43,7 +50,7 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
                                          refEmitter: RefEmitter = OasRefEmitter,
                                          options: ShapeRenderOptions = ShapeRenderOptions())
     extends SpecEmitterContext(eh, refEmitter, options) {
-
+  def schemaVersion: JSONSchemaVersion
   def schemasDeclarationsPath: String
 
   override def localReference(reference: Linkable): PartEmitter =

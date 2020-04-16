@@ -4,6 +4,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Yaml
+import amf.core.remote.Vendor.AMF
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
@@ -440,6 +441,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           s"${resolutionPath}recursive-additional-properties/")
   }
 
+  test("recursivity in additional properties 2") {
+    cycle(
+      "recursive-additional-properties-2.yaml",
+      "recursive-additional-properties-2.jsonld",
+      OasYamlHint,
+      Amf,
+      s"${resolutionPath}recursive-additional-properties/"
+    )
+  }
+
   test("types with properties that must not be extracted to declares") {
     cycle(
       "avoid-extract-to-declares.raml",
@@ -460,8 +471,44 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    config.target match {
+  test("References to message definitions") {
+    cycle("message-references.yaml", "message-references.jsonld", AsyncYamlHint, AMF, resolutionPath + "async20/")
+  }
+
+  test("raml with declared element link of link") {
+    cycle("link-of-link/link-of-link.raml",
+          "link-of-link/link-of-link.jsonld",
+          RamlYamlHint,
+          target = Amf,
+          directory = resolutionPath,
+          transformWith = Some(Raml10))
+  }
+
+  test("raml with declared element link of link of link") {
+    cycle(
+      "link-of-link/link-of-link-of-link.raml",
+      "link-of-link/link-of-link-of-link.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
+  test("raml with declared element link of link in api") {
+    cycle(
+      "link-of-link/in-api/link-of-link-in-api.raml",
+      "link-of-link/in-api/link-of-link-in-api.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+    val vendor = config.transformWith.getOrElse(config.target)
+    vendor match {
       case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
       case Raml | Raml10 => Raml10Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
       case Oas30         => Oas30Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
@@ -469,6 +516,7 @@ class EditingResolutionTest extends FunSuiteCycleTests {
       case Amf           => AmfEditingPipeline.unhandled.resolve(unit)
       case target        => throw new Exception(s"Cannot resolve $target")
     }
+  }
 
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit,
