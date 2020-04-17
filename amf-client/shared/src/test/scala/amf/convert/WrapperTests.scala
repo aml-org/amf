@@ -66,6 +66,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
   private val recursiveAdditionalProperties =
     "file://amf-client/shared/src/test/resources/recursive/recursive-additional-properties.yaml"
+  private val knowledgeGraphServiceApi =
+    "file://amf-client/shared/src/test/resources/production/knowledge-graph-service-api-1.0.13-raml/kg.raml"
 
   def testVocabulary(file: String, numClasses: Int, numProperties: Int): Future[Assertion] = {
     for {
@@ -1771,8 +1773,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseFileAsync(file).asFuture
     } yield {
-      assert(
-        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+      assert(unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 
@@ -1795,8 +1796,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit     <- new RamlParser().parseStringAsync(api).asFuture
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
-      json <- Future(
-        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
+      json     <- Future(resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
     } yield {
       val golden = """{
                      |  "$schema": "http://json-schema.org/draft-04/schema#",
@@ -2226,6 +2226,16 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       val postCleaning1 = unit1._internal.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil)
       val postCleaning2 = unit2._internal.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil)
       assert(postCleaning1.isEmpty && postCleaning2.isEmpty)
+    }
+  }
+
+  test("Resolve KG Service API") {
+    for {
+      _        <- AMF.init().asFuture
+      parsed   <- new Raml10Parser().parseFileAsync(knowledgeGraphServiceApi).asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(parsed, ResolutionPipeline.EDITING_PIPELINE))
+    } yield {
+      assert(resolved.references().asSeq.forall(_.id != null))
     }
   }
 

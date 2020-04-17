@@ -1,0 +1,71 @@
+#%Dialect 1.0
+uses:
+  uses__1: http://mulesoft.com/v1/vocabulary/9758c8aa-18d0-484f-905c-a715c279b195/7574a3a021fc0ad2a2bae65136bea7ab
+nodeMappings:
+  ProductNode:
+    classTerm: schema-org.Product
+    mapping:
+      version:
+        propertyTerm: uses__1.semantic-version
+        range: string
+      code:
+        propertyTerm: uses__1.code
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      resources:
+        propertyTerm: uses__1.resources
+        range: string
+        allowMultiple: true
+  PresentationNode:
+    classTerm: uses__1.Presentation
+    mapping:
+      title:
+        propertyTerm: schema-org.name
+        range: string
+        mandatory: true
+      about:
+        propertyTerm: schema-org.description
+        range: string
+        mandatory: true
+      speakers:
+        propertyTerm: uses__1.speakers
+        range: SpeakerNode
+        mapKey: uses__1.nickName
+        mandatory: true
+      date:
+        propertyTerm: uses__1.demoDate
+        range: date
+        mandatory: true
+      product:
+        propertyTerm: uses__1.showcases
+        range: ProductNode
+        mandatory: true
+      recorded:
+        propertyTerm: uses__1.isRecorded
+        range: boolean
+  SpeakerNode:
+    classTerm: uses__1.Speaker
+    mapping:
+      email:
+        propertyTerm: schema-org.email
+        range: string
+      nick:
+        propertyTerm: uses__1.nickName
+        range: string
+        mandatory: true
+      age:
+        propertyTerm: schema-org.age
+        range: integer
+external:
+  schema-org: http://schema.org/
+dialect: Tech Talks
+version: "0.1"
+documents:
+  root:
+    encodes: PresentationNode
+  library:
+    declares:
+      products: ProductNode

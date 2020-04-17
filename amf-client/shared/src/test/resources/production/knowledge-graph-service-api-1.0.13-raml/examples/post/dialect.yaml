@@ -1,0 +1,81 @@
+#%Dialect 1.0
+
+# Name of the dialect, this will define the header of the dialect documents
+dialect: Tech Talks
+version: "0.1"
+
+# Vocabularies and externals can be referenced to use those terms in the dialect nodess
+uses:
+  demos: http://mulesoft.com/v1/vocabulary/9758c8aa-18d0-484f-905c-a715c279b195/7574a3a021fc0ad2a2bae65136bea7ab
+
+external:
+  schema-org: http://schema.org/
+
+documents:
+  library:
+    declares:
+      products: ProductNode
+  root:
+    encodes: PresentationNode
+
+nodeMappings:
+
+  PresentationNode:
+    classTerm: demos.Presentation
+    mapping:
+      title:
+        propertyTerm: schema-org.name
+        mandatory: true
+        range: string
+      about:
+        propertyTerm: schema-org.description
+        mandatory: true
+        range: string
+      date:
+        propertyTerm: demos.demoDate
+        mandatory: true
+        range: date
+      recorded:
+        propertyTerm: demos.isRecorded
+        range: boolean
+      product:
+        propertyTerm: demos.showcases
+        range: ProductNode
+        mandatory: true
+      speakers:
+        propertyTerm: demos.speakers
+        mandatory: true
+        mapKey: demos.nickName
+        range: SpeakerNode
+
+  SpeakerNode:
+    classTerm: demos.Speaker
+    mapping:
+      age:
+        propertyTerm: schema-org.age
+        range: integer
+      email:
+        propertyTerm: schema-org.email
+        range: string
+      nick:
+        propertyTerm: demos.nickName
+        mandatory: true
+        range: string
+
+  ProductNode:
+    classTerm: schema-org.Product
+    mapping:
+      code:
+        propertyTerm: demos.code
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      version:
+        propertyTerm: demos.semantic-version
+        range: string
+      resources:
+        propertyTerm: demos.resources
+        range: string
+        allowMultiple: true

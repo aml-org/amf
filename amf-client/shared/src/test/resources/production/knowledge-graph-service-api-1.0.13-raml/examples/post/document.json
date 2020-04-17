@@ -1,0 +1,97 @@
+{
+    "@context": {
+        "description": "j.1:description",
+        "semantic-version": "j.4:semantic-version",
+        "resources": "j.4:resources",
+        "code": "j.4:code",
+        "name": "j.1:name",
+        "speakers": {
+            "@id": "j.4:speakers",
+            "@type": "@id"
+        },
+        "showcases": {
+            "@id": "j.4:showcases",
+            "@type": "@id"
+        },
+        "demoDate": {
+            "@id": "j.4:demoDate",
+            "@type": "http://www.w3.org/2001/XMLSchema#date"
+        },
+        "email": "j.1:email",
+        "age": {
+            "@id": "j.1:age",
+            "@type": "http://www.w3.org/2001/XMLSchema#long"
+        },
+        "nickName": "j.4:nickName",
+        "definedBy": {
+            "@id": "j.2:definedBy",
+            "@type": "@id"
+        },
+        "encodes": {
+            "@id": "j.3:encodes",
+            "@type": "@id"
+        },
+        "j.4": "http://mulesoft.com/vocabularies/eng-demos#",
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+        "j.1": "http://schema.org/",
+        "j.0": "http://0.0.0.0:8080/v1/schema/356fb8fa-faa2-4db5-a2fb-cd231e7992e8/3116aa59b5a7b5954f278016cd3e8b6a#/declarations/",
+        "j.3": "http://a.ml/vocabularies/document#",
+        "j.2": "http://a.ml/vocabularies/meta#"
+    },
+    "@graph": [
+        {
+            "@id": "",
+            "@type": [
+                "j.3:Unit",
+                "j.3:Fragment",
+                "j.2:DialectInstance",
+                "j.3:Document",
+                "j.3:Module"
+            ],
+            "encodes": "#/",
+            "definedBy": "http://0.0.0.0:8080/v1/schema/356fb8fa-faa2-4db5-a2fb-cd231e7992e8/3116aa59b5a7b5954f278016cd3e8b6a"
+        },
+        {
+            "@id": "#/",
+            "@type": [
+                "j.3:DomainElement",
+                "j.2:DialectDomainElement",
+                "j.4:Presentation",
+                "j.0:PresentationNode"
+            ],
+            "demoDate": "2018-11-18",
+            "showcases": "#/product",
+            "speakers": "#/speakers/damian",
+            "description": "Qué pasa cuando hacemos un nuevo feature.\nEntender los diferentes contextos en donde trabaja la plataforma \ny como afectan a todos los productos y que debemos hacer para \nentender los nuevos productos y funcionalidades bajo esos \ncontextos y no romper la plataforma\n",
+            "name": "Rompiendo la plataforma Tech Talk"
+        },
+        {
+            "@id": "#/product",
+            "@type": [
+                "j.0:ProductNode",
+                "j.1:Product",
+                "j.3:DomainElement",
+                "j.2:DialectDomainElement"
+            ],
+            "code": "amf",
+            "resources": [
+                "https://github.com/mulesoft/amf",
+                "https://github.com/mulesoft-labs/amf-tech-talk"
+            ],
+            "semantic-version": "1.0.0",
+            "description": "Rompiendo la plataforma"
+        },
+        {
+            "@id": "#/speakers/damian",
+            "@type": [
+                "j.4:Speaker",
+                "j.3:DomainElement",
+                "j.0:SpeakerNode",
+                "j.2:DialectDomainElement"
+            ],
+            "nickName": "damian",
+            "age": "32",
+            "email": "damian.meydac@gmail.com"
+        }
+    ]
+}

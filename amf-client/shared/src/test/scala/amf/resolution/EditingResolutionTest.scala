@@ -506,6 +506,18 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  // JSON-LD is serialized differently every time
+  ignore("KG Service API resolution") {
+    cycle(
+      "knowledge-graph-service-api-1.0.13-raml/kg.raml",
+      "knowledge-graph-service-api-1.0.13-raml/kg.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = productionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val vendor = config.transformWith.getOrElse(config.target)
     vendor match {
