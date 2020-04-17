@@ -180,7 +180,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
   protected def parseSchema(map: YMap, payload: Payload): Unit
 
   private def parseHeaderSchema(entry: YMapEntry, parentId: String): Option[Parameter] = {
-    val param = Parameter().withName("default-parameter", Annotations(SynthesizedField())).adopted(parentId) // set default name to avoid raw validations
+    val param = Parameter(entry.value).withName("default-parameter", Annotations(SynthesizedField())).adopted(parentId) // set default name to avoid raw validations
     val shape =
       AsyncApiTypeParser(entry, shape => shape.withName("schema").adopted(param.id), JSONSchemaDraft7SchemaVersion)
         .parse()
