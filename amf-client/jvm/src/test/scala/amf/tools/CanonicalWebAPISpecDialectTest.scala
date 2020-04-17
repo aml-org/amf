@@ -65,11 +65,11 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
   }
 
   val tests: Seq[String] = Seq(
-//    "simple/api.raml",
-//    "annotations/api.raml",
-//    "macros/api.raml",
-//    "modular/api.raml",
-    "modular-recursion/api.raml"
+    "simple/api.raml",
+    "annotations/api.raml",
+    "macros/api.raml",
+    "modular/api.raml",
+    "modular-recursion/api.raml" // FLAKY
 
     // "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml.jsonld" -> "banking-api.webapi.yaml",
     // "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml.jsonld" -> "banking-api.webapi.yaml",
@@ -88,6 +88,14 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
     "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/api.raml.jsonld" -> false
   )
    */
+
+//  test("Test WebAPI dialect transformation and yaml/json rendering") {
+//    checkCanonicalDialectTransformation("modular-recursion/api.raml", "modular-recursion/webapi", shouldTranform = false)
+//  }
+
+//  test("Test WebAPI dialect transformation and yaml/json rendering") {
+//    checkCanonicalDialectTransformation("macros/api.raml", "macros/webapi", shouldTranform = false)
+//  }
 
   tests.foreach { input =>
     val golden = input.replace("api.raml", "webapi")
