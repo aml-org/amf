@@ -52,14 +52,16 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
 
   /** if the shape was parsed of a json schema, or has been previously generated a new json schema, returns thar value,
     otherwise generate a new json schema and store the value for futures invocations */
-  def toJsonSchema(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    _internal.toJsonSchema(exec)
+  def toJsonSchema(): String = _internal.toJsonSchema
+
+  def toJsonSchema(exec: BaseExecutionEnvironment): String = _internal.toJsonSchema(exec)
 
   /** Force a new json schema generation, no matter if the shape was parsed from that kind of expression or if was previously generated.
     * Stores the result for futures toJsonSchema invocations.
     * Should use this method when you have mutated this instance */
-  def buildJsonSchema(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    _internal.buildJsonSchema(exec)
+  def buildJsonSchema(): String = _internal.buildJsonSchema()
+
+  def buildJsonSchema(exec: BaseExecutionEnvironment): String = _internal.buildJsonSchema(exec)
 
   def buildJsonSchema(options: ShapeRenderOptions): String =
     _internal.buildJsonSchema(InternalShapeRenderOptions(options))
@@ -72,8 +74,9 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     * the value for futures invocations.
     * Proxies call to internal AnyShape.toRamlDatatype.
     */
-  def toRamlDatatype(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    _internal.toRamlDatatype(exec)
+  def toRamlDatatype(): String = _internal.toRamlDatatype
+
+  def toRamlDatatype(exec: BaseExecutionEnvironment): String = _internal.toRamlDatatype(exec)
 
   /** Forces a new RAML Data Type generation, no matter if the shape was
     * parsed from that kind of expression or if was previously generated.
@@ -82,8 +85,9 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     * instance was mutated.
     * Proxies call to internal AnyShape.toRamlDatatype.
     */
-  def buildRamlDatatype(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    _internal.buildRamlDatatype(exec)
+  def buildRamlDatatype(): String = _internal.buildRamlDatatype
+
+  def buildRamlDatatype(exec: BaseExecutionEnvironment): String = _internal.buildRamlDatatype(exec)
 
   def validate(payload: String, env: Environment, exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
     implicit val executionEnvironment: ExecutionContext = exec.executionContext
