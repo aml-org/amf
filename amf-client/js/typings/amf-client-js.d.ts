@@ -572,6 +572,7 @@ declare module 'amf-client-js' {
 
       export class DialectInstance extends Document {
         withDefinedBy(id: string): DialectInstance
+        definedBy(): StrField
       }
 
       export class Vocabulary extends BaseUnit {
@@ -599,6 +600,10 @@ declare module 'amf-client-js' {
     }
 
     namespace domain {
+
+      class AmfScalar {
+        value: any
+      }
 
       /* Not exported */
       abstract class DomainElement implements Annotable {
@@ -640,6 +645,9 @@ declare module 'amf-client-js' {
                           value: DialectDomainElement): DialectDomainElement
         setObjectCollectionProperty(propertyId: String,
                                     value: DialectDomainElement[]): DialectDomainElement
+        getScalarByPropertyUri(propertyId: String): core.parser.Value[];
+        getScalarValueByPropertyUri(propertyId: String): any[];
+        getObjectPropertyUri(propertyId: String): DialectDomainElement[];
       }
 
       export class NodeMapping extends DomainElement {
@@ -2005,6 +2013,9 @@ declare module 'amf-client-js' {
         toString(): string
       }
 
+      class Value {
+        value: model.domain.AmfScalar
+      }
     }
 
     namespace validation {
