@@ -5,6 +5,13 @@ import scala.collection.mutable
 
 private[shape_normalization] case class NormalizationCache() extends ClosureHelper {
 
+  private val cache = mutable.Map[String, Shape]()
+  /* Shape in the closure -> Shape that in s.closures contains the shape */
+  private val cacheWithClosures = mutable.Map[String, Seq[Shape]]()
+
+  private val fixPointCache = mutable.Map[String, Seq[RecursiveShape]]()
+  private val mappings      = mutable.Map[String, String]()
+
   def cacheClosure(id: String, array: Shape): this.type = {
     cacheWithClosures.get(id) match {
       case Some(seq) => cacheWithClosures.update(id, seq :+ array)
@@ -12,6 +19,8 @@ private[shape_normalization] case class NormalizationCache() extends ClosureHelp
     }
     this
   }
+
+  def cacheWithClosures(id: String): Option[Seq[Shape]] = cacheWithClosures.get(id)
 
   def updateFixPointsAndClosures(canonical: Shape, withoutCaching: Boolean): Unit = {
     // First check if the shape has itself as closure or fixpoint target (because of it still not in the cache)
@@ -66,13 +75,6 @@ private[shape_normalization] case class NormalizationCache() extends ClosureHelp
     }
     this
   }
-
-  private val cache = mutable.Map[String, Shape]()
-  /* Shape in the closure -> Shape that in s.closures contains the shape */
-  private val cacheWithClosures = mutable.Map[String, Seq[Shape]]()
-
-  private val fixPointCache = mutable.Map[String, Seq[RecursiveShape]]()
-  private val mappings      = mutable.Map[String, String]()
 
   private def registerFixPoint(r: RecursiveShape): RecursiveShape = {
     r.fixpoint.option().foreach { fp =>
