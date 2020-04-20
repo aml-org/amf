@@ -1,0 +1,62 @@
+#%Vocabulary 1.0
+external:
+  schema-org: http://schema.org/
+base: http://mulesoft.com/vocabularies/tech-talk#
+vocabulary: Tech Talk
+usage: Engineering Demonstrations @ MuleSoft
+classTerms:
+  Presentation:
+    displayName: Presentation
+    description: Product demonstrations
+    properties:
+      - demoDate
+      - speakers
+      - showcases
+  Speaker:
+    displayName: Speaker
+    description: Product demonstration presenter
+    extends: schema-org.Person
+    properties:
+      - nickName
+  schema-org.Product:
+    displayName: Product
+    description: The product being showcased
+    properties:
+      - resources
+propertyTerms:
+  code:
+    displayName: code
+    description: product code
+    extends: schema-org.name
+    range: string
+  demoDate:
+    displayName: demo date
+    description: day the demo took place
+    extends: schema-org.dateCreated
+    range: date
+  nickName:
+    displayName: nick
+    description: nick name of the speaker
+    extends: schema-org.alternateName
+    range: string
+  resources:
+    displayName: resources
+    description: list of materials about the showcased product
+    range: string
+  speakers:
+    displayName: speakers
+    description: list of speakers
+    range: Speaker
+  semantic-version:
+    displayName: semantic version
+    description: "semantic version standard: M.m.r"
+    extends: schema-org.version
+    range: string
+  isRecorded:
+    displayName: is recorded
+    description: notifies if this demo was recorded
+    range: boolean
+  showcases:
+    displayName: showcases
+    description: Product being showcased in a presentation
+    range: schema-org.Product

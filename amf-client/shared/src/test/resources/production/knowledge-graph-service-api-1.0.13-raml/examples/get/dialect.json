@@ -1,0 +1,454 @@
+{
+    "@context": {
+        "description": "j.0:description",
+        "displayName": "j.2:displayName",
+        "subPropertyOf": {
+            "@id": "rdfs:subPropertyOf",
+            "@type": "@id"
+        },
+        "range": {
+            "@id": "rdfs:range",
+            "@type": "@id"
+        },
+        "path": {
+            "@id": "j.1:path",
+            "@type": "@id"
+        },
+        "minCount": {
+            "@id": "j.1:minCount",
+            "@type": "http://www.w3.org/2001/XMLSchema#long"
+        },
+        "datatype": {
+            "@id": "j.1:datatype",
+            "@type": "@id"
+        },
+        "name": "j.0:name",
+        "encodedNode": {
+            "@id": "j.2:encodedNode",
+            "@type": "@id"
+        },
+        "properties": {
+            "@id": "j.2:properties",
+            "@type": "@id"
+        },
+        "subClassOf": {
+            "@id": "rdfs:subClassOf",
+            "@type": "@id"
+        },
+        "mappedNode": {
+            "@id": "j.2:mappedNode",
+            "@type": "@id"
+        },
+        "_1": {
+            "@id": "rdfs:_1",
+            "@type": "@id"
+        },
+        "alias": "j.0:alias",
+        "base": "j.2:base",
+        "node": {
+            "@id": "j.1:node",
+            "@type": "@id"
+        },
+        "targetClass": {
+            "@id": "j.1:targetClass",
+            "@type": "@id"
+        },
+        "property": {
+            "@id": "j.1:property",
+            "@type": "@id"
+        },
+        "declares": {
+            "@id": "j.3:declares",
+            "@type": "@id"
+        },
+        "externals": {
+            "@id": "j.2:externals",
+            "@type": "@id"
+        },
+        "usage": "j.3:usage",
+        "location": "j.3:location",
+        "mapProperty": {
+            "@id": "j.2:mapProperty",
+            "@type": "@id"
+        },
+        "allowMultiple": {
+            "@id": "j.2:allowMultiple",
+            "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        "declaredNode": {
+            "@id": "j.2:declaredNode",
+            "@type": "@id"
+        },
+        "documents": {
+            "@id": "j.2:documents",
+            "@type": "@id"
+        },
+        "version": "j.0:version",
+        "references": {
+            "@id": "j.3:references",
+            "@type": "@id"
+        },
+        "rootDocument": {
+            "@id": "j.2:rootDocument",
+            "@type": "@id"
+        },
+        "library": {
+            "@id": "j.2:library",
+            "@type": "@id"
+        },
+        "owl": "http://www.w3.org/2002/07/owl#",
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "j.1": "http://www.w3.org/ns/shacl#",
+        "j.0": "http://schema.org/",
+        "j.3": "http://a.ml/vocabularies/document#",
+        "j.2": "http://a.ml/vocabularies/meta#"
+    },
+    "@graph": [
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c",
+            "@type": [
+                "j.2:Dialect",
+                "j.3:Fragment",
+                "j.3:Unit",
+                "j.3:Document",
+                "j.3:Module"
+            ],
+            "declares": [
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/SpeakerNode"
+            ],
+            "references": "http://mulesoft.com/v1/vocabulary/9758c8aa-18d0-484f-905c-a715c279b195/7574a3a021fc0ad2a2bae65136bea7ab",
+            "documents": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c/documents",
+            "externals": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c/externals/schema-org",
+            "name": "Tech Talks",
+            "version": "0.1"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode",
+            "@type": "j.2:NodeMapping",
+            "name": "PresentationNode",
+            "property": [
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/title",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/about",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/speakers",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/date",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/product",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/recorded"
+            ],
+            "targetClass": "http://mulesoft.com/vocabularies/tech-talk#Presentation"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/about",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "about",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string",
+            "minCount": "1",
+            "path": "j.0:description"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/date",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "date",
+            "datatype": "http://www.w3.org/2001/XMLSchema#date",
+            "minCount": "1",
+            "path": "http://mulesoft.com/vocabularies/tech-talk#demoDate"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/product",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "product",
+            "minCount": "1",
+            "node": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/product/list",
+            "path": "http://mulesoft.com/vocabularies/tech-talk#showcases"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/product/list",
+            "@type": "rdfs:Seq",
+            "_1": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/recorded",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "recorded",
+            "datatype": "http://www.w3.org/2001/XMLSchema#boolean",
+            "path": "http://mulesoft.com/vocabularies/tech-talk#isRecorded"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/speakers",
+            "@type": "j.2:NodePropertyMapping",
+            "mapProperty": "http://mulesoft.com/vocabularies/tech-talk#nickName",
+            "name": "speakers",
+            "minCount": "1",
+            "node": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/speakers/list",
+            "path": "http://mulesoft.com/vocabularies/tech-talk#speakers"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/speakers/list",
+            "@type": "rdfs:Seq",
+            "_1": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/SpeakerNode"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode/property/title",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "title",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string",
+            "minCount": "1",
+            "path": "j.0:name"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode",
+            "@type": "j.2:NodeMapping",
+            "name": "ProductNode",
+            "property": [
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode/property/version",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode/property/code",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode/property/description",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode/property/resources"
+            ],
+            "targetClass": "j.0:Product"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode/property/code",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "code",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string",
+            "minCount": "1",
+            "path": "http://mulesoft.com/vocabularies/tech-talk#code"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode/property/description",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "description",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string",
+            "path": "j.0:description"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode/property/resources",
+            "@type": "j.2:NodePropertyMapping",
+            "j.2:allowMultiple": true,
+            "name": "resources",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string",
+            "path": "http://mulesoft.com/vocabularies/tech-talk#resources"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode/property/version",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "version",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string",
+            "path": "http://mulesoft.com/vocabularies/tech-talk#semantic-version"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/SpeakerNode",
+            "@type": "j.2:NodeMapping",
+            "name": "SpeakerNode",
+            "property": [
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/SpeakerNode/property/email",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/SpeakerNode/property/nick",
+                "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/SpeakerNode/property/age"
+            ],
+            "targetClass": "http://mulesoft.com/vocabularies/tech-talk#Speaker"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/SpeakerNode/property/age",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "age",
+            "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+            "path": "j.0:age"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/SpeakerNode/property/email",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "email",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string",
+            "path": "j.0:email"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/SpeakerNode/property/nick",
+            "@type": "j.2:NodePropertyMapping",
+            "name": "nick",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string",
+            "minCount": "1",
+            "path": "http://mulesoft.com/vocabularies/tech-talk#nickName"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/documents/modules",
+            "@type": "j.2:DocumentMapping",
+            "declaredNode": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/documents/modules/products",
+            "j.2:name": "Tech Talks 0.1 / Library"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/documents/modules/products",
+            "@type": "j.2:PublicNodeMapping",
+            "mappedNode": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/ProductNode",
+            "name": "products"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/documents/root",
+            "@type": "j.2:DocumentMapping",
+            "encodedNode": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/declarations/PresentationNode",
+            "j.2:name": "Tech Talks 0.1"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c/documents",
+            "@type": "j.2:DocumentsModel",
+            "library": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/documents/modules",
+            "rootDocument": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c#/documents/root"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c/externals/schema-org",
+            "@type": [
+                "owl:Ontology",
+                "j.2:ExternalVocabulary"
+            ],
+            "base": "http://schema.org/",
+            "alias": "schema-org"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/vocabulary/9758c8aa-18d0-484f-905c-a715c279b195/7574a3a021fc0ad2a2bae65136bea7ab",
+            "@type": [
+                "owl:Ontology",
+                "j.2:Vocabulary",
+                "j.3:Unit"
+            ],
+            "declares": [
+                "http://mulesoft.com/vocabularies/tech-talk#code",
+                "http://mulesoft.com/vocabularies/tech-talk#demoDate",
+                "http://mulesoft.com/vocabularies/tech-talk#nickName",
+                "http://mulesoft.com/vocabularies/tech-talk#resources",
+                "http://mulesoft.com/vocabularies/tech-talk#speakers",
+                "http://mulesoft.com/vocabularies/tech-talk#semantic-version",
+                "http://mulesoft.com/vocabularies/tech-talk#Presentation",
+                "http://mulesoft.com/vocabularies/tech-talk#isRecorded",
+                "http://mulesoft.com/vocabularies/tech-talk#Speaker",
+                "http://mulesoft.com/vocabularies/tech-talk#showcases",
+                "j.0:Product"
+            ],
+            "location": "http://mulesoft.com/v1/vocabulary/9758c8aa-18d0-484f-905c-a715c279b195/7574a3a021fc0ad2a2bae65136bea7ab",
+            "usage": "Tech Talks @ MuleSoft",
+            "base": "http://mulesoft.com/vocabularies/tech-talk#",
+            "externals": "http://mulesoft.com/v1/vocabulary/9758c8aa-18d0-484f-905c-a715c279b195/7574a3a021fc0ad2a2bae65136bea7ab/externals/schema-org",
+            "name": "Tech Talks"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/vocabulary/9758c8aa-18d0-484f-905c-a715c279b195/7574a3a021fc0ad2a2bae65136bea7ab/externals/schema-org",
+            "@type": [
+                "owl:Ontology",
+                "j.2:ExternalVocabulary"
+            ],
+            "base": "http://schema.org/",
+            "alias": "schema-org"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#Presentation",
+            "@type": "owl:Class",
+            "displayName": "Presentation",
+            "properties": [
+                "http://mulesoft.com/vocabularies/tech-talk#demoDate",
+                "http://mulesoft.com/vocabularies/tech-talk#speakers",
+                "http://mulesoft.com/vocabularies/tech-talk#showcases"
+            ],
+            "description": "Product demonstrations"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#Speaker",
+            "@type": "owl:Class",
+            "displayName": "Speaker",
+            "properties": "http://mulesoft.com/vocabularies/tech-talk#nickName",
+            "description": "Product demonstration presenter",
+            "subClassOf": "j.0:Person"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#code",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.2:Property"
+            ],
+            "displayName": "code",
+            "description": "product code",
+            "range": "http://www.w3.org/2001/XMLSchema#string",
+            "subPropertyOf": "j.0:name"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#demoDate",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.2:Property"
+            ],
+            "displayName": "demo date",
+            "description": "day the demo took place",
+            "range": "http://www.w3.org/2001/XMLSchema#date",
+            "subPropertyOf": "j.0:dateCreated"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#isRecorded",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.2:Property"
+            ],
+            "displayName": "is recorded",
+            "description": "notifies if this demo was recorded",
+            "range": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#nickName",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.2:Property"
+            ],
+            "displayName": "nick",
+            "description": "nick name of the speaker",
+            "range": "http://www.w3.org/2001/XMLSchema#string",
+            "subPropertyOf": "j.0:alternateName"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#resources",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.2:Property"
+            ],
+            "displayName": "resources",
+            "description": "list of materials about the showcased product",
+            "range": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#semantic-version",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.2:Property"
+            ],
+            "displayName": "semantic version",
+            "description": "semantic version standard: M.m.r",
+            "range": "http://www.w3.org/2001/XMLSchema#string",
+            "subPropertyOf": "j.0:version"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#showcases",
+            "@type": [
+                "owl:ObjectProperty",
+                "j.2:Property"
+            ],
+            "displayName": "showcases",
+            "description": "Product being showcased in a presentation",
+            "range": "j.0:Product"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#speakers",
+            "@type": [
+                "owl:ObjectProperty",
+                "j.2:Property"
+            ],
+            "displayName": "speakers",
+            "description": "list of speakers",
+            "range": "http://mulesoft.com/vocabularies/tech-talk#Speaker"
+        },
+        {
+            "@id": "j.0:Product",
+            "@type": "owl:Class",
+            "displayName": "Product",
+            "properties": "http://mulesoft.com/vocabularies/tech-talk#resources",
+            "description": "The product being showcased"
+        }
+    ]
+}

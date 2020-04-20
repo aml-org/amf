@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.{DefaultParserErrorHandler, IgnoringErrorHandler}
 import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.ErrorHandler
@@ -10,12 +10,7 @@ import amf.core.parser.{Annotations, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
-import amf.plugins.document.webapi.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  RamlWebApiContextType
-}
+import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
@@ -359,18 +354,7 @@ object ExtendsHelper {
   }
 }
 
-case class CustomParserErrorHandler() extends DefaultParserErrorHandler {
-  override def handle[T](error: YError, defaultValue: T): T = defaultValue
-  override def warning(id: ValidationSpecification,
-                       node: String,
-                       property: Option[String],
-                       message: String,
-                       lexical: Option[LexicalInformation],
-                       location: Option[String]): Unit              = {}
-  override def handle(loc: SourceLocation, e: SyamlException): Unit = {}
-
-}
-class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext(eh = CustomParserErrorHandler())) { // generating a new id???? cannot be ok
+class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext(eh = IgnoringErrorHandler())) { // generating a new id???? cannot be ok
 }
 
-class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext(eh = CustomParserErrorHandler())) {}
+class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext(eh = IgnoringErrorHandler())) {}

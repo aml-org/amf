@@ -1,0 +1,125 @@
+{
+    "@context": {
+        "property": "http://www.w3.org/ns/hydra/core#property",
+        "definedBy": {
+            "@id": "http://a.ml/vocabularies/meta#definedBy",
+            "@type": "@id"
+        },
+        "pattern": {
+            "@id": "http://mulesoft.com/vocabularies/knowledge-graph-service#pattern",
+            "@type": "@id"
+        },
+        "schema": {
+            "@id": "http://mulesoft.com/vocabularies/knowledge-graph-service#schema",
+            "@type": "@id"
+        },
+        "pageSize": {
+            "@id": "http://mulesoft.com/vocabularies/knowledge-graph-service#pageSize",
+            "@type": "http://www.w3.org/2001/XMLSchema#integer"
+        },
+        "mappings": {
+            "@id": "http://mulesoft.com/vocabularies/knowledge-graph-service#mappings",
+            "@type": "@id"
+        },
+        "namespace": "http://mulesoft.com/vocabularies/knowledge-graph-service#namespace",
+        "encodes": {
+            "@id": "http://a.ml/vocabularies/document#encodes",
+            "@type": "@id"
+        },
+        "template": "http://www.w3.org/ns/hydra/core#template",
+        "properties": {
+            "@id": "http://mulesoft.com/vocabularies/knowledge-graph-service#properties",
+            "@type": "@id"
+        },
+        "node": "http://mulesoft.com/vocabularies/knowledge-graph-service#node"
+    },
+    "@graph": [
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk",
+            "@type": [
+                "http://a.ml/vocabularies/document#Fragment",
+                "http://a.ml/vocabularies/document#Unit",
+                "http://a.ml/vocabularies/document#Document",
+                "http://www.w3.org/ns/ldp#Container",
+                "http://a.ml/vocabularies/document#DomainElement",
+                "http://a.ml/vocabularies/document#Module",
+                "http://a.ml/vocabularies/meta#DialectDomainElement",
+                "http://a.ml/vocabularies/meta#DialectInstance",
+                "http://mulesoft.com/v1/schema/Container+Configuration/0.1#/declarations/ContainerConfigurationNode"
+            ],
+            "encodes": "http://mulesoft.com/v1/tech-talk",
+            "definedBy": "http://mulesoft.com/v1/schema/Container+Configuration/0.1",
+            "mappings": "http://mulesoft.com/v1/tech-talk#/mappings/PresentationNode",
+            "namespace": "tech-talk",
+            "http://mulesoft.com/vocabularies/knowledge-graph-service#pageSize": 10,
+            "pattern": "http://mulesoft.com/v1/tech-talk#/pattern",
+            "schema": "http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk#/mappings/PresentationNode",
+            "@type": [
+                "http://mulesoft.com/v1/schema/Container+Configuration/0.1#/declarations/NodeMappingNode",
+                "http://a.ml/vocabularies/meta#DialectDomainElement",
+                "http://mulesoft.com/vocabularies/knowledge-graph-service#NodeMapping",
+                "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "node": "PresentationNode",
+            "properties": [
+                "http://mulesoft.com/v1/tech-talk#/mappings/PresentationNode/properties/title",
+                "http://mulesoft.com/v1/tech-talk#/mappings/PresentationNode/properties/recorded",
+                "http://mulesoft.com/v1/tech-talk#/mappings/PresentationNode/properties/about",
+                "http://mulesoft.com/v1/tech-talk#/mappings/PresentationNode/properties/date"
+            ]
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk#/mappings/PresentationNode/properties/about",
+            "@type": [
+                "http://mulesoft.com/v1/schema/Container+Configuration/0.1#/declarations/PropertyMappingNode",
+                "http://a.ml/vocabularies/meta#DialectDomainElement",
+                "http://mulesoft.com/vocabularies/knowledge-graph-service#PropertyMapping",
+                "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "property": "about"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk#/mappings/PresentationNode/properties/date",
+            "@type": [
+                "http://mulesoft.com/v1/schema/Container+Configuration/0.1#/declarations/PropertyMappingNode",
+                "http://a.ml/vocabularies/meta#DialectDomainElement",
+                "http://mulesoft.com/vocabularies/knowledge-graph-service#PropertyMapping",
+                "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "property": "date"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk#/mappings/PresentationNode/properties/recorded",
+            "@type": [
+                "http://mulesoft.com/v1/schema/Container+Configuration/0.1#/declarations/PropertyMappingNode",
+                "http://a.ml/vocabularies/meta#DialectDomainElement",
+                "http://mulesoft.com/vocabularies/knowledge-graph-service#PropertyMapping",
+                "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "property": "recorded"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk#/mappings/PresentationNode/properties/title",
+            "@type": [
+                "http://mulesoft.com/v1/schema/Container+Configuration/0.1#/declarations/PropertyMappingNode",
+                "http://a.ml/vocabularies/meta#DialectDomainElement",
+                "http://mulesoft.com/vocabularies/knowledge-graph-service#PropertyMapping",
+                "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "property": "title"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk#/pattern",
+            "@type": [
+                "http://mulesoft.com/v1/schema/Container+Configuration/0.1#/declarations/IriTemplateNode",
+                "http://www.w3.org/ns/hydra/core#IriTemplate",
+                "http://a.ml/vocabularies/meta#DialectDomainElement",
+                "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "template": "$container/anyId/$uuid"
+        }
+    ]
+}
