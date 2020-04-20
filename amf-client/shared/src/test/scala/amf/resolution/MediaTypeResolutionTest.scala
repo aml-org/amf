@@ -32,6 +32,10 @@ class MediaTypeResolutionTest extends ResolutionTest {
 
   // Different target, should keep accepts and consumes fields as they are required in OAS.
   test("Override mediaType oas to OAS") {
-    cycle("media-type-override.json", "media-type-override-oas-target.json.jsonld", OasJsonHint, Oas)
+    cycle("media-type-override.json",
+          "media-type-override-oas-target.json.jsonld",
+          OasJsonHint,
+          Amf,
+          transformWith = Some(Oas))
   }
 }

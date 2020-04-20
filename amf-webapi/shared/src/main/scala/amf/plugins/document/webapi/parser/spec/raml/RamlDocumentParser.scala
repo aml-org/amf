@@ -25,7 +25,7 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.annotations.TypeAlias
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
+import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.{ResponseModel, WebApiModel}
 import amf.plugins.domain.webapi.models._
@@ -401,7 +401,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
   }
 
   private def isDirectTypeAlias(shape: Shape) = {
-    shape.isInstanceOf[NodeShape] && shape.isLink
+    shape.isInstanceOf[AnyShape] && shape.isLink
   }
 
   /** Get types or schemas facet. If both are available, default to types facet and throw a validation error. */

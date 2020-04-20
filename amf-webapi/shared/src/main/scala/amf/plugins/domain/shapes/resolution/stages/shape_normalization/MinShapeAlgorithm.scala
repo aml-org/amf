@@ -66,6 +66,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                      s == DataType.Double ||
                      s == DataType.Number)) {
             computeMinScalar(baseScalar, superScalar.withDataType(DataType.Integer))
+          } else if (baseScalar.dataType.option().isEmpty && superScalar.dataType.option().isDefined) {
+            computeMinShape(baseScalar.withDataType(s), superScalar)
           } else {
             context.errorHandler.violation(
               InvalidTypeInheritanceErrorSpecification,

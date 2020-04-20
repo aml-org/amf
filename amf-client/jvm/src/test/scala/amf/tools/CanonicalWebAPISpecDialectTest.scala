@@ -10,16 +10,16 @@ import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.BuildCycleTests
+import amf.io.FunSuiteCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.webapi.Raml10Plugin
 import amf.tools.canonical.CanonicalWebAPISpecTransformer
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
 
 import scala.concurrent.Future
 
-class CanonicalWebAPISpecDialectTest extends AsyncFunSuite with BuildCycleTests with PlatformSecrets {
+class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSecrets {
 
   val CANONICAL_WEBAPI_DIALECT  = "file://vocabularies/dialects/canonical_webapi_spec.yaml"
   override def basePath: String = "file://amf-client/shared/src/test/resources/transformations/"

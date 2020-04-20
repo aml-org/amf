@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.annotations.TypeAlias
-import amf.plugins.domain.shapes.models.NodeShape
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 class TypeAliasTransformationStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
   override def resolve[T <: BaseUnit](model: T): T = {
@@ -14,8 +14,8 @@ class TypeAliasTransformationStage()(override implicit val errorHandler: ErrorHa
   }
 
   private def isTypeAlias(element: DomainElement): Boolean = element match {
-    case shape: NodeShape => shape.annotations.contains(classOf[TypeAlias])
-    case _                => false
+    case shape: AnyShape => shape.annotations.contains(classOf[TypeAlias])
+    case _               => false
   }
 
   private def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {

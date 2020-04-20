@@ -249,7 +249,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       case None if shape.inherits.nonEmpty =>
         traversal.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
       case _ if shape.isInstanceOf[RecursiveShape] => shape
-      case _                                       => traversal.runWithIgnoredIds(() => normalize(shape), Set(root.id))
+      case _                                       => traversal.runWithIgnoredIds(() => normalize(shape), Set(root.id, shape.id))
     }
   }
 

@@ -1,12 +1,25 @@
 package amf.javaparser.org.raml
 
+import amf.io.FunSuiteCycleTests
 import amf.resolution.ResolutionTest
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.compatible.Assertion
 
 import scala.concurrent.Future
 
-trait DirectoryTest extends ResolutionTest {
+trait DirectoryTest extends FunSuiteCycleTests {
+
+  directories.foreach(d => {
+    if (ignoreDir(d)) {
+      ignore("DirectoryTest for dir: " + d) {
+        runTest(d)
+      }
+    } else {
+      test("DirectoryTest for dir: " + d) {
+        runTest(d)
+      }
+    }
+  })
 
   def path: String
   def inputFileName: String
@@ -34,27 +47,14 @@ trait DirectoryTest extends ResolutionTest {
       outputFileName concat ignorableExtension) || fileNames.contains(outputFileName + s".${platform.name}"))
   }
 
-  private def testFunction(d: String): Future[Assertion] = {
+  private def runTest(d: String): Future[Assertion] = {
     runDirectory(d).flatMap {
       case (t, usePlatform) =>
         val finalOutputFileName = if (usePlatform) outputFileName + s".${platform.name}" else outputFileName
-        writeTemporaryFile(finalOutputFileName)(t)
-          .flatMap(assertDifferences(_, s"${d + finalOutputFileName}"))
+        writeTemporaryFile(finalOutputFileName)(t).flatMap(assertDifferences(_, s"${d + finalOutputFileName}"))
     }
   }
-  directories.foreach(d => {
-    if (ignoreDir(d)) {
-      ignore("DirectoryTest for dir: " + d) {
-        testFunction(d)
-      }
-    } else {
-      test("DirectoryTest for dir: " + d) {
-        testFunction(d)
-      }
-    }
-  })
 
   protected def ignoreDir(d: String): Boolean =
     Fs.syncFile(d).list.exists(_.equals(outputFileName concat ignorableExtension))
-
 }
