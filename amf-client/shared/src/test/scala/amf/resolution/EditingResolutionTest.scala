@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.Oas30Profile
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Yaml
@@ -514,6 +515,15 @@ class EditingResolutionTest extends ResolutionTest {
       directory = productionPath,
       transformWith = Some(Raml10)
     )
+  }
+
+  test("Oas declared type alias inheritance with scalar type is valid") {
+    cycle("oas-declared-link-of-scalar.json",
+          "oas-declared-link-of-scalar.jsonld",
+          OasJsonHint,
+          Amf,
+          directory = resolutionPath,
+          transformWith = Some(Oas30))
   }
 
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
