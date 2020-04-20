@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "BoolFilter": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "filters"
+      ],
+      "properties": {
+        "filters": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "boolFilter": {
+              "$ref": "#/definitions/BoolFilter"
+            }
+          }
+        }
+      }
+    },
+    "root": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "must": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "root": {
+              "$ref": "#/definitions/root"
+            },
+            "filteredQuery": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "filter"
+              ],
+              "properties": {
+                "filter": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "properties": {
+                    "boolFilter": {
+                      "$ref": "#/definitions/BoolFilter"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

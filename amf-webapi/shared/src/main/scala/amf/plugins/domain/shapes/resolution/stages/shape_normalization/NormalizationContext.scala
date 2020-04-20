@@ -20,7 +20,21 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
   override protected def addClosure(closure: Shape, target: Shape): Unit = {
     super.addClosure(closure, target)
     cache.cacheClosure(closure.id, target)
+    updateAssociatedShapes(closure, target)
   }
+
+  /*
+   * search shapes that have target as a closure, and add the new closure that was added to target
+   */
+  def updateAssociatedShapes(closure: Shape, target: Shape): Unit =
+    cache.cacheWithClosures(target.id) match {
+      case Some(seq) =>
+        // shape has target as a closure, so the new closure of target should also be added
+        seq.foreach { shape =>
+          if (!shape.closureShapes.contains(closure)) addClosure(closure, shape)
+        }
+      case _ =>
+    }
 
   def minShape(derivedShape: Shape, superShape: Shape): Shape = {
 

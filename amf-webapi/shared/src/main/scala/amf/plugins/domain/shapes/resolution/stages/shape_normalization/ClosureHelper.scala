@@ -15,15 +15,7 @@ trait ClosureHelper {
   }
 
   protected def addClosures(closures: Seq[Shape], target: Shape): Unit = {
-    var closuresToAdd: List[Shape] = closures.toList
-    while (closuresToAdd.nonEmpty) {
-      val closure = closuresToAdd.head
-      closuresToAdd = closuresToAdd.tail
-      addClosure(closure, target)
-      val nestedClosures =
-        closure.closureShapes.filter(c => !target.closureShapes.contains(c) && !closuresToAdd.contains(c))
-      closuresToAdd ++= nestedClosures
-    }
+    closures.foreach { addClosure(_, target) }
   }
 
   protected def addFixpointToClosures(source: RecursiveShape, target: Shape): Unit = {

@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: some nice recursions
+
+types:
+  BoolFilter:
+    properties:
+      filters: Filter
+
+  root:
+    properties:
+      must?: Query
+
+  Filter:
+    properties:
+      boolFilter?: BoolFilter
+
+  FilteredQuery:
+    properties:
+      filter: Filter
+
+  Query:
+    properties:
+      root?: root
+      filteredQuery?: FilteredQuery
