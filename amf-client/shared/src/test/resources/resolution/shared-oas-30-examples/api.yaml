@@ -1,0 +1,92 @@
+openapi: '3.0.0'
+info:
+  version: 1.4.0
+  title: example.com
+paths:
+  /inlined:
+    post:
+      parameters:
+        - name: myParam
+          in: query
+          style: form
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                myExample:
+                  $ref: '#/components/examples/ErrorResponseExample'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorResponse'
+            examples:
+              myExample:
+                $ref: '#/components/examples/ErrorResponseExample'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                myExample:
+                  $ref: '#/components/examples/ErrorResponseExample'
+  /refs:
+    post:
+      parameters:
+        - $ref: "#/components/parameters/myParam"
+      requestBody:
+        $ref: "#/components/requestBodies/myReqBody"
+      responses:
+        '200':
+          $ref: "#/components/responses/myResponse"
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        text:
+          type: string
+  examples:
+    ErrorResponseExample:
+      summary: this is an example for an error response
+      value:
+        status: "202"
+        text: "Aloha"
+  responses:
+    myResponse:
+      description: Ok
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            myExample:
+              $ref: '#/components/examples/ErrorResponseExample'
+  requestBodies:
+    myReqBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            myExample:
+              $ref: '#/components/examples/ErrorResponseExample'
+  parameters:
+    myParam:
+      name: myParam
+      in: query
+      style: form
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            myExample:
+              $ref: '#/components/examples/ErrorResponseExample'

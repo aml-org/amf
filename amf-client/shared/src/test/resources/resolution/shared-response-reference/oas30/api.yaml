@@ -1,0 +1,34 @@
+openapi: '3.0.0'
+info:
+  version: 1.4.0
+  title: Example.com
+paths:
+  /echo:
+    post:
+      responses:
+        '202':
+          $ref: '#/components/responses/202_error_response'
+  '/users':
+    delete:
+      responses:
+        '202':
+          $ref: '#/components/responses/202_error_response'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        text:
+          type: string
+  responses:
+    202_error_response:
+      description: Accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            status: "202"
+            text: "Aloha"
