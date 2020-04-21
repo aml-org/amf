@@ -1,0 +1,34 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: api
+  contact:
+    name: cb
+    email: cbazan@mulesoft.com
+    url: http://mulesoft.com
+  description: testing swagger
+  termsOfService: Legal terms & conditions
+
+components:
+  parameters:
+    query-with-schema:
+      in: query
+      name: some query param
+      schema:
+        type: object
+paths:
+  /test:
+    get:
+      summary: get test
+      responses:
+        "200":
+          description: ok
+          content:
+            "*/*":
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                  msg:
+                    type: string
