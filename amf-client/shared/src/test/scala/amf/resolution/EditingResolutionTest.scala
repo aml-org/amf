@@ -3,7 +3,7 @@ package amf.resolution
 import amf.Oas30Profile
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.Yaml
+import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote.Vendor.AMF
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -524,6 +524,50 @@ class EditingResolutionTest extends ResolutionTest {
           Amf,
           directory = resolutionPath,
           transformWith = Some(Oas30))
+  }
+
+  test("Shared response references in OAS 2.0") {
+    cycle(
+      "shared-response-reference/oas20/api.yaml",
+      "shared-response-reference/oas20/api.jsonld",
+      OasYamlHint,
+      Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas20)
+    )
+  }
+
+  test("Shared response references in OAS 3.0") {
+    cycle(
+      "shared-response-reference/oas30/api.yaml",
+      "shared-response-reference/oas30/api.jsonld",
+      OasYamlHint,
+      Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30)
+    )
+  }
+
+  test("Shared request body references in OAS 3.0") {
+    cycle(
+      "shared-request-body-reference/oas30/api.yaml",
+      "shared-request-body-reference/oas30/api.jsonld",
+      OasYamlHint,
+      Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30)
+    )
+  }
+
+  test("Shared examples in OAS 3.0") {
+    cycle(
+      "shared-oas-30-examples/api.yaml",
+      "shared-oas-30-examples/api.jsonld",
+      OasYamlHint,
+      Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30)
+    )
   }
 
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
