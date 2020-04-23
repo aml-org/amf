@@ -164,23 +164,3 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   }
 
 }
-
-class JsonSchemaValidationFragmentEmitter(fragment: DataTypeFragment)(
-    implicit override val spec: JsonSchemaEmitterContext)
-    extends OasFragmentEmitter(fragment) {
-
-  override def emitFragment(): YDocument = {
-
-    val ordering: SpecOrdering = SpecOrdering.ordering(Oas, fragment.annotations)
-    val closureShapes          = fragment.encodes.closureShapes.toSeq
-
-    YDocument {
-      _.obj { b =>
-        traverse(DataTypeFragmentEmitter(fragment, ordering).emitters ++ Seq(
-                   OasDeclaredTypesEmitters(closureShapes, Nil, ordering)),
-                 b)
-      }
-    }
-  }
-
-}
