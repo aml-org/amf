@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.validation.remote
 
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.client.render.JsonSchemaDraft7
 import amf.core.client.ParsingOptions
 import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.DataType
@@ -12,13 +13,10 @@ import amf.core.parser.{ParserContext, SyamlParsedDocument}
 import amf.core.validation._
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.PayloadPlugin
-import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
-import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
-import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
+import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, JsonSchemaEmitter}
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models._
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -140,10 +138,11 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
   }
 
   private def generateSchemaString(dataType: DataTypeFragment): Option[CharSequence] = {
-    val renderOptions = new ShapeRenderOptions().withoutDocumentation
-    val context       = new JsonSchemaEmitterContext(dataType.errorHandler(), renderOptions, JSONSchemaDraft7SchemaVersion)
-    val emitter       = new JsonSchemaValidationFragmentEmitter(dataType)(context)
-    val document      = SyamlParsedDocument(document = emitter.emitFragment())
+    val renderOptions =
+      new ShapeRenderOptions().withoutDocumentation.withCompactedEmission.withSchemaVersion(JsonSchemaDraft7)
+    val declarations = dataType.encodes.closureShapes.toSeq :+ dataType.encodes
+    val emitter      = JsonSchemaEmitter(dataType.encodes, declarations, options = renderOptions)
+    val document     = SyamlParsedDocument(document = emitter.emitDocument())
     SYamlSyntaxPlugin.unparse("application/json", document)
   }
 
