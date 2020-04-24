@@ -87,10 +87,9 @@ object AMF extends PlatformSecrets {
 
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 
-  def registerDialect(
-      url: String,
-      executionEnvironment: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): ClientFuture[Dialect] =
-    Vocabularies.registerDialect(url, executionEnvironment)
+  def registerDialect(url: String): ClientFuture[Dialect] = Vocabularies.registerDialect(url)
+
+  def registerDialect(url: String, env: Environment): ClientFuture[Dialect] = Vocabularies.registerDialect(url, env)
 
   def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
 
