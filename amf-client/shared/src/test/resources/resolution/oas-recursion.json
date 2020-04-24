@@ -1,0 +1,26 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test",
+    "version": "1.1"
+  },
+  "paths": {},
+  "definitions": {
+    "Causes": {
+      "$ref": "#/definitions/ThesaurusSense"
+    },
+    "ThesaurusSense": {
+      "properties": {
+        "subsenses": {
+          "items": {
+            "$ref": "#/definitions/ThesaurusSense"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+
+  }
+}

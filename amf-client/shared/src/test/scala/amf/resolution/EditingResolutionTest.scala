@@ -585,6 +585,15 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  test("Oas 2 recursion detection") {
+    cycle("oas-recursion.json",
+          "oas-recursion.jsonld",
+          OasJsonHint,
+          Amf,
+          directory = resolutionPath,
+          transformWith = Some(Oas20))
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit,
                     config.target,

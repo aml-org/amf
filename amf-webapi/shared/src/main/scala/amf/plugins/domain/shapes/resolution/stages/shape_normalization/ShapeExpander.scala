@@ -150,7 +150,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       val newItems = if (mandatory) {
         recursiveNormalization(array.items)
       } else { // min items not present, could be an empty array, so not need to report recursive violation
-        traverseOptionalShapeFacet(array.items)
+        traverseOptionalShapeFacet(array.items, array)
       }
 
       context.handleClosures(newItems, array)
@@ -189,14 +189,16 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     val oldProperties = node.fields.getValue(NodeShapeModel.Properties)
     if (Option(oldProperties).isDefined) {
       val newProperties = node.properties.map { prop =>
-        val newPropertyShape = recursiveNormalization(prop).asInstanceOf[PropertyShape]
+        val newPropertyShape =
+          if (prop.minCount.option().forall(_ > 0)) recursiveNormalization(prop).asInstanceOf[PropertyShape]
+          else traverseOptionalShapeFacet(prop, node).asInstanceOf[PropertyShape]
         context.handleClosures(newPropertyShape.range, node)
         newPropertyShape
       }
       node.setArrayWithoutId(NodeShapeModel.Properties, newProperties, oldProperties.annotations)
     }
     Option(node.additionalPropertiesSchema).foreach(x => {
-      val resultantShape = traverseOptionalShapeFacet(x)
+      val resultantShape = traverseOptionalShapeFacet(x, node)
       context.handleClosures(resultantShape, node)
       node.set(NodeShapeModel.AdditionalPropertiesSchema, resultantShape)
     })
@@ -228,9 +230,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
     val oldRange = property.fields.getValue(PropertyShapeModel.Range)
     if (Option(oldRange).isDefined) {
-      val expandedRange =
-        if (!required) traverseOptionalShapeFacet(property.range) else recursiveNormalization(property.range)
-
+      val expandedRange = recursiveNormalization(property.range)
       property.fields.setWithoutId(PropertyShapeModel.Range, expandedRange, oldRange.annotations)
     } else {
       context.errorHandler.violation(
@@ -243,14 +243,9 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     property
   }
 
-  private def traverseOptionalShapeFacet(shape: Shape) = {
-    shape.linkTarget match {
-      case Some(t) => traversal.runWithIgnoredIds(() => normalize(shape), Set(root.id, t.id))
-      case None if shape.inherits.nonEmpty =>
-        traversal.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
-      case _ if shape.isInstanceOf[RecursiveShape] => shape
-      case _                                       => traversal.runWithIgnoredIds(() => normalize(shape), Set(root.id, shape.id))
-    }
+  private def traverseOptionalShapeFacet(shape: Shape, from: Shape) = shape match {
+    case _: RecursiveShape => shape
+    case _                 => traversal.recursionAllowed(() => normalize(shape), from.id)
   }
 
   protected def expandUnion(union: UnionShape): Shape = {
