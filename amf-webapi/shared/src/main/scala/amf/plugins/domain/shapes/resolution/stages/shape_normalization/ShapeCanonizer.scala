@@ -136,7 +136,8 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
         // we save this information to connect the references once we have computed the minShape
         if (hasDiscriminator(canonicalSuperNode))
-          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(canonicalSuperNode.asInstanceOf[NodeShape])
+          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(
+            canonicalSuperNode.asInstanceOf[NodeShape])
 
         canonicalSuperNode match {
           case chain: InheritanceChain => inheritedIds ++= (Seq(canonicalSuperNode.id) ++ chain.inheritedIds)
@@ -180,8 +181,10 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
   private def copyExamples(from: AnyShape, to: AnyShape): Unit = {
     from.examples.foreach(e1 => {
       to.examples.find { e2 =>
-        e1.id == e2.id || (e1.raw.option().getOrElse("").trim == e2.raw.option().getOrElse("").trim && e1.name
-          .value() == e2.name.value())
+        val exampleIdsAreEqual   = e1.id == e2.id
+        val rawExamplesAreEqual  = e1.raw.option().getOrElse("").trim == e2.raw.option().getOrElse("").trim
+        val examplesHaveSameName = e1.name.value() == e2.name.value()
+        exampleIdsAreEqual || (rawExamplesAreEqual && examplesHaveSameName)
       } match {
         case Some(toExample) =>
           // duplicated
