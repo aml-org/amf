@@ -574,6 +574,17 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("oas3-inlined-shapes.yaml", "oas3-inlined-shapes.jsonld", OasYamlHint, Amf, directory = resolutionPath)
   }
 
+  test("Oas 3 resolve request links that have parameters") {
+    cycle(
+      "request-link-parameters/api.yaml",
+      "request-link-parameters/api.jsonld",
+      OasYamlHint,
+      Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30)
+    )
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit,
                     config.target,
