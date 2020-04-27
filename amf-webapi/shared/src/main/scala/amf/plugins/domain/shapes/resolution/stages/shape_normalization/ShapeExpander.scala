@@ -190,7 +190,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (Option(oldProperties).isDefined) {
       val newProperties = node.properties.map { prop =>
         val newPropertyShape =
-          if (prop.minCount.option().forall(_ > 0)) recursiveNormalization(prop).asInstanceOf[PropertyShape]
+          if (isRequired(prop)) recursiveNormalization(prop).asInstanceOf[PropertyShape]
           else traverseOptionalShapeFacet(prop, node).asInstanceOf[PropertyShape]
         context.handleClosures(newPropertyShape.range, node)
         newPropertyShape
@@ -215,6 +215,8 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
     node
   }
+
+  private def isRequired(prop: PropertyShape) = prop.minCount.option().forall(_ > 0)
 
   protected def expandProperty(property: PropertyShape): PropertyShape = {
     // property is mandatory and must be explicit
@@ -244,6 +246,8 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   }
 
   private def traverseOptionalShapeFacet(shape: Shape, from: Shape) = shape match {
+    case _ if shape.inherits.nonEmpty =>
+      traversal.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
     case _: RecursiveShape => shape
     case _                 => traversal.recursionAllowed(() => normalize(shape), from.id)
   }
