@@ -59,7 +59,6 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
 
-
 # Final user and home config
 RUN useradd --create-home --shell /bin/bash jenkins
 USER jenkins
