@@ -98,7 +98,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     }
   }
 
-  def mapBaseUnits(unit: String, dialect: Dialect, nativeModel: Model) = {
+  private def mapBaseUnits(unit: String, dialect: Dialect, nativeModel: Model) = {
     val unitResource = nativeModel.createResource(unit)
 
     // Process and remove old types
@@ -462,7 +462,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
       transformLink(nativeModel, domainElement)
 
       // same for custom domain properties
-      // domain properties are generated as properties, now they will becom
+      // domain properties are generated as properties, now they will become
       /// reified so we can list them
       transformAnnotations(nativeModel, mapping, domainElement)
     }

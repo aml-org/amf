@@ -4,6 +4,7 @@ import amf.ProfileName
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.AMF
 import amf.core.emitter.RenderOptions
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
@@ -12,7 +13,6 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.document.webapi.Raml10Plugin
 import amf.tools.canonical.CanonicalWebAPISpecTransformer
 import org.scalatest.Assertion
 
@@ -29,16 +29,15 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
     val amfWebApi  = basePath + source
     val goldenYaml = s"$basePath$target.yaml"
     val goldenJson = s"$basePath$target.json"
-    val eh         = DefaultParserErrorHandler.withRun()
+
     for {
-      _           <- AMF.init()
-      _           <- Future(amf.Core.registerPlugin(AMLPlugin))
-      v           <- Validation(platform)
-      d           <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, eh = eh).build()
-      _           <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
-      unit        <- AMFCompiler(amfWebApi, platform, RamlYamlHint, eh = eh).build()
-      resolved    <- Future { Raml10Plugin.resolve(unit, eh) }
-      transformed <- CanonicalWebAPISpecTransformer.transform(resolved)
+      _    <- AMF.init()
+      _    <- Future(amf.Core.registerPlugin(AMLPlugin))
+      v    <- Validation(platform)
+      d    <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, eh = UnhandledParserErrorHandler).build()
+      _    <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
+      unit <- AMFCompiler(amfWebApi, platform, RamlYamlHint, eh = UnhandledParserErrorHandler).build()
+      transformed <- CanonicalWebAPISpecTransformer.transform(unit)
       json        <- new AMFRenderer(transformed, Vendor.AMF, RenderOptions().withPrettyPrint, Some(Syntax.Json)).renderToString
       yaml        <- new AMFRenderer(transformed, Vendor.AML, RenderOptions().withNodeIds, Some(Syntax.Yaml)).renderToString
       tmpYaml     <- writeTemporaryFile(goldenYaml)(yaml)
@@ -64,18 +63,8 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
     "annotations/api.raml",
     "macros/api.raml",
     "modular/api.raml",
-    "all-annotations/api.raml",
+    "security/api.raml",
 //    "modular-recursion/api.raml"
-
-    // "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml.jsonld" -> "banking-api.webapi.yaml",
-    // "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml.jsonld" -> "banking-api.webapi.yaml",
-
-//    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/all-type-types/api.raml.jsonld" -> "all-type-types.webapi.yaml",
-
-//    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/api.raml.jsonld" -> "secured-by.webapi.yaml",
-//    TODO: positions moving
-//    "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml.jsonld"     -> "full-banking-api.webapi.yaml",
-//    "file://amf-tools/jvm/src/test/resources/input/sample.raml.resolved.jsonld"                     -> "sample.webapi.yaml"
   )
 
   /*
@@ -87,10 +76,8 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
 
   tests.foreach { input =>
     val golden = input.replace("api.raml", "webapi")
-    (1 to 1).foreach { n =>
-      test(s"Test WebAPI dialect transformation and yaml/json rendering '$input' ($n)") {
-        checkCanonicalDialectTransformation(input, golden, shouldTranform = false)
-      }
+    test(s"Test '$input' for WebAPI dialect transformation and yaml/json rendering") {
+      checkCanonicalDialectTransformation(input, golden, shouldTranform = false)
     }
   }
 }

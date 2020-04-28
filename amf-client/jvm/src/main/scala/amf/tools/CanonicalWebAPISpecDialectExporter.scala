@@ -98,37 +98,37 @@ object CanonicalWebAPISpecDialectExporter {
 
   var nodeMappings: Map[String, ExtendedDialectNodeMapping] = Map()
 
-  def metaTypeToDialectRange(metaType: Type): (String, Boolean) = {
+  def metaTypeToDialectRange(metaType: Type): (String, Boolean, Boolean) = {
     metaType match {
       // objects
-      case metaModel: Obj => (metaModel.doc.displayName.toCamelCase, false)
+      case metaModel: Obj => (metaModel.doc.displayName.toCamelCase, false, false)
       // scalars
-      case scalar: Scalar if scalar == Type.Str        => ("string", false)
-      case scalar: Scalar if scalar == Type.RegExp     => ("string", false)
-      case scalar: Scalar if scalar == Type.Int        => ("integer", false)
-      case scalar: Scalar if scalar == Type.Float      => ("float", false)
-      case scalar: Scalar if scalar == Type.Double     => ("double", false)
-      case scalar: Scalar if scalar == Type.Time       => ("time", false)
-      case scalar: Scalar if scalar == Type.Date       => ("date", false)
-      case scalar: Scalar if scalar == Type.DateTime   => ("dateTime", false)
-      case scalar: Scalar if scalar == Type.Iri        => ("uri", false)
-      case scalar: Scalar if scalar == Type.EncodedIri => ("uri", false)
-      case scalar: Scalar if scalar == Type.Bool       => ("boolean", false)
+      case scalar: Scalar if scalar == Type.Str        => ("string", false, false)
+      case scalar: Scalar if scalar == Type.RegExp     => ("string", false, false)
+      case scalar: Scalar if scalar == Type.Int        => ("integer", false, false)
+      case scalar: Scalar if scalar == Type.Float      => ("float", false, false)
+      case scalar: Scalar if scalar == Type.Double     => ("double", false, false)
+      case scalar: Scalar if scalar == Type.Time       => ("time", false, false)
+      case scalar: Scalar if scalar == Type.Date       => ("date", false, false)
+      case scalar: Scalar if scalar == Type.DateTime   => ("dateTime", false, false)
+      case scalar: Scalar if scalar == Type.Iri        => ("uri", false, false)
+      case scalar: Scalar if scalar == Type.EncodedIri => ("uri", false, false)
+      case scalar: Scalar if scalar == Type.Bool       => ("boolean", false, false)
       // collections
-      case Type.Array(t)       => (metaTypeToDialectRange(t)._1, true)
-      case Type.SortedArray(t) => (metaTypeToDialectRange(t)._1, true)
+      case Type.Array(t)       => (metaTypeToDialectRange(t)._1, true, false)
+      case Type.SortedArray(t) => (metaTypeToDialectRange(t)._1, true, true)
     }
   }
 
-  def buildPropertyMapping(field: Field): DialectPropertyMapping = {
-    val propertyTerm           = field.value.iri()
-    val name                   = field.doc.displayName.toCamelCase.replace("\\.", "")
-    val (range, allowMultiple) = metaTypeToDialectRange(field.`type`)
+  private def buildPropertyMapping(field: Field): DialectPropertyMapping = {
+    val propertyTerm                   = field.value.iri()
+    val name                           = field.doc.displayName.toCamelCase.replace("\\.", "")
+    val (range, allowMultiple, sorted) = metaTypeToDialectRange(field.`type`)
 
-    DialectPropertyMapping(name, propertyTerm, range, allowMultiple)
+    DialectPropertyMapping(name, propertyTerm, range, allowMultiple, sorted)
   }
 
-  def buildNodeMapping(klassName: String, modelObject: Obj): ExtendedDialectNodeMapping = {
+  private def buildNodeMapping(klassName: String, modelObject: Obj): ExtendedDialectNodeMapping = {
     val doc         = modelObject.doc
     val types       = modelObject.`type`.map(_.iri())
     val id          = types.head
@@ -599,9 +599,11 @@ object CanonicalWebAPISpecDialectExporter {
                   stringBuilder.append(s"        range: ${propertyMapping.range}\n")
                 }
                 if (propertyMapping.allowMultiple) {
-                  stringBuilder.append(s"        allowMultiple: ${propertyMapping.allowMultiple}\n")
+                  stringBuilder.append(s"        allowMultiple: true\n")
+                  if (propertyMapping.sorted) {
+                    stringBuilder.append(s"        sorted: true\n")
+                  }
                 }
-
               }
 
               if (dialectNodeMapping.propertyMappings.exists(
