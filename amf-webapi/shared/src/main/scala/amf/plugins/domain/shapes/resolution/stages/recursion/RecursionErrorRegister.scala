@@ -8,7 +8,7 @@ import amf.plugins.features.validation.CoreValidations.RecursiveShapeSpecificati
 import scala.collection.mutable.ListBuffer
 
 private[stages] class RecursionErrorRegister(errorHandler: ErrorHandler) {
-  private val avoidRegister = ListBuffer[String]()
+  private val errorRegister = ListBuffer[String]()
 
   private def buildRecursion(base: Option[String], s: Shape): RecursiveShape = {
     val fixPointId = base.getOrElse(s.id)
@@ -29,10 +29,8 @@ private[stages] class RecursionErrorRegister(errorHandler: ErrorHandler) {
                      traversal: ModelTraversalRegistry,
                      checkId: Option[String] = None): RecursiveShape = {
 
-    val canRegister = !avoidRegister.contains(r.id)
-    if (!r.supportsRecursion
-          .option()
-          .getOrElse(false) && !traversal.avoidError(r, checkId) && canRegister) {
+    val canRegister = !errorRegister.contains(r.id)
+    if (!r.supportsRecursion.option().getOrElse(false) && !traversal.avoidError(r, checkId) && canRegister) {
       errorHandler.violation(
         RecursiveShapeSpecification,
         original.id,
@@ -41,10 +39,8 @@ private[stages] class RecursionErrorRegister(errorHandler: ErrorHandler) {
         original.position(),
         original.location()
       )
-      avoidRegister += r.id
-    } else if (traversal.avoidError(r, checkId)) {
-      r.withSupportsRecursion(true)
-    }
+      errorRegister += r.id
+    } else if (traversal.avoidError(r, checkId)) r.withSupportsRecursion(true)
     r
   }
 }
