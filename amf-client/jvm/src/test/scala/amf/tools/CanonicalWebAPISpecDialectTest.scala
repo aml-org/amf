@@ -31,12 +31,12 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
     val goldenJson = s"$basePath$target.json"
 
     for {
-      _    <- AMF.init()
-      _    <- Future(amf.Core.registerPlugin(AMLPlugin))
-      v    <- Validation(platform)
-      d    <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, eh = UnhandledParserErrorHandler).build()
-      _    <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
-      unit <- AMFCompiler(amfWebApi, platform, RamlYamlHint, eh = UnhandledParserErrorHandler).build()
+      _           <- AMF.init()
+      _           <- Future(amf.Core.registerPlugin(AMLPlugin))
+      v           <- Validation(platform)
+      d           <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, eh = UnhandledParserErrorHandler).build()
+      _           <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
+      unit        <- AMFCompiler(amfWebApi, platform, RamlYamlHint, eh = UnhandledParserErrorHandler).build()
       transformed <- CanonicalWebAPISpecTransformer.transform(unit)
       json        <- new AMFRenderer(transformed, Vendor.AMF, RenderOptions().withPrettyPrint, Some(Syntax.Json)).renderToString
       yaml        <- new AMFRenderer(transformed, Vendor.AML, RenderOptions().withNodeIds, Some(Syntax.Yaml)).renderToString
@@ -64,6 +64,7 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
     "macros/api.raml",
     "modular/api.raml",
     "security/api.raml",
+    "declares/api.raml"
 //    "modular-recursion/api.raml"
   )
 

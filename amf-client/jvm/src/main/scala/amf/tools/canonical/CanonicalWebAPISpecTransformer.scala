@@ -373,10 +373,6 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     val mapping = buildCanonicalClassMapping
     val model   = unit.toNativeRdfModel()
 
-    println("----- Parsed UNIT <<<")
-    println(model.toN3())
-    println("----- Parsed UNIT >>> ")
-
     val nativeModel = model.native().asInstanceOf[Model]
 
     val baseUnitId = preProcessUnits(nativeModel)
