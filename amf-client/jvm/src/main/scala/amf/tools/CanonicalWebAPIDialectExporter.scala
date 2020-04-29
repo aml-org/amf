@@ -3,12 +3,12 @@ package amf.tools
 import java.io.{File, FileWriter}
 
 import amf.core.metamodel.Type.Scalar
-import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
+import amf.core.utils.AmfStrings
 
 import scala.collection.mutable
 
@@ -46,20 +46,10 @@ object CanonicalWebAPIDialectExporter {
 
   var nodeMappings: Map[String, DialectNodeMapping] = Map()
 
-  def toCamelCase(str: String): String = {
-    // str.replace(" ", "")
-    val words = str.split("\\s+")
-    if (words.size == 1) {
-      words.head
-    } else {
-      (Seq(words.head) ++ words.tail.map(_.capitalize)).mkString
-    }
-  }
-
   def metaTypeToDialectRange(metaType: Type): (String, Boolean) = {
     metaType match {
       // objects
-      case metaModel: Obj => (toCamelCase(metaModel.doc.displayName), false)
+      case metaModel: Obj => ((metaModel.doc.displayName).toCamelCase, false)
       // scalars
       case scalar: Scalar if scalar == Type.Str        => ("string", false)
       case scalar: Scalar if scalar == Type.RegExp     => ("string", false)
@@ -80,7 +70,7 @@ object CanonicalWebAPIDialectExporter {
 
   def buildPropertyMapping(field: Field): DialectPropertyMapping = {
     val propertyTerm           = field.value.iri()
-    val name                   = toCamelCase(field.doc.displayName).replace("\\.", "")
+    val name                   = field.doc.displayName.toCamelCase.replace("\\.", "")
     val (range, allowMultiple) = metaTypeToDialectRange(field.`type`)
 
     DialectPropertyMapping(name, propertyTerm, range, allowMultiple)
@@ -98,7 +88,7 @@ object CanonicalWebAPIDialectExporter {
     val propertyTerms = modelObject.fields.map(buildPropertyMapping)
 
     val isShape = types.contains((Namespace.Shacl + "Shape").iri())
-    val nodeMapping = DialectNodeMapping(name = toCamelCase(displayName),
+    val nodeMapping = DialectNodeMapping(name = displayName.toCamelCase,
                                          classTerm = id,
                                          propertyMappings = propertyTerms,
                                          isShape = isShape)
@@ -389,7 +379,7 @@ object CanonicalWebAPIDialectExporter {
     stringBuilder.append("\n\n")
     stringBuilder.append("documents:\n")
     stringBuilder.append("  root:\n")
-    stringBuilder.append(s"    encodes: ${toCamelCase(WebApiModel.doc.displayName)}\n")
+    stringBuilder.append(s"    encodes: ${WebApiModel.doc.displayName.toCamelCase}\n")
     // TODO: union of declarations
     stringBuilder.append(declarations)
 
