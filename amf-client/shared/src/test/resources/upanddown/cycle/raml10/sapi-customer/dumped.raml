@@ -17,8 +17,6 @@ types:
       "200":
         body:
           application/json:
-            type:
-              items: objectName
             example:
               -
                 id: "1"
@@ -59,6 +57,7 @@ types:
                   state: Indiana
                   postalCode: "46614"
                   country: USA
+            items: objectName
   post:
     body:
       application/json:

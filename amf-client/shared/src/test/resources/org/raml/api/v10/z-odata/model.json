@@ -255,6 +255,7 @@ types:
       "200":
         body:
           application/json:
+            type: array
             items:
               (odata.remote): Orders
               type: object
@@ -547,6 +548,7 @@ types:
       "200":
         body:
           application/json:
+            type: array
             items:
               (odata.remote): Customers
               type: object
@@ -809,6 +811,7 @@ types:
       "200":
         body:
           application/json:
+            type: array
             items:
               (odata.remote): Weird-resource_NAME
               type: object
