@@ -4,6 +4,7 @@ import amf.ProfileName
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.Shape
 import amf.core.resolution.stages.elements.resolution.ElementStageTransformer
+import amf.plugins.domain.shapes.resolution.stages.recursion.RecursionErrorRegister
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization.{
   NormalizationContext,
   ShapeCanonizer,
@@ -12,7 +13,7 @@ import amf.plugins.domain.shapes.resolution.stages.shape_normalization.{
 
 class ShapeTransformer(context: NormalizationContext) extends ElementStageTransformer[Shape] {
 
-  private val recursionRegister = RecursionErrorRegister()
+  private val recursionRegister = new RecursionErrorRegister(context.errorHandler)
   override def transform(element: Shape): Option[Shape] = {
     Some(ShapeCanonizer(ShapeExpander(element, context, recursionRegister), context))
 

@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: Something
+types:
+  myArray:
+    type: array
+    items: Person[]
+    minItems: 1
+  myTypeExpression:
+    type: Person[][]
+    minItems: 1
+  Person:
+    properties:
+      name: string
