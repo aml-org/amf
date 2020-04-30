@@ -44,8 +44,7 @@ types:
           "200":
             body:
               application/json:
-                type:
-                  items: shapes.BankAccountData
+                items: shapes.BankAccountData
       post:
         description: Requests the creation of a new BankAccount
         body:
@@ -77,8 +76,7 @@ types:
           "200":
             body:
               application/json:
-                type:
-                  items: shapes.LoanData
+                items: shapes.LoanData
       post:
         description: Requests the creation of a new Loan
         body:
@@ -114,8 +112,7 @@ types:
             "200":
               body:
                 application/json:
-                  type:
-                    items: shapes.DebitCardData
+                  items: shapes.DebitCardData
         post:
           description: Requests the creation of a new DebitCard
           body:
@@ -147,8 +144,7 @@ types:
             "200":
               body:
                 application/json:
-                  type:
-                    items: shapes.CreditCardData
+                  items: shapes.CreditCardData
         post:
           description: Requests the creation of a new CreditCard
           body:

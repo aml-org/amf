@@ -14,9 +14,11 @@ types:
       "200":
         body:
           application/json:
+            type: array
             items:
               type: string
           application/xml:
+            type: array
             items:
               type: string
 /send:

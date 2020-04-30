@@ -43,6 +43,7 @@ types:
             type: string
             required: false
           reports:
+            type: array
             items:
               type: object
               additionalProperties: true
@@ -92,6 +93,7 @@ types:
         type: string
         required: false
       reports:
+        type: array
         items:
           type: object
           additionalProperties: true
@@ -166,6 +168,7 @@ types:
             type: string
             required: false
           reports:
+            type: array
             items:
               type: object
               additionalProperties: true
@@ -252,6 +255,7 @@ types:
                     type: string
                     required: false
                   reports:
+                    type: array
                     items:
                       type: object
                       additionalProperties: true

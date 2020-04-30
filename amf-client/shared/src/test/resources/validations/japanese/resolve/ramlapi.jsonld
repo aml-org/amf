@@ -2850,11 +2850,31 @@
                     ]
                   }
                 ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "\u753B\u50CF"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "amf://id#21/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "@id": "amf://id#21/source-map/type-property-lexical-info/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "amf://id#21"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(38,8)-(38,12)]"
+                          }
+                        ]
+                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
@@ -2866,7 +2886,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(38,8)-(39,0)]"
+                            "@value": "[(37,6)-(39,0)]"
                           }
                         ]
                       }

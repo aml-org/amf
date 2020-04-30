@@ -106,6 +106,11 @@
                                 ]
                               }
                             ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
                             "apiContract:examples": [
                               {
                                 "@id": "#25",
@@ -321,9 +326,6 @@
                                     "#25": "[(2,0)-(8,13)]",
                                     "doc:structuredValue": "[(2,10)-(8,13)]"
                                   },
-                                  "local-element": {
-                                    "#25": ""
-                                  },
                                   "tracked-element": {
                                     "#25": "amf://id#23"
                                   }
@@ -335,7 +337,11 @@
                                 "#24": ""
                               },
                               "lexical": {
-                                "#24": "[(13,8)-(14,0)]"
+                                "apiContract:examples": "[(14,8)-(15,0)]",
+                                "#24": "[(12,6)-(15,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#24": "[(13,8)-(13,12)]"
                               }
                             }
                           }

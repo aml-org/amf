@@ -378,6 +378,51 @@
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
+        "http://a.ml/vocabularies/shapes#items": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/items/default-node",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
+              "http://www.w3.org/ns/shacl#Shape",
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#link-target": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/Email"
+              }
+            ],
+            "http://a.ml/vocabularies/document#link-label": [
+              {
+                "@value": "Email"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/items/default-node/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#type-expression": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/items/default-node/source-map/type-expression/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/items/default-node"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "Email"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
         "http://www.w3.org/ns/shacl#minCount": [
           {
             "@value": 1
@@ -391,78 +436,6 @@
         "http://www.w3.org/ns/shacl#name": [
           {
             "@value": "Emails"
-          }
-        ],
-        "http://a.ml/vocabularies/shapes#inherits": [
-          {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/array/default-array",
-            "@type": [
-              "http://a.ml/vocabularies/shapes#ArrayShape",
-              "http://a.ml/vocabularies/shapes#AnyShape",
-              "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/shapes#items": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/array/default-array/items/default-node",
-                "@type": [
-                  "http://www.w3.org/ns/shacl#NodeShape",
-                  "http://a.ml/vocabularies/shapes#AnyShape",
-                  "http://www.w3.org/ns/shacl#Shape",
-                  "http://a.ml/vocabularies/shapes#Shape",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/document#link-target": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/Email"
-                  }
-                ],
-                "http://a.ml/vocabularies/document#link-label": [
-                  {
-                    "@value": "Email"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/array/default-array/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/array/default-array/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/array/default-array"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(11,4)-(12,0)]"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#type-expression": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/array/default-array/source-map/type-expression/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/array/default-array"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "Email[]"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
           }
         ],
         "http://a.ml/vocabularies/apiContract#examples": [
@@ -928,33 +901,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/source-map/lexical/element_5",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/shapes#inherits"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(11,4)-(12,0)]"
-                  }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/source-map/lexical/element_3",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(10,2)-(20,43)]"
-                  }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/source-map/lexical/element_4",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#name"
@@ -963,6 +910,19 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(10,2)-(10,8)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/source-map/lexical/element_2",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(10,2)-(20,43)]"
                   }
                 ]
               },
@@ -980,20 +940,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/source-map/lexical/element_2",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://www.w3.org/ns/shacl#minCount"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(12,4)-(13,0)]"
-                  }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/source-map/lexical/element_4",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/shapes#uniqueItems"
@@ -1002,6 +949,19 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(13,4)-(14,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#minCount"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(12,4)-(13,0)]"
                   }
                 ]
               }
