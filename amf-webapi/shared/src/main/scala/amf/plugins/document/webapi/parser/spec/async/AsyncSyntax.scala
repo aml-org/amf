@@ -219,6 +219,20 @@ object Async20Syntax extends SpecSyntax {
       "externalDocs",
       "bindings"
     ),
+    "messageTrait" -> Set(
+      "headers",
+      "correlationId",
+      "schemaFormat",
+      "contentType",
+      "name",
+      "title",
+      "summary",
+      "description",
+      "tags",
+      "externalDocs",
+      "bindings",
+      "examples"
+    ),
     "info" -> Set(
       "title",
       "description",

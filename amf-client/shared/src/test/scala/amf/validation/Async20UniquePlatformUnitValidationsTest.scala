@@ -165,11 +165,7 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
              Async20Profile)
   }
 
-  ignore("Nested external message refs with traits") {
-    validate("nested-libraries/nested-messages-traits/api.yaml", None, Async20Profile)
-  }
-
-  ignore("Nested external message refs") {
-    validate("nested-libraries/nested-messages/api.yaml", None, Async20Profile)
+  test("Valid message trait node") {
+    validate("valid-messageTrait-node.yaml", None, Async20Profile)
   }
 }
