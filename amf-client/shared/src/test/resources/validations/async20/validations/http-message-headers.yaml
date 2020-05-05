@@ -1,0 +1,22 @@
+asyncapi: 2.0.0
+info:
+  title: asasd
+  version: asd
+channels:
+  /invalid:
+    subscribe:
+      message:
+        bindings:
+          http:
+            headers:
+              type: string
+  /managers:
+    subscribe:
+      message:
+        bindings:
+          http:
+            headers:
+              type: object
+              properties:
+                something:
+                  type: string
