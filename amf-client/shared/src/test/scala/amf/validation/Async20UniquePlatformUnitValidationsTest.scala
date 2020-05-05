@@ -161,6 +161,18 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
              Async20Profile)
   }
 
+  test("WsSocketChannelBinding query and header field must be an object type and have properties key") {
+    validate("ws-channel-binding-header-query.yaml", Some("ws-channel-binding-header-query.report"), Async20Profile)
+  }
+
+  test("HttpOperationBinding query field must be an object type and have properties key") {
+    validate("http-operation-query.yaml", Some("http-operation-query.report"), Async20Profile)
+  }
+
+  test("HttpMessageBinding headers field must be an object type and have properties key") {
+    validate("http-message-headers.yaml", Some("http-message-headers.report"), Async20Profile)
+  }
+
   ignore("Nested external correlationId refs") {
     validate("nested-libraries/nested-correlationIds/api.yaml", None, Async20Profile)
   }

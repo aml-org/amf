@@ -2,13 +2,15 @@ package amf.validations
 
 import java.util.regex.Pattern
 
-import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
+import amf.core.model.domain.extensions.PropertyShape
+import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar, DomainElement}
 import amf.core.parser.Annotations
-import amf.core.services.RuntimeValidator.CustomShaclFunctions
+import amf.core.services.RuntimeValidator.{CustomShaclFunctions, PropertyInfo}
 import amf.core.utils.RegexConverter
 import amf.plugins.document.webapi.validation.Oas3ExpressionValidator
 import amf.plugins.domain.shapes.metamodel._
-import amf.plugins.domain.shapes.models.{FileShape, ScalarShape}
+import amf.plugins.domain.shapes.models.{FileShape, NodeShape, ScalarShape}
+import amf.plugins.domain.webapi.metamodel.bindings.{BindingHeaders, BindingQuery, WebSocketsChannelBindingModel}
 import amf.plugins.domain.webapi.metamodel.security.{
   OAuth2SettingsModel,
   OpenIdConnectSettingsModel,
@@ -210,8 +212,33 @@ object CustomShaclFunctions {
           case _ =>
         }
       }
+    }),
+    "mandatoryHeadersObjectNodeWithPropertiesFacet" -> ((element, violation) => {
+      for {
+        headerElement <- element.fields.?[AmfElement](BindingHeaders.Headers)
+      } yield {
+        val isObjectAndHasProperties = validateObjectAndHasProperties(headerElement)
+        if (!isObjectAndHasProperties) violation(None)
+      }
+    }),
+    "mandatoryQueryObjectNodeWithPropertiesFacet" -> ((element, violation) => {
+      for {
+        queryElement <- element.fields.?[AmfElement](BindingQuery.Query)
+      } yield {
+        val isObjectAndHasProperties = validateObjectAndHasProperties(queryElement)
+        if (!isObjectAndHasProperties) violation(None)
+      }
     })
   )
+
+  private def validateObjectAndHasProperties(element: AmfElement) = {
+    element match {
+      case element: NodeShape =>
+        element.properties.exists(p => p.patternName.option().isEmpty) || element.fields.exists(
+          NodeShapeModel.Properties)
+      case _ => false
+    }
+  }
 
   def validateExpression(exp: Option[AmfElement], throwValidation: () => Unit): Unit = exp foreach {
     case exp: AmfScalar =>

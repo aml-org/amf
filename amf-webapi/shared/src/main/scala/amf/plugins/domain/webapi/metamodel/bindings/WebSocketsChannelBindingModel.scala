@@ -8,25 +8,15 @@ import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.webapi.models.bindings.websockets.WebSocketsChannelBinding
 
-object WebSocketsChannelBindingModel extends ChannelBindingModel with BindingVersion {
+object WebSocketsChannelBindingModel
+    extends ChannelBindingModel
+    with BindingVersion
+    with BindingHeaders
+    with BindingQuery {
   val Method =
     Field(Str,
           ApiBinding + "method",
           ModelDoc(ModelVocabularies.ApiBinding, "method", "The HTTP method to use when establishing the connection"))
-
-  val Query = Field(ShapeModel,
-                    ApiBinding + "query",
-                    ModelDoc(ModelVocabularies.ApiBinding,
-                             "query",
-                             "A Schema object containing the definitions for each query parameter"))
-
-  val Headers = Field(
-    ShapeModel,
-    ApiBinding + "headers",
-    ModelDoc(ModelVocabularies.ApiBinding,
-             "query",
-             "A Schema object containing the definitions for each query parameter")
-  )
 
   override def modelInstance: AmfObject = WebSocketsChannelBinding()
 

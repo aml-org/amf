@@ -2126,6 +2126,58 @@ object AMFRawValidations {
         "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",
         "Violation"
       ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:WebSocketsChannelBinding",
+        "apiBinding:query",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:mandatoryQueryObjectNodeWithPropertiesFacet",
+        "0",
+        "'query' property of ws channel binding must be of type object and have properties",
+        "'query' property of ws channel binding must be of type object and have properties",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:WebSocketsChannelBinding",
+        "apiBinding:headers",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:mandatoryHeadersObjectNodeWithPropertiesFacet",
+        "0",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:HttpMessageBinding",
+        "apiBinding:headers",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:mandatoryHeadersObjectNodeWithPropertiesFacet",
+        "0",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:HttpOperationBinding",
+        "apiBinding:query",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:mandatoryQueryObjectNodeWithPropertiesFacet",
+        "0",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "Violation"
+      ),
     )
     
     override def validations(): Seq[AMFValidation] = result
