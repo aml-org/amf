@@ -1838,6 +1838,32 @@ object AMFRawValidations {
         "'in' field is mandatory in HttpApiKey scheme",
         "Violation"
       ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "security:HttpApiKeySettings",
+        "security:in",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        "^(query|header|cookie)$",
+        "Invalid 'in' value. The options are: query, header or cookie",
+        "Invalid 'in' value. The options are: query, header or cookie",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "security:ApiKeySettings",
+        "security:in",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        "^(user|password)$",
+        "Invalid 'in' value. The options are: user or password",
+        "Invalid 'in' value. The options are: user or password",
+        "Violation"
+      ),
       urlValidation(AsyncApi20.name, "core:Organization", "core:url"),
       urlValidation(AsyncApi20.name, "core:License", "core:url"),
       AMFValidation(

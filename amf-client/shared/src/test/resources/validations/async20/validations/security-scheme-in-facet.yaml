@@ -1,0 +1,39 @@
+asyncapi: 2.0.0
+
+info:
+  title: Signup service example (internal)
+  version: 0.1.0
+channels:
+  /user/signedup:
+    subscribe:
+      message:
+        payload:
+          type: string
+components:
+  securitySchemes:
+    http-header:
+      type: httpApiKey
+      name: "My-Key"
+      in: header
+    http-query:
+      type: httpApiKey
+      name: "My-Key"
+      in: query
+    http-cookie:
+      type: httpApiKey
+      name: "My-Key"
+      in: cookie
+    http-invalid:
+      type: httpApiKey
+      name: "My-Key"
+      in: invalidValue
+
+    api-key-user:
+      type: apiKey
+      in: user
+    api-key-password:
+      type: apiKey
+      in: password
+    api-key-invalid:
+      type: apiKey
+      in: invalidValue
