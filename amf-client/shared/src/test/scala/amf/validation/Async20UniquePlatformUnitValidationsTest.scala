@@ -174,4 +174,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Valid message trait node") {
     validate("valid-messageTrait-node.yaml", None, Async20Profile)
   }
+
+  test("httpApiKey and apiKey 'in' facet validation") {
+    validate("security-scheme-in-facet.yaml", Some("invalid-in-facet-security-scheme.report"), Async20Profile)
+  }
 }
