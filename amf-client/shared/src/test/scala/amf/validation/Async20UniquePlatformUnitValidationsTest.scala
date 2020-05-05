@@ -155,6 +155,12 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
              Async20Profile)
   }
 
+  test("AmqpOperationBinding expiration field value must greater than or equal to 0") {
+    validate("amqp-operation-binding-expiration.yaml",
+             Some("amqp-operation-binding-expiration.report"),
+             Async20Profile)
+  }
+
   ignore("Nested external correlationId refs") {
     validate("nested-libraries/nested-correlationIds/api.yaml", None, Async20Profile)
   }

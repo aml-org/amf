@@ -1874,7 +1874,7 @@ object AMFRawValidations {
         "PropertyShape",
         "sh:path",
         "sh:pattern",
-        "0|1|2",
+        "^[0-2]$",
         "",
         "'qos' for mqtt operation binding object must be one of 0, 1 or 2",
         "Violation"
@@ -2017,7 +2017,7 @@ object AMFRawValidations {
         "PropertyShape",
         "sh:path",
         "sh:pattern",
-        "0|1|2",
+        "^[0-2]$",
         "",
         "'qos' for mqtt server binding last will object must be one of 0, 1 or 2",
         "Violation"
@@ -2030,9 +2030,22 @@ object AMFRawValidations {
         "PropertyShape",
         "sh:path",
         "sh:pattern",
-        "1|2",
+        "^[1-2]$",
         "",
         "'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:Amqp091OperationBinding",
+        "apiBinding:expiration",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        "^[0-9]+(.[0-9]+)?$",
+        "",
+        "'expiration' for amqp 0.9.1 operation binding object must greather than or equal to 0",
         "Violation"
       ),
       AMFValidation(
@@ -2043,7 +2056,7 @@ object AMFRawValidations {
         "PropertyShape",
         "sh:path",
         "sh:pattern",
-        "0|1|2",
+        "^[0-2]$",
         "",
         "'qos' for mqtt server last will binding object must be one 0, 1 or 2",
         "Violation"
