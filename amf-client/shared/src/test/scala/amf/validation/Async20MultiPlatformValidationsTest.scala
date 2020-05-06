@@ -12,4 +12,8 @@ class Async20MultiPlatformValidationsTest extends MultiPlatformReportGenTest wit
   test("Draft 7 - conditional sub schemas validations") {
     validate("draft-7-validations.yaml", Some("draft-7-validations.report"), Async20Profile)
   }
+
+  test("invalid examples defined in variables of server") {
+    validate("invalid-server-variable-examples.yaml", Some("invalid-server-variable-examples.report"), Async20Profile)
+  }
 }

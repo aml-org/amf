@@ -21,7 +21,7 @@ case class AsyncServerVariableParser(entry: YMapEntry, parent: String)(implicit 
           case YType.Seq =>
             val idCounter = new IdCounter()
             val examples = examplesEntry.value.as[YSequence].nodes.map { node =>
-              Example()
+              Example(node)
                 .withName(idCounter.genId("example"))
                 .withValue(node)
             }
