@@ -11,7 +11,8 @@ import amf.plugins.domain.shapes.resolution.stages.{ShapeNormalizationStage, Typ
 import amf.plugins.domain.webapi.resolution.stages._
 import amf.plugins.domain.webapi.resolution.stages.async.{
   AsyncContentTypeResolutionStage,
-  AsyncExamplePropagationResolutionStage
+  AsyncExamplePropagationResolutionStage,
+  ServerVariableExampleResolutionStage
 }
 import amf.{Async20Profile, ProfileName}
 
@@ -30,6 +31,7 @@ class Async20ResolutionPipeline(override val eh: ErrorHandler) extends AmfResolu
     new JsonMergePatchStage(),
     new AsyncContentTypeResolutionStage(),
     new AsyncExamplePropagationResolutionStage(),
+    new ServerVariableExampleResolutionStage(),
     new PathDescriptionNormalizationStage(profileName),
     new CleanReferencesStage(),
     new DeclarationsRemovalStage()
