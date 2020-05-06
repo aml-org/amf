@@ -469,6 +469,11 @@ object ParserSideValidations extends Validations {
     "Unable to parse json schema"
   )
 
+  val MalformedJsonReference = validation(
+    "malformed-json-reference",
+    "Malformed json reference"
+  )
+
   val InvalidAnnotationType = validation(
     "invalid-annotation-type",
     "Invalid annotation type"

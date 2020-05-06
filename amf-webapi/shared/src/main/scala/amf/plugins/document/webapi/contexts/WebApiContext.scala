@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.contexts
 import amf.core.client.ParsingOptions
 import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.model.domain.Shape
-import amf.core.parser.{ParsedReference, ParserContext}
+import amf.core.parser.{Annotations, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
@@ -31,6 +31,8 @@ abstract class WebApiContext(val loc: String,
     extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
     with SpecAwareContext
     with PlatformSecrets {
+
+  def validateRefFormatWithError(ref: String): Boolean = true
 
   val syntax: SpecSyntax
   val vendor: Vendor
@@ -80,7 +82,8 @@ abstract class WebApiContext(val loc: String,
     }
   }
 
-  def obtainRemoteYNode(ref: String)(implicit ctx: WebApiContext): Option[YNode] = {
+  def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations())(
+      implicit ctx: WebApiContext): Option[YNode] = {
     jsonSchemaRefGuide.obtainRemoteYNode(ref)
   }
 
