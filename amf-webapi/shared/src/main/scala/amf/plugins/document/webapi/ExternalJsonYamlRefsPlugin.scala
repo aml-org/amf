@@ -46,7 +46,7 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
 
   def links(part: YPart, ctx: ParserContext): Unit = {
     val childrens = part match {
-      case map: YMap if map.map.get("$ref").isDefined =>
+      case map: YMap if map.map.contains("$ref") =>
         collectRef(map, ctx)
         part.children.filter(c => c != map.entries.find(_.key.as[YScalar].text == "$ref").get)
       case _ => part.children
@@ -65,7 +65,7 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
   }
 }
 
-class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
+class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
 
   override val priority: Int = AMFDocumentPluginSettings.PluginPriorities.low
 
@@ -86,7 +86,7 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
     * List of media types used to encode serialisations of
     * this domain
     */
-  override def documentSyntaxes: Seq[String] = Seq("application/json")
+  override def documentSyntaxes: Seq[String] = Seq("application/json", "application/yaml")
 
   /**
     * Parses an accepted document returning an optional BaseUnit
@@ -101,7 +101,7 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
         ExternalDomainElement()
           .withId(document.location + "#/")
           .withRaw(document.raw)
-          .withMediaType("application/json")
+          .withMediaType(docMediaType(document))
       result.parsed = Some(parsed.document.node)
       val references = document.references.map(_.unit)
       val fragment = ExternalFragment()
@@ -116,7 +116,9 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
       None
   }
 
-  override def canParse(document: Root): Boolean = document.raw.isJson
+  private def docMediaType(doc: Root) = if (doc.raw.isJson) "application/json" else "application/yaml"
+
+  override def canParse(document: Root): Boolean = !document.raw.isXml // for JSON or YAML
 
   override def referenceHandler(eh: ErrorHandler): ReferenceHandler = new JsonRefsReferenceHandler()
 
@@ -130,4 +132,4 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
   override val allowRecursiveReferences: Boolean = true
 }
 
-object ExternalJsonRefsPlugin extends ExternalJsonRefsPlugin
+object ExternalJsonYamlRefsPlugin extends ExternalJsonYamlRefsPlugin
