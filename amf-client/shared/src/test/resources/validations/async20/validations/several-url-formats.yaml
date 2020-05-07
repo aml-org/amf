@@ -1,0 +1,25 @@
+asyncapi: 2.0.0
+info:
+  title: aTitle
+  version: 1.0
+  license:
+    name: bogusName
+    url: alal:¿/alal
+  contact:
+    name: aName
+    url: invalid url format
+  termsOfService: is not in the format of a URL
+externalDocs:
+  description: Find more info here
+  url: invalid url format
+channels: {}
+components:
+  securitySchemes:
+    invalidUrls:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: invalid url
+          tokenUrl: invalid url
+          refreshUrl: invalid url
+          scopes: {}
