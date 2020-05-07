@@ -2,27 +2,21 @@ package amf.validations
 
 import java.util.regex.Pattern
 
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar, DomainElement}
+import amf.core.annotations.SynthesizedField
+import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
 import amf.core.parser.Annotations
-import amf.core.services.RuntimeValidator.{CustomShaclFunctions, PropertyInfo}
+import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.utils.RegexConverter
-import amf.plugins.document.webapi.validation.Oas3ExpressionValidator
+import amf.plugins.document.webapi.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.{FileShape, NodeShape, ScalarShape}
-import amf.plugins.domain.webapi.metamodel.bindings.{BindingHeaders, BindingQuery, WebSocketsChannelBindingModel}
+import amf.plugins.domain.webapi.metamodel.bindings.{BindingHeaders, BindingQuery}
 import amf.plugins.domain.webapi.metamodel.security.{
   OAuth2SettingsModel,
   OpenIdConnectSettingsModel,
   SecuritySchemeModel
 }
-import amf.plugins.domain.webapi.metamodel.{
-  CallbackModel,
-  IriTemplateMappingModel,
-  ParameterModel,
-  TemplatedLinkModel,
-  WebApiModel
-}
+import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.plugins.domain.webapi.models.security.{OAuth2Settings, OpenIdConnectSettings}
 
@@ -194,12 +188,11 @@ object CustomShaclFunctions {
     }),
     "validCallbackExpression" -> ((callback, violation) => {
       val optExpression = callback.fields.getValueAsOption(CallbackModel.Expression).map(_.value)
-      validateExpression(optExpression, () => violation(Some(Annotations(), CallbackModel.Expression)))
+      validateOas3Expression(optExpression, () => violation(Some(Annotations(), CallbackModel.Expression)))
     }),
     "validLinkRequestBody" -> ((link, violation) => {
       val optExpression = link.fields.getValueAsOption(TemplatedLinkModel.RequestBody).map(_.value)
-      validateExpression(optExpression, () => violation(Some(Annotations(), TemplatedLinkModel.RequestBody)))
-
+      validateOas3Expression(optExpression, () => violation(Some(Annotations(), TemplatedLinkModel.RequestBody)))
     }),
     "validLinkParameterExpressions" -> ((link, violation) => {
       val maybeArray = link.fields.?[AmfArray](TemplatedLinkModel.Mapping)
@@ -208,9 +201,19 @@ object CustomShaclFunctions {
           case link: IriTemplateMapping =>
             val optExpression: Option[AmfElement] =
               link.fields.getValueAsOption(IriTemplateMappingModel.LinkExpression).map(_.value)
-            validateExpression(optExpression, () => violation(Some(Annotations(), TemplatedLinkModel.Mapping)))
+            validateOas3Expression(optExpression, () => violation(Some(Annotations(), TemplatedLinkModel.Mapping)))
           case _ =>
         }
+      }
+    }),
+    "validCorrelationIdLocation" -> ((link, violation) => {
+      val optExpression = link.fields.getValueAsOption(CorrelationIdModel.Location).map(_.value)
+      validateAsyncExpression(optExpression, () => violation(Some(Annotations(), CorrelationIdModel.Location)))
+    }),
+    "validParameterLocation" -> ((link, violation) => {
+      val location = link.fields.getValueAsOption(ParameterModel.Binding)
+      if (location.exists(!_.annotations.contains(classOf[SynthesizedField]))) {
+        validateAsyncExpression(location.map(_.value), () => violation(Some(Annotations(), ParameterModel.Binding)))
       }
     }),
     "mandatoryHeadersObjectNodeWithPropertiesFacet" -> ((element, violation) => {
@@ -240,9 +243,16 @@ object CustomShaclFunctions {
     }
   }
 
-  def validateExpression(exp: Option[AmfElement], throwValidation: () => Unit): Unit = exp foreach {
+  def validateOas3Expression(exp: Option[AmfElement], throwValidation: () => Unit): Unit = exp foreach {
     case exp: AmfScalar =>
       if (!Oas3ExpressionValidator.validate(exp.toString))
+        throwValidation()
+    case _ =>
+  }
+
+  def validateAsyncExpression(exp: Option[AmfElement], throwValidation: () => Unit): Unit = exp foreach {
+    case exp: AmfScalar =>
+      if (!AsyncExpressionValidator.expression(exp.toString))
         throwValidation()
     case _ =>
   }

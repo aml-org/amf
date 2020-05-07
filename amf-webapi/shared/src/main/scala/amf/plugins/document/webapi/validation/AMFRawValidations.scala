@@ -2178,6 +2178,33 @@ object AMFRawValidations {
         "'headers' property of ws channel binding must be of type object and have properties",
         "Violation"
       ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "core:CorrelationId",
+        "core:location",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:validCorrelationIdLocation",
+        "0",
+        "Does not comply with runtime expression ABNF syntax",
+        "Does not comply with runtime expression ABNF syntax",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiContract:Parameter",
+        "apiContract:binding",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:validParameterLocation",
+        "0",
+        "Does not comply with runtime expression ABNF syntax",
+        "Does not comply with runtime expression ABNF syntax",
+        "Violation"
+      ),
+
     )
     
     override def validations(): Seq[AMFValidation] = result
