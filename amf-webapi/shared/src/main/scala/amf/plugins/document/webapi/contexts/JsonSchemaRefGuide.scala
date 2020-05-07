@@ -17,6 +17,7 @@ case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReferenc
   }
 
   def withFragmentAndInFileReference[T](ref: String)(action: (Fragment, Option[String]) => Option[T]): Option[T] = {
+    if (!context.validateRefFormatWithError(ref)) return None
     val fileUrl      = getFileUrl(ref)
     val referenceUrl = getReferenceUrl(fileUrl)
     obtainFragmentFromFullRef(fileUrl) flatMap { fragment =>
