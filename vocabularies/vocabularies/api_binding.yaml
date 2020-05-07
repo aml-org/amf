@@ -142,8 +142,8 @@ propertyTerms:
     description: Id of the consumer group
     range: string
   headers:
-    displayName: query
-    description: A Schema object containing the definitions for each query parameter
+    displayName: headers
+    description: A Schema object containing the definitions for HTTP-specific headers
     range: shacl.Shape
   is:
     displayName: is

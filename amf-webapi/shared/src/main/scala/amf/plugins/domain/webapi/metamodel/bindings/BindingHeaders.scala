@@ -9,8 +9,8 @@ trait BindingHeaders {
     ShapeModel,
     ApiBinding + "headers",
     ModelDoc(ModelVocabularies.ApiBinding,
-             "query",
-             "A Schema object containing the definitions for each query parameter")
+             "headers",
+             "A Schema object containing the definitions for HTTP-specific headers")
   )
 }
 
