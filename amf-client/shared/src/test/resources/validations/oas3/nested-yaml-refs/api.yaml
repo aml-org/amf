@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: undefined
+paths:
+  /resource1:
+    get:
+      responses:
+        '200':
+          description: 'Resource 1'
+          content:
+            application/json:
+              example:
+                name: a Name
+                length: 2999
+              schema:
+                $ref: 'complexType.json'
+      operationId: GET_resource1
+  /resource2:
+    get:
+      responses:
+        '200':
+          description: 'Resource 2'
+          content:
+            application/json:
+              example:
+                id: an id
+                field1:
+                  id: an id
+                  name: a Name
+              schema:
+                $ref: 'complexType.yaml'
+      operationId: GET_resource2
+  /resource3:
+    get:
+      responses:
+        '200':
+          description: 'Resource 3'
+          content:
+            application/json:
+              example:
+                id: an id
+                name: a Name
+              schema:
+                $ref: 'baseType.yaml'
+      operationId: GET_resource3

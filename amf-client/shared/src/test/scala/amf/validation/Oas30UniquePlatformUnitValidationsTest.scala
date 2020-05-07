@@ -85,4 +85,8 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Validate invalid parameter defined in request body link") {
     validate("param-in-request-link.yaml", Some("param-in-request-link.report"), Oas30Profile)
   }
+
+  test("Nested yaml refs") {
+    validate("nested-yaml-refs/api.yaml", None, Oas30Profile)
+  }
 }
