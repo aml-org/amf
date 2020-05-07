@@ -103,5 +103,28 @@ components:
         }
       ]
 
+    notKeyword:
+      not:
+        type: object
+        properties:
+          a:
+            required: true
+            type: string
+          b:
+            required: true
+            type: number
+      examples: [
+        {
+          "other": "Canada",
+          "thing": "K1M 1M4",
+          "is": "K1M 1M4",
+          "valid": 5
+        },
+        {
+          a: "this shloud be invalid",
+          b: 10
+        }
+      ]
+
 
 channels: {}
