@@ -3,7 +3,6 @@ package amf.plugins.document.webapi.validation
 import amf._
 import amf.core.remote._
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.webapi.validation.AMFRawValidations.Oas30Validations.urlValidation
 
 object AMFRawValidations {
 
@@ -1474,7 +1473,7 @@ object AMFRawValidations {
     override def validations(): Seq[AMFValidation] = result
   }
 
-  trait OasValidations extends RamlAndOasValidations {
+  trait OasValidations extends RamlAndOasValidations with GenericValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
         "amf-parser:mandatory-api-version",
@@ -1626,38 +1625,12 @@ object AMFRawValidations {
         "Response must have a 'description' field",
         "Violation"
       ),
-      AMFValidation(
-        Oas.name,
-        "Domain",
-        "core:Organization",
-        "core:email",
-        "PropertyShape",
-        "sh:path",
-        "sh:pattern",
-        """^[a-zA-Z0-9\.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$""".stripMargin,
-        "",
-        "Field 'email' must be in the format of an email address",
-        "Violation"
-      ),
+      emailValidation(Oas.name, "core:Organization", "core:email"),
       urlValidation(Oas.name, "core:License", "core:url"),
       urlValidation(Oas.name, "core:Organization", "core:url"),
       urlValidation(Oas.name, "core:CreativeWork", "core:url")
     )
     override def validations(): Seq[AMFValidation] = result
-    def urlValidation(spec: String, owlClass: String, owlProperty: String) =
-      AMFValidation(
-        spec,
-        "Domain",
-        owlClass,
-        owlProperty,
-        "PropertyShape",
-        "sh:path",
-        "sh:pattern",
-        """^((https?|ftp|file)://)?[-a-zA-Z0-9()+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9()+&@#/%=~_|]$""".stripMargin,
-        "Must be in the format of a URL",
-        "Must be in the format of a URL",
-        "Violation"
-      )
   }
 
   object Oas20Validations extends OasValidations {
@@ -1706,7 +1679,7 @@ object AMFRawValidations {
     override def validations(): Seq[AMFValidation] = result
   }
 
-  object Async20Validations extends AmfProfileValidations {
+  object Async20Validations extends AmfProfileValidations with GenericValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
         AsyncApi20.name,
@@ -1864,8 +1837,6 @@ object AMFRawValidations {
         "Invalid 'in' value. The options are: user or password",
         "Violation"
       ),
-      urlValidation(AsyncApi20.name, "core:Organization", "core:url"),
-      urlValidation(AsyncApi20.name, "core:License", "core:url"),
       AMFValidation(
         AsyncApi20.name,
         "Domain",
@@ -2204,9 +2175,17 @@ object AMFRawValidations {
         "Does not comply with runtime expression ABNF syntax",
         "Violation"
       ),
-
+      emailValidation(AsyncApi.name, "core:Organization", "core:email"),
+      urlValidation(AsyncApi20.name, "core:Organization", "core:url"),
+      urlValidation(AsyncApi20.name, "core:License", "core:url"),
+      urlValidation(AsyncApi20.name, "apiContract:WebAPI", "core:termsOfService"),
+      uriValidation(AsyncApi20.name, "apiContract:WebAPI", "core:identifier"),
+      urlValidation(AsyncApi20.name, "core:CreativeWork", "core:url"),
+      urlValidation(AsyncApi20.name, "security:OAuth2Flow", "security:authorizationUri"),
+      urlValidation(AsyncApi20.name, "security:OAuth2Flow", "security:accessTokenUri"),
+      urlValidation(AsyncApi20.name, "security:OAuth2Flow", "security:refreshUri")
     )
-    
+
     override def validations(): Seq[AMFValidation] = result
   }
 
@@ -2399,6 +2378,53 @@ object AMFRawValidations {
       )
     )
     override def validations(): Seq[AMFValidation] = result
+  }
+
+  trait GenericValidations {
+    def urlValidation(spec: String, owlClass: String, owlProperty: String) =
+      AMFValidation(
+        spec,
+        "Domain",
+        owlClass,
+        owlProperty,
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        """^((https?|ftp|file)://)?[-a-zA-Z0-9()+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9()+&@#/%=~_|]$""".stripMargin,
+        "Must be in the format of a URL",
+        "Must be in the format of a URL",
+        "Violation"
+      )
+
+    def uriValidation(spec: String, owlClass: String, owlProperty: String) =
+      AMFValidation(
+        spec,
+        "Domain",
+        owlClass,
+        owlProperty,
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        """^\w+:(\/?\/?)[^\s]+$""".stripMargin,
+        "Must be in the format of a URI",
+        "Must be in the format of a URI",
+        "Violation"
+      )
+
+    def emailValidation(spec: String, owlClass: String, owlProperty: String) =
+      AMFValidation(
+        spec,
+        "Domain",
+        owlClass,
+        owlProperty,
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        """^[a-zA-Z0-9\.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$""".stripMargin,
+        "",
+        "Field 'email' must be in the format of an email address",
+        "Violation"
+      )
   }
 
   val map: Map[ProfileName, Seq[AMFValidation]] = Map(
