@@ -190,4 +190,9 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("httpApiKey and apiKey 'in' facet validation") {
     validate("security-scheme-in-facet.yaml", Some("invalid-in-facet-security-scheme.report"), Async20Profile)
   }
+
+  test("async runtime expression validations") {
+    validate("invalid-runtime-expressions.yaml", Some("invalid-runtime-expressions.report"), Async20Profile)
+  }
+
 }

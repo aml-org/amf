@@ -1,4 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.domain
+import amf.core.annotations.SynthesizedField
 import org.yaml.model.{YMap, YMapEntry}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.DataType
@@ -41,9 +42,9 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val
     val node     = ScalarNode(entry.key)
     val variable = Parameter(entry).set(ParameterModel.Name, node.string(), Annotations(entry.key))
     variable.adopted(parent)
+    variable.set(ParameterModel.Binding, AmfScalar("path"), Annotations() += SynthesizedField())
     variable
       .withParameterName(entry.key)
-      .withBinding("path")
       .withRequired(true) // default value of path parameter to avoid raw validation
 
     val map = entry.value.as[YMap]
