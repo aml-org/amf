@@ -865,7 +865,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       shape
     }
 
-    private def parseExample() = {
+    private def parseExample(): Unit = {
 
       if (version == JSONSchemaDraft7SchemaVersion || version == JSONSchemaDraft6SchemaVersion)
         parseExamplesArray()
@@ -874,17 +874,18 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           .parse()
     }
 
-    private def parseExamplesArray(): Seq[Example] =
+    private def parseExamplesArray(): Unit =
       map
         .key("examples")
         .map { entry =>
           val counter = new IdCounter()
-          entry.value.as[YSequence].nodes.map {
-            RamlExampleValueAsString(_, shape.withExample(Some(counter.genId("default-example"))), options).populate()
+          val examples = entry.value.as[YSequence].nodes.map { n =>
+            val exa = Example(n).withName(counter.genId("default-example"))
+            exa.adopted(shape.id)
+            RamlExampleValueAsString(n, exa, options).populate()
           }
+          shape.setArrayWithoutId(AnyShapeModel.Examples, examples, Annotations(entry))
         }
-        .getOrElse(Nil)
-
   }
 
   case class NodeShapeParser(shape: NodeShape, map: YMap)(implicit val ctx: OasLikeWebApiContext)
