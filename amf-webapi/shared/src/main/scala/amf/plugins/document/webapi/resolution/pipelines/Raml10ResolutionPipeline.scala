@@ -1,14 +1,8 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.core.errorhandling.ErrorHandler
-import amf.core.resolution.stages.{
-  CleanReferencesStage,
-  DeclarationsRemovalStage,
-  ExternalSourceRemovalStage,
-  ResolutionStage
-}
-import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
-import amf.plugins.domain.shapes.resolution.stages.{ShapeNormalizationStage, TypeAliasTransformationStage}
+import amf.core.resolution.stages.ResolutionStage
+import amf.plugins.domain.shapes.resolution.stages.TypeAliasTransformationStage
 import amf.plugins.domain.webapi.resolution.stages._
 import amf.{ProfileName, RamlProfile}
 
@@ -19,20 +13,7 @@ class Raml10ResolutionPipeline(override val eh: ErrorHandler) extends AmfResolut
   override protected def parameterNormalizationStage: ParametersNormalizationStage =
     new Raml10ParametersNormalizationStage()
 
-  override val steps: scala.Seq[ResolutionStage] = Seq(
+  override val steps: Seq[ResolutionStage] = Seq(
     new TypeAliasTransformationStage(),
-    references,
-    new ExternalSourceRemovalStage,
-    new ExtensionsResolutionStage(profileName, keepEditingInfo = false),
-    new ShapeNormalizationStage(profileName, keepEditingInfo = false),
-    new SecurityResolutionStage(),
-    parameterNormalizationStage,
-    new ServersNormalizationStage(profileName),
-    new PathDescriptionNormalizationStage(profileName),
-    new MediaTypeResolutionStage(profileName),
-    new ResponseExamplesResolutionStage(),
-    new PayloadAndParameterResolutionStage(profileName),
-    new CleanReferencesStage(),
-    new DeclarationsRemovalStage()
-  )
+  ) ++ baseSteps
 }

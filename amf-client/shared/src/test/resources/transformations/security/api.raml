@@ -1,0 +1,30 @@
+#%RAML 1.0
+# Objective: The following example shows how use 'null' to indicate that a method can be called without applying any security scheme.
+title: GitHub API
+version: v3
+baseUri: https://api.github.com
+securitySchemes:
+  oauth_2_0:
+    description: |
+      Dropbox supports OAuth 2.0 for authenticating all API requests.
+    type: OAuth 2.0
+    describedBy:
+      headers:
+        Authorization:
+          description: |
+             Used to send a valid OAuth 2 access token.
+          type: string
+      responses:
+        401:
+          description: |
+              Bad or expired token. This can happen if the user or Dropbox
+              revoked or expired an access token. To fix, re-authenticate
+              the user.
+    settings:
+      authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+      accessTokenUri: https://api.dropbox.com/1/oauth2/token
+      authorizationGrants: [ authorization_code, implicit, 'urn:ietf:params:oauth:grant-type:saml2-bearer' ]
+      scopes: [ ADMINISTRATOR ]
+/users/{userid}/gists:
+  get:
+    securedBy: [null, oauth_2_0]

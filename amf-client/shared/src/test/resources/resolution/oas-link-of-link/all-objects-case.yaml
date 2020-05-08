@@ -1,0 +1,25 @@
+swagger: '2.0'
+info:
+  title: GitHub
+  version: v3
+
+definitions:
+  E:
+    $ref: '#/definitions/D'
+  C:
+    properties:
+      d:
+        type: string
+  D:
+    type: object
+    properties:
+      c:
+        $ref: '#/definitions/C'
+paths:
+  '/endPoint':
+    get:
+      responses:
+        '200':
+          description: a description
+          schema:
+            $ref: '#/definitions/E'

@@ -8,9 +8,12 @@ import amf.validation.MultiPlatformReportGenTest
 import amf.{ProfileName, Raml10Profile}
 import org.scalatest.Assertion
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGenTest {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/recursives/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/recursives/"
   override val hint: Hint          = RamlYamlHint

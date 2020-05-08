@@ -96,6 +96,11 @@
                                 ]
                               }
                             ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
                             "apiContract:examples": [
                               {
                                 "@id": "#35",
@@ -415,9 +420,6 @@
                                     "#35": "[(2,0)-(15,3)]",
                                     "doc:structuredValue": "[(2,6)-(15,3)]"
                                   },
-                                  "local-element": {
-                                    "#35": ""
-                                  },
                                   "tracked-element": {
                                     "#35": "amf://id#33"
                                   }
@@ -429,7 +431,11 @@
                                 "#34": ""
                               },
                               "lexical": {
-                                "#34": "[(13,8)-(14,0)]"
+                                "apiContract:examples": "[(14,8)-(15,0)]",
+                                "#34": "[(12,6)-(15,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#34": "[(13,8)-(13,12)]"
                               }
                             }
                           }
@@ -534,6 +540,11 @@
                                     "@value": "Organization"
                                   }
                                 ]
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
                               }
                             ],
                             "apiContract:examples": [
@@ -855,9 +866,6 @@
                                     "#51": "[(2,0)-(15,3)]",
                                     "doc:structuredValue": "[(2,6)-(15,3)]"
                                   },
-                                  "local-element": {
-                                    "#51": ""
-                                  },
                                   "tracked-element": {
                                     "#51": "amf://id#49"
                                   }
@@ -869,7 +877,11 @@
                                 "#50": ""
                               },
                               "lexical": {
-                                "#50": "[(21,12)-(22,0)]"
+                                "apiContract:examples": "[(22,12)-(24,0)]",
+                                "#50": "[(20,10)-(24,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#50": "[(21,12)-(21,16)]"
                               }
                             }
                           }

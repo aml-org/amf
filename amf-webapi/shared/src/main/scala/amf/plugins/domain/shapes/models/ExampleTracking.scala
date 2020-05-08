@@ -44,7 +44,7 @@ object ExampleTracking {
     shape
   }
 
-  private def tracked(parent: String, e: Example, remove: Option[String]): TrackedElement =
+  def tracked(parent: String, e: Example, remove: Option[String]): TrackedElement =
     e.annotations
       .find(classOf[TrackedElement])
       .fold(TrackedElement(parent)) { t =>

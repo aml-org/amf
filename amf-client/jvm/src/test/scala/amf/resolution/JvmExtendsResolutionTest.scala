@@ -1,0 +1,3 @@
+package amf.resolution
+
+class JvmExtendsResolutionTest extends ExtendsResolutionTest

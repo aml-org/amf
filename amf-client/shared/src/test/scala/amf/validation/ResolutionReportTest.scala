@@ -172,5 +172,9 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/library/nested-dataType/main.raml")
   }
 
+  test("Same type inheritance recursion") {
+    checkReport("/same-type-inheritance-recursion.raml", Some("same-type-inheritance-recursion.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

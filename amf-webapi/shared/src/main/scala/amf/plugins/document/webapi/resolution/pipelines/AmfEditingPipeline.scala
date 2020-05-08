@@ -16,7 +16,7 @@ class AmfEditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean =
 
   protected def parameterNormalizationStage: ParametersNormalizationStage = new AmfParametersNormalizationStage()
 
-  override lazy val steps: Seq[ResolutionStage] = Seq(
+  protected lazy val baseSteps: Seq[ResolutionStage] = Seq(
     references,
     new ExtensionsResolutionStage(profileName, keepEditingInfo = true),
     new ShapeNormalizationStage(profileName, keepEditingInfo = true),
@@ -28,6 +28,8 @@ class AmfEditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean =
     new ResponseExamplesResolutionStage(),
     new PayloadAndParameterResolutionStage(profileName)
   ) ++ url
+
+  override val steps: Seq[ResolutionStage] = baseSteps
 
   val ID: String                        = EDITING_PIPELINE
   override def profileName: ProfileName = AmfProfile

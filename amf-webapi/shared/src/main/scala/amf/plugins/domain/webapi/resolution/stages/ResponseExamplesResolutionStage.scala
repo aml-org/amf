@@ -4,7 +4,7 @@ import amf.core.annotations.TrackedElement
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.shapes.models.{AnyShape, Example}
+import amf.plugins.domain.shapes.models.{AnyShape, Example, ExampleTracking}
 import amf.plugins.domain.webapi.metamodel.ResponseModel
 import amf.plugins.domain.webapi.models.{Payload, WebApi}
 import amf.validations.ResolutionSideValidations.{ExamplesWithInvalidMimeType, ExamplesWithNoSchemaDefined}
@@ -30,14 +30,15 @@ class ResponseExamplesResolutionStage()(override implicit val errorHandler: Erro
         response.fields.removeField(ResponseModel.Examples)
         examplesByMediaType.foreach {
           case (mediaType, example) =>
-            val mediaTypeIn = (mediaTypes: Seq[String]) => (p: Payload) => {
-              mediaTypes.contains(p.mediaType.value())
+            val mediaTypeIn = (mediaTypes: Seq[String]) =>
+              (p: Payload) => {
+                mediaTypes.contains(p.mediaType.value())
             }
             response.payloads.find(mediaTypeIn(Seq(mediaType, "*/*"))) match {
               case Some(p) =>
                 p.schema match {
                   case shape: AnyShape =>
-                    example.add(TrackedElement(p.id))
+                    example.add(ExampleTracking.tracked(p.id, example, Some(response.id)))
                     if (!shape.examples.exists(_.id == example.id)) {
                       example.withName(example.mediaType.value() + index)
                       shape.withExamples(shape.examples ++ Seq(example))

@@ -1,9 +1,9 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ARG USER_HOME_DIR="/root"
 
-ENV SCALA_VERSION 2.12.10
-ENV SBT_VERSION 1.3.3
+ENV SCALA_VERSION 2.12.11
+ENV SBT_VERSION 1.3.9
 
 # Update the repository sources list and install dependencies
 RUN apt-get update
@@ -58,7 +58,6 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
-
 
 # Final user and home config
 RUN useradd --create-home --shell /bin/bash jenkins

@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/validations/oas3/param-in-request-link.yaml
+Profile: OAS 3.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#path-parameter-required
+  Message: Path parameters must have the required property set to true
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/param-in-request-link.yaml#/web-api/end-points/%2Frefs/post/requestBody/parameter/pathParam
+  Property: 
+  Position: Some(LexicalInformation([(30,10)-(39,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/param-in-request-link.yaml
+
+- Source: http://a.ml/vocabularies/amf/parser#Parameter-payload-maxCount
+  Message: Parameters 'content' field must only have one entry
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/param-in-request-link.yaml#/web-api/end-points/%2Frefs/post/requestBody/parameter/pathParam
+  Property: http://a.ml/vocabularies/apiContract#payload
+  Position: Some(LexicalInformation([(32,10)-(39,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/param-in-request-link.yaml

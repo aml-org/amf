@@ -52,18 +52,16 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
 
   /** if the shape was parsed of a json schema, or has been previously generated a new json schema, returns thar value,
     otherwise generate a new json schema and store the value for futures invocations */
-  def toJsonSchema(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    _internal.toJsonSchema(exec)
+  def toJsonSchema(): String                               = _internal.toJsonSchema()
+  def toJsonSchema(exec: BaseExecutionEnvironment): String = _internal.toJsonSchema(exec)
 
   /** Force a new json schema generation, no matter if the shape was parsed from that kind of expression or if was previously generated.
     * Stores the result for futures toJsonSchema invocations.
     * Should use this method when you have mutated this instance */
-  def buildJsonSchema(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    _internal.buildJsonSchema(exec)
-
+  def buildJsonSchema(): String                               = _internal.buildJsonSchema()
+  def buildJsonSchema(exec: BaseExecutionEnvironment): String = _internal.buildJsonSchema(exec = exec)
   def buildJsonSchema(options: ShapeRenderOptions): String =
     _internal.buildJsonSchema(InternalShapeRenderOptions(options))
-
   def buildJsonSchema(options: ShapeRenderOptions, exec: BaseExecutionEnvironment): String =
     _internal.buildJsonSchema(InternalShapeRenderOptions(options), exec)
 
@@ -72,8 +70,8 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     * the value for futures invocations.
     * Proxies call to internal AnyShape.toRamlDatatype.
     */
-  def toRamlDatatype(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    _internal.toRamlDatatype(exec)
+  def toRamlDatatype(): String                               = _internal.toRamlDatatype()
+  def toRamlDatatype(exec: BaseExecutionEnvironment): String = _internal.toRamlDatatype(exec)
 
   /** Forces a new RAML Data Type generation, no matter if the shape was
     * parsed from that kind of expression or if was previously generated.
@@ -82,76 +80,75 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     * instance was mutated.
     * Proxies call to internal AnyShape.toRamlDatatype.
     */
-  def buildRamlDatatype(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    _internal.buildRamlDatatype(exec)
-
-  def validate(payload: String, env: Environment, exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
-    implicit val executionEnvironment: ExecutionContext = exec.executionContext
-    _internal.validate(payload, env._internal, exec).asClient
-  }
-
-  def validate(payload: String, exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
-    implicit val executionEnvironment: ExecutionContext = exec.executionContext
-    _internal.validate(payload, exec).asClient
-  }
-
-  def validate(payload: String, env: Environment): ClientFuture[ValidationReport] =
-    validate(payload, env, platform.defaultExecutionEnvironment)
+  def buildRamlDatatype(): String                               = _internal.buildRamlDatatype()
+  def buildRamlDatatype(exec: BaseExecutionEnvironment): String = _internal.buildRamlDatatype(exec)
 
   def validate(payload: String): ClientFuture[ValidationReport] = {
     implicit val executionEnvironment: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
     _internal.validate(payload).asClient
   }
-
-  def validate(
-      fragment: PayloadFragment,
-      env: Environment,
-      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): ClientFuture[ValidationReport] = {
-    implicit val executionEnvironment: ExecutionContext = exec.executionContext
-    _internal.validate(fragment._internal, env._internal, exec).asClient
+  def validate(payload: String, env: Environment): ClientFuture[ValidationReport] = {
+    implicit val executionEnvironment: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
+    _internal.validate(payload, env._internal).asClient
   }
-
-  def validate(fragment: PayloadFragment, exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
+  def validate(payload: String, exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
     implicit val executionEnvironment: ExecutionContext = exec.executionContext
-    _internal.validate(fragment._internal, exec).asClient
+    _internal.validate(payload, exec).asClient
+  }
+  def validate(payload: String, env: Environment, exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
+    implicit val executionEnvironment: ExecutionContext = exec.executionContext
+    _internal.validate(payload, env._internal, exec).asClient
   }
 
   def validate(fragment: PayloadFragment): ClientFuture[ValidationReport] = {
     implicit val executionEnvironment: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
     _internal.validate(fragment._internal).asClient
   }
-
-  def validateParameter(
-      payload: String,
-      env: Environment,
-      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): ClientFuture[ValidationReport] = {
-    implicit val executionEnvironment: ExecutionContext = exec.executionContext
-    _internal.validateParameter(payload, env._internal, exec).asClient
+  def validate(fragment: PayloadFragment, env: Environment): ClientFuture[ValidationReport] = {
+    implicit val executionEnvironment: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
+    _internal.validate(fragment._internal, env._internal).asClient
   }
-
-  def validateParameter(payload: String, exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
+  def validate(fragment: PayloadFragment, exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
     implicit val executionEnvironment: ExecutionContext = exec.executionContext
-    _internal.validateParameter(payload, exec).asClient
+    _internal.validate(fragment._internal, exec).asClient
+  }
+  def validate(fragment: PayloadFragment,
+               env: Environment,
+               exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
+    implicit val executionEnvironment: ExecutionContext = exec.executionContext
+    _internal.validate(fragment._internal, env._internal, exec).asClient
   }
 
   def validateParameter(payload: String): ClientFuture[ValidationReport] = {
     implicit val executionEnvironment: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
     _internal.validateParameter(payload).asClient
   }
+  def validateParameter(payload: String, env: Environment): ClientFuture[ValidationReport] = {
+    implicit val executionEnvironment: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
+    _internal.validateParameter(payload, env._internal).asClient
+  }
+  def validateParameter(payload: String, exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
+    implicit val executionEnvironment: ExecutionContext = exec.executionContext
+    _internal.validateParameter(payload, exec).asClient
+  }
+  def validateParameter(payload: String,
+                        env: Environment,
+                        exec: BaseExecutionEnvironment): ClientFuture[ValidationReport] = {
+    implicit val executionEnvironment: ExecutionContext = exec.executionContext
+    _internal.validateParameter(payload, env._internal, exec).asClient
+  }
 
-  def payloadValidator(
-      mediaType: String,
-      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): ClientOption[PayloadValidator] =
+  def payloadValidator(mediaType: String): ClientOption[PayloadValidator] =
+    _internal.payloadValidator(mediaType).asClient
+  def payloadValidator(mediaType: String, exec: BaseExecutionEnvironment): ClientOption[PayloadValidator] =
     _internal.payloadValidator(mediaType, exec).asClient
-
   def payloadValidator(mediaType: String, env: Environment): ClientOption[PayloadValidator] =
     _internal.payloadValidator(mediaType, env._internal).asClient
 
-  def parameterValidator(
-      mediaType: String,
-      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): ClientOption[PayloadValidator] =
+  def parameterValidator(mediaType: String): ClientOption[PayloadValidator] =
+    _internal.parameterValidator(mediaType).asClient
+  def parameterValidator(mediaType: String, exec: BaseExecutionEnvironment): ClientOption[PayloadValidator] =
     _internal.parameterValidator(mediaType, exec).asClient
-
   def parameterValidator(mediaType: String, env: Environment): ClientOption[PayloadValidator] =
     _internal.parameterValidator(mediaType, env._internal).asClient
 

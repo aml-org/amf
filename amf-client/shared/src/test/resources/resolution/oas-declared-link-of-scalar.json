@@ -1,0 +1,22 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Npcf_PolicyAuthorization Service API",
+    "version": "1.0.0",
+    "description": "This is the Policy Authorization Service"
+  },
+  "paths": {
+  },
+  "components": {
+    "schemas": {
+      "Uint32": {
+        "format": "int32",
+        "type": "integer",
+        "minimum": 0
+      },
+      "ServiceId": {
+        "$ref": "#/components/schemas/Uint32"
+      }
+    }
+  }
+}

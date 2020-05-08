@@ -30,7 +30,7 @@ object AsyncMessageParser {
       implicit ctx: AsyncWebApiContext): AsyncMessageParser = {
     val populator = if (isTrait) AsyncMessageTraitPopulator() else AsyncConcreteMessagePopulator(parent)
     val finder    = if (isTrait) MessageTraitFinder() else MessageFinder()
-    new AsyncMessageParser(entryLike, parent, messageType, populator, finder)(ctx)
+    new AsyncMessageParser(entryLike, parent, messageType, populator, finder, isTrait)(ctx)
   }
 }
 
@@ -38,7 +38,8 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
                          parent: String,
                          messageType: Option[MessageType],
                          populator: AsyncMessagePopulator,
-                         finder: Finder[Message])(implicit val ctx: AsyncWebApiContext)
+                         finder: Finder[Message],
+                         isTrait: Boolean)(implicit val ctx: AsyncWebApiContext)
     extends SpecParserOps {
 
   def parse(): Message = {
@@ -84,7 +85,7 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
                          "",
                          s"Cannot find link reference $fullRef",
                          Annotations(entryLike.asMap))
-        val errorMessage = new ErrorMessage(fullRef, entryLike.asMap)
+        val errorMessage = new ErrorMessage(fullRef, entryLike.asMap, isTrait)
         nameAndAdopt(errorMessage.link(fullRef, errorMessage.annotations), entryLike.key)
     }
   }
@@ -179,7 +180,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
   protected def parseSchema(map: YMap, payload: Payload): Unit
 
   private def parseHeaderSchema(entry: YMapEntry, parentId: String): Option[Parameter] = {
-    val param = Parameter().withName("default-parameter", Annotations(SynthesizedField())).adopted(parentId) // set default name to avoid raw validations
+    val param = Parameter(entry.value).withName("default-parameter", Annotations(SynthesizedField())).adopted(parentId) // set default name to avoid raw validations
     val shape =
       AsyncApiTypeParser(entry, shape => shape.withName("schema").adopted(param.id), JSONSchemaDraft7SchemaVersion)
         .parse()

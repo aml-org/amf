@@ -1,0 +1,14 @@
+#%Container Configuration 0.1
+mappings:
+  PresentationNode:
+    properties:
+      title: {}
+      about: {}
+      date: {}
+      recorded: {}
+
+namespace: tech-talk
+pattern:
+  template: $container/anyId/$uuid
+schema: http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c
+pageSize: 10

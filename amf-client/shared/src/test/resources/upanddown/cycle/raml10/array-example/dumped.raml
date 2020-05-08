@@ -9,8 +9,6 @@ types:
       body:
         type: string
   Emails:
-    type:
-      items: Email
     minItems: 1
     uniqueItems: true
     example:
@@ -20,3 +18,4 @@ types:
       -
         subject: My Email 2
         body: This is the text for email 2.
+    items: Email

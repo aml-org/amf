@@ -372,7 +372,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
         ctx match {
           case _ @(_: Oas2WebApiContext | _: Oas3WebApiContext) if isDeclaration(ref) =>
-            val shape = NodeShape(ast).withName(name, nameAnnotations)
+            val shape = AnyShape(ast).withName(name, nameAnnotations)
             shape.withLinkTarget(tmpShape).withLinkLabel(text)
             adopt(shape)
             Some(shape)

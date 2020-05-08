@@ -19,8 +19,19 @@ annotationTypes:
   arrAnot:
     type: array
     items: string
+  clearanceLevel:
+      properties:
+        level:
+          enum: [ low, medium, high ]
+          required: true
+        signature:
+          pattern: "\\d{3}-\\w{12}"
+          required: true
 /test:
   (arrAnot): ["a", "b"]
+  (clearanceLevel):
+      level: high
+      signature: 230-ghtwvfrs1itr
   get:
     description: an operation
     responses:

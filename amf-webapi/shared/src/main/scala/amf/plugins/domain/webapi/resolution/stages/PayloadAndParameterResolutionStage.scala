@@ -5,7 +5,7 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfObject
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.domain.shapes.models.{AnyShape, ExampleTracking}
 import amf.plugins.domain.webapi.models._
 import amf.{AmfProfile, Oas30Profile, ProfileName}
 
@@ -73,7 +73,7 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
       case shape: AnyShape =>
         payloadOrParam.examples.foreach { example =>
           if (!shape.examples.exists(_.id == example.id)) {
-            example.add(TrackedElement(payloadOrParam.id))
+            example.add(ExampleTracking.tracked(payloadOrParam.id, example, None))
             shape.withExamples(shape.examples ++ Seq(example))
             payloadOrParam.removeExamples()
           }

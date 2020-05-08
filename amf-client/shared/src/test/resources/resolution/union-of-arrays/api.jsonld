@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#15",
+        "@id": "#14",
         "@type": [
           "apiContract:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#16",
+            "@id": "#15",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#17",
+                "@id": "#16",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -46,7 +46,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#18",
+                    "@id": "#17",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -54,7 +54,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#19",
+                        "@id": "#18",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -66,7 +66,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#10/link--576971870",
+                            "@id": "#9/link-1178521432",
                             "@type": [
                               "raml-shapes:UnionShape",
                               "raml-shapes:AnyShape",
@@ -76,7 +76,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#10"
+                                "@id": "#9"
                               }
                             ],
                             "doc:link-label": [
@@ -88,7 +88,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#19": "[(14,6)-(16,0)]"
+                            "#18": "[(14,6)-(16,0)]"
                           }
                         }
                       }
@@ -96,7 +96,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(13,4)-(16,0)]",
-                        "#18": "[(13,0)-(16,0)]"
+                        "#17": "[(13,0)-(16,0)]"
                       }
                     }
                   }
@@ -106,25 +106,25 @@
                     "apiContract:expects": "true"
                   },
                   "lexical": {
-                    "#17": "[(12,2)-(16,0)]"
+                    "#16": "[(12,2)-(16,0)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#16": "[(11,0)-(16,0)]"
+                "#15": "[(11,0)-(16,0)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#15": "RAML 1.0"
+            "#14": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#15": "[(2,0)-(16,0)]"
+            "#14": "[(2,0)-(16,0)]"
           }
         }
       }
@@ -265,29 +265,26 @@
           }
         ],
         "smaps": {
-          "inherited-shapes": {
-            "#6": "amf://id#9"
+          "resolved-link-target": {
+            "#6": "amf://id#6"
           },
-          "resolved-link": {
-            "#6": "amf://id#8"
-          },
-          "type-property-lexical-info": {
-            "#6": "[(8,4)-(8,8)]"
+          "declared-element": {
+            "#6": ""
           },
           "lexical": {
             "shacl:name": "[(7,2)-(7,7)]",
             "#6": "[(7,2)-(9,0)]"
           },
-          "declared-element": {
-            "#6": ""
+          "type-property-lexical-info": {
+            "#6": "[(8,4)-(8,8)]"
           },
-          "resolved-link-target": {
-            "#6": "amf://id#6"
+          "resolved-link": {
+            "#6": "amf://id#8"
           }
         }
       },
       {
-        "@id": "#10",
+        "@id": "#9",
         "@type": [
           "raml-shapes:UnionShape",
           "raml-shapes:AnyShape",
@@ -297,7 +294,7 @@
         ],
         "raml-shapes:anyOf": [
           {
-            "@id": "#11",
+            "@id": "#10",
             "@type": [
               "raml-shapes:ArrayShape",
               "raml-shapes:AnyShape",
@@ -407,24 +404,24 @@
             ],
             "smaps": {
               "resolved-link-target": {
-                "#11": "amf://id#10"
+                "#10": "amf://id#9"
               },
               "declared-element": {
-                "#11": ""
+                "#10": ""
               },
               "lexical": {
-                "#11": "[(9,2)-(11,0)]"
+                "#10": "[(9,2)-(11,0)]"
               },
               "type-property-lexical-info": {
-                "#11": "[(10,4)-(10,8)]"
+                "#10": "[(10,4)-(10,8)]"
               },
               "resolved-link": {
-                "#11": "amf://id#12"
+                "#10": "amf://id#11"
               }
             }
           },
           {
-            "@id": "#13",
+            "@id": "#12",
             "@type": [
               "raml-shapes:ArrayShape",
               "raml-shapes:AnyShape",
@@ -456,19 +453,19 @@
             ],
             "smaps": {
               "resolved-link-target": {
-                "#13": "amf://id#10"
+                "#12": "amf://id#9"
               },
               "declared-element": {
-                "#13": ""
+                "#12": ""
               },
               "lexical": {
-                "#13": "[(9,2)-(11,0)]"
+                "#12": "[(9,2)-(11,0)]"
               },
               "type-property-lexical-info": {
-                "#13": "[(10,4)-(10,8)]"
+                "#12": "[(10,4)-(10,8)]"
               },
               "resolved-link": {
-                "#13": "amf://id#12"
+                "#12": "amf://id#11"
               }
             }
           }
@@ -480,11 +477,11 @@
         ],
         "smaps": {
           "inherited-shapes": {
-            "#10": "amf://id#14"
+            "#9": "amf://id#13"
           },
           "lexical": {
             "shacl:name": "[(9,2)-(9,11)]",
-            "#10": "[(10,4)-(11,0)]"
+            "#9": "[(10,4)-(11,0)]"
           }
         }
       }

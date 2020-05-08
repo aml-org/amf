@@ -1,0 +1,85 @@
+#%WebAPI Spec 1.0
+unitType: Document
+$id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/rootAsset
+declares:
+  -
+    elementType: Node
+    $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A
+    name: A
+    property:
+      -
+        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/b
+        range:
+          shapeType: Scalar
+          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/b/scalar/b
+          name: b
+          datatype: http://www.w3.org/2001/XMLSchema#integer
+        name: b
+        min.Count: 1
+        path: http://a.ml/vocabularies/data#b
+      -
+        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/a
+        range:
+          shapeType: Scalar
+          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/a/scalar/a
+          name: a
+          datatype: http://www.w3.org/2001/XMLSchema#string
+        name: a
+        min.Count: 1
+        path: http://a.ml/vocabularies/data#a
+    closed: false
+version: 2.0.1
+root: true
+encodes:
+  elementType: WebAPI
+  $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api
+  name: test
+  server:
+    -
+      $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/falsedomain.com%2Fapis
+      urlTemplate: falsedomain.com/apis
+  accepts:
+    - application/json
+  version: "1.0"
+  endpoint:
+    -
+      $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest
+      supportedOperation:
+        -
+          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get
+          description: an operation
+          returns:
+            -
+              $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200
+              name: "200"
+              payload:
+                -
+                  $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson
+                  schema:
+                    shapeType: Node
+                    $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema
+                    inherits:
+                      -
+                        shapeType: Node
+                        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/link-1074138123
+                        designLink: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A
+                        name: A
+                    name: schema
+                    property:
+                      -
+                        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c
+                        range:
+                          shapeType: Scalar
+                          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c/scalar/c
+                          name: c
+                          datatype: http://www.w3.org/2001/XMLSchema#string
+                        name: c
+                        min.Count: 1
+                        path: http://a.ml/vocabularies/data#c
+                    closed: false
+                  mediaType: application/json
+              statusCode: "200"
+          method: get
+      path: /test
+  contentType:
+    - application/json

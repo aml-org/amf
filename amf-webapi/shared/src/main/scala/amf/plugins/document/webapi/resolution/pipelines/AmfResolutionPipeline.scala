@@ -15,7 +15,7 @@ class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPip
 
   protected def parameterNormalizationStage: ParametersNormalizationStage = new AmfParametersNormalizationStage()
 
-  override val steps: Seq[ResolutionStage] = Seq(
+  protected lazy val baseSteps = Seq(
     references,
     new ExternalSourceRemovalStage,
     new ExtensionsResolutionStage(profileName, keepEditingInfo = false),
@@ -30,6 +30,8 @@ class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPip
     new CleanReferencesStage(),
     new DeclarationsRemovalStage()
   )
+
+  override val steps: Seq[ResolutionStage] = baseSteps
 }
 
 object AmfResolutionPipeline {

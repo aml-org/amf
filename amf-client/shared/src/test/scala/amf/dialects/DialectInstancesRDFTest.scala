@@ -4,13 +4,9 @@ import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.FunSuiteCycleTests
+import amf.io.FunSuiteRdfCycleTests
 
-import scala.concurrent.ExecutionContext
-
-class DialectInstancesRDFTest extends FunSuiteCycleTests with PlatformSecrets {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets {
 
   val basePath       = "amf-client/shared/src/test/resources/vocabularies2/instances/"
   val productionPath = "amf-client/shared/src/test/resources/vocabularies2/production/"
