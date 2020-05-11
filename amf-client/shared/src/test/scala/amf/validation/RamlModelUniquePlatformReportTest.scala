@@ -437,4 +437,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Long number format is valid with number type in RAML 1.0") {
     validate("raml/valid-number-format.raml", None, profile = Raml10Profile)
   }
+
+  test("Duplicate key defined in yaml") {
+    validate("yaml-duplicate-key.raml", Some("yaml-duplicate-key.report"), profile = Raml10Profile)
+  }
+
 }

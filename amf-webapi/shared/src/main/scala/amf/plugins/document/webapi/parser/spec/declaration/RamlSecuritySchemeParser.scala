@@ -154,16 +154,6 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                       .entries
                       .filter(y => !isRamlAnnotation(y.key.as[YScalar].text))
 
-                    val keys   = entries.map(_.key.as[YScalar].text)
-                    val keySet = keys.toSet
-                    if (keys.size > keySet.size) {
-                      ctx.eh.violation(DuplicatedOperationStatusCodeSpecification,
-                                       scheme.id,
-                                       None,
-                                       "RAML Responses must not have duplicated status codes",
-                                       entry.value)
-                    }
-
                     entries.foreach(entry => {
                       responses += ctx.factory
                         .responseParser(entry, (r: Response) => r.adopted(scheme.id), false)
