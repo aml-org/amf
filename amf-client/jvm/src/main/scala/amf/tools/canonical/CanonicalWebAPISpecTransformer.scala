@@ -481,7 +481,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     val plugins = PluginContext(
       blacklist = Seq(CorePlugin, WebAPIDomainPlugin, DataShapesDomainPlugin, AMFGraphPlugin, Raml10Plugin))
 
-    new RdfModelParser(platform)(ParserContext(eh = UnhandledParserErrorHandler, plugins = plugins))
+    RdfModelParser(errorHandler = UnhandledParserErrorHandler, plugins = plugins)
       .parse(model, baseUnitId)
   }
 
