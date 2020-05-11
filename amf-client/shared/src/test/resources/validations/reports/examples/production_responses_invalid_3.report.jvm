@@ -5,10 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#duplicated-operation-status-code
-  Message: RAML Responses must not have duplicated status codes
+- Source: http://a.ml/vocabularies/amf/core#syaml-error
+  Message: Duplicate key : '200'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/production/responses-invalid-3.raml#/web-api/end-points/%2Ftest%2F%7Bid%7D/patch
+  Target: 
   Property: 
-  Position: Some(LexicalInformation([(7,16)-(12,14)]))
+  Position: Some(LexicalInformation([(12,8)-(12,13)]))
   Location: file://amf-client/shared/src/test/resources/validations/production/responses-invalid-3.raml
