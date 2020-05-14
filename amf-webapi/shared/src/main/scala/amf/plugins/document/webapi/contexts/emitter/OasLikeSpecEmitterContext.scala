@@ -30,11 +30,9 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
                    ignored: Seq[Field] = Nil,
                    references: Seq[BaseUnit],
                    pointer: Seq[String] = Nil,
-                   schemaPath: Seq[(String, String)] = Nil): Seq[Emitter] =
-    OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
+                   schemaPath: Seq[(String, String)] = Nil): Seq[Emitter]
 
-  def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter =
-    OasRecursiveShapeEmitter.apply
+  def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter
 
   def exampleEmitter: (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters =
     (isHeader, exampleOption, ordering, extensions, references) =>

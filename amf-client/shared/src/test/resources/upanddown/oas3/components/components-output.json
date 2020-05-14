@@ -4,6 +4,96 @@
     "title": "Basic Callbacks",
     "version": "0.1"
   },
+  "paths": {
+    "/endpoint": {
+      "summary": "This is the",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/limitParam"
+        }
+      ],
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limitParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/someRequest"
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Success"
+          }
+        },
+        "callbacks": {
+          "someCallback": {
+            "$ref": "#/components/callbacks/myWebhook"
+          }
+        }
+      }
+    },
+    "/relative-schema-doc-reference": {
+      "get": {
+        "summary": "this is a test",
+        "requestBody": {
+          "description": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/relative-doc-embedded-schema-reference": {
+      "get": {
+        "summary": "this is a test",
+        "requestBody": {
+          "description": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "components": {
     "links": {
       "someLink": {
@@ -32,9 +122,6 @@
       }
     },
     "schemas": {
-      "External": {
-        "type": "number"
-      },
       "Product": {
         "type": "object",
         "properties": {
@@ -43,6 +130,9 @@
             "format": "int64"
           }
         }
+      },
+      "External": {
+        "type": "number"
       }
     },
     "responses": {
@@ -209,96 +299,6 @@
       "openIdConnectType": {
         "type": "openIdConnect",
         "openIdConnectUrl": "https://test.com/"
-      }
-    }
-  },
-  "paths": {
-    "/endpoint": {
-      "summary": "This is the",
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/limitParam"
-        }
-      ],
-      "post": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/limitParam"
-          }
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/someRequest"
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "default": {
-            "$ref": "#/components/responses/Success"
-          }
-        },
-        "callbacks": {
-          "someCallback": {
-            "$ref": "#/components/callbacks/myWebhook"
-          }
-        }
-      }
-    },
-    "/relative-schema-doc-reference": {
-      "get": {
-        "summary": "this is a test",
-        "requestBody": {
-          "description": "request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "description",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/relative-doc-embedded-schema-reference": {
-      "get": {
-        "summary": "this is a test",
-        "requestBody": {
-          "description": "request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "description",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
       }
     }
   }

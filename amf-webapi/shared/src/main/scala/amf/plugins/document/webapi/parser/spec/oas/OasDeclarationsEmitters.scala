@@ -28,8 +28,7 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
     val declarations = WebApiDeclarations(declares, UnhandledParserErrorHandler, EmptyFutureDeclarations())
 
     val result = ListBuffer[EntryEmitter]()
-
-    if (declarations.shapes.nonEmpty)
+    if (declarations.shapes.nonEmpty || spec.definitionsQueue.nonEmpty())
       result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, references, ordering)
 
     if (declarations.annotations.nonEmpty)
