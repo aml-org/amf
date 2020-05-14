@@ -4,6 +4,34 @@
     "title": "API",
     "version": "1"
   },
+  "paths": {
+    "/books": {
+      "x-amf-type": {
+        "searchableCollection": {
+          "queryParamName": "title",
+          "fallbackParamName": "digest_all_fields"
+        }
+      },
+      "x-amf-is": [
+        "descr"
+      ],
+      "get": {
+        "x-amf-is": [
+          {
+            "secured": {
+              "tokenName": "access_token"
+            }
+          },
+          {
+            "paged": {
+              "maxPages": "10"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    }
+  },
   "x-amf-resourceTypes": {
     "searchableCollection": {
       "get": {
@@ -35,34 +63,6 @@
     },
     "descr": {
       "description": "Some requests require authentication."
-    }
-  },
-  "paths": {
-    "/books": {
-      "x-amf-type": {
-        "searchableCollection": {
-          "queryParamName": "title",
-          "fallbackParamName": "digest_all_fields"
-        }
-      },
-      "x-amf-is": [
-        "descr"
-      ],
-      "get": {
-        "x-amf-is": [
-          {
-            "secured": {
-              "tokenName": "access_token"
-            }
-          },
-          {
-            "paged": {
-              "maxPages": "10"
-            }
-          }
-        ],
-        "responses": {}
-      }
     }
   }
 }

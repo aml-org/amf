@@ -1,28 +1,24 @@
 package amf.plugins.document.webapi.contexts.emitter.async
 
 import amf.core.emitter.BaseEmitters.MapEntryEmitter
-import amf.core.emitter.{EntryEmitter, PartEmitter, ShapeRenderOptions, SpecOrdering}
+import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, ShapeRenderOptions, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
+import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{CustomDomainProperty, ShapeExtension}
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote.{AsyncApi20, Vendor}
 import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.plugins.document.webapi.contexts.{RefEmitter, TagToReferenceEmitter}
-import amf.plugins.document.webapi.parser.spec.async.emitters.Draft7ExampleEmitters
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasRecursiveShapeEmitter, OasTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.domain.{
   AbstractSecurityRequirementEmitter,
   ParametrizedSecuritySchemeEmitter
 }
-import amf.plugins.document.webapi.parser.spec.oas.emitters.{
-  OasExampleEmitters,
-  OasLikeExampleEmitters,
-  OasSecurityRequirementEmitter
-}
+import amf.plugins.document.webapi.parser.spec.oas.emitters.OasSecurityRequirementEmitter
 import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, OasTypeDefStringValueMatcher}
-import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.Parameter
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement}
 import org.yaml.model.YDocument.PartBuilder
@@ -33,6 +29,16 @@ abstract class AsyncSpecEmitterFactory(override implicit val spec: AsyncSpecEmit
   override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
     AsyncDeclaredTypesEmitters.obtainEmitter
 
+  def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter =
+    OasRecursiveShapeEmitter.apply
+
+  def typeEmitters(shape: Shape,
+                   ordering: SpecOrdering,
+                   ignored: Seq[Field] = Nil,
+                   references: Seq[BaseUnit],
+                   pointer: Seq[String] = Nil,
+                   schemaPath: Seq[(String, String)] = Nil): Seq[Emitter] =
+    OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
 }
 
 case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)

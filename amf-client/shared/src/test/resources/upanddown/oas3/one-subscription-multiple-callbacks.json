@@ -4,6 +4,42 @@
     "title": "Basic Callbacks",
     "version": "0.1"
   },
+  "paths": {
+    "/subscribe": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "inProgressUrl": {
+                    "type": "string"
+                  },
+                  "failedUrl": {
+                    "type": "string"
+                  },
+                  "successUrl": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "callbacks": {
+          "inProgress": {
+            "$ref": "#/components/callbacks/inProgress"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "callbacks": {
       "inProgress": {
@@ -39,42 +75,6 @@
                 "description": "OK"
               }
             }
-          }
-        }
-      }
-    }
-  },
-  "paths": {
-    "/subscribe": {
-      "post": {
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "inProgressUrl": {
-                    "type": "string"
-                  },
-                  "failedUrl": {
-                    "type": "string"
-                  },
-                  "successUrl": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "callbacks": {
-          "inProgress": {
-            "$ref": "#/components/callbacks/inProgress"
           }
         }
       }

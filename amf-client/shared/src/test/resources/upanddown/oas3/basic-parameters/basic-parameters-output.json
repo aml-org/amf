@@ -4,6 +4,51 @@
     "title": "Basic Callbacks",
     "version": "0.1"
   },
+  "paths": {
+    "/test/{itemId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "itemId",
+          "deprecated": true,
+          "schema": {
+            "type": "object"
+          }
+        }
+      ],
+      "get": {
+        "parameters": [
+          {
+            "in": "cookie",
+            "deprecated": false,
+            "name": "someCookie",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "summary": "this is a test",
+        "operationId": "test",
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "components": {
     "parameters": {
       "simple": {
@@ -95,51 +140,6 @@
             "value": {
               "lat": 5,
               "long": 4
-            }
-          }
-        }
-      }
-    }
-  },
-  "paths": {
-    "/test/{itemId}": {
-      "parameters": [
-        {
-          "in": "path",
-          "name": "itemId",
-          "deprecated": true,
-          "schema": {
-            "type": "object"
-          }
-        }
-      ],
-      "get": {
-        "parameters": [
-          {
-            "in": "cookie",
-            "deprecated": false,
-            "name": "someCookie",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "summary": "this is a test",
-        "operationId": "test",
-        "responses": {
-          "200": {
-            "description": "description",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "a": {
-                      "type": "number"
-                    }
-                  }
-                }
-              }
             }
           }
         }

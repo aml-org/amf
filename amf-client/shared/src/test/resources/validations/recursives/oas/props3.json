@@ -55,118 +55,10 @@
           "type": "string"
         },
         "b": {
-          "x-amf-examples": {
-            "valid": {
-              "b": "bb",
-              "a": {
-                "a": "aaa",
-                "c": {
-                  "c": "cc"
-                }
-              }
-            },
-            "invalid": {
-              "b": 1,
-              "a": {
-                "a": 2,
-                "c": {
-                  "c": 3,
-                  "b": {
-                    "b": 4,
-                    "a": {
-                      "a": 5
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "type": "object",
-          "additionalProperties": true,
-          "required": [
-            "b"
-          ],
-          "properties": {
-            "b": {
-              "type": "string"
-            },
-            "a": {
-              "$ref": "#/definitions/A"
-            }
-          }
+          "$ref": "#/definitions/B"
         },
         "c": {
-          "x-amf-examples": {
-            "valid": {
-              "c": "cc",
-              "b": {
-                "b": "bb",
-                "a": {
-                  "a": "aa"
-                }
-              }
-            },
-            "invalid": {
-              "c": 5,
-              "b": {
-                "b": 6,
-                "a": {
-                  "a": "aa"
-                }
-              }
-            }
-          },
-          "type": "object",
-          "additionalProperties": true,
-          "required": [
-            "c"
-          ],
-          "properties": {
-            "c": {
-              "type": "string"
-            },
-            "b": {
-              "x-amf-examples": {
-                "valid": {
-                  "b": "bb",
-                  "a": {
-                    "a": "aaa",
-                    "c": {
-                      "c": "cc"
-                    }
-                  }
-                },
-                "invalid": {
-                  "b": 1,
-                  "a": {
-                    "a": 2,
-                    "c": {
-                      "c": 3,
-                      "b": {
-                        "b": 4,
-                        "a": {
-                          "a": 5
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "type": "object",
-              "additionalProperties": true,
-              "required": [
-                "b"
-              ],
-              "properties": {
-                "b": {
-                  "type": "string"
-                },
-                "a": {
-                  "$ref": "#/definitions/A"
-                }
-              }
-            }
-          }
+          "$ref": "#/definitions/C"
         }
       }
     },
@@ -242,45 +134,7 @@
           "type": "string"
         },
         "b": {
-          "x-amf-examples": {
-            "valid": {
-              "b": "bb",
-              "a": {
-                "a": "aaa",
-                "c": {
-                  "c": "cc"
-                }
-              }
-            },
-            "invalid": {
-              "b": 1,
-              "a": {
-                "a": 2,
-                "c": {
-                  "c": 3,
-                  "b": {
-                    "b": 4,
-                    "a": {
-                      "a": 5
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "type": "object",
-          "additionalProperties": true,
-          "required": [
-            "b"
-          ],
-          "properties": {
-            "b": {
-              "type": "string"
-            },
-            "a": {
-              "$ref": "#/definitions/A"
-            }
-          }
+          "$ref": "#/definitions/B"
         }
       }
     }

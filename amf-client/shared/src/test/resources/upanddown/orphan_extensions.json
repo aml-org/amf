@@ -16,18 +16,6 @@
     "http",
     "https"
   ],
-  "securityDefinitions": {
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://swagger.io/api/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets",
-        "x-scopes-extension": "hey"
-      }
-    }
-  },
   "paths": {
     "/levelzero": {
       "x-amf-displayName": "Name",
@@ -41,5 +29,17 @@
       }
     },
     "x-paths-extension": "hey"
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://swagger.io/api/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets",
+        "x-scopes-extension": "hey"
+      }
+    }
   }
 }
