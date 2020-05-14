@@ -4,14 +4,6 @@
     "title": "test",
     "version": "1.0"
   },
-  "parameters": {
-    "a": {
-      "type": "string",
-      "required": true,
-      "in": "path",
-      "name": "b"
-    }
-  },
   "paths": {
     "/a/{a}": {
       "get": {
@@ -27,6 +19,14 @@
         ],
         "responses": {}
       }
+    }
+  },
+  "parameters": {
+    "a": {
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "name": "b"
     }
   }
 }

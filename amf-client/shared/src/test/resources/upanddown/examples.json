@@ -4,41 +4,6 @@
     "title": "API with Examples",
     "version": "1.0"
   },
-  "definitions": {
-    "User": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "lastname": {
-          "type": "string"
-        }
-      },
-      "example": {
-        "name": "Bob",
-        "lastname": "Marley"
-      }
-    },
-    "Org": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "address": {
-          "type": "string"
-        },
-        "value": {
-          "type": "string"
-        }
-      },
-      "example": {
-        "name": "Bob",
-        "lastname": "Marley"
-      }
-    }
-  },
   "paths": {
     "/organization": {
       "post": {
@@ -116,6 +81,41 @@
             "description": ""
           }
         }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "name": "Bob",
+        "lastname": "Marley"
+      }
+    },
+    "Org": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "name": "Bob",
+        "lastname": "Marley"
       }
     }
   }

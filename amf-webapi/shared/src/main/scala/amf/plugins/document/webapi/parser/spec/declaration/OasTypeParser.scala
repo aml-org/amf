@@ -576,7 +576,11 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       nodeOrEntry.left.toOption.map(e => Annotations(e.key)).getOrElse(Annotations())
     override val map: YMap = node.as[YMap]
 
-    override val shape: UnionShape = UnionShape(Annotations.valueNode(node)).withName(name, nameAnnotations)
+    override val shape: UnionShape = {
+      val union = UnionShape(Annotations.valueNode(node)).withName(name, nameAnnotations)
+      adopt(union)
+      union
+    }
 
     override def parse(): UnionShape = {
       super.parse()

@@ -1,35 +1,5 @@
 {
   "swagger": "2.0",
-  "definitions": {
-    "Person": {
-      "type": "object",
-      "properties": {
-        "age": {
-          "type": "number"
-        },
-        "name": {
-          "type": "string"
-        },
-        "address": {
-          "$ref": "#/definitions/Address"
-        },
-        "parent": {
-          "$ref": "#/definitions/Person"
-        }
-      }
-    },
-    "Address": {
-      "type": "object",
-      "properties": {
-        "street": {
-          "type": "string"
-        },
-        "number": {
-          "type": "number"
-        }
-      }
-    }
-  },
   "paths": {
     "/person-response": {
       "get": {
@@ -59,5 +29,35 @@
   "info": {
     "title": "API",
     "version": "1.0"
+  },
+  "definitions": {
+    "Person": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "parent": {
+          "$ref": "#/definitions/Person"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "number": {
+          "type": "number"
+        }
+      }
+    }
   }
 }
