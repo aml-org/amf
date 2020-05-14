@@ -12,8 +12,8 @@ import amf.core.services.RuntimeSerializer
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.emitter.oas.{
-  CompactJsonSchemaEmitterContext,
-  DefinitionsEmissionHelper,
+  InlinedJsonSchemaEmitterContext,
+  AliasDefinitions,
   JsonSchemaEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -84,7 +84,11 @@ case class JsonSchemaEmitter(root: Shape,
 
   def emitDocument(): YDocument = {
     val schemaVersion: JSONSchemaVersion = JSONSchemaVersion.fromClientOptions(options.schemaVersion)
-    val emitters                         = Seq(JsonSchemaEntry(schemaVersion), jsonSchemaRefEntry) ++ sortedTypeEntries(schemaVersion)
+    val context =
+      if (options.isWithCompactedEmission)
+        new JsonSchemaEmitterContext(options.errorHandler, options, schemaVersion = schemaVersion)
+      else InlinedJsonSchemaEmitterContext(options.errorHandler, options, schemaVersion = schemaVersion)
+    val emitters = Seq(JsonSchemaEntry(schemaVersion), jsonSchemaRefEntry(context)) ++ sortedTypeEntries(context)
     YDocument(b => {
       b.obj { b =>
         traverse(emitters, b)
@@ -92,10 +96,10 @@ case class JsonSchemaEmitter(root: Shape,
     })
   }
 
-  private val jsonSchemaRefEntry = new EntryEmitter {
+  private def jsonSchemaRefEntry(ctx: JsonSchemaEmitterContext) = new EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val name =
-        if (options.isWithCompactedEmission) DefinitionsEmissionHelper.normalizeName(root.name.option())
+        if (options.isWithCompactedEmission) ctx.definitionsQueue.normalizeName(root.name.option())
         else root.name.value()
       b.entry("$ref", OasDefinitions.appendDefinitionsPrefix(name))
     }
@@ -103,12 +107,8 @@ case class JsonSchemaEmitter(root: Shape,
     override def position(): Position = Position.ZERO
   }
 
-  private def sortedTypeEntries(schemaVersion: JSONSchemaVersion) = {
-    val context =
-      if (options.isWithCompactedEmission)
-        CompactJsonSchemaEmitterContext(options.errorHandler, options, schemaVersion = schemaVersion)
-      else new JsonSchemaEmitterContext(options.errorHandler, options, schemaVersion = schemaVersion)
-    ordering.sorted(OasDeclarationsEmitter(declarations, SpecOrdering.Lexical, Seq())(context).emitters)
+  private def sortedTypeEntries(ctx: JsonSchemaEmitterContext) = {
+    ordering.sorted(OasDeclarationsEmitter(declarations, SpecOrdering.Lexical, Seq())(ctx).emitters)
   } // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
 
 }

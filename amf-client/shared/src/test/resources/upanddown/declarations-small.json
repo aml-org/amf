@@ -1,5 +1,11 @@
 {
   "swagger": "2.0",
+  "info": {
+    "description": "This RAML illustrates a type declaration that uses facets to restrict its object properties.",
+    "title": "My API With Types",
+    "version": ""
+  },
+  "paths": {},
   "definitions": {
     "Person": {
       "type": "object",
@@ -28,11 +34,5 @@
         }
       }
     }
-  },
-  "info": {
-    "description": "This RAML illustrates a type declaration that uses facets to restrict its object properties.",
-    "title": "My API With Types",
-    "version": ""
-  },
-  "paths": {}
+  }
 }

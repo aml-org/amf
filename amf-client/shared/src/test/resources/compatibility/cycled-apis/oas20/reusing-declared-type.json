@@ -7,12 +7,27 @@
   "paths": {
     "/aPath": {
       "get": {
+        "operationId": "null_0",
         "responses": {
           "200": {
             "description": "",
             "x-amf-mediaType": "application/json",
             "schema": {
-              "$ref": "#/definitions/FirstBaseType"
+              "$ref": "#/definitions/SomeType"
+            }
+          }
+        }
+      }
+    },
+    "/anotherPath": {
+      "get": {
+        "operationId": "null_1",
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "$ref": "#/definitions/SomeType"
             }
           }
         }
@@ -20,19 +35,18 @@
     }
   },
   "definitions": {
-    "FirstBaseType": {
-      "x-amf-examples": {
-        "baseExample": {
-          "onlyProp": "something"
-        }
-      },
+    "SomeType": {
       "type": "object",
       "additionalProperties": true,
       "required": [
-        "onlyProp"
+        "a",
+        "b"
       ],
       "properties": {
-        "onlyProp": {
+        "a": {
+          "type": "integer"
+        },
+        "b": {
           "type": "string"
         }
       }

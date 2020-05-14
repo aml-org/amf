@@ -1,0 +1,50 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "FHIR API",
+    "version": "v4.0.1"
+  },
+  "host": "fhir.test.com",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/Account": {
+      "post": {
+        "consumes": [
+          "application/fhir+xml; fhirVersion=4.0"
+        ],
+        "produces": [
+          "application/fhir+xml; fhirVersion=4.0"
+        ],
+        "x-amf-requestPayloads": [
+          {
+            "mediaType": "application/fhir+json; fhirVersion=4.0",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Account": {
+      "x-amf-union": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
+    }
+  }
+}

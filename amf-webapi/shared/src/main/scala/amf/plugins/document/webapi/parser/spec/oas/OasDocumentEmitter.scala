@@ -161,7 +161,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
     val ordering = SpecOrdering.ordering(Oas, doc.encodes.annotations)
 
     val references = ReferencesEmitter(document, ordering)
-    val declares =
+    def declares: Seq[EntryEmitter] =
       wrapDeclarations(OasDeclarationsEmitter(doc.declares, ordering, document.references).emitters, ordering)
     val api       = emitWebApi(ordering, document.references)
     val extension = extensionEmitter()
@@ -171,7 +171,8 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
     YDocument {
       _.obj { b =>
         versionEntry(b)
-        traverse(ordering.sorted(api ++ extension ++ usage ++ declares :+ references), b)
+        traverse(ordering.sorted(api), b) // api explicitly needs to be emitted before declares to populate compact emission queue
+        traverse(ordering.sorted(extension ++ usage ++ declares :+ references), b)
       }
     }
   }

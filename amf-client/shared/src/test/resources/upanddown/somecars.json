@@ -224,28 +224,18 @@
     }
   },
   "definitions": {
-    "Product": {
+    "Error": {
       "type": "object",
       "properties": {
-        "product_id": {
-          "type": "string",
-          "description": "Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles."
+        "code": {
+          "type": "integer",
+          "format": "int32"
         },
-        "description": {
-          "type": "string",
-          "description": "Description of product."
+        "message": {
+          "type": "string"
         },
-        "display_name": {
-          "type": "string",
-          "description": "Display name of product."
-        },
-        "capacity": {
-          "type": "string",
-          "description": "Capacity of product. For example, 4 people."
-        },
-        "image": {
-          "type": "string",
-          "description": "Image URL representing the product."
+        "fields": {
+          "type": "string"
         }
       }
     },
@@ -282,6 +272,15 @@
         }
       }
     },
+    "Activity": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "Unique identifier for the activity"
+        }
+      }
+    },
     "Profile": {
       "type": "object",
       "properties": {
@@ -304,15 +303,6 @@
         "promo_code": {
           "type": "string",
           "description": "Promo code of the Uber user."
-        }
-      }
-    },
-    "Activity": {
-      "type": "object",
-      "properties": {
-        "uuid": {
-          "type": "string",
-          "description": "Unique identifier for the activity"
         }
       }
     },
@@ -342,18 +332,28 @@
         }
       }
     },
-    "Error": {
+    "Product": {
       "type": "object",
       "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
+        "product_id": {
+          "type": "string",
+          "description": "Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles."
         },
-        "message": {
-          "type": "string"
+        "description": {
+          "type": "string",
+          "description": "Description of product."
         },
-        "fields": {
-          "type": "string"
+        "display_name": {
+          "type": "string",
+          "description": "Display name of product."
+        },
+        "capacity": {
+          "type": "string",
+          "description": "Capacity of product. For example, 4 people."
+        },
+        "image": {
+          "type": "string",
+          "description": "Image URL representing the product."
         }
       }
     }
