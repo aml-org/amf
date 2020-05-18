@@ -243,5 +243,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("libraries-resolve-correct-alias/promotions.raml")
   }
 
+  test("Validate api that has schemas with missing closures which are handled in emission") {
+    checkValid("complex-closure-case/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
