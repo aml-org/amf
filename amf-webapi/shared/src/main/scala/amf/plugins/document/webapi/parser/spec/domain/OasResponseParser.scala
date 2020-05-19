@@ -76,7 +76,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
           map.key(
             "examples",
             entry => {
-              val examples = OasResponseExamplesParser(entry).parse()
+              val examples = OasResponseExamplesParser(entry, res.id).parse()
               if (examples.nonEmpty) {
                 examples.foreach(_.annotations += TrackedElement(res.id))
               }

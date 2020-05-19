@@ -141,10 +141,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
                         ctx.factory
-                          .typeParser(entry,
-                                      shape => shape.withName("default").adopted(payload.id),
-                                      false,
-                                      defaultType)
+                          .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, defaultType)
                           .parse()
                           .foreach { schema =>
                             val payload = res.withPayload()
@@ -174,7 +171,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
         map.key(
           "examples".asRamlAnnotation,
           entry => {
-            val examples = OasResponseExamplesParser(entry).parse()
+            val examples = OasResponseExamplesParser(entry, res.id).parse()
             res.set(ResponseModel.Examples, AmfArray(examples, Annotations(entry.value)), Annotations(entry))
           }
         )

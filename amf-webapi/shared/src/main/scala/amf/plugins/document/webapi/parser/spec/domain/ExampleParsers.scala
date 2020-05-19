@@ -33,13 +33,13 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-case class OasResponseExamplesParser(entry: YMapEntry)(implicit ctx: WebApiContext) {
+case class OasResponseExamplesParser(entry: YMapEntry, parentId: String)(implicit ctx: WebApiContext) {
   def parse(): Seq[Example] = {
     val results = ListBuffer[Example]()
     entry.value
       .as[YMap]
       .regex(".*/.*")
-      .map(e => results += OasResponseExampleParser(e).parse())
+      .map(e => results += OasResponseExampleParser(e, parentId).parse())
 
     results
   }
@@ -85,10 +85,11 @@ case class Oas3NamedExamplesParser(entry: YMapEntry, parentId: String)(implicit 
   }
 }
 
-case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiContext) {
+case class OasResponseExampleParser(yMapEntry: YMapEntry, parentId: String)(implicit ctx: WebApiContext) {
   def parse(): Example = {
     val example = Example(yMapEntry)
-      .set(ExampleModel.MediaType, yMapEntry.key.as[YScalar].text)
+    example.adopted(parentId)
+    example.set(ExampleModel.MediaType, yMapEntry.key.as[YScalar].text)
     RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = false, quiet = true)).populate()
   }
 }
