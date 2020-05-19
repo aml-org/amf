@@ -171,7 +171,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
         map.key(
           "examples".asRamlAnnotation,
           entry => {
-            val examples = OasResponseExamplesParser(entry, res.id).parse()
+            val examples = ExamplesByMediaTypeParser(entry, res.id).parse()
             res.set(ResponseModel.Examples, AmfArray(examples, Annotations(entry.value)), Annotations(entry))
           }
         )

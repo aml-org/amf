@@ -22,7 +22,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.utils.JsonSchemaParsi
 import amf.plugins.document.webapi.parser.spec.domain.{
   ExampleOptions,
   NodeDataNodeParser,
-  RamlExampleValueAsString,
+  ExampleDataParser,
   RamlExamplesParser
 }
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
@@ -763,8 +763,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   }
 
-  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit)
-      extends DataArrangementShapeParser() {
+  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
 
     override def parse(): AnyShape = {
       adopt(shape)
@@ -815,8 +814,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit)
-      extends DataArrangementShapeParser() {
+  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
     override def parse(): AnyShape = {
       checkJsonIdentity(shape, map, adopt, ctx.declarations.futureDeclarations)
       super.parse()
@@ -886,7 +884,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           val examples = entry.value.as[YSequence].nodes.map { n =>
             val exa = Example(n).withName(counter.genId("default-example"))
             exa.adopted(shape.id)
-            RamlExampleValueAsString(n, exa, options).populate()
+            ExampleDataParser(n, exa, options).parse()
           }
           shape.setArrayWithoutId(AnyShapeModel.Examples, examples, Annotations(entry))
         }
@@ -1029,10 +1027,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     required
       .foreach {
         case (name, nodes) if nodes.size > 1 =>
-          ctx.eh.violation(DuplicateRequiredItem,
-                           shape.id,
-                           s"'$name' is duplicated in 'required' property",
-                           nodes.last)
+          ctx.eh.violation(DuplicateRequiredItem, shape.id, s"'$name' is duplicated in 'required' property", nodes.last)
         case _ => // ignore
       }
 
@@ -1187,8 +1182,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       )
 
       map.key("enum", ShapeModel.Values in shape using dataNodeParser)
-      map.key("externalDocs",
-              AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
+      map.key("externalDocs", AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 
       map.key(
