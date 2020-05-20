@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.remote.{Amf, OasJsonHint, RamlYamlHint}
+import amf.core.remote.{Amf, OasJsonHint, OasYamlHint, RamlYamlHint}
 
 /**
   *
@@ -11,6 +11,13 @@ class ExamplesResolutionTest extends ResolutionTest {
 
   test("Response examples oas to AMF") {
     cycle("response-examples.json", "response-examples.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("Response declarations with multiple media types oas to AMF") {
+    cycle("response-declarations-with-multiple-media-types.yaml",
+          "response-declarations-with-multiple-media-types.jsonld",
+          OasYamlHint,
+          Amf)
   }
 
   test("Response examples raml to AMF") {

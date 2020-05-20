@@ -1,0 +1,41 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: API
+produces:
+  - application/json
+  - application/xml
+paths:
+  /echo:
+    post:
+      responses:
+        '201':
+          $ref: '#/responses/201_response_object'
+        '202':
+          $ref: '#/responses/202_response_object'
+definitions:
+  ResponseObject:
+    description: Response object
+    type: object
+    properties:
+      status:
+        type: string
+      description:
+        type: string
+responses:
+  201_response_object:
+    description: Created
+    schema:
+      $ref: '#/definitions/ResponseObject'
+    examples:
+      application/json:
+        status: '201'
+        description: 'Created'
+  202_response_object:
+    description: Accepted
+    schema:
+      $ref: '#/definitions/ResponseObject'
+    examples:
+      application/json:
+        status: '202'
+        description: 'Accepted'
