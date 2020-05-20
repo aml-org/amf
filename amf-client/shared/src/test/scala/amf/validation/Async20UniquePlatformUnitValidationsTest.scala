@@ -197,8 +197,12 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("several-url-formats.yaml", Some("several-url-formats.report"), Async20Profile)
   }
 
-  test("Id uri format") {
-    validate("id-uri-format.yaml", Some("id-uri-format.report"), Async20Profile)
+  test("Invalid Id uri format") {
+    validate("invalid-id-uri-format.yaml", Some("invalid-id-uri-format.report"), Async20Profile)
+  }
+
+  test("Valid Id uri format") {
+    validate("valid-id-uri-format.yaml", None, Async20Profile)
   }
 
   test("Contact email format") {
