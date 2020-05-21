@@ -10,12 +10,7 @@ import amf.core.parser.{Annotations, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
-import amf.plugins.document.webapi.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  RamlWebApiContextType
-}
+import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
@@ -273,7 +268,11 @@ object ExtendsHelper {
     case _ => None
   }
 
-  private def sourceNameMatch(bu: BaseUnit, sourceName: String): Boolean = bu.location().contains(sourceName)
+  private def sourceNameMatch(f: AmfElement, sourceName: String): Boolean =
+    f.annotations
+      .find(classOf[AmfSourceLocation])
+      .map(_.location)
+      .contains(sourceName)
 
   private def extractFilteredDeclarations(unit: BaseUnit,
                                           filterCondition: DomainElement => Boolean): Seq[DomainElement] = {
