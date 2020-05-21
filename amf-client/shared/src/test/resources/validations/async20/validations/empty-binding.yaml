@@ -1,0 +1,13 @@
+asyncapi: 2.0.0
+info:
+  title: aTitle
+  version: aVersion
+channels: {}
+servers:
+  production:
+    url: development.gigantic-server.com
+    protocolVersion: 0.9.1
+    protocol: amqp
+    bindings:
+      amqp:
+        shouldBeEmpty: true
