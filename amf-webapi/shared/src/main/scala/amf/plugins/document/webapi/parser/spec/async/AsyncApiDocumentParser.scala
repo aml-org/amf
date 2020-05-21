@@ -278,7 +278,7 @@ case class IdentifierParser(entry: YMapEntry, webApi: WebApi, override implicit 
   def parse(): Unit = {
     entry.value.tagType match {
       case YType.Str =>
-        val id = entry.value.toString
+        val id = entry.value.as[String]
         webApi.set(WebApiModel.Identifier, AmfScalar(id), Annotations(entry))
       case _ =>
         ctx.eh.violation(InvalidIdentifier, webApi.id, "'id' must be a string", entry.location)
