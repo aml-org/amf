@@ -212,4 +212,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Message headers must type object") {
     validate("message-headers-object.yaml", Some("message-headers-object.report"), Async20Profile)
   }
+
+  test("Empty binding validation report should have location") {
+    validate("empty-binding.yaml", Some("empty-binding.report"), Async20Profile)
+  }
 }
