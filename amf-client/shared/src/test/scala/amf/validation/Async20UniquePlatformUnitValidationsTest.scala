@@ -208,4 +208,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Contact email format") {
     validate("contact-email-format.yaml", Some("contact-email-format.report"), Async20Profile)
   }
+
+  test("Message headers must type object") {
+    validate("message-headers-object.yaml", Some("message-headers-object.report"), Async20Profile)
+  }
 }

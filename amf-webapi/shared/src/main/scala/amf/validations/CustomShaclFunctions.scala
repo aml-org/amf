@@ -11,13 +11,9 @@ import amf.plugins.document.webapi.validation.runtimeexpression.{AsyncExpression
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.{FileShape, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.bindings.{BindingHeaders, BindingQuery}
-import amf.plugins.domain.webapi.metamodel.security.{
-  OAuth2SettingsModel,
-  OpenIdConnectSettingsModel,
-  SecuritySchemeModel
-}
+import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
 import amf.plugins.domain.webapi.metamodel._
-import amf.plugins.domain.webapi.models.IriTemplateMapping
+import amf.plugins.domain.webapi.models.{IriTemplateMapping, Parameter}
 import amf.plugins.domain.webapi.models.security.{OAuth2Settings, OpenIdConnectSettings}
 
 object CustomShaclFunctions {
@@ -231,7 +227,20 @@ object CustomShaclFunctions {
         val isObjectAndHasProperties = validateObjectAndHasProperties(queryElement)
         if (!isObjectAndHasProperties) violation(None)
       }
-    })
+    }),
+    "mandatoryHeadersObjectNode" -> ((element, violation) => {
+      for {
+        headerElement <- element.fields.?[AmfArray](MessageModel.Headers)
+        header <- headerElement.values.headOption
+      } yield {
+        header match {
+          case p: Parameter => p.schema match {
+            case _: NodeShape => // ignore
+            case _ => violation(None)
+          }
+        }
+      }
+    }),
   )
 
   private def validateObjectAndHasProperties(element: AmfElement) = {
@@ -256,5 +265,4 @@ object CustomShaclFunctions {
         throwValidation()
     case _ =>
   }
-
 }

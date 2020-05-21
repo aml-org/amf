@@ -2175,6 +2175,19 @@ object AMFRawValidations {
         "Does not comply with runtime expression ABNF syntax",
         "Violation"
       ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiContract:Message",
+        "apiContract:headers",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:mandatoryHeadersObjectNode",
+        "0",
+        "Message headers must be of type object",
+        "Message headers must be of type object",
+        "Violation"
+      ),
       emailValidation(AsyncApi.name, "core:Organization", "core:email"),
       urlValidation(AsyncApi20.name, "core:Organization", "core:url"),
       urlValidation(AsyncApi20.name, "core:License", "core:url"),
