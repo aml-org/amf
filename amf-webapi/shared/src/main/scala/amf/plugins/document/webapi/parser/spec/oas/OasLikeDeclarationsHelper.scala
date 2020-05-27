@@ -28,7 +28,6 @@ trait OasLikeDeclarationsHelper {
               shape.adopted(typesPrefix)
             })(ctx).parse() match {
               case Some(shape) =>
-                if (isDirectTypeAlias(shape)) shape.add(TypeAlias())
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>
                 ctx.eh.violation(UnableToParseShape,

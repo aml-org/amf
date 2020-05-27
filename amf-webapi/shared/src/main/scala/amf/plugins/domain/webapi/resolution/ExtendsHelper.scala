@@ -7,7 +7,8 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, FragmentRef, ParserContext}
-import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
+import amf.core.resolution.stages.ReferenceResolutionStage
+import amf.core.resolution.stages.helpers.ResolvedNamedEntity
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.parser.raml.{

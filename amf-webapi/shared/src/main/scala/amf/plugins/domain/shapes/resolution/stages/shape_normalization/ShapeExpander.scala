@@ -43,7 +43,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     shape match {
       case l: Linkable if l.isLink => recursionRegister.recursionAndError(root, Some(root.id), shape, traversal)
 
-      case _ if traversal.shouldFailIfRecursive(shape) && !shape.isInstanceOf[RecursiveShape] =>
+      case _ if traversal.shouldFailIfRecursive(root, shape) && !shape.isInstanceOf[RecursiveShape] =>
         recursionRegister.recursionAndError(root, None, shape, traversal)
 
       case _ if traversal.wasVisited(shape.id) => shape

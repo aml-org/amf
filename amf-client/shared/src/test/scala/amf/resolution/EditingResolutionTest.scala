@@ -505,6 +505,17 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  test("raml with declared element link of link of link in api") {
+    cycle(
+      "link-of-link/middle-link-in-api/link-of-link-in-api.raml",
+      "link-of-link/middle-link-in-api/link-of-link-in-api.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
   // JSON-LD is serialized differently every time
   ignore("KG Service API resolution") {
     cycle(
