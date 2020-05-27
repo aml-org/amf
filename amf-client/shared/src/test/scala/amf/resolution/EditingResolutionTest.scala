@@ -272,7 +272,7 @@ class EditingResolutionTest extends ResolutionTest {
   test("Recursion in inheritance with resource type - Array") {
     cycle(
       "recursion-inheritance-array.raml",
-      "recursion-inheritance-array.jsonld",
+      "recursion-inheritance-array.resolved.raml",
       RamlYamlHint,
       Raml08,
       validationsPath
