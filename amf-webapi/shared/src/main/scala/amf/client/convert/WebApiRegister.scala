@@ -79,6 +79,9 @@ object WebApiRegister {
     platform.registerWrapper(templates.ParametrizedResourceTypeModel) {
       case s: webapi.models.templates.ParametrizedResourceType => ParametrizedResourceType(s)
     }
+    platform.registerWrapper(webapi.metamodel.TagModel) {
+      case s: webapi.models.Tag => Tag(s)
+    }
     platform.registerWrapper(templates.ParametrizedTraitModel) {
       case s: webapi.models.templates.ParametrizedTrait => ParametrizedTrait(s)
     }
