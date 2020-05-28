@@ -1,9 +1,9 @@
 package amf.client.validation
 
-import amf.client.convert.NativeOps
+import amf.client.convert.{NativeOps, WebApiRegister}
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.DataTypes
-import amf.client.model.domain.{ArrayShape, NodeShape, PropertyShape, ScalarShape}
+import amf.client.model.domain.{AnyShape, ArrayShape, NodeShape, PropertyShape, ScalarShape, Shape}
 import amf.core.AMF
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import org.scalatest.{AsyncFunSuite, Matchers}
@@ -163,6 +163,23 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
       val validator = shape.payloadValidator("application/json").asOption.get
 
       validator.validate("application/json", payload).asFuture.map(r => r.conforms shouldBe true)
+    }
+  }
+
+  test("Invalid payload for json media type") {
+    amf.Core.init().asFuture.flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+      WebApiRegister.register(platform)
+
+      val payload            = "Hello World"
+      val stringShape: Shape = new ScalarShape().withDataType(DataTypes.String)
+      val validator = new AnyShape()
+        .withId("someId")
+        .withOr(Seq(stringShape._internal).asClient)
+        .payloadValidator("application/json")
+        .asOption
+        .get
+      validator.validate("application/json", payload).asFuture.map(r => r.conforms shouldBe false)
     }
   }
 
