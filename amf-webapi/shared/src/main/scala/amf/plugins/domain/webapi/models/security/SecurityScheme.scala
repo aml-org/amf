@@ -60,7 +60,7 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   }
 
   override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type =
-    if (parent.contains("#")) {
+    if (Option(parent).isDefined && parent.contains("#")) {
       withId(parent + "/" + componentId.urlComponentEncoded)
     } else {
       withId(parent + "#" + componentId.urlComponentEncoded)

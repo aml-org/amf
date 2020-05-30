@@ -17,7 +17,7 @@ case class HttpOperationBinding(override private[amf] val _internal: InternalHtt
   def method: StrField        = _internal.method
   def query: Shape            = _internal.query
 
-  def withType(`type`: String): this.type = {
+  def withOperationType(`type`: String): this.type = {
     _internal.withOperationType(`type`)
     this
   }

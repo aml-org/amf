@@ -24,6 +24,7 @@ case class WebSocketsChannelBinding(override private[amf] val _internal: Interna
   def method: StrField = _internal.method
   def query: Shape     = _internal.query
   def headers: Shape   = _internal.headers
+  def `type`: StrField = _internal.`type`
 
   def withMethod(method: String): this.type = {
     _internal.withMethod(method)
@@ -37,6 +38,11 @@ case class WebSocketsChannelBinding(override private[amf] val _internal: Interna
 
   def withHeaders(headers: Shape): this.type = {
     _internal.withHeaders(headers)
+    this
+  }
+
+  def withType(`type`: String): this.type = {
+    _internal.withType(`type`)
     this
   }
 
