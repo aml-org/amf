@@ -594,6 +594,10 @@ class EditingResolutionTest extends ResolutionTest {
           transformWith = Some(Oas20))
   }
 
+  test("Resolve links defined in rt and traits before merging") {
+    cycle("trait-with-link.raml", "trait-with-link.jsonld", RamlYamlHint, Amf, directory = resolutionPath)
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit,
                     config.target,
