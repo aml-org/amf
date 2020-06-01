@@ -10,7 +10,12 @@ import amf.core.parser.{Annotations, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
-import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.contexts.parser.raml.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  RamlWebApiContextType
+}
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
@@ -38,7 +43,8 @@ object ExtendsHelper {
                                  extensionId: String,
                                  extensionLocation: Option[String],
                                  keepEditingInfo: Boolean,
-                                 context: Option[RamlWebApiContext] = None): Operation = {
+                                 context: Option[RamlWebApiContext] = None,
+                                 errorHandler: ErrorHandler): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
@@ -80,7 +86,8 @@ object ExtendsHelper {
                      entry,
                      node.annotations,
                      referencesCollector,
-                     context)
+                     context,
+                     errorHandler)
   }
 
   def entryAsOperation[T <: BaseUnit](profile: ProfileName,
@@ -92,7 +99,8 @@ object ExtendsHelper {
                                       annotations: Annotations,
                                       referencesCollector: mutable.Map[String, DomainElement] =
                                         mutable.Map[String, DomainElement](),
-                                      context: Option[RamlWebApiContext] = None): Operation = {
+                                      context: Option[RamlWebApiContext] = None,
+                                      errorHandler: ErrorHandler): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
     addDeclarations(ctx, unit, entry.value.sourceName)
@@ -110,13 +118,11 @@ object ExtendsHelper {
         val operation = ctxForTrait.factory
           .operationParser(entry, _ => Operation().withId(extensionId + "/applied"), true)
           .parse()
-//          ctxForTrait.futureDeclarations.resolve()
         operation
       }
 
     if (keepEditingInfo) annotateExtensionId(operation, extensionId, findUnitLocationOfElement(extensionId, unit))
-    operation
-    // new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
+    new ReferenceResolutionStage(keepEditingInfo)(errorHandler).resolveDomainElement(operation)
   }
 
   def asEndpoint[T <: BaseUnit](unit: T,
