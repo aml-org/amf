@@ -22,9 +22,10 @@ case class ExamplesByMediaTypeParser(entry: YMapEntry, parentId: String)(implici
 
 case class ExampleByMediaTypeParser(yMapEntry: YMapEntry, parentId: String)(implicit ctx: WebApiContext) {
   def parse(): Example = {
-    val example = Example(yMapEntry)
-    example.adopted(parentId)
-    example.set(ExampleModel.MediaType, yMapEntry.key.as[YScalar].text)
+    val example   = Example(yMapEntry)
+    val mediaType = yMapEntry.key.as[YScalar].text
+    example.withName(mediaType).adopted(parentId)
+    example.set(ExampleModel.MediaType, mediaType)
     ExampleDataParser(yMapEntry.value, example, ExampleOptions(strictDefault = false, quiet = true)).parse()
   }
 }
