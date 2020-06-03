@@ -18,11 +18,12 @@ import scala.collection.mutable.ListBuffer
 /**
   * Parse an object as a fully dynamic value.
   */
-class DataNodeParser(node: YNode,
-                     refsCounter: AliasCounter,
-                     parameters: AbstractVariables = AbstractVariables(),
-                     parent: Option[String] = None,
-                     idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
+// TODO: should have private constructor
+class DataNodeParser private (node: YNode,
+                              refsCounter: AliasCounter,
+                              parameters: AbstractVariables = AbstractVariables(),
+                              parent: Option[String] = None,
+                              idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
 
   def parse(): DataNode = {
     if (refsCounter.exceedsThreshold(node)) {
@@ -145,7 +146,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
   def parseIncludedAST(raw: String, node: YNode): DataNode = {
     val n = YamlParser(raw, node.sourceName).withIncludeTag("!include").document().node
     if (n.isNull) ScalarNode(raw, Some(DataType.String)).withId(parent.getOrElse("") + "/included")
-    else new DataNodeParser(n, AliasCounter(ctx.options.getMaxYamlReferences), parameters, parent, idCounter).parse()
+    else DataNodeParser(n, parameters, parent, idCounter).parse()
   }
 
   /**
@@ -208,5 +209,10 @@ object DataNodeParser {
                        refsCounter = AliasCounter(ctx.options.getMaxYamlReferences),
                        parameters = parameters,
                        parent = parent)
+  }
+
+  def apply(node: YNode, parameters: AbstractVariables, parent: Option[String], idCounter: IdCounter)(
+      implicit ctx: WebApiContext): DataNodeParser = {
+    new DataNodeParser(node, AliasCounter(ctx.options.getMaxYamlReferences), parameters, parent, idCounter)
   }
 }
