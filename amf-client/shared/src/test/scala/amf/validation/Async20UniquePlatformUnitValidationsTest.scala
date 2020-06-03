@@ -21,16 +21,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("required-info-version.yaml", Some("required-info-version.report"), Async20Profile)
   }
 
-  test("Contact url must be in url format") {
-    validate("contact-url-format.yaml", Some("contact-url-format.report"), Async20Profile)
-  }
-
   test("Required license name") {
     validate("required-license-name.yaml", Some("required-license-name.report"), Async20Profile)
-  }
-
-  test("Url license must be in url format") {
-    validate("license-url-format.yaml", Some("license-url-format.report"), Async20Profile)
   }
 
   test("Server name must comply with pattern") {
@@ -155,6 +147,24 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
              Async20Profile)
   }
 
+  test("AmqpOperationBinding expiration field value must greater than or equal to 0") {
+    validate("amqp-operation-binding-expiration.yaml",
+             Some("amqp-operation-binding-expiration.report"),
+             Async20Profile)
+  }
+
+  test("WsSocketChannelBinding query and header field must be an object type and have properties key") {
+    validate("ws-channel-binding-header-query.yaml", Some("ws-channel-binding-header-query.report"), Async20Profile)
+  }
+
+  test("HttpOperationBinding query field must be an object type and have properties key") {
+    validate("http-operation-query.yaml", Some("http-operation-query.report"), Async20Profile)
+  }
+
+  test("HttpMessageBinding headers field must be an object type and have properties key") {
+    validate("http-message-headers.yaml", Some("http-message-headers.report"), Async20Profile)
+  }
+
   ignore("Nested external correlationId refs") {
     validate("nested-libraries/nested-correlationIds/api.yaml", None, Async20Profile)
   }
@@ -165,11 +175,45 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
              Async20Profile)
   }
 
-  ignore("Nested external message refs with traits") {
-    validate("nested-libraries/nested-messages-traits/api.yaml", None, Async20Profile)
+  test("Valid message trait node") {
+    validate("valid-messageTrait-node.yaml", None, Async20Profile)
   }
 
-  ignore("Nested external message refs") {
-    validate("nested-libraries/nested-messages/api.yaml", None, Async20Profile)
+  test("httpApiKey and apiKey 'in' facet validation") {
+    validate("security-scheme-in-facet.yaml", Some("invalid-in-facet-security-scheme.report"), Async20Profile)
+  }
+
+  test("async runtime expression validations") {
+    validate("invalid-runtime-expressions.yaml", Some("invalid-runtime-expressions.report"), Async20Profile)
+  }
+
+  test("JsonReference is invalid with '#' only") {
+    validate("json-reference/invalid-json-reference-format.yaml",
+             Some("invalid-json-reference-format.report"),
+             Async20Profile)
+  }
+
+  test("Several url formats") {
+    validate("several-url-formats.yaml", Some("several-url-formats.report"), Async20Profile)
+  }
+
+  test("Invalid Id uri format") {
+    validate("invalid-id-uri-format.yaml", Some("invalid-id-uri-format.report"), Async20Profile)
+  }
+
+  test("Valid Id uri format") {
+    validate("valid-id-uri-format.yaml", None, Async20Profile)
+  }
+
+  test("Contact email format") {
+    validate("contact-email-format.yaml", Some("contact-email-format.report"), Async20Profile)
+  }
+
+  test("Message headers must type object") {
+    validate("message-headers-object.yaml", Some("message-headers-object.report"), Async20Profile)
+  }
+
+  test("Empty binding validation report should have location") {
+    validate("empty-binding.yaml", Some("empty-binding.report"), Async20Profile)
   }
 }

@@ -40,4 +40,8 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Reference a yaml file") {
     validate("yaml-ref/api.yaml", None, Oas20Profile)
   }
+
+  test("Nested yaml refs") {
+    validate("nested-yaml-refs/api.yaml", None, Oas20Profile)
+  }
 }

@@ -32,7 +32,7 @@ nodeMappings:
       Scalar: ScalarShape
       Any: AnyShape
       Recursive: RecursiveShape
-
+    
     union:
       - UnionShape
       - TupleShape
@@ -45,7 +45,7 @@ nodeMappings:
       - ScalarShape
       - AnyShape
       - RecursiveShape
-
+    
   SecuritySettingsUnion:
     typeDiscriminatorName: settingsType
     typeDiscriminator:
@@ -54,14 +54,14 @@ nodeMappings:
       APIKey: APIKeySettings
       Http: HTTPSettings
       OpenID: OpenIDSettings
-
+    
     union:
       - OAuth2Settings
       - OAuth1Settings
       - APIKeySettings
       - HTTPSettings
       - OpenIDSettings
-
+    
 
   DataNodeUnion:
     typeDiscriminatorName: elementType
@@ -654,7 +654,7 @@ nodeMappings:
           - ParametrizedResourceType
           - ParametrizedTrait
         allowMultiple: true
-
+    
       path:
         propertyTerm: apiContract.path
         range: string
@@ -1248,7 +1248,7 @@ nodeMappings:
         range:
           - ParametrizedTrait
         allowMultiple: true
-
+    
       method:
         propertyTerm: apiContract.method
         range: string
@@ -1439,7 +1439,7 @@ nodeMappings:
         range:
           - ResourceType
           - Trait
-
+    
       variable:
         propertyTerm: doc.variable
         range: VariableValue
@@ -2090,7 +2090,7 @@ nodeMappings:
       query:
         propertyTerm: apiBinding.query
         range: DataShapesUnion
-      query1:
+      headers:
         propertyTerm: apiBinding.headers
         range: DataShapesUnion
       bindingVersion:

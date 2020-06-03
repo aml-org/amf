@@ -16,7 +16,7 @@ import amf.validations.ParserSideValidations._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
-
+import amf.core.TaggedReferences._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 
@@ -191,23 +191,20 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), updated)
-
+                reference.unit.tagReference(unit.location().getOrElse(unit.id), r)
                 resolved.map(res => {
                   reference.unit.addReference(res.unit)
-                  r.refs.foreach {
-                    refContainer =>
-                      reference.unit.add(ReferenceTargets(res.unit.location().getOrElse(res.unit.id),
-                                                          Range(refContainer.node.location.inputRange)))
-                      refContainer.node match {
-                        case mut: MutRef =>
-                          res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
-                          mut.target = res.ast
-                        case other =>
-                          compilerContext.violation(InvalidFragmentType,
-                                                    "Cannot inline a fragment in a not mutable node",
-                                                    other)
-                      }
-                    // not meaning, only for collect all futures, not matter the type
+                  r.refs.foreach { refContainer =>
+                    refContainer.node match {
+                      case mut: MutRef =>
+                        res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
+                        mut.target = res.ast
+                      case other =>
+                        compilerContext.violation(InvalidFragmentType,
+                                                  "Cannot inline a fragment in a not mutable node",
+                                                  other)
+                    }
+                  // not meaning, only for collect all futures, not matter the type
                   }
                 })
               case ReferenceResolutionResult(Some(_), _) => Future(Nil)

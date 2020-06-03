@@ -104,8 +104,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
       })
       .getOrElse {
         ctx.obtainRemoteYNode(parsedUrl) match {
-          case Some(schemeNode) =>
-            ctx.factory.securitySchemeParser(schemeNode, adopt).parse()
+          case Some(schemeNode) => ctx.factory.securitySchemeParser(schemeNode, adopt).parse()
           case None =>
             ctx.eh.violation(CoreValidations.UnresolvedReference,
                              "",

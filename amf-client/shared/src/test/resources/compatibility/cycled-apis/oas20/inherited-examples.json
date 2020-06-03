@@ -12,23 +12,28 @@
             "description": "",
             "x-amf-mediaType": "application/json",
             "schema": {
-              "x-amf-examples": {
-                "baseExample": {
-                  "onlyProp": "something"
-                }
-              },
-              "type": "object",
-              "additionalProperties": true,
-              "required": [
-                "onlyProp"
-              ],
-              "properties": {
-                "onlyProp": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/FirstBaseType"
             }
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FirstBaseType": {
+      "x-amf-examples": {
+        "baseExample": {
+          "onlyProp": "something"
+        }
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "onlyProp"
+      ],
+      "properties": {
+        "onlyProp": {
+          "type": "string"
         }
       }
     }

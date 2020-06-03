@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.plugins.document.webapi.validation.Oas3ExpressionValidator
+import amf.plugins.document.webapi.validation.runtimeexpression.{AsyncExpressionValidator, ExpressionValidator, Oas3ExpressionValidator}
 import org.scalatest.{FunSuite, Matchers}
 
 class ExpressionValidatorTest extends FunSuite with Matchers {
@@ -20,11 +20,27 @@ class ExpressionValidatorTest extends FunSuite with Matchers {
     ExpressionTest("$request.path.id", expected = true)
   )
 
-  oas3Expressions.foreach {
-    case ExpressionTest(text, expected) =>
-      test(s"OAS 3.0 expression '$text' validation should be $expected") {
-        Oas3ExpressionValidator.validate(text) should be(expected)
-      }
+  val asyncExpressions: Seq[ExpressionTest] = Seq(
+    ExpressionTest("$message.header#/hello", expected = true),
+    ExpressionTest("$message.payload#/hello", expected = true),
+    ExpressionTest("$method", expected = false),
+    ExpressionTest("$method.name", expected = false),
+    ExpressionTest("$url", expected = false),
+    ExpressionTest("$url.extension", expected = false),
+    ExpressionTest("$statusCode", expected = false),
+    ExpressionTest("$response.header.Server", expected = false),
+  )
+
+  validateExpressions(oas3Expressions, Oas3ExpressionValidator, "OAS 3.0")
+  validateExpressions(asyncExpressions, AsyncExpressionValidator, "Async 2.0")
+
+  def validateExpressions(tests: Seq[ExpressionTest], validator: ExpressionValidator, specLabel: String): Unit = {
+    tests.foreach {
+      case ExpressionTest(text, expected) =>
+        test(s"$specLabel - '$text' validation should be $expected") {
+          validator.validate(text) should be(expected)
+        }
+    }
   }
 
   case class ExpressionTest(text: String, expected: Boolean)

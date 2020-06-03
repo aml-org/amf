@@ -146,9 +146,10 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
 
   private def validateEmptyMap(value: YNode, node: String, `type`: String)(implicit ctx: AsyncWebApiContext): Unit =
     if (value.as[YMap].entries.nonEmpty) {
-      ctx.violation(ParserSideValidations.NonEmptyBindingMap,
-                    node,
-                    s"Reserved name binding '${`type`}' must have an empty map")
+      ctx.eh.violation(ParserSideValidations.NonEmptyBindingMap,
+                       node,
+                       s"Reserved name binding '${`type`}' must have an empty map",
+                       value)
     }
 
   protected def parseBindingVersion(binding: BindingVersion, field: Field, map: YMap)(

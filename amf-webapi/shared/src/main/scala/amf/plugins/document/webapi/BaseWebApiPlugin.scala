@@ -34,7 +34,11 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
 
   override def referenceHandler(eh: ErrorHandler) = new WebApiReferenceHandler(ID, this)
 
-  override def dependencies(): Seq[AMFPlugin] = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin, ExternalJsonRefsPlugin)
+  override def dependencies(): Seq[AMFPlugin] = Seq(
+    WebAPIDomainPlugin,
+    DataShapesDomainPlugin,
+    ExternalJsonYamlRefsPlugin
+  )
 
   def specContext(options: RenderOptions): SpecEmitterContext
 

@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: Inherited Examples
+/aPath:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: SomeType
+/anotherPath:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: SomeType
+
+types:
+  SomeType:
+    type: object
+    properties:
+      a: integer
+      b: string

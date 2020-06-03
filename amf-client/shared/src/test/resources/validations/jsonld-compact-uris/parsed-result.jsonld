@@ -22,7 +22,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#21/end-points/%2Fendpoint1",
+            "@id": "#22/end-points/%2Fendpoint1",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#22/get",
+                "@id": "#23/get",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -46,7 +46,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#23/request",
+                    "@id": "#24/request",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -54,7 +54,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#24/application%2Fjson",
+                        "@id": "#25/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -66,7 +66,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/link-379818744",
+                            "@id": "#1/link-65",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -92,7 +92,7 @@
                 ]
               },
               {
-                "@id": "#22/post",
+                "@id": "#23/post",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -104,7 +104,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#25/request",
+                    "@id": "#26/request",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -112,7 +112,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#26/application%2Fjson",
+                        "@id": "#27/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -124,7 +124,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/link-379818744",
+                            "@id": "#1/link-65",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",

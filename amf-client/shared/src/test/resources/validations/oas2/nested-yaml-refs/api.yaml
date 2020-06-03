@@ -1,0 +1,35 @@
+swagger: '2.0'
+info:
+  title: Sample API
+  version: ''
+paths:
+  /resource1:
+    get:
+      operationId: GET_resource1
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'complexType.json'
+  /resource2:
+    get:
+      operationId: GET_resource2
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'complexType.yaml'
+  /resource3:
+    get:
+      operationId: GET_resource3
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: 'baseType.yaml'

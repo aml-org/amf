@@ -362,6 +362,12 @@ object JsCustomValidations {
         |function(shape) {
         |  return true;
         |}
+      """.stripMargin,
+    "mandatoryHeadersObjectNode" ->
+      """
+        |function(shape) {
+        |  return true;
+        |}
       """.stripMargin
   )
 

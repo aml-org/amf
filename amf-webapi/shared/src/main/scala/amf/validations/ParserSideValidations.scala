@@ -308,11 +308,6 @@ object ParserSideValidations extends Validations {
     "Using a security scheme type from raml in oas or from oas in raml"
   )
 
-  val DuplicatedOperationStatusCodeSpecification = validation(
-    "duplicated-operation-status-code",
-    "Status code for the provided operation response must not be duplicated"
-  )
-
   val ChainedReferenceSpecification = validation(
     "chained-reference-error",
     "References cannot be chained"
@@ -467,6 +462,11 @@ object ParserSideValidations extends Validations {
   val UnableToParseJsonSchema = validation(
     "unable-to-parse-json-schema",
     "Unable to parse json schema"
+  )
+
+  val MalformedJsonReference = validation(
+    "malformed-json-reference",
+    "Malformed json reference"
   )
 
   val InvalidAnnotationType = validation(
@@ -656,7 +656,6 @@ object ParserSideValidations extends Validations {
   )
 
   override val validations: List[ValidationSpecification] = List(
-    DuplicatedOperationStatusCodeSpecification,
     ChainedReferenceSpecification,
     ExclusivePropertiesSpecification,
     PathTemplateUnbalancedParameters,

@@ -10,7 +10,7 @@ import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterContext
-import amf.plugins.document.webapi.contexts.emitter.oas.{CompactJsonSchemaEmitterContext, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasNamedTypeEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
@@ -52,13 +52,12 @@ case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit]
     implicit spec: OasLikeSpecEmitterContext)
     extends DeclaredTypesEmitters(types, references, ordering) {
   override def emitTypes(b: EntryBuilder): Unit = {
-    val definedInComponents = spec.vendor == Vendor.OAS30 || spec.vendor == Vendor.ASYNC20
-    b.entry(
-      if (definedInComponents) "schemas" else "definitions",
-      _.obj(
-        traverse(ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq("definitions")))),
-                 _))
-    )
+    if (types.nonEmpty)
+      b.entry(
+        key,
+        _.obj(
+          traverse(ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq(key)))), _))
+      )
   }
 }
 
@@ -72,28 +71,29 @@ object AsyncDeclaredTypesEmitters {
 
 }
 
-case class CompactJsonSchemaTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
-    implicit spec: CompactJsonSchemaEmitterContext)
+case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
+    implicit spec: OasSpecEmitterContext)
     extends DeclaredTypesEmitters(types, references, ordering) {
   override def emitTypes(b: EntryBuilder): Unit = {
-    b.entry(
-      "definitions",
-      _.obj { entryBuilder =>
-        val definitionsQueue = spec.definitionsQueue
-        types.foreach(definitionsQueue.enqueue)
-        while (definitionsQueue.nonEmpty()) {
-          val labeledShape = definitionsQueue.dequeue()
-          // used to force shape to be emitted with OasTypeEmitter, and not as a ref
-          spec.forceEmission = Some(labeledShape.shape.id)
-          OasNamedTypeEmitter(labeledShape.shape,
-                              ordering,
-                              references,
-                              pointer = Seq("definitions"),
-                              Some(labeledShape.label))
-            .emit(entryBuilder)
+    if (types.nonEmpty || spec.definitionsQueue.nonEmpty)
+      b.entry(
+        key,
+        _.obj { entryBuilder =>
+          val definitionsQueue = spec.definitionsQueue
+          types.foreach(definitionsQueue.enqueue)
+          while (definitionsQueue.nonEmpty()) {
+            val labeledShape = definitionsQueue.dequeue()
+            // used to force shape to be emitted with OasTypeEmitter, and not as a ref
+            spec.forceEmission = Some(labeledShape.shape.id)
+            OasNamedTypeEmitter(labeledShape.shape,
+                                ordering,
+                                references,
+                                pointer = Seq("definitions"),
+                                Some(labeledShape.label))
+              .emit(entryBuilder)
+          }
         }
-      }
-    )
+      )
   }
 }
 
@@ -101,6 +101,8 @@ abstract class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
+
+  val key: String = if (spec.vendor == Vendor.OAS30 || spec.vendor == Vendor.ASYNC20) "schemas" else "definitions"
 
   def emitTypes(b: EntryBuilder): Unit
 

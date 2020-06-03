@@ -148,21 +148,30 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName, v
 
       case e: InvalidJsonValue if shape.isInstanceOf[ScalarShape] =>
         Seq(
-          AMFValidationResult(
-            message = s"expected type: ${formattedDatatype(shape.asInstanceOf[ScalarShape])}, found: String",
-            level = SeverityLevels.VIOLATION,
-            targetNode = element.map(_.id).getOrElse(""),
-            targetProperty = None,
-            validationId = ExampleValidationErrorSpecification.id,
-            position = element.flatMap(_.position()),
-            location = element.flatMap(_.location()),
-            source = e
-          ))
+          invalidJsonValidation(s"expected type: ${formattedDatatype(shape.asInstanceOf[ScalarShape])}, found: String",
+                                element,
+                                e))
+
+      case e: InvalidJsonValue =>
+        Seq(invalidJsonValidation("Invalid json value was provided", element, e))
 
       case other =>
         super.processCommonException(other, element)
     }
     processResults(results)
+  }
+
+  private def invalidJsonValidation(message: String, element: Option[DomainElement], e: RuntimeException) = {
+    AMFValidationResult(
+      message = message,
+      level = SeverityLevels.VIOLATION,
+      targetNode = element.map(_.id).getOrElse(""),
+      targetProperty = None,
+      validationId = ExampleValidationErrorSpecification.id,
+      position = element.flatMap(_.position()),
+      location = element.flatMap(_.location()),
+      source = e
+    )
   }
 
   private def formattedDatatype(scalarShape: ScalarShape): String =

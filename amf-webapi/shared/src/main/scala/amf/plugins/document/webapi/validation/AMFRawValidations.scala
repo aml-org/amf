@@ -3,7 +3,6 @@ package amf.plugins.document.webapi.validation
 import amf._
 import amf.core.remote._
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.webapi.validation.AMFRawValidations.Oas30Validations.urlValidation
 
 object AMFRawValidations {
 
@@ -1474,7 +1473,7 @@ object AMFRawValidations {
     override def validations(): Seq[AMFValidation] = result
   }
 
-  trait OasValidations extends RamlAndOasValidations {
+  trait OasValidations extends RamlAndOasValidations with GenericValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
         "amf-parser:mandatory-api-version",
@@ -1626,38 +1625,12 @@ object AMFRawValidations {
         "Response must have a 'description' field",
         "Violation"
       ),
-      AMFValidation(
-        Oas.name,
-        "Domain",
-        "core:Organization",
-        "core:email",
-        "PropertyShape",
-        "sh:path",
-        "sh:pattern",
-        """^[a-zA-Z0-9\.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$""".stripMargin,
-        "",
-        "Field 'email' must be in the format of an email address",
-        "Violation"
-      ),
+      emailValidation(Oas.name, "core:Organization", "core:email"),
       urlValidation(Oas.name, "core:License", "core:url"),
       urlValidation(Oas.name, "core:Organization", "core:url"),
       urlValidation(Oas.name, "core:CreativeWork", "core:url")
     )
     override def validations(): Seq[AMFValidation] = result
-    def urlValidation(spec: String, owlClass: String, owlProperty: String) =
-      AMFValidation(
-        spec,
-        "Domain",
-        owlClass,
-        owlProperty,
-        "PropertyShape",
-        "sh:path",
-        "sh:pattern",
-        """^((https?|ftp|file)://)?[-a-zA-Z0-9()+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9()+&@#/%=~_|]$""".stripMargin,
-        "Must be in the format of a URL",
-        "Must be in the format of a URL",
-        "Violation"
-      )
   }
 
   object Oas20Validations extends OasValidations {
@@ -1706,7 +1679,7 @@ object AMFRawValidations {
     override def validations(): Seq[AMFValidation] = result
   }
 
-  object Async20Validations extends AmfProfileValidations {
+  object Async20Validations extends AmfProfileValidations with GenericValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
         AsyncApi20.name,
@@ -1838,8 +1811,32 @@ object AMFRawValidations {
         "'in' field is mandatory in HttpApiKey scheme",
         "Violation"
       ),
-      urlValidation(AsyncApi20.name, "core:Organization", "core:url"),
-      urlValidation(AsyncApi20.name, "core:License", "core:url"),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "security:HttpApiKeySettings",
+        "security:in",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        "^(query|header|cookie)$",
+        "Invalid 'in' value. The options are: query, header or cookie",
+        "Invalid 'in' value. The options are: query, header or cookie",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "security:ApiKeySettings",
+        "security:in",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        "^(user|password)$",
+        "Invalid 'in' value. The options are: user or password",
+        "Invalid 'in' value. The options are: user or password",
+        "Violation"
+      ),
       AMFValidation(
         AsyncApi20.name,
         "Domain",
@@ -1874,7 +1871,7 @@ object AMFRawValidations {
         "PropertyShape",
         "sh:path",
         "sh:pattern",
-        "0|1|2",
+        "^[0-2]$",
         "",
         "'qos' for mqtt operation binding object must be one of 0, 1 or 2",
         "Violation"
@@ -2017,7 +2014,7 @@ object AMFRawValidations {
         "PropertyShape",
         "sh:path",
         "sh:pattern",
-        "0|1|2",
+        "^[0-2]$",
         "",
         "'qos' for mqtt server binding last will object must be one of 0, 1 or 2",
         "Violation"
@@ -2030,9 +2027,22 @@ object AMFRawValidations {
         "PropertyShape",
         "sh:path",
         "sh:pattern",
-        "1|2",
+        "^[1-2]$",
         "",
         "'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:Amqp091OperationBinding",
+        "apiBinding:expiration",
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        "^[0-9]+(.[0-9]+)?$",
+        "",
+        "'expiration' for amqp 0.9.1 operation binding object must greather than or equal to 0",
         "Violation"
       ),
       AMFValidation(
@@ -2043,7 +2053,7 @@ object AMFRawValidations {
         "PropertyShape",
         "sh:path",
         "sh:pattern",
-        "0|1|2",
+        "^[0-2]$",
         "",
         "'qos' for mqtt server last will binding object must be one 0, 1 or 2",
         "Violation"
@@ -2087,8 +2097,108 @@ object AMFRawValidations {
         "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",
         "Violation"
       ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:WebSocketsChannelBinding",
+        "apiBinding:query",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:mandatoryQueryObjectNodeWithPropertiesFacet",
+        "0",
+        "'query' property of ws channel binding must be of type object and have properties",
+        "'query' property of ws channel binding must be of type object and have properties",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:WebSocketsChannelBinding",
+        "apiBinding:headers",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:mandatoryHeadersObjectNodeWithPropertiesFacet",
+        "0",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:HttpMessageBinding",
+        "apiBinding:headers",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:mandatoryHeadersObjectNodeWithPropertiesFacet",
+        "0",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:HttpOperationBinding",
+        "apiBinding:query",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:mandatoryQueryObjectNodeWithPropertiesFacet",
+        "0",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "'headers' property of ws channel binding must be of type object and have properties",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "core:CorrelationId",
+        "core:location",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:validCorrelationIdLocation",
+        "0",
+        "Does not comply with runtime expression ABNF syntax",
+        "Does not comply with runtime expression ABNF syntax",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiContract:Parameter",
+        "apiContract:binding",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:validParameterLocation",
+        "0",
+        "Does not comply with runtime expression ABNF syntax",
+        "Does not comply with runtime expression ABNF syntax",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiContract:Message",
+        "apiContract:headers",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:mandatoryHeadersObjectNode",
+        "0",
+        "Message headers must be of type object",
+        "Message headers must be of type object",
+        "Violation"
+      ),
+      emailValidation(AsyncApi.name, "core:Organization", "core:email"),
+      urlValidation(AsyncApi20.name, "core:Organization", "core:url"),
+      urlValidation(AsyncApi20.name, "core:License", "core:url"),
+      urlValidation(AsyncApi20.name, "apiContract:WebAPI", "core:termsOfService"),
+      uriValidation(AsyncApi20.name, "apiContract:WebAPI", "core:identifier"),
+      urlValidation(AsyncApi20.name, "core:CreativeWork", "core:url"),
+      urlValidation(AsyncApi20.name, "security:OAuth2Flow", "security:authorizationUri"),
+      urlValidation(AsyncApi20.name, "security:OAuth2Flow", "security:accessTokenUri"),
+      urlValidation(AsyncApi20.name, "security:OAuth2Flow", "security:refreshUri")
     )
-    
+
     override def validations(): Seq[AMFValidation] = result
   }
 
@@ -2281,6 +2391,53 @@ object AMFRawValidations {
       )
     )
     override def validations(): Seq[AMFValidation] = result
+  }
+
+  trait GenericValidations {
+    def urlValidation(spec: String, owlClass: String, owlProperty: String) =
+      AMFValidation(
+        spec,
+        "Domain",
+        owlClass,
+        owlProperty,
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        """^((https?|ftp|file)://)?[-a-zA-Z0-9()+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9()+&@#/%=~_|]$""".stripMargin,
+        "Must be in the format of a URL",
+        "Must be in the format of a URL",
+        "Violation"
+      )
+
+    def uriValidation(spec: String, owlClass: String, owlProperty: String) =
+      AMFValidation(
+        spec,
+        "Domain",
+        owlClass,
+        owlProperty,
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        """^\w+:(\/?\/?)[^\s]+$""".stripMargin,
+        "Must be in the format of a URI",
+        "Must be in the format of a URI",
+        "Violation"
+      )
+
+    def emailValidation(spec: String, owlClass: String, owlProperty: String) =
+      AMFValidation(
+        spec,
+        "Domain",
+        owlClass,
+        owlProperty,
+        "PropertyShape",
+        "sh:path",
+        "sh:pattern",
+        """^[a-zA-Z0-9\.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$""".stripMargin,
+        "",
+        "Field 'email' must be in the format of an email address",
+        "Violation"
+      )
   }
 
   val map: Map[ProfileName, Seq[AMFValidation]] = Map(

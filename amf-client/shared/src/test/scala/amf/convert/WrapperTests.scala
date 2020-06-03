@@ -1773,7 +1773,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseFileAsync(file).asFuture
     } yield {
-      assert(unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+      assert(
+        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 
@@ -1796,7 +1797,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit     <- new RamlParser().parseStringAsync(api).asFuture
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
-      json     <- Future(resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
+      json <- Future(
+        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
     } yield {
       val golden = """{
                      |  "$schema": "http://json-schema.org/draft-04/schema#",
@@ -2201,7 +2203,14 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
                         |""".stripMargin
       val options = new ShapeRenderOptions().withSchemaVersion(JSONSchemaVersions.DRAFT_07)
       val generated =
-        resolved.asInstanceOf[Document].declares.asSeq(3).asInstanceOf[NodeShape].buildJsonSchema(options)
+        resolved
+          .asInstanceOf[Document]
+          .declares
+          .asSeq
+          .find(_._internal.id == "file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/conditional-subschemas")
+          .get
+          .asInstanceOf[NodeShape]
+          .buildJsonSchema(options)
       assert(generated == golden)
     }
   }

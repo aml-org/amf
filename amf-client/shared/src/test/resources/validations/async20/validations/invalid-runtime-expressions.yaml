@@ -1,0 +1,30 @@
+asyncapi: 2.0.0
+
+info:
+  title: Signup service example (internal)
+  version: 0.1.0
+
+channels:
+  /user/{userId}/signup:
+    parameters:
+      userId:
+        description: Id of the user.
+        schema:
+          type: string
+        location: somewhere else
+      otherValid:
+        description: Id of the user.
+        schema:
+          type: string
+        location: $message.payload#/messageId
+    subscribe:
+      operationId: userSignedUp
+      summary: user signed up
+      description: user signed up to load some data
+      message:
+        contentType: application/json
+        correlationId:
+          description: Default Correlation ID
+          location: not a valid runtime expression
+
+

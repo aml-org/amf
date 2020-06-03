@@ -29,7 +29,7 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
       k =>
         correlationId
           .set(CorrelationIdModel.Name, ScalarNode(k).string()))
-    correlationId.adopted(parentId).add(Annotations(entryLike.asMap))
+    correlationId.adopted(parentId).add(entryLike.annotations)
   }
 
   private def handleRef(map: YMap, fullRef: String) = {

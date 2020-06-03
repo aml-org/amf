@@ -18,27 +18,7 @@
             "description": "",
             "x-amf-mediaType": "application/json",
             "schema": {
-              "example": {
-                "title": "hola",
-                "prop": 2.2
-              },
-              "type": "object",
-              "additionalProperties": true,
-              "required": [
-                "title"
-              ],
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "prop": {
-                  "description": "the children of a root category",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/A"
-                  }
-                }
-              }
+              "$ref": "#/definitions/A"
             }
           }
         }
@@ -47,6 +27,10 @@
   },
   "definitions": {
     "A": {
+      "example": {
+        "title": "hola",
+        "prop": 2.2
+      },
       "type": "object",
       "additionalProperties": true,
       "required": [

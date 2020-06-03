@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#11",
+        "@id": "#12",
         "@type": [
           "apiContract:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#12",
+            "@id": "#13",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#13",
+                "@id": "#14",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -46,7 +46,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#14",
+                    "@id": "#15",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -64,7 +64,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#15",
+                        "@id": "#16",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -76,7 +76,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#16",
+                            "@id": "#17",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -164,20 +164,20 @@
                                 "shacl:name": "amf://id#4"
                               },
                               "type-property-lexical-info": {
-                                "#16": "[(13,12)-(13,16)]"
+                                "#17": "[(13,12)-(13,16)]"
                               },
                               "lexical": {
-                                "#16": "[(12,10)-(13,30)]"
+                                "#17": "[(12,10)-(13,30)]"
                               },
                               "inherited-shapes": {
-                                "#16": "amf://id#17"
+                                "#17": "amf://id#18"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#15": "[(12,10)-(13,30)]"
+                            "#16": "[(12,10)-(13,30)]"
                           }
                         }
                       }
@@ -185,7 +185,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(11,8)-(13,30)]",
-                        "#14": "[(10,6)-(13,30)]"
+                        "#15": "[(10,6)-(13,30)]"
                       }
                     }
                   }
@@ -193,25 +193,25 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(9,4)-(13,30)]",
-                    "#13": "[(8,2)-(13,30)]"
+                    "#14": "[(8,2)-(13,30)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#12": "[(7,0)-(13,30)]"
+                "#13": "[(7,0)-(13,30)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#11": "RAML 1.0"
+            "#12": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(4,0)]",
-            "#11": "[(2,0)-(13,30)]"
+            "#12": "[(2,0)-(13,30)]"
           }
         }
       }
@@ -465,7 +465,7 @@
             ],
             "smaps": {
               "inherited-shapes": {
-                "#7": "amf://id#3"
+                "#7": "amf://id#11"
               },
               "resolved-link": {
                 "#7": "amf://id#10"

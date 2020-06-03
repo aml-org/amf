@@ -6,7 +6,8 @@ import amf.plugins.domain.shapes.resolution.stages.{ShapeNormalizationStage, Typ
 import amf.plugins.domain.webapi.resolution.stages._
 import amf.plugins.domain.webapi.resolution.stages.async.{
   AsyncContentTypeResolutionStage,
-  AsyncExamplePropagationResolutionStage
+  AsyncExamplePropagationResolutionStage,
+  ServerVariableExampleResolutionStage
 }
 import amf.{Async20Profile, ProfileName}
 
@@ -26,6 +27,7 @@ class Async20EditingPipeline(override val eh: ErrorHandler, urlShortening: Boole
     new JsonMergePatchStage(),
     new AsyncContentTypeResolutionStage(),
     new AsyncExamplePropagationResolutionStage(),
+    new ServerVariableExampleResolutionStage(),
     new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true)
   )
 }

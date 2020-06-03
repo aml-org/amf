@@ -8,20 +8,13 @@ import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.webapi.models.bindings.http.{HttpMessageBinding, HttpOperationBinding}
 
-object HttpOperationBindingModel extends OperationBindingModel with BindingVersion {
+object HttpOperationBindingModel extends OperationBindingModel with BindingVersion with BindingQuery {
 
   val OperationType =
     Field(Str, ApiBinding + "operationType", ModelDoc(ModelVocabularies.ApiBinding, "type", "Type of operation"))
 
   val Method =
     Field(Str, ApiBinding + "method", ModelDoc(ModelVocabularies.ApiBinding, "method", "Operation binding method"))
-
-  val Query =
-    Field(ShapeModel,
-          ApiBinding + "query",
-          ModelDoc(ModelVocabularies.ApiBinding,
-                   "query",
-                   "A Schema object containing the definitions for each query parameter"))
 
   override def modelInstance: AmfObject = HttpOperationBinding()
 
@@ -38,15 +31,7 @@ object HttpOperationBindingModel extends OperationBindingModel with BindingVersi
   )
 }
 
-object HttpMessageBindingModel extends MessageBindingModel with BindingVersion {
-  val Headers =
-    Field(
-      ShapeModel,
-      ApiBinding + "headers",
-      ModelDoc(ModelVocabularies.ApiBinding,
-               "headers",
-               "A Schema object containing the definitions for HTTP-specific headers")
-    )
+object HttpMessageBindingModel extends MessageBindingModel with BindingVersion with BindingHeaders {
 
   override def modelInstance: AmfObject = HttpMessageBinding()
 

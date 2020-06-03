@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml
 Profile: ASYNC 2.0
 Conforms? false
-Number of results: 8
+Number of results: 9
 
 Level: Violation
 
@@ -75,4 +75,12 @@ should contain a valid item
   Target: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/exclusive-with-values/example/default-example_2
   Property: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/exclusive-with-values/example/default-example_2
   Position: Some(LexicalInformation([(100,8)-(103,9)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: should NOT be valid
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/any/notKeyword/example/default-example_2
+  Property: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/any/notKeyword/example/default-example_2
+  Position: Some(LexicalInformation([(123,8)-(126,9)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml

@@ -19,4 +19,13 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
           Oas20,
           transformWith = Some(Oas20))
   }
+
+  test("declared type is extracted to definitions facet") {
+    cycle("raml10/reusing-declared-type.raml",
+          "cycled-apis/oas20/reusing-declared-type.json",
+          RamlYamlHint,
+          Oas20,
+          transformWith = Some(Oas20))
+  }
+
 }

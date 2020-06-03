@@ -23,7 +23,7 @@ case class KafkaMessageBinding(override private[amf] val _internal: InternalKafk
   override protected def bindingVersion: model.StrField = _internal.bindingVersion
 
   override def withBindingVersion(bindingVersion: String): this.type = {
-    withBindingVersion(bindingVersion)
+    _internal.withBindingVersion(bindingVersion)
     this
   }
 

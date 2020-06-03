@@ -1,0 +1,9 @@
+type: object
+required:
+  - id
+  - field1
+properties:
+  id:
+    type: string
+  field1:
+    $ref: 'baseType.yaml'
