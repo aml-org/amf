@@ -40,5 +40,5 @@ case class Callback(override private[amf] val _internal: InternalCallback)
   }
 
   /** Set endpoint property of this Callback. */
-  def withEndpoint(): EndPoint = _internal.withEndpoint()
+  def withEndpoint(path: String): EndPoint = _internal.withEndpoint(path)
 }
