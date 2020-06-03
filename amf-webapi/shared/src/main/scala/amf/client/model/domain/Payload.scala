@@ -16,13 +16,12 @@ case class Payload(override private[amf] val _internal: InternalPayload)
 
   @JSExportTopLevel("model.domain.Payload")
   def this() = this(InternalPayload())
-
-  def name: StrField                 = _internal.name
-  def mediaType: StrField            = _internal.mediaType
-  def schemaMediaType: StrField      = _internal.schemaMediaType
-  def schema: Shape                  = _internal.schema
-  def examples: ClientList[Example]  = _internal.examples.asClient
-  def encoding: ClientList[Encoding] = _internal.encodings.asClient
+  def name: StrField                  = _internal.name
+  def mediaType: StrField             = _internal.mediaType
+  def schemaMediaType: StrField       = _internal.schemaMediaType
+  def schema: Shape                   = _internal.schema
+  def examples: ClientList[Example]   = _internal.examples.asClient
+  def encodings: ClientList[Encoding] = _internal.encodings.asClient
 
   /** Set name property of this Payload. */
   def withName(name: String): this.type = {
@@ -55,7 +54,7 @@ case class Payload(override private[amf] val _internal: InternalPayload)
   }
 
   /** Set encoding property of this Payload. */
-  def withEncoding(encoding: ClientList[Encoding]): this.type = {
+  def withEncodings(encoding: ClientList[Encoding]): this.type = {
     _internal.withEncodings(encoding.asInternal)
     this
   }

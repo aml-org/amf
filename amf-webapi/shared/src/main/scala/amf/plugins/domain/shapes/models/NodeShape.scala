@@ -64,7 +64,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
 
   override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
     val isCycle = cycle.contains(id)
-    if (("" + parent).contains("#")) // TODO: NULL ARRIVING HERE
+    if (Option(parent).exists(_.contains("#")))
       simpleAdoption(parent)
     else
       simpleAdoption(parent + "#/")
