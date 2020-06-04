@@ -185,14 +185,6 @@ class DomainModelTests extends FunSuite with Matchers {
     response.links.asInternal shouldBe templatedLinks
   }
 
-  test("test Settings") {
-    val node = new ScalarNode()
-
-    val settings = new Settings()
-      .withAdditionalProperties(node)
-    settings.additionalProperties._internal shouldBe node._internal
-  }
-
   test("test SecurityScheme") {
     val settings  = new Settings()
     val responses = Seq(new Response()._internal)
@@ -377,6 +369,9 @@ class DomainModelTests extends FunSuite with Matchers {
   test("test CorrelationId") {
     val correlationId = new CorrelationId()
       .withDescription(s)
+      .withIdLocation(s)
+    correlationId.description.value() shouldBe s
+    correlationId.idLocation.value() shouldBe s
   }
 
   test("test Scope") {

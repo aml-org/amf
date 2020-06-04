@@ -189,7 +189,8 @@ case class OpenIdConnectSettings(override val fields: Fields, override val annot
   def url: StrField      = fields.field(Url)
   def scopes: Seq[Scope] = fields.field(OpenIdConnectSettingsModel.Scopes)
 
-  def withUrl(url: String): this.type = set(Url, url)
+  def withUrl(url: String): this.type           = set(Url, url)
+  def withScopes(scopes: Seq[Scope]): this.type = setArray(Scopes, scopes)
 
   override def meta: Obj = OpenIdConnectSettingsModel
 
