@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: MyTestApi
+
+uses:
+  myTypes: ./library.raml
+
+/endpoint:
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            type: myTypes.User
