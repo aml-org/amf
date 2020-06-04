@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: IPRights Management B2B API
+description: This API can be used to create and manage all types of intellectual property rights in Australia
+version: v1
+mediaType: application/json
+
+uses:
+  trademark: lib.raml
+
+types:
+  TradeMarkGoodsAndService: trademark.GoodsAndServicesItem
+
+resourceTypes:
+  collection:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              properties:
+                results: TradeMarkGoodsAndService[]
+
+/trade-mark-goods-and-services:
+  type:
+    collection:
+
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            properties:
+              results: trademark.GoodsAndServicesItem[]

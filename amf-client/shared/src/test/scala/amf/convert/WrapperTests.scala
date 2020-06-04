@@ -2000,6 +2000,18 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Resource type merging of identical types referenced differently") {
+    val file = "file://amf-client/shared/src/test/resources/validations/rt-type-merging/api.raml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseFileAsync(file).asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
   test("Test non existent traits") {
     val file = "file://amf-client/shared/src/test/resources/validations/traits/non-existent-include.raml"
     for {
