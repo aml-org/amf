@@ -172,4 +172,10 @@ case class OpenIdConnectSettings(override private[amf] val _internal: InternalOp
     _internal.withUrl(url)
     this
   }
+
+  /** Set scopes property of this OpenIdConnectSettings. */
+  def withScopes(scopes: ClientList[Scope]): this.type = {
+    _internal.withScopes(scopes.asInternal)
+    this
+  }
 }

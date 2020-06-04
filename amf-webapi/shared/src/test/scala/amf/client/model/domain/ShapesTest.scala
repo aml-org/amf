@@ -16,7 +16,6 @@ class ShapesTest extends FunSuite with Matchers with PlatformSecrets {
   val creativeWork                             = new CreativeWork()
   val shapes: Seq[amf.core.model.domain.Shape] = Seq(shape._internal)
 
-  // TODO: add missing value & dataType
   test("test ScalarNode") {
     val scalarNode = new ScalarNode()
       .withName(s)
