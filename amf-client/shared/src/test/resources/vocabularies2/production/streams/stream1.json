@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes",
         "@type": [
           "https://www.w3.org/ns/activitystreams/Collection",
           "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode",
@@ -29,7 +29,7 @@
         ],
         "https://www.w3.org/ns/activitystreams/items": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/items/0",
             "@type": [
               "https://www.w3.org/ns/activitystreams/Create",
               "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode",
@@ -148,13 +148,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/items/0/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0/source-map/lexical/element_3",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/items/0/source-map/lexical/element_3",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "https://www.w3.org/ns/activitystreams/actor"
@@ -167,7 +167,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/items/0/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "https://www.w3.org/ns/activitystreams/published"
@@ -180,7 +180,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/items/0/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "https://www.w3.org/ns/activitystreams/object"
@@ -193,10 +193,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0/source-map/lexical/element_2",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/items/0/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/items/0"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -212,13 +212,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/source-map/lexical/element_2",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "https://www.w3.org/ns/activitystreams/totalItems"
@@ -231,7 +231,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "https://www.w3.org/ns/activitystreams/items"
@@ -244,10 +244,10 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/"
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/encodes"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
