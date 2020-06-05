@@ -2248,6 +2248,22 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test custom validation to root document") {
+
+    val instance          = "file://amf-client/shared/src/test/resources/custom/example.raml"
+    val validationProfile = "file://amf-client/shared/src/test/resources/custom/profile.raml"
+
+    for {
+      _          <- AMF.init().asFuture
+      unit       <- new RamlParser().parseFileAsync(instance).asFuture
+      report     <- AMF.validate(unit, RamlProfile, AMFStyle).asFuture
+      newProfile <- AMF.loadValidationProfile(validationProfile).asFuture
+      custom     <- AMF.validate(unit, newProfile, AMFStyle).asFuture
+    } yield {
+      assert(report.conforms && custom.conforms)
+    }
+  }
+
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }
