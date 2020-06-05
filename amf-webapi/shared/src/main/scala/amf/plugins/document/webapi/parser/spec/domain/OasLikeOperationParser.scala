@@ -6,19 +6,18 @@ import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.{IdCounter, _}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
-import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncOperationBindingsParser
+import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkParser
 import amf.plugins.document.webapi.parser.spec.oas.{
   Oas20RequestParser,
   Oas30CallbackParser,
   Oas30ParametersParser,
   Oas30RequestParser
 }
-import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel}
+import amf.plugins.domain.webapi.metamodel.OperationModel.Method
+import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Operation, Request, Response}
 import amf.validations.ParserSideValidations.DuplicatedOperationId
 import org.yaml.model._
@@ -32,7 +31,9 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
   def parse(): Operation = {
 
     val operation: Operation = producer(ScalarNode(entry.key).string().value.toString).add(Annotations(entry))
-    val map                  = entry.value.as[YMap]
+    operation.set(Method, ScalarNode(entry.key).string()) // add lexical info
+
+    val map = entry.value.as[YMap]
 
     ctx.closedShape(operation.id, map, "operation")
 
@@ -42,7 +43,8 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
         ctx.eh.violation(DuplicatedOperationId, operation.id, s"Duplicated operation id '$operationId'", entry.value)
     }
 
-    map.key("operationId", OperationModel.Name in operation)
+    parseOperationId(map, operation)
+
     map.key("description", OperationModel.Description in operation)
     map.key("summary", OperationModel.Summary in operation)
     map.key("externalDocs",
@@ -52,6 +54,11 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
     AnnotationParser(operation, map).parse()
 
     operation
+  }
+
+  def parseOperationId(map: YMap, operation: Operation) = {
+    map.key("operationId", OperationModel.Name in operation)
+    map.key("operationId", OperationModel.OperationId in operation)
   }
 }
 
@@ -85,19 +92,14 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
       }
     )
 
-    map.key(
-      "security",
-      entry => {
-        val idCounter = new IdCounter()
-        // TODO check for empty array for resolution ?
-        val securedBy = entry.value
-          .as[Seq[YNode]]
-          .map(s => OasSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
-          .collect { case Some(s) => s }
+    map.key("security", entry => {
+      operation.set(WebApiModel.Security, AmfArray(Seq(), Annotations(entry.value)), Annotations(entry))
+      parseSecurity(operation, entry)
+    })
 
-        operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-      }
-    )
+    map.key("security".asOasExtension, entry => {
+      parseSecurity(operation, entry)
+    })
 
     map.key(
       "responses",
@@ -123,6 +125,14 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
     )
 
     operation
+  }
+
+  private def parseSecurity(operation: Operation, entry: YMapEntry): Unit = {
+    val idCounter = new IdCounter()
+    // TODO check for empty array for resolution ?
+    entry.value
+      .as[Seq[YNode]]
+      .foreach(s => OasLikeSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
   }
 }
 
@@ -186,49 +196,4 @@ case class Oas30OperationParser(entry: YMapEntry, producer: String => Operation)
     operation
   }
 
-}
-
-case class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)(
-    override implicit val ctx: AsyncWebApiContext)
-    extends OasLikeOperationParser(entry, producer) {
-  override def parse(): Operation = {
-    val operation = super.parse()
-    val map       = entry.value.as[YMap]
-
-    map.key(
-      "tags",
-      entry => {
-        val tags = OasLikeTagsParser(operation.id, entry).parse()
-        operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
-      }
-    )
-
-    map.key(
-      "message",
-      entry =>
-        messageType() foreach { msgType =>
-          val messages = AsyncMessageParser(operation.id, entry.value.as[YMap], msgType).parse()
-          operation.setArray(msgType.field, messages, Annotations(entry.value))
-      }
-    )
-
-    map.key("bindings").foreach { entry =>
-      val bindings = AsyncOperationBindingsParser.parse(entry.value.as[YMap], operation.id)
-      operation.setArray(OperationModel.Bindings, bindings, Annotations(entry))
-
-      AnnotationParser(operation, map).parseOrphanNode("bindings")
-    }
-
-//    map.key("traits", OperationModel. in operation)
-
-    operation
-  }
-
-  private def messageType(): Option[MessageType] =
-    entry.key.value match {
-      case scalar: YScalar if scalar.text == "publish"   => Some(Publish)
-      case scalar: YScalar if scalar.text == "subscribe" => Some(Subscribe)
-      // invalid message type is validated with closed shape of pathItem
-      case _ => None
-    }
 }

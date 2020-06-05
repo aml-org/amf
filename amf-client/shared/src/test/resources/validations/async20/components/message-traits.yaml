@@ -1,0 +1,20 @@
+asyncapi: 2.0.0
+info:
+  title: anApi
+  version: 1.0.0
+channels:
+  aChannel:
+    publish:
+      operationId: something
+      message:
+        name: aMessage
+        traits:
+          - $ref: "#/components/messageTraits/myMessageTrait"
+        payload:
+          type: string
+components:
+  messageTraits:
+    myMessageTrait:
+      title: something
+      payload: no me importa porque no lo parseo
+

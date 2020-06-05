@@ -356,6 +356,18 @@ object JsCustomValidations {
         |function(shape) {
         |  return true;
         |}
+      """.stripMargin,
+    "headerParamNameMustBeAscii" ->
+      """
+        |function(shape) {
+        |  return true;
+        |}
+      """.stripMargin,
+    "mandatoryHeadersObjectNode" ->
+      """
+        |function(shape) {
+        |  return true;
+        |}
       """.stripMargin
   )
 

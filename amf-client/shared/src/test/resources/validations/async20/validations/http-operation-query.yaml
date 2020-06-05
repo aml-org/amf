@@ -1,0 +1,22 @@
+asyncapi: 2.0.0
+info:
+  title: asasd
+  version: asd
+channels:
+  /invalid:
+    publish:
+      bindings:
+        http:
+          type: request
+          query:
+            type: string
+  /valid:
+    publish:
+      bindings:
+        http:
+          type: request
+          query:
+            type: object
+            properties:
+              name:
+                type: string

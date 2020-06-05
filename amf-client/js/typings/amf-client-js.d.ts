@@ -521,6 +521,7 @@ declare module 'amf-client-js' {
         /* DeclaresModel methods */
         declares: domain.DomainElement[]
 
+        withId(id: String): this
         withDeclaredElement(declared: domain.DomainElement): this
 
         withDeclares(declares: domain.DomainElement[]): this
@@ -562,6 +563,16 @@ declare module 'amf-client-js' {
       export class AnnotationTypeDeclaration extends Fragment {}
 
       export class SecuritySchemeFragment extends Fragment {}
+
+      export class Dialect extends BaseUnit {
+        name: StrField
+        declares: domain.NodeMapping[]
+        encodes: domain.NodeMapping
+      }
+
+      export class DialectInstance extends Document {
+        withDefinedBy(id: string): DialectInstance
+      }
 
       export class Vocabulary extends BaseUnit {
         name: StrField
@@ -617,6 +628,29 @@ declare module 'amf-client-js' {
         getObjectByPropertyId(id: string): DomainElement[]
 
         remove(uri: string): this
+      }
+
+      export class DialectDomainElement extends DomainElement {
+        withDefinedby(nodeMapping: NodeMapping): DialectDomainElement
+        definedBy(): NodeMapping
+        withInstanceTypes(types: string[]): DialectDomainElement
+        setProperty(property: PropertyMapping, value: any): DialectDomainElement
+        setLiteralProperty(property: string, value: any): DialectDomainElement
+        setObjectProperty(propertyId: String,
+                          value: DialectDomainElement): DialectDomainElement
+        setObjectCollectionProperty(propertyId: String,
+                                    value: DialectDomainElement[]): DialectDomainElement
+      }
+
+      export class NodeMapping extends DomainElement {
+        name: StrField
+        nodetypeMapping: StrField
+        propertiesMapping(): PropertyMapping[]
+      }
+
+      export class PropertyMapping extends DomainElement {
+        name(): StrField
+        nodePropertyMapping(): StrField
       }
 
       export class ClassTerm extends DomainElement {
@@ -1806,16 +1840,36 @@ declare module 'amf-client-js' {
     export class RenderOptions {
 
       withSourceMaps: RenderOptions
-
       withoutSourceMaps: RenderOptions
-
       isWithSourceMaps: boolean
 
       withCompactUris: RenderOptions
-
       withoutCompactUris: RenderOptions
-
       isWithCompactUris: boolean
+
+      withPrettyPrint: RenderOptions
+      withoutPrettyPrint: RenderOptions
+      isPrettyPrint: boolean
+
+      withRawSourceMaps : RenderOptions
+      withoutRawSourceMaps : RenderOptions
+      isRawSourceMaps : boolean
+
+      withValidation : RenderOptions
+      withoutValidation : RenderOptions
+      isValidation : boolean
+
+      withNodeIds : RenderOptions
+      withoutNodeIds : RenderOptions
+      isNodeIds : boolean
+
+      withAmfJsonLdSerialization : RenderOptions
+      withoutAmfJsonLdSerialization : RenderOptions
+      isAmfJsonLdSerialization : boolean
+
+      withFlattenedJsonLd : RenderOptions
+      withoutFlattenedJsonLd : RenderOptions
+      isFlattenedJsonLd : boolean
 
       static apply(): RenderOptions
     }

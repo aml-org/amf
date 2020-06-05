@@ -1,0 +1,20 @@
+asyncapi: 2.0.0
+info:
+  title: aTitle
+  version: aVersion
+channels: {}
+components:
+  securitySchemes:
+    some:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: something
+          scopes: {}
+        password:
+          scopes: {}
+        clientCredentials:
+          scopes: {}
+        authorizationCode:
+          scopes: {}
+          authorizationUrl: something

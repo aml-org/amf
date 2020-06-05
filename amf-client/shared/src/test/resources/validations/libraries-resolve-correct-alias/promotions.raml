@@ -1,0 +1,42 @@
+#%RAML 1.0
+title: Promotions
+version: v1
+protocols: HTTPS
+mediaType: application/json
+
+uses:
+  ApiStandards: api-standards.raml
+  CommerceCloudStandards: commerce-cloud-standards.raml
+
+traits:
+  PromotionNotFound: !include Traits/PromotionNotFound.raml
+
+'/organizations/{organizationId}/promotions':
+  get:
+    is:
+      - PromotionNotFound:
+    responses:
+      '200':
+        description: Retrieved promotion information successfully.
+        body:
+          application/json:
+            type: object
+            examples:
+              promotionGetResponse: !include Examples/get-promotion-response.raml
+  patch:
+    responses:
+      '200':
+        description: ""
+    body:
+      application/json:
+        type: object
+        # esto hace que no sea flaky
+        examples:
+          promotionPatchRequest: !include Examples/patch-promotion-request.raml
+
+  post:
+    responses:
+      '404':
+        body:
+          application/json:
+            type: ApiStandards.ErrorResponse

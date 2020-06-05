@@ -57,7 +57,7 @@
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/apiContract#parameter": [
+                    "http://a.ml/vocabularies/apiContract#uriParameter": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF",
                         "@type": [
@@ -84,34 +84,34 @@
                             "@value": true
                           }
                         ],
+                        "http://a.ml/vocabularies/apiContract#style": [
+                          {
+                            "@value": "simple"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#explode": [
+                          {
+                            "@value": false
+                          }
+                        ],
                         "http://a.ml/vocabularies/apiContract#binding": [
                           {
-                            "@value": "body"
+                            "@value": "path"
                           }
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/scalar/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/document#link-target": [
+                            "http://www.w3.org/ns/shacl#datatype": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Branch"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document#link-label": [
-                              {
-                                "@value": "Branch"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document#recursive": [
-                              {
-                                "@value": true
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
                             "http://www.w3.org/ns/shacl#name": [
@@ -121,26 +121,41 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/scalar/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map/lexical/element_1",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/scalar/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map/auto-generated-name/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF"
+                                        "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/scalar/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(16,12)-(18,13)]"
+                                        "@value": ""
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/scalar/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map/lexical/element_2",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(17,14)-(17,30)]"
                                       }
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map/lexical/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/scalar/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#name"
@@ -149,6 +164,34 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(13,12)-(13,29)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/scalar/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map/lexical/element_1",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/scalar/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(16,12)-(18,13)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/scalar/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map/type-property-lexical-info/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/parameter/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/scalar/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(17,14)-(17,20)]"
                                       }
                                     ]
                                   }
@@ -271,7 +314,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/apiContract#parameter"
+                                "@value": "http://a.ml/vocabularies/apiContract#uriParameter"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -647,9 +690,9 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E5%B8%B8%E3%81%AB%E5%8F%96%E5%BE%97%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/get/200/application%2Fjson/array/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E5%B8%B8%E3%81%AB%E5%8F%96%E5%BE%97%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/get/200/application%2Fjson/array/schema/source-map/auto-generated-name/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E5%B8%B8%E3%81%AB%E5%8F%96%E5%BE%97%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/get/200/application%2Fjson/array/schema"
@@ -657,7 +700,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(43,18)-(43,24)]"
+                                        "@value": ""
                                       }
                                     ]
                                   }
@@ -673,6 +716,21 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(42,16)-(47,17)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E5%B8%B8%E3%81%AB%E5%8F%96%E5%BE%97%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/get/200/application%2Fjson/array/schema/source-map/type-property-lexical-info/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E5%B8%B8%E3%81%AB%E5%8F%96%E5%BE%97%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/get/200/application%2Fjson/array/schema"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(43,18)-(43,24)]"
                                       }
                                     ]
                                   }
@@ -901,7 +959,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -1437,7 +1495,20 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/VehicleDetails/source-map/lexical/element_2",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/VehicleDetails/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(57,6)-(57,22)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/VehicleDetails/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#property"
@@ -1453,17 +1524,17 @@
                 "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/VehicleDetails/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#name"
+                    "@value": "http://a.ml/vocabularies/apiContract#examples"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(57,6)-(57,22)]"
+                    "@value": "[(67,8)-(70,9)]"
                   }
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/VehicleDetails/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/VehicleDetails/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/VehicleDetails"
@@ -2383,7 +2454,20 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Branch/source-map/lexical/element_2",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Branch/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(72,6)-(72,14)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Branch/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#property"
@@ -2399,17 +2483,17 @@
                 "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Branch/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#name"
+                    "@value": "http://a.ml/vocabularies/apiContract#examples"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(72,6)-(72,14)]"
+                    "@value": "[(88,8)-(93,9)]"
                   }
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Branch/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Branch/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Branch"
@@ -3545,7 +3629,20 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Application/source-map/lexical/element_2",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Application/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(95,6)-(95,19)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Application/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#property"
@@ -3561,17 +3658,17 @@
                 "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Application/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#name"
+                    "@value": "http://a.ml/vocabularies/apiContract#examples"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(95,6)-(95,19)]"
+                    "@value": "[(111,8)-(121,9)]"
                   }
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Application/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Application/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/declarations/types/Application"

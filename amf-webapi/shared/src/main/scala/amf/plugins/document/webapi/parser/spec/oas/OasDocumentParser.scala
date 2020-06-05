@@ -15,15 +15,16 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
-import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
+import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, _}
 import amf.plugins.document.webapi.parser.spec.domain
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel._
-import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
+import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations._
@@ -35,7 +36,9 @@ import scala.collection.mutable.ListBuffer
 /**
   * Oas spec parser
   */
-abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) extends OasSpecParser {
+abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
+    extends OasSpecParser
+    with OasLikeDeclarationsHelper {
 
   def parseExtension(): Extension = {
     val extension = parseDocument(Extension())
@@ -81,7 +84,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     ctx.setJsonSchemaAST(map)
 
     val references = ReferencesParser(document, "uses".asOasExtension, map, root.references).parse(root.location)
-    parseDeclarations(root: Root, map)
+    parseDeclarations(root, map)
 
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
     document
@@ -135,49 +138,40 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   protected val definitionsKey: String
   protected val securityKey: String
 
-  def parseTypeDeclarations(map: YMap, typesPrefix: String): Unit = {
-
-    map.key(
-      definitionsKey,
-      entry => {
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            val typeName = e.key.as[YScalar].text
-            OasTypeParser(e, shape => {
-              shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
-              shape.adopted(typesPrefix)
-            })(ctx).parse() match {
-              case Some(shape) =>
-                ctx.declarations += shape.add(DeclaredElement())
-              case None =>
-                ctx.eh.violation(UnableToParseShape,
-                                 NodeShape().adopted(typesPrefix).id,
-                                 s"Error parsing shape at $typeName",
-                                 e)
-            }
-          })
-      }
-    )
-  }
-
   protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
     parseSecuritySchemeDeclarationsFromKey(securityKey, map, parent)
     parseSecuritySchemeDeclarationsFromKey("securitySchemes".asOasExtension, map, parent)
   }
 
   protected def parseSecuritySchemeDeclarationsFromKey(key: String, map: YMap, parent: String): Unit = {
+
+    def validateSchemeType(scheme: SecurityScheme): Unit = {
+      val schemeType = scheme.`type`
+      if (schemeType.nonEmpty && !OasLikeSecuritySchemeTypeMappings
+            .validTypesFor(ctx.vendor)
+            .contains(schemeType.value()))
+        ctx.eh.violation(
+          InvalidSecuritySchemeType,
+          scheme.id,
+          Some(SecuritySchemeModel.Type.value.iri()),
+          s"'$schemeType' is not a valid security scheme type in ${ctx.vendor.name}",
+          scheme.`type`.annotations().find(classOf[LexicalInformation]),
+          Some(ctx.rootContextDocument)
+        )
+    }
+
+    val isExtension = key.startsWith("x-amf-")
+
     map.key(
       key,
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += ctx.factory
+          val securityScheme: SecurityScheme = ctx.factory
             .securitySchemeParser(
               entry,
               (scheme) => {
                 val name = entry.key.as[String]
-                scheme.set(ParametrizedSecuritySchemeModel.Name,
+                scheme.set(SecuritySchemeModel.Name,
                            AmfScalar(name, Annotations(entry.key.value)),
                            Annotations(entry.key))
                 scheme.adopted(parent)
@@ -185,6 +179,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             )
             .parse()
             .add(DeclaredElement())
+          if (!isExtension) validateSchemeType(securityScheme)
+          ctx.declarations += securityScheme
         }
       }
     )
@@ -249,63 +245,38 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
     })
 
-    map.key(
-      "security",
-      entry => {
-        entry.value.tagType match {
-          case YType.Seq =>
-            val idCounter = new IdCounter()
-            val securedBy =
-              entry.value
-                .as[Seq[YNode]]
-                .map(s => OasSecurityRequirementParser(s, api.withSecurity, idCounter).parse()) // todo when generating id for security requirements webapi id is null
-                .collect { case Some(s) => s }
-            api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-          case _ =>
-            ctx.eh.violation(InvalidSecurityRequirementsSeq,
-                             entry.value,
-                             "'security' must be an array of security requirement object")
-        }
-      }
-    )
+    map.key("security", entry => {
+      api.set(WebApiModel.Security, AmfArray(Seq(), Annotations(entry.value)), Annotations(entry))
+      parseSecurity(entry, api)
+    })
+    map.key("security".asOasExtension, entry => { parseSecurity(entry, api) })
 
-    val documentations = ListBuffer[CreativeWork]()
+    val documentations: mutable.ListBuffer[(CreativeWork, YMapEntry)] = ListBuffer[(CreativeWork, YMapEntry)]()
 
     map.key(
       "externalDocs",
       entry => {
-        documentations += OasLikeCreativeWorkParser(entry.value, api.id).parse()
+        documentations.append((OasLikeCreativeWorkParser(entry.value, api.id).parse(), entry))
       }
     )
 
     map.key(
       "userDocumentation".asOasExtension,
       entry => {
-        documentations ++= UserDocumentationParser(entry.value.as[Seq[YNode]])
-          .parse()
+        documentations.appendAll(
+          UserDocumentationParser(entry.value.as[Seq[YNode]])
+            .parse()
+            .map(c => (c, entry)))
       }
     )
 
-    if (documentations.nonEmpty) api.setArray(WebApiModel.Documentations, documentations)
+    if (documentations.nonEmpty)
+      api.setArray(WebApiModel.Documentations, documentations.map(_._1), Annotations(documentations.map(_._2).head))
 
-    map.key(
-      "paths",
-      entry => {
-        val paths = entry.value.as[YMap]
-        paths.regex(
-          "^/.*",
-          entries => {
-            val endpoints = mutable.ListBuffer[EndPoint]()
-            entries.foreach(
-              ctx.factory.endPointParser(_, api.withEndPoint, endpoints).parse()
-            )
-            api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
-          }
-        )
-
-        ctx.closedShape(api.id, paths, "paths")
-      }
-    )
+    map.key("paths") match {
+      case Some(entry) => parseEndpoints(api, entry)
+      case None        => ctx.eh.violation(MandatoryPathsProperty, api.id, "'paths' is mandatory in OAS spec")
+    }
 
     AnnotationParser(api, map).parse()
     AnnotationParser(api, map).parseOrphanNode("paths")
@@ -313,6 +284,34 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     ctx.closedShape(api.id, map, "webApi")
 
     api
+  }
+
+  def parseSecurity(entry: YMapEntry, api: WebApi) = {
+    entry.value.tagType match {
+      case YType.Seq =>
+        val idCounter = new IdCounter()
+        val securedBy =
+          entry.value
+            .as[Seq[YNode]]
+            .map(s => OasLikeSecurityRequirementParser(s, api.withSecurity, idCounter).parse()) // todo when generating id for security requirements webapi id is null
+            .collect { case Some(s) => s }
+      //api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)))
+      case _ =>
+        ctx.eh.violation(InvalidSecurityRequirementsSeq,
+                         entry.value,
+                         "'security' must be an array of security requirement object")
+    }
+  }
+
+  private def parseEndpoints(api: WebApi, entry: YMapEntry) = {
+    val paths = entry.value.as[YMap]
+    val endpoints =
+      paths
+        .regex("^/.*")
+        .foldLeft(List[EndPoint]())((acc, curr) =>
+          acc ++ ctx.factory.endPointParser(curr, api.withEndPoint, acc).parse())
+    if (endpoints.nonEmpty) api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
+    ctx.closedShape(api.id, paths, "paths")
   }
 }
 

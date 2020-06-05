@@ -1,0 +1,16 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+paths:
+  /pets:
+    get:
+      responses:
+        "200":
+          description: unexpected error
+          schema:
+            $ref: 'ref.yaml'
+        "400":
+          description: unexpected error
+          schema:
+            $ref: 'ref2.yml'

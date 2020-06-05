@@ -16,6 +16,7 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
+import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -23,7 +24,7 @@ import amf.tools.{CanonicalWebAPISpecDialectExporter, PropertyNodeModel}
 import org.apache.jena.rdf.model.{Model, RDFNode, Resource, Statement}
 
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext.Implicits.global // TODO Should implement ExecutionEnvironment here?
 import scala.concurrent.Future
 
 object CanonicalWebAPISpecTransformer extends PlatformSecrets {
@@ -97,7 +98,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     }
   }
 
-  def mapBaseUnits(unit: String, dialect: Dialect, nativeModel: Model) = {
+  private def mapBaseUnits(unit: String, dialect: Dialect, nativeModel: Model) = {
     val unitResource = nativeModel.createResource(unit)
 
     // Process and remove old types
@@ -369,8 +370,9 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     * @return Equivalent Canonical WebAPI AML dialect instance
     */
   protected def cleanAMFModel(unit: BaseUnit): BaseUnit = {
-    val mapping     = buildCanonicalClassMapping
-    val model       = unit.toNativeRdfModel()
+    val mapping = buildCanonicalClassMapping
+    val model   = unit.toNativeRdfModel()
+
     val nativeModel = model.native().asInstanceOf[Model]
 
     val baseUnitId = preProcessUnits(nativeModel)
@@ -456,7 +458,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
       transformLink(nativeModel, domainElement)
 
       // same for custom domain properties
-      // domain properties are generated as properties, now they will becom
+      // domain properties are generated as properties, now they will become
       /// reified so we can list them
       transformAnnotations(nativeModel, mapping, domainElement)
     }
@@ -477,9 +479,9 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     }
 
     val plugins = PluginContext(
-      blacklist = Seq(CorePlugin, WebAPIDomainPlugin, DataShapesDomainPlugin, AMFGraphPlugin))
+      blacklist = Seq(CorePlugin, WebAPIDomainPlugin, DataShapesDomainPlugin, AMFGraphPlugin, Raml10Plugin))
 
-    new RdfModelParser(platform)(ParserContext(eh = UnhandledParserErrorHandler, plugins = plugins))
+    RdfModelParser(errorHandler = UnhandledParserErrorHandler, plugins = plugins)
       .parse(model, baseUnitId)
   }
 

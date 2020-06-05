@@ -1,13 +1,14 @@
 package amf.plugins.domain.webapi.resolution
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.{DefaultParserErrorHandler, IgnoringErrorHandler}
 import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, FragmentRef, ParserContext}
-import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
+import amf.core.resolution.stages.ReferenceResolutionStage
+import amf.core.resolution.stages.helpers.ResolvedNamedEntity
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.parser.raml.{
@@ -43,7 +44,8 @@ object ExtendsHelper {
                                  extensionId: String,
                                  extensionLocation: Option[String],
                                  keepEditingInfo: Boolean,
-                                 context: Option[RamlWebApiContext] = None): Operation = {
+                                 context: Option[RamlWebApiContext] = None,
+                                 errorHandler: ErrorHandler): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
@@ -85,7 +87,8 @@ object ExtendsHelper {
                      entry,
                      node.annotations,
                      referencesCollector,
-                     context)
+                     context,
+                     errorHandler)
   }
 
   def entryAsOperation[T <: BaseUnit](profile: ProfileName,
@@ -97,7 +100,8 @@ object ExtendsHelper {
                                       annotations: Annotations,
                                       referencesCollector: mutable.Map[String, DomainElement] =
                                         mutable.Map[String, DomainElement](),
-                                      context: Option[RamlWebApiContext] = None): Operation = {
+                                      context: Option[RamlWebApiContext] = None,
+                                      errorHandler: ErrorHandler): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
     addDeclarations(ctx, unit, entry.value.sourceName)
@@ -115,13 +119,11 @@ object ExtendsHelper {
         val operation = ctxForTrait.factory
           .operationParser(entry, _ => Operation().withId(extensionId + "/applied"), true)
           .parse()
-//          ctxForTrait.futureDeclarations.resolve()
         operation
       }
 
     if (keepEditingInfo) annotateExtensionId(operation, extensionId, findUnitLocationOfElement(extensionId, unit))
-    operation
-    // new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
+    new ReferenceResolutionStage(keepEditingInfo)(errorHandler).resolveDomainElement(operation)
   }
 
   def asEndpoint[T <: BaseUnit](unit: T,
@@ -264,6 +266,7 @@ object ExtendsHelper {
 
   private def getDeclaringUnit(refs: List[BaseUnit], sourceName: String): Option[BaseUnit] = refs match {
     case (f: Fragment) :: _ if sourceNameMatch(f, sourceName) => Some(f)
+    case (m: Module) :: _ if sourceNameMatch(m, sourceName)   => Some(m)
     case unit :: tail =>
       getDeclaringUnit(tail, sourceName) match {
         case ref @ Some(_) => ref
@@ -272,7 +275,7 @@ object ExtendsHelper {
     case _ => None
   }
 
-  private def sourceNameMatch(f: Fragment, sourceName: String): Boolean =
+  private def sourceNameMatch(f: AmfElement, sourceName: String): Boolean =
     f.annotations
       .find(classOf[AmfSourceLocation])
       .map(_.location)
@@ -297,21 +300,20 @@ object ExtendsHelper {
         processDeclaration(declaration, ctx, unit)
     }
 
-    addNestedDeclarations(ctx, declaringUnit)
-    if (declaringUnit != root) addNestedDeclarations(ctx, root)
+    // gives priority to references of fragments or modules over those in root file, this order can be adjusted
+    if (declaringUnit != root) processRefsToDeclarations(ctx, root)
+    processRefsToDeclarations(ctx, declaringUnit)
   }
 
-  private def addNestedDeclarations(ctx: RamlWebApiContext, model: BaseUnit): Unit = {
+  private def processRefsToDeclarations(ctx: RamlWebApiContext, model: BaseUnit): Unit = {
     model.references.foreach {
       // Declarations of traits and resourceTypes are contextual, so should skip it
       case f: Fragment if !f.isInstanceOf[ResourceTypeFragment] && !f.isInstanceOf[TraitFragment] =>
         ctx.declarations += (f.location().getOrElse(f.id), f)
-        addNestedDeclarations(ctx, f)
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
           case (alias, (fullUrl, _)) =>
-            // If the library alias is already in the context, skip it
-            if (m.id == fullUrl && !ctx.declarations.libraries.exists(_._1 == alias)) {
+            if (m.id == fullUrl) {
               val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(eh = ctx.eh))
               m.declares.foreach { declaration =>
                 processDeclaration(declaration, nestedCtx, m)
@@ -319,7 +321,6 @@ object ExtendsHelper {
               ctx.declarations.libraries += (alias -> nestedCtx.declarations)
             }
         }
-        addNestedDeclarations(ctx, m)
       case _: Fragment => // Trait or RT, nothing to do
       case other =>
         ctx.eh.violation(
@@ -360,18 +361,7 @@ object ExtendsHelper {
   }
 }
 
-case class CustomParserErrorHandler() extends DefaultParserErrorHandler {
-  override def handle[T](error: YError, defaultValue: T): T = defaultValue
-  override def warning(id: ValidationSpecification,
-                       node: String,
-                       property: Option[String],
-                       message: String,
-                       lexical: Option[LexicalInformation],
-                       location: Option[String]): Unit              = {}
-  override def handle(loc: SourceLocation, e: SyamlException): Unit = {}
-
-}
-class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext(eh = CustomParserErrorHandler())) { // generating a new id???? cannot be ok
+class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext(eh = IgnoringErrorHandler())) { // generating a new id???? cannot be ok
 }
 
-class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext(eh = CustomParserErrorHandler())) {}
+class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext(eh = IgnoringErrorHandler())) {}

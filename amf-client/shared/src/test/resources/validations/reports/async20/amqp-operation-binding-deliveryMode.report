@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/async20/validations/amqp-operation-binding-deliveryMode.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#Amqp091OperationBinding-deliveryMode-pattern
+  Message: 'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/amqp-operation-binding-deliveryMode.yaml#/web-api/end-points/%2Finvalid/subscribe/operation-bindings/amqp091-operation
+  Property: http://a.ml/vocabularies/apiBinding#deliveryMode
+  Position: Some(LexicalInformation([(20,24)-(20,25)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/amqp-operation-binding-deliveryMode.yaml

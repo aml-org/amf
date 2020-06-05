@@ -39,15 +39,17 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
 
   override val vendors: Seq[String] = Seq(vendor.name, Raml.name)
 
-  def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext
+  def context(wrapped: ParserContext,
+              root: Root,
+              options: ParsingOptions,
+              ds: Option[WebApiDeclarations] = None): RamlWebApiContext
 
   // context that opens a new context for declarations and copies the global JSON Schema declarations
-  def cleanContext(wrapped: ParserContext, root: Root): RamlWebApiContext = {
+  def cleanContext(wrapped: ParserContext, root: Root, options: ParsingOptions): RamlWebApiContext = {
     val cleanNested =
       ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.eh)
-    val clean = context(cleanNested, root)
+    val clean = context(cleanNested, root, options)
     clean.globalSpace = wrapped.globalSpace
-    clean.reportDisambiguation = wrapped.reportDisambiguation
     clean
   }
 
@@ -58,9 +60,9 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
                      platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
 
-    val updated = context(parentContext, root)
+    val updated = context(parentContext, root, options)
     inlineExternalReferences(root, updated)
-    val clean = cleanContext(parentContext, root)
+    val clean = cleanContext(parentContext, root, options)
 
     RamlHeader(root) flatMap { // todo review this, should we use the raml web api context for get the version parser?
 
@@ -174,11 +176,15 @@ object Raml08Plugin extends RamlPlugin {
       case _                  => None
     }
 
-  override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
+  override def context(wrapped: ParserContext,
+                       root: Root,
+                       options: ParsingOptions,
+                       ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
     new Raml08WebApiContext(root.location,
                             root.references ++ wrapped.refs,
                             wrapped,
-                            ds.map(d => RamlWebApiDeclarations(d)))
+                            ds.map(d => RamlWebApiDeclarations(d)),
+                            options = options)
 
   def specContext(options: RenderOptions): RamlSpecEmitterContext = new Raml08SpecEmitterContext(options.errorHandler)
 
@@ -240,11 +246,15 @@ object Raml10Plugin extends RamlPlugin {
       case _                          => None
     }
 
-  override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
+  override def context(wrapped: ParserContext,
+                       root: Root,
+                       options: ParsingOptions,
+                       ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
     new Raml10WebApiContext(root.location,
                             root.references ++ wrapped.refs,
                             wrapped,
-                            ds.map(d => RamlWebApiDeclarations(d)))
+                            ds.map(d => RamlWebApiDeclarations(d)),
+                            options = options)
 
   def specContext(options: RenderOptions): RamlSpecEmitterContext = new Raml10SpecEmitterContext(options.errorHandler)
 

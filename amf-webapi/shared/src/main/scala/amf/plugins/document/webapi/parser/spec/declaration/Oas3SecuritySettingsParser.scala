@@ -1,18 +1,17 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.VirtualObject
+import amf.core.parser.{ScalarNode, YMapOps}
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import org.yaml.model.{YMap, YMapEntry}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, OAuth2FlowValidations}
 import amf.plugins.domain.webapi.metamodel.security.{
-  OAuth2SettingsModel,
   HttpSettingsModel,
   OAuth2FlowModel,
+  OAuth2SettingsModel,
   OpenIdConnectSettingsModel
 }
 import amf.plugins.domain.webapi.models.security._
-import amf.core.parser.{Annotations, ScalarNode, YMapOps}
-import amf.core.utils.{Lazy, AmfStrings}
+import org.yaml.model.{YMap, YMapEntry}
 
 class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: OasWebApiContext)
     extends OasLikeSecuritySettingsParser(map, scheme) {
@@ -80,7 +79,12 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
 
     parseScopes(flow, flowMap)
 
+    OAuth2FlowValidations.validateFlowFields(flow, ctx.eh)
+
+    ctx.closedShape(flow.id, flowMap, flow.flow.value())
+
     settings.add(OAuth2SettingsModel.Flows, flow)
   }
+
   override def vendorSpecificSettingsProducers(): SettingsProducers = Oas3SettingsProducers
 }

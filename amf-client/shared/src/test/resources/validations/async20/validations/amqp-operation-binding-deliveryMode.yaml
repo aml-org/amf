@@ -1,0 +1,20 @@
+asyncapi: 2.0.0
+info:
+  title: asasd
+  version: asd
+channels:
+  /employees:
+    subscribe:
+      bindings:
+        amqp:
+          deliveryMode: 2
+  /managers:
+    subscribe:
+      bindings:
+        amqp:
+          deliveryMode: 1
+  /invalid:
+    subscribe:
+      bindings:
+        amqp:
+          deliveryMode: 0

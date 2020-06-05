@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode}
 import amf.core.annotations.DeclaredElement
 import amf.core.emitter.ShapeRenderOptions
@@ -87,74 +88,97 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
     with JsonSchemaSerializer
     with RamlDatatypeSerializer
     with ExternalSourceElement
-    with InheritanceChain {
+    with InheritanceChain
+    with ExemplifiedDomainElement {
 
   def documentation: CreativeWork     = fields.field(Documentation)
   def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
-  def examples: Seq[Example]          = fields.field(Examples)
   def comment: StrField               = fields.field(Comment)
 
   def withDocumentation(documentation: CreativeWork): this.type        = set(Documentation, documentation)
   def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = set(XMLSerialization, xmlSerialization)
-  def withExamples(examples: Seq[Example]): this.type                  = setArray(Examples, examples)
   def withComment(comment: String): this.type                          = set(Comment, comment)
-
-  def withExample(name: Option[String]): Example = {
-    val example = Example()
-    name.foreach { example.withName(_) }
-    add(Examples, example)
-    example
-  }
 
   override def linkCopy(): AnyShape = AnyShape().withId(id)
 
   override def meta: AnyShapeModel = AnyShapeModel
 
-  def toJsonSchema: String = toJsonSchema(this)
+  def toJsonSchema(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
+    toJsonSchema(this, exec)
 
-  def buildJsonSchema(): String = generateJsonSchema(this)
-
-  def buildJsonSchema(options: ShapeRenderOptions): String = generateJsonSchema(this, options)
+  def buildJsonSchema(options: ShapeRenderOptions = ShapeRenderOptions(),
+                      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
+    generateJsonSchema(this, options, exec)
 
   /** Delegates generation of a new RAML Data Type or returns cached
     * one if it was generated before.
     */
-  def toRamlDatatype: String = toRamlDatatype(this)
+  def toRamlDatatype(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
+    toRamlDatatype(this, exec)
 
   /** Generates a new RAML Data Type. */
-  def buildRamlDatatype(): String = generateRamlDatatype(this)
+  def buildRamlDatatype(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
+    generateRamlDatatype(this, exec)
 
   def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =
     AnyShape(fields, annotations).withId(id)
 
-  def validateParameter(payload: String, env: Environment): Future[AMFValidationReport] =
+  def validateParameter(
+      payload: String,
+      env: Environment = Environment(),
+      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] =
     PayloadValidationPluginsHandler.validateWithGuessing(this,
                                                          payload,
                                                          SeverityLevels.VIOLATION,
                                                          env,
-                                                         ScalarRelaxedValidationMode)
+                                                         ScalarRelaxedValidationMode,
+                                                         exec)
 
-  def validateParameter(payload: String): Future[AMFValidationReport] = validateParameter(payload, Environment())
+  def validateParameter(payload: String, exec: BaseExecutionEnvironment): Future[AMFValidationReport] =
+    validateParameter(payload, Environment(exec), exec)
+
+  def validate(payload: String, env: Environment, exec: BaseExecutionEnvironment): Future[AMFValidationReport] =
+    PayloadValidationPluginsHandler.validateWithGuessing(this,
+                                                         payload,
+                                                         SeverityLevels.VIOLATION,
+                                                         env,
+                                                         StrictValidationMode,
+                                                         exec)
+
+  def validate(payload: String): Future[AMFValidationReport] =
+    validate(payload, Environment(), platform.defaultExecutionEnvironment)
 
   def validate(payload: String, env: Environment): Future[AMFValidationReport] =
-    PayloadValidationPluginsHandler.validateWithGuessing(this,
-                                                         payload,
-                                                         SeverityLevels.VIOLATION,
-                                                         env,
-                                                         StrictValidationMode)
+    validate(payload, env, platform.defaultExecutionEnvironment)
 
-  def validate(payload: String): Future[AMFValidationReport] = validate(payload, Environment())
+  def validate(payload: String, exec: BaseExecutionEnvironment): Future[AMFValidationReport] =
+    validate(payload, Environment(exec), exec)
+
+  def validate(fragment: PayloadFragment,
+               env: Environment,
+               exec: BaseExecutionEnvironment): Future[AMFValidationReport] =
+    PayloadValidationPluginsHandler.validateFragment(this, fragment, SeverityLevels.VIOLATION, env, exec = exec)
+
+  def validate(fragment: PayloadFragment): Future[AMFValidationReport] =
+    validate(fragment, Environment(), platform.defaultExecutionEnvironment)
 
   def validate(fragment: PayloadFragment, env: Environment): Future[AMFValidationReport] =
-    PayloadValidationPluginsHandler.validateFragment(this, fragment, SeverityLevels.VIOLATION, env)
+    validate(fragment, env, platform.defaultExecutionEnvironment)
 
-  def validate(fragment: PayloadFragment): Future[AMFValidationReport] = validate(fragment, Environment())
+  def validate(fragment: PayloadFragment, exec: BaseExecutionEnvironment): Future[AMFValidationReport] =
+    validate(fragment, Environment(exec), exec)
 
   def payloadValidator(mediaType: String, env: Environment = Environment()): Option[PayloadValidator] =
     PayloadValidationPluginsHandler.payloadValidator(this, mediaType, env, StrictValidationMode)
 
+  def payloadValidator(mediaType: String, exec: BaseExecutionEnvironment): Option[PayloadValidator] =
+    payloadValidator(mediaType, Environment(exec))
+
   def parameterValidator(mediaType: String, env: Environment = Environment()): Option[PayloadValidator] =
     PayloadValidationPluginsHandler.payloadValidator(this, mediaType, env, ScalarRelaxedValidationMode)
+
+  def parameterValidator(mediaType: String, exec: BaseExecutionEnvironment): Option[PayloadValidator] =
+    parameterValidator(mediaType, Environment(exec))
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded

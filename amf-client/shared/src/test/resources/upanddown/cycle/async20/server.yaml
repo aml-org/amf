@@ -1,0 +1,11 @@
+asyncapi: 2.0.0
+info:
+  title: API
+  version: "1.0"
+channels: {}
+servers:
+  production:
+    url: development.gigantic-server.com
+    protocol: kafka
+    protocolVersion: 1.0.0
+    description: Development server

@@ -9,3 +9,5 @@ trait AbstractModel {
                          ApiContract + "isAbstract",
                          ModelDoc(ModelVocabularies.ApiContract, "isAbstract", "Defines a model as abstract"))
 }
+
+object AbstractModel extends AbstractModel

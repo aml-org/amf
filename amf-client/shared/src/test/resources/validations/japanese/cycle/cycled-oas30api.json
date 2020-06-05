@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.2",
+  "openapi": "3.0.0",
   "info": {
     "title": "ローンマイクロサービス",
     "version": "1"
@@ -9,12 +9,12 @@
       "post": {
         "parameters": [
           {
-            "in": "body",
+            "in": "path",
             "name": "ローン申し込み",
             "description": "ローン申し込みオブジェクトを入力して、ローンのDetailsをサービスに保存します",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/LoanApplication"
+              "type": "string"
             }
           }
         ],

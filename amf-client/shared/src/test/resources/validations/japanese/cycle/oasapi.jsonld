@@ -404,9 +404,9 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
-                            "http://a.ml/vocabularies/document-source-maps#required-param-payload": [
+                            "http://a.ml/vocabularies/document-source-maps#body-parameter": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/end-points/%2F%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/post/request/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map/required-param-payload/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/end-points/%2F%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/post/request/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map/body-parameter/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/end-points/%2F%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/post/request/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF"
@@ -414,7 +414,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "true->[(27,12)-(27,28)]"
+                                    "@value": "true"
                                   }
                                 ]
                               }
@@ -458,6 +458,57 @@
                                     "@value": "[(23,10)-(31,11)]"
                                   }
                                 ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#required-param-payload": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/end-points/%2F%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/post/request/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/source-map/required-param-payload/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/end-points/%2F%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/post/request/%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true->[(27,12)-(27,28)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/end-points/%2F%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/post/request/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/end-points/%2F%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/post/request/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/end-points/%2F%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/post/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(21,14)-(41,7)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/end-points/%2F%E3%83%AD%E3%83%BC%E3%83%B3%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF/post/request/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/apiContract#payload"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(22,8)-(32,9)]"
                               }
                             ]
                           }
@@ -1102,7 +1153,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -1519,9 +1570,8 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/property/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/property/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/any/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0",
                 "@type": [
-                  "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
@@ -1534,7 +1584,7 @@
                 ],
                 "http://a.ml/vocabularies/document#link-label": [
                   {
-                    "@value": "#/definitions/\u8ECA\u4E21\u8A73\u7D30"
+                    "@value": "\u8ECA\u4E21\u8A73\u7D30"
                   }
                 ],
                 "http://www.w3.org/ns/shacl#name": [
@@ -1544,16 +1594,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/property/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/property/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/any/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/property/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/property/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/any/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/property/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0"
+                            "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/property/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/any/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1934,7 +1984,20 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/source-map/lexical/element_2",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(60,4)-(60,8)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#property"
@@ -1950,17 +2013,17 @@
                 "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#name"
+                    "@value": "http://a.ml/vocabularies/apiContract#examples"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(60,4)-(60,8)]"
+                    "@value": "[(77,6)-(81,7)]"
                   }
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1"
@@ -2518,7 +2581,20 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/source-map/lexical/element_2",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(83,4)-(83,10)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#property"
@@ -2534,17 +2610,17 @@
                 "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#name"
+                    "@value": "http://a.ml/vocabularies/apiContract#examples"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(83,4)-(83,10)]"
+                    "@value": "[(93,6)-(96,7)]"
                   }
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/declarations/types/%E8%BB%8A%E4%B8%A1%E8%A9%B3%E7%B4%B0"

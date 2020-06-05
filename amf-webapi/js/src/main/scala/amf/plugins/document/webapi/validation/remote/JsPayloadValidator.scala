@@ -4,13 +4,14 @@ import amf.client.plugins.ValidationMode
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
+import amf.internal.environment.Environment
 import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 
 import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
 
-class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
-    extends PlatformPayloadValidator(shape) {
+class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode, val env: Environment)
+    extends PlatformPayloadValidator(shape, env) {
 
   override type LoadedObj    = js.Dynamic
   override type LoadedSchema = Dictionary[js.Dynamic]

@@ -6,19 +6,31 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
-import amf.plugins.document.webapi.validation.json.{JSONObject, JSONTokenerHack}
+import amf.internal.environment.Environment
+import amf.plugins.document.webapi.validation.json.{InvalidJSONValueException, JSONObject, JSONTokenerHack}
+import amf.plugins.domain.shapes.models.ScalarShape
 import amf.validations.PayloadValidations.{
   ExampleValidationErrorSpecification,
   SchemaException => InternalSchemaException
 }
-import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidator, URIFormatValidator}
+import org.everit.json.schema.internal.{
+  DateFormatValidator,
+  DateTimeFormatValidator,
+  EmailFormatValidator,
+  HostnameFormatValidator,
+  IPV4Validator,
+  IPV6Validator,
+  RegexFormatValidator,
+  URIFormatValidator,
+  URIV4FormatValidator
+}
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
 import org.json.JSONException
 
-class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
-    extends PlatformPayloadValidator(shape) {
+class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, val env: Environment)
+    extends PlatformPayloadValidator(shape, env) {
 
   case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
     override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)
@@ -58,23 +70,26 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
         val schemaBuilder = SchemaLoader
           .builder()
           .schemaJson(schemaNode)
+          .draftV7Support()
           .regexpFactory(CustomJavaUtilRegexpFactory())
           .addFormatValidator(DateTimeOnlyFormatValidator)
           .addFormatValidator(Rfc2616Attribute)
           .addFormatValidator(Rfc2616AttributeLowerCase)
-          .addFormatValidator(new DateFormatValidator())
-          .addFormatValidator(new URIFormatValidator())
-          .addFormatValidator(new RegexFormatValidator())
           .addFormatValidator(PartialTimeFormatValidator)
+          // the following are everit format validators
+          .addFormatValidator(new URIV4FormatValidator())
+          .addFormatValidator(new DateFormatValidator())
+          .addFormatValidator(new RegexFormatValidator())
+          .addFormatValidator(new HostnameFormatValidator())
+          .addFormatValidator(new IPV4Validator())
+          .addFormatValidator(new DateTimeFormatValidator())
+          .addFormatValidator(new IPV6Validator())
+          .addFormatValidator(new EmailFormatValidator())
 
         try {
-          Right(
-            Some(
-              schemaBuilder
-                .build()
-                .load()
-                .build())
-          )
+          // does not use schemaBuilder.build() as this causes formats of schema version to override custom format validators
+          val loader = new SchemaLoader(schemaBuilder);
+          Right(Some(loader.load().build()))
         } catch {
           case e: SchemaException =>
             Left(validationProcessor.processException(e, Some(element)))
@@ -101,15 +116,17 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
   override protected def loadJson(text: String): Object = {
     try new JSONTokenerHack(text).nextValue()
     catch {
-      case e: JSONException => throw new InvalidJsonObject(e)
+      case e: InvalidJSONValueException => throw new InvalidJsonValue(e)
+      case e: JSONException             => throw new InvalidJsonObject(e)
     }
   }
 
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
-    JvmReportValidationProcessor(profileName)
+    JvmReportValidationProcessor(profileName, shape)
 }
 
-case class JvmReportValidationProcessor(override val profileName: ProfileName) extends ReportValidationProcessor {
+case class JvmReportValidationProcessor(override val profileName: ProfileName, val shape: Shape)
+    extends ReportValidationProcessor {
 
   override def processException(r: Throwable, element: Option[DomainElement]): Return = {
     val results = r match {
@@ -129,11 +146,36 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName) e
             source = e
           ))
 
+      case e: InvalidJsonValue if shape.isInstanceOf[ScalarShape] =>
+        Seq(
+          invalidJsonValidation(s"expected type: ${formattedDatatype(shape.asInstanceOf[ScalarShape])}, found: String",
+                                element,
+                                e))
+
+      case e: InvalidJsonValue =>
+        Seq(invalidJsonValidation("Invalid json value was provided", element, e))
+
       case other =>
         super.processCommonException(other, element)
     }
     processResults(results)
   }
+
+  private def invalidJsonValidation(message: String, element: Option[DomainElement], e: RuntimeException) = {
+    AMFValidationResult(
+      message = message,
+      level = SeverityLevels.VIOLATION,
+      targetNode = element.map(_.id).getOrElse(""),
+      targetProperty = None,
+      validationId = ExampleValidationErrorSpecification.id,
+      position = element.flatMap(_.position()),
+      location = element.flatMap(_.location()),
+      source = e
+    )
+  }
+
+  private def formattedDatatype(scalarShape: ScalarShape): String =
+    scalarShape.dataType.value().split("#").last.capitalize
 
   private def iterateValidations(validationException: ValidationException,
                                  element: Option[DomainElement]): Seq[AMFValidationResult] = {

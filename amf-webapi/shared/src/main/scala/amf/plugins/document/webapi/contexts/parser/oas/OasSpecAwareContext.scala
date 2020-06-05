@@ -53,7 +53,7 @@ case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) ext
     Oas20OperationParser(entry, producer)(ctx)
   override def endPointParser(entry: YMapEntry,
                               producer: String => EndPoint,
-                              collector: ListBuffer[EndPoint]): OasLikeEndpointParser =
+                              collector: List[EndPoint]): OasLikeEndpointParser =
     Oas20EndpointParser(entry, producer, collector)(ctx)
 }
 
@@ -84,6 +84,6 @@ case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) ext
 
   override def endPointParser(entry: YMapEntry,
                               producer: String => EndPoint,
-                              collector: ListBuffer[EndPoint]): OasLikeEndpointParser =
+                              collector: List[EndPoint]): OasLikeEndpointParser =
     Oas30EndpointParser(entry, producer, collector)(ctx)
 }

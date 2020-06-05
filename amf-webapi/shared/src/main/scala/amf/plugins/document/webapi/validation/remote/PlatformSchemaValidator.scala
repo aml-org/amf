@@ -2,6 +2,8 @@ package amf.plugins.document.webapi.validation.remote
 
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.client.render.JsonSchemaDraft7
+import amf.core.client.ParsingOptions
 import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
@@ -11,12 +13,10 @@ import amf.core.parser.{ParserContext, SyamlParsedDocument}
 import amf.core.validation._
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.PayloadPlugin
-import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
-import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
+import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, JsonSchemaEmitter}
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models._
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -27,30 +27,37 @@ import org.yaml.model._
 import org.yaml.parser.{JsonParser, YamlParser}
 
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
+class InvalidJsonValue(e: Throwable)        extends RuntimeException(e)
 class UnknownDiscriminator()                extends RuntimeException
 class UnsupportedMediaType(msg: String)     extends Exception(msg)
 
-abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
+abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends PayloadValidator {
 
   override val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
 
-  override def isValid(mediaType: String, payload: String): Future[Boolean] = {
+  override def isValid(mediaType: String, payload: String)(
+      implicit executionContext: ExecutionContext): Future[Boolean] = {
     Future(validateForPayload(mediaType, payload, BooleanValidationProcessor))
   }
 
-  override def validate(mediaType: String, payload: String): Future[AMFValidationReport] = {
+  override def validate(mediaType: String, payload: String)(
+      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     Future(
       validateForPayload(mediaType, payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
   }
 
-  override def validate(fragment: PayloadFragment): Future[AMFValidationReport] = {
+  override def validate(fragment: PayloadFragment)(
+      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     Future(validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
+  }
+
+  override def syncValidate(mediaType: String, payload: String): AMFValidationReport = {
+    validateForPayload(mediaType, payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
   }
 
   type LoadedObj
@@ -58,8 +65,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   val validationMode: ValidationMode
 
   val isFileShape: Boolean = shape.isInstanceOf[FileShape]
-
-  val env: Environment = Environment()
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
 
@@ -84,6 +89,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       performValidation(buildCandidate(fragment), validationProcessor)
     } catch {
       case e: InvalidJsonObject => validationProcessor.processException(e, Some(fragment.encodes))
+      case e: InvalidJsonValue  => validationProcessor.processException(e, Some(fragment.encodes))
     }
   }
 
@@ -108,33 +114,36 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       try {
         performValidation(buildCandidate(mediaType, payload), validationProcessor)
       } catch {
-        case e: InvalidJsonObject =>
-          validationProcessor.processException(e, None)
+        case e: InvalidJsonObject => validationProcessor.processException(e, None)
+        case e: InvalidJsonValue  => validationProcessor.processException(e, None)
       }
 
     }
   }
 
-  private def generateShape(
+  private def generateSchema(
       fragmentShape: Shape,
       validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
+
     val dataType = DataTypeFragment()
     dataType.fields
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-    val unparsedDocOption = SYamlSyntaxPlugin
-      .unparse(
-        "application/json",
-        SyamlParsedDocument(
-          document = new JsonSchemaValidationFragmentEmitter(dataType)(
-            JsonSchemaEmitterContext(dataType.errorHandler(), new ShapeRenderOptions().withoutDocumentation))
-            .emitFragment())
-      )
+    val schemaOption: Option[CharSequence] = generateSchemaString(dataType)
 
-    unparsedDocOption match {
+    schemaOption match {
       case Some(charSequence) => loadSchema(charSequence, fragmentShape, validationProcessor)
       case None               => Right(None)
     }
+  }
+
+  private def generateSchemaString(dataType: DataTypeFragment): Option[CharSequence] = {
+    val renderOptions =
+      new ShapeRenderOptions().withoutDocumentation.withCompactedEmission.withSchemaVersion(JsonSchemaDraft7)
+    val declarations = dataType.encodes.closureShapes.toSeq :+ dataType.encodes
+    val emitter      = JsonSchemaEmitter(dataType.encodes, declarations, options = renderOptions)
+    val document     = SyamlParsedDocument(document = emitter.emitDocument())
+    SYamlSyntaxPlugin.unparse("application/json", document)
   }
 
   protected def literalRepresentation(payload: PayloadFragment): Option[String] = {
@@ -163,13 +172,13 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     }
   }
 
-  private def getOrCreateObj(
+  private def getOrCreateSchema(
       s: AnyShape,
       validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
     schemas.get(s.id) match {
       case Some(json) => Right(Some(json))
       case _ =>
-        generateShape(s, validationProcessor) match {
+        generateSchema(s, validationProcessor) match {
           case Right(maybeSchema) =>
             maybeSchema.foreach { schemas.put(s.id, _) }
             Right(maybeSchema)
@@ -199,14 +208,17 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   }
 
   private def parsePayload(payload: String, mediaType: String, errorHandler: AmfParserErrorHandler): PayloadFragment = {
-    val defaultCtx = new PayloadContext("", Nil, ParserContext(eh = errorHandler))
+    val options = ParsingOptions()
+    env.maxYamlReferences.foreach(options.setMaxYamlReferences)
+    val defaultCtx = new PayloadContext("", Nil, ParserContext(eh = errorHandler), options = options)
 
     val parser = mediaType match {
       case "application/json" => JsonParser(payload)(errorHandler)
       case _                  => YamlParser(payload)(errorHandler)
     }
     val node = parser.document().node
-    PayloadFragment(if (node.isNull) ScalarNode(payload, None) else DataNodeParser(node)(defaultCtx).parse(),
+    PayloadFragment(if (node.isNull) ScalarNode(payload, None).withDataType(DataType.Nil)
+                    else DataNodeParser(node)(defaultCtx).parse(),
                     mediaType)
   }
 
@@ -231,7 +243,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
           {
             resultOption match {
               case _ if shape.isInstanceOf[AnyShape] =>
-                getOrCreateObj(shape.asInstanceOf[AnyShape], validationProcessor)
+                getOrCreateSchema(shape.asInstanceOf[AnyShape], validationProcessor)
               case _ =>
                 Left(
                   validationProcessor.processResults(Seq(AMFValidationResult(

@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "home-prop",
+            "cat-prop"
+          ],
+          "properties": {
+            "cat-prop": {
+              "type": "string"
+            },
+            "home-prop": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "home-prop",
+            "parrot-prop"
+          ],
+          "properties": {
+            "parrot-prop": {
+              "type": "string"
+            },
+            "home-prop": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "farm-prop",
+            "cat-prop"
+          ],
+          "properties": {
+            "cat-prop": {
+              "type": "string"
+            },
+            "farm-prop": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "farm-prop",
+            "parrot-prop"
+          ],
+          "properties": {
+            "parrot-prop": {
+              "type": "string"
+            },
+            "farm-prop": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

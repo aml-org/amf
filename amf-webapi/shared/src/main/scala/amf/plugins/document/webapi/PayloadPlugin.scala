@@ -19,8 +19,7 @@ import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}
 import org.yaml.model.{YDocument, YMap, YScalar}
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object PayloadPlugin extends AMFDocumentPlugin {
 
@@ -50,7 +49,8 @@ object PayloadPlugin extends AMFDocumentPlugin {
                      options: ParsingOptions): Option[PayloadFragment] = {
     root.parsed match {
       case parsed: SyamlParsedDocument =>
-        implicit val ctx: PayloadContext = new PayloadContext(root.location, parentContext.refs, parentContext)
+        implicit val ctx: PayloadContext =
+          new PayloadContext(root.location, parentContext.refs, parentContext, options = options)
         Some(PayloadParser(parsed.document, root.location, root.mediatype).parseUnit())
       case _ =>
         None
@@ -108,7 +108,9 @@ object PayloadPlugin extends AMFDocumentPlugin {
                        pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
     new ValidationResolutionPipeline(AmfProfile, errorHandler).resolve(unit)
 
-  override def init(): Future[AMFPlugin] = Future { this }
+  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = {
+    Future { this }
+  }
 
   /**
     * Does references in this type of documents be recursive?

@@ -107,10 +107,10 @@ case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(i
   override def position(): Position = pos(example.annotations)
 }
 
-case class MultipleExampleEmitter(key: String,
-                                  examples: Seq[Example],
-                                  ordering: SpecOrdering,
-                                  references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+abstract class MultipleExampleEmitter(key: String,
+                                      examples: Seq[Example],
+                                      ordering: SpecOrdering,
+                                      references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
 
@@ -122,8 +122,7 @@ case class MultipleExampleEmitter(key: String,
             examples.head.linkTarget.foreach(l =>
               spec.factory.tagToReferenceEmitter(l, examples.head.linkLabel.option(), references).emit(b))
           else {
-            val emitters = examples.map(NamedExampleEmitter(_, ordering))
-            b.obj(traverse(ordering.sorted(emitters), _))
+            emit(b)
           }
 
         }
@@ -131,7 +130,31 @@ case class MultipleExampleEmitter(key: String,
     }
   }
 
+  def emit(b: PartBuilder): Unit
+
   override def position(): Position = examples.headOption.map(h => pos(h.annotations)).getOrElse(Position.ZERO)
+}
+
+case class NamedMultipleExampleEmitter(key: String,
+                                       examples: Seq[Example],
+                                       ordering: SpecOrdering,
+                                       references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+    extends MultipleExampleEmitter(key, examples, ordering, references) {
+
+  def emit(b: PartBuilder) = {
+    val emitters = examples.map(NamedExampleEmitter(_, ordering))
+    b.obj(traverse(ordering.sorted(emitters), _))
+  }
+}
+
+case class ExampleArrayEmitter(key: String, examples: Seq[Example], ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: SpecEmitterContext)
+    extends MultipleExampleEmitter(key, examples, ordering, references) {
+
+  override def emit(b: PartBuilder): Unit = {
+    val emitters: Seq[PartEmitter] = examples.map(ExampleValuesEmitter(_, ordering))
+    b.list(traverse(ordering.sorted(emitters), _))
+  }
 }
 
 case class SingleExampleEmitter(key: String, example: Example, ordering: SpecOrdering)(
@@ -182,7 +205,10 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
     val explicitFielMeta =
-      List(ExampleModel.Strict, ExampleModel.Description, ExampleModel.DisplayName, ExampleModel.CustomDomainProperties)
+      List(ExampleModel.Strict,
+           ExampleModel.Description,
+           ExampleModel.DisplayName,
+           ExampleModel.CustomDomainProperties)
         .filter { f =>
           fs.entry(f) match {
             case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])

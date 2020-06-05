@@ -1,0 +1,41 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Inherited Examples",
+    "version": "1.0"
+  },
+  "paths": {
+    "/aPath": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "$ref": "#/definitions/FirstBaseType"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FirstBaseType": {
+      "x-amf-examples": {
+        "baseExample": {
+          "onlyProp": "something"
+        }
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "onlyProp"
+      ],
+      "properties": {
+        "onlyProp": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

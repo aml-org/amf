@@ -1,0 +1,19 @@
+asyncapi: 2.0.0
+info:
+  title: someThing
+  version: 1.0.0
+channels:
+  aChannel:
+    publish:
+      message:
+        payload:
+          type: object
+          properties:
+            name:
+              type: string
+          examples:
+            - name: Pipi
+            - name: Romagnoli
+        examples:
+          john: Johnny
+          good: Goode

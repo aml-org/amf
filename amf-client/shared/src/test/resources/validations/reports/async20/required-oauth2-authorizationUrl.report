@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/validations/async20/validations/required-oauth2-authorizationUrl.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
+  Message: Missing authorizationUrl for authorizationCode flow
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/required-oauth2-authorizationUrl.yaml#/declarations/securitySchemes/some/settings/oauth2/authorizationCode
+  Property: 
+  Position: None
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
+  Message: Missing authorizationUrl for implicit flow
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/required-oauth2-authorizationUrl.yaml#/declarations/securitySchemes/some/settings/oauth2/implicit
+  Property: 
+  Position: None
+  Location: 

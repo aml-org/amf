@@ -5,9 +5,9 @@ import amf.core.metamodel.Type._
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace.{ApiContract, Core, ApiBinding}
+import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.domain.webapi.metamodel.bindings.ChannelBindingModel
+import amf.plugins.domain.webapi.metamodel.bindings.ChannelBindingsModel
 import amf.plugins.domain.webapi.metamodel.security.SecurityRequirementModel
 import amf.plugins.domain.webapi.models.EndPoint
 
@@ -57,7 +57,7 @@ object EndPointModel extends DomainElementModel with KeyField with NameFieldSche
   )
 
   val Bindings = Field(
-    Array(ChannelBindingModel),
+    ChannelBindingsModel,
     ApiBinding + "binding",
     ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this endpoint")
   )

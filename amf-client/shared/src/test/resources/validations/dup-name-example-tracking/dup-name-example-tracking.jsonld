@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#18",
+        "@id": "#19",
         "@type": [
           "apiContract:WebAPI",
           "doc:RootDomainElement",
@@ -32,7 +32,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#19",
+            "@id": "#20",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -44,7 +44,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#20",
+                "@id": "#21",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -56,7 +56,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#21",
+                    "@id": "#22",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -76,7 +76,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#3/link--1934647970",
+                            "@id": "#3/link--90472973",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -105,7 +105,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "#21": "[(13,0)-(22,0)]"
+                        "#22": "[(13,0)-(22,0)]"
                       }
                     }
                   }
@@ -115,19 +115,19 @@
                     "apiContract:expects": "true"
                   },
                   "lexical": {
-                    "#20": "[(12,2)-(22,0)]"
+                    "#21": "[(12,2)-(22,0)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#19": "[(11,0)-(22,0)]"
+                "#20": "[(11,0)-(22,0)]"
               }
             }
           },
           {
-            "@id": "#22",
+            "@id": "#23",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -139,7 +139,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#23",
+                "@id": "#24",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -151,7 +151,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#24",
+                    "@id": "#25",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -171,7 +171,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#3/link--1934647970",
+                            "@id": "#3/link--90472973",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -200,7 +200,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "#24": "[(24,0)-(31,13)]"
+                        "#25": "[(24,0)-(31,13)]"
                       }
                     }
                   }
@@ -210,14 +210,14 @@
                     "apiContract:expects": "true"
                   },
                   "lexical": {
-                    "#23": "[(23,2)-(31,13)]"
+                    "#24": "[(23,2)-(31,13)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#22": "[(22,0)-(31,13)]"
+                "#23": "[(22,0)-(31,13)]"
               }
             }
           }
@@ -230,18 +230,18 @@
           "lexical": {
             "apiContract:contentType": "[(4,0)-(6,0)]",
             "core:name": "[(2,0)-(4,0)]",
-            "#18": "[(2,0)-(31,13)]",
+            "#19": "[(2,0)-(31,13)]",
             "apiContract:accepts": "[(4,0)-(6,0)]"
           },
           "source-vendor": {
-            "#18": "RAML 1.0"
+            "#19": "RAML 1.0"
           }
         }
       }
     ],
     "doc:version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "doc:root": [
@@ -278,7 +278,7 @@
         ],
         "doc:version": [
           {
-            "@value": "2.0.1"
+            "@value": "2.1.0"
           }
         ],
         "doc:root": [
@@ -663,7 +663,7 @@
             "#3": "[(7,2)-(11,0)]"
           },
           "resolved-link": {
-            "#3": "amf://id#17"
+            "#3": "amf://id#18"
           }
         }
       }

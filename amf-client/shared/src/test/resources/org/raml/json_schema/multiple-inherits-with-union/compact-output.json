@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/HasHome"
+        },
+        {
+          "$ref": "#/definitions/HasHome_1"
+        },
+        {
+          "$ref": "#/definitions/IsOnFarm"
+        },
+        {
+          "$ref": "#/definitions/IsOnFarm_2"
+        }
+      ]
+    },
+    "HasHome": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "home-prop",
+        "cat-prop"
+      ],
+      "properties": {
+        "cat-prop": {
+          "type": "string"
+        },
+        "home-prop": {
+          "type": "boolean"
+        }
+      }
+    },
+    "HasHome_1": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "home-prop",
+        "parrot-prop"
+      ],
+      "properties": {
+        "parrot-prop": {
+          "type": "string"
+        },
+        "home-prop": {
+          "type": "boolean"
+        }
+      }
+    },
+    "IsOnFarm": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "farm-prop",
+        "cat-prop"
+      ],
+      "properties": {
+        "cat-prop": {
+          "type": "string"
+        },
+        "farm-prop": {
+          "type": "boolean"
+        }
+      }
+    },
+    "IsOnFarm_2": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "farm-prop",
+        "parrot-prop"
+      ],
+      "properties": {
+        "parrot-prop": {
+          "type": "string"
+        },
+        "farm-prop": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

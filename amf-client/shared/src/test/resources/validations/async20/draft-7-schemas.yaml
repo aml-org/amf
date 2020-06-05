@@ -22,7 +22,7 @@ channels:
           if:
             properties:
               country:
-                const: United States
+                const: United States of America
           then:
             properties:
               postal_code:
@@ -110,3 +110,26 @@ channels:
               type: number
               exclusiveMinimum: 0
               maximum: 100
+
+  notKeyWord:
+    subscribe:
+      message:
+        payload:
+          not:
+            type: object
+            properties:
+              a:
+                required: true
+                type: string
+              b:
+                required: true
+                type: number
+
+          examples: [
+            {
+              "other": "Canada",
+              "thing": "K1M 1M4",
+              "is": "K1M 1M4",
+              "valid": 5
+            }
+          ]

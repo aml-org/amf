@@ -1,0 +1,188 @@
+{
+    "@context": {
+        "description": "j.0:description",
+        "properties": {
+            "@id": "j.1:properties",
+            "@type": "@id"
+        },
+        "displayName": "j.1:displayName",
+        "range": {
+            "@id": "rdfs:range",
+            "@type": "@id"
+        },
+        "subPropertyOf": {
+            "@id": "rdfs:subPropertyOf",
+            "@type": "@id"
+        },
+        "declares": {
+            "@id": "j.2:declares",
+            "@type": "@id"
+        },
+        "base": "j.1:base",
+        "name": "j.0:name",
+        "usage": "j.2:usage",
+        "externals": {
+            "@id": "j.1:externals",
+            "@type": "@id"
+        },
+        "location": "j.2:location",
+        "alias": "j.0:alias",
+        "subClassOf": {
+            "@id": "rdfs:subClassOf",
+            "@type": "@id"
+        },
+        "owl": "http://www.w3.org/2002/07/owl#",
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "j.1": "http://a.ml/vocabularies/meta#",
+        "j.0": "http://schema.org/",
+        "j.2": "http://a.ml/vocabularies/document#"
+    },
+    "@graph": [
+        {
+            "@id": "http://mulesoft.com/externals/schema-org",
+            "@type": [
+                "owl:Ontology",
+                "j.1:ExternalVocabulary"
+            ],
+            "base": "http://schema.org/",
+            "alias": "schema-org"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/vocabulary/9758c8aa-18d0-484f-905c-a715c279b195/7574a3a021fc0ad2a2bae65136bea7ab",
+            "@type": [
+                "owl:Ontology",
+                "j.1:Vocabulary",
+                "j.2:Unit"
+            ],
+            "declares": [
+                "http://mulesoft.com/vocabularies/tech-talk#code",
+                "http://mulesoft.com/vocabularies/tech-talk#demoDate",
+                "http://mulesoft.com/vocabularies/tech-talk#nickName",
+                "http://mulesoft.com/vocabularies/tech-talk#resources",
+                "http://mulesoft.com/vocabularies/tech-talk#speakers",
+                "http://mulesoft.com/vocabularies/tech-talk#semantic-version",
+                "http://mulesoft.com/vocabularies/tech-talk#Presentation",
+                "http://mulesoft.com/vocabularies/tech-talk#isRecorded",
+                "http://mulesoft.com/vocabularies/tech-talk#Speaker",
+                "http://mulesoft.com/vocabularies/tech-talk#showcases",
+                "j.0:Product"
+            ],
+            "location": "",
+            "usage": "Engineering Demonstrations @ MuleSoft",
+            "base": "http://mulesoft.com/vocabularies/tech-talk#",
+            "externals": "http://mulesoft.com/externals/schema-org",
+            "name": "Tech Talk"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#Presentation",
+            "@type": "owl:Class",
+            "displayName": "Presentation",
+            "properties": [
+                "http://mulesoft.com/vocabularies/tech-talk#demoDate",
+                "http://mulesoft.com/vocabularies/tech-talk#speakers",
+                "http://mulesoft.com/vocabularies/tech-talk#showcases"
+            ],
+            "description": "Product demonstrations"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#Speaker",
+            "@type": "owl:Class",
+            "displayName": "Speaker",
+            "properties": "http://mulesoft.com/vocabularies/tech-talk#nickName",
+            "description": "Product demonstration presenter",
+            "subClassOf": "j.0:Person"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#code",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.1:Property"
+            ],
+            "displayName": "code",
+            "description": "product code",
+            "range": "http://www.w3.org/2001/XMLSchema#string",
+            "subPropertyOf": "j.0:name"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#demoDate",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.1:Property"
+            ],
+            "displayName": "demo date",
+            "description": "day the demo took place",
+            "range": "http://www.w3.org/2001/XMLSchema#date",
+            "subPropertyOf": "j.0:dateCreated"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#isRecorded",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.1:Property"
+            ],
+            "displayName": "is recorded",
+            "description": "notifies if this demo was recorded",
+            "range": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#nickName",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.1:Property"
+            ],
+            "displayName": "nick",
+            "description": "nick name of the speaker",
+            "range": "http://www.w3.org/2001/XMLSchema#string",
+            "subPropertyOf": "j.0:alternateName"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#resources",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.1:Property"
+            ],
+            "displayName": "resources",
+            "description": "list of materials about the showcased product",
+            "range": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#semantic-version",
+            "@type": [
+                "owl:DatatypeProperty",
+                "j.1:Property"
+            ],
+            "displayName": "semantic version",
+            "description": "semantic version standard: M.m.r",
+            "range": "http://www.w3.org/2001/XMLSchema#string",
+            "subPropertyOf": "j.0:version"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#showcases",
+            "@type": [
+                "owl:ObjectProperty",
+                "j.1:Property"
+            ],
+            "displayName": "showcases",
+            "description": "Product being showcased in a presentation",
+            "range": "j.0:Product"
+        },
+        {
+            "@id": "http://mulesoft.com/vocabularies/tech-talk#speakers",
+            "@type": [
+                "owl:ObjectProperty",
+                "j.1:Property"
+            ],
+            "displayName": "speakers",
+            "description": "list of speakers",
+            "range": "http://mulesoft.com/vocabularies/tech-talk#Speaker"
+        },
+        {
+            "@id": "j.0:Product",
+            "@type": "owl:Class",
+            "displayName": "Product",
+            "properties": "http://mulesoft.com/vocabularies/tech-talk#resources",
+            "description": "The product being showcased"
+        }
+    ]
+}

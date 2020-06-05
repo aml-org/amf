@@ -43,83 +43,7 @@
           "type": "string"
         },
         "a": {
-          "x-amf-examples": {
-            "valid": {
-              "a": "hh",
-              "b": {
-                "b": "ee",
-                "c": {
-                  "c": "last",
-                  "a": {
-                    "a": "tt"
-                  }
-                }
-              }
-            },
-            "invalid": {
-              "a": "hh",
-              "b": {
-                "b": "ee",
-                "c": {
-                  "c": "last",
-                  "a": {
-                    "a": 5
-                  }
-                }
-              }
-            }
-          },
-          "type": "object",
-          "additionalProperties": true,
-          "required": [
-            "a"
-          ],
-          "properties": {
-            "a": {
-              "type": "string"
-            },
-            "b": {
-              "x-amf-examples": {
-                "valid": {
-                  "b": "hh",
-                  "c": {
-                    "c": "ee",
-                    "a": {
-                      "a": "last",
-                      "b": {
-                        "b": "tt"
-                      }
-                    }
-                  }
-                },
-                "invalid": {
-                  "b": "hh",
-                  "c": {
-                    "c": "ee",
-                    "a": {
-                      "a": "last",
-                      "b": {
-                        "b": 5
-                      }
-                    }
-                  }
-                }
-              },
-              "type": "object",
-              "additionalProperties": true,
-              "required": [
-                "b"
-              ],
-              "properties": {
-                "b": {
-                  "type": "string"
-                },
-                "c": {
-                  "$ref": "#/definitions/C"
-                }
-              }
-            }
-          }
+          "$ref": "#/definitions/A"
         }
       }
     },
@@ -201,45 +125,7 @@
           "type": "string"
         },
         "b": {
-          "x-amf-examples": {
-            "valid": {
-              "b": "hh",
-              "c": {
-                "c": "ee",
-                "a": {
-                  "a": "last",
-                  "b": {
-                    "b": "tt"
-                  }
-                }
-              }
-            },
-            "invalid": {
-              "b": "hh",
-              "c": {
-                "c": "ee",
-                "a": {
-                  "a": "last",
-                  "b": {
-                    "b": 5
-                  }
-                }
-              }
-            }
-          },
-          "type": "object",
-          "additionalProperties": true,
-          "required": [
-            "b"
-          ],
-          "properties": {
-            "b": {
-              "type": "string"
-            },
-            "c": {
-              "$ref": "#/definitions/C"
-            }
-          }
+          "$ref": "#/definitions/B"
         }
       }
     }

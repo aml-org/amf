@@ -227,5 +227,25 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("union-generic-array.raml")
   }
 
+  test("Nested yaml aliases") {
+    checkValid("yaml-nested-alias.raml")
+  }
+
+  test("Validating schemas with special chars") {
+    checkValid("special-chars.raml")
+  }
+
+  test("Prioritize library alias defined in fragment over root file") {
+    checkValid("library-alias-repeated-in-root/root.raml")
+  }
+
+  test("Resolve correct library alias defined in root file") {
+    checkValid("libraries-resolve-correct-alias/promotions.raml")
+  }
+
+  test("Validate api that has schemas with missing closures which are handled in emission") {
+    checkValid("complex-closure-case/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

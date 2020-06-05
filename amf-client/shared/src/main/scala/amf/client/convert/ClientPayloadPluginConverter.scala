@@ -8,13 +8,14 @@ import amf.core.model.domain.Shape
 import amf.core.validation.{AMFPayloadValidationPlugin, AMFValidationReport, PayloadValidator}
 import amf.internal.environment.Environment
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 object ClientPayloadPluginConverter {
 
   implicit object AMFPluginConverter extends ClientInternalMatcher[ClientAMFPlugin, AMFPlugin] {
 
     override def asInternal(from: ClientAMFPlugin): AMFPlugin = new AMFPlugin {
-      override def init(): Future[AMFPlugin] = new ClientFutureOps(from.init())(AMFPluginConverter).asInternal
+      override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] =
+        new ClientFutureOps(from.init())(AMFPluginConverter, executionContext).asInternal
 
       override def dependencies(): Seq[AMFPlugin] =
         new ClientListOps(from.dependencies())(AMFPluginConverter).asInternal
@@ -36,7 +37,8 @@ object ClientPayloadPluginConverter {
       override def dependencies(): Seq[AMFPlugin] =
         new ClientListOps(clientPlugin.dependencies())(AMFPluginConverter).asInternal
 
-      override def init(): Future[AMFPlugin] = new ClientFutureOps(clientPlugin.init())(AMFPluginConverter).asInternal
+      override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] =
+        new ClientFutureOps(clientPlugin.init())(AMFPluginConverter, executionContext).asInternal
 
       override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator = {
         val validator = clientPlugin.validator(s, ClientEnvironment(env), validationMode)
@@ -45,13 +47,17 @@ object ClientPayloadPluginConverter {
           override val defaultSeverity: String        = validator.defaultSeverity
           override val validationMode: ValidationMode = validator.validationMode
           override val env: Environment               = validator.env._internal
-          override def validate(payload: String, mediaType: String): Future[AMFValidationReport] =
+          override def validate(payload: String, mediaType: String)(
+              implicit executionContext: ExecutionContext): Future[AMFValidationReport] =
             validator.validate(payload, mediaType).asInternal
-          override def validate(payloadFragment: InternalPayloadFragment): Future[AMFValidationReport] =
+          override def validate(payloadFragment: InternalPayloadFragment)(
+              implicit executionContext: ExecutionContext): Future[AMFValidationReport] =
             validator.validate(payloadFragment).asInternal
-
-          override def isValid(payload: String, mediaType: String): Future[Boolean] =
+          override def isValid(payload: String, mediaType: String)(
+              implicit executionContext: ExecutionContext): Future[Boolean] =
             validator.isValid(payload, mediaType).asInternal
+          override def syncValidate(mediaType: String, payload: String): AMFValidationReport =
+            validator.syncValidate(mediaType, payload)
         }
       }
     }

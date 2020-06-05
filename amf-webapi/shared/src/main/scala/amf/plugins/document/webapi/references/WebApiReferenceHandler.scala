@@ -16,9 +16,8 @@ import amf.validations.ParserSideValidations._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import amf.core.TaggedReferences._
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 
 class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends ReferenceHandler {
@@ -34,7 +33,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   }
 
   /** Update parsed reference if needed. */
-  override def update(reference: ParsedReference, compilerContext: CompilerContext): Future[ParsedReference] =
+  override def update(reference: ParsedReference, compilerContext: CompilerContext)(
+      implicit executionContext: ExecutionContext): Future[ParsedReference] =
     vendor match {
       case Raml10.name | Raml08.name | Raml.name if reference.isExternalFragment =>
         handleRamlExternalFragment(reference, compilerContext)
@@ -84,9 +84,9 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   // todo: we should use vendor.name in every place instead of match handwrited strings
   private def links(part: YPart, ctx: ParserContext): Unit = {
     vendor match {
-      case Raml10.name | Raml08.name | Raml.name => ramlLinks(part, ctx)
-      case Oas20.name | Oas30.name               => oasLinks(part, ctx)
-      case _                                     => // Ignore
+      case Raml10.name | Raml08.name | Raml.name     => ramlLinks(part, ctx)
+      case Oas20.name | Oas30.name | AsyncApi20.name => oasLinks(part, ctx)
+      case _                                         => // Ignore
     }
   }
 
@@ -177,37 +177,34 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def handleRamlExternalFragment(reference: ParsedReference,
-                                         compilerContext: CompilerContext): Future[ParsedReference] = {
+  private def handleRamlExternalFragment(reference: ParsedReference, compilerContext: CompilerContext)(
+      implicit executionContext: ExecutionContext): Future[ParsedReference] = {
     resolveUnitDocument(reference, compilerContext.parserContext) match {
       case Right(document) =>
         val parsed = SyamlParsedDocument(document)
 
         val refs    = new WebApiReferenceHandler(vendor, plugin).collect(parsed, compilerContext.parserContext)
-        val updated = compilerContext.forReference(reference.unit.id)
+        val updated = compilerContext.forReference(reference.unit.id, withNormalizedUri = false)
 
         val externals = refs.toReferences.map((r: Reference) => {
           r.resolve(updated, r.refs.map(_.node), allowRecursiveRefs = true)
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), updated)
-
+                reference.unit.tagReference(unit.location().getOrElse(unit.id), r)
                 resolved.map(res => {
                   reference.unit.addReference(res.unit)
-                  r.refs.foreach {
-                    refContainer =>
-                      reference.unit.add(ReferenceTargets(res.unit.location().getOrElse(res.unit.id),
-                                                          Range(refContainer.node.location.inputRange)))
-                      refContainer.node match {
-                        case mut: MutRef =>
-                          res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
-                          mut.target = res.ast
-                        case other =>
-                          compilerContext.violation(InvalidFragmentType,
-                                                    "Cannot inline a fragment in a not mutable node",
-                                                    other)
-                      }
-                    // not meaning, only for collect all futures, not matter the type
+                  r.refs.foreach { refContainer =>
+                    refContainer.node match {
+                      case mut: MutRef =>
+                        res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
+                        mut.target = res.ast
+                      case other =>
+                        compilerContext.violation(InvalidFragmentType,
+                                                  "Cannot inline a fragment in a not mutable node",
+                                                  other)
+                    }
+                  // not meaning, only for collect all futures, not matter the type
                   }
                 })
               case ReferenceResolutionResult(Some(_), _) => Future(Nil)

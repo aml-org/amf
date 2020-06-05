@@ -8,6 +8,7 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.{
+  BodyParameter,
   FormBodyParameter,
   Inferred,
   ParameterNameForPayload,
@@ -28,15 +29,16 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toOas}
 import amf.plugins.domain.shapes.models.ExampleTracking._
-import amf.plugins.domain.shapes.models.{FileShape, NodeShape}
+import amf.plugins.domain.shapes.models.{AnyShape, Example, FileShape, NodeShape}
 import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
-import amf.plugins.domain.webapi.models.{Parameter, Payload}
+import amf.plugins.domain.webapi.models.{Parameter, Payload, SchemaContainer}
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
+import scala.language.postfixOps
 case class RamlParametersParser(map: YMap, adopted: Parameter => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext) {
 
@@ -268,7 +270,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
         OasParameter(parseFormDataPayload(bindingEntry.map(a => Range(a.range))),
                      entryOrNode.toOption.orElse(entryOrNode.left.toOption))
       case "query" | "header" | "path" =>
-        OasParameter(parseCommonParam(), entryOrNode.toOption.orElse(entryOrNode.left.toOption))
+        OasParameter(parseCommonParam(in), entryOrNode.toOption.orElse(entryOrNode.left.toOption))
       case _ =>
         val oasParam = buildFromBinding(defaultBinding, None)
         invalidBinding(bindingEntry, in, oasParam)
@@ -311,28 +313,34 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  protected def parseCommonParam(): Parameter = {
+  protected def parseCommonParam(binding: String): Parameter = {
     val parameter = parseFixedFields()
-    OasTypeParser(
-      entryOrNode,
-      "schema",
-      map,
-      shape => shape.withName("schema").adopted(parameter.id),
-      OAS20SchemaVersion(position = "parameter")(ctx.eh)
-    )(toOas(ctx))
-      .parse()
-      .map { schema =>
-        parameter.set(ParameterModel.Schema, schema, Annotations(map))
+    parseType(
+      parameter,
+      binding,
+      () => {
+        OasTypeParser(
+          entryOrNode,
+          "schema",
+          map,
+          shape => shape.withName("schema").adopted(parameter.id),
+          OAS20SchemaVersion(position = "parameter")(ctx.eh)
+        )(toOas(ctx))
+          .parse()
+          .map { schema =>
+            parameter.set(ParameterModel.Schema, schema, Annotations(map))
+          }
+          .orElse {
+            ctx.eh.violation(
+              UnresolvedParameter,
+              parameter.id,
+              "Cannot find valid schema for parameter",
+              map
+            )
+            None
+          }
       }
-      .orElse {
-        ctx.eh.violation(
-          UnresolvedParameter,
-          parameter.id,
-          "Cannot find valid schema for parameter",
-          map
-        )
-        None
-      }
+    )
     parameter
   }
 
@@ -353,29 +361,51 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     parameter
   }
 
-  private def parseFormDataPayload(bindingRange: Option[Range]) = {
+  def parseType(container: SchemaContainer, binding: String, typeParsing: () => Unit) = {
+
+    def setDefaultSchema = (c: SchemaContainer) => c.setSchema(AnyShape(Annotations(Inferred())))
+
+    map.key("type") match {
+      case None =>
+        setDefaultSchema(container)
+        ctx.eh.violation(MissingParameterType,
+                         container.id,
+                         s"'type' is required in a parameter with binding '${binding}'",
+                         map)
+      case Some(_) => typeParsing()
+    }
+    container
+  }
+
+  private def parseFormDataPayload(bindingRange: Option[Range]): Payload = {
     val payload = commonPayload(bindingRange)
     ctx.closedShape(payload.id, map, "parameter")
-    OasTypeParser(
-      entryOrNode,
-      "schema",
-      map,
-      shape => setName(shape).asInstanceOf[Shape].adopted(payload.id),
-      OAS20SchemaVersion(position = "parameter")(ctx.eh)
-    )(toOas(ctx))
-      .parse()
-      .map { schema =>
-        payload.set(PayloadModel.Schema, tracking(schema, payload.id), Annotations(map))
+    parseType(
+      payload,
+      "formData",
+      () => {
+        OasTypeParser(
+          entryOrNode,
+          "schema",
+          map,
+          shape => setName(shape).asInstanceOf[Shape].adopted(payload.id),
+          OAS20SchemaVersion(position = "parameter")(ctx.eh)
+        )(toOas(ctx))
+          .parse()
+          .map { schema =>
+            payload.set(PayloadModel.Schema, tracking(schema, payload.id), Annotations(map))
+          }
+          .orElse {
+            ctx.eh.violation(
+              UnresolvedParameter,
+              payload.id,
+              "Cannot find valid schema for parameter",
+              map
+            )
+            None
+          }
       }
-      .orElse {
-        ctx.eh.violation(
-          UnresolvedParameter,
-          payload.id,
-          "Cannot find valid schema for parameter",
-          map
-        )
-        None
-      }
+    )
     payload.annotations += FormBodyParameter()
     payload
   }
@@ -539,14 +569,19 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
                       OAS30SchemaVersion("schema")(ctx.eh))(toOas(ctx))
           .parse()
           .map { schema =>
+            ctx.autoGeneratedAnnotation(schema)
             param.set(ParameterModel.Schema, schema, Annotations(entry))
           }
       }
     )
 
   private def parseExamples(param: Parameter): Unit = {
-    val examples = OasExamplesParser(map, param.id).parse()
-    if (examples.nonEmpty) param.set(PayloadModel.Examples, AmfArray(examples))
+    def setShape(examples: Seq[Example], maybeEntry: Option[YMapEntry]): Unit =
+      maybeEntry
+        .map(entry => param.set(PayloadModel.Examples, AmfArray(examples), Annotations(entry)))
+        .getOrElse(param.set(PayloadModel.Examples, AmfArray(examples)))
+
+    OasExamplesParser(map, param).parse()
   }
 
   private def parseContent(param: Parameter): Unit = {
@@ -568,6 +603,16 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
 
 object Oas3ParameterParser {
 
+  lazy val validStyles: Map[String, List[String]] = Map(
+    "matrix"         -> List("path"),
+    "label"          -> List("path"),
+    "form"           -> List("query", "cookie"),
+    "simple"         -> List("path", "header"),
+    "spaceDelimited" -> List("query"),
+    "pipeDelimited"  -> List("query"),
+    "deepObject"     -> List("query")
+  )
+
   def parseExplodeField(map: YMap, result: Parameter): Unit = {
     map.key("explode") match {
       case Some(entry) =>
@@ -583,11 +628,13 @@ object Oas3ParameterParser {
     }
   }
 
-  def parseStyleField(map: YMap, result: Parameter): Unit = {
+  def parseStyleField(map: YMap, result: Parameter)(implicit ctx: WebApiContext): Unit = {
     map.key("style") match {
       case Some(entry) =>
+        val styleText = entry.value.asScalar.map(_.text).getOrElse("")
+        validateStyle(result, styleText, ctx)
         result.fields.setWithoutId(ParameterModel.Style,
-                                   AmfScalar(entry.value.asScalar.map(_.text).getOrElse(""), Annotations(entry.value)),
+                                   AmfScalar(styleText, Annotations(entry.value)),
                                    Annotations(entry) += ExplicitField())
       case None =>
         val defValue: Option[String] = result.binding.option() match {
@@ -597,6 +644,18 @@ object Oas3ParameterParser {
         }
         defValue.foreach(result.set(ParameterModel.Style, _))
     }
+  }
+
+  private def isStyleValid(paramBinding: String, style: String): Boolean = Oas3ParameterParser.validStyles.exists {
+    case (key, value) => key.equals(style) && value.contains(paramBinding)
+  }
+
+  private def validateStyle(param: Parameter, style: String, ctx: WebApiContext): Unit = {
+    val paramBinding = param.binding.value()
+    if (!isStyleValid(paramBinding, style))
+      ctx.eh.violation(InvalidParameterStyleBindingCombination,
+                       param.id,
+                       s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'")
   }
 
   def validateSchemaOrContent(map: YMap, param: Parameter)(implicit ctx: WebApiContext): Unit = {
@@ -643,23 +702,24 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
 
   private case class ParameterInformation(oasParam: OasParameter, name: String, binding: String)
 
-  def parse(inRequest: Boolean = false): Parameters = {
+  def parse(inRequestOrEndpoint: Boolean = false): Parameters = {
     val nameGenerator = new IdCounter()
     val oasParameters = values
       .map(value => ctx.factory.parameterParser(Right(value), parentId, None, nameGenerator).parse)
 
     val formData = oasParameters.flatMap(_.formData)
     val body     = oasParameters.filter(_.isBody)
+    body.foreach(_.domainElement.annotations += BodyParameter())
 
     validateDuplicated(oasParameters)
 
-    if (inRequest) {
+    if (inRequestOrEndpoint) {
       if (body.nonEmpty && formData.nonEmpty) {
         val bodyParam = body.head
         ctx.eh.violation(
           OasBodyAndFormDataParameterSpecification,
           bodyParam.domainElement.id,
-          "Cannot declare body and formData params at the same time for a request",
+          "Cannot declare 'body' and 'formData' params at the same time for a request or resource",
           bodyParam.ast.get
         )
       }
@@ -736,7 +796,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
         ctx.eh.violation(
           id,
           param.domainElement.id,
-          "Cannot declare more than one body parameter for a request",
+          "Cannot declare more than one 'body' parameter for a request or a resource",
           param.ast.get
         )
       }

@@ -272,6 +272,32 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/vocabulary-fragment/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fyaml/any/schema/source-map/lexical/element_2",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/core#description"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(12,12)-(13,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/vocabulary-fragment/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fyaml/any/schema/source-map/lexical/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/apiContract#examples"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(13,12)-(13,45)]"
+                                      }
+                                    ]
+                                  },
+                                  {
                                     "@id": "file://amf-client/shared/src/test/resources/validations/examples/vocabulary-fragment/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fyaml/any/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
@@ -281,19 +307,6 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(11,10)-(13,45)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/examples/vocabulary-fragment/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fyaml/any/schema/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/core#description"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(12,12)-(13,0)]"
                                       }
                                     ]
                                   }
@@ -509,7 +522,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

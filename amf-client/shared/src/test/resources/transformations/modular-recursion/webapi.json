@@ -1,0 +1,125 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/api.raml",
+    "@type": [
+      "http://a.ml/vocabularies/meta#DialectInstance",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://vocabularies/dialects/canonical_webapi_spec.yaml"
+      }
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/api.raml#/rootAsset",
+        "@type": [
+          "http://a.ml/vocabularies/document#Document",
+          "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Document",
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": true
+          }
+        ],
+        "http://a.ml/vocabularies/document#references": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/libs/user.raml",
+            "@type": [
+              "http://a.ml/vocabularies/document#Module",
+              "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Module",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#version": [
+              {
+                "@value": "2.1.0"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/libs/base.raml",
+            "@type": [
+              "http://a.ml/vocabularies/document#Module",
+              "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Module",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#references": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/libs/user.raml",
+                "@type": [
+                  "http://a.ml/vocabularies/document#Module",
+                  "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Module",
+                  "http://a.ml/vocabularies/meta#DialectDomainElement",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#root": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "http://a.ml/vocabularies/document#version": [
+                  {
+                    "@value": "2.1.0"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#version": [
+              {
+                "@value": "2.1.0"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#encodes": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/transformations/modular-recursion/api.raml#/web-api",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#WebAPI",
+              "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/WebAPI",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "Modular Recursion API"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#version": [
+          {
+            "@value": "2.1.0"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": false
+      }
+    ]
+  }
+]

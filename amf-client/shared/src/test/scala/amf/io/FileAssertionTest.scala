@@ -20,7 +20,7 @@ trait FileAssertionTest extends PlatformSecrets {
   }
 
   protected def assertDifferences(actual: AsyncFile, golden: String): Future[Assertion] = {
-    val expected = fs.asyncFile(golden)
+    val expected = fs.asyncFile(golden.replace("file://", ""))
     expected.read().flatMap(_ => checkDiff(actual, expected))
   }
 

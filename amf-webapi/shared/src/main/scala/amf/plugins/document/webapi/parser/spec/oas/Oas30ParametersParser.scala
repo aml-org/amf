@@ -17,7 +17,7 @@ case class Oas30ParametersParser(map: YMap, producer: () => Request)(implicit ct
       .key("parameters")
       .foreach { entry =>
         val parameters =
-          OasParametersParser(entry.value.as[Seq[YNode]], request.getOrCreate.id).parse(inRequest = true)
+          OasParametersParser(entry.value.as[Seq[YNode]], request.getOrCreate.id).parse(inRequestOrEndpoint = true)
         parameters match {
           case Parameters(query, path, header, cookie, baseUri08, _) =>
             if (query.nonEmpty)

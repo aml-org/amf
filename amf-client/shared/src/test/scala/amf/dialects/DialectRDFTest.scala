@@ -1,11 +1,11 @@
 package amf.dialects
 import amf.core.remote.{Amf, Aml, VocabularyYamlHint}
 import amf.core.unsafe.PlatformSecrets
-import amf.io.FunSuiteCycleTests
+import amf.io.{FunSuiteCycleTests, FunSuiteRdfCycleTests}
 
 import scala.concurrent.ExecutionContext
 
-class DialectRDFTest extends FunSuiteCycleTests with PlatformSecrets {
+class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val productionPath                                       = "amf-client/shared/src/test/resources/vocabularies2/production/"

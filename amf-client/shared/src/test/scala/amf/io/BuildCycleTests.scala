@@ -21,11 +21,58 @@ abstract class FunSuiteCycleTests extends AsyncFunSuite with BuildCycleTests {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 }
 
-trait BuildCycleTests extends FileAssertionTest {
+abstract class FunSuiteRdfCycleTests extends AsyncFunSuite with BuildCycleRdfTests {
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+}
 
-  private implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+trait BuildCycleTestCommon extends FileAssertionTest {
+
+  protected implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   def basePath: String
+
+  case class CycleConfig(source: String,
+                         golden: String,
+                         hint: Hint,
+                         target: Vendor,
+                         directory: String,
+                         syntax: Option[Syntax],
+                         pipeline: Option[String],
+                         transformWith: Option[Vendor] = None) {
+    val sourcePath: String = directory + source
+    val goldenPath: String = directory + golden
+  }
+
+  /** Method to parse unit. Override if necessary. */
+  def build(config: CycleConfig,
+            eh: Option[ParserErrorHandler],
+            useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
+    Validation(platform).flatMap { _ =>
+      var options =
+        if (!useAmfJsonldSerialisation) ParsingOptions().withoutAmfJsonLdSerialization
+        else ParsingOptions().withAmfJsonLdSerialization
+
+      options = options.withBaseUnitUrl("file://" + config.goldenPath)
+
+      AMFCompiler(s"file://${config.sourcePath}",
+                  platform,
+                  config.hint,
+                  eh = eh.getOrElse(UnhandledParserErrorHandler),
+                  parsingOptions = options).build()
+    }
+  }
+
+  /** Method to render parsed unit. Override if necessary. */
+  def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
+    val target  = config.target
+    var options = RenderOptions().withSourceMaps.withPrettyPrint
+    options =
+      if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
+    new AMFRenderer(unit, target, options, config.syntax).renderToString
+  }
+}
+
+trait BuildCycleTests extends BuildCycleTestCommon {
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, syntax: Option[Syntax]): Future[Assertion] =
@@ -51,9 +98,10 @@ trait BuildCycleTests extends FileAssertionTest {
                   useAmfJsonldSerialization: Boolean = true,
                   syntax: Option[Syntax] = None,
                   pipeline: Option[String] = None,
+                  transformWith: Option[Vendor] = None,
                   eh: Option[ParserErrorHandler] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
+    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
 
     build(config, eh.orElse(Some(DefaultParserErrorHandler.withRun())), useAmfJsonldSerialization)
       .map(transform(_, config))
@@ -62,33 +110,46 @@ trait BuildCycleTests extends FileAssertionTest {
       .flatMap(assertDifferences(_, config.goldenPath))
   }
 
-  /** Method to parse unit. Override if necessary. */
-  def build(config: CycleConfig,
-            eh: Option[ParserErrorHandler],
-            useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
-    Validation(platform).flatMap { v =>
-      var options = if (!useAmfJsonldSerialisation) { ParsingOptions().withoutAmfJsonLdSerialization } else {
-        ParsingOptions().withAmfJsonLdSerialization
-      }
-      options = options.withBaseUnitUrl("file://" + config.goldenPath)
-      AMFCompiler(s"file://${config.sourcePath}",
-                  platform,
-                  config.hint,
-                  eh = eh.getOrElse(UnhandledParserErrorHandler),
-                  parsingOptions = options).build()
-    }
-  }
-
   /** Method for transforming parsed unit. Override if necessary. */
   def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = unit
+}
 
-  /** Method to render parsed unit. Override if necessary. */
-  def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    val target  = config.target
-    var options = RenderOptions().withSourceMaps.withPrettyPrint
-    options =
-      if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
-    new AMFRenderer(unit, target, options, config.syntax).renderToString
+trait BuildCycleRdfTests extends BuildCycleTestCommon {
+
+  def cycleFullRdf(source: String,
+                   golden: String,
+                   hint: Hint,
+                   target: Vendor = Amf,
+                   directory: String = basePath,
+                   syntax: Option[Syntax] = None,
+                   pipeline: Option[String] = None): Future[Assertion] = {
+
+    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, None)
+
+    build(config, None, useAmfJsonldSerialisation = true)
+      .map(transformThroughRdf(_, config))
+      .flatMap(render(_, config, useAmfJsonldSerialization = true))
+      .flatMap(writeTemporaryFile(golden))
+      .flatMap(assertDifferences(_, config.goldenPath))
+  }
+
+  /** Compile source with specified hint. Render to temporary file and assert against golden. */
+  def cycleRdf(source: String,
+               golden: String,
+               hint: Hint,
+               target: Vendor = Amf,
+               directory: String = basePath,
+               syntax: Option[Syntax] = None,
+               pipeline: Option[String] = None,
+               transformWith: Option[Vendor] = None): Future[Assertion] = {
+
+    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
+
+    build(config, None, useAmfJsonldSerialisation = true)
+      .map(transformRdf(_, config))
+      .flatMap(renderRdf(_, config))
+      .flatMap(writeTemporaryFile(golden))
+      .flatMap(assertDifferences(_, config.goldenPath))
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
@@ -107,51 +168,5 @@ trait BuildCycleTests extends FileAssertionTest {
     Future {
       unit.toN3().split("\n").sorted.mkString("\n")
     }
-  }
-
-  /** Compile source with specified hint. Render to temporary file and assert against golden. */
-  def cycleRdf(source: String,
-               golden: String,
-               hint: Hint,
-               target: Vendor = Amf,
-               directory: String = basePath,
-               syntax: Option[Syntax] = None,
-               pipeline: Option[String] = None): Future[Assertion] = {
-
-    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
-
-    build(config, None, useAmfJsonldSerialisation = true)
-      .map(transformRdf(_, config))
-      .flatMap(renderRdf(_, config))
-      .flatMap(writeTemporaryFile(golden))
-      .flatMap(assertDifferences(_, config.goldenPath))
-  }
-
-  case class CycleConfig(source: String,
-                         golden: String,
-                         hint: Hint,
-                         target: Vendor,
-                         directory: String,
-                         syntax: Option[Syntax],
-                         pipeline: Option[String]) {
-    val sourcePath: String = directory + source
-    val goldenPath: String = directory + golden
-  }
-
-  def cycleFullRdf(source: String,
-                   golden: String,
-                   hint: Hint,
-                   target: Vendor = Amf,
-                   directory: String = basePath,
-                   syntax: Option[Syntax] = None,
-                   pipeline: Option[String] = None): Future[Assertion] = {
-
-    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
-
-    build(config, None, useAmfJsonldSerialisation = true)
-      .map(transformThroughRdf(_, config))
-      .flatMap(render(_, config, useAmfJsonldSerialization = true))
-      .flatMap(writeTemporaryFile(golden))
-      .flatMap(assertDifferences(_, config.goldenPath))
   }
 }

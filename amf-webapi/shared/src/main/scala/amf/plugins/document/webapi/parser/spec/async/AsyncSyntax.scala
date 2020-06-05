@@ -211,6 +211,28 @@ object Async20Syntax extends SpecSyntax {
       "traits",
       "message"
     ),
+    "operationTrait" -> Set(
+      "operationId",
+      "summary",
+      "description",
+      "tags",
+      "externalDocs",
+      "bindings"
+    ),
+    "messageTrait" -> Set(
+      "headers",
+      "correlationId",
+      "schemaFormat",
+      "contentType",
+      "name",
+      "title",
+      "summary",
+      "description",
+      "tags",
+      "externalDocs",
+      "bindings",
+      "examples"
+    ),
     "info" -> Set(
       "title",
       "description",
@@ -218,6 +240,16 @@ object Async20Syntax extends SpecSyntax {
       "contact",
       "license",
       "version"
+    ),
+    "securityScheme" -> Set(
+      "type",
+      "description",
+      "name",
+      "in",
+      "scheme",
+      "bearerFormat",
+      "flows",
+      "openIdConnectUrl"
     )
   )
 }

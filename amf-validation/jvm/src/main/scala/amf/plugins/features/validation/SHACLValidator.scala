@@ -8,6 +8,7 @@ import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfModel, RdfModelEmitter}
 import amf.core.services.ValidationOptions
+import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
 import org.apache.commons.io.IOUtils
@@ -18,10 +19,9 @@ import org.topbraid.jenax.util.JenaUtil
 import org.topbraid.shacl.js.{JSScriptEngine, JSScriptEngineFactory, NashornScriptEngine, SHACLScriptEngineManager}
 import org.topbraid.shacl.validation.ValidationUtil
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class SHACLValidator extends amf.core.validation.core.SHACLValidator {
+class SHACLValidator extends amf.core.validation.core.SHACLValidator with PlatformSecrets {
 
   var functionUrl: Option[String]  = None
   var functionCode: Option[String] = None
@@ -34,7 +34,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     "test/turtle"         -> FileUtils.langTurtle
   )
 
-  override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): Future[String] =
+  override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
+      implicit executionContext: ExecutionContext): Future[String] =
     Future {
       val dataModel   = loadModel(StringUtils.chomp(data), dataMediaType)
       val shapesModel = loadModel(StringUtils.chomp(shapes), shapesMediaType)
@@ -60,10 +61,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     }
   }
 
-  override def report(data: String,
-                      dataMediaType: String,
-                      shapes: String,
-                      shapesMediaType: String): Future[ValidationReport] =
+  override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
+      implicit executionContext: ExecutionContext): Future[ValidationReport] =
     validate(data, dataMediaType, shapes, shapesMediaType).map(new JVMValidationReport(_))
 
   /**
@@ -80,9 +79,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
     })
   }
 
-  override def validate(data: BaseUnit,
-                        shapes: Seq[ValidationSpecification],
-                        options: ValidationOptions): Future[String] =
+  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
+      implicit executionContext: ExecutionContext): Future[String] =
     Future {
       ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
       val dataModel = new JenaRdfModel()
@@ -142,9 +140,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator {
       output
     }
 
-  override def report(data: BaseUnit,
-                      shapes: Seq[ValidationSpecification],
-                      options: ValidationOptions): Future[ValidationReport] =
+  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
+      implicit executionContext: ExecutionContext): Future[ValidationReport] =
     validate(data, shapes, options: ValidationOptions).map(new JVMValidationReport(_))
 
   override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = {

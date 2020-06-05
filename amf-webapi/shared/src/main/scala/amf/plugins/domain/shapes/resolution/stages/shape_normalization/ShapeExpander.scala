@@ -9,7 +9,7 @@ import amf.core.parser.Annotations
 import amf.core.traversal.ModelTraversalRegistry
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.shapes.resolution.stages.RecursionErrorRegister
+import amf.plugins.domain.shapes.resolution.stages.recursion.RecursionErrorRegister
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
 private[stages] object ShapeExpander {
@@ -43,7 +43,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     shape match {
       case l: Linkable if l.isLink => recursionRegister.recursionAndError(root, Some(root.id), shape, traversal)
 
-      case _ if traversal.shouldFailIfRecursive(shape) && !shape.isInstanceOf[RecursiveShape] =>
+      case _ if traversal.shouldFailIfRecursive(root, shape) && !shape.isInstanceOf[RecursiveShape] =>
         recursionRegister.recursionAndError(root, None, shape, traversal)
 
       case _ if traversal.wasVisited(shape.id) => shape
@@ -53,18 +53,17 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
         traversal + shape.id
         traversal.runNested(_ => {
           shape match {
-            case union: UnionShape       => expandUnion(union)
-            case scalar: ScalarShape     => expandAny(scalar)
-            case array: ArrayShape       => expandArray(array)
-            case matrix: MatrixShape     => expandMatrix(matrix)
-            case tuple: TupleShape       => expandTuple(tuple)
-            case property: PropertyShape => expandProperty(property)
-            case fileShape: FileShape    => expandAny(fileShape)
-            case nil: NilShape           => nil
-            case node: NodeShape         => expandNode(node)
-            case recursive: RecursiveShape =>
-              recursionRegister.recursionError(recursive, recursive, traversal)
-            case any: AnyShape => expandAny(any)
+            case union: UnionShape         => expandUnion(union)
+            case scalar: ScalarShape       => expandAny(scalar)
+            case array: ArrayShape         => expandArray(array)
+            case matrix: MatrixShape       => expandMatrix(matrix)
+            case tuple: TupleShape         => expandTuple(tuple)
+            case property: PropertyShape   => expandProperty(property)
+            case fileShape: FileShape      => expandAny(fileShape)
+            case nil: NilShape             => nil
+            case node: NodeShape           => expandNode(node)
+            case recursive: RecursiveShape => recursionRegister.recursionError(recursive, recursive, traversal)
+            case any: AnyShape             => expandAny(any)
           }
         })
     }
@@ -76,24 +75,15 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       // in this case i use the father shape id and position, because the inheritance could be a recursive shape already
       val newInherits = shape.inherits.map {
         case r: RecursiveShape if r.fixpoint.option().exists(_.equals(shape.id)) =>
-          r.fixpointTarget.foreach(target => addClosure(target, shape))
-          addClosures(r.closureShapes.toSeq, shape)
+          context.handleClosures(r, shape)
           recursionRegister.recursionError(shape, r, traversal) // direct recursion
         case r: RecursiveShape =>
-          r.fixpointTarget.foreach(target => addClosure(target, shape))
-          addClosures(r.closureShapes.toSeq, shape)
+          context.handleClosures(r, shape)
           r
-        case other =>
-          recursiveNormalization(other) match {
-            case rec: RecursiveShape =>
-              rec.fixpointTarget.foreach(target => addClosure(target, shape))
-              addClosures(rec.closureShapes.toSeq, shape)
-              rec
-            case o =>
-              addClosures(o.closureShapes.toSeq, shape)
-              context.cache.addClosures(shape.closureShapes.toSeq, shape)
-              o
-          }
+        case parent =>
+          val normalizedParent = recursiveNormalization(parent)
+          context.handleClosures(normalizedParent, shape, RecursionPropagation.REJECT_ALL)
+          normalizedParent
       }
       shape.setArrayWithoutId(ShapeModel.Inherits, newInherits, oldInherits.annotations)
     }
@@ -104,12 +94,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (Option(oldLogicalConstraints).isDefined) {
       val newLogicalConstraints = shape.and.map { elem =>
         val constraint = recursiveNormalization(elem)
-        constraint match {
-          case rec: RecursiveShape =>
-            rec.fixpointTarget.foreach(target => addClosure(target, shape))
-          case other =>
-            addClosures(other.closureShapes.toSeq, shape)
-        }
+        context.handleClosures(constraint, shape)
         constraint
       }
       shape.setArrayWithoutId(ShapeModel.And, newLogicalConstraints, oldLogicalConstraints.annotations)
@@ -119,12 +104,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (Option(oldLogicalConstraints).isDefined) {
       val newLogicalConstraints = shape.or.map { elem =>
         val constraint = recursiveNormalization(elem)
-        constraint match {
-          case rec: RecursiveShape =>
-            rec.fixpointTarget.foreach(target => addClosure(target, shape))
-          case other =>
-            addClosures(other.closureShapes.toSeq, shape)
-        }
+        context.handleClosures(constraint, shape)
         constraint
       }
       shape.setArrayWithoutId(ShapeModel.Or, newLogicalConstraints, oldLogicalConstraints.annotations)
@@ -134,12 +114,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (Option(oldLogicalConstraints).isDefined) {
       val newLogicalConstraints = shape.xone.map { elem =>
         val constraint = recursiveNormalization(elem)
-        constraint match {
-          case rec: RecursiveShape =>
-            rec.fixpointTarget.foreach(target => addClosure(target, shape))
-          case other =>
-            addClosures(other.closureShapes.toSeq, shape)
-        }
+        context.handleClosures(constraint, shape)
         constraint
       }
       shape.setArrayWithoutId(ShapeModel.Xone, newLogicalConstraints, oldLogicalConstraints.annotations)
@@ -148,12 +123,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     val notConstraint = shape.fields.getValue(ShapeModel.Not)
     if (Option(notConstraint).isDefined) {
       val constraint = recursiveNormalization(shape.not)
-      constraint match {
-        case rec: RecursiveShape =>
-          rec.fixpointTarget.foreach(target => addClosure(target, shape))
-        case other =>
-          addClosures(other.closureShapes.toSeq, shape)
-      }
+      context.handleClosures(constraint, shape)
       shape.set(ShapeModel.Not, constraint, notConstraint.annotations)
     }
   }
@@ -173,22 +143,16 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       array.inherits.collect({ case arr: ArrayShape if arr.items.isInstanceOf[RecursiveShape] => arr }).foreach { f =>
         val r = f.items.asInstanceOf[RecursiveShape]
         recursionRegister.recursionError(array, r, traversal, Some(array.id))
-        r.fixpointTarget.foreach(target => addClosure(target, array))
+        context.handleClosures(r, array)
       }
     if (Option(oldItems).isDefined) {
       val newItems = if (mandatory) {
         recursiveNormalization(array.items)
       } else { // min items not present, could be an empty array, so not need to report recursive violation
-        traverseOptionalShapeFacet(array.items)
+        traverseOptionalShapeFacet(array.items, array)
       }
 
-      // dealing with recursion and closure
-      newItems match {
-        case rec: RecursiveShape =>
-          rec.fixpointTarget.foreach(target => addClosure(target, array))
-        case other =>
-          addClosures(other.closureShapes.toSeq, array)
-      }
+      context.handleClosures(newItems, array)
 
       array.fields.setWithoutId(ArrayShapeModel.Items, newItems, oldItems.annotations)
     }
@@ -200,15 +164,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     val oldItems = matrix.fields.getValue(MatrixShapeModel.Items)
     if (Option(oldItems).isDefined) {
       val arrangement = recursiveNormalization(matrix.items)
-
-      // dealing with recursion and closure
-      arrangement match {
-        case rec: RecursiveShape =>
-          rec.fixpointTarget.foreach(target => addClosure(target, matrix))
-        case other =>
-          addClosures(other.closureShapes.toSeq, matrix)
-      }
-
+      context.handleClosures(arrangement, matrix)
       matrix.fields.setWithoutId(MatrixShapeModel.Items, arrangement, oldItems.annotations)
     }
     matrix
@@ -220,13 +176,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (Option(oldItems).isDefined) {
       val newItemShapes = tuple.items.map { item =>
         val newItem = recursiveNormalization(item)
-        // update the closure
-        newItem match {
-          case rec: RecursiveShape =>
-            rec.fixpointTarget.foreach(target => addClosure(target, tuple))
-          case other =>
-            addClosures(other.closureShapes.toSeq, tuple)
-        }
+        context.handleClosures(newItem, tuple)
         newItem
       }
       tuple.setArrayWithoutId(TupleShapeModel.TupleItems, newItemShapes, oldItems.annotations)
@@ -234,36 +184,23 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     tuple
   }
 
-  private def addClosure(closure: Shape, s: Shape): Shape = {
-    s.closureShapes.retain(_.name.value() != closure.name.value())
-    s.closureShapes += closure
-    context.cache.cacheClosure(closure.id, s)
-    s
-  }
-
-  private def addClosures(closures: Seq[Shape], s: Shape): Shape = {
-    closures.foreach { addClosure(_, s) }
-    s
-  }
-
   protected def expandNode(node: NodeShape): NodeShape = {
     val oldProperties = node.fields.getValue(NodeShapeModel.Properties)
     if (Option(oldProperties).isDefined) {
       val newProperties = node.properties.map { prop =>
-        val newPropertyShape = recursiveNormalization(prop).asInstanceOf[PropertyShape]
-        // update the closure
-        newPropertyShape.range match {
-          case rec: RecursiveShape =>
-            rec.fixpointTarget.foreach(target => addClosure(target, node))
-            addClosures(rec.closureShapes.toSeq, node)
-          case other =>
-            addClosures(other.closureShapes.toSeq, node)
-
-        }
+        val newPropertyShape =
+          if (isRequired(prop)) recursiveNormalization(prop).asInstanceOf[PropertyShape]
+          else traverseOptionalShapeFacet(prop, node).asInstanceOf[PropertyShape]
+        context.handleClosures(newPropertyShape.range, node)
         newPropertyShape
       }
       node.setArrayWithoutId(NodeShapeModel.Properties, newProperties, oldProperties.annotations)
     }
+    Option(node.additionalPropertiesSchema).foreach(x => {
+      val resultantShape = traverseOptionalShapeFacet(x, node)
+      context.handleClosures(resultantShape, node)
+      node.set(NodeShapeModel.AdditionalPropertiesSchema, resultantShape)
+    })
 
     expandInherits(node)
     expandLogicalConstraints(node)
@@ -277,6 +214,8 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
     node
   }
+
+  private def isRequired(prop: PropertyShape) = prop.minCount.option().forall(_ > 0)
 
   protected def expandProperty(property: PropertyShape): PropertyShape = {
     // property is mandatory and must be explicit
@@ -292,9 +231,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
     val oldRange = property.fields.getValue(PropertyShapeModel.Range)
     if (Option(oldRange).isDefined) {
-      val expandedRange =
-        if (!required) traverseOptionalShapeFacet(property.range) else recursiveNormalization(property.range)
-
+      val expandedRange = recursiveNormalization(property.range)
       property.fields.setWithoutId(PropertyShapeModel.Range, expandedRange, oldRange.annotations)
     } else {
       context.errorHandler.violation(
@@ -307,14 +244,11 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     property
   }
 
-  private def traverseOptionalShapeFacet(shape: Shape) = {
-    shape.linkTarget match {
-      case Some(t) => traversal.runWithIgnoredIds(() => normalize(shape), Set(root.id, t.id))
-      case None if shape.inherits.nonEmpty =>
-        traversal.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
-      case _ if shape.isInstanceOf[RecursiveShape] => shape
-      case _                                       => traversal.runWithIgnoredIds(() => normalize(shape), Set(root.id))
-    }
+  private def traverseOptionalShapeFacet(shape: Shape, from: Shape) = shape match {
+    case _ if shape.inherits.nonEmpty =>
+      traversal.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
+    case _: RecursiveShape => shape
+    case _                 => traversal.recursionAllowed(() => normalize(shape), from.id)
   }
 
   protected def expandUnion(union: UnionShape): Shape = {
@@ -323,12 +257,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (Option(oldAnyOf).isDefined) {
       val newAnyOf = union.anyOf.map { u =>
         val unionMember = traversal.recursionAllowed(() => recursiveNormalization(u), u.id)
-        unionMember match {
-          case rec: RecursiveShape =>
-            rec.fixpointTarget.foreach(target => addClosure(target, union))
-          case other =>
-            addClosures(other.closureShapes.toSeq, union)
-        }
+        context.handleClosures(unionMember, union)
         unionMember
       }
       union.setArrayWithoutId(UnionShapeModel.AnyOf, newAnyOf, oldAnyOf.annotations)
@@ -341,4 +270,5 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
     union
   }
+
 }

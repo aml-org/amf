@@ -11,13 +11,7 @@ case class OasLikeTagsParser(parentId: String, entry: YMapEntry)(implicit val ct
     extends SpecParserOps {
 
   def parse(): Seq[Tag] = {
-    val tags = entry.value.tagType match {
-      case YType.Seq =>
-        val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(parentId)).parse())
-        validateDuplicated(tags, entry)
-        tags
-      case _ => Nil // ignore
-    }
+    val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(parentId)).parse())
     validateDuplicated(tags, entry)
     tags
   }

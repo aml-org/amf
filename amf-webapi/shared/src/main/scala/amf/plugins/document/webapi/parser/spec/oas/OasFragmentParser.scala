@@ -8,7 +8,7 @@ import amf.core.model.domain.{Shape, ExternalDomainElement}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.ExternalJsonRefsPlugin
+import amf.plugins.document.webapi.ExternalJsonYamlRefsPlugin
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
@@ -45,7 +45,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       case Oas20SecurityScheme            => Some(SecuritySchemeFragmentParser(map).parse())
       case Oas20NamedExample              => Some(NamedExampleFragmentParser(map).parse())
       case Oas20Header | Oas30Header =>
-        new ExternalJsonRefsPlugin().parse(root, ctx, platform, ParsingOptions())
+        new ExternalJsonYamlRefsPlugin().parse(root, ctx, platform, ParsingOptions())
       case _ => None
     }).getOrElse {
       val fragment = ExternalFragment()

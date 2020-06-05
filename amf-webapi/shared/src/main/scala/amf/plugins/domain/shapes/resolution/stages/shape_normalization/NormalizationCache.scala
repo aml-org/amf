@@ -1,57 +1,16 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
-import amf.core.errorhandling.ErrorHandler
-import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{RecursiveShape, Shape}
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
-import amf.validations.ResolutionSideValidations.InvalidTypeInheritanceWarningSpecification
-import amf.{ProfileName, Raml08Profile}
 
 import scala.collection.mutable
 
-private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler,
-                                            final val keepEditingInfo: Boolean,
-                                            final val profile: ProfileName,
-                                            val cache: NormalizationCache = NormalizationCache()) {
+private[shape_normalization] case class NormalizationCache() extends ClosureHelper {
 
-  val isRaml08: Boolean                        = profile.equals(Raml08Profile)
-  private val minShapeClass: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
+  private val cache = mutable.Map[String, Shape]()
+  /* Shape in the closure -> Shape that in s.closures contains the shape */
+  private val cacheWithClosures = mutable.Map[String, Seq[Shape]]()
 
-  def minShape(derivedShape: Shape, superShape: Shape): Shape = {
-
-    try {
-      minShapeClass.computeMinShape(derivedShape, superShape)
-    } catch {
-      case e: InheritanceIncompatibleShapeError =>
-        errorHandler.violation(
-          InvalidTypeInheritanceWarningSpecification,
-          derivedShape.id,
-          e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
-          e.getMessage,
-          e.position,
-          e.location
-        )
-        derivedShape
-      case other: Throwable =>
-        errorHandler.violation(
-          ResolutionValidation,
-          derivedShape.id,
-          Some(ShapeModel.Inherits.value.iri()),
-          other.getMessage,
-          derivedShape.position(),
-          derivedShape.location()
-        )
-        derivedShape
-    }
-  }
-
-}
-
-private[shape_normalization] case class NormalizationCache() {
-  def addClosures(closureShapes: Seq[Shape], s: Shape): Unit = {
-    closureShapes.foreach { c =>
-      cacheClosure(c.id, s)
-    }
-  }
+  private val fixPointCache = mutable.Map[String, Seq[RecursiveShape]]()
+  private val mappings      = mutable.Map[String, String]()
 
   def cacheClosure(id: String, array: Shape): this.type = {
     cacheWithClosures.get(id) match {
@@ -61,14 +20,12 @@ private[shape_normalization] case class NormalizationCache() {
     this
   }
 
+  def cacheWithClosures(id: String): Option[Seq[Shape]] = cacheWithClosures.get(id)
+
   def updateFixPointsAndClosures(canonical: Shape, withoutCaching: Boolean): Unit = {
     // First check if the shape has itself as closure or fixpoint target (because of it still not in the cache)
-    canonical.closureShapes.find(_.id == canonical.id) match {
-      case Some(x) =>
-        canonical.closureShapes.remove(x)
-        canonical.closureShapes.add(canonical)
-      case _ => // Nothing to do
-    }
+    updateClosure(canonical, _.id == canonical.id, canonical)
+
     canonical match {
       case r: RecursiveShape if r.fixpointTarget.isDefined && r.fixpointTarget.get.id == canonical.id =>
         r.withFixpointTarget(canonical)
@@ -81,12 +38,8 @@ private[shape_normalization] case class NormalizationCache() {
       cacheWithClosures.get(canonical.id) match {
         case Some(seq) =>
           seq.foreach { s =>
-            s.closureShapes.find(clo => clo.id == canonical.id && clo != canonical) match {
-              case Some(clo) =>
-                s.closureShapes.remove(clo)
-                s.closureShapes += canonical
-              case _ => // ignore
-            }
+            val predicate: Shape => Boolean = clo => clo.id == canonical.id && clo != canonical
+            updateClosure(s, predicate, canonical)
           }
         case _ => // ignore
       }
@@ -122,13 +75,6 @@ private[shape_normalization] case class NormalizationCache() {
     }
     this
   }
-
-  private val cache = mutable.Map[String, Shape]()
-  /* Shape in the closure -> Shape that in s.closures contains the shape */
-  private val cacheWithClosures = mutable.Map[String, Seq[Shape]]()
-
-  private val fixPointCache = mutable.Map[String, Seq[RecursiveShape]]()
-  private val mappings      = mutable.Map[String, String]()
 
   private def registerFixPoint(r: RecursiveShape): RecursiveShape = {
     r.fixpoint.option().foreach { fp =>

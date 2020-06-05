@@ -96,7 +96,7 @@ trait SpecEmitterFactory {
 
   def parametrizedSecurityEmitter: (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter
 
-  def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => SecurityRequirementEmitter
+  def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => AbstractSecurityRequirementEmitter
 
   def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter
 

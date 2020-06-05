@@ -1,0 +1,38 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "api"
+  },
+  "paths": {
+    "/my-endpoint": {
+      "put": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/playlist/properties/users"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "playlist": {
+      "type": "object",
+      "required": [
+        "user",
+        "title"
+      ],
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

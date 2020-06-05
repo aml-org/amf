@@ -7,6 +7,8 @@
   "paths": {
     "/test": {
       "get": {
+        "x-annotA": "foo",
+        "x-annotB": "bar",
         "responses": {
           "200": {
             "description": "",
@@ -32,9 +34,7 @@
           {
             "oauth20": []
           }
-        ],
-        "x-annotA": "foo",
-        "x-annotB": "bar"
+        ]
       }
     },
     "/test2": {

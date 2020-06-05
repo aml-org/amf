@@ -9,14 +9,16 @@ import amf.core.remote._
 import amf.core.{CompilerContext, CompilerContextBuilder, Root, AMFCompiler => ModularCompiler}
 import amf.plugins.document.vocabularies.RamlHeaderExtractor
 
-import scala.concurrent.Future
-class AMFCompiler private (val url: String,
-                           val remote: Platform,
-                           val base: Option[Context],
-                           hint: Hint,
-                           private val cache: Cache,
-                           eh: ParserErrorHandler,
-                           private val parsingOptions: ParsingOptions = ParsingOptions())
+import scala.concurrent.{ExecutionContext, Future}
+
+class AMFCompiler private (
+    val url: String,
+    val remote: Platform,
+    val base: Option[Context],
+    hint: Hint,
+    private val cache: Cache,
+    eh: ParserErrorHandler,
+    private val parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext)
     extends RamlHeaderExtractor {
 
   private val compilerContext: CompilerContext = {
@@ -67,7 +69,7 @@ object AMFCompiler {
             cache: Option[Cache] = None,
             ctx: Option[ParserContext] = None,
             eh: ParserErrorHandler,
-            parsingOptions: ParsingOptions = ParsingOptions()) =
+            parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext) =
     new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), eh, parsingOptions = parsingOptions)
 
   val RAML_10 = "#%RAML 1.0\n"

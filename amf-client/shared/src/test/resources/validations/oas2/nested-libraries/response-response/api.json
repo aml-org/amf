@@ -1,0 +1,18 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/individual": {
+      "get": {
+        "responses": {
+          "500": {
+            "$ref": "libraries/responses.json#/responses/500"
+          }
+        }
+      }
+    }
+  }
+}

@@ -5,6 +5,35 @@
       "oauth_2_0": []
     }
   ],
+  "paths": {
+    "/users": {
+      "get": {
+        "responses": {},
+        "security": [
+          {
+            "oauth_2_0": []
+          }
+        ]
+      }
+    },
+    "/users/{userid}/gists": {
+      "get": {
+        "responses": {},
+        "security": [
+          {
+            "oauth_2_0": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
   "x-amf-securitySchemes": {
     "oauth_1_0": {
       "description": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.",
@@ -36,37 +65,5 @@
     "oauth_2_0": {
       "$ref": "../references/fragments/security-scheme.json"
     }
-  },
-  "paths": {
-    "/users": {
-      "get": {
-        "security": [
-          {
-            "oauth_2_0": []
-          },
-          {
-            "oauth_1_0": []
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/users/{userid}/gists": {
-      "get": {
-        "security": [
-          {
-            "oauth_2_0": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ],
-        "responses": {}
-      }
-    }
-  },
-  "info": {
-    "title": "API",
-    "version": "1.0"
   }
 }

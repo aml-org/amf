@@ -10,6 +10,7 @@ import amf.core.model.domain.{DataNode, DomainElement, ElementTree}
 import amf.core.parser.{ParserContext, YNodeLikeOps}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
+import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
@@ -19,6 +20,7 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
@@ -42,7 +44,7 @@ class ExtendsResolutionStage(
 
   /** Default to raml10 context. */
   private val parserErrorHandler = DefaultParserErrorHandler.fromErrorHandler(errorHandler)
-  def ctx(parserRun: Int): RamlWebApiContext = profile match {
+  def ctx(): RamlWebApiContext = profile match {
     case Raml08Profile =>
       new Raml08WebApiContext("", Nil, ParserContext(eh = parserErrorHandler))
     case _ => new Raml10WebApiContext("", Nil, ParserContext(eh = parserErrorHandler))
@@ -130,7 +132,7 @@ class ExtendsResolutionStage(
       .add("resourcePathName", resourcePathName(endpoint))
 
     val tree           = EndPointTreeBuilder(endpoint).build()
-    val extendsContext = ctx(context.model.parserRun.get)
+    val extendsContext = ctx()
     val resourceTypes  = collectResourceTypes(endpoint, context, extendsContext, tree)
     apply(endpoint, resourceTypes)(extendsContext) // Apply ResourceTypes to EndPoint
 
@@ -299,7 +301,8 @@ class ExtendsResolutionStage(
                 t.id,
                 ExtendsHelper.findUnitLocationOfElement(t.id, context.model),
                 keepEditingInfo,
-                Some(apiContext)
+                Some(apiContext),
+                errorHandler
               )
 
               val children = op.traits.flatMap(resolve(_, context, apiContext, subTree))
@@ -321,6 +324,7 @@ class ExtendsResolutionStage(
   case class TraitBranch(key: Key, operation: Operation, children: Seq[Branch]) extends Branch
 
   private abstract class ElementTreeBuilder(element: DomainElement) {
+    private val refsCounter = AliasCounter()
 
     private def buildEntry(entry: YMapEntry) = {
       val sons: Seq[ElementTree] = buildNode(entry.value)
@@ -328,12 +332,21 @@ class ExtendsResolutionStage(
     }
 
     private def buildNode(node: YNode): Seq[ElementTree] = {
-      node.tagType match {
-        case YType.Map =>
-          node.as[YMap].entries.map { buildEntry }
-        case YType.Seq =>
-          node.as[Seq[YNode]].flatMap { buildNode }
-        case _ => Nil
+      if (refsCounter.exceedsThreshold(node)) {
+        errorHandler.violation(
+          ExeededMaxYamlReferences,
+          "",
+          "Exceeded maximum yaml references threshold"
+        )
+        Nil
+      } else {
+        node.tagType match {
+          case YType.Map =>
+            node.as[YMap].entries.map { buildEntry }
+          case YType.Seq =>
+            node.as[Seq[YNode]].flatMap { buildNode }
+          case _ => Nil
+        }
       }
     }
 

@@ -11,6 +11,9 @@ paths:
         -
           $ref: "#/parameters/bp"
       responses: {}
+info:
+  title: API
+  version: "1.0"
 parameters:
   bp:
     in: body
@@ -21,6 +24,3 @@ parameters:
     name: fp
     in: formData
     type: object
-info:
-  title: API
-  version: "1.0"

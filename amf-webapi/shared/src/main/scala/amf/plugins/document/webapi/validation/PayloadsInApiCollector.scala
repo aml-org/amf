@@ -63,8 +63,7 @@ class PayloadsInApiCollector(model: BaseUnit) {
           case example: Example
               if example.fields.exists(ExampleModel.StructuredValue) && example.strict.option().getOrElse(true) =>
             DataNodeCollectedElement(example.structuredValue, example.id, example.raw.value(), example.annotations)
-          case example: Example
-              if example.fields.exists(ExampleModel.Raw) && example.strict.option().getOrElse(true) =>
+          case example: Example if example.fields.exists(ExampleModel.Raw) && example.strict.option().getOrElse(true) =>
             StringCollectedElement(example.id, example.raw.value(), example.annotations)
         })
         if (examples.nonEmpty) {
@@ -127,14 +126,14 @@ class PayloadsInApiCollector(model: BaseUnit) {
                                             override val a: Annotations)
       extends CollectedElement(id, raw, a)
 
-  private def buildFragment(shape: Shape, colectedElement: CollectedElement) = {
-    val fragment = colectedElement match {
+  private def buildFragment(shape: Shape, collectedElement: CollectedElement) = {
+    val fragment = collectedElement match {
       case dn: DataNodeCollectedElement => // the example has been parsed, so i can use native validation like json or any default
         PayloadFragment(dn.dataNode, "text/vnd.yaml")
       case s: StringCollectedElement =>
         PayloadFragment(ScalarNode(s.raw, None, s.a), s.raw.guessMediaType(shape.isInstanceOf[ScalarShape])) // todo: review with antonio
     }
-    fragment.encodes.withId(colectedElement.id)
+    fragment.encodes.withId(collectedElement.id)
     fragment
   }
 

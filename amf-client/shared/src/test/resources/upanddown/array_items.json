@@ -24,83 +24,48 @@
                   "b"
                 ],
                 "type": "array",
-                "x-amf-merge": [
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                ]
+                "items": {
+                  "type": "string"
+                }
               },
               "arrayOfNumberHeader": {
                 "type": "array",
-                "x-amf-merge": [
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "number"
-                    }
-                  }
-                ]
+                "items": {
+                  "type": "number"
+                }
               },
               "arrayOfIntegerHeader": {
                 "type": "array",
-                "x-amf-merge": [
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "integer"
-                    }
-                  }
-                ]
+                "items": {
+                  "type": "integer"
+                }
               },
               "arrayOfDateHeader": {
                 "type": "array",
-                "x-amf-merge": [
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
-                ]
+                "items": {
+                  "type": "string",
+                  "format": "date-time"
+                }
               },
               "arrayOfBooleanHeader": {
                 "type": "array",
-                "x-amf-merge": [
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "boolean"
-                    }
-                  }
-                ]
+                "items": {
+                  "type": "boolean"
+                }
               },
               "arrayOfFileHeader": {
                 "type": "array",
-                "x-amf-merge": [
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "file"
-                    }
-                  }
-                ]
+                "items": {
+                  "type": "file"
+                }
               }
             },
             "x-amf-mediaType": "application/json",
             "schema": {
               "type": "array",
-              "x-amf-merge": [
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  }
-                }
-              ]
+              "items": {
+                "type": "number"
+              }
             }
           }
         }

@@ -18,11 +18,9 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, Ram
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.oas.{
-  OasDeclaredParametersEmitter,
-  OasDeclaredResponsesEmitter,
-  TagsEmitter
-}
+import amf.plugins.document.webapi.parser.spec.oas.emitters.TagsEmitter
+import amf.plugins.document.webapi.parser.spec.oas.{OasDeclaredParametersEmitter, OasDeclaredResponsesEmitter}
+import amf.plugins.document.webapi.parser.spec.raml.emitters.RamlSecuritySchemesEmitters
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._

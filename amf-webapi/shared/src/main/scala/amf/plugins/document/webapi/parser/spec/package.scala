@@ -34,7 +34,7 @@ package object spec {
     val responsesDefinitionsPrefix = "#/responses/"
 
     def stripDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
-      if (ctx.vendor == Vendor.OAS30) url.stripPrefix(oas3DefinitionsPrefix)
+      if (ctx.vendor == Vendor.OAS30 || ctx.vendor == Vendor.ASYNC20) url.stripPrefix(oas3DefinitionsPrefix)
       else url.stripPrefix(oas2DefinitionsPrefix)
     }
 
@@ -56,21 +56,21 @@ package object spec {
     }
 
     def appendDefinitionsPrefix(url: String, vendor: Option[Vendor] = None): String = vendor match {
-      case Some(Vendor.OAS30) =>
+      case Some(Vendor.OAS30) | Some(Vendor.ASYNC20) =>
         if (!url.startsWith(oas3DefinitionsPrefix)) appendPrefix(oas3DefinitionsPrefix, url) else url
       case _ =>
         if (!url.startsWith(oas2DefinitionsPrefix)) appendPrefix(oas2DefinitionsPrefix, url) else url
     }
 
     def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
-        implicit spec: OasSpecEmitterContext): String = {
+        implicit spec: SpecEmitterContext): String = {
       if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
         appendOas3ComponentsPrefix(url, "parameters")
       else
         appendPrefix(parameterDefinitionsPrefix, url)
     }
 
-    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: OasSpecEmitterContext): String = {
+    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: SpecEmitterContext): String = {
       if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
         appendOas3ComponentsPrefix(url, "responses")
       else
@@ -88,19 +88,31 @@ package object spec {
   def toOas(ctx: WebApiContext): OasWebApiContext = {
     ctx.vendor match {
       case Vendor.OAS30 =>
-        new Oas3WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+        new Oas3WebApiContext(ctx.rootContextDocument,
+                              ctx.refs,
+                              ctx,
+                              Some(toOasDeclarations(ctx.declarations)),
+                              ctx.options)
       case _ =>
-        new Oas2WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+        new Oas2WebApiContext(ctx.rootContextDocument,
+                              ctx.refs,
+                              ctx,
+                              Some(toOasDeclarations(ctx.declarations)),
+                              ctx.options)
     }
 
   }
 
   def toOas(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+    new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.options)
   }
 
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {
-    new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toRamlDeclarations(ctx.declarations)))
+    new Raml10WebApiContext(ctx.rootContextDocument,
+                            ctx.refs,
+                            ctx,
+                            Some(toRamlDeclarations(ctx.declarations)),
+                            options = ctx.options)
   }
 
   private def toRamlDeclarations(ds: WebApiDeclarations) = {
@@ -126,10 +138,14 @@ package object spec {
   }
 
   def toJsonSchema(ctx: WebApiContext): JsonSchemaWebApiContext = {
-    new JsonSchemaWebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+    new JsonSchemaWebApiContext(ctx.rootContextDocument,
+                                ctx.refs,
+                                ctx,
+                                Some(toOasDeclarations(ctx.declarations)),
+                                ctx.options)
   }
 
   def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new JsonSchemaWebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+    new JsonSchemaWebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.options)
   }
 }

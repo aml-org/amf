@@ -8,7 +8,7 @@ import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, Mode
 import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.metamodel.common.DocumentationField
-import amf.plugins.domain.webapi.metamodel.bindings.OperationBindingModel
+import amf.plugins.domain.webapi.metamodel.bindings.OperationBindingsModel
 import amf.plugins.domain.webapi.metamodel.security.SecurityRequirementModel
 import amf.plugins.domain.webapi.models.Operation
 
@@ -29,6 +29,11 @@ object OperationModel
   val Method = Field(Str,
                      ApiContract + "method",
                      ModelDoc(ModelVocabularies.ApiContract, "method", "HTTP method required to invoke the operation"))
+
+  val OperationId = Field(
+    Str,
+    ApiContract + "operationId",
+    ModelDoc(ModelVocabularies.ApiContract, "operation ID", "Identifier of the target operation"))
 
   val Deprecated = Field(Bool,
                          Core + "deprecated",
@@ -81,7 +86,7 @@ object OperationModel
           ModelDoc(ModelVocabularies.ApiContract, "server", "server information"))
 
   val Bindings = Field(
-    Array(OperationBindingModel),
+    OperationBindingsModel,
     ApiBinding + "binding",
     ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this operation")
   )
@@ -107,7 +112,8 @@ object OperationModel
     Callbacks,
     Servers,
     Bindings,
-    IsAbstract
+    IsAbstract,
+    OperationId
   ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = Operation()

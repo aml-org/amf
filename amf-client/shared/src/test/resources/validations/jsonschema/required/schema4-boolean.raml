@@ -1,0 +1,19 @@
+#%RAML 0.8
+title: sample1
+/products:
+  put:
+    description: Updates a single product
+    body:
+      application/json:
+        schema: |
+          {
+            "$schema": "http://json-schema.org/draft-04/schema",
+            "product": {
+                "name": {
+                    "required": true,
+                    "type": "string"
+                }
+            },
+            "required": true,
+            "type": "object"
+          }

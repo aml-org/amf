@@ -22,7 +22,10 @@ case class PropertyDependencies(fields: Fields, annotations: Annotations) extend
   override def meta: Obj = PropertyDependenciesModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/dependency" // TODO check id for each dependency
+  override def componentId: String = {
+    val propertySourceName = propertySource.option().map(x => x).getOrElse("unknown").split("/").last
+    s"/dependency/${propertySourceName}"
+  }
 }
 
 object PropertyDependencies {

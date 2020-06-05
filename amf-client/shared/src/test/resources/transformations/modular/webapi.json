@@ -1,0 +1,791 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml",
+    "@type": [
+      "http://a.ml/vocabularies/meta#DialectInstance",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://vocabularies/dialects/canonical_webapi_spec.yaml"
+      }
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/rootAsset",
+        "@type": [
+          "http://a.ml/vocabularies/document#Document",
+          "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Document",
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": true
+          }
+        ],
+        "http://a.ml/vocabularies/document#references": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/transformations/modular/lib.raml",
+            "@type": [
+              "http://a.ml/vocabularies/document#Module",
+              "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Module",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#references": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/transformations/modular/fragment1.raml",
+                "@type": [
+                  "http://a.ml/vocabularies/shapes#DataTypeFragment",
+                  "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/DataTypeFragment",
+                  "http://a.ml/vocabularies/meta#DialectDomainElement",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/document#root": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "http://a.ml/vocabularies/document#encodes": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/fragment1.raml#/type",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#NodeShape",
+                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
+                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#property": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/transformations/modular/fragment1.raml#/type/property/p1",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#PropertyShape",
+                          "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
+                          "http://a.ml/vocabularies/meta#DialectDomainElement",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/shapes#range": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/transformations/modular/fragment1.raml#/type/property/p1/scalar/p1",
+                            "@type": [
+                              "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
+                              "http://a.ml/vocabularies/meta#DialectDomainElement",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "p1"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "p1"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#p1"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "type"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#closed": [
+                      {
+                        "@value": false
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document#version": [
+                  {
+                    "@value": "2.1.0"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#declares": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/transformations/modular/lib.raml#/declarations/types/A",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
+                  "http://a.ml/vocabularies/meta#DialectDomainElement",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#property": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/lib.raml#/declarations/types/A/property/c",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
+                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#range": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/transformations/modular/lib.raml#/declarations/types/A/property/c/c",
+                        "@type": [
+                          "http://www.w3.org/ns/shacl#NodeShape",
+                          "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
+                          "http://a.ml/vocabularies/meta#DialectDomainElement",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/document#link-label": [
+                          {
+                            "@value": "fragment1.raml"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document#design-link-target": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/transformations/modular/fragment1.raml#/type"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "c"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "c"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#c"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/lib.raml#/declarations/types/A/property/b",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
+                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#range": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/transformations/modular/lib.raml#/declarations/types/A/property/b/scalar/b",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
+                          "http://a.ml/vocabularies/meta#DialectDomainElement",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "b"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "b"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#b"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/lib.raml#/declarations/types/A/property/a",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
+                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#range": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/transformations/modular/lib.raml#/declarations/types/A/property/a/scalar/a",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
+                          "http://a.ml/vocabularies/meta#DialectDomainElement",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "a"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "a"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#a"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "A"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#closed": [
+                  {
+                    "@value": false
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#version": [
+              {
+                "@value": "2.1.0"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/transformations/modular/fragment2.raml",
+            "@type": [
+              "http://a.ml/vocabularies/shapes#DataTypeFragment",
+              "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/DataTypeFragment",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#encodes": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/transformations/modular/fragment2.raml#/type",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
+                  "http://a.ml/vocabularies/meta#DialectDomainElement",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#property": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/fragment2.raml#/type/property/p2",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
+                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/shapes#range": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/transformations/modular/fragment2.raml#/type/property/p2/scalar/p2",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
+                          "http://a.ml/vocabularies/meta#DialectDomainElement",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "p2"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "p2"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#p2"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "type"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#closed": [
+                  {
+                    "@value": false
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#version": [
+              {
+                "@value": "2.1.0"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#encodes": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#WebAPI",
+              "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/WebAPI",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "test"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#server": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api/falsedomain.com%2Fapis",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#Server",
+                  "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Server",
+                  "http://a.ml/vocabularies/meta#DialectDomainElement",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/core#urlTemplate": [
+                  {
+                    "@value": "falsedomain.com/apis"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#accepts": [
+              {
+                "@value": "application/json"
+              }
+            ],
+            "http://a.ml/vocabularies/core#version": [
+              {
+                "@value": "1.0"
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#endpoint": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api/end-points/%2Ftest",
+                "@type": [
+                  "http://a.ml/vocabularies/apiContract#EndPoint",
+                  "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/EndPoint",
+                  "http://a.ml/vocabularies/meta#DialectDomainElement",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#supportedOperation": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api/end-points/%2Ftest/get",
+                    "@type": [
+                      "http://a.ml/vocabularies/apiContract#Operation",
+                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Operation",
+                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#description": [
+                      {
+                        "@value": "an operation"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#returns": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api/end-points/%2Ftest/get/200",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Response",
+                          "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Response",
+                          "http://a.ml/vocabularies/meta#DialectDomainElement",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/apiContract#statusCode": [
+                          {
+                            "@value": "200"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "200"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiContract#payload": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson",
+                            "@type": [
+                              "http://a.ml/vocabularies/apiContract#Payload",
+                              "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/Payload",
+                              "http://a.ml/vocabularies/meta#DialectDomainElement",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/shapes#schema": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#NodeShape",
+                                  "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
+                                  "http://a.ml/vocabularies/meta#DialectDomainElement",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/ns/shacl#property": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/d",
+                                    "@type": [
+                                      "http://www.w3.org/ns/shacl#PropertyShape",
+                                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
+                                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/shapes#range": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/d/d",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
+                                          "http://a.ml/vocabularies/meta#DialectDomainElement",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/document#link-label": [
+                                          {
+                                            "@value": "fragment2.raml"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document#design-link-target": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/transformations/modular/fragment2.raml#/type"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "d"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#minCount": [
+                                      {
+                                        "@value": 1
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "d"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#path": [
+                                      {
+                                        "@id": "http://a.ml/vocabularies/data#d"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c",
+                                    "@type": [
+                                      "http://www.w3.org/ns/shacl#PropertyShape",
+                                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
+                                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/shapes#range": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c/c",
+                                        "@type": [
+                                          "http://www.w3.org/ns/shacl#NodeShape",
+                                          "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
+                                          "http://a.ml/vocabularies/meta#DialectDomainElement",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/document#link-label": [
+                                          {
+                                            "@value": "lib.A"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document#design-link-target": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/transformations/modular/lib.raml#/declarations/types/A"
+                                          }
+                                        ],
+                                        "http://www.w3.org/ns/shacl#name": [
+                                          {
+                                            "@value": "c"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#minCount": [
+                                      {
+                                        "@value": 1
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "c"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#path": [
+                                      {
+                                        "@id": "http://a.ml/vocabularies/data#c"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "schema"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/shapes#inherits": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/declarations/types/A/link--1105145909",
+                                    "@type": [
+                                      "http://www.w3.org/ns/shacl#NodeShape",
+                                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
+                                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/document#link-label": [
+                                      {
+                                        "@value": "A"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document#design-link-target": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/declarations/types/A"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#name": [
+                                      {
+                                        "@value": "A"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#closed": [
+                                  {
+                                    "@value": false
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/core#mediaType": [
+                              {
+                                "@value": "application/json"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiContract#method": [
+                      {
+                        "@value": "get"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/apiContract#path": [
+                  {
+                    "@value": "/test"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/apiContract#contentType": [
+              {
+                "@value": "application/json"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#declares": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/declarations/types/A",
+            "@type": [
+              "http://www.w3.org/ns/shacl#NodeShape",
+              "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/NodeShape",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#property": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/declarations/types/A/property/b",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
+                  "http://a.ml/vocabularies/meta#DialectDomainElement",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/declarations/types/A/property/b/scalar/b",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
+                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "b"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "b"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#b"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/declarations/types/A/property/a",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#PropertyShape",
+                  "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/PropertyShape",
+                  "http://a.ml/vocabularies/meta#DialectDomainElement",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/shapes#range": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/transformations/modular/api.raml#/declarations/types/A/property/a/scalar/a",
+                    "@type": [
+                      "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "file://vocabularies/dialects/canonical_webapi_spec.yaml#/declarations/ScalarShape",
+                      "http://a.ml/vocabularies/meta#DialectDomainElement",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "a"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "a"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#a"
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#name": [
+              {
+                "@value": "A"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#closed": [
+              {
+                "@value": false
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#version": [
+          {
+            "@value": "2.1.0"
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": false
+      }
+    ]
+  }
+]

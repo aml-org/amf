@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value
   Message: Value 'invalid/value-enums' of uri parameter must not contain '/' character
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/uriparam-value-with-slash.raml#/web-api/end-points/%2Fin-enum%2Finvalid%2F%7BuserId%7D/parameter/userId/scalar/schema/scalar_2
+  Target: file://amf-client/shared/src/test/resources/validations/uriparam-value-with-slash.raml#/web-api/end-points/%2Fin-enum%2Finvalid%2F%7BuserId%7D/parameter/userId/scalar/schema/enum/scalar_2
   Property: 
   Position: Some(LexicalInformation([(11,12)-(14,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/uriparam-value-with-slash.raml

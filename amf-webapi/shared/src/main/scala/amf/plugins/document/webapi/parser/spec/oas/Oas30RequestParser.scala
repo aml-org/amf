@@ -60,9 +60,9 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
       .findRequestBody(name, SearchScope.Named)
       .map(req => adopt(req.link(name, Annotations(map))))
       .getOrElse {
-        ctx.obtainRemoteYNode(fullRef) match {
-          case Some(requestNode) =>
-            Oas30RequestParser(requestNode.as[YMap], parentId, definitionEntry).parse()
+        ctx.navigateToRemoteYNode(fullRef) match {
+          case Some(navigation) =>
+            Oas30RequestParser(navigation.remoteNode.as[YMap], parentId, definitionEntry)(navigation.context).parse()
           case None =>
             ctx.eh.violation(CoreValidations.UnresolvedReference,
                              "",

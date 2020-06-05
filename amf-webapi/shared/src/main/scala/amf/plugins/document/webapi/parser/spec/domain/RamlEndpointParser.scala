@@ -2,14 +2,15 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.model.DataType
-import amf.core.model.domain.{Shape, AmfArray, DataNode, AmfScalar, ScalarNode => ScalarDataNode}
+import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, AmfStrings, TemplateUri}
+import amf.core.utils.{AmfStrings, IdCounter, TemplateUri}
+import amf.plugins.document.webapi.annotations.{EndPointResourceTypeEntry, EndPointTraitEntry}
 import amf.plugins.document.webapi.contexts.parser.raml.{
-  RamlWebApiContext,
-  RamlWebApiContextType,
   Raml08WebApiContext,
-  Raml10WebApiContext
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  RamlWebApiContextType
 }
 import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -17,13 +18,13 @@ import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
-import amf.plugins.domain.webapi.metamodel.{ParameterModel, EndPointModel}
-import amf.plugins.domain.webapi.models.{Parameter, EndPoint, Operation}
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import amf.validations.ParserSideValidations.{
-  SlashInUriParameterValues,
-  UnusedBaseUriParameter,
   DuplicatedEndpointPath,
-  InvalidEndpointPath
+  InvalidEndpointPath,
+  SlashInUriParameterValues,
+  UnusedBaseUriParameter
 }
 import amf.validations.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
@@ -92,17 +93,24 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     map.key("displayName", (EndPointModel.Name in endpoint).allowingAnnotations)
     map.key("description", (EndPointModel.Description in endpoint).allowingAnnotations)
 
-    map.key("is",
-            (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
-              .parse(endpoint.withTrait)).allowingSingleValue.optional)
+    map.key(
+      "is",
+      (e: YMapEntry) => {
+        endpoint.annotations += EndPointTraitEntry(Range(e.range))
+        (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
+          .parse(endpoint.withTrait)).allowingSingleValue.optional(e)
+      }
+    )
 
     map.key(
       "type",
-      entry =>
+      entry => {
+        endpoint.annotations += EndPointResourceTypeEntry(Range(entry.range))
         ParametrizedDeclarationParser(entry.value,
                                       endpoint.withResourceType,
                                       ctx.declarations.findResourceTypeOrError(entry.value))
           .parse()
+      }
     )
 
     val optionalMethod = if (parseOptionalOperations) "\\??" else ""
@@ -119,13 +127,15 @@ abstract class RamlEndpointParser(entry: YMapEntry,
                                       ctx.refs,
                                       ParserContext(eh = ctx.eh),
                                       Some(ctx.declarations),
-                                      ctx.contextType)
+                                      ctx.contextType,
+                                      ctx.options)
             case _ =>
               new Raml10WebApiContext(ctx.loc,
                                       ctx.refs,
                                       ParserContext(eh = ctx.eh),
                                       Some(ctx.declarations),
-                                      ctx.contextType)
+                                      ctx.contextType,
+                                      ctx.options)
           }
           val operation = RamlOperationParser(entry, endpoint.withOperation, parseOptionalOperations)(operationContext)
             .parse()

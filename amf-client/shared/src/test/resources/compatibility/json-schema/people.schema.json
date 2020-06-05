@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "http://example.com/people.schema.json",
+  "title": "People",
+  "description": "This is a person array",
+  "type": "array",
+  "items": {
+    "$ref": "./person.schema.json#"
+  }
+}

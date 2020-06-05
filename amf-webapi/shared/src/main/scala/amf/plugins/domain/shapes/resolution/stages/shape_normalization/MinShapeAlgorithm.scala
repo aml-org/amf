@@ -10,7 +10,8 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, Value}
-import amf.plugins.document.webapi.annotations.ParsedJSONSchema
+import amf.plugins.document.vocabularies.emitters.common.IdCounter
+import amf.plugins.document.webapi.annotations.{Inferred, ParsedJSONSchema}
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
@@ -44,16 +45,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     }
   }
 
-  private def mergeClosures(derived: Shape, superShape: Shape): Unit = {
-    superShape.closureShapes.foreach { scs =>
-      derived.closureShapes += scs
-      context.cache.addClosures(Seq(scs), derived)
-    }
-  }
   def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
     val superShape   = copy(superShapeOri)
     val derivedShape = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
-    mergeClosures(derivedShape, superShape)
+    context.propagateClosures(superShape, derivedShape)
 //    context.cache.updateRecursiveTargets(derivedShape)
     try {
       derivedShape match {
@@ -71,6 +66,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                      s == DataType.Double ||
                      s == DataType.Number)) {
             computeMinScalar(baseScalar, superScalar.withDataType(DataType.Integer))
+          } else if (baseScalar.dataType.option().isEmpty && superScalar.dataType.option().isDefined) {
+            computeMinShape(baseScalar.withDataType(s), superScalar)
           } else {
             context.errorHandler.violation(
               InvalidTypeInheritanceErrorSpecification,
@@ -129,7 +126,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
 
         // Any => is explicitly Any, we are comparing the meta-model because now
         //      all shapes inherit from Any, cannot check with instanceOf
-        case _ if derivedShape.meta == AnyShapeModel || superShape.meta == AnyShapeModel =>
+        case _
+            if derivedShape.meta.`type`.headOption
+              .exists(_.iri() == AnyShapeModel.`type`.head.iri()) || superShape.meta.`type`.headOption
+              .exists(_.iri() == AnyShapeModel.`type`.head.iri()) =>
           derivedShape match {
             case shape: AnyShape =>
               restrictShape(shape, superShape)
@@ -197,7 +197,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   protected def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
-    computeNarrowRestrictions(ScalarShapeModel.fields, baseScalar, superScalar)
+    computeNarrowRestrictions(ScalarShapeModel.fields,
+                              baseScalar,
+                              superScalar,
+                              filteredFields = Seq(ScalarShapeModel.Examples))
     baseScalar
   }
 
@@ -416,6 +419,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         finalMinShapes
       }
 
+    avoidDuplicatedIds(newUnionItems)
     baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
                                   AmfArray(newUnionItems),
                                   baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
@@ -427,6 +431,16 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
 
     baseUnion
   }
+
+  private def avoidDuplicatedIds(newUnionItems: Seq[Shape]): Unit =
+    newUnionItems.groupBy(_.id).foreach {
+      case (_, shapes) if shapes.size > 1 =>
+        val counter = new IdCounter()
+        shapes.foreach { shape =>
+          shape.id = counter.genId(shape.id)
+        }
+      case _ =>
+    }
 
   protected def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
@@ -524,16 +538,24 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {
-    val newRange = context.minShape(baseProperty.range, superProperty.range)
+    if (isExactlyAny(baseProperty.range) && !isInferred(baseProperty) && isSubtypeOfAny(superProperty.range)) {
+      context.errorHandler.violation(
+        InvalidTypeInheritanceErrorSpecification,
+        baseProperty,
+        Some(ShapeModel.Inherits.value.iri()),
+        s"Resolution error: Invalid scalar inheritance base type 'any' can't override"
+      )
+    } else {
+      val newRange = context.minShape(baseProperty.range, superProperty.range)
+      baseProperty.fields.setWithoutId(PropertyShapeModel.Range,
+                                       newRange,
+                                       baseProperty.fields.getValue(PropertyShapeModel.Range).annotations)
 
-    baseProperty.fields.setWithoutId(PropertyShapeModel.Range,
-                                     newRange,
-                                     baseProperty.fields.getValue(PropertyShapeModel.Range).annotations)
-
-    computeNarrowRestrictions(PropertyShapeModel.fields,
-                              baseProperty,
-                              superProperty,
-                              filteredFields = Seq(PropertyShapeModel.Range))
+      computeNarrowRestrictions(PropertyShapeModel.fields,
+                                baseProperty,
+                                superProperty,
+                                filteredFields = Seq(PropertyShapeModel.Range))
+    }
 
     baseProperty
   }
@@ -542,6 +564,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     computeNarrowRestrictions(FileShapeModel.fields, baseFile, superFile)
     baseFile
   }
+
+  private def isExactlyAny(shape: Shape)       = shape.meta == AnyShapeModel
+  private def isSubtypeOfAny(shape: Shape)     = shape.meta != AnyShapeModel && shape.isInstanceOf[AnyShape]
+  private def isInferred(shape: PropertyShape) = shape.range.annotations.contains(classOf[Inferred])
 
   override val keepEditingInfo: Boolean = context.keepEditingInfo
 }

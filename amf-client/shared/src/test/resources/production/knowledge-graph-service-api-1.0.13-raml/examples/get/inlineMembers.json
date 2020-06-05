@@ -1,0 +1,147 @@
+{
+    "@context": {
+        "encodes": {
+            "@id": "j.3:encodes",
+            "@type": "@id"
+        },
+        "definedBy": {
+            "@id": "j.2:definedBy",
+            "@type": "@id"
+        },
+        "nickName": "j.4:nickName",
+        "age": {
+            "@id": "j.1:age",
+            "@type": "http://www.w3.org/2001/XMLSchema#long"
+        },
+        "email": "j.1:email",
+        "code": "j.4:code",
+        "resources": "j.4:resources",
+        "semantic-version": "j.4:semantic-version",
+        "description": "j.1:description",
+        "showcases": {
+            "@id": "j.4:showcases",
+            "@type": "@id"
+        },
+        "speakers": {
+            "@id": "j.4:speakers",
+            "@type": "@id"
+        },
+        "name": "j.1:name",
+        "demoDate": {
+            "@id": "j.4:demoDate",
+            "@type": "http://www.w3.org/2001/XMLSchema#date"
+        },
+        "schema": "http://mulesoft.com/vocabularies/knowledge-graph-service#schema",
+        "namespace": "http://mulesoft.com/vocabularies/knowledge-graph-service#namespace",
+        "versionable": {
+            "@id": "http://mulesoft.com/vocabularies/knowledge-graph-service#versionable",
+            "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        "member": {
+            "@id": "http://www.w3.org/ns/ldp#member",
+            "@type": "@id"
+        },
+        "pageSize": {
+            "@id": "http://mulesoft.com/vocabularies/knowledge-graph-service#pageSize",
+            "@type": "http://www.w3.org/2001/XMLSchema#long"
+        },
+        "j.4": "http://mulesoft.com/vocabularies/tech-talk#",
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+        "j.1": "http://schema.org/",
+        "j.0": "http://mulesoft.com/v1/schema/3bea2c19-8ffb-41a5-8f69-802fcd81a065/3c66e8758b4f7d237514db508c83d382#/declarations/",
+        "j.3": "http://a.ml/vocabularies/document#",
+        "j.2": "http://a.ml/vocabularies/meta#"
+    },
+    "@graph": [
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk",
+            "@type": [
+                "j.3:Fragment",
+                "http://www.w3.org/ns/ldp#Container",
+                "j.2:DialectDomainElement",
+                "j.3:Document",
+                "http://mulesoft.com/v1/schema/container/latest#/declarations/ContainerConfigurationNode",
+                "j.3:Module",
+                "j.2:DialectInstance",
+                "j.3:DomainElement",
+                "j.3:Unit"
+            ],
+            "encodes": "http://mulesoft.com/v1/tech-talk",
+            "definedBy": "http://mulesoft.com/v1/schema/container/latest",
+            "namespace": "tech-talk",
+            "pageSize": "3",
+            "schema": "http://mulesoft.com/v1/schema/3bea2c19-8ffb-41a5-8f69-802fcd81a065/3c66e8758b4f7d237514db508c83d382",
+            "http://mulesoft.com/vocabularies/knowledge-graph-service#versionable": true,
+            "member": "http://mulesoft.com/v1/tech-talk/7541a157-eb8b-4c11-802b-2d2e08882677/0981d6607e0dd9ac41cf61086e47274c"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk/7541a157-eb8b-4c11-802b-2d2e08882677/0981d6607e0dd9ac41cf61086e47274c",
+            "@type": [
+                "j.3:Module",
+                "j.3:Document",
+                "j.2:DialectInstance",
+                "j.3:Fragment",
+                "j.3:Unit"
+            ],
+            "encodes": "http://mulesoft.com/v1/tech-talk/7541a157-eb8b-4c11-802b-2d2e08882677/0981d6607e0dd9ac41cf61086e47274c#/",
+            "definedBy": "http://mulesoft.com/v1/schema/3bea2c19-8ffb-41a5-8f69-802fcd81a065/3c66e8758b4f7d237514db508c83d382"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk/7541a157-eb8b-4c11-802b-2d2e08882677/0981d6607e0dd9ac41cf61086e47274c#/",
+            "@type": [
+                "j.0:PresentationNode",
+                "j.3:DomainElement",
+                "j.2:DialectDomainElement",
+                "j.4:Presentation"
+            ],
+            "demoDate": "2017-11-03",
+            "showcases": "http://mulesoft.com/v1/tech-talk/7541a157-eb8b-4c11-802b-2d2e08882677/0981d6607e0dd9ac41cf61086e47274c#/product",
+            "speakers": [
+                "http://mulesoft.com/v1/tech-talk/7541a157-eb8b-4c11-802b-2d2e08882677/0981d6607e0dd9ac41cf61086e47274c#/speakers/Antonio",
+                "http://mulesoft.com/v1/tech-talk/7541a157-eb8b-4c11-802b-2d2e08882677/0981d6607e0dd9ac41cf61086e47274c#/speakers/Pedro"
+            ],
+            "description": "This is a short demo to show the work we have been doing\non the Application Modeling Framework.\nIt will try to be a hands-on demo with a practical approach1\n",
+            "name": "Application Modeling Framework 1.0 Tech Talk"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk/7541a157-eb8b-4c11-802b-2d2e08882677/0981d6607e0dd9ac41cf61086e47274c#/product",
+            "@type": [
+                "j.0:ProductNode",
+                "j.2:DialectDomainElement",
+                "j.3:DomainElement",
+                "j.1:Product"
+            ],
+            "code": "AMF",
+            "resources": [
+                "https://github.com/mulesoft/amf",
+                "https://github.com/mulesoft-labs/amf-tech-talk"
+            ],
+            "semantic-version": "1.0.0",
+            "description": "Something we had to build because we can"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk/7541a157-eb8b-4c11-802b-2d2e08882677/0981d6607e0dd9ac41cf61086e47274c#/speakers/Antonio",
+            "@type": [
+                "j.2:DialectDomainElement",
+                "j.3:DomainElement",
+                "j.4:Speaker",
+                "j.0:SpeakerNode"
+            ],
+            "nickName": "Antonio",
+            "age": "35",
+            "email": "antonio.garrote@mulesoft.com"
+        },
+        {
+            "@id": "http://mulesoft.com/v1/tech-talk/7541a157-eb8b-4c11-802b-2d2e08882677/0981d6607e0dd9ac41cf61086e47274c#/speakers/Pedro",
+            "@type": [
+                "j.2:DialectDomainElement",
+                "j.3:DomainElement",
+                "j.4:Speaker",
+                "j.0:SpeakerNode"
+            ],
+            "nickName": "Pedro",
+            "age": "33",
+            "email": "pedro.colunga@mulesoft.com"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "definitions": {
+    "ApiOkDetail": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "$ref": "#/definitions/ApiOkDetail"
+        }
+      }
+    },
+    "ApiOk": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/ApiOkDetail"
+        }
+      }
+    }
+  }
+}

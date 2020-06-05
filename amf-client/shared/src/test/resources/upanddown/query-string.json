@@ -4,6 +4,19 @@
     "title": "Illustrate query parameter variations",
     "version": "1.0"
   },
+  "paths": {
+    "/locations": {
+      "get": {
+        "x-amf-queryString": {
+          "type": [
+            "paging",
+            "lat-long | loc"
+          ]
+        },
+        "responses": {}
+      }
+    }
+  },
   "definitions": {
     "lat-long": {
       "type": "object",
@@ -33,19 +46,6 @@
         "page-size": {
           "type": "number"
         }
-      }
-    }
-  },
-  "paths": {
-    "/locations": {
-      "get": {
-        "x-amf-queryString": {
-          "type": [
-            "paging",
-            "lat-long | loc"
-          ]
-        },
-        "responses": {}
       }
     }
   }

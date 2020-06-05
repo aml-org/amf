@@ -1,6 +1,7 @@
 package amf.plugins.domain.webapi.models.templates
 
 import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
+import amf.core.metamodel.Obj
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
@@ -17,7 +18,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
 
   override def linkCopy(): ResourceType = ResourceType().withId(id)
 
-  override def meta: AbstractDeclarationModel = ResourceTypeModel
+  override def meta: Obj = ResourceTypeModel
 
   def asEndpoint[T <: BaseUnit](unit: T,
                                 profile: ProfileName = RamlProfile,

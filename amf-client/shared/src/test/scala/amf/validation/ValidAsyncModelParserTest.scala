@@ -17,6 +17,10 @@ class ValidAsyncModelParserTest extends ValidModelTest {
     checkValid("channel-parameters.yaml", Async20Profile)
   }
 
+  test("Security schemes") {
+    checkValid("security-schemes.yaml", Async20Profile)
+  }
+
   test("Empty and dynamic binding") {
     checkValid("empty-dynamic-binding.yaml", Async20Profile)
   }

@@ -1,0 +1,58 @@
+openapi: '3.0.0'
+info:
+  version: 1.4.0
+  title: example.com
+
+components:
+  requestBodies:
+    myReqBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/aSchema"
+  schemas:
+    aSchema:
+      type: object
+      properties:
+        a:
+          type: string
+  parameters:
+    queryParam:
+      schema:
+        type: string
+      name: nameQueryParam
+      in: query
+    headerParam:
+      schema:
+        type: string
+      name: nameHeaderParam
+      in: header
+    pathParam:
+      schema:
+        type: string
+      name: namePathParam
+      in: path
+      required: true
+    cookieParam:
+      schema:
+        type: string
+      name: cookiePathParam
+      in: cookie
+
+paths:
+  /refs:
+    post:
+      parameters:
+        - $ref: "#/components/parameters/queryParam"
+        - $ref: "#/components/parameters/headerParam"
+        - $ref: "#/components/parameters/cookieParam"
+        - $ref: "#/components/parameters/pathParam"
+      requestBody:
+        $ref: "#/components/requestBodies/myReqBody"
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object

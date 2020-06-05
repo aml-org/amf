@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.Field
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -26,7 +26,7 @@ case class Callback(fields: Fields, annotations: Annotations) extends NamedDomai
     result
   }
 
-  override def meta = CallbackModel
+  override def meta: Obj = CallbackModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String =

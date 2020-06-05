@@ -300,5 +300,13 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/cross-recursion.raml")
   }
 
+  test("Inherit in scalars should reject inherited examples") {
+    validate("/examples/inherits-reject-examples.raml")
+  }
+
+  test("Json Schema Any Of valid example") {
+    validate("/json-schema-anyof/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

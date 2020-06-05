@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: Shopper Customers
+
+types:
+  CustomerProductList:
+    properties:
+      coRegistrant:
+        description: The coregistrant of this product list.
+        #esto es un AnyShape inherits ScalarShape y por eso mantiene la annotation
+        type: CustomerProductListRegistrant
+
+  CustomerProductListRegistrant:
+    type: string
+
+/organizations:
+  get:
+    body:
+      application/json:
+        type: CustomerProductList
+        description: this causes the error

@@ -21,9 +21,7 @@ import scala.collection.mutable.ListBuffer
   */
 class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean)(
     override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage()
-    with MetaModelTypeMapping
-    with ElementResolutionStage[Shape] {
+    extends ResolutionStage() {
 
   protected var m: Option[BaseUnit] = None
   protected val context             = new NormalizationContext(errorHandler, keepEditingInfo, profile)
@@ -40,45 +38,5 @@ class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean
     }
   }
 
-  override def transformer: ElementStageTransformer[Shape] = new ShapeTransformer(context)
-}
-
-private[stages] case class RecursionErrorRegister() {
-  private val avoidRegister = ListBuffer[String]()
-
-  private def buildRecursion(base: Option[String], s: Shape): RecursiveShape = {
-    val fixPointId = base.getOrElse(s.id)
-    val r          = RecursiveShape(s).withFixPoint(fixPointId)
-    r
-  }
-
-  def recursionAndError(root: Shape, base: Option[String], s: Shape, traversal: ModelTraversalRegistry)(
-      implicit context: NormalizationContext): RecursiveShape = {
-    val recursion = buildRecursion(base, s)
-    recursionError(root, recursion, traversal: ModelTraversalRegistry, Some(root.id))
-  }
-
-  def recursionError(original: Shape,
-                     r: RecursiveShape,
-                     traversal: ModelTraversalRegistry,
-                     checkId: Option[String] = None)(implicit context: NormalizationContext): RecursiveShape = {
-
-    val canRegister = !avoidRegister.contains(r.id)
-    if (!r.supportsRecursion
-          .option()
-          .getOrElse(false) && !traversal.avoidError(r, checkId) && canRegister) {
-      context.errorHandler.violation(
-        RecursiveShapeSpecification,
-        original.id,
-        None,
-        "Error recursive shape",
-        original.position(),
-        original.location()
-      )
-      avoidRegister += r.id
-    } else if (traversal.avoidError(r, checkId)) {
-      r.withSupportsRecursion(true)
-    }
-    r
-  }
+  def transformer: ElementStageTransformer[Shape] = new ShapeTransformer(context)
 }

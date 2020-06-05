@@ -136,9 +136,6 @@
 <http://a.ml/vocabularies/amf/parser#duplicated-operation-id> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#duplicated-operation-id> <http://www.w3.org/ns/shacl#message> "Duplicated operation id" .
 <http://a.ml/vocabularies/amf/parser#duplicated-operation-id> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
-<http://a.ml/vocabularies/amf/parser#duplicated-operation-status-code> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
-<http://a.ml/vocabularies/amf/parser#duplicated-operation-status-code> <http://www.w3.org/ns/shacl#message> "Status code for the provided operation response must not be duplicated" .
-<http://a.ml/vocabularies/amf/parser#duplicated-operation-status-code> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#duplicated-property> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#duplicated-property> <http://www.w3.org/ns/shacl#message> "Duplicated property in node" .
 <http://a.ml/vocabularies/amf/parser#duplicated-property> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -307,6 +304,9 @@
 <http://a.ml/vocabularies/amf/parser#json-schema-inheritance> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#json-schema-inheritance> <http://www.w3.org/ns/shacl#message> "Inheriting from JSON Schema" .
 <http://a.ml/vocabularies/amf/parser#json-schema-inheritance> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#max-yaml-references> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#max-yaml-references> <http://www.w3.org/ns/shacl#message> "Exceeded maximum yaml references threshold" .
+<http://a.ml/vocabularies/amf/parser#max-yaml-references> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#missing-discriminator-property> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#missing-discriminator-property> <http://www.w3.org/ns/shacl#message> "Type is missing property marked as discriminator" .
 <http://a.ml/vocabularies/amf/parser#missing-discriminator-property> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

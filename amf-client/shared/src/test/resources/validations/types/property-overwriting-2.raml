@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: splunktaxapi
+types:
+  Grandfather:
+    properties:
+      age:
+        description: age.
+        type: integer
+        minimum: 1
+        required: false
+        example: 1
+  Father:
+    type: Grandfather
+    properties:
+      age:
+        type: any
+        required: true

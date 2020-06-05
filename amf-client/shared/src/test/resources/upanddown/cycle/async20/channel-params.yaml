@@ -1,0 +1,14 @@
+asyncapi: 2.0.0
+info:
+  title: API
+  version: "1.0"
+channels:
+  users/signup:
+    description: This channel is used to exchange messages about users signing up
+    subscribe:
+      summary: A user signed up.
+    parameters:
+      userId:
+        description: Id of the user.
+        schema:
+          type: string

@@ -1,0 +1,57 @@
+#%RAML 1.0
+title: An example file demonstrating the usage of the commerce cloud standards library
+
+types:
+  BoolFilter:
+    type: object
+    example: !include ./Examples/BoolFilter.json
+    properties:
+      filters:
+        type: Filter[]
+        required: false
+  BoolQuery:
+    type: object
+    examples: !include ./Examples/BoolQuery.raml
+    properties:
+      must?:
+        description: List of queries to be evaluated as an `AND`.
+        type: Query[]
+      mustNot?:
+        description:  List of queries to be evaluated as an `NOT`.
+        type: Query[]
+      should?:
+        description:  List of queries to be evaluated as an `OR`.
+        type: Query[]
+  Filter:
+    type: object
+    example: !include ./Examples/Filter.json
+    properties:
+      boolFilter?: BoolFilter
+      queryFilter?: QueryFilter
+  FilteredQuery:
+    type: object
+    example: !include ./Examples/FilteredQuery.json
+    properties:
+      filter:
+        type: Filter
+      query:
+        type: Query
+  NestedQuery:
+    type: object
+    example: !include ./Examples/NestedQuery.json
+    properties:
+      query:
+        type: Query
+  Query:
+    type: object
+    example: !include ./Examples/Query.json
+    properties:
+      boolQuery?: BoolQuery
+      filteredQuery?: FilteredQuery
+      nestedQuery?: NestedQuery
+  QueryFilter:
+    type: object
+    example: !include ./Examples/QueryFilter.json
+    properties:
+      query:
+        type: Query

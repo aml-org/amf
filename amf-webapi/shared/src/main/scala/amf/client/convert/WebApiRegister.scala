@@ -79,6 +79,9 @@ object WebApiRegister {
     platform.registerWrapper(templates.ParametrizedResourceTypeModel) {
       case s: webapi.models.templates.ParametrizedResourceType => ParametrizedResourceType(s)
     }
+    platform.registerWrapper(webapi.metamodel.TagModel) {
+      case s: webapi.models.Tag => Tag(s)
+    }
     platform.registerWrapper(templates.ParametrizedTraitModel) {
       case s: webapi.models.templates.ParametrizedTrait => ParametrizedTrait(s)
     }
@@ -176,6 +179,18 @@ object WebApiRegister {
     }
     platform.registerWrapper(Amqp091ChannelBindingModel) {
       case s: webapi.models.bindings.amqp.Amqp091ChannelBinding => Amqp091ChannelBinding(s)
+    }
+    platform.registerWrapper(OperationBindingsModel) {
+      case s: webapi.models.bindings.OperationBindings => OperationBindings(s)
+    }
+    platform.registerWrapper(ServerBindingsModel) {
+      case s: webapi.models.bindings.ServerBindings => ServerBindings(s)
+    }
+    platform.registerWrapper(ChannelBindingsModel) {
+      case s: webapi.models.bindings.ChannelBindings => ChannelBindings(s)
+    }
+    platform.registerWrapper(MessageBindingsModel) {
+      case s: webapi.models.bindings.MessageBindings => MessageBindings(s)
     }
     platform.registerWrapper(Amqp091ChannelExchangeModel) {
       case s: webapi.models.bindings.amqp.Amqp091ChannelExchange => Amqp091ChannelExchange(s)

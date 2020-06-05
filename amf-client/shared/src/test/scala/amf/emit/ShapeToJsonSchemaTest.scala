@@ -115,7 +115,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
           u.declares.forall {
             case anyShape: AnyShape =>
               val originalId = anyShape.id
-              anyShape.toJsonSchema
+              anyShape.toJsonSchema()
               val newId = anyShape.id
               originalId == newId
           }
@@ -138,13 +138,13 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
   private def cycle(file: String,
                     golden: String,
                     findShapeFunc: BaseUnit => Option[AnyShape],
-                    renderFn: AnyShape => String = (a: AnyShape) => a.toJsonSchema,
+                    renderFn: AnyShape => String = (a: AnyShape) => a.toJsonSchema(),
                     hint: Hint = RamlYamlHint): Future[Assertion] = {
     val jsonSchema: Future[String] = for {
       _    <- Validation(platform)
       unit <- AMFCompiler(basePath + file, platform, hint, eh = UnhandledParserErrorHandler).build()
     } yield {
-      findShapeFunc(Oas20Plugin.resolve(unit, UnhandledErrorHandler)).map(_.toJsonSchema).getOrElse("")
+      findShapeFunc(Oas20Plugin.resolve(unit, UnhandledErrorHandler)).map(_.toJsonSchema()).getOrElse("")
     }
 
     jsonSchema.flatMap { writeTemporaryFile(golden) }.flatMap(assertDifferences(_, goldenPath + golden))

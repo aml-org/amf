@@ -28,9 +28,19 @@ object ParserSideValidations extends Validations {
     "Invalid json schema definition type"
   )
 
+  val MandatoryObjectNodeType = validation(
+    "mandatory-object-node-type",
+    "Mandatory object node type"
+  )
+
   val InvalidShapeFormat = validation(
     "invalid-shape-format",
     "Invalid shape format"
+  )
+
+  val InvalidSecuritySchemeType = validation(
+    "invalid-security-scheme-type",
+    "Invalid security scheme type"
   )
 
   val InvalidDatetimeFormat = validation(
@@ -73,6 +83,11 @@ object ParserSideValidations extends Validations {
     "Discriminator property name is required"
   )
 
+  val InvalidRequiredValue = validation(
+    "invalid-required-value",
+    "Invalid required value"
+  )
+
   val InvalidServerPath = validation(
     "invalid-server-path",
     "Invalid server path"
@@ -93,9 +108,24 @@ object ParserSideValidations extends Validations {
     "Scope names must be an empty array"
   )
 
+  val MandatoryPathsProperty = validation(
+    "mandatory-paths-property",
+    "Paths property must be declared"
+  )
+
+  val MandatoryChannelsProperty = validation(
+    "mandatory-channels-property",
+    "Channels property must be declared"
+  )
+
   val InvalidSecuritySchemeDescribedByType = validation(
     "invalid-security-scheme-described-by-type",
     "Invalid 'describedBy' type, map expected"
+  )
+
+  val ExpectedReference = validation(
+    "expected-reference",
+    "Expected reference"
   )
 
   val InvalidTagType = validation(
@@ -178,6 +208,11 @@ object ParserSideValidations extends Validations {
     "Invalid decimal point"
   )
 
+  val DuplicateRequiredItem = validation(
+    "duplicate-required-item",
+    "Duplicate required item"
+  )
+
   val InvalidTypeDefinition = validation(
     "invalid-type-definition",
     "Invalid type definition"
@@ -191,6 +226,11 @@ object ParserSideValidations extends Validations {
   val InvalidRequiredBooleanForSchemaVersion = validation(
     "invalid-required-boolean-for-schema-version",
     "Required property boolean value is only supported in JSON Schema draft-3"
+  )
+
+  val MissingOAuthFlowField = validation(
+    "missing-oauth-flow-field",
+    "Missing mandatory property for declared OAuth flow"
   )
 
   val InvalidAdditionalPropertiesType = validation(
@@ -266,11 +306,6 @@ object ParserSideValidations extends Validations {
   val CrossSecurityWarningSpecification = validation(
     "cross-security-warning",
     "Using a security scheme type from raml in oas or from oas in raml"
-  )
-
-  val DuplicatedOperationStatusCodeSpecification = validation(
-    "duplicated-operation-status-code",
-    "Status code for the provided operation response must not be duplicated"
   )
 
   val ChainedReferenceSpecification = validation(
@@ -429,6 +464,11 @@ object ParserSideValidations extends Validations {
     "Unable to parse json schema"
   )
 
+  val MalformedJsonReference = validation(
+    "malformed-json-reference",
+    "Malformed json reference"
+  )
+
   val InvalidAnnotationType = validation(
     "invalid-annotation-type",
     "Invalid annotation type"
@@ -444,9 +484,19 @@ object ParserSideValidations extends Validations {
     "Invalid fragment type"
   )
 
+  val InvalidParameterStyleBindingCombination = validation(
+    "invalid-parameter-style-binding-combination",
+    "Invalid parameter style binding combination"
+  )
+
   val InvalidTypesType = validation(
     "invalid-types-type",
     "Invalid types type"
+  )
+
+  val InvalidOAuth2FlowName = validation(
+    "invalid-oauth2-flow-name",
+    "Invalid OAuth2 flow name"
   )
 
   val InvalidDocumentationType = validation(
@@ -553,6 +603,16 @@ object ParserSideValidations extends Validations {
     "'id' must be a string"
   )
 
+  val ExeededMaxYamlReferences = validation(
+    "max-yaml-references",
+    "Exceeded maximum yaml references threshold"
+  )
+
+  val MissingParameterType = validation(
+    "missing-parameter-type",
+    "Missing parameter type"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -596,7 +656,6 @@ object ParserSideValidations extends Validations {
   )
 
   override val validations: List[ValidationSpecification] = List(
-    DuplicatedOperationStatusCodeSpecification,
     ChainedReferenceSpecification,
     ExclusivePropertiesSpecification,
     PathTemplateUnbalancedParameters,
@@ -696,6 +755,7 @@ object ParserSideValidations extends Validations {
     ItemsFieldRequired,
     InvalidTagType,
     InvalidIdentifier,
-    InvalidComponents
+    InvalidComponents,
+    ExeededMaxYamlReferences
   )
 }

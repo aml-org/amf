@@ -11,9 +11,10 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Oas20Resolver, Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Async20Resolver, Oas20Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
+import amf.core.errorhandling.StaticErrorCollector
 import amf.core.exception.UnsupportedVendorException
 import amf.core.model.document.{Document => InternalDocument}
 import amf.core.model.domain.{
@@ -27,9 +28,9 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
+import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
-import org.yaml.parser.JsonParser
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -40,6 +41,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val banking       = "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml"
   private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
   private val oas3          = "file://amf-client/shared/src/test/resources/api/oas3.json"
+  private val async2        = "file://amf-client/shared/src/test/resources/api/async2.yaml"
   private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
   private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
@@ -58,10 +60,16 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val data_model     = "file://vocabularies/vocabularies/data_model.yaml"
   private val data_shapes    = "file://vocabularies/vocabularies/data_shapes.yaml"
   private val security_model = "file://vocabularies/vocabularies/security.yaml"
+  private val apiWithSpaces =
+    "file://amf-client/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
+  private val recursiveAdditionalProperties =
+    "file://amf-client/shared/src/test/resources/recursive/recursive-additional-properties.yaml"
+  private val knowledgeGraphServiceApi =
+    "file://amf-client/shared/src/test/resources/production/knowledge-graph-service-api-1.0.13-raml/kg.raml"
 
-  def testVocabulary(file: String, numClasses: Int, numProperties: Int) = {
+  def testVocabulary(file: String, numClasses: Int, numProperties: Int): Future[Assertion] = {
     for {
       _    <- AMF.init().asFuture
       unit <- amf.Core.parser(Aml.name, "application/yaml").parseFileAsync(file).asFuture
@@ -127,6 +135,62 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Node value uses unescaped strings in RAML") {
+    val expected = "The tag's name. This is typically a version (e.g., \"v0.0.1\")."
+    val doc =
+      """
+        | #%RAML 1.0
+        | title: 'The tag''s name. This is typically a version (e.g., "v0.0.1").'
+        | baseUri: https://elmdv.symc.symantec.com/keybank/v1
+        | version: 1.0
+        |""".stripMargin
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseStringAsync(doc).asFuture
+    } yield {
+      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
+  test("Node value uses unescaped strings in OAS 20 YAML") {
+    val expected = "The tag's name. This is typically a version (e.g., \"v0.0.1\")."
+    val doc =
+      """
+        | swagger: "2.0"
+        | info:
+        |   title: 'The tag''s name. This is typically a version (e.g., "v0.0.1").'
+        |   version: 1.0
+        | paths: {}
+        |""".stripMargin
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new Oas20YamlParser().parseStringAsync(doc).asFuture
+    } yield {
+      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
+  test("Node value with double \\ should be unescaped") {
+    val expected = """\\"""
+    val doc =
+      """
+        | swagger: "2.0"
+        | info:
+        |   title: "\\\\"
+        |   version: 1.0
+        | paths: {}
+        |""".stripMargin
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new Oas20YamlParser().parseStringAsync(doc).asFuture
+    } yield {
+      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
   test("Render / parse test RAML 0.8") {
     for {
       _      <- AMF.init().asFuture
@@ -176,6 +240,16 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       output <- new Oas30Renderer().generateString(unit).asFuture
     } yield {
       output should include("openIdConnectUrl")
+    }
+  }
+
+  test("Render / parse test Async 2.0") {
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- new Async20Parser().parseFileAsync(async2).asFuture
+      output <- new Async20Renderer().generateString(unit).asFuture
+    } yield {
+      output should include("Correlation ID Example")
     }
   }
 
@@ -813,9 +887,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         |      "200":
         |       description: a descrip""".stripMargin
     for {
-      _         <- AMF.init().asFuture
-      doc       <- Future { buildBasicApi() }
-      generated <- new Renderer(Oas20.name, "application/yaml").generateString(doc).asFuture
+      _   <- AMF.init().asFuture
+      doc <- Future { buildBasicApi() }
+      generated <- new Renderer(Oas20.name, "application/yaml", None)
+        .generateString(doc)
+        .asFuture
     } yield {
       val deltas = Diff.ignoreAllSpace.diff(expected, generated)
       if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
@@ -849,9 +925,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
          |      name:
          |        type: string""".stripMargin
     for {
-      _         <- AMF.init().asFuture
-      doc       <- Future { buildApiWithTypeTarget() }
-      generated <- new Renderer(Oas20.name, "application/yaml").generateString(doc).asFuture
+      _   <- AMF.init().asFuture
+      doc <- Future { buildApiWithTypeTarget() }
+      generated <- new Renderer(Oas20.name, "application/yaml", None)
+        .generateString(doc)
+        .asFuture
     } yield {
       val deltas = Diff.ignoreAllSpace.diff(expected, generated)
       if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
@@ -1588,7 +1666,6 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit <- new RamlParser(environment).parseStringAsync(input).asFuture
       v    <- AMF.validate(unit, Raml10Profile, RAMLStyle).asFuture
     } yield {
-      //println("report: " + v.toString)
       v.conforms should be(true)
       val declarations = unit.asInstanceOf[Document].declares.asSeq
       declarations should have size 1
@@ -1825,6 +1902,17 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test uri references to external reference from external reference are not encoded") {
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseFileAsync(apiWithSpaces).asFuture
+    } yield {
+      val units      = unit.references().asSeq
+      val references = units.flatMap(x => x.references().asSeq)
+      (units.size + references.size) shouldBe 3
+    }
+  }
+
   test("Test JSON Schema emission without documentation") {
     val api = """#%RAML 1.0
                 |title: test json schema
@@ -1912,6 +2000,18 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Resource type merging of identical types referenced differently") {
+    val file = "file://amf-client/shared/src/test/resources/validations/rt-type-merging/api.raml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseFileAsync(file).asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
   test("Test non existent traits") {
     val file = "file://amf-client/shared/src/test/resources/validations/traits/non-existent-include.raml"
     for {
@@ -1938,8 +2038,225 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
-      println(report.toString())
       assert(!report.conforms)
+    }
+  }
+
+  test("Test API with recursive type in array items") {
+    val api =
+      """
+        |{
+        |  "swagger": "2.0",
+        |  "info": {
+        |    "title": "api",
+        |    "version": "1.0.0"
+        |  },
+        |  "paths": {},
+        |  "definitions": {
+        |    "APTransactionType": {
+        |      "properties": {
+        |        "GLTransaction": {
+        |          "items": {
+        |            "$ref": "#/definitions/GLTransactionType"
+        |          },
+        |          "type": "array"
+        |        }
+        |      },
+        |      "type": "object"
+        |    },
+        |    "ARTransactionType": {
+        |      "properties": {
+        |        "GLTransaction": {
+        |          "items": {
+        |            "$ref": "#/definitions/GLTransactionType"
+        |          },
+        |          "type": "array"
+        |        }
+        |      },
+        |      "type": "object"
+        |    },
+        |    "GLTransactionType": {
+        |      "properties": {
+        |        "APTransaction": {
+        |          "$ref": "#/definitions/APTransactionType"
+        |        },
+        |        "ARTransaction": {
+        |          "$ref": "#/definitions/ARTransactionType"
+        |        }
+        |      },
+        |      "type": "object"
+        |    },
+        |    "root": {
+        |      "properties": {
+        |        "ARTransaction": {
+        |          "items": {
+        |            "$ref": "#/definitions/ARTransactionType"
+        |          },
+        |          "type": "array"
+        |        }
+        |      },
+        |      "type": "object"
+        |    }
+        |  }
+        |}
+        |""".stripMargin
+    val payload =
+      """
+        |{
+        |  "ARTransaction": [
+        |    {
+        |      "GLTransaction": [
+        |        {
+        |          "APTransaction": {
+        |            "GLTransaction": []
+        |          },
+        |          "ARTransaction": {
+        |            "GLTransaction": []
+        |          }
+        |        }
+        |      ]
+        |    }
+        |  ]
+        |}
+        |""".stripMargin
+    for {
+      _        <- AMF.init().asFuture
+      parsed   <- new Oas20Parser().parseStringAsync(api).asFuture
+      resolved <- Future(new Oas20Resolver().resolve(parsed, ResolutionPipeline.EDITING_PIPELINE))
+      shape <- {
+        Future.successful {
+          val declarations = resolved.asInstanceOf[Document].declares.asSeq
+          val shape = declarations.find {
+            case s: Shape => s.name.value() == "root"
+            case _        => false
+          }
+          shape.get.asInstanceOf[AnyShape]
+        }
+      }
+      report <- {
+        shape.validate(payload).asFuture
+      }
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test emission of json schema with specified version") {
+    val api = "file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new Async20Parser().parseFileAsync(api).asFuture
+      resolved <- Future(new Async20Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+    } yield {
+      val golden  = """{
+                        |  "$schema": "http://json-schema.org/draft-07/schema#",
+                        |  "$ref": "#/definitions/conditional-subschemas",
+                        |  "definitions": {
+                        |    "conditional-subschemas": {
+                        |      "type": "object",
+                        |      "if": {
+                        |        "properties": {
+                        |          "country": {
+                        |            "enum": [
+                        |              "United States of America"
+                        |            ]
+                        |          }
+                        |        },
+                        |        "type": "object"
+                        |      },
+                        |      "then": {
+                        |        "properties": {
+                        |          "postal_code": {
+                        |            "pattern": "[0-9]{5}(-[0-9]{4})?",
+                        |            "type": "string"
+                        |          }
+                        |        },
+                        |        "type": "object"
+                        |      },
+                        |      "else": {
+                        |        "properties": {
+                        |          "postal_code": {
+                        |            "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]",
+                        |            "type": "string"
+                        |          }
+                        |        },
+                        |        "type": "object"
+                        |      },
+                        |      "examples": [
+                        |        {
+                        |          "country": "United States of America",
+                        |          "postal_code": "dlkfjslfj"
+                        |        },
+                        |        {
+                        |          "country": "United States of America",
+                        |          "postal_code": "20500"
+                        |        },
+                        |        {
+                        |          "country": "Canada",
+                        |          "postal_code": "K1M 1M4"
+                        |        },
+                        |        {
+                        |          "country": "Canada",
+                        |          "postal_code": "K1M NOT"
+                        |        }
+                        |      ],
+                        |      "additionalProperties": true,
+                        |      "properties": {
+                        |        "country": {
+                        |          "enum": [
+                        |            "United States of America",
+                        |            "Canada"
+                        |          ]
+                        |        }
+                        |      }
+                        |    }
+                        |  }
+                        |}
+                        |""".stripMargin
+      val options = new ShapeRenderOptions().withSchemaVersion(JSONSchemaVersions.DRAFT_07)
+      val generated =
+        resolved
+          .asInstanceOf[Document]
+          .declares
+          .asSeq
+          .find(_._internal.id == "file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/conditional-subschemas")
+          .get
+          .asInstanceOf[NodeShape]
+          .buildJsonSchema(options)
+      assert(generated == golden)
+    }
+  }
+
+  test("Empty static validations collector") {
+    val api = """#%RAML 1.0
+                |title: API
+                |types:
+                |  SomeType:
+                |    type: string
+                |    required: true
+                |""".stripMargin
+    for {
+      _     <- AMF.init().asFuture
+      unit1 <- new RamlParser().parseStringAsync(api).asFuture
+      unit2 <- new RamlParser().parseStringAsync(api).asFuture
+    } yield {
+      val validations1 = unit1._internal.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil)
+      val validation2  = unit2._internal.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil)
+      assert(validations1.nonEmpty && validation2.nonEmpty)
+      StaticErrorCollector.clean()
+      val postCleaning1 = unit1._internal.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil)
+      val postCleaning2 = unit2._internal.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil)
+      assert(postCleaning1.isEmpty && postCleaning2.isEmpty)
+    }
+  }
+
+  test("Resolve KG Service API") {
+    for {
+      _        <- AMF.init().asFuture
+      parsed   <- new Raml10Parser().parseFileAsync(knowledgeGraphServiceApi).asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(parsed, ResolutionPipeline.EDITING_PIPELINE))
+    } yield {
+      assert(resolved.references().asSeq.forall(_.id != null))
     }
   }
 

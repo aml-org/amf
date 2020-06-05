@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models.security
 
 import amf.core.annotations.SourceAST
-import amf.core.metamodel.Field
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.{StrField, domain}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields}
@@ -60,7 +60,7 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   }
 
   override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type =
-    if (parent.contains("#")) {
+    if (Option(parent).isDefined && parent.contains("#")) {
       withId(parent + "/" + componentId.urlComponentEncoded)
     } else {
       withId(parent + "#" + componentId.urlComponentEncoded)
@@ -157,7 +157,7 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
 
   override def linkCopy(): SecurityScheme = SecurityScheme().withId(id)
 
-  override def meta = SecuritySchemeModel
+  override def meta: Obj = SecuritySchemeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = name.option().getOrElse("fragment").urlComponentEncoded

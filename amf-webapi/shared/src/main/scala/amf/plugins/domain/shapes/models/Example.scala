@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.client.execution.BaseExecutionEnvironment
 import amf.core.metamodel.{Field, Obj}
 import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.domain._
@@ -10,6 +11,7 @@ import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import org.yaml.model.YPart
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.parser.spec.common.PayloadSerializer
+import amf.plugins.domain.webapi.models.Key
 
 /**
   *
@@ -18,7 +20,8 @@ class Example(override val fields: Fields, override val annotations: Annotations
     extends NamedDomainElement
     with Linkable
     with ExternalSourceElement
-    with PayloadSerializer {
+    with PayloadSerializer
+    with Key {
 
   def displayName: StrField     = fields.field(DisplayName)
   def description: StrField     = fields.field(Description)
@@ -37,12 +40,18 @@ class Example(override val fields: Fields, override val annotations: Annotations
 
   override def meta: Obj = ExampleModel
 
+  override def key: StrField = fields.field(ExampleModel.key)
+
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/example/" + name.option().getOrElse("default-example").urlComponentEncoded
 
   def toJson: String = toJson(this)
 
   def toYaml: String = toYaml(this)
+
+  def toJson(exec: BaseExecutionEnvironment): String = toJson(this, exec)
+
+  def toYaml(exec: BaseExecutionEnvironment): String = toYaml(this, exec)
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Example.apply

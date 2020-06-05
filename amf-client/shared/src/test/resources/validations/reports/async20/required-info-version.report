@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/async20/validations/required-info-version.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#WebAPI-version-minCount
+  Message: Info object 'version' is mandatory
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/required-info-version.yaml#/web-api
+  Property: http://a.ml/vocabularies/core#version
+  Position: Some(LexicalInformation([(1,0)-(4,12)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/required-info-version.yaml

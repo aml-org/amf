@@ -22,21 +22,6 @@ abstract class RamlResolutionTest extends ResolutionTest {
   }
 }
 
-abstract class OasResolutionTest extends ResolutionTest {
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    val res = config.target match {
-      case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler)
-      case Raml | Raml10 => Raml10Plugin.resolve(unit, UnhandledErrorHandler)
-      case Oas30         => Oas30Plugin.resolve(unit, UnhandledErrorHandler)
-      case Oas | Oas20   => Oas20Plugin.resolve(unit, UnhandledErrorHandler)
-      case Amf           => Oas20Plugin.resolve(unit, UnhandledErrorHandler)
-      case target        => throw new Exception(s"Cannot resolve $target")
-      //    case _ => unit
-    }
-    res
-  }
-}
-
 class ProductionValidationTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   override def build(config: CycleConfig,
@@ -68,6 +53,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
   val validationPath    = "amf-client/shared/src/test/resources/validations/"
+  val resolutionPath    = "amf-client/shared/src/test/resources/resolution/"
   val productionRaml10  = "amf-client/shared/src/test/resources/production/raml10/"
   val productionRaml08  = "amf-client/shared/src/test/resources/production/raml08/"
 
@@ -270,11 +256,26 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test nil type with additional facets") {
     cycle("nil-type.raml", "nil-type.raml.resolved", RamlYamlHint, Amf, validationPath)
   }
+
+  test("jsonld with links to declares and references") {
+    cycle(
+      "link-to-declares-and-refs.raml",
+      "link-to-declares-and-refs-default.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "links-to-declares-and-references/"
+    )
+  }
 }
 
-class OASProductionResolutionTest extends OasResolutionTest {
+class OASProductionResolutionTest extends ResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
+
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+    if (config.target.equals(Amf) && config.transformWith.isEmpty) Oas20Plugin.resolve(unit, UnhandledErrorHandler)
+    else super.transform(unit, config)
+  }
 
   test("OAS Response parameters resolution") {
     cycle("oas_response_declaration.yaml",
@@ -313,8 +314,9 @@ class OASProductionResolutionTest extends OasResolutionTest {
       "description-applied-to-operations.json",
       "description-applied-to-operations-resolution.jsonld",
       OasJsonHint,
-      Oas30,
-      completeCyclePath + "oas3/summary-description-in-path/"
+      Amf,
+      completeCyclePath + "oas3/summary-description-in-path/",
+      transformWith = Some(Oas30)
     )
   }
 }
@@ -441,29 +443,4 @@ class ProductionServiceTest extends RamlResolutionTest {
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }
-
-//  private def cycle(source: String, directory: String): Future[Assertion] = {
-//
-//    val config = CycleConfig(source, source+".jsonld", RamlYamlHint, Amf, directory)
-//
-//    for{
-//      v <- Validation(platform).map(_.withEnabledValidation(true))
-//      model <- build(config, Some(v))
-//      tr <- Future.successful(transform(model,config))
-//      jsonLd <- AMFRenderer(tr,Amf,Json,RenderOptions()).renderToString
-//      resolvedRaml <- AMFRenderer(tr,Raml,Yaml,RenderOptions()).renderToString
-//      parsedRaml <- AMFCompiler("", TrunkPlatform(jsonLd),AmfJsonHint,v).build()
-//      resolvedParsedRaml <- Future.successful({
-//        val unit = new ValidationResolutionPipeline(RAMLProfile, parsedRaml).resolve()
-//        unit.fields.removeField(DocumentModel.Declares)
-//        unit
-//      })
-//      renderedRaml <-  AMFRenderer(resolvedParsedRaml,Raml,Yaml,RenderOptions()).renderToString
-//      resolvedFile <- writeTemporaryFile("resolved.raml")(resolvedRaml)
-//      renderedFile <- writeTemporaryFile("rendered.raml")(renderedRaml)
-//      r <- Tests.checkDiff(resolvedFile,renderedFile)
-//    } yield {
-//      r
-//    }
-//  }
 }

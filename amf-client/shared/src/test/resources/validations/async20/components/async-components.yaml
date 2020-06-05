@@ -1,0 +1,140 @@
+asyncapi: '2.0.0'
+info:
+  title: components
+  version: '1.0.0'
+
+components:
+  securitySchemes:
+    userPassword:
+      type: userPassword
+      description: userPassword security scheme
+
+  schemas:
+    simple-obj:
+      type: object
+    conditional-subschemas:
+      type: string
+      properties:
+        country:
+          enum: ["United States of America", "Canada"]
+      if:
+        properties:
+          country:
+            const: United States
+      then:
+        properties:
+          postal_code:
+            pattern: "[0-9]{5}(-[0-9]{4})?"
+      else:
+        properties:
+          postal_code:
+            pattern: "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]"
+    external-obj:
+      $ref: 'external-components.json#/external-schema'
+
+  parameters:
+    userId:
+      description: id of the user
+      location: "$message.payload#/user/id"
+      schema:
+        type: string
+    external-param:
+      $ref: 'external-components.json#/external-param'
+
+  messages:
+    someMessage:
+      headers:
+        type: object
+        properties:
+          a:
+            type: string
+          b:
+            type: integer
+      payload:
+        type: string
+      schemaFormat: application/schema+json;version=draft-07
+      contentType: application/json
+      name: lightMeasured
+      title: Light measured
+      summary: Inform about environmental lighting conditions of a particular streetlight.
+    externalMessage:
+      $ref: 'external-components.json#/external-message'
+
+  correlationIds:
+    someId:
+      description: Default Correlation ID
+      location: $message.header#/correlationId
+    external-example:
+      $ref: 'external-components.json#/external-correlation-id'
+
+  messageBindings:
+    someMessageBinding:
+      mqtt:
+        bindingVersion: 31.07.92
+      kafka:
+        key: somekey
+    externalMessageBinding:
+      $ref: 'external-components.json#/external-message-binding'
+
+  serverBindings:
+    someServerBinding:
+      mqtt:
+        clientId: someid
+        cleanSession: true
+        keepAlive: 12
+        bindingVersion: 3.4.3
+    externalServerBinding:
+      $ref: 'external-components.json#/external-server-binding'
+
+  operationBindings:
+    someOperationBinding:
+      http:
+        bindingVersion: 31.07.92
+        type: request
+        method: TRACE
+        query:
+          type: object
+          properties:
+            some:
+              type: string
+    externalOperationBinding:
+      $ref: 'external-components.json#/external-operation-binding'
+
+  channelBindings:
+    someChannelBinding:
+      ws:
+        bindingVersion: 1.0.0
+    externalChannelBinding:
+      $ref: 'external-components.json#/external-channel-binding'
+
+servers:
+  production:
+    url: rabbitmq.example.org
+    protocol: amqp
+    security:
+      - userPassword: []
+    bindings:
+      $ref: '#/components/serverBindings/someServerBinding'
+
+channels:
+  smartylighting/streetlights/1/0/event/lighting/measured:
+    bindings:
+      $ref: '#/components/channelBindings/someChannelBinding'
+    parameters:
+      someId:
+        $ref: '#/components/parameters/userId'
+    subscribe:
+      bindings:
+        $ref: '#/components/operationBindings/someOperationBinding'
+      message:
+        oneOf:
+          - $ref: '#/components/messages/someMessage'
+          - $ref: '#/components/messages/someMessage'
+    publish:
+      message:
+        headers:
+          $ref: '#/components/schemas/simple-obj'
+        correlationId:
+          $ref: '#/components/correlationIds/someId'
+        bindings:
+          $ref: '#/components/messageBindings/someMessageBinding'

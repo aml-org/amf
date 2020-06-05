@@ -8,7 +8,7 @@ import amf.plugins.domain.webapi.metamodel.ServerModel
 import amf.plugins.domain.webapi.metamodel.ServerModel._
 import org.yaml.model.YMap
 import amf.core.utils.AmfStrings
-import amf.plugins.domain.webapi.models.bindings.ServerBinding
+import amf.plugins.domain.webapi.models.bindings.ServerBindings
 import amf.plugins.domain.webapi.models.security.SecurityRequirement
 
 /**
@@ -23,7 +23,7 @@ case class Server(fields: Fields, annotations: Annotations) extends DomainElemen
   def protocol: StrField                 = fields.field(Protocol)
   def protocolVersion: StrField          = fields.field(ProtocolVersion)
   def security: Seq[SecurityRequirement] = fields.field(Security)
-  def bindings: Seq[ServerBinding]       = fields.field(Bindings)
+  def bindings: ServerBindings           = fields.field(Bindings)
 
   def withName(name: String): this.type                           = set(Name, name)
   def withUrl(url: String): this.type                             = set(Url, url)
@@ -32,11 +32,17 @@ case class Server(fields: Fields, annotations: Annotations) extends DomainElemen
   def withProtocol(protocol: String): this.type                   = set(Protocol, protocol)
   def withProtocolVersion(protocolVersion: String): this.type     = set(ProtocolVersion, protocolVersion)
   def withSecurity(security: Seq[SecurityRequirement]): this.type = setArray(Security, security)
-  def withBindings(bindings: Seq[ServerBinding]): this.type       = setArray(Bindings, bindings)
+  def withBindings(bindings: ServerBindings): this.type           = set(Bindings, bindings)
 
   def withVariable(name: String): Parameter = {
     val result = Parameter().withName(name)
     add(Variables, result)
+    result
+  }
+
+  def withSecurity(name: String): SecurityRequirement = {
+    val result = SecurityRequirement().withName(name)
+    add(Security, result)
     result
   }
 

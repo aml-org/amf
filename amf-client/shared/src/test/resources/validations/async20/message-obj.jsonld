@@ -124,16 +124,11 @@
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
-                    ],
-                    "http://a.ml/vocabularies/core#name": [
-                      {
-                        "@value": "lightMeasured"
-                      }
                     ],
                     "http://a.ml/vocabularies/core#description": [
                       {
@@ -347,6 +342,11 @@
                             ]
                           }
                         ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#displayName": [
+                      {
+                        "@value": "lightMeasured"
                       }
                     ],
                     "http://a.ml/vocabularies/core#title": [
@@ -711,6 +711,21 @@
                                   }
                                 ]
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/parameter/default-parameter/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/parameter/default-parameter"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(14,16)-(21,0)]"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -1038,13 +1053,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured/source-map/lexical/element_7",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_8",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiContract#tag"
@@ -1057,23 +1072,10 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured/source-map/lexical/element_5",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_6",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/core#description"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(31,8)-(32,0)]"
-                              }
-                            ]
-                          },
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured/source-map/lexical/element_3",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/core#name"
+                                "@value": "http://a.ml/vocabularies/core#displayName"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1083,20 +1085,33 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_4",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/core#summary"
+                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(30,8)-(31,0)]"
+                                "@value": "[(14,0)-(42,16)]"
                               }
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_2",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/core#title"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(29,8)-(30,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#documentation"
@@ -1109,7 +1124,20 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured/source-map/lexical/element_2",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/apiContract#header"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(14,8)-(21,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_3",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#correlationId"
@@ -1122,28 +1150,28 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured/source-map/lexical/element_4",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_5",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured"
+                                "@value": "http://a.ml/vocabularies/core#description"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(14,0)-(42,16)]"
+                                "@value": "[(31,8)-(32,0)]"
                               }
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/lightMeasured/source-map/lexical/element_6",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/source-map/lexical/element_7",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/core#title"
+                                "@value": "http://a.ml/vocabularies/core#summary"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(29,8)-(30,0)]"
+                                "@value": "[(30,8)-(31,0)]"
                               }
                             ]
                           }
@@ -1285,7 +1313,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(10,9)-(42,16)]"
+                    "@value": "[(10,0)-(42,16)]"
                   }
                 ]
               },
@@ -1322,7 +1350,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

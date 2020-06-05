@@ -1,4 +1,5 @@
 package amf.plugins.document.webapi.contexts.parser.raml
+import amf.core.client.ParsingOptions
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{Raml10, Vendor}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
@@ -9,14 +10,15 @@ class Raml10WebApiContext(loc: String,
                           refs: Seq[ParsedReference],
                           override val wrapped: ParserContext,
                           private val ds: Option[RamlWebApiDeclarations] = None,
-                          contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
-    extends RamlWebApiContext(loc, refs, wrapped, ds, contextType) {
+                          contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
+                          options: ParsingOptions = ParsingOptions())
+    extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType) {
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val vendor: Vendor                  = Raml10
   override val syntax: SpecSyntax              = Raml10Syntax
 
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =
-    new Raml10WebApiContext(loc, refs, wrapped, Some(declarations))
+    new Raml10WebApiContext(loc, refs, wrapped, Some(declarations), options = options)
 }
 
 class ExtensionLikeWebApiContext(loc: String,
@@ -25,8 +27,9 @@ class ExtensionLikeWebApiContext(loc: String,
                                  val ds: Option[RamlWebApiDeclarations] = None,
                                  val parentDeclarations: RamlWebApiDeclarations,
                                  parserCount: Option[Int] = None,
-                                 contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
-    extends Raml10WebApiContext(loc, refs, wrapped, ds, contextType = contextType) {
+                                 contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
+                                 options: ParsingOptions = ParsingOptions())
+    extends Raml10WebApiContext(loc, refs, wrapped, ds, contextType = contextType, options) {
 
   override val declarations: ExtensionWebApiDeclarations =
     ds match {
@@ -45,5 +48,5 @@ class ExtensionLikeWebApiContext(loc: String,
     }
 
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =
-    new ExtensionLikeWebApiContext(loc, refs, wrapped, Some(declarations), parentDeclarations)
+    new ExtensionLikeWebApiContext(loc, refs, wrapped, Some(declarations), parentDeclarations, options = options)
 }

@@ -2,26 +2,18 @@ package amf.validations
 
 import java.util.regex.Pattern
 
+import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
 import amf.core.parser.Annotations
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.utils.RegexConverter
-import amf.plugins.document.webapi.validation.Oas3ExpressionValidator
+import amf.plugins.document.webapi.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.plugins.domain.shapes.metamodel._
-import amf.plugins.domain.shapes.models.{FileShape, ScalarShape}
-import amf.plugins.domain.webapi.metamodel.security.{
-  OAuth2SettingsModel,
-  OpenIdConnectSettingsModel,
-  SecuritySchemeModel
-}
-import amf.plugins.domain.webapi.metamodel.{
-  CallbackModel,
-  IriTemplateMappingModel,
-  ParameterModel,
-  TemplatedLinkModel,
-  WebApiModel
-}
-import amf.plugins.domain.webapi.models.IriTemplateMapping
+import amf.plugins.domain.shapes.models.{FileShape, NodeShape, ScalarShape}
+import amf.plugins.domain.webapi.metamodel.bindings.{BindingHeaders, BindingQuery}
+import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
+import amf.plugins.domain.webapi.metamodel._
+import amf.plugins.domain.webapi.models.{IriTemplateMapping, Parameter}
 import amf.plugins.domain.webapi.models.security.{OAuth2Settings, OpenIdConnectSettings}
 
 object CustomShaclFunctions {
@@ -47,6 +39,21 @@ object CustomShaclFunctions {
                 violation(None)
             case _ => None
         })
+    }),
+    "headerParamNameMustBeAscii" -> ((element, violation) => {
+      for {
+        name    <- element.fields.?[AmfScalar](ParameterModel.Name)
+        binding <- element.fields.?[AmfScalar](ParameterModel.Binding)
+      } yield {
+        val isAscii: (String) => Boolean = (toMatch) => toMatch.matches("^[\\x00-\\x7F]+$")
+        val bindingVal                   = binding.value.toString
+        val nameVal                      = name.value.toString
+        (bindingVal, nameVal) match {
+          case ("header", name) if !isAscii(name) => violation(None)
+          case _                                  => // ignore
+        }
+      }
+
     }),
     "minimumMaximumValidation" ->
       ((element, violation) => {
@@ -177,12 +184,11 @@ object CustomShaclFunctions {
     }),
     "validCallbackExpression" -> ((callback, violation) => {
       val optExpression = callback.fields.getValueAsOption(CallbackModel.Expression).map(_.value)
-      validateExpression(optExpression, () => violation(Some(Annotations(), CallbackModel.Expression)))
+      validateOas3Expression(optExpression, () => violation(Some(Annotations(), CallbackModel.Expression)))
     }),
     "validLinkRequestBody" -> ((link, violation) => {
       val optExpression = link.fields.getValueAsOption(TemplatedLinkModel.RequestBody).map(_.value)
-      validateExpression(optExpression, () => violation(Some(Annotations(), TemplatedLinkModel.RequestBody)))
-
+      validateOas3Expression(optExpression, () => violation(Some(Annotations(), TemplatedLinkModel.RequestBody)))
     }),
     "validLinkParameterExpressions" -> ((link, violation) => {
       val maybeArray = link.fields.?[AmfArray](TemplatedLinkModel.Mapping)
@@ -191,18 +197,72 @@ object CustomShaclFunctions {
           case link: IriTemplateMapping =>
             val optExpression: Option[AmfElement] =
               link.fields.getValueAsOption(IriTemplateMappingModel.LinkExpression).map(_.value)
-            validateExpression(optExpression, () => violation(Some(Annotations(), TemplatedLinkModel.Mapping)))
+            validateOas3Expression(optExpression, () => violation(Some(Annotations(), TemplatedLinkModel.Mapping)))
           case _ =>
         }
       }
-    })
+    }),
+    "validCorrelationIdLocation" -> ((link, violation) => {
+      val optExpression = link.fields.getValueAsOption(CorrelationIdModel.Location).map(_.value)
+      validateAsyncExpression(optExpression, () => violation(Some(Annotations(), CorrelationIdModel.Location)))
+    }),
+    "validParameterLocation" -> ((link, violation) => {
+      val location = link.fields.getValueAsOption(ParameterModel.Binding)
+      if (location.exists(!_.annotations.contains(classOf[SynthesizedField]))) {
+        validateAsyncExpression(location.map(_.value), () => violation(Some(Annotations(), ParameterModel.Binding)))
+      }
+    }),
+    "mandatoryHeadersObjectNodeWithPropertiesFacet" -> ((element, violation) => {
+      for {
+        headerElement <- element.fields.?[AmfElement](BindingHeaders.Headers)
+      } yield {
+        val isObjectAndHasProperties = validateObjectAndHasProperties(headerElement)
+        if (!isObjectAndHasProperties) violation(None)
+      }
+    }),
+    "mandatoryQueryObjectNodeWithPropertiesFacet" -> ((element, violation) => {
+      for {
+        queryElement <- element.fields.?[AmfElement](BindingQuery.Query)
+      } yield {
+        val isObjectAndHasProperties = validateObjectAndHasProperties(queryElement)
+        if (!isObjectAndHasProperties) violation(None)
+      }
+    }),
+    "mandatoryHeadersObjectNode" -> ((element, violation) => {
+      for {
+        headerElement <- element.fields.?[AmfArray](MessageModel.Headers)
+        header <- headerElement.values.headOption
+      } yield {
+        header match {
+          case p: Parameter => p.schema match {
+            case _: NodeShape => // ignore
+            case _ => violation(None)
+          }
+        }
+      }
+    }),
   )
 
-  def validateExpression(exp: Option[AmfElement], throwValidation: () => Unit): Unit = exp foreach {
+  private def validateObjectAndHasProperties(element: AmfElement) = {
+    element match {
+      case element: NodeShape =>
+        element.properties.exists(p => p.patternName.option().isEmpty) || element.fields.exists(
+          NodeShapeModel.Properties)
+      case _ => false
+    }
+  }
+
+  def validateOas3Expression(exp: Option[AmfElement], throwValidation: () => Unit): Unit = exp foreach {
     case exp: AmfScalar =>
       if (!Oas3ExpressionValidator.validate(exp.toString))
         throwValidation()
     case _ =>
   }
 
+  def validateAsyncExpression(exp: Option[AmfElement], throwValidation: () => Unit): Unit = exp foreach {
+    case exp: AmfScalar =>
+      if (!AsyncExpressionValidator.expression(exp.toString))
+        throwValidation()
+    case _ =>
+  }
 }

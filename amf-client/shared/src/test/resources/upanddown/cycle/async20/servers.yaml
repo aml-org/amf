@@ -1,0 +1,21 @@
+asyncapi: 2.0.0
+info:
+  title: API
+  version: "1.0"
+channels: {}
+servers:
+  development:
+    url: development.gigantic-server.com
+    protocol: amqp
+    protocolVersion: 0.9.1
+    description: Development server
+  staging:
+    url: staging.gigantic-server.com
+    protocol: amqp
+    protocolVersion: 0.9.1
+    description: Staging server
+  production:
+    url: api.gigantic-server.com
+    protocol: amqp
+    protocolVersion: 0.9.1
+    description: Production server

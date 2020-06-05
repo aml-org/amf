@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#13",
+        "@id": "#14",
         "@type": [
           "apiContract:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#14",
+            "@id": "#15",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#15",
+                "@id": "#16",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -46,7 +46,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#16",
+                    "@id": "#17",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -64,7 +64,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#17",
+                        "@id": "#18",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -76,7 +76,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#3/link-701227645",
+                            "@id": "#3/link-96784904",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -98,7 +98,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#17": "[(11,10)-(13,0)]"
+                            "#18": "[(11,10)-(13,0)]"
                           }
                         }
                       }
@@ -106,7 +106,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(10,8)-(13,0)]",
-                        "#16": "[(9,6)-(13,0)]"
+                        "#17": "[(9,6)-(13,0)]"
                       }
                     }
                   }
@@ -114,12 +114,12 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(8,4)-(13,0)]",
-                    "#15": "[(7,2)-(13,0)]"
+                    "#16": "[(7,2)-(13,0)]"
                   }
                 }
               },
               {
-                "@id": "#18",
+                "@id": "#19",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -131,7 +131,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#19",
+                    "@id": "#20",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -149,7 +149,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#20",
+                        "@id": "#21",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -161,7 +161,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#3/link-701227645",
+                            "@id": "#3/link-96784904",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -183,7 +183,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#20": "[(17,10)-(18,23)]"
+                            "#21": "[(17,10)-(18,23)]"
                           }
                         }
                       }
@@ -191,7 +191,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(16,8)-(18,23)]",
-                        "#19": "[(15,6)-(18,23)]"
+                        "#20": "[(15,6)-(18,23)]"
                       }
                     }
                   }
@@ -199,32 +199,32 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(14,4)-(18,23)]",
-                    "#18": "[(13,2)-(18,23)]"
+                    "#19": "[(13,2)-(18,23)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#14": "[(6,0)-(18,23)]"
+                "#15": "[(6,0)-(18,23)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#13": "RAML 1.0"
+            "#14": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#13": "[(2,0)-(18,23)]"
+            "#14": "[(2,0)-(18,23)]"
           }
         }
       }
     ],
     "doc:version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "doc:root": [
@@ -261,7 +261,7 @@
         ],
         "doc:version": [
           {
-            "@value": "2.0.1"
+            "@value": "2.1.0"
           }
         ],
         "doc:root": [
@@ -558,7 +558,7 @@
             "#3": "[(3,2)-(3,8)]"
           },
           "resolved-link": {
-            "#3": "amf://id#12"
+            "#3": "amf://id#13"
           },
           "parsed-json-schema": {
             "#3": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"details\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"message\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\n        \"message\"\n      ]\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\",\n    \"details\"\n  ]\n}"

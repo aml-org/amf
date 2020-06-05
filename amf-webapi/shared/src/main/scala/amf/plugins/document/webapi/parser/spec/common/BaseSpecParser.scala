@@ -108,21 +108,22 @@ trait SpecParserOps {
           val value = field.`type` match {
             case _: Obj if mapped.isDefined => mapped.get(node)
             case ArrayLike(element)         => parseArray(node, element)
-            case element                    => parseScalar(node, element)
+            case element                    => parseScalar(node, element, entry.value.tagType)
           }
           value.annotations ++= custom
           target.foreach(_.set(field, value, Annotations(entry) ++= annotations))
       }
     }
 
-    private def parseScalar(node: YNode, element: Type): AmfElement = {
+    private def parseScalar(node: YNode, element: Type, tagType: YType): AmfElement = {
       val scalar = if (annotated) parseScalarValued(node) else ScalarNode(node)
-      element match {
-        case _ if typed.isDefined => typed.get(scalar)
-        case Type.Int             => scalar.integer()
-        case Type.Bool            => scalar.boolean()
-        case Type.Double          => scalar.double()
-        case _                    => scalar.text()
+      (element, tagType) match {
+        case _ if typed.isDefined  => typed.get(scalar)
+        case (Type.Int, _)         => scalar.integer()
+        case (Type.Bool, _)        => scalar.boolean()
+        case (Type.Double, _)      => scalar.double()
+        case (Type.Str, YType.Str) => scalar.string()
+        case _                     => scalar.text()
       }
     }
 
@@ -166,7 +167,8 @@ trait SpecParserOps {
 
   implicit class FieldOps(field: Field)(implicit iv: WebApiContext) {
     def in(elem: DomainElement): ObjectField = in(SingleTarget(elem))
-    def in(target: Target): ObjectField      = new ObjectField(target, field)
+
+    def in(target: Target): ObjectField = new ObjectField(target, field)
   }
 
   trait Target {
@@ -180,16 +182,22 @@ trait SpecParserOps {
   case object EmptyTarget extends Target {
     override def foreach(fn: DomainElement => Unit): Unit = {}
   }
+
 }
 
 /** Scalar valued raml node (based on obj node). */
 private case class RamlScalarValuedNode(obj: YMap, scalar: ScalarNode)(implicit iv: WebApiContext) extends ScalarNode {
 
-  override def string(): AmfScalar  = as(_.string())
-  override def text(): AmfScalar    = as(_.text())
+  override def string(): AmfScalar = as(_.string())
+
+  override def text(): AmfScalar = as(_.text())
+
   override def integer(): AmfScalar = as(_.integer())
-  override def double(): AmfScalar  = as(_.double())
+
+  override def double(): AmfScalar = as(_.double())
+
   override def boolean(): AmfScalar = as(_.boolean())
+
   override def negated(): AmfScalar = as(_.negated())
 
   private def as(fn: ScalarNode => AmfScalar) = fn(scalar)
@@ -197,12 +205,18 @@ private case class RamlScalarValuedNode(obj: YMap, scalar: ScalarNode)(implicit 
 
 private case class RamlSingleArrayNode(node: YNode)(implicit iv: WebApiContext) extends ArrayNode {
 
-  override def string(): AmfArray                     = as(ScalarNode(node).string())
-  override def text(): AmfArray                       = as(ScalarNode(node).text())
-  override def integer(): AmfArray                    = as(ScalarNode(node).integer())
-  override def double(): AmfArray                     = as(ScalarNode(node).double())
-  override def boolean(): AmfArray                    = as(ScalarNode(node).boolean())
-  override def negated(): AmfArray                    = as(ScalarNode(node).negated())
+  override def string(): AmfArray = as(ScalarNode(node).string())
+
+  override def text(): AmfArray = as(ScalarNode(node).text())
+
+  override def integer(): AmfArray = as(ScalarNode(node).integer())
+
+  override def double(): AmfArray = as(ScalarNode(node).double())
+
+  override def boolean(): AmfArray = as(ScalarNode(node).boolean())
+
+  override def negated(): AmfArray = as(ScalarNode(node).negated())
+
   override def obj(fn: YNode => AmfElement): AmfArray = as(fn(node))
 
   private def as(element: AmfElement) =

@@ -12,16 +12,22 @@ import amf.core.vocabulary.{Namespace, ValueType}
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
 import org.yaml.model.YPart
+import amf.core.utils.AmfStrings
 
 import scala.collection.mutable
 
 // Auxiliary class to hold the parsed data
-case class ExtendedDialectNodeMapping(id: String, name: String, classTerm: String, extended: Seq[String], propertyMappings: List[DialectPropertyMapping], isShape: Boolean)
+case class ExtendedDialectNodeMapping(id: String,
+                                      name: String,
+                                      classTerm: String,
+                                      extended: Seq[String],
+                                      propertyMappings: List[DialectPropertyMapping],
+                                      isShape: Boolean)
 
 // This model is just to reify the dynamic properties in an
 // ObjectNode
 class PropertyNode(override val fields: Fields, val annotations: Annotations) extends DomainElement {
-  override def meta: Obj = PropertyNodeModel
+  override def meta: Obj           = PropertyNodeModel
   override def componentId: String = "/property"
 }
 
@@ -50,99 +56,85 @@ object PropertyNodeModel extends DomainElementModel {
 }
 
 // The actual exporter
-object CanonicalWebAPISpecDialectExporter  {
+object CanonicalWebAPISpecDialectExporter {
 
-  val DesignLinkTargetField = Field(Iri,
+  val DesignLinkTargetField = Field(
+    Iri,
     Namespace.Document + "design-link-target",
     ModelDoc(ModelVocabularies.AmlDoc, "design link target", "URI of the linked element linked at design time"))
 
-  val DesignAnnotationField = Field(MetaArray(DomainExtensionModel),
+  val DesignAnnotationField = Field(
+    MetaArray(DomainExtensionModel),
     Namespace.Document + "designAnnotation",
-    ModelDoc(
-      ModelVocabularies.AmlDoc,
-      "design annotation",
-      "Extensions provided for a particular domain element during design time")
+    ModelDoc(ModelVocabularies.AmlDoc,
+             "design annotation",
+             "Extensions provided for a particular domain element during design time")
   )
 
   val DataPropertiesField = Field(MetaArray(PropertyNodeModel),
-    Namespace.Data + "properties",
-    ModelDoc(
-      ModelVocabularies.Data,
-      "properties",
-      "properties in a dynamic object")
-  )
+                                  Namespace.Data + "properties",
+                                  ModelDoc(ModelVocabularies.Data, "properties", "properties in a dynamic object"))
 
   val DIALECT_FILE = "canonical_webapi_spec.yaml"
-  val WELL_KNOWN_VOCABULARIES: Map[String, String] = Map[String,String](
-    "http://a.ml/vocabularies/document#" -> "../vocabularies/aml_doc.yaml",
-    "http://a.ml/vocabularies/data#" -> "../vocabularies/data_model.yaml",
-    "http://a.ml/vocabularies/apiBinding#" -> "../vocabularies/api_binding.yaml",
+  val WELL_KNOWN_VOCABULARIES: Map[String, String] = Map[String, String](
+    "http://a.ml/vocabularies/document#"    -> "../vocabularies/aml_doc.yaml",
+    "http://a.ml/vocabularies/data#"        -> "../vocabularies/data_model.yaml",
+    "http://a.ml/vocabularies/apiBinding#"  -> "../vocabularies/api_binding.yaml",
     "http://a.ml/vocabularies/apiContract#" -> "../vocabularies/api_contract.yaml",
-    "http://a.ml/vocabularies/core#" -> "../vocabularies/core.yaml",
-    "http://a.ml/vocabularies/meta#" -> "../vocabularies/aml_meta.yaml",
-    "http://a.ml/vocabularies/security#" -> "../vocabularies/security.yaml",
-    "http://a.ml/vocabularies/shapes#" -> "../vocabularies/data_shapes.yaml"
+    "http://a.ml/vocabularies/core#"        -> "../vocabularies/core.yaml",
+    "http://a.ml/vocabularies/meta#"        -> "../vocabularies/aml_meta.yaml",
+    "http://a.ml/vocabularies/security#"    -> "../vocabularies/security.yaml",
+    "http://a.ml/vocabularies/shapes#"      -> "../vocabularies/data_shapes.yaml"
   )
 
-  val reflectionsWebApi     = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
-  val reflectionsShapes     = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
-  val reflectionsCore       = new Reflections("amf.core.metamodel.domain.extensions", new SubTypesScanner(false))
-  val reflectionsTemplates  = new Reflections("amf.core.metamodel.domain.templates", new SubTypesScanner(false))
-  val reflectionsDataNode   = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
-  val reflectionsApiDocs    = new Reflections("amf.plugins.document.webapi.metamodel", new SubTypesScanner(false))
-  val reflectionsDocs       = new Reflections("amf.core.metamodel.document", new SubTypesScanner(false))
-  val reflectionsExtModel   = new Reflections("amf.tools", new SubTypesScanner(false))
+  val reflectionsWebApi    = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
+  val reflectionsShapes    = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
+  val reflectionsCore      = new Reflections("amf.core.metamodel.domain.extensions", new SubTypesScanner(false))
+  val reflectionsTemplates = new Reflections("amf.core.metamodel.domain.templates", new SubTypesScanner(false))
+  val reflectionsDataNode  = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
+  val reflectionsApiDocs   = new Reflections("amf.plugins.document.webapi.metamodel", new SubTypesScanner(false))
+  val reflectionsDocs      = new Reflections("amf.core.metamodel.document", new SubTypesScanner(false))
+  val reflectionsExtModel  = new Reflections("amf.tools", new SubTypesScanner(false))
 
   var nodeMappings: Map[String, ExtendedDialectNodeMapping] = Map()
 
-  def toCamelCase(str: String): String = {
-    // str.replace(" ", "")
-    val words = str.split("\\s+")
-    if (words.size == 1) {
-      words.head
-    } else {
-      (Seq(words.head) ++ words.tail.map(_.capitalize)).mkString
-    }
-  }
-
-  def metaTypeToDialectRange(metaType: Type): (String, Boolean) = {
+  def metaTypeToDialectRange(metaType: Type): (String, Boolean, Boolean) = {
     metaType match {
       // objects
-      case metaModel:Obj                               => (toCamelCase(metaModel.doc.displayName), false)
+      case metaModel: Obj => (metaModel.doc.displayName.toCamelCase, false, false)
       // scalars
-      case scalar: Scalar if scalar == Type.Str        => ("string", false)
-      case scalar: Scalar if scalar == Type.RegExp     => ("string", false)
-      case scalar: Scalar if scalar == Type.Int        => ("integer", false)
-      case scalar: Scalar if scalar == Type.Float      => ("float", false)
-      case scalar: Scalar if scalar == Type.Double     => ("double", false)
-      case scalar: Scalar if scalar == Type.Time       => ("time", false)
-      case scalar: Scalar if scalar == Type.Date       => ("date", false)
-      case scalar: Scalar if scalar == Type.DateTime   => ("dateTime", false)
-      case scalar: Scalar if scalar == Type.Iri        => ("uri", false)
-      case scalar: Scalar if scalar == Type.EncodedIri => ("uri", false)
-      case scalar: Scalar if scalar == Type.Bool       => ("boolean", false)
+      case scalar: Scalar if scalar == Type.Str        => ("string", false, false)
+      case scalar: Scalar if scalar == Type.RegExp     => ("string", false, false)
+      case scalar: Scalar if scalar == Type.Int        => ("integer", false, false)
+      case scalar: Scalar if scalar == Type.Float      => ("float", false, false)
+      case scalar: Scalar if scalar == Type.Double     => ("double", false, false)
+      case scalar: Scalar if scalar == Type.Time       => ("time", false, false)
+      case scalar: Scalar if scalar == Type.Date       => ("date", false, false)
+      case scalar: Scalar if scalar == Type.DateTime   => ("dateTime", false, false)
+      case scalar: Scalar if scalar == Type.Iri        => ("uri", false, false)
+      case scalar: Scalar if scalar == Type.EncodedIri => ("uri", false, false)
+      case scalar: Scalar if scalar == Type.Bool       => ("boolean", false, false)
       // collections
-      case Type.Array(t)                               => (metaTypeToDialectRange(t)._1, true)
-      case Type.SortedArray(t)                         => (metaTypeToDialectRange(t)._1, true)
+      case Type.Array(t)       => (metaTypeToDialectRange(t)._1, true, false)
+      case Type.SortedArray(t) => (metaTypeToDialectRange(t)._1, true, true)
     }
   }
 
-  def buildPropertyMapping(field: Field): DialectPropertyMapping = {
-    val propertyTerm          = field.value.iri()
-    val name = toCamelCase(field.doc.displayName).replace("\\.", "")
-    val (range, allowMultiple) = metaTypeToDialectRange(field.`type`)
+  private def buildPropertyMapping(field: Field): DialectPropertyMapping = {
+    val propertyTerm                   = field.value.iri()
+    val name                           = field.doc.displayName.toCamelCase.replace("\\.", "")
+    val (range, allowMultiple, sorted) = metaTypeToDialectRange(field.`type`)
 
-    DialectPropertyMapping(name, propertyTerm, range, allowMultiple)
+    DialectPropertyMapping(name, propertyTerm, range, allowMultiple, sorted)
   }
 
-  def buildNodeMapping(klassName: String, modelObject: Obj): ExtendedDialectNodeMapping = {
+  private def buildNodeMapping(klassName: String, modelObject: Obj): ExtendedDialectNodeMapping = {
     val doc         = modelObject.doc
     val types       = modelObject.`type`.map(_.iri())
     val id          = types.head
     val displayName = doc.displayName
     val description = doc.description
     val vocab       = doc.vocabulary.filename
-
 
     // index fields
     val fields = if (types.contains(DomainElementModel.`type`.head.iri()) && displayName != "CustomDomainProperty") {
@@ -155,7 +147,7 @@ object CanonicalWebAPISpecDialectExporter  {
       modelObject.fields
     }
     val propertyTerms = fields.map(buildPropertyMapping)
-    val isShape = types.contains((Namespace.Shacl + "Shape").iri())
+    val isShape       = types.contains((Namespace.Shacl + "Shape").iri())
 
     // Find superSchemas
     val superSchemas =
@@ -185,7 +177,12 @@ object CanonicalWebAPISpecDialectExporter  {
         types.drop(1).find(!blacklistedSupertypes.contains(_)).map(Seq(_)).getOrElse(Nil)
       }
 
-    val nodeMapping = ExtendedDialectNodeMapping(id = id, name = toCamelCase(displayName), classTerm = id, extended = superSchemas, propertyMappings = propertyTerms, isShape = isShape)
+    val nodeMapping = ExtendedDialectNodeMapping(id = id,
+                                                 name = displayName.toCamelCase,
+                                                 classTerm = id,
+                                                 extended = superSchemas,
+                                                 propertyMappings = propertyTerms,
+                                                 isShape = isShape)
 
     nodeMapping
   }
@@ -193,7 +190,7 @@ object CanonicalWebAPISpecDialectExporter  {
   def parseMetaObject(klassName: String): Option[ExtendedDialectNodeMapping] = {
     nodeMappings.get(klassName) match {
       case cached @ Some(_) => cached
-      case _                =>
+      case _ =>
         try {
           val singleton = Class.forName(klassName)
           singleton.getField("MODULE$").get(singleton) match {
@@ -242,28 +239,30 @@ object CanonicalWebAPISpecDialectExporter  {
 
   def cleanInheritance(): Unit = {
     val cleanNodeMappings: mutable.Map[String, ExtendedDialectNodeMapping] = mutable.Map()
-    nodeMappings = nodeMappings.foldLeft(Map[String, ExtendedDialectNodeMapping]()) { case (acc, (old, mapping)) =>
-        acc.updated(mapping.id, mapping)//.updated(old, mapping)
+    nodeMappings = nodeMappings.foldLeft(Map[String, ExtendedDialectNodeMapping]()) {
+      case (acc, (old, mapping)) =>
+        acc.updated(mapping.id, mapping) //.updated(old, mapping)
     }
-    nodeMappings.foreach { case (id, mapping) =>
-      val superMappings = findExtended(mapping)
-      val inheritedProperties = superMappings.map(nodeMappings(_)).flatMap(_.propertyMappings)
-      val inheritedPropertiesMap = inheritedProperties.foldLeft(Set[String]()) { case (acc, p) =>
-        acc + p.name
-      }
-      val filteredPropertyMappings = mapping.propertyMappings.filter(p => !inheritedPropertiesMap.contains(p.name))
-      cleanNodeMappings.update(id, mapping.copy(propertyMappings = filteredPropertyMappings))
+    nodeMappings.foreach {
+      case (id, mapping) =>
+        val superMappings       = findExtended(mapping)
+        val inheritedProperties = superMappings.map(nodeMappings(_)).flatMap(_.propertyMappings)
+        val inheritedPropertiesMap = inheritedProperties.foldLeft(Set[String]()) {
+          case (acc, p) =>
+            acc + p.name
+        }
+        val filteredPropertyMappings = mapping.propertyMappings.filter(p => !inheritedPropertiesMap.contains(p.name))
+        cleanNodeMappings.update(id, mapping.copy(propertyMappings = filteredPropertyMappings))
     }
     nodeMappings = cleanNodeMappings.toMap
   }
-
 
   def findExtended(mapping: ExtendedDialectNodeMapping): Seq[String] = {
     val collected = mapping.extended.flatMap { superMappingId =>
       nodeMappings.get(superMappingId) match {
         case Some(superMapping: ExtendedDialectNodeMapping) =>
           Seq(superMapping.id) ++ findExtended(superMapping)
-        case _                  => Nil
+        case _ => Nil
       }
     }
 
@@ -284,7 +283,7 @@ object CanonicalWebAPISpecDialectExporter  {
     (Namespace.Shacl + "Shape").iri(),
     (Namespace.Shapes + "Shape").iri(),
     (Namespace.Rdf + "Property").iri(),
-    (Namespace.Rdf +  "Seq").iri()
+    (Namespace.Rdf + "Seq").iri()
   )
 
   val blacklistedRanges: Set[String] = Set()
@@ -326,7 +325,6 @@ object CanonicalWebAPISpecDialectExporter  {
       |      - AnyShape
       |      - RecursiveShape
     """.stripMargin
-
 
   val settingsUnionDeclaration = "SecuritySettingsUnion"
 
@@ -496,8 +494,8 @@ object CanonicalWebAPISpecDialectExporter  {
       |""".stripMargin
 
   def renderDialect(): String = {
-    val stringBuilder = new StringBuilder()
-    val externals: mutable.HashMap[String,String] = mutable.HashMap()
+    val stringBuilder                              = new StringBuilder()
+    val externals: mutable.HashMap[String, String] = mutable.HashMap()
     val header = "#%Dialect 1.0\n\n" ++
       "dialect: WebAPI Spec\n" ++
       "version: 1.0\n\n"
@@ -537,7 +535,7 @@ object CanonicalWebAPISpecDialectExporter  {
             var nodeMappingWithProperties = dialectNodeMapping.propertyMappings.filter { propertyMapping =>
               // dynamic and linking information only relevant for design will not be dumped in the dialect
               !blacklistedProperties.contains(propertyMapping.propertyTerm) &&
-                !blacklistedRanges.contains(propertyMapping.range)
+              !blacklistedRanges.contains(propertyMapping.range)
             }
 
             // extends relationship for macros
@@ -564,7 +562,6 @@ object CanonicalWebAPISpecDialectExporter  {
               } else if (dialectNodeMapping.classTerm == (Namespace.ApiContract + "Operation").iri()) {
                 stringBuilder.append(operationExtends + "\n")
               }
-
 
               nodeMappingWithProperties.map { propertyMapping =>
                 // property names can be duplicated in the WebAPI meta-model, we make sure
@@ -602,19 +599,23 @@ object CanonicalWebAPISpecDialectExporter  {
                   stringBuilder.append(s"        range: ${propertyMapping.range}\n")
                 }
                 if (propertyMapping.allowMultiple) {
-                  stringBuilder.append(s"        allowMultiple: ${propertyMapping.allowMultiple}\n")
+                  stringBuilder.append(s"        allowMultiple: true\n")
+                  if (propertyMapping.sorted) {
+                    stringBuilder.append(s"        sorted: true\n")
+                  }
                 }
-
               }
 
-              if (dialectNodeMapping.propertyMappings.exists(_.propertyTerm == LinkableElementModel.TargetId.value.iri())) {
+              if (dialectNodeMapping.propertyMappings.exists(
+                    _.propertyTerm == LinkableElementModel.TargetId.value.iri())) {
                 stringBuilder.append(s"      designLink:\n")
                 val (compacted, _, _) = compact(DesignLinkTargetField.value.iri())
                 stringBuilder.append(s"        propertyTerm: $compacted\n")
                 stringBuilder.append(s"        range: link\n")
               }
 
-              val annotationMapping = dialectNodeMapping.propertyMappings.find(_.propertyTerm == DomainElementModel.CustomDomainProperties.value.iri())
+              val annotationMapping = dialectNodeMapping.propertyMappings.find(
+                _.propertyTerm == DomainElementModel.CustomDomainProperties.value.iri())
               if (annotationMapping.isDefined) {
                 stringBuilder.append(s"      designAnnotations:\n")
                 val (compacted, _, _) = compact(DesignAnnotationField.value.iri())
@@ -636,17 +637,20 @@ object CanonicalWebAPISpecDialectExporter  {
     // TODO: union of declarations
     // stringBuilder.append(declarations)
 
-    val effectiveExternals = externals.filter { case (p, b) =>
-      !WELL_KNOWN_VOCABULARIES.contains(b)
+    val effectiveExternals = externals.filter {
+      case (p, b) =>
+        !WELL_KNOWN_VOCABULARIES.contains(b)
     }
-    val effectiveVocabularies = externals.filter { case (p, b) =>
-      WELL_KNOWN_VOCABULARIES.contains(b)
-    } map { case (p, b) =>
-      p -> WELL_KNOWN_VOCABULARIES(b)
+    val effectiveVocabularies = externals.filter {
+      case (p, b) =>
+        WELL_KNOWN_VOCABULARIES.contains(b)
+    } map {
+      case (p, b) =>
+        p -> WELL_KNOWN_VOCABULARIES(b)
     }
 
-    val vocabularyDepedencies = "uses:\n" ++ effectiveVocabularies.map { case (p, b) => s"  $p: $b\n" }.mkString ++ "\n"
-    val externalDependencies = "external:\n" ++ effectiveExternals.map { case (p, b) => s"  $p: $b\n" }.mkString ++ "\n"
+    val vocabularyDepedencies = "uses:\n" ++ effectiveVocabularies.map { case (p, b)  => s"  $p: $b\n" }.mkString ++ "\n"
+    val externalDependencies  = "external:\n" ++ effectiveExternals.map { case (p, b) => s"  $p: $b\n" }.mkString ++ "\n"
 
     header ++ vocabularyDepedencies ++ externalDependencies ++ "nodeMappings:\n\n" ++ stringBuilder.mkString
   }
@@ -659,8 +663,8 @@ object CanonicalWebAPISpecDialectExporter  {
 
   def compact(url: String): (String, String, String) = {
     val compacted = Namespace.compact(url).replace(":", ".")
-    val prefix = compacted.split("\\.").head
-    val base = Namespace.ns(prefix).base
+    val prefix    = compacted.split("\\.").head
+    val base      = Namespace.ns(prefix).base
     (compacted, prefix, base)
   }
 

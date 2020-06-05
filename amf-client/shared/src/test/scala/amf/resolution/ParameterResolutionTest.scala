@@ -12,6 +12,10 @@ class ParameterResolutionTest extends ResolutionTest {
   }
 
   test("resolution OpenAPI") {
-    cycle("parameters.json", "parameters.json.jsonld", OasJsonHint, Oas)
+    cycle("parameters.json", "parameters.json.jsonld", OasJsonHint, Amf, transformWith = Some(Oas))
+  }
+
+  test("nested parameters AMF") {
+    cycle("nested-parameters.raml", "nested-parameters.raml.jsonld", RamlYamlHint, Amf)
   }
 }

@@ -4,7 +4,8 @@ import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, AmfStrings}
+import amf.core.utils.{AmfStrings, IdCounter}
+import amf.plugins.document.webapi.annotations.OperationTraitEntry
 import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -12,7 +13,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkPa
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
-import amf.plugins.domain.webapi.models.{Response, Operation, Tag}
+import amf.plugins.domain.webapi.models.{Operation, Response, Tag}
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
@@ -69,7 +70,13 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
       }
     )
     val DeclarationParser = ParametrizedDeclarationParser.parse(operation.withTrait) _
-    map.key("is", (DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue.optional)
+    map.key(
+      "is",
+      (e: YMapEntry) => {
+        operation.annotations += OperationTraitEntry(Range(e.range))
+        ((DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue.optional)(e)
+      }
+    )
 
     ctx.factory
       .requestParser(map, () => operation.withRequest(), parseOptional)
@@ -101,16 +108,6 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
               .as[YMap]
               .entries
               .filter(y => !isRamlAnnotation(y.key.as[YScalar].text))
-
-            val keys   = entries.map(_.key.as[YScalar].text)
-            val keySet = keys.toSet
-            if (keys.size > keySet.size) {
-              ctx.eh.violation(DuplicatedOperationStatusCodeSpecification,
-                               operation.id,
-                               None,
-                               "RAML Responses must not have duplicated status codes",
-                               entry.value)
-            }
 
             entries.foreach { entry =>
               responses += ctx.factory

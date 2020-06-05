@@ -97,6 +97,7 @@ object TypeDefXsdMapping {
       case s if s == DataType.Byte         => ByteType
       case s if s == DataType.Binary       => BinaryType
       case s if s == DataType.Password     => PasswordType
+      case s if s == DataType.Nil          => NilType
       case _                               => UndefinedType
     }
 

@@ -11,15 +11,17 @@ import amf.{AmfProfile, ProfileName}
 class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
   override def profileName: ProfileName = AmfProfile
 
-  protected def references = new ReferenceResolutionStage(keepEditingInfo = false)
+  protected def references = new WebApiReferenceResolutionStage(keepEditingInfo = false)
 
-  override val steps: Seq[ResolutionStage] = Seq(
+  protected def parameterNormalizationStage: ParametersNormalizationStage = new AmfParametersNormalizationStage()
+
+  protected lazy val baseSteps = Seq(
     references,
     new ExternalSourceRemovalStage,
     new ExtensionsResolutionStage(profileName, keepEditingInfo = false),
     new ShapeNormalizationStage(profileName, keepEditingInfo = false),
     new SecurityResolutionStage(),
-    new ParametersNormalizationStage(profileName),
+    parameterNormalizationStage,
     new ServersNormalizationStage(profileName),
     new PathDescriptionNormalizationStage(profileName),
     new MediaTypeResolutionStage(profileName),
@@ -29,6 +31,7 @@ class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPip
     new DeclarationsRemovalStage()
   )
 
+  override val steps: Seq[ResolutionStage] = baseSteps
 }
 
 object AmfResolutionPipeline {

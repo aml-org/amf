@@ -181,8 +181,10 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
   private def copyExamples(from: AnyShape, to: AnyShape): Unit = {
     from.examples.foreach(e1 => {
       to.examples.find { e2 =>
-        e1.id == e2.id || (e1.raw.option().getOrElse("").trim == e2.raw.option().getOrElse("").trim && e1.name
-          .value() == e2.name.value())
+        val exampleIdsAreEqual   = e1.id == e2.id
+        val rawExamplesAreEqual  = e1.raw.option().getOrElse("").trim == e2.raw.option().getOrElse("").trim
+        val examplesHaveSameName = e1.name.value() == e2.name.value()
+        exampleIdsAreEqual || (rawExamplesAreEqual && examplesHaveSameName)
       } match {
         case Some(toExample) =>
           // duplicated
@@ -405,21 +407,12 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       canonicalInheritance(union)
     } else {
       val anyOfAcc: ListBuffer[Shape] = ListBuffer()
-      union.anyOf.foreach { shape: Shape =>
-        normalizeWithoutCaching(shape) match {
+      union.anyOf.foreach { unionMember: Shape =>
+        val normalizedUnionMember = normalizeWithoutCaching(unionMember)
+        normalizedUnionMember match {
           case nestedUnion: UnionShape =>
-            union.closureShapes ++= nestedUnion.closureShapes
-            context.cache.addClosures(nestedUnion.closureShapes.toSeq, union)
             nestedUnion.anyOf.foreach(e => anyOfAcc += e)
-          case rec: RecursiveShape =>
-            rec.fixpointTarget.foreach(target => {
-              union.closureShapes ++= Seq(target).filter(_.id != union.id)
-              context.cache.cacheClosure(target.id, union)
-            })
-            anyOfAcc += rec
           case other: Shape =>
-            context.cache.addClosures(other.closureShapes.toSeq, union)
-            union.closureShapes ++= other.closureShapes
             anyOfAcc += other
         }
       }

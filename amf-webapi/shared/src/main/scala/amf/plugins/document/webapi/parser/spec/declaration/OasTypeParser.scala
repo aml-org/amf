@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
+import amf.core.annotations.{ExplicitField, ExternalFragmentRef, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
-import amf.core.annotations.{ExplicitField, NilUnion}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -19,10 +18,11 @@ import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3W
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser}
+import amf.plugins.document.webapi.parser.spec.declaration.utils.JsonSchemaParsingHelper
 import amf.plugins.document.webapi.parser.spec.domain.{
   ExampleOptions,
   NodeDataNodeParser,
-  RamlExampleValueAsString,
+  ExampleDataParser,
   RamlExamplesParser
 }
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
@@ -40,27 +40,6 @@ import org.yaml.model._
 import scala.collection.mutable
 import scala.util.Try
 
-abstract class JSONSchemaVersion(val name: String)
-class OASSchemaVersion(override val name: String, val position: String)(implicit eh: ErrorHandler)
-    extends JSONSchemaVersion(name) {
-  if (position != "schema" && position != "parameter")
-    eh.violation(CoreValidations.ResolutionValidation,
-                 "",
-                 s"Invalid schema position '$position', only 'schema' and 'parameter' are valid")
-}
-class OAS20SchemaVersion(override val position: String)(implicit eh: ErrorHandler)
-    extends OASSchemaVersion("oas2.0", position)
-object OAS20SchemaVersion { def apply(position: String)(implicit eh: ErrorHandler) = new OAS20SchemaVersion(position) }
-class OAS30SchemaVersion(override val position: String)(implicit eh: ErrorHandler)
-    extends OASSchemaVersion("oas3.0.0", position)
-object OAS30SchemaVersion {
-  def apply(position: String)(implicit eh: ErrorHandler) = new OAS30SchemaVersion(position)(eh)
-}
-object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3")
-object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4")
-object JSONSchemaDraft7SchemaVersion extends JSONSchemaVersion("draft-7")
-object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("")
-
 /**
   * OpenAPI Type Parser.
   */
@@ -77,6 +56,7 @@ object OasTypeParser {
       entry.value.as[YMap],
       adopt,
       if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion("schema")(ctx.eh)
+      else if (ctx.vendor == Vendor.ASYNC20) JSONSchemaDraft7SchemaVersion
       else OAS20SchemaVersion("schema")(ctx.eh)
     )
 
@@ -86,7 +66,6 @@ object OasTypeParser {
 
   def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(Right(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx.eh))
-
 }
 
 case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
@@ -193,7 +172,6 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       .orElse(map.key("patternProperties"))
       .orElse(map.key("additionalProperties"))
       .orElse(map.key("discriminator"))
-      .orElse(map.key("required"))
       .map(_ => ObjectType)
 
   private def detectItemProperties(): Option[TypeDef.ArrayType.type] =
@@ -336,30 +314,38 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         e.value.tagType match {
           case YType.Null => Some(AnyShape(e))
           case _ =>
-            val ref: String = e.value
-            val text        = OasDefinitions.stripDefinitionsPrefix(ref)
-            ctx.declarations.findType(text, SearchScope.All) match { // normal declaration to be used from raml or oas
-              case Some(s) =>
-                val copied =
-                  s.link(text, Annotations(ast))
-                    .asInstanceOf[AnyShape]
-                    .withName(name, nameAnnotations)
-                    .withSupportsRecursion(true)
-                adopt(copied)
-                Some(copied)
-              case _ => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
-                // now we work with canonical JSON schema pointers, not local refs
-                val referencedShape = ctx.findLocalJSONPath(ref) match {
-                  case Some((_, _)) =>
-                    searchLocalJsonSchema(ref, if (!ctx.linkTypes) ref else text, e)
-                  case _ =>
-                    searchRemoteJsonSchema(ref, if (!ctx.linkTypes) ref else text, e)
-                }
-                referencedShape.foreach(adopt(_))
-                referencedShape
-            }
+            findDeclarationAndParse(e)
         }
       }
+  }
+
+  private def findDeclarationAndParse(e: YMapEntry) = {
+    val ref: String = e.value
+    val text        = OasDefinitions.stripDefinitionsPrefix(ref)
+
+    def createLinkToDeclaration(s: AnyShape) = {
+      val link =
+        s.link(text, Annotations(ast))
+          .asInstanceOf[AnyShape]
+          .withName(name, nameAnnotations)
+          .withSupportsRecursion(true)
+      adopt(link)
+      Some(link)
+    }
+
+    ctx.declarations.findType(text, SearchScope.All) match { // normal declaration to be used from raml or oas
+      case Some(s) => createLinkToDeclaration(s)
+      case _       => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
+        // now we work with canonical JSON schema pointers, not local refs
+        val referencedShape = ctx.findLocalJSONPath(ref) match {
+          case Some((_, _)) =>
+            searchLocalJsonSchema(ref, if (!ctx.linkTypes) ref else text, e)
+          case _ =>
+            searchRemoteJsonSchema(ref, if (!ctx.linkTypes) ref else text, e)
+        }
+        referencedShape.foreach(adopt(_))
+        referencedShape
+    }
   }
 
   private def searchLocalJsonSchema(r: String, t: String, e: YMapEntry): Option[AnyShape] = {
@@ -386,8 +372,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
         ctx match {
           case _ @(_: Oas2WebApiContext | _: Oas3WebApiContext) if isDeclaration(ref) =>
-            val shape = NodeShape(ast).withName(name, nameAnnotations)
-            shape.withLinkTarget(tmpShape).withLinkLabel(ref)
+            val shape = AnyShape(ast).withName(name, nameAnnotations)
+            shape.withLinkTarget(tmpShape).withLinkLabel(text)
             adopt(shape)
             Some(shape)
           case _ =>
@@ -401,7 +387,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                     //            tmpShape.resolve(shape) // useless?
                     ctx.registerJsonSchema(ref, shape)
                     if (ctx.linkTypes || ref.equals("#"))
-                      shape.link(ref, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
+                      shape.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
                     else shape
                   } orElse { Some(tmpShape) }
 
@@ -426,53 +412,64 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
     val fullRef = ctx.resolvedPath(ctx.rootContextDocument, ref)
     ctx.findJsonSchema(fullRef) match {
-      case Some(u: UnresolvedShape) =>
-        val annots = Annotations(ast)
-        val copied = u.copyShape(annots ++= u.annotations.copy()).withLinkLabel(ref)
-        copied.unresolved(fullRef, e, "warning")(ctx)
-        adopt(copied)
-        Some(copied)
-      case Some(s) =>
-        val annots = Annotations(ast)
-        val copied =
-          s.link(ref, annots).asInstanceOf[AnyShape].withName(name, nameAnnotations).withSupportsRecursion(true)
-        adopt(copied)
-        Some(copied)
+      case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullRef, e, u)
+      case Some(shape)              => createLinkToParsedShape(ref, shape)
       case _ =>
-        val tmpShape =
-          UnresolvedShape(fullRef, e).withName(fullRef, Annotations()).withId(fullRef).withSupportsRecursion(true)
-        tmpShape.unresolved(fullRef, e, "warning")(ctx)
-        tmpShape.withContext(ctx)
-        adopt(tmpShape)
-        ctx.registerJsonSchema(fullRef, tmpShape)
-        // remote reference
-        ctx.parseRemoteJSONPath(fullRef).map { shape =>
-          ctx.registerJsonSchema(fullRef, shape)
-          ctx.futureDeclarations.resolveRef(fullRef, shape)
-          shape
-        } match {
+        val fileUrl = ctx.jsonSchemaRefGuide.getFileUrl(ref)
+        parseAndRegisterRemoteSchema(ref) match {
           case None =>
+            val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fileUrl)
             // it might still be resolvable at the RAML (not JSON Schema) level
             tmpShape.unresolved(text, e, "warning").withSupportsRecursion(true)
             Some(tmpShape)
           case Some(jsonSchemaShape) =>
             if (ctx.declarations.fragments.contains(text)) {
               // case when in an OAS spec we point with a regular $ref to something that is external
-              // and holds a JSON schema
-              // we need to promote an external fragment to data type fragment
-              val promotedShape =
-                ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
-              Some(
-                promotedShape
-                  .link(text, Annotations(ast))
-                  .asInstanceOf[AnyShape]
-                  .withName(name, nameAnnotations)
-                  .withSupportsRecursion(true))
+              // and holds a JSON schema we need to promote an external fragment to data type fragment
+              promoteParsedShape(ref, text, fullRef, jsonSchemaShape)
             } else {
 
               Some(jsonSchemaShape)
             }
         }
+    }
+  }
+
+  private def copyUnresolvedShape(ref: String, fullRef: String, entry: YMapEntry, unresolved: UnresolvedShape) = {
+    val annots = Annotations(ast)
+    val copied = unresolved.copyShape(annots ++= unresolved.annotations.copy()).withLinkLabel(ref)
+    copied.unresolved(fullRef, entry, "warning")(ctx)
+    adopt(copied)
+    Some(copied)
+  }
+
+  private def createLinkToParsedShape(ref: String, shape: AnyShape) = {
+    val annots = Annotations(ast)
+    val copied =
+      shape.link(ref, annots).asInstanceOf[AnyShape].withName(name, nameAnnotations).withSupportsRecursion(true)
+    adopt(copied)
+    Some(copied)
+  }
+
+  private def promoteParsedShape(ref: String,
+                                 text: String,
+                                 fullRef: String,
+                                 jsonSchemaShape: AnyShape): Option[AnyShape] = {
+    val promotedShape =
+      ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
+    Some(
+      promotedShape
+        .link(text, Annotations(ast) += ExternalFragmentRef(ref))
+        .asInstanceOf[AnyShape]
+        .withName(name, nameAnnotations)
+        .withSupportsRecursion(true))
+  }
+
+  private def parseAndRegisterRemoteSchema(fullRef: String): Option[AnyShape] = {
+    ctx.parseRemoteJSONPath(fullRef).map { shape =>
+      ctx.registerJsonSchema(fullRef, shape)
+      ctx.futureDeclarations.resolveRef(fullRef, shape)
+      shape
     }
   }
 
@@ -510,24 +507,24 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   trait CommonScalarParsingLogic {
     def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): TypeDef = {
-      map.key("pattern", ScalarShapeModel.Pattern in shape)
-      map.key("minLength", ScalarShapeModel.MinLength in shape)
-      map.key("maxLength", ScalarShapeModel.MaxLength in shape)
-
-      setValue("minimum", map, ScalarShapeModel.Minimum, shape)
-      setValue("maximum", map, ScalarShapeModel.Maximum, shape)
-
-      if (version == JSONSchemaDraft7SchemaVersion) {
-        parseNumericExclusive(map, shape)
-      } else {
-        map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
-        map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
+      typeDef match {
+        case TypeDef.StrType | TypeDef.FileType =>
+          map.key("pattern", ScalarShapeModel.Pattern in shape)
+          map.key("minLength", ScalarShapeModel.MinLength in shape)
+          map.key("maxLength", ScalarShapeModel.MaxLength in shape)
+        case n if n.isNumber =>
+          setValue("minimum", map, ScalarShapeModel.Minimum, shape)
+          setValue("maximum", map, ScalarShapeModel.Maximum, shape)
+          map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
+          if (version == JSONSchemaDraft7SchemaVersion) {
+            parseNumericExclusive(map, shape)
+          } else {
+            map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
+            map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
+          }
+        case _ => // Nothing to do
       }
-      map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
-
       ScalarFormatType(shape, typeDef).parse(map)
-//      shape.set(ScalarShapeModel.Repeat, value = false)
-
     }
 
     private def parseNumericExclusive(map: YMap, shape: Shape): Unit = {
@@ -553,6 +550,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       with CommonScalarParsingLogic {
 
     override lazy val dataNodeParser: YNode => DataNode = ScalarNodeParser(parent = Some(shape.id)).parse
+    override lazy val enumParser: YNode => DataNode     = CommonEnumParser(shape.id, enumType = EnumParsing.SCALAR_ENUM)
 
     override def parse(): ScalarShape = {
       super.parse()
@@ -579,7 +577,11 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       nodeOrEntry.left.toOption.map(e => Annotations(e.key)).getOrElse(Annotations())
     override val map: YMap = node.as[YMap]
 
-    override val shape: UnionShape = UnionShape(Annotations.valueNode(node)).withName(name, nameAnnotations)
+    override val shape: UnionShape = {
+      val union = UnionShape(Annotations.valueNode(node)).withName(name, nameAnnotations)
+      adopt(union)
+      union
+    }
 
     override def parse(): UnionShape = {
       super.parse()
@@ -623,7 +625,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.Or, unionNodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.Or, unionNodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidOrType,
                                shape.id,
@@ -652,7 +654,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.And, andNodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.And, andNodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidAndType,
                                shape.id,
@@ -681,7 +683,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.Xone, nodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.Xone, nodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidXoneType,
                                shape.id,
@@ -868,28 +870,27 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       shape
     }
 
-    private def parseExample() = {
-      val examples: Seq[Example] =
-        if (version == JSONSchemaDraft7SchemaVersion)
-          parseExamplesArray()
-        else
-          RamlExamplesParser(map, "example", "examples".asOasExtension, None, shape.withExample, options).parse()
+    private def parseExample(): Unit = {
 
-      if (examples.nonEmpty)
-        shape.setArray(AnyShapeModel.Examples, examples)
+      if (version == JSONSchemaDraft7SchemaVersion || version == JSONSchemaDraft6SchemaVersion)
+        parseExamplesArray()
+      else
+        RamlExamplesParser(map, "example", "examples".asOasExtension, shape, options)
+          .parse()
     }
 
-    private def parseExamplesArray(): Seq[Example] =
+    private def parseExamplesArray(): Unit =
       map
         .key("examples")
         .map { entry =>
           val counter = new IdCounter()
-          entry.value.as[YSequence].nodes.map {
-            RamlExampleValueAsString(_, shape.withExample(Some(counter.genId("default-example"))), options).populate()
+          val examples = entry.value.as[YSequence].nodes.map { n =>
+            val exa = Example(n).withName(counter.genId("default-example"))
+            exa.adopted(shape.id)
+            ExampleDataParser(n, exa, options).parse()
           }
+          shape.setArrayWithoutId(AnyShapeModel.Examples, examples, Annotations(entry))
         }
-        .getOrElse(Nil)
-
   }
 
   case class NodeShapeParser(shape: NodeShape, map: YMap)(implicit val ctx: OasLikeWebApiContext)
@@ -927,30 +928,12 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         map.key("discriminatorValue".asOasExtension, NodeShapeModel.DiscriminatorValue in shape)
       }
 
-      val requiredFields = map
-        .key("required")
-        .map { field =>
-          field.value.tagType match {
-            case YType.Seq if version == JSONSchemaDraft3SchemaVersion =>
-              ctx.eh.violation(InvalidRequiredArrayForSchemaVersion,
-                               shape.id,
-                               "Required arrays of properties not supported in JSON Schema below version draft-4",
-                               field.value)
-              Map[String, YNode]()
-            case YType.Seq =>
-              field.value.as[YSequence].nodes.foldLeft(Map[String, YNode]()) {
-                case (acc, node) =>
-                  acc.updated(node.as[String], node)
-              }
-            case _ => Map[String, YNode]()
-          }
-        }
-        .getOrElse(Map[String, YNode]())
+      val requiredFields = parseRequiredFields(map, shape)
 
       val properties  = mutable.LinkedHashMap[String, PropertyShape]()
       val properEntry = map.key("properties")
       properEntry.foreach(entry => {
-        entry.value.toOption[YMap] match {
+        Option(entry.value.as[YMap]) match {
           case Some(m) =>
             val props = PropertiesParser(m, shape.withProperty, requiredFields).parse()
             properties ++= props.map(p => p.name.value() -> p)
@@ -1004,6 +987,55 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       shape
     }
   }
+
+  private def parseRequiredFields(map: YMap, shape: NodeShape): Map[String, YNode] = {
+
+    def parse(field: YMapEntry): Map[String, YNode] = {
+      val defaultValue = Map[String, YNode]()
+      val requiredSeq  = field.value.asOption[Seq[YNode]]
+      requiredSeq match {
+        case Some(required) =>
+          val requiredGroup = required.groupBy(_.as[String])
+          validateRequiredFields(requiredGroup, shape)
+          requiredGroup.map {
+            case (key, nodes) => key -> nodes.head
+          }
+        case None =>
+          ctx.eh.violation(InvalidRequiredValue, shape.id, "'required' field has to be an array", loc = field.location)
+          defaultValue
+      }
+    }
+
+    val defaultValue = Map[String, YNode]()
+    map
+      .key("required")
+      .map { field =>
+        (field.value.tagType, version) match {
+          case (YType.Seq, JSONSchemaDraft3SchemaVersion) =>
+            ctx.eh.violation(InvalidRequiredArrayForSchemaVersion,
+                             shape.id,
+                             "Required arrays of properties not supported in JSON Schema below version draft-4",
+                             field.value)
+            defaultValue
+          case (_, JSONSchemaDraft3SchemaVersion)        => defaultValue
+          case (YType.Seq, JSONSchemaUnspecifiedVersion) => parse(field)
+          case (_, JSONSchemaUnspecifiedVersion)         => defaultValue
+          case (_, _)                                    => parse(field)
+        }
+      }
+      .getOrElse(defaultValue)
+  }
+
+  private def validateRequiredFields(required: Map[String, Seq[YNode]], shape: NodeShape): Unit =
+    required
+      .foreach {
+        case (name, nodes) if nodes.size > 1 =>
+          ctx.eh.violation(DuplicateRequiredItem,
+                           shape.id,
+                           s"'$name' is duplicated in 'required' property",
+                           nodes.last)
+        case _ => // ignore
+      }
 
   case class DiscriminatorParser(shape: NodeShape, entry: YMapEntry) {
     def parse(): Unit = {
@@ -1136,8 +1168,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     val shape: Shape
     val map: YMap
-    private val counter                        = new IdCounter()
-    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), counter)
+
+    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), new IdCounter())
+    lazy val enumParser: YNode => DataNode     = CommonEnumParser(shape.id)
 
     def parse(): Shape = {
 
@@ -1155,7 +1188,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       )
 
-      map.key("enum", ShapeModel.Values in shape using dataNodeParser)
+      map.key("enum", ShapeModel.Values in shape using enumParser)
       map.key("externalDocs",
               AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
@@ -1174,10 +1207,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       XoneConstraintParser(map, shape).parse()
       InnerShapeParser("not", ShapeModel.Not, map, shape).parse()
 
-      map.key("readOnly", PropertyShapeModel.ReadOnly in shape)
+      map.key("readOnly", ShapeModel.ReadOnly in shape)
 
       if (version.isInstanceOf[OAS30SchemaVersion] || version == JSONSchemaDraft7SchemaVersion) {
-        map.key("writeOnly", PropertyShapeModel.WriteOnly in shape)
+        map.key("writeOnly", ShapeModel.WriteOnly in shape)
         map.key("deprecated", ShapeModel.Deprecated in shape)
       }
 

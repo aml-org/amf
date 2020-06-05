@@ -1,19 +1,19 @@
 package amf.resolution
 
+import amf.Oas30Profile
 import amf.core.emitter.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.Yaml
+import amf.core.remote.Syntax.{Json, Yaml}
+import amf.core.remote.Vendor.AMF
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
-import amf.io.FunSuiteCycleTests
-import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
-import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class EditingResolutionTest extends FunSuiteCycleTests {
+class EditingResolutionTest extends ResolutionTest {
+
+  override val defaultPipelineToUse: String = ResolutionPipeline.EDITING_PIPELINE
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -359,6 +359,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Resolving parameter without type doesnt throw NPE") {
+    cycle(
+      "parameter-without-type.json",
+      "parameter-without-type.jsonld",
+      OasJsonHint,
+      Amf,
+      resolutionPath + "parameter-without-type/"
+    )
+  }
+
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")
@@ -422,15 +432,182 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    config.target match {
-      case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
-      case Raml | Raml10 => Raml10Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
-      case Oas30         => Oas30Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
-      case Oas | Oas20   => Oas20Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
-      case Amf           => AmfEditingPipeline.unhandled.resolve(unit)
-      case target        => throw new Exception(s"Cannot resolve $target")
-    }
+  test("recursivity in additional properties") {
+    cycle("recursive-additional-properties.yaml",
+          "recursive-additional-properties.jsonld",
+          OasYamlHint,
+          Amf,
+          s"${resolutionPath}recursive-additional-properties/")
+  }
+
+  test("recursivity in additional properties 2") {
+    cycle(
+      "recursive-additional-properties-2.yaml",
+      "recursive-additional-properties-2.jsonld",
+      OasYamlHint,
+      Amf,
+      s"${resolutionPath}recursive-additional-properties/"
+    )
+  }
+
+  test("types with properties that must not be extracted to declares") {
+    cycle(
+      "avoid-extract-to-declares.raml",
+      "avoid-extract-to-declares.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "links-to-declares-and-references/"
+    )
+  }
+
+  test("jsonld with links to declares and references") {
+    cycle(
+      "link-to-declares-and-refs.raml",
+      "link-to-declares-and-refs-editing.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "links-to-declares-and-references/"
+    )
+  }
+
+  test("References to message definitions") {
+    cycle("message-references.yaml", "message-references.jsonld", AsyncYamlHint, AMF, resolutionPath + "async20/")
+  }
+
+  test("raml with declared element link of link") {
+    cycle("link-of-link/link-of-link.raml",
+          "link-of-link/link-of-link.jsonld",
+          RamlYamlHint,
+          target = Amf,
+          directory = resolutionPath,
+          transformWith = Some(Raml10))
+  }
+
+  test("raml with declared element link of link of link") {
+    cycle(
+      "link-of-link/link-of-link-of-link.raml",
+      "link-of-link/link-of-link-of-link.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
+  test("raml with declared element link of link in api") {
+    cycle(
+      "link-of-link/in-api/link-of-link-in-api.raml",
+      "link-of-link/in-api/link-of-link-in-api.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
+  test("raml with declared element link of link of link in api") {
+    cycle(
+      "link-of-link/middle-link-in-api/link-of-link-in-api.raml",
+      "link-of-link/middle-link-in-api/link-of-link-in-api.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
+  // JSON-LD is serialized differently every time
+  ignore("KG Service API resolution") {
+    cycle(
+      "knowledge-graph-service-api-1.0.13-raml/kg.raml",
+      "knowledge-graph-service-api-1.0.13-raml/kg.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = productionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
+  test("Oas declared type alias inheritance with scalar type is valid") {
+    cycle("oas-declared-link-of-scalar.json",
+          "oas-declared-link-of-scalar.jsonld",
+          OasJsonHint,
+          Amf,
+          directory = resolutionPath,
+          transformWith = Some(Oas30))
+  }
+
+  test("Shared response references in OAS 2.0") {
+    cycle(
+      "shared-response-reference/oas20/api.yaml",
+      "shared-response-reference/oas20/api.jsonld",
+      OasYamlHint,
+      Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas20)
+    )
+  }
+
+  test("Shared response references in OAS 3.0") {
+    cycle(
+      "shared-response-reference/oas30/api.yaml",
+      "shared-response-reference/oas30/api.jsonld",
+      OasYamlHint,
+      Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30)
+    )
+  }
+
+  test("Shared request body references in OAS 3.0") {
+    cycle(
+      "shared-request-body-reference/oas30/api.yaml",
+      "shared-request-body-reference/oas30/api.jsonld",
+      OasYamlHint,
+      Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30)
+    )
+  }
+
+  test("Shared examples in OAS 3.0") {
+    cycle(
+      "shared-oas-30-examples/api.yaml",
+      "shared-oas-30-examples/api.jsonld",
+      OasYamlHint,
+      Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30)
+    )
+  }
+
+  test("Oas 3 autogenerated name in for inlined shapes") {
+    cycle("oas3-inlined-shapes.yaml", "oas3-inlined-shapes.jsonld", OasYamlHint, Amf, directory = resolutionPath)
+  }
+
+  test("Oas 3 resolve request links that have parameters") {
+    cycle(
+      "request-link-parameters/api.yaml",
+      "request-link-parameters/api.jsonld",
+      OasYamlHint,
+      Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30)
+    )
+  }
+
+  test("Oas 2 recursion detection") {
+    cycle("oas-recursion.json",
+          "oas-recursion.jsonld",
+          OasJsonHint,
+          Amf,
+          directory = resolutionPath,
+          transformWith = Some(Oas20))
+  }
+
+  test("Resolve links defined in rt and traits before merging") {
+    cycle("trait-with-link.raml", "trait-with-link.jsonld", RamlYamlHint, Amf, directory = resolutionPath)
+  }
 
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit,

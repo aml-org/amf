@@ -108,7 +108,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#8/link-1086670918",
+                            "@id": "#8/link--890878794",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -178,7 +178,7 @@
     ],
     "doc:version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "doc:root": [
@@ -357,6 +357,7 @@
                 "#2": "RAML 1.0"
               },
               "lexical": {
+                "apiContract:examples": "[(5,0)-(6,10)]",
                 "#2": "[(2,0)-(6,10)]"
               },
               "type-property-lexical-info": {
@@ -367,7 +368,7 @@
         ],
         "doc:version": [
           {
-            "@value": "2.0.1"
+            "@value": "2.1.0"
           }
         ],
         "doc:root": [
@@ -551,6 +552,7 @@
             "#8": "[(2,0)-(2,4)]"
           },
           "lexical": {
+            "apiContract:examples": "[(5,0)-(6,10)]",
             "#8": "[(2,0)-(6,10)]"
           },
           "source-vendor": {

@@ -4,6 +4,15 @@
     "title": "test",
     "version": "1.0"
   },
+  "paths": {
+    "/a/{a}": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/a"
+        }
+      ]
+    }
+  },
   "parameters": {
     "a": {
       "type": "string",
@@ -22,15 +31,6 @@
           }
         }
       }
-    }
-  },
-  "paths": {
-    "/a/{a}": {
-      "parameters": [
-        {
-          "$ref": "#/parameters/a"
-        }
-      ]
     }
   }
 }

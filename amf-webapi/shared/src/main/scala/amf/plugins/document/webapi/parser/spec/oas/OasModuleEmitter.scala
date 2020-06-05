@@ -13,7 +13,10 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{JsonSchemaEmitterContex
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
+import amf.plugins.document.webapi.parser.spec.oas.emitters.OasSecuritySchemeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
@@ -90,7 +93,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     override val header: OasHeaderEmitter = OasHeaderEmitter(OasHeader.Oas20DataType)
 
     val emitters: Seq[EntryEmitter] =
-      OasTypeEmitter(dataType.encodes, ordering, references = dataType.references).entries()
+      oas.OasTypeEmitter(dataType.encodes, ordering, references = dataType.references).entries()
   }
 
   case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclarationFragment, ordering: SpecOrdering)
@@ -138,9 +141,10 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20SecurityScheme)
 
     val emitters: Seq[EntryEmitter] =
-      OasSecuritySchemeEmitter(securityScheme.encodes,
-                               OasSecuritySchemeTypeMapping.fromText(securityScheme.encodes.`type`.value()),
-                               ordering).emitters()
+      new OasSecuritySchemeEmitter(
+        securityScheme.encodes,
+        OasLikeSecuritySchemeTypeMappings.mapsTo(spec.vendor, securityScheme.encodes.`type`.value()),
+        ordering).emitters()
   }
 
   case class NamedExampleFragmentEmitter(namedExample: NamedExampleFragment, ordering: SpecOrdering)
@@ -157,26 +161,6 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     }
 
     override def position(): Position = Position.ZERO
-  }
-
-}
-
-class JsonSchemaValidationFragmentEmitter(fragment: DataTypeFragment)(
-    implicit override val spec: JsonSchemaEmitterContext)
-    extends OasFragmentEmitter(fragment) {
-
-  override def emitFragment(): YDocument = {
-
-    val ordering: SpecOrdering = SpecOrdering.ordering(Oas, fragment.annotations)
-    val closureShapes          = fragment.encodes.closureShapes.toSeq
-
-    YDocument {
-      _.obj { b =>
-        traverse(DataTypeFragmentEmitter(fragment, ordering).emitters ++ Seq(
-                   OasDeclaredTypesEmitters(closureShapes, Nil, ordering)),
-                 b)
-      }
-    }
   }
 
 }

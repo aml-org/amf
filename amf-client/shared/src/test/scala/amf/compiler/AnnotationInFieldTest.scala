@@ -184,10 +184,10 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     for {
       unit <- build(s"${uri}root.raml", RamlYamlHint)
     } yield {
-      val targets = unit.annotations.collect { case rt: ReferenceTargets => rt }
+      val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
       assert(targets.size == 1)
-      assert(targets.head.targetLocation == s"${uri}reference.json")
-      assert(targets.head.originRange == Range(Position(6, 5), Position(6, 28)))
+      assert(targets.head._1 == s"${uri}reference.json")
+      assert(targets.head._2 == Range(Position(6, 5), Position(6, 28)))
       succeed
     }
   }
@@ -197,10 +197,10 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     for {
       unit <- build(s"${uri}root-2.raml", RamlYamlHint)
     } yield {
-      val targets = unit.annotations.collect { case rt: ReferenceTargets => rt }
+      val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
       assert(targets.size == 1)
-      assert(targets.head.targetLocation == s"${uri}reference.raml")
-      assert(targets.head.originRange == Range(Position(6, 5), Position(6, 28)))
+      assert(targets.head._1 == s"${uri}reference.raml")
+      assert(targets.head._2 == Range(Position(6, 5), Position(6, 28)))
       succeed
     }
   }
@@ -210,16 +210,33 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     for {
       unit <- build(s"${uri}root-3.raml", RamlYamlHint)
     } yield {
-      val targets    = unit.annotations.collect { case rt: ReferenceTargets                 => rt }
-      val reftargets = unit.references.head.annotations.collect { case rt: ReferenceTargets => rt }
+      val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
+      val reftargets =
+        unit.references.head.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
 
       assert(targets.size == 1)
-      assert(targets.head.targetLocation == s"${uri}reference-1.yaml")
-      assert(targets.head.originRange == Range(Position(6, 5), Position(6, 30)))
+      assert(targets.head._1 == s"${uri}reference-1.yaml")
+      assert(targets.head._2 == Range(Position(6, 5), Position(6, 30)))
 
       assert(reftargets.size == 1)
-      assert(reftargets.head.targetLocation == s"${uri}reference.json")
-      assert(reftargets.head.originRange == Range(Position(1, 6), Position(1, 29)))
+      assert(reftargets.head._1 == s"${uri}reference.json")
+      assert(reftargets.head._2 == Range(Position(1, 6), Position(1, 29)))
+
+      succeed
+    }
+  }
+
+  test("test raml ReferenceTarget annotations coincides with references (invalid inclusion)") {
+    val uri =
+      "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/invalid-include/"
+    for {
+      unit <- build(s"${uri}api.raml", RamlYamlHint)
+    } yield {
+      val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
+
+      assert(targets.size == 1)
+      assert(unit.references.size == 1)
+      assert(targets.head._1 == unit.references.head.id)
 
       succeed
     }

@@ -1,0 +1,30 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Test",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/": {
+      "parameters": [
+        {
+          "name": "body parameter 1",
+          "in": "body",
+          "schema": {}
+        },
+        {
+          "name": "body parameter 2",
+          "in": "body",
+          "schema": {}
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    }
+  }
+}

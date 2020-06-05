@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.Raml08Profile
+import amf.{Raml08Profile, Raml10Profile}
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
@@ -30,6 +30,10 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("Property overwriting") {
     validate("types/property_overwriting.raml", Some("property_overwriting.report"))
+  }
+
+  test("Property overwriting 2") {
+    validate("types/property-overwriting-2.raml", Some("property-overwriting-2.report"))
   }
 
   test("Invalid media type") {
@@ -419,4 +423,23 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("JSON Schema relative references") {
     validate("json-schema-relative-references/api.raml")
   }
+
+  test("Optional responses in traits with RAML 1.0") {
+    validate("optional-responses/optional-responses-10.raml",
+             Some("optional-responses-10.report"),
+             profile = Raml10Profile)
+  }
+
+  test("Optional responses in traits with RAML 0.8") {
+    validate("optional-responses/optional-responses-08.raml", profile = Raml08Profile)
+  }
+
+  test("Long number format is valid with number type in RAML 1.0") {
+    validate("raml/valid-number-format.raml", None, profile = Raml10Profile)
+  }
+
+  test("Duplicate key defined in yaml") {
+    validate("yaml-duplicate-key.raml", Some("yaml-duplicate-key.report"), profile = Raml10Profile)
+  }
+
 }

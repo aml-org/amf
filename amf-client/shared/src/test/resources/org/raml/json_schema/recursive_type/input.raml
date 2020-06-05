@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Reference Check API
+
+types:
+  A:
+    type: object
+    properties:
+      a1?:
+        type: root
+  B:
+    type: A[]
+  root:
+    type: object
+    properties:
+      c1?:
+        type: B

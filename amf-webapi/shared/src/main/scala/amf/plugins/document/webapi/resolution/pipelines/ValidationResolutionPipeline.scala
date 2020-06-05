@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
-import amf.ProfileName
+import amf.{Async20Profile, Oas30Profile, ProfileName}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -16,7 +16,7 @@ import amf.plugins.domain.webapi.resolution.stages.{
 class ValidationResolutionPipeline(profile: ProfileName, override val eh: ErrorHandler)
     extends ResolutionPipeline(eh) {
 
-  override val steps: Seq[ResolutionStage] = Seq(
+  protected lazy val baseSteps = Seq(
     new ReferenceResolutionStage(keepEditingInfo = false),
     new ExternalSourceRemovalStage,
     new ExtensionsResolutionStage(profile, keepEditingInfo = false),
@@ -26,11 +26,18 @@ class ValidationResolutionPipeline(profile: ProfileName, override val eh: ErrorH
     new PayloadAndParameterResolutionStage(profile)
   )
 
+  override val steps: Seq[ResolutionStage] = baseSteps
+
   override def profileName: ProfileName = profile
 }
 
 object ValidationResolutionPipeline {
   def apply(profile: ProfileName, unit: BaseUnit): BaseUnit = {
-    new ValidationResolutionPipeline(profile, unit.errorHandler()).resolve(unit)
+    val pipeline = profile match {
+      case Oas30Profile   => new Oas30ValidationResolutionPipeline(unit.errorHandler())
+      case Async20Profile => new Async20ValidationResolutionPipeline(unit.errorHandler())
+      case _              => new ValidationResolutionPipeline(profile, unit.errorHandler())
+    }
+    pipeline.resolve(unit)
   }
 }

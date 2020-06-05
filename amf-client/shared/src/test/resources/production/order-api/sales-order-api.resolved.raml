@@ -82,7 +82,104 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
                 price: "1645"
                 creationDate: 08/17/2017
                 trackingNumber: 7d0d25a4-b4bd-4b28-ba30-785415eedad2
-            (amf-tuple): true
+            (amf-tuple):
+              -
+                type: object
+              -
+                additionalProperties: true
+              -
+                properties:
+                  id:
+                    type: string
+                    required: false
+                  userId:
+                    type: string
+                    required: false
+                  billingAddress:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+                      properties:
+                        address1:
+                          type: string
+                          required: false
+                        address2:
+                          type: string
+                          required: false
+                        city:
+                          type: string
+                          required: false
+                        state:
+                          type: string
+                          required: false
+                        postalCode:
+                          type: string
+                          required: false
+                        country:
+                          type: string
+                          required: false
+                    required: false
+                  products:
+                    (amf-tuple):
+                      -
+                        type: object
+                      -
+                        additionalProperties: true
+                      -
+                        properties:
+                          id:
+                            type: string
+                            required: false
+                          productName:
+                            type: string
+                            required: false
+                          quantity:
+                            type: string
+                            required: false
+                      -
+                        type: object
+                      -
+                        additionalProperties: true
+                      -
+                        properties:
+                          id:
+                            type: string
+                            required: false
+                          productName:
+                            type: string
+                            required: false
+                          quantity:
+                            type: string
+                            required: false
+                      -
+                        type: object
+                      -
+                        additionalProperties: true
+                      -
+                        properties:
+                          id:
+                            type: string
+                            required: false
+                          productName:
+                            type: string
+                            required: false
+                          quantity:
+                            type: string
+                            required: false
+                    required: false
+                  status:
+                    type: string
+                    required: false
+                  price:
+                    type: string
+                    required: false
+                  creationDate:
+                    type: string
+                    required: false
+                  trackingNumber:
+                    type: string
+                    required: false
       "404":
         body:
           application/json:

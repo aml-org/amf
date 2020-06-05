@@ -1,0 +1,17 @@
+asyncapi: 2.0.0
+info:
+  title: asasd
+  version: asd
+channels:
+  /employees:
+    bindings:
+      ws:
+        method: GET
+  /managers:
+    bindings:
+      ws:
+        method: POST
+  /invalid:
+    bindings:
+      ws:
+        method: INVALID

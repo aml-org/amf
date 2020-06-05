@@ -20,7 +20,17 @@ import amf.plugins.document.webapi.contexts.{RefEmitter, SpecEmitterContext, Spe
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
+  Raml08TypePartEmitter,
+  Raml10TypePartEmitter,
+  RamlTypePartEmitter
+}
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.parser.spec.raml.emitters.{
+  Raml08NamedSecuritySchemeEmitter,
+  Raml10NamedSecuritySchemeEmitter,
+  RamlNamedSecuritySchemeEmitter
+}
 import amf.plugins.document.webapi.parser.spec.raml.{
   Raml08RootLevelEmitters,
   Raml10RootLevelEmitters,
@@ -98,7 +108,7 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
     : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
     RamlParametrizedSecuritySchemeEmitter.apply
 
-  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => SecurityRequirementEmitter =
+  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => AbstractSecurityRequirementEmitter =
     RamlSecurityRequirementEmitter.apply
 
   def payloadsEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlPayloadsEmitter
@@ -300,7 +310,8 @@ class XRaml10SpecEmitterContext(eh: ErrorHandler,
   override def localReference(reference: Linkable): PartEmitter =
     oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
-  val oasFactory: OasSpecEmitterFactory = Oas2SpecEmitterFactory(new Oas2SpecEmitterContext(eh, refEmitter, options))
+  val oasFactory: OasSpecEmitterFactory = new Oas2SpecEmitterFactory(
+    new Oas2SpecEmitterContext(eh, refEmitter, options))
 }
 
 class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = ShapeRenderOptions())
@@ -318,6 +329,9 @@ abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
   import BaseEmitters._
 
   override def localReference(reference: Linkable): PartEmitter = RamlLocalReferenceEmitter(reference)
+
+  def localReferenceEntryEmitter(key: String, reference: Linkable): EntryEmitter =
+    new RamlLocalReferenceEntryEmitter(key, reference)
 
   def externalReference(location: String, reference: Linkable): PartEmitter =
     new PartEmitter {

@@ -1,16 +1,16 @@
 package amf.plugins.domain.webapi.models
 
 import amf.core.metamodel.{Field, Obj}
-import amf.core.model.domain.{DomainElement, NamedDomainElement, Linkable}
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.{Request => OperationRequest, _}
+import amf.plugins.domain.webapi.models.bindings.OperationBindings
 import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import amf.plugins.domain.webapi.models.templates.ParametrizedTrait
-import amf.core.utils.AmfStrings
-import amf.plugins.domain.webapi.models.bindings.OperationBinding
 
 /**
   * Operation internal model.
@@ -37,7 +37,8 @@ case class Operation(fields: Fields, annotations: Annotations)
   def callbacks: Seq[Callback]           = fields.field(Callbacks)
   def servers: Seq[Server]               = fields.field(Servers)
   def isAbstract: BoolField              = fields.field(IsAbstract)
-  def bindings: Seq[OperationBinding]    = fields.field(Bindings)
+  def bindings: OperationBindings        = fields.field(Bindings)
+  def operationId: StrField              = fields.field(OperationId)
 
   def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
@@ -56,9 +57,11 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withCallbacks(callbacks: Seq[Callback]): this.type          = setArray(Callbacks, callbacks)
   def withServers(servers: Seq[Server]): this.type                = setArray(Servers, servers)
   def withAbstract(abs: Boolean): this.type                       = set(IsAbstract, abs)
-  def withBindings(bindings: Seq[OperationBinding]): this.type    = setArray(Bindings, bindings)
+  def withBindings(bindings: OperationBindings): this.type        = set(Bindings, bindings)
+  def withOperationId(operationId: String): this.type             = set(OperationId, operationId)
 
   override def removeServers(): Unit = fields.removeField(OperationModel.Servers)
+  def removeName(): fields.type      = fields.removeField(OperationModel.Name)
 
   def withResponse(name: String): Response = {
     val result = Response().withName(name).withStatusCode(if (name == "default") "200" else name)

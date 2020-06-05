@@ -5,14 +5,14 @@ import amf.core.rdf.RdfModel
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
 import amf.core.unsafe.PlatformSecrets
-import amf.io.FunSuiteCycleTests
+import amf.io.{FunSuiteCycleTests, FunSuiteRdfCycleTests}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DialectSHACLTest extends FunSuiteCycleTests with PlatformSecrets {
+class DialectSHACLTest extends FunSuiteRdfCycleTests with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -41,7 +41,8 @@ class DialectSHACLTest extends FunSuiteCycleTests with PlatformSecrets {
                         target: Vendor = Amf,
                         directory: String = basePath,
                         syntax: Option[Syntax] = None,
-                        pipeline: Option[String] = None): Future[Assertion] = {
+                        pipeline: Option[String] = None,
+                        transformWith: Option[Vendor] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 

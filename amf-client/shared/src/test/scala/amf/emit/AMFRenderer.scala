@@ -13,8 +13,7 @@ import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 // TODO: this is only here for compatibility with the test suite
 class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax: Option[Syntax]) {
@@ -25,6 +24,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
+  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Async20Plugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
@@ -33,25 +33,26 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
   /** Print ast to string. */
-  def renderToString: Future[String] = render()
+  def renderToString(implicit executionContext: ExecutionContext): Future[String] = render()
 
   /** Print ast to file. */
-  def renderToFile(remote: Platform, path: String): Future[Unit] = render().flatMap(s => remote.write(path, s))
+  def renderToFile(remote: Platform, path: String)(implicit executionContext: ExecutionContext): Future[Unit] =
+    render().flatMap(s => remote.write(path, s))
 
-  private def render(): Future[String] = {
+  private def render()(implicit executionContext: ExecutionContext): Future[String] = {
     val mediaType = syntax.fold(vendor match {
       case Amf                          => "application/ld+json"
       case Payload                      => "application/amf+json"
       case Raml10 | Raml08 | Raml | Aml => "application/yaml"
       case Oas | Oas20 | Oas30          => "application/json"
+      case AsyncApi20 | AsyncApi        => "application/json"
       case _                            => "text/plain"
     })({
       case Json => "application/json"
       case _    => "application/yaml"
     })
 
-    new AMFSerializer(unit, mediaType, vendor.name, options)
-      .renderToString(scala.concurrent.ExecutionContext.Implicits.global)
+    new AMFSerializer(unit, mediaType, vendor.name, options).renderToString
   }
 }
 

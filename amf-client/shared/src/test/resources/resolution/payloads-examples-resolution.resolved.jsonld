@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#21",
+        "@id": "#22",
         "@type": [
           "apiContract:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#22",
+            "@id": "#23",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#23",
+                "@id": "#24",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -46,7 +46,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#24",
+                    "@id": "#25",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -66,7 +66,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/link-379818744",
+                            "@id": "#1/link-65",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -96,7 +96,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(14,4)-(21,0)]",
-                        "#24": "[(14,0)-(21,0)]"
+                        "#25": "[(14,0)-(21,0)]"
                       }
                     }
                   }
@@ -106,12 +106,12 @@
                     "apiContract:expects": "true"
                   },
                   "lexical": {
-                    "#23": "[(13,2)-(21,0)]"
+                    "#24": "[(13,2)-(21,0)]"
                   }
                 }
               },
               {
-                "@id": "#25",
+                "@id": "#26",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -123,7 +123,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#26",
+                    "@id": "#27",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -143,7 +143,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/link-379818744",
+                            "@id": "#1/link-65",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -173,7 +173,7 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(22,4)-(28,19)]",
-                        "#26": "[(22,0)-(28,19)]"
+                        "#27": "[(22,0)-(28,19)]"
                       }
                     }
                   }
@@ -183,32 +183,32 @@
                     "apiContract:expects": "true"
                   },
                   "lexical": {
-                    "#25": "[(21,2)-(28,19)]"
+                    "#26": "[(21,2)-(28,19)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#22": "[(12,0)-(28,19)]"
+                "#23": "[(12,0)-(28,19)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#21": "RAML 1.0"
+            "#22": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#21": "[(2,0)-(28,19)]"
+            "#22": "[(2,0)-(28,19)]"
           }
         }
       }
     ],
     "doc:version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "doc:root": [
@@ -721,7 +721,7 @@
             "#1": "[(4,2)-(12,0)]"
           },
           "resolved-link": {
-            "#1": "amf://id#20"
+            "#1": "amf://id#21"
           }
         }
       }

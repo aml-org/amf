@@ -1,15 +1,17 @@
 package amf.plugins.domain.webapi.models.bindings.amqp
-import amf.plugins.domain.webapi.metamodel.bindings.Amqp091OperationBindingModel
-import amf.plugins.domain.webapi.models.bindings.{OperationBinding, BindingVersion}
-import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.metamodel.{Field, Obj}
-import amf.core.model.domain.{Linkable, DomainElement}
+import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.parser.{Annotations, Fields}
+import amf.plugins.domain.webapi.metamodel.bindings.Amqp091OperationBindingModel
 import amf.plugins.domain.webapi.metamodel.bindings.Amqp091OperationBindingModel._
+import amf.plugins.domain.webapi.models.Key
+import amf.plugins.domain.webapi.models.bindings.{BindingVersion, OperationBinding}
 
 class Amqp091OperationBinding(override val fields: Fields, override val annotations: Annotations)
     extends OperationBinding
-    with BindingVersion {
+    with BindingVersion
+    with Key {
   override protected def bindingVersionField: Field = BindingVersion
   override def meta: Obj                            = Amqp091OperationBindingModel
 
@@ -38,7 +40,10 @@ class Amqp091OperationBinding(override val fields: Fields, override val annotati
 
   override def linkCopy(): Amqp091OperationBinding = Amqp091OperationBinding().withId(id)
 
-  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Amqp091OperationBinding.apply
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    Amqp091OperationBinding.apply
+
+  override def key: StrField = fields.field(Amqp091OperationBindingModel.key)
 }
 
 object Amqp091OperationBinding {
@@ -47,5 +52,6 @@ object Amqp091OperationBinding {
 
   def apply(annotations: Annotations): Amqp091OperationBinding = apply(Fields(), annotations)
 
-  def apply(fields: Fields, annotations: Annotations): Amqp091OperationBinding = new Amqp091OperationBinding(fields, annotations)
+  def apply(fields: Fields, annotations: Annotations): Amqp091OperationBinding =
+    new Amqp091OperationBinding(fields, annotations)
 }

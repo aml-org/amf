@@ -1,0 +1,218 @@
+#%RAML 1.0
+baseUri: http://ang-service.kqa.msap.io/v1
+#baseUri: https://mocksvc.mulesoft.com/mocks/515b37d9-b7af-4c6a-9a3c-052bced57e5b # 
+title: ANG Service
+version: v1
+
+traits:
+  container:  
+    description: |
+        Stores the triples for the parsed, and validated <<containerType>> and returns the URI for the newly created graph
+    headers: 
+      Content-Encoding:
+        type: string
+        required: false
+        example: gzip
+    responses:
+      201:
+        body:
+          text/html:
+            example:
+        headers:
+          Location:
+            type: string
+            description: the URI for the stored graph
+            example: <<uri-example>>
+          
+  resource:
+    description: 
+      Stores the triples for the parsed, and validated <<resourceType>> and returns the URI for the newly created graph
+    responses: 
+      201:
+        body:
+          text/html:
+            example:
+        headers:
+          Location:
+            type: string
+            description: the URI for the stored graph
+            example: <<uri-example>>
+          Content-Encoding:
+            type: string
+            example: gzip          
+
+/vocabulary:
+  post:
+    is: [ {container: {
+            containerType: Vocabulary,
+            uri-example: http://mulesoft.com/v1/vocabulary/9758c8aa-18d0-484f-905c-a715c279b195/7574a3a021fc0ad2a2bae65136bea7ab
+        }} ]
+    body:
+      application/ld+json:
+          example: !include examples/post/vocabulary.json
+      application/yaml:
+        example: !include examples/post/vocabulary.yaml
+    
+
+  /{vocabularyID}:
+    get:
+      description: Retrieve a particular <<containerType>>
+      headers: 
+        Accept-Encoding:
+          type: string
+          required: false
+          example: gzip
+      responses:
+        200:
+          body:
+            application/ld+json:
+                description: Json for the <<containerType>>.
+                example: !include examples/get/vocabulary.json
+            application/yaml:
+              description: Yaml for the <<containerType>>.
+              example: !include examples/get/vocabulary.yaml
+/schema:
+  post:
+    is: [{container: {
+            containerType: Dialects,
+            uri-example: http://mulesoft.com/v1/schema/1b1867f1-caab-4496-af9d-64e96112fa11/10e4e01c812fdc17ac31dc39a636938c
+        }}]
+    body:
+      application/ld+json:
+        example: !include examples/post/dialect.json
+      application/yaml:
+      #  example: !include examples/post/dialect.yaml
+
+  /{schemaID}:
+    get:
+      description: Retrieve a particular <<containerType>>
+      headers: 
+        Accept-Encoding:
+          type: string
+          required: false
+          example: gzip
+      responses:
+        200:
+          body:
+            application/ld+json:
+              description: Graph for the <<containerType>>.
+              example: !include examples/get/dialect.json
+            application/yaml:
+              description: Yaml for the <<containerType>>.
+              #example: !include examples/get/dialect.yaml
+/system:
+  post:
+    is: [{container: {
+            containerType: Container,
+            uri-example: http://mulesoft.com/v1/tech-talk
+        }}]
+    body:
+      application/ld+json:
+        description: Creates a container
+        example: !include examples/post/container.json
+      application/yaml:
+        description: Creates a container
+        example: !include examples/post/container.yaml
+
+/{containerID}:
+  post:
+    is: [{resource: {
+            resourceType: RDFResource,
+            uri-example: http://mulesoft.com/v1/tech-talk/1c53a7e2-6212-4c39-9f5e-d1b81ee10599/10e4ev1c812f7c17ac31dc3da636537d
+        }}]
+    body:
+      application/ld+json:
+        example: !include examples/post/document.json
+      application/yaml:
+        example: !include examples/post/document.yaml
+
+  get:
+    queryParameters: 
+        page:
+          description: The container's page number to be returned
+          required: false
+        filter_param:
+          description: The parameter to filter
+          required: false
+        _asc:
+          description: The parameter to order the result in ascending form
+          required: false
+        _desc:
+          description: The parameter to order the result in descending form
+          required: false
+    description: Retrieve a containers page
+    headers: 
+        Accept-Encoding:
+          type: string
+          required: false
+          example: gzip
+    responses:
+      200:
+        body:
+          application/yaml:
+            description: Yaml for the <<resourceType>>.
+            example: !include examples/get/paginatedResponse.yaml
+      309:
+        headers: 
+          Location:
+            description: The location where the first page will be found
+      
+  /{documentID}:
+    get:
+      description: Retrieve a particular <<resourceType>>
+      headers: 
+        Accept-Encoding:
+          type: string
+          required: false
+          example: gzip
+      responses:
+        200:
+          body:
+            application/ld+json:
+              description: Json for the <<resourceType>>.
+              example: !include examples/post/document.json
+            application/yaml:
+              description: Yaml for the <<resourceType>>.
+              example: !include examples/post/document.yaml
+  /*:
+    get:
+      description: Retrieve a containers page with inline members
+      queryParameters: 
+        page:
+          description: The container's page number to be returned
+          required: false
+        filter_param:
+          description: The parameter to filter with
+          required: false
+        _asc:
+          description: The parameter to sort the result in ascending form
+          required: false
+        _desc:
+          description: The parameter to sort the result in descending form
+          required: false
+      headers: 
+        Accept-Encoding:
+          type: string
+          required: false
+          example: gzip
+      responses:
+        200:
+          body:
+            application/ld+json:
+              description: Json for the <<resourceType>>.
+              example: !include examples/get/inlineMembers.json
+
+/status:
+  get:
+    description: Returns status of the service
+    headers: 
+        Accept-Encoding:
+          type: string
+          required: false
+          example: gzip
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              { "status": "ok" }

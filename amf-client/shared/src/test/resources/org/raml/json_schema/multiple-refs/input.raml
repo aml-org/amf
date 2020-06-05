@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: simple object
+types:
+  number-type:
+    type: number
+  root:
+    type: object
+    properties:
+      internalRef1: number-type
+      internalRef2: number-type
+      externalRef1: !include data-type.raml
+      externalRef2: !include data-type.raml
+      otherExtRef1: !include other-data-type.raml
+      otherExtRef2: !include other-data-type.raml

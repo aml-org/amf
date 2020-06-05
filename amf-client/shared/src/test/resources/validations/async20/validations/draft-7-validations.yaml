@@ -1,0 +1,130 @@
+asyncapi: '2.0.0'
+info:
+  title: components
+  version: '1.0.0'
+
+components:
+  schemas:
+    const-keyword:
+      type: string
+      const: some value
+      examples: [
+        "invalid","some value"
+      ]
+    conditional-subschemas:
+      type: object
+      properties:
+        country:
+          enum: ["United States of America", "Canada"]
+      if:
+        properties:
+          country:
+            const: United States of America
+      then:
+        properties:
+          postal_code:
+            pattern: "[0-9]{5}(-[0-9]{4})?"
+      else:
+        properties:
+          postal_code:
+            pattern: "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]"
+      examples: [
+      {
+        "country": "United States of America",
+        "postal_code": "dlkfjslfj"
+      },
+      {
+        "country": "United States of America",
+        "postal_code": "20500"
+      },
+      {
+        "country": "Canada",
+        "postal_code": "K1M 1M4"
+      },
+      {
+        "country": "Canada",
+        "postal_code": "K1M NOT"
+      }
+      ]
+
+    property-names:
+      type: object
+      propertyNames:
+        pattern: "^[A-Za-z]*$"
+      examples: [
+       { "invalid5": "hello" }
+      ]
+
+    contains-keyword:
+      type: array
+      contains:
+        type: number
+      examples: [
+        ["invalid"],
+        ["valid", 5]
+      ]
+
+    additional-items:
+      items: [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string",
+          "enum": ["Street", "Avenue", "Boulevard"]
+        }
+      ]
+      additionalItems:
+        type: number
+      examples: [
+        [3, "Street", "invalid"],
+        [3, "Street", 4]
+      ]
+
+    exclusive-with-values:
+      type: object
+      properties:
+        a:
+          type: number
+          minimum: 0
+          exclusiveMaximum: 100
+        b:
+          type: number
+          exclusiveMinimum: 0
+          maximum: 100
+      examples: [
+        {
+          "a": 0,
+          "b": 0
+        },
+        {
+          "a": 100,
+          "b": 100
+        }
+      ]
+
+    notKeyword:
+      not:
+        type: object
+        properties:
+          a:
+            required: true
+            type: string
+          b:
+            required: true
+            type: number
+      examples: [
+        {
+          "other": "Canada",
+          "thing": "K1M 1M4",
+          "is": "K1M 1M4",
+          "valid": 5
+        },
+        {
+          a: "this shloud be invalid",
+          b: 10
+        }
+      ]
+
+
+channels: {}
