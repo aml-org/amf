@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.remote.{Oas20, RamlYamlHint}
+import amf.core.remote.{Oas20, Oas30, RamlYamlHint}
 import amf.core.resolution.pipelines.ResolutionPipeline
 
 import scala.concurrent.ExecutionContext
@@ -28,4 +28,19 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
           transformWith = Some(Oas20))
   }
 
+  test("RAML operations without names do not generate null_0 operationIds in OAS 3.0") {
+    cycle("raml10/no-operation-name.raml",
+          "cycled-apis/oas30/no-operation-name.json",
+          RamlYamlHint,
+          Oas30,
+          transformWith = Some(Oas30))
+  }
+
+  test("RAML operations without names do not generate null_0 operationIds in OAS 2.0") {
+    cycle("raml10/no-operation-name.raml",
+          "cycled-apis/oas20/no-operation-name.json",
+          RamlYamlHint,
+          Oas20,
+          transformWith = Some(Oas20))
+  }
 }
