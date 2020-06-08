@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "merchant": {
+      "type": "string"
+    },
+    "operator": {
+      "type": "string"
+    },
+
+    "primaryApplicant": {
+      "$ref": "definitions.json#/applicant"
+    },
+    "additionalApplicants": {
+      "$ref": "definitions.json#/applicant"
+    }
+  },
+  "required": [
+    "merchant",
+    "operator"
+  ]
+}
