@@ -20,14 +20,20 @@ import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
+import amf.tools.canonical.JenaUtils.all
 import amf.tools.{CanonicalWebAPISpecDialectExporter, PropertyNodeModel}
-import org.apache.jena.rdf.model.{Model, RDFNode, Resource, Statement}
+import org.apache.jena.rdf.model.{Model, RDFNode, ResIterator, Resource, Statement}
+import org.apache.jena.util.iterator.ExtendedIterator
 
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext.Implicits.global // TODO Should implement ExecutionEnvironment here?
+import scala.collection.mutable.ListBuffer
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 object CanonicalWebAPISpecTransformer extends PlatformSecrets {
+  type DomainElementUri = String
+  type TypeUri          = String
+  type DialectNode      = String
 
   val CANONICAL_WEBAPI_NAME = "WebAPI Spec 1.0"
 
@@ -46,7 +52,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     * class in the WebAPI vocabulary
     * @return
     */
-  protected def buildCanonicalClassMapping: Map[String, String] = {
+  protected def buildCanonicalClassMapping: Map[TypeUri, DialectNode] = {
     findWebAPIDialect match {
       case Some(webApiDialect) =>
         val nodeMappings = webApiDialect.declares.collect { case mapping: NodeMapping => mapping }
@@ -274,7 +280,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     topLevelUnit
   }
 
-  protected def transformDataNodes(mapping: Map[String, String], nativeModel: Model): Unit = {
+  protected def transformDataNodes(typeMapping: Map[TypeUri, DialectNode], nativeModel: Model): Unit = {
     // we first remove the name from al ldata nodes
     // we first list all the data nodes
     val toCleanIt = nativeModel.listSubjectsWithProperty(
@@ -349,7 +355,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
           nativeModel.add(
             pReif,
             nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-            nativeModel.createResource(mapping(PropertyNodeModel.`type`.head.iri()))
+            nativeModel.createResource(typeMapping(PropertyNodeModel.`type`.head.iri()))
           )
       }
 
@@ -361,6 +367,20 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     }
   }
 
+  def domainElementsFrom(nativeModel: Model): Seq[DomainElementUri] = {
+    val domainElements = nativeModel.listSubjectsWithProperty(
+      nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+      nativeModel.createResource((Namespace.Document + "DomainElement").iri())
+    )
+
+    val shapes = nativeModel.listSubjectsWithProperty(
+      nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+      nativeModel.createResource((Namespace.Shapes + "Shape").iri())
+    )
+
+    all(domainElements) ++ all(shapes) map { _.getURI }
+  }
+
   /**
     * Cleans the input WebAPI model adding the required information to the
     * underlying RDF graph and uses it to build the canonical WebAPI dialect
@@ -370,8 +390,8 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     * @return Equivalent Canonical WebAPI AML dialect instance
     */
   protected def cleanAMFModel(unit: BaseUnit): BaseUnit = {
-    val mapping = buildCanonicalClassMapping
-    val model   = unit.toNativeRdfModel()
+    val typeMapping = buildCanonicalClassMapping
+    val model       = unit.toNativeRdfModel()
 
     val nativeModel = model.native().asInstanceOf[Model]
 
@@ -385,98 +405,13 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
           nativeModel.createProperty((Namespace.Meta + "definedBy").iri()),
           nativeModel.createResource(dialect.id)
         )
-      case None => //ignore
+      case None => // ignore
     }
 
     // transform dynamic data nodes to list the properties
-    transformDataNodes(mapping, nativeModel)
+    transformDataNodes(typeMapping, nativeModel)
 
-    // Find all domain elements
-    var it = nativeModel.listSubjectsWithProperty(
-      nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-      nativeModel.createResource((Namespace.Document + "DomainElement").iri())
-    )
-    val domainElements: mutable.ListBuffer[String] = mutable.ListBuffer()
-    while (it.hasNext) {
-      domainElements += it.next().getURI
-    }
-
-    // Find all shapes
-    it = nativeModel.listSubjectsWithProperty(
-      nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-      nativeModel.createResource((Namespace.Shapes + "Shape").iri())
-    )
-    while (it.hasNext) {
-      domainElements += it.next().getURI
-    }
-
-    // Find the type of all the domain elements and map it to a node in the canonical dialect
-    val domainElementsMapping = mutable.Map[String, String]()
-    domainElements.foreach { domainElement =>
-      // get the types of the node
-      val nodeIt = nativeModel.listObjectsOfProperty(
-        nativeModel.createResource(domainElement),
-        nativeModel.createProperty((Namespace.Rdf + "type").iri())
-      )
-
-      // We need to deal with node shape inheritance
-      // These flags allow us to track if we found any shape or shape in case
-      // we cannot find a more specific shape
-      var foundShape: Option[String]    = None
-      var foundAnyShape: Option[String] = None
-      var found                         = false
-      while (nodeIt.hasNext) {
-        val nextType = nodeIt.next().asResource().getURI
-        mapping.get(nextType) match {
-          case Some(dialectNode) =>
-            // dealing with inheritance here
-            if (!dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape") && !dialectNode
-                  .endsWith("#/declarations/DataNode")) {
-              found = true
-              domainElementsMapping += (domainElement -> dialectNode)
-            } else if (dialectNode.endsWith("#/declarations/Shape")) {
-              foundShape = Some(dialectNode)
-            } else if (dialectNode.endsWith("#/declarations/AnyShape")) {
-              foundAnyShape = Some(dialectNode)
-            }
-          case _ => // ignore
-        }
-      }
-
-      // Set the base shape node if we have find it and we didn't find anything more specific
-      if (!found && foundAnyShape.isDefined) {
-        domainElementsMapping += (domainElement -> foundAnyShape.get)
-        found = true
-      }
-      if (!found && foundShape.isDefined) {
-        domainElementsMapping += (domainElement -> foundShape.get)
-        found = true
-      }
-
-      // now we transform regular link-targets into design-link-targets so we can render them in a dialect without
-      // triggering element dereference logic
-      transformLink(nativeModel, domainElement)
-
-      // same for custom domain properties
-      // domain properties are generated as properties, now they will become
-      /// reified so we can list them
-      transformAnnotations(nativeModel, mapping, domainElement)
-    }
-
-    // Add the dialect domain element and right mapped node mapping type in the model
-    domainElementsMapping.foreach {
-      case (domainElement, nodeMapping) =>
-        nativeModel.add(
-          nativeModel.createResource(domainElement),
-          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-          nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
-        )
-        nativeModel.add(
-          nativeModel.createResource(domainElement),
-          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-          nativeModel.createResource(nodeMapping)
-        )
-    }
+    transformDomainElements(typeMapping, nativeModel)
 
     val plugins = PluginContext(
       blacklist = Seq(CorePlugin, WebAPIDomainPlugin, DataShapesDomainPlugin, AMFGraphPlugin, Raml10Plugin))
@@ -485,7 +420,83 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
       .parse(model, baseUnitId)
   }
 
-  protected def transformLink(nativeModel: Model, domainElement: String): Unit = {
+  private def transformDomainElements(typeMapping: Map[TypeUri, DialectNode], nativeModel: Model): Unit = {
+    domainElementsFrom(nativeModel).foreach { domainElement =>
+      // we map types to dialect nodes and add them to the rdf:type property
+      transformType(nativeModel, domainElement, typeMapping)
+
+      // now we transform regular link-targets into design-link-targets so we can render them in a dialect without
+      // triggering element dereference logic
+      transformLink(nativeModel, domainElement)
+
+      // same for custom domain properties
+      // domain properties are generated as properties, now they will become
+      // reified so we can list them
+      transformAnnotations(nativeModel, typeMapping, domainElement)
+    }
+  }
+
+  def transformType(nativeModel: Model, domainElement: DomainElementUri, mapping: Map[TypeUri, DialectNode]): Unit = {
+    val typesIterator = nativeModel.listObjectsOfProperty(
+      nativeModel.createResource(domainElement),
+      nativeModel.createProperty((Namespace.Rdf + "type").iri())
+    )
+
+    // We need to deal with node shape inheritance
+    // These flags allow us to track if we found any shape or shape in case
+    // we cannot find a more specific shape
+    var foundShape: Option[String]      = None
+    var foundAnyShape: Option[String]   = None
+    var foundArrayShape: Option[String] = None
+    var found                           = false
+    var mappedDialectNode               = ""
+    while (typesIterator.hasNext) {
+      val nextType = typesIterator.next().asResource().getURI
+      mapping.get(nextType) match {
+        case Some(dialectNode) =>
+          // dealing with inheritance here
+          if (!dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape") && !dialectNode
+                .endsWith("#/declarations/DataNode") && !dialectNode.endsWith("#/declarations/ArrayShape")) {
+            found = true
+            mappedDialectNode = dialectNode
+          } else if (dialectNode.endsWith("#/declarations/Shape")) {
+            foundShape = Some(dialectNode)
+          } else if (dialectNode.endsWith("#/declarations/AnyShape")) {
+            foundAnyShape = Some(dialectNode)
+          } else if (dialectNode.endsWith("#/declarations/ArrayShape")) {
+            foundArrayShape = Some(dialectNode)
+          }
+        case _ => // ignore
+      }
+    }
+
+    // Set the base shape node if we have find it and we didn't find anything more specific
+    if (!found && foundArrayShape.isDefined) {
+      mappedDialectNode = foundArrayShape.get
+      found = true
+    }
+    if (!found && foundAnyShape.isDefined) {
+      mappedDialectNode = foundAnyShape.get
+      found = true
+    }
+    if (!found && foundShape.isDefined) {
+      mappedDialectNode = foundShape.get
+      found = true
+    }
+
+    nativeModel.add(
+      nativeModel.createResource(domainElement),
+      nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+      nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
+    )
+    nativeModel.add(
+      nativeModel.createResource(domainElement),
+      nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+      nativeModel.createResource(mappedDialectNode)
+    )
+  }
+
+  protected def transformLink(nativeModel: Model, domainElement: DomainElementUri): Unit = {
     val linksIt = nativeModel.listObjectsOfProperty(
       nativeModel.createResource(domainElement),
       nativeModel.createProperty(LinkableElementModel.TargetId.value.iri())
@@ -505,7 +516,9 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     }
   }
 
-  protected def transformAnnotations(nativeModel: Model, mapping: Map[String, String], domainElement: String) {
+  protected def transformAnnotations(nativeModel: Model,
+                                     typeMapping: Map[TypeUri, DialectNode],
+                                     domainElement: DomainElementUri) {
     val annotsIt = nativeModel.listObjectsOfProperty(
       nativeModel.createResource(domainElement),
       nativeModel.createProperty(DomainElementModel.CustomDomainProperties.value.iri())
@@ -543,7 +556,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
       nativeModel.add(
         reifiedAnnotationUri,
         nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-        nativeModel.createResource(mapping(DomainExtensionModel.`type`.head.iri()))
+        nativeModel.createResource(typeMapping(DomainExtensionModel.`type`.head.iri()))
       )
       // the extension
       nativeModel.add(
@@ -562,7 +575,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
       nativeModel.add(
         annotationLink,
         nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-        nativeModel.createResource(mapping(CustomDomainPropertyModel.`type`.head.iri()))
+        nativeModel.createResource(typeMapping(CustomDomainPropertyModel.`type`.head.iri()))
       )
       nativeModel.add(
         annotationLink,

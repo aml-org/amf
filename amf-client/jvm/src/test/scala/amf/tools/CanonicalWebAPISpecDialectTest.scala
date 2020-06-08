@@ -23,7 +23,9 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
   val CANONICAL_WEBAPI_DIALECT  = "file://vocabularies/dialects/canonical_webapi_spec.yaml"
   override def basePath: String = "file://amf-client/shared/src/test/resources/transformations/"
 
-  def checkCanonicalDialectTransformation(source: String, target: String, shouldTranform: Boolean): Future[Assertion] = {
+  def checkCanonicalDialectTransformation(source: String,
+                                          target: String,
+                                          shouldTranform: Boolean): Future[Assertion] = {
     val amfWebApi  = basePath + source
     val goldenYaml = s"$basePath$target.yaml"
     val goldenJson = s"$basePath$target.json"
@@ -64,6 +66,7 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
     "modular/api.raml",
     "security/api.raml",
     "declares/api.raml",
+    "tuple-shape-schema/api.raml"
 //    "modular-recursion/api.raml"
   )
 

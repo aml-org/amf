@@ -213,30 +213,6 @@ object CanonicalWebAPISpecDialectExporter {
     }
   }
 
-  def allowedShapePropertyMapping(propertyTerm: String, isBaseShape: Boolean): Boolean = {
-    if (isBaseShape) {
-      val shapeMapping = nodeMappings("amf.core.metamodel.domain.ShapeModel$")
-      val duplicatedPropertyFound = shapeMapping.propertyMappings.find { p =>
-        p.propertyTerm == propertyTerm
-      }
-      duplicatedPropertyFound.isEmpty
-    } else {
-      true
-    }
-  }
-
-  def allowedAnyShapePropertyMapping(propertyTerm: String, isAnyShape: Boolean): Boolean = {
-    if (isAnyShape) {
-      val shapeMapping = nodeMappings("amf.plugins.domain.shapes.metamodel.AnyShapeModel$")
-      val duplicatedPropertyFound = shapeMapping.propertyMappings.find { p =>
-        p.propertyTerm == propertyTerm
-      }
-      duplicatedPropertyFound.isEmpty
-    } else {
-      true
-    }
-  }
-
   def cleanInheritance(): Unit = {
     val cleanNodeMappings: mutable.Map[String, ExtendedDialectNodeMapping] = mutable.Map()
     nodeMappings = nodeMappings.foldLeft(Map[String, ExtendedDialectNodeMapping]()) {
@@ -247,11 +223,9 @@ object CanonicalWebAPISpecDialectExporter {
       case (id, mapping) =>
         val superMappings       = findExtended(mapping)
         val inheritedProperties = superMappings.map(nodeMappings(_)).flatMap(_.propertyMappings)
-        val inheritedPropertiesMap = inheritedProperties.foldLeft(Set[String]()) {
-          case (acc, p) =>
-            acc + p.name
-        }
-        val filteredPropertyMappings = mapping.propertyMappings.filter(p => !inheritedPropertiesMap.contains(p.name))
+        val filteredPropertyMappings = mapping.propertyMappings.filter(p => {
+          !inheritedProperties.contains(p)
+        })
         cleanNodeMappings.update(id, mapping.copy(propertyMappings = filteredPropertyMappings))
     }
     nodeMappings = cleanNodeMappings.toMap
