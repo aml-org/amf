@@ -420,56 +420,9 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
   }
 
   private def transformDomainElements(mapping: Map[String, String], model: Model): Unit = {
-    // Find the type of all the domain elements and map it to a node in the canonical dialect
-    val domainElementsMapping = mutable.Map[DomainElementUri, DialectNode]()
-
     domainElementsFrom(model).foreach { domainElement =>
-      // get the types of the node
-      val typesIterator = model.listObjectsOfProperty(
-        model.createResource(domainElement),
-        model.createProperty((Namespace.Rdf + "type").iri())
-      )
-
-      // We need to deal with node shape inheritance
-      // These flags allow us to track if we found any shape or shape in case
-      // we cannot find a more specific shape
-      var foundShape: Option[String]      = None
-      var foundAnyShape: Option[String]   = None
-      var foundArrayShape: Option[String] = None
-      var found                           = false
-      while (typesIterator.hasNext) {
-        val nextType = typesIterator.next().asResource().getURI
-        mapping.get(nextType) match {
-          case Some(dialectNode) =>
-            // dealing with inheritance here
-            if (!dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape") && !dialectNode
-                  .endsWith("#/declarations/DataNode") && !dialectNode.endsWith("#/declarations/ArrayShape")) {
-              found = true
-              domainElementsMapping += (domainElement -> dialectNode)
-            } else if (dialectNode.endsWith("#/declarations/Shape")) {
-              foundShape = Some(dialectNode)
-            } else if (dialectNode.endsWith("#/declarations/AnyShape")) {
-              foundAnyShape = Some(dialectNode)
-            } else if (dialectNode.endsWith("#/declarations/ArrayShape")) {
-              foundArrayShape = Some(dialectNode)
-            }
-          case _ => // ignore
-        }
-      }
-
-      // Set the base shape node if we have find it and we didn't find anything more specific
-      if (!found && foundArrayShape.isDefined) {
-        domainElementsMapping += (domainElement -> foundArrayShape.get)
-        found = true
-      }
-      if (!found && foundAnyShape.isDefined) {
-        domainElementsMapping += (domainElement -> foundAnyShape.get)
-        found = true
-      }
-      if (!found && foundShape.isDefined) {
-        domainElementsMapping += (domainElement -> foundShape.get)
-        found = true
-      }
+      // we map types to dialect nodes and add them to the rdf:type property
+      transformType(model, domainElement, mapping)
 
       // now we transform regular link-targets into design-link-targets so we can render them in a dialect without
       // triggering element dereference logic
@@ -480,21 +433,66 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
       // reified so we can list them
       transformAnnotations(model, mapping, domainElement)
     }
+  }
 
-    // Add the dialect domain element and right mapped node mapping type in the model
-    domainElementsMapping.foreach {
-      case (domainElement, nodeMapping) =>
-        model.add(
-          model.createResource(domainElement),
-          model.createProperty((Namespace.Rdf + "type").iri()),
-          model.createResource((Namespace.Meta + "DialectDomainElement").iri())
-        )
-        model.add(
-          model.createResource(domainElement),
-          model.createProperty((Namespace.Rdf + "type").iri()),
-          model.createResource(nodeMapping)
-        )
+  def transformType(model: Model, domainElement: DomainElementUri, mapping: Map[String, String]): Unit = {
+    val typesIterator = model.listObjectsOfProperty(
+      model.createResource(domainElement),
+      model.createProperty((Namespace.Rdf + "type").iri())
+    )
+
+    // We need to deal with node shape inheritance
+    // These flags allow us to track if we found any shape or shape in case
+    // we cannot find a more specific shape
+    var foundShape: Option[String]      = None
+    var foundAnyShape: Option[String]   = None
+    var foundArrayShape: Option[String] = None
+    var found                           = false
+    var mappedDialectNode               = ""
+    while (typesIterator.hasNext) {
+      val nextType = typesIterator.next().asResource().getURI
+      mapping.get(nextType) match {
+        case Some(dialectNode) =>
+          // dealing with inheritance here
+          if (!dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape") && !dialectNode
+                .endsWith("#/declarations/DataNode") && !dialectNode.endsWith("#/declarations/ArrayShape")) {
+            found = true
+            mappedDialectNode = dialectNode
+          } else if (dialectNode.endsWith("#/declarations/Shape")) {
+            foundShape = Some(dialectNode)
+          } else if (dialectNode.endsWith("#/declarations/AnyShape")) {
+            foundAnyShape = Some(dialectNode)
+          } else if (dialectNode.endsWith("#/declarations/ArrayShape")) {
+            foundArrayShape = Some(dialectNode)
+          }
+        case _ => // ignore
+      }
     }
+
+    // Set the base shape node if we have find it and we didn't find anything more specific
+    if (!found && foundArrayShape.isDefined) {
+      mappedDialectNode = foundArrayShape.get
+      found = true
+    }
+    if (!found && foundAnyShape.isDefined) {
+      mappedDialectNode = foundAnyShape.get
+      found = true
+    }
+    if (!found && foundShape.isDefined) {
+      mappedDialectNode = foundShape.get
+      found = true
+    }
+
+    model.add(
+      model.createResource(domainElement),
+      model.createProperty((Namespace.Rdf + "type").iri()),
+      model.createResource((Namespace.Meta + "DialectDomainElement").iri())
+    )
+    model.add(
+      model.createResource(domainElement),
+      model.createProperty((Namespace.Rdf + "type").iri()),
+      model.createResource(mappedDialectNode)
+    )
   }
 
   protected def transformLink(nativeModel: Model, domainElement: String): Unit = {
