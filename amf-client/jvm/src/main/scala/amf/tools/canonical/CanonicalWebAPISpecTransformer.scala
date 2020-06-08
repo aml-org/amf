@@ -422,28 +422,35 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
       // We need to deal with node shape inheritance
       // These flags allow us to track if we found any shape or shape in case
       // we cannot find a more specific shape
-      var foundShape: Option[String]    = None
-      var foundAnyShape: Option[String] = None
-      var found                         = false
+      var foundShape: Option[String]      = None
+      var foundAnyShape: Option[String]   = None
+      var foundArrayShape: Option[String] = None
+      var found                           = false
       while (nodeIt.hasNext) {
         val nextType = nodeIt.next().asResource().getURI
         mapping.get(nextType) match {
           case Some(dialectNode) =>
             // dealing with inheritance here
             if (!dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape") && !dialectNode
-                  .endsWith("#/declarations/DataNode")) {
+                  .endsWith("#/declarations/DataNode") && !dialectNode.endsWith("#/declarations/ArrayShape")) {
               found = true
               domainElementsMapping += (domainElement -> dialectNode)
             } else if (dialectNode.endsWith("#/declarations/Shape")) {
               foundShape = Some(dialectNode)
             } else if (dialectNode.endsWith("#/declarations/AnyShape")) {
               foundAnyShape = Some(dialectNode)
+            } else if (dialectNode.endsWith("#/declarations/ArrayShape")) {
+              foundArrayShape = Some(dialectNode)
             }
           case _ => // ignore
         }
       }
 
       // Set the base shape node if we have find it and we didn't find anything more specific
+      if (!found && foundArrayShape.isDefined) {
+        domainElementsMapping += (domainElement -> foundArrayShape.get)
+        found = true
+      }
       if (!found && foundAnyShape.isDefined) {
         domainElementsMapping += (domainElement -> foundAnyShape.get)
         found = true

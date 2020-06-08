@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: API
+
+/list:
+  get:
+    description: Returns list of claims for selcted provider
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include schema.json

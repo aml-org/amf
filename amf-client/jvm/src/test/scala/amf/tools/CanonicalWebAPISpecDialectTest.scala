@@ -23,20 +23,19 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
   val CANONICAL_WEBAPI_DIALECT  = "file://vocabularies/dialects/canonical_webapi_spec.yaml"
   override def basePath: String = "file://amf-client/shared/src/test/resources/transformations/"
 
-  def checkCanonicalDialectTransformation(source: String,
-                                          target: String,
-                                          shouldTranform: Boolean): Future[Assertion] = {
+  def checkCanonicalDialectTransformation(source: String, target: String, shouldTranform: Boolean): Future[Assertion] = {
     val amfWebApi  = basePath + source
     val goldenYaml = s"$basePath$target.yaml"
     val goldenJson = s"$basePath$target.json"
 
     for {
-      _           <- AMF.init()
-      _           <- Future(amf.Core.registerPlugin(AMLPlugin))
-      v           <- Validation(platform)
-      d           <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, eh = UnhandledParserErrorHandler).build()
+      _ <- AMF.init()
+      _ <- Future(amf.Core.registerPlugin(AMLPlugin))
+      v <- Validation(platform)
+      d <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, eh = UnhandledParserErrorHandler)
+        .build()
       _           <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
-      unit        <- AMFCompiler(amfWebApi, platform, RamlYamlHint, eh = UnhandledParserErrorHandler).build()
+      unit        <- AMFCompiler(amfWebApi, platform, RamlYamlHint, eh = DefaultParserErrorHandler()).build()
       transformed <- CanonicalWebAPISpecTransformer.transform(unit)
       json        <- new AMFRenderer(transformed, Vendor.AMF, RenderOptions().withPrettyPrint, Some(Syntax.Json)).renderToString
       yaml        <- new AMFRenderer(transformed, Vendor.AML, RenderOptions().withNodeIds, Some(Syntax.Yaml)).renderToString
@@ -64,7 +63,8 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
     "macros/api.raml",
     "modular/api.raml",
     "security/api.raml",
-    "declares/api.raml"
+    "declares/api.raml",
+    "tuple-shape-schema/api.raml"
 //    "modular-recursion/api.raml"
   )
 
