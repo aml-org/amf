@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+
+  "expensesLiving": {
+    "type": "object"
+  },
+  "fullAddress": {
+    "type": "object"
+  },
+  "applicant": {
+    "type": "object",
+    "properties": {
+      "addresses": {
+        "allOf": [
+          {
+            "$ref": "#/fullAddress"
+          }
+        ]
+      },
+      "expenses": {
+        "anyOf": [
+          {
+            "$ref": "#/expensesLiving"
+          }
+        ]
+      }
+    }
+  }
+}

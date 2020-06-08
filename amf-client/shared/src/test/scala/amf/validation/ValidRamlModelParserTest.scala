@@ -247,5 +247,8 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("complex-closure-case/api.raml")
   }
 
+  test("Nested json schema references") {
+    checkValid("json-schema-nested-refs/api.raml")
+  }
   override val hint: Hint = RamlYamlHint
 }

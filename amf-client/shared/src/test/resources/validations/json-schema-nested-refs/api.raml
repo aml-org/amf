@@ -1,0 +1,15 @@
+#%RAML 1.0
+baseUri: https://api-test.pepper.com.au/turboconnect
+
+title: TurboConnect
+version: 1.0
+mediaType: application/json
+description: Pepper Asset Finance loan application APIs.
+
+types:
+  someType:
+    type: !include schema/application-request.json
+    example: !include examples/CreateApplicationRequest.json
+
+ 
+
