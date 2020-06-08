@@ -15,7 +15,7 @@ import org.scalatest.Matchers
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-class CompatibilityCycleTest extends CompatibilityCycle {
+class CompatibilityCycledValidationTest extends CompatibilityCycle {
 
   override val basePath = "amf-client/shared/src/test/resources/compatibility/"
 
