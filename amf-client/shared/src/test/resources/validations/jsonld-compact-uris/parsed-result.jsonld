@@ -22,7 +22,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#22/end-points/%2Fendpoint1",
+            "@id": "#23",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#23/get",
+                "@id": "#24",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -46,7 +46,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#24/request",
+                    "@id": "#25",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -54,7 +54,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#25/application%2Fjson",
+                        "@id": "#14",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -92,7 +92,7 @@
                 ]
               },
               {
-                "@id": "#23/post",
+                "@id": "#26",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -104,7 +104,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#26/request",
+                    "@id": "#27",
                     "@type": [
                       "apiContract:Request",
                       "apiContract:Message",
@@ -112,7 +112,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#27/application%2Fjson",
+                        "@id": "#19",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -181,7 +181,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#1/property/a",
+            "@id": "#2",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -195,7 +195,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#1/property/a/scalar/a",
+                "@id": "#2/scalar/a",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -227,7 +227,7 @@
             ]
           },
           {
-            "@id": "#1/property/b",
+            "@id": "#4",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -241,7 +241,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#1/property/b/scalar/b",
+                "@id": "#4/scalar/b",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -280,7 +280,7 @@
         ],
         "apiContract:examples": [
           {
-            "@id": "#1/example/declared",
+            "@id": "#6",
             "@type": [
               "apiContract:Example",
               "doc:DomainElement"
@@ -367,7 +367,7 @@
             ]
           },
           {
-            "@id": "#1/example/endpoint1",
+            "@id": "#10",
             "@type": [
               "apiContract:Example",
               "doc:DomainElement"
@@ -454,7 +454,7 @@
             ]
           },
           {
-            "@id": "#1/example/endpointP",
+            "@id": "#15",
             "@type": [
               "apiContract:Example",
               "doc:DomainElement"
