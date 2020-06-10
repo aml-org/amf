@@ -613,6 +613,11 @@ object ParserSideValidations extends Validations {
     "Missing parameter type"
   )
 
+  val InvalidStatusCode = validation(
+    "invalid-status-code",
+    "Status code for a Response object must be a string"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -756,6 +761,7 @@ object ParserSideValidations extends Validations {
     InvalidTagType,
     InvalidIdentifier,
     InvalidComponents,
-    ExeededMaxYamlReferences
+    ExeededMaxYamlReferences,
+    InvalidStatusCode
   )
 }
