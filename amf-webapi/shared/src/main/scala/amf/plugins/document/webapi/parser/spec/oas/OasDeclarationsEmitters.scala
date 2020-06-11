@@ -186,7 +186,10 @@ case class OasDeclaredResponsesEmitter(key: String,
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       key,
-      _.obj(traverse(ordering.sorted(responses.map(OasResponseEmitter(_, ordering, references: Seq[BaseUnit]))), _)))
+      _.obj(
+        traverse(ordering.sorted(
+                   responses.map(OasResponseEmitter(_, ordering, references: Seq[BaseUnit], isDeclaration = true))),
+                 _)))
   }
 
   override def position(): Position = responses.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
