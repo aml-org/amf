@@ -72,7 +72,7 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, producer: String =>
     messageEntry =>
       AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
         val messages = AsyncMultipleMessageParser(messageEntry.value.as[YMap], operation.id, msgType).parse()
-        operation.setArray(msgType.field, messages, Annotations(messageEntry.value))
+        operation.setArrayWithoutId(msgType.field, messages, Annotations(messageEntry.value))
     }
   )
 
