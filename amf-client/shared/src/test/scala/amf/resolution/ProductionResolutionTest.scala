@@ -257,6 +257,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("nil-type.raml", "nil-type.raml.resolved", RamlYamlHint, Amf, validationPath)
   }
 
+  test("Test first enum value and default value witha applied trait have different ids") {
+    cycle("enum-id-with-applied-trait/api.raml",
+          "enum-id-with-applied-trait/golden.jsonld",
+          RamlYamlHint,
+          Amf,
+          transformWith = Some(Raml10))
+  }
+
   test("jsonld with links to declares and references") {
     cycle(
       "link-to-declares-and-refs.raml",
@@ -356,7 +364,6 @@ class Raml08ResolutionTest extends RamlResolutionTest {
   test("Test json_schemasa refs") {
     cycle("json_schemas.raml", "json_schemas.resolved.raml", RamlYamlHint, Raml08)
   }
-
 }
 
 /**
