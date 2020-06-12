@@ -40,7 +40,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     MergingValidator.validate(main, other, ctx.eh)
     var merged = false
 
-    other.fields.fields().filter(ignored).foreach {
+    other.fields.fields().filter(isNotIgnored).foreach {
       case otherFieldEntry @ FieldEntry(otherField, _) =>
         main.fields.entry(otherField) match {
           case None =>
@@ -261,7 +261,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         adopted += element.id
         element.fields.foreach {
           case (f, value) =>
-            if (ignored(FieldEntry(f, value))) {
+            if (isNotIgnored(FieldEntry(f, value))) {
               adoptInner(element.id, value.value, adopted)
             }
         }
@@ -395,7 +395,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       .entry(`type`.asInstanceOf[OptionalField].Optional)
       .exists(_.scalar.toBool)
 
-  private def ignored(entry: FieldEntry) = entry.field match {
+  private def isNotIgnored(entry: FieldEntry) = entry.field match {
     case Extends | Sources | LinkableElementModel.Target => false
     case _                                               => true
   }
