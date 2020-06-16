@@ -109,8 +109,10 @@ case class AsyncMultipleMessageParser(map: YMap, parent: String, messageType: Me
         entry.value
           .as[YSequence]
           .nodes
-          .map { node =>
-            AsyncMessageParser(YMapEntryLike(node), parent, Some(messageType)).parse()
+          .zipWithIndex
+          .map {
+            case (node, index) =>
+              AsyncMessageParser(YMapEntryLike(node), s"$parent/$index", Some(messageType)).parse()
           }
           .toList
       case None => List(AsyncMessageParser(YMapEntryLike(map), parent, Some(messageType)).parse())

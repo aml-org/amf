@@ -609,6 +609,17 @@ class EditingResolutionTest extends ResolutionTest {
     cycle("trait-with-link.raml", "trait-with-link.jsonld", RamlYamlHint, Amf, directory = resolutionPath)
   }
 
+  test("Response with reference to declaration") {
+    cycle(
+      "reference-response-declaration.json",
+      "reference-response-declaration-resolved.json",
+      OasJsonHint,
+      Oas30,
+      directory = cyclePath + "oas3/",
+      transformWith = Some(Oas30)
+    )
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit,
                     config.target,

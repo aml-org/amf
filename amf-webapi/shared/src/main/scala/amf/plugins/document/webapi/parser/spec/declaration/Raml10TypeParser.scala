@@ -671,7 +671,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
           refTuple match {
             case (text: String, Some(s)) =>
-              s.link(text, Annotations.valueNode(node))
+              s.link(text, Annotations(node))
                 .asInstanceOf[Shape]
                 .withName(name, nameAnnotations) // we setup the local reference in the name
                 .withId(shape.id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
