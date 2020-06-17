@@ -19,12 +19,14 @@ case class Operation(fields: Fields, annotations: Annotations)
     extends NamedDomainElement
     with ExtensibleWebApiDomainElement
     with ServerContainer
+    with DocumentedElement
     with Linkable {
 
-  def method: StrField                   = fields.field(Method)
-  def description: StrField              = fields.field(Description)
-  def deprecated: BoolField              = fields.field(Deprecated)
-  def summary: StrField                  = fields.field(Summary)
+  def method: StrField      = fields.field(Method)
+  def description: StrField = fields.field(Description)
+  def deprecated: BoolField = fields.field(Deprecated)
+  def summary: StrField     = fields.field(Summary)
+  // TODO: should return Option has field can be null
   def documentation: CreativeWork        = fields.field(Documentation)
   def schemes: Seq[StrField]             = fields.field(Schemes)
   def accepts: Seq[StrField]             = fields.field(Accepts)
@@ -39,6 +41,8 @@ case class Operation(fields: Fields, annotations: Annotations)
   def isAbstract: BoolField              = fields.field(IsAbstract)
   def bindings: OperationBindings        = fields.field(Bindings)
   def operationId: StrField              = fields.field(OperationId)
+
+  override def documentations: Seq[CreativeWork] = Seq(documentation)
 
   def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
