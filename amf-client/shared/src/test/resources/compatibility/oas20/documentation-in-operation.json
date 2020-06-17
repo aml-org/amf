@@ -1,0 +1,23 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "OpenAPI 3 Doc Created From Scratch"
+  },
+  "paths": {
+    "/articles": {
+      "get": {
+        "description": "Get all articles, optionally using paging.",
+        "externalDocs": {
+          "description": "Performance characteristics of this operation in the `prod` environment.",
+          "url": "https://www.anUrl.com/rtfm"
+        },
+        "responses": {
+          "default": {
+            "description": "Something"
+          }
+        }
+      }
+    }
+  }
+}
