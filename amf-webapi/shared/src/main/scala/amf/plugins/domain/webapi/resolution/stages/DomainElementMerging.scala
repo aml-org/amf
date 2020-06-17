@@ -233,10 +233,10 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
   }
 
   protected case class Adopted() {
-    private var adopted: Seq[String] = Nil
+    private val adopted: mutable.Set[String] = mutable.Set()
 
     def +=(id: String): Adopted = {
-      adopted = adopted :+ id
+      adopted.add(id)
       this
     }
 
