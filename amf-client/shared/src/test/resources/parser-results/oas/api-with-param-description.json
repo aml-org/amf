@@ -1,21 +1,21 @@
 {
-  "swagger" : "2.0",
-  "info" : {
-    "title" : "a",
+  "swagger": "2.0",
+  "info": {
+    "title": "a",
     "version": "1"
   },
-  "paths" : {
-    "/users" : {
-      "post" : {
+  "paths": {
+    "/users": {
+      "post": {
         "parameters": [
           {
-          "name": "x",
-          "in": "body",
-          "description": "z",
-          "required": true
+            "name": "x",
+            "in": "body",
+            "description": "z",
+            "required": true
           }
         ],
-        "responses" : {
+        "responses": {
           "200": {
             "description": "zz"
           }
