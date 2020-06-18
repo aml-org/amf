@@ -9,6 +9,6 @@ Level: Violation
   Message: Required arrays of properties not supported in JSON Schema below version draft-4
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/required/schema3-array.raml#/web-api/end-points/%2Fproducts/put/request/application%2Fjson/application%2Fjson
-  Property:
+  Property: 
   Position: Some(LexicalInformation([(17,29)-(17,40)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/required/schema3-array.raml

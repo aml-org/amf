@@ -2,7 +2,6 @@ asyncapi: 2.0.0
 info:
   title: Empty and dynamic bindings
   version: 1.0.0
-
 servers:
   theName:
     url: some.com
@@ -23,7 +22,6 @@ servers:
       someCustom:
         and: property
       x-extension: say server
-
 channels:
   some-channel:
     bindings:
@@ -41,7 +39,6 @@ channels:
       someCustom:
         and: property
       x-extension: say channel
-
     description: some channel
     publish:
       bindings:
@@ -57,7 +54,6 @@ channels:
         someCustom:
           and: property
         x-extension: say operation
-
       message:
         bindings:
           mqtt5: {}
@@ -73,6 +69,5 @@ channels:
             and:
               the: property
           x-extension: say message
-
         payload:
           type: string
