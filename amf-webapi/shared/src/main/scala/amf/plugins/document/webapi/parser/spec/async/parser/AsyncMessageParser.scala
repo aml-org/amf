@@ -199,8 +199,8 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
           .as[YMap]
           .entries
           .map(entry => {
-            val example = Example(entry).adopted(parentId)
-            example.set(ExampleModel.Name, ScalarNode(entry.key).text())
+            val example = Example(entry)
+            example.set(ExampleModel.Name, ScalarNode(entry.key).text()).adopted(parentId)
             ExampleDataParser(entry.value, example, Oas3ExampleOptions).parse()
           })
       case None => Nil
