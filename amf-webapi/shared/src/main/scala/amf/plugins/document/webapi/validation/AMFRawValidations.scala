@@ -862,27 +862,6 @@ object AMFRawValidations {
           "Swagger object 'schemes' property must have a case insensitive value matching http or https"
       ),
       AMFValidation(
-        uri = amfParser("min-max-inclusive"),
-        message = "Maximum must be greater than or equal to minimum",
-        owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("minInclusive")),
-        constraint = shape("minimumMaximumValidation").get
-      ),
-      AMFValidation(
-        uri = amfParser("min-max-items"),
-        message = "MaxItems must be greater than or equal to minItems",
-        owlClass = shape("ArrayShape"),
-        owlProperty = Some(minCount),
-        constraint = shape("minMaxItemsValidation").get
-      ),
-      AMFValidation(
-        uri = amfParser("min-max-length"),
-        message = "MaxLength must be greater than or equal to minLength",
-        owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("minLength")),
-        constraint = shape("minMaxLengthValidation").get
-      ),
-      AMFValidation(
         uri = amfParser("min-max-properties"),
         message = "MaxProperties must be greater than or equal to minProperties",
         owlClass = Some(sh("NodeShape")),
