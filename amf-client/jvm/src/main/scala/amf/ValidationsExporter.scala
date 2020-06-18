@@ -22,10 +22,7 @@ object ValidationsExporter extends ImportUtils {
     Validations.validations.foreach { validation =>
       val severity: Map[String, String] = parserSideVals(validation.id)
       val levelsString = severity.keys.toSeq.sorted
-        .map {
-          case i =>
-            severity(i)
-        }
+        .map(severity)
         .mkString("\t")
       println(s"${uriModel(Some(validation.id))}\t\t\t${validation.message}\t\t\t$levelsString")
     }
@@ -49,15 +46,12 @@ object ValidationsExporter extends ImportUtils {
       case (id, validation) =>
         val severity: Map[String, String] = levels.getOrElse(id, parserSideVals(id))
         val levelsString = severity.keys.toSeq.sorted
-          .map {
-            case i =>
-              severity(i)
-          }
+          .map(severity)
           .mkString("\t")
 
         println(
           s"${uri(validation)}\t${uriModel(validation.owlClass)}\t${uriModel(validation.owlProperty)}\t${validation.message
-            .getOrElse("")}\t${validation.ramlErrorMessage}\t${validation.openApiErrorMessage}\t${levelsString}")
+            .getOrElse("")}\t${validation.ramlErrorMessage}\t${validation.openApiErrorMessage}\t$levelsString")
     }
 
   }
