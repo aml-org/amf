@@ -4,6 +4,7 @@ import amf.ProfileName
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.AMF
 import amf.core.emitter.RenderOptions
+import amf.core.model.document.ExternalFragment
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.core.services.RuntimeValidator
@@ -13,12 +14,12 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.tools.canonical.CanonicalWebAPISpecTransformer
-import org.scalatest.Assertion
+import amf.tools.canonical.{CanonicalWebAPISpecTransformer, DocumentExpectedException}
+import org.scalatest.{Assertion, Matchers}
 
 import scala.concurrent.Future
 
-class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSecrets {
+class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSecrets with Matchers {
 
   val CANONICAL_WEBAPI_DIALECT  = "file://vocabularies/dialects/canonical_webapi_spec.yaml"
   override def basePath: String = "file://amf-client/shared/src/test/resources/transformations/"
@@ -70,17 +71,15 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
 //    "modular-recursion/api.raml"
   )
 
-  /*
-  val resolve: Map[String, Boolean] = Map(
-    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/sample.oas.resolved.jsonld" -> false,
-    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/api.raml.jsonld" -> false
-  )
-   */
-
   tests.foreach { input =>
     val golden = input.replace("api.raml", "webapi")
     test(s"Test '$input' for WebAPI dialect transformation and yaml/json rendering") {
       checkCanonicalDialectTransformation(input, golden, shouldTranform = false)
     }
+  }
+
+  test("Test that canonical transformer only accepts Documents") {
+    val unit = ExternalFragment()
+    assertThrows[DocumentExpectedException](CanonicalWebAPISpecTransformer.transform(unit))
   }
 }
