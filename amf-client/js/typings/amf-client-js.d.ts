@@ -550,11 +550,11 @@ declare module 'amf-client-js' {
 
       export class Overlay extends Fragment {}
 
-      export class DocumentationItem extends Fragment {}
+      export class DocumentationItemFragment extends Fragment {}
 
-      export class DataType extends Fragment {}
+      export class DataTypeFragment extends Fragment {}
 
-      export class NamedExample extends Fragment {}
+      export class NamedExampleFragment extends Fragment {}
 
       export class ResourceTypeFragment extends Fragment {}
 

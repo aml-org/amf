@@ -19,47 +19,47 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class DocumentationItem(override private[amf] val _internal: InternalDocumentationItemFragment)
     extends Fragment(_internal) {
-  @JSExportTopLevel("model.domain.DocumentationItem")
+  @JSExportTopLevel("model.document.DocumentationItemFragment")
   def this() = this(InternalDocumentationItemFragment())
 
 }
 
 @JSExportAll
 case class DataType(override private[amf] val _internal: InternalDataTypeFragment) extends Fragment(_internal) {
-  @JSExportTopLevel("model.domain.DataType")
+  @JSExportTopLevel("model.document.DataTypeFragment")
   def this() = this(InternalDataTypeFragment())
 }
 
 @JSExportAll
 case class NamedExample(override private[amf] val _internal: InternalNamedExampleFragment)
     extends Fragment(_internal) {
-  @JSExportTopLevel("model.domain.NamedExample")
+  @JSExportTopLevel("model.document.NamedExampleFragment")
   def this() = this(InternalNamedExampleFragment())
 }
 
 @JSExportAll
 case class ResourceTypeFragment(override private[amf] val _internal: InternalResourceTypeFragment)
     extends Fragment(_internal) {
-  @JSExportTopLevel("model.domain.ResourceTypeFragment")
+  @JSExportTopLevel("model.document.ResourceTypeFragment")
   def this() = this(InternalResourceTypeFragment())
 }
 
 @JSExportAll
 case class TraitFragment(override private[amf] val _internal: InternalTraitFragment) extends Fragment(_internal) {
-  @JSExportTopLevel("model.domain.TraitFragment")
+  @JSExportTopLevel("model.document.TraitFragment")
   def this() = this(InternalTraitFragment())
 }
 
 @JSExportAll
 case class AnnotationTypeDeclaration(override private[amf] val _internal: InternalAnnotationTypeDeclarationFragment)
     extends Fragment(_internal) {
-  @JSExportTopLevel("model.domain.AnnotationTypeDeclaration")
+  @JSExportTopLevel("model.document.AnnotationTypeDeclarationFragment")
   def this() = this(InternalAnnotationTypeDeclarationFragment())
 }
 
 @JSExportAll
 case class SecuritySchemeFragment(override private[amf] val _internal: InternalSecuritySchemeFragment)
     extends Fragment(_internal) {
-  @JSExportTopLevel("model.domain.SecuritySchemeFragment")
+  @JSExportTopLevel("model.document.SecuritySchemeFragment")
   def this() = this(InternalSecuritySchemeFragment())
 }
