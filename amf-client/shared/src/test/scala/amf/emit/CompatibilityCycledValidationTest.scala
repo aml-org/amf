@@ -36,7 +36,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
                              syntax: Option[Syntax] = None,
                              pipeline: Option[String] = None): Unit = {
     for {
-      file <- platform.fs.syncFile(basePath + filePath).list
+      file <- platform.fs.syncFile(basePath + filePath).list.sorted
     } {
       val path = s"$filePath/$file"
 
