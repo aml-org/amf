@@ -6,7 +6,7 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{AMFDocumentPlugin, AMFFeaturePlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.annotations.SourceVendor
 import amf.core.benchmark.ExecutionLog
-import amf.core.errorhandling.{AmfStaticReportBuilder, ErrorHandler, StaticErrorCollector}
+import amf.core.errorhandling.{AmfStaticReportBuilder, ErrorHandler}
 import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.rdf.RdfModel
@@ -18,9 +18,9 @@ import amf.core.validation.core.{ValidationProfile, ValidationReport, Validation
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, ValidationResultProcessor}
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.syntax.SYamlSyntaxPlugin
