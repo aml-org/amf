@@ -13,10 +13,14 @@ import org.yaml.model.YNode
 /**
   * Tag internal model
   */
-case class Tag(fields: Fields, annotations: Annotations) extends NamedDomainElement {
+case class Tag(fields: Fields, annotations: Annotations) extends NamedDomainElement with DocumentedElement {
 
-  def description: StrField       = fields.field(Description)
+  def description: StrField = fields.field(Description)
+
+  // TODO: should return Option has field can be null
   def documentation: CreativeWork = fields(Documentation)
+
+  override def documentations: Seq[CreativeWork] = Seq(documentation)
 
   def withDescription(description: String): this.type           = set(Description, description)
   def withDocumentation(documentation: CreativeWork): this.type = set(Documentation, documentation)
