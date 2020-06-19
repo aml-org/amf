@@ -5,7 +5,6 @@ import amf.core.metamodel.document.{DocumentModel, ExternalFragmentModel, Module
 import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.plugin.{CorePlugin, PluginContext}
 import amf.core.rdf.RdfModelParser
@@ -22,12 +21,9 @@ import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.tools.canonical.JenaUtils.all
 import amf.tools.{CanonicalWebAPISpecDialectExporter, PropertyNodeModel}
-import org.apache.jena.rdf.model.{Model, RDFNode, ResIterator, Resource, Statement}
-import org.apache.jena.util.iterator.ExtendedIterator
+import org.apache.jena.rdf.model.{Model, RDFNode, Resource, Statement}
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 object CanonicalWebAPISpecTransformer extends PlatformSecrets {
