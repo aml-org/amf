@@ -35,7 +35,7 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
       v <- Validation(platform)
       d <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, eh = UnhandledParserErrorHandler)
         .build()
-      _           <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
+      _           <- Future { AMLPlugin().registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
       unit        <- AMFCompiler(amfWebApi, platform, RamlYamlHint, eh = DefaultParserErrorHandler()).build()
       transformed <- CanonicalWebAPISpecTransformer.transform(unit)
       json        <- new AMFRenderer(transformed, Vendor.AMF, RenderOptions().withPrettyPrint, Some(Syntax.Json)).renderToString

@@ -10,7 +10,7 @@ import scala.concurrent.ExecutionContext
 
 abstract class DialectResolutionCycleTests extends FunSuiteCycleTests {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    AMLPlugin.resolve(unit, UnhandledErrorHandler)
+    AMLPlugin().resolve(unit, UnhandledErrorHandler)
 }
 
 class DialectsResolutionTest extends DialectResolutionCycleTests {

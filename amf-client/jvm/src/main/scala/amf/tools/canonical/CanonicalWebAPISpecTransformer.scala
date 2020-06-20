@@ -41,7 +41,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
   val REPO_EXTENDS        = "http://anypoint.com/vocabs/digital-repository#extends"
 
   protected def findWebAPIDialect: Option[Dialect] =
-    AMLPlugin.registry.allDialects().find(_.nameAndVersion() == CANONICAL_WEBAPI_NAME)
+    AMLPlugin().registry.allDialects().find(_.nameAndVersion() == CANONICAL_WEBAPI_NAME)
 
   /**
     * Creates a map from the node mapping in the canonical web api dialect to the mapped

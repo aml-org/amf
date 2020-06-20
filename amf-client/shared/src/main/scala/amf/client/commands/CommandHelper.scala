@@ -39,7 +39,7 @@ trait CommandHelper {
     else s"file://$inputFile"
 
   protected def processDialects(config: ParserConfig): Future[Unit] = {
-    val dialectFutures = config.dialects.map(dialect => AMLPlugin.registry.registerDialect(dialect))
+    val dialectFutures = config.dialects.map(dialect => AMLPlugin().registry.registerDialect(dialect))
     Future.sequence(dialectFutures) map [Unit](_ => {})
   }
 
