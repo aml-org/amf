@@ -47,7 +47,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       Future {
         model match {
           case dialectInstance: DialectInstance =>
-            AMLPlugin.registry.dialectFor(dialectInstance) match {
+            AMLPlugin().registry.dialectFor(dialectInstance) match {
               case Some(dialect) =>
                 ProfileName(dialect.nameAndVersion())
               case _ =>

@@ -62,7 +62,7 @@ class Validation(platform: Platform) {
     * Loads the validation dialect from the provided URL
     */
   def loadValidationDialect(): Future[Dialect] = {
-    AMLPlugin.registry.registerDialect(url, ValidationDialectText.text)
+    AMLPlugin().registry.registerDialect(url, ValidationDialectText.text)
     /*
     platform.dialectsRegistry.get("%Validation Profile 1.0") match {
       case Some(dialect) => Promise().success(dialect).future
