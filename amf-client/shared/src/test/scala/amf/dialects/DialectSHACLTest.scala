@@ -24,7 +24,7 @@ class DialectSHACLTest extends FunSuiteRdfCycleTests with PlatformSecrets {
 
   /** Method for transforming parsed unit. Override if necessary. */
   override def transformRdf(unit: BaseUnit, config: CycleConfig): RdfModel = {
-    AMLPlugin.shapesForDialect(unit.asInstanceOf[Dialect], "http://metadata.org/validations.js")
+    AMLPlugin().shapesForDialect(unit.asInstanceOf[Dialect], "http://metadata.org/validations.js")
   }
 
   /** Method to render parsed unit. Override if necessary. */
