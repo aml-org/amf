@@ -4,7 +4,7 @@ import amf.core.metamodel.Obj
 import amf.core.metamodel.document.{DocumentModel, ExternalFragmentModel, ModuleModel}
 import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.plugin.{CorePlugin, PluginContext}
@@ -606,5 +606,10 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
   /**
     * Transforms a WebAPI model parsed by AMF from a RAML/OAS document into a canonical WebAPI model compatible with the canonical WebAPI AML dialect
     */
-  def transform(unit: BaseUnit): Future[BaseUnit] = Future { cleanAMFModel(unit) }
+  def transform(unit: BaseUnit): Future[BaseUnit] = unit match {
+    case _: Document => Future.successful(cleanAMFModel(unit))
+    case _           => throw DocumentExpectedException("Expected Document for CanonicalWebAPISpecTransformation")
+  }
 }
+
+case class DocumentExpectedException(message: String) extends RuntimeException(message)
