@@ -866,6 +866,9 @@ nodeMappings:
     classTerm: apiBinding.HttpOperationBinding
     extends: OperationBinding
     mapping:
+      type:
+        propertyTerm: apiBinding.operationType
+        range: string
       method:
         propertyTerm: apiBinding.method
         range: string
@@ -1985,6 +1988,11 @@ nodeMappings:
     classTerm: raml-shapes.TupleShape
     extends: ArrayShape
     mapping:
+      items:
+        propertyTerm: raml-shapes.items
+        range: DataShapesUnion
+        allowMultiple: true
+        sorted: true
       closedItems:
         propertyTerm: raml-shapes.closedItems
         range: boolean

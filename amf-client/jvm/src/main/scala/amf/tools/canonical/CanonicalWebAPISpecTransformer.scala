@@ -4,7 +4,7 @@ import amf.core.metamodel.Obj
 import amf.core.metamodel.document.{DocumentModel, ExternalFragmentModel, ModuleModel}
 import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.plugin.{CorePlugin, PluginContext}
@@ -422,28 +422,35 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
       // We need to deal with node shape inheritance
       // These flags allow us to track if we found any shape or shape in case
       // we cannot find a more specific shape
-      var foundShape: Option[String]    = None
-      var foundAnyShape: Option[String] = None
-      var found                         = false
+      var foundShape: Option[String]      = None
+      var foundAnyShape: Option[String]   = None
+      var foundArrayShape: Option[String] = None
+      var found                           = false
       while (nodeIt.hasNext) {
         val nextType = nodeIt.next().asResource().getURI
         mapping.get(nextType) match {
           case Some(dialectNode) =>
             // dealing with inheritance here
             if (!dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape") && !dialectNode
-                  .endsWith("#/declarations/DataNode")) {
+                  .endsWith("#/declarations/DataNode") && !dialectNode.endsWith("#/declarations/ArrayShape")) {
               found = true
               domainElementsMapping += (domainElement -> dialectNode)
             } else if (dialectNode.endsWith("#/declarations/Shape")) {
               foundShape = Some(dialectNode)
             } else if (dialectNode.endsWith("#/declarations/AnyShape")) {
               foundAnyShape = Some(dialectNode)
+            } else if (dialectNode.endsWith("#/declarations/ArrayShape")) {
+              foundArrayShape = Some(dialectNode)
             }
           case _ => // ignore
         }
       }
 
       // Set the base shape node if we have find it and we didn't find anything more specific
+      if (!found && foundArrayShape.isDefined) {
+        domainElementsMapping += (domainElement -> foundArrayShape.get)
+        found = true
+      }
       if (!found && foundAnyShape.isDefined) {
         domainElementsMapping += (domainElement -> foundAnyShape.get)
         found = true
@@ -481,7 +488,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     val plugins = PluginContext(
       blacklist = Seq(CorePlugin, WebAPIDomainPlugin, DataShapesDomainPlugin, AMFGraphPlugin, Raml10Plugin))
 
-    new RdfModelParser(platform)(ParserContext(eh = UnhandledParserErrorHandler, plugins = plugins))
+    RdfModelParser(errorHandler = UnhandledParserErrorHandler, plugins = plugins)
       .parse(model, baseUnitId)
   }
 
@@ -599,5 +606,10 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
   /**
     * Transforms a WebAPI model parsed by AMF from a RAML/OAS document into a canonical WebAPI model compatible with the canonical WebAPI AML dialect
     */
-  def transform(unit: BaseUnit): Future[BaseUnit] = Future { cleanAMFModel(unit) }
+  def transform(unit: BaseUnit): Future[BaseUnit] = unit match {
+    case _: Document => Future.successful(cleanAMFModel(unit))
+    case _           => throw DocumentExpectedException("Expected Document for CanonicalWebAPISpecTransformation")
+  }
 }
+
+case class DocumentExpectedException(message: String) extends RuntimeException(message)
