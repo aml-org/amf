@@ -1256,6 +1256,13 @@ object AMFRawValidations {
         owlProperty = "apiContract:headers",
         constraint = "raml-shapes:mandatoryHeadersObjectNode",
       ),
+      AMFValidation(
+        message = "Query parameters must not be defined in uri, use bindings instead",
+        owlClass = "apiContract:EndPoint",
+        owlProperty = "apiContract:path",
+        constraint = "sh:pattern",
+        value = """^(?!(.*\?.*=.*)$).*$""".stripMargin // negates the regex for defining a query param
+      ),
       emailValidation("core:Organization", "core:email"),
       urlValidation("core:Organization", "core:url"),
       urlValidation("core:License", "core:url"),
