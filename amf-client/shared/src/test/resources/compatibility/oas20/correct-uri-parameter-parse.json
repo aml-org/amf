@@ -1,0 +1,43 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "People",
+    "version": "v1"
+  },
+  "paths": {
+    "/v1/{resourceName}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "resourceName",
+            "required": true,
+            "type": "string",
+            "x-reservedExpansion": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "put": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "resourceName",
+            "required": true,
+            "type": "string",
+            "x-reservedExpansion": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,20 +1,20 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.model.domain.{DomainElement, AmfArray}
+import amf.core.model.domain.{AmfArray, DomainElement}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{Lazy, AmfStrings}
+import amf.core.utils.{AmfStrings, Lazy}
 import amf.plugins.document.webapi.annotations.EmptyPayload
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
-import amf.plugins.document.webapi.parser.spec.declaration.{Raml10TypeParser, DefaultType, AnyDefaultType}
+import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, Raml10TypeParser}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.RequestModel
-import amf.plugins.domain.webapi.models.{Parameter, Request, Payload}
+import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 import amf.validations.ParserSideValidations.{
   ExclusivePropertiesSpecification,
   UnsupportedExampleMediaTypeErrorSpecification
 }
-import org.yaml.model.{YType, YMap, YScalar, YNode}
+import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
 
 import scala.collection.mutable
 
@@ -47,6 +47,12 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
     )
   }
 
+  override protected def parseParameter(entry: YMapEntry,
+                                        adopt: Parameter => Unit,
+                                        parseOptional: Boolean): Parameter =
+    Raml10ParameterParser(entry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional)
+      .parse()
+
   override protected val baseUriParametersKey: String = "baseUriParameters".asRamlAnnotation
 
   override protected val defaultType: DefaultType = AnyDefaultType
@@ -60,6 +66,12 @@ case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional
 
   override def parse(request: Lazy[Request], target: Target): Unit = Unit
 
+  override protected def parseParameter(entry: YMapEntry,
+                                        adopt: Parameter => Unit,
+                                        parseOptional: Boolean): Parameter =
+    Raml08ParameterParser(entry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional)
+      .parse()
+
   override protected val defaultType: DefaultType = AnyDefaultType
 }
 
@@ -72,6 +84,8 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
 
   def parse(request: Lazy[Request], target: Target): Unit
   protected val defaultType: DefaultType
+
+  protected def parseParameter(entry: YMapEntry, adopt: Parameter => Unit, parseOptional: Boolean): Parameter
 
   def parse(): Option[Request] = {
 
@@ -95,8 +109,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
       baseUriParametersKey,
       entry => {
         val parameters = entry.value.as[YMap].entries.map { paramEntry =>
-          Raml08ParameterParser(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional)
-            .parse()
+          parseParameter(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional)
             .withBinding("path")
         }
 
