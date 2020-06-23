@@ -29,7 +29,7 @@ class ValidationsFile(validationsFile: File) {
                  ramlErrorMessage,
                  openAPIErrorMessage) =>
         Some(
-          AMFValidation(
+          AMFValidation.fromStrings(
             uri.trim,
             message.trim,
             owlClass.trim,
