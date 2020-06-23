@@ -370,6 +370,30 @@ declare module 'amf-client-js' {
       }
 
     }
+
+    namespace model {
+      export class DataTypes {
+        static String: string
+        static Integer: string
+        static Number: string
+        static Long: string
+        static Double: string
+        static Float: string
+        static Decimal: string
+        static Boolean: string
+        static Date: string
+        static Time: string
+        static DateTime: string
+        static DateTimeOnly: string
+        static File: string
+        static Byte: string
+        static Binary: string
+        static Password: string
+        static Any: string
+        static AnyUri: string
+        static Nil: string
+      }
+    }
   }
 
   namespace model {
