@@ -2,34 +2,54 @@
 
 # AML Modeling Framework
 
-This project aims to provide a common programming interface that lets developers interact with any API specification, whether it is written in OpenAPI Specification (OAS) or RAML, similar to the way the HTML DOM allows programmatic interaction with an HTML document.
+AMF (AML Modeling Framework) is an open-source programming framework, capable of parsing, generating and validating metadata documents defined using [AML](https://a.ml/aml-spec). It can be used as a library in Java or JavaScript projects, or as a stand-alone command-line tool. The modular design of AMF facilitates creating plugins capable of parsing other metadata syntaxes not defined by AML.
 
 ## Vision
 
-The API Modeling Framework (AMF) allows users to formally describe different kinds of APIs, parse and generate instances of those APIS as sets of modular documents and  store those connected descriptions into a single unified data graph.
+[AML](https://a.ml/aml-spec) allows users to formally describe different kinds of models, whether syntactic models (i.e. language/specification specific) or semantic models (i.e. domain/industry specific). AMF can parse and generate descriptions of those models as sets of modular documents and store those connected descriptions into a single unified data graph.
 
 ## Goals
 
-- Support for multiple languages with a unified output API/model for clients
-- Support for both, document (RAML modularity) and domain (service clients), layers
-- Bi-directional transformation
-- Support for validation at document and service layers
-- Produce a formal specification for the language
-- Extensible, single document model for multiple domain vocabularies
-- Consistent parsing behavior
+- Support for multiple formats with a unified programming interface and model
+- Support for both syntactic and semantic model layers
+- Support for validation at both syntactic and semantic model layers
+- Produce formal specifications of any (specification) language
+- Extensible, single syntactic model for multiple semantic models
+- Ability to create consistent parsing behaviors across different syntactic models
+- Support for bi-directional transformation and export
+- Support for custom (parsing/resolution/generation) pipelines
 
-## General scope
-The library supports many of the required uses cases:
-- Parse a 0.8 / 1.0 RAML, 2.0 / 3.0 OAS / ASYNC 2.0 and JSON-LD AMF model.
-- AMF API design model creation.
-- Model edition.
-- Export to any of the mentioned standards.
+## Native support
+
+AMF natively supports the following formats:
+- YAML
+- JSON
+
+the following semantic models:
+- WebApi (or "Web APIs" as in "APIs accessible over the network")
+
+and the following syntactic models:
+- JSON-LD "AMF model"
+- RAML 0.8 / 1.0 (mapped to "WebApi")
+- OpenAPI (OAS) 2.0 / 3.0 (mapped to "WebApi")
+- AsyncAPI 2.0 (beta) (mapped to "WebApi")
+
+The models above and any other models may be extended and supported via custom [AML-defined models](https://a.ml/aml-spec). Other formats and models that cannot be expressed with AML may also be supported via plugins. 
+
+## Guaranteed output
+
+The **only** guaranteed output of AMF is the JSON-LD "AMF model". Any other output such as any output provided natively by the models listed under the section above may change at any time. This means that while the semantic representation of those outputs may remain unchanged, the syntactical expression such as the order in which the outputted metadata is expressed and any other syntax-related constructs may change from one version of AMF to another. If this is an issue for your use-case, you may consider using a custom resolution/generation pipeline.
+
+## Documentation
+- [The AML Project](https://a.ml)
+- [What is AMF?](https://a.ml/docbook/overview_amf.html)
+- [AMF model documentation](documentation/model.md)
+- [Validation insights](./documentation/validation.md)
+- [Basic use cases - parsing & validating an API](documentation/basic_use_cases.md)
+- [Code examples](https://github.com/aml-org/examples)
+- [More code examples](https://github.com/mulesoft/amf-examples)
 
 ## Usage
-
-To use AMF you should first generate or get the right distribution for your project and import them as dependencies.
-
-## Installation
 
 ### Download JVM artifacts
 
@@ -57,9 +77,9 @@ Maven snippet:
 </dependency>
 ```
 
-NOTE: `-SNAPSHOT` versions of the JVM artifacts are available but may contain breaking changes.
+NOTE: you may use the `-SNAPSHOT` versions of the artifacts at your own risk since those snapshot versions may contain breaking changes.
 
-### Download JS artifacts
+### JavaScript artifacts
 
 NPM:
 ```bash
@@ -112,7 +132,7 @@ class App {
 
 You can build a standalone Java executable (JAR) running the following SBT target:
 ```bash
-sbt buildCommandLine
+$ sbt buildCommandLine
 ```
 
 This will generate an executable JAR at the top level directory that can be used to execute AMF from the command line.
@@ -142,26 +162,13 @@ Using this JAR you can execute AMF by passing one of the following commands:
 
 An interactive section can be started using the `repl` command.
 
-If you want to parse any RAML dialect other than RAML 1.0, you can pass a list of dialects to be loaded in the parser through the `dialects` option.
+If you want to parse any AML dialect other than RAML 1.0, you can pass a list of dialects to be loaded in the parser through the `dialects` option.
 
 Refer to the usage of the application for additional commands and explanations.
-
-## Examples
-
-Go to [amf examples repository](https://github.com/mulesoft/amf-examples) There are examples for each one of the three usages and a *converter* project that add some UI on top of the library.
-
-## Validation
-
-Validation is one of the key features of AMF. Please check the following link to get more information:
-
-[Validation insights](./documentation/validation.md)
 
 ## AML Vocabulary
 
 The AML Vocabulary that could be found in this repository under the **vocabularies** directory has been migrated to the [amf metadata repository](https://github.com/aml-org/amf-metadata)
 
-## Want to learn more?
-[Click here for more documentation and playground](https://a.ml)
-
-## Want to contribute?
-If you are interested in contributing code to this project, thanks! Please [read and accept the Contributors Agreement](https://api-notebook.anypoint.mulesoft.com/notebooks#380297ed0e474010ff43). This should automatically create a Github issue with the record of your signature [here](https://github.com/mulesoft/contributor-agreements/issues). If for any reason, you do not see your signature there, please contact us.
+## Contributing
+If you are interested in contributing to this project, please make sure to read our [contributing guidelines](./CONTRIBUTING.md).
