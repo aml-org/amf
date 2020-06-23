@@ -36,10 +36,12 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("prefixes can be loaded") {
-    val expectedFile             = "validation_profile_prefixes.raml.jsonld"
-    val exampleFile              = "validation_profile_prefixes.raml"
-    val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
-    val validation               = Validation(platform)
+    val expectedFile                      = "validation_profile_prefixes.raml.jsonld" // TODO: delete this when deprecating legacy json-ld emitter
+    val expectedFlattenedFile             = "validation_profile_prefixes.raml.flattened.jsonld"
+    val exampleFile                       = "validation_profile_prefixes.raml"
+    val expected: Future[String]          = platform.resolve(basePath + expectedFile).map(_.stream.toString)
+    val expectedFlattened: Future[String] = platform.resolve(basePath + expectedFlattenedFile).map(_.stream.toString)
+    val validation                        = Validation(platform)
     cycle(exampleFile, VocabularyYamlHint, Json, Amf).zip(expected).map(checkDiff)
   }
 
