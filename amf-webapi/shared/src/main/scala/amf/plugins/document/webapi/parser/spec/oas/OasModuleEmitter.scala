@@ -23,7 +23,8 @@ import org.yaml.model.{YDocument, YNode, YScalar, YType}
 /**
   *
   */
-case class OasModuleEmitter(module: Module)(implicit override val spec: OasSpecEmitterContext) extends OasSpecEmitter {
+abstract class OasModuleEmitter(module: Module)(implicit override val spec: OasSpecEmitterContext)
+    extends OasSpecEmitter {
 
   def emitModule(): YDocument = {
 
@@ -35,11 +36,23 @@ case class OasModuleEmitter(module: Module)(implicit override val spec: OasSpecE
 
     YDocument {
       _.obj { b =>
-        b.swagger = "2.0"
+        docVersion(b)
         traverse(ordering.sorted(declares ++ usages ++ references), b)
       }
     }
   }
+
+  protected def docVersion(builder: EntryBuilder): Unit
+}
+
+case class Oas30ModuleEmitter(module: Module)(implicit override val spec: OasSpecEmitterContext)
+    extends OasModuleEmitter(module) {
+  override protected def docVersion(builder: EntryBuilder): Unit = builder.openapi = "3.0.0"
+}
+
+case class Oas20ModuleEmitter(module: Module)(implicit override val spec: OasSpecEmitterContext)
+    extends OasModuleEmitter(module) {
+  override protected def docVersion(builder: EntryBuilder): Unit = builder.swagger = "2.0"
 }
 
 class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpecEmitterContext)
