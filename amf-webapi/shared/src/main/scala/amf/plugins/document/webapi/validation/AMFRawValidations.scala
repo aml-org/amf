@@ -1257,11 +1257,20 @@ object AMFRawValidations {
         constraint = "raml-shapes:mandatoryHeadersObjectNode",
       ),
       AMFValidation(
+        uri="amf-parser:uri-query-param",
         message = "Query parameters must not be defined in uri, use bindings instead",
         owlClass = "apiContract:EndPoint",
         owlProperty = "apiContract:path",
         constraint = "sh:pattern",
         value = """^(?!(.*\?.*=.*)$).*$""".stripMargin // negates the regex for defining a query param
+      ),
+      AMFValidation(
+        uri="amf-parser:uri-fragment",
+        message = "Fragments must not be defined in uri",
+        owlClass = "apiContract:EndPoint",
+        owlProperty = "apiContract:path",
+        constraint = "sh:pattern",
+        value = """^(?!(.*#.+)$).*$""".stripMargin
       ),
       emailValidation("core:Organization", "core:email"),
       urlValidation("core:Organization", "core:url"),
