@@ -109,8 +109,10 @@ case class AsyncMultipleMessageParser(map: YMap, parent: String, messageType: Me
         entry.value
           .as[YSequence]
           .nodes
-          .map { node =>
-            AsyncMessageParser(YMapEntryLike(node), parent, Some(messageType)).parse()
+          .zipWithIndex
+          .map {
+            case (node, index) =>
+              AsyncMessageParser(YMapEntryLike(node), s"$parent/$index", Some(messageType)).parse()
           }
           .toList
       case None => List(AsyncMessageParser(YMapEntryLike(map), parent, Some(messageType)).parse())
@@ -197,8 +199,8 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
           .as[YMap]
           .entries
           .map(entry => {
-            val example = Example(entry).adopted(parentId)
-            example.set(ExampleModel.Name, ScalarNode(entry.key).text())
+            val example = Example(entry)
+            example.set(ExampleModel.Name, ScalarNode(entry.key).text()).adopted(parentId)
             ExampleDataParser(entry.value, example, Oas3ExampleOptions).parse()
           })
       case None => Nil

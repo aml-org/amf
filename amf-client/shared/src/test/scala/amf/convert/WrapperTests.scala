@@ -13,7 +13,7 @@ import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
 import amf.client.resolve.{Async20Resolver, Oas20Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
-import amf.common.Diff
+import amf.common.{Diff, Tests}
 import amf.core.errorhandling.StaticErrorCollector
 import amf.core.exception.UnsupportedVendorException
 import amf.core.model.document.{Document => InternalDocument}
@@ -27,6 +27,7 @@ import amf.core.remote.{Aml, Oas20, Raml10}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
+import amf.io.FileAssertionTest
 import amf.plugins.document.Vocabularies
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
@@ -34,7 +35,7 @@ import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
+trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -1371,6 +1372,23 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Generate unit with compact uris and external file") {
+    val apiPath = "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml"
+    val golden  = "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.jsonld"
+    val options = new RenderOptions().withCompactUris.withSourceMaps.withPrettyPrint
+
+    for {
+      _      <- AMF.init().asFuture
+      parsed <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(apiPath).asFuture
+//      resolved <- Future.successful(amf.Core.resolver(Raml10.name).resolve(parsed, ResolutionPipeline.DEFAULT_PIPELINE))
+      jsonLd <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(parsed, options).asFuture
+      actual <- writeTemporaryFile(golden)(jsonLd)
+      r      <- assertDifferences(actual, golden)
+    } yield {
+      r
+    }
+  }
+
   test("banking-api-test") {
     for {
       _    <- AMF.init().asFuture
@@ -1773,8 +1791,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseFileAsync(file).asFuture
     } yield {
-      assert(
-        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+      assert(unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 
@@ -1797,8 +1814,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit     <- new RamlParser().parseStringAsync(api).asFuture
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
-      json <- Future(
-        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
+      json     <- Future(resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
     } yield {
       val golden = """{
                      |  "$schema": "http://json-schema.org/draft-04/schema#",
@@ -2257,6 +2273,22 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       resolved <- Future.successful(new Raml10Resolver().resolve(parsed, ResolutionPipeline.EDITING_PIPELINE))
     } yield {
       assert(resolved.references().asSeq.forall(_.id != null))
+    }
+  }
+
+  test("Test custom validation to root document") {
+
+    val instance          = "file://amf-client/shared/src/test/resources/custom/example.raml"
+    val validationProfile = "file://amf-client/shared/src/test/resources/custom/profile.raml"
+
+    for {
+      _          <- AMF.init().asFuture
+      unit       <- new RamlParser().parseFileAsync(instance).asFuture
+      report     <- AMF.validate(unit, RamlProfile, AMFStyle).asFuture
+      newProfile <- AMF.loadValidationProfile(validationProfile).asFuture
+      custom     <- AMF.validate(unit, newProfile, AMFStyle).asFuture
+    } yield {
+      assert(report.conforms && custom.conforms)
     }
   }
 

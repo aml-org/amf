@@ -1,6 +1,5 @@
 #%RAML 1.0
 title: New API
-
 types:
   UnionType:
     type: SomeType | integer
@@ -8,10 +7,9 @@ types:
     type: object
     properties:
       a:
-       type: string
+        type: string
       b:
-       type: integer
-
+        type: integer
 /someEndpoint:
   post:
     body:

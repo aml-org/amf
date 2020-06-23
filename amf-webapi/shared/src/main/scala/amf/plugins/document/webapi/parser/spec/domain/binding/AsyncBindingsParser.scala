@@ -169,9 +169,12 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
 
   protected def parseSchema(field: Field, binding: DomainElement, entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): Unit = {
-    OasTypeParser(entry, shape => shape.withName("schema").adopted(parent), JSONSchemaDraft7SchemaVersion)
+    OasTypeParser(entry, shape => shape.withName("schema"), JSONSchemaDraft7SchemaVersion)
       .parse()
-      .foreach(binding.set(field, _, Annotations(entry)))
+      .foreach { shape =>
+        binding.set(field, shape, Annotations(entry))
+        shape.adopted(parent)
+      }
   }
 
   private def setBindingType(entry: YMapEntry, binding: Binding): Binding = {

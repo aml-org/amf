@@ -5,17 +5,11 @@ import amf._
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.Module
-import amf.core.model.domain.{ObjectNode, RecursiveShape}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.Raml10Plugin
-import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
-import amf.plugins.document.webapi.validation.AMFShapeValidations
-import amf.plugins.domain.shapes.models.ArrayShape
 import amf.plugins.features.validation.CoreValidations
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -66,40 +60,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       val resolved = Raml10Plugin.resolve(doc, eh)
       assert(Option(resolved).isDefined)
-    }
-  }
-
-  // is not a validation test, its cheking that the generated profile for effective validations exists
-  test("Can parse a recursive array API") {
-    val eh = DefaultParserErrorHandler.withRun()
-    for {
-      validation <- Validation(platform)
-      doc        <- AMFCompiler(productionPath + "recursive2.raml", platform, RamlYamlHint, eh = eh).build()
-    } yield {
-      val resolved      = Raml10Plugin.resolve(doc, eh)
-      val A: ArrayShape = resolved.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
-      assert(A.items.isInstanceOf[RecursiveShape])
-      val AOrig   = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
-      val profile = new AMFShapeValidations(AOrig).profile(ObjectNode())
-      assert(profile != null)
-    }
-  }
-
-  // is not a validation test, its cheking that the generated profile for effective validations exists
-  test("Can normalize a recursive array API") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "recursive2.raml",
-                         platform,
-                         RamlYamlHint,
-                         eh = DefaultParserErrorHandler.withRun()).build()
-    } yield {
-      val A: ArrayShape = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
-      new ValidationResolutionPipeline(RamlProfile, UnhandledErrorHandler).resolve(Module().withDeclares(Seq(A)))
-      val profile = new AMFShapeValidations(A).profile(ObjectNode())
-      assert(profile.violationLevel.size == 1)
-      assert(
-        profile.violationLevel.head == "file://amf-client/shared/src/test/resources/production/recursive2.raml#/declarations/types/array/A_validation")
     }
   }
 
@@ -401,22 +361,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-//  test("Test test") {
-//    for {
-//      validation <- Validation(platform)
-//      doc <- AMFCompiler(validationsPath + "/traits/Test/api.raml", platform, RamlYamlHint, validation)
-//        .build()
-//      report <- validation.validate(doc, Raml10Profile)
-//    } yield {
-//      print(report.toString())
-//      assert(report.conforms)
-//    }
-//  }
-
-  //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
-
-  //test("pattern raml example test") { was duplicated by   test("Param in raml 0.8 api") {
-
   ignore("emilio performance") {
     for {
       validation <- Validation(platform)
@@ -434,20 +378,4 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
     //assert(true)
   }
-
-  /*
-  test("test field_nation") {
-    for {
-      validation <- Validation(platform)
-      model      <- AMFCompiler(productionPath + "field-nation-v2-api-2.0.7-fat-raml/FN_API_full.raml", platform, RamlYamlHint, validation)
-        .build()
-      report <- validation.validate(model, RAMLProfile)
-    } yield {
-      ExecutionLog.finish()
-      ExecutionLog.buildReport()
-      assert(report.conforms)
-    }
-  }
- */
-
 }

@@ -122,8 +122,9 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val map     = entry.value.as[YMap]
 
     map.key("method", WebSocketsChannelBindingModel.Method in binding)
-    map.key("query", entry => parseSchema(WebSocketsChannelBindingModel.Query, binding, entry, parent))     // TODO validate as object
-    map.key("headers", entry => parseSchema(WebSocketsChannelBindingModel.Headers, binding, entry, parent)) // TODO validate as object
+    map.key("query", entry => parseSchema(WebSocketsChannelBindingModel.Query, binding, entry, binding.id + "/query"))
+    map.key("headers",
+            entry => parseSchema(WebSocketsChannelBindingModel.Headers, binding, entry, binding.id + "/headers"))
     parseBindingVersion(binding, WebSocketsChannelBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding.id, map, "wsChannelBinding")

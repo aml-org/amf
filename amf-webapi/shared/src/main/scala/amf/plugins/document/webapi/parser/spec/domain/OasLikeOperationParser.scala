@@ -6,7 +6,7 @@ import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.{IdCounter, _}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.{Oas3WebApiContext, OasWebApiContext}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkParser
@@ -19,7 +19,7 @@ import amf.plugins.document.webapi.parser.spec.oas.{
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
 import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Operation, Request, Response}
-import amf.validations.ParserSideValidations.DuplicatedOperationId
+import amf.validations.ParserSideValidations.{DuplicatedOperationId, InvalidStatusCode}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -110,14 +110,23 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
           .as[YMap]
           .entries
           .filter(y => !isOasAnnotation(y.key.as[YScalar].text))
-          .foreach { entry =>
-            val node = ScalarNode(entry.key).text()
-            responses += OasResponseParser(entry.value.as[YMap], { r =>
-              r.set(ResponseModel.Name, node)
-                .adopted(operation.id)
-                .withStatusCode(r.name.value())
-              r.annotations ++= Annotations(entry)
-            }).parse()
+          .foreach {
+            entry =>
+              val node = ScalarNode(entry.key).text()
+              responses += OasResponseParser(
+                entry.value.as[YMap], { r =>
+                  r.set(ResponseModel.Name, node)
+                    .adopted(operation.id)
+                    .withStatusCode(r.name.value())
+                  r.annotations ++= Annotations(entry)
+                  // Validation for OAS 3
+                  if (ctx.isInstanceOf[Oas3WebApiContext] && entry.key.tagType != YType.Str)
+                    ctx.eh.violation(InvalidStatusCode,
+                                     r.id,
+                                     "Status code for a Response object must be a string",
+                                     entry.key)
+                }
+              ).parse()
           }
 
         operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), Annotations(entry))

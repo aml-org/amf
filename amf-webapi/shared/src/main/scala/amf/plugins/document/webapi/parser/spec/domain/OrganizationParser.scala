@@ -35,3 +35,5 @@ class OrganizationParser(node: YNode)(implicit ctx: WebApiContext) extends SpecP
     organization
   }
 }
+
+class RamlCompatibleOrganizationParser(node: YNode)(implicit ctx: WebApiContext) extends SpecParserOps {}

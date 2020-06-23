@@ -49,7 +49,7 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
 
     map.key("type", HttpOperationBindingModel.OperationType in binding)
     if (binding.operationType.is("request")) map.key("method", HttpOperationBindingModel.Method in binding)
-    map.key("query", entry => parseSchema(HttpOperationBindingModel.Query, binding, entry, parent)) // TODO validate as object
+    map.key("query", entry => parseSchema(HttpOperationBindingModel.Query, binding, entry, binding.id))
     parseBindingVersion(binding, HttpOperationBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding.id, map, "httpOperationBinding")

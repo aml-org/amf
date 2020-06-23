@@ -5,7 +5,7 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, FieldEntry, Position, Value}
+import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
 import amf.plugins.document.webapi.annotations.{DefaultPayload, EndPointBodyParameter}
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
@@ -22,8 +22,10 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchem
 
 import scala.collection.mutable
 
-case class OasResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
+case class OasResponseEmitter(response: Response,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit],
+                              isDeclaration: Boolean = false)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val fs = response.fields
@@ -31,7 +33,7 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
     sourceOr(
       response.annotations,
       b.complexEntry(
-        ScalarEmitter(fs.entry(ResponseModel.Name).map(_.scalar).getOrElse(AmfScalar("default"))).emit(_),
+        ScalarEmitter(statusCodeOrName(fs).getOrElse(AmfScalar("default"))).emit(_),
         p => {
           if (response.isLink) {
             spec.localReference(response).emit(p)
@@ -96,6 +98,11 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
         }
       )
     )
+  }
+
+  private def statusCodeOrName(fs: Fields): Option[AmfScalar] = {
+    val statusCode = if (!isDeclaration) fs.entry(ResponseModel.StatusCode) else None
+    statusCode.orElse(fs.entry(ResponseModel.Name)).map(_.scalar)
   }
 
   override def position(): Position = pos(response.annotations)

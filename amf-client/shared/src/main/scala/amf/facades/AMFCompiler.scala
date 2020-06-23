@@ -7,7 +7,7 @@ import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote.Syntax.{Json, PlainText, Yaml}
 import amf.core.remote._
 import amf.core.{CompilerContext, CompilerContextBuilder, Root, AMFCompiler => ModularCompiler}
-import amf.plugins.document.vocabularies.RamlHeaderExtractor
+import amf.plugins.document.vocabularies.plugin.headers.RamlHeaderExtractor
 
 import scala.concurrent.{ExecutionContext, Future}
 

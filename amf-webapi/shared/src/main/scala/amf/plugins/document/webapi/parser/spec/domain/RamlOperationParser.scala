@@ -10,10 +10,12 @@ import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkParser
+import amf.plugins.document.webapi.parser.spec.oas.Oas30CallbackParser
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
 import amf.plugins.domain.webapi.models.{Operation, Response, Tag}
+import amf.plugins.document.webapi.parser.spec.toOas
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
@@ -120,6 +122,24 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
         operation.set(OperationModel.Responses,
                       AmfArray(responses ++ defaultResponses, Annotations(entry.value)),
                       Annotations(entry))
+      }
+    )
+
+    map.key(
+      "callbacks".asRamlAnnotation,
+      entry => {
+        val callbacks = entry.value
+          .as[YMap]
+          .entries
+          .flatMap { callbackEntry =>
+            val name = callbackEntry.key.as[YScalar].text
+            Oas30CallbackParser(callbackEntry.value.as[YMap],
+                                _.withName(name).adopted(operation.id),
+                                name,
+                                callbackEntry)(toOas(ctx))
+              .parse()
+          }
+        operation.withCallbacks(callbacks)
       }
     )
 

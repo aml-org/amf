@@ -6,7 +6,6 @@ import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
@@ -63,7 +62,7 @@ class Validation(platform: Platform) {
     * Loads the validation dialect from the provided URL
     */
   def loadValidationDialect(): Future[Dialect] = {
-    AMLPlugin.registry.registerDialect(url, ValidationDialectText.text)
+    AMLPlugin().registry.registerDialect(url, ValidationDialectText.text)
     /*
     platform.dialectsRegistry.get("%Validation Profile 1.0") match {
       case Some(dialect) => Promise().success(dialect).future
@@ -72,19 +71,9 @@ class Validation(platform: Platform) {
    */
   }
 
-  var profile: Option[ValidationProfile] = None
-
   def loadValidationProfile(validationProfilePath: String, errorHandler: ErrorHandler): Future[ProfileName] = {
     validator.loadValidationProfile(validationProfilePath, errorHandler = errorHandler)
   }
-
-  /**
-    * Loads a validation profile generated out of a RAML Dialect
-    * @param dialect RAML dialect to be parsed as a Validation Profile
-    */
-  def loadDialectValidationProfile(dialect: Dialect): Unit =
-    // TODO: REDO THIS!!!
-    profile = None // Some(new AMFDialectValidations(dialect).profile())
 
   def validate(model: BaseUnit,
                profileName: ProfileName,

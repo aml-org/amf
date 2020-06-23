@@ -17,6 +17,7 @@ import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import amf.plugins.domain.webapi.models.DocumentedElement
 import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
 import org.yaml.model.YPart
 
@@ -89,11 +90,15 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
     with RamlDatatypeSerializer
     with ExternalSourceElement
     with InheritanceChain
+    with DocumentedElement
     with ExemplifiedDomainElement {
 
+  // TODO: should return Option has field can be null
   def documentation: CreativeWork     = fields.field(Documentation)
   def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
   def comment: StrField               = fields.field(Comment)
+
+  override def documentations: Seq[CreativeWork] = Seq(documentation)
 
   def withDocumentation(documentation: CreativeWork): this.type        = set(Documentation, documentation)
   def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = set(XMLSerialization, xmlSerialization)

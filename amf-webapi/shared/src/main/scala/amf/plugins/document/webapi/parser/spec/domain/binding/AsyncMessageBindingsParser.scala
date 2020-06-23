@@ -63,7 +63,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val binding = HttpMessageBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    map.key("headers", parseSchema(HttpMessageBindingModel.Headers, binding, _, parent))
+    map.key("headers", parseSchema(HttpMessageBindingModel.Headers, binding, _, binding.id))
     parseBindingVersion(binding, HttpMessageBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding.id, map, "httpMessageBinding")

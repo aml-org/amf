@@ -124,7 +124,7 @@ object Oas20Plugin extends OasPlugin {
       renderOptions: RenderOptions,
       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
     unit match {
-      case module: Module             => Some(OasModuleEmitter(module)(specContext(renderOptions)).emitModule())
+      case module: Module             => Some(Oas20ModuleEmitter(module)(specContext(renderOptions)).emitModule())
       case document: Document         => Some(Oas2DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
       case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
@@ -189,7 +189,7 @@ object Oas30Plugin extends OasPlugin {
       renderOptions: RenderOptions,
       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
     unit match {
-      case module: Module             => Some(OasModuleEmitter(module)(specContext(renderOptions)).emitModule())
+      case module: Module             => Some(Oas30ModuleEmitter(module)(specContext(renderOptions)).emitModule())
       case document: Document         => Some(Oas3DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
       case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())

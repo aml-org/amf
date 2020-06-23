@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Example
+
+types:
+  ValidCamel:
+    type: object
+    properties:
+      a1:
+        type: object
+      a2: integer
+
+traits:
+  trait1:
+    body:
+      application/json:
+        type: string

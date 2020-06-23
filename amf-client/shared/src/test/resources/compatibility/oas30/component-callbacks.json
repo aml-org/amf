@@ -1,0 +1,50 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore"
+  },
+  "paths": {
+    "/pets": {
+      "get": {
+        "callbacks": {
+          "error": {
+            "$ref": "#/components/callbacks/errorEvent"
+          }
+        },
+        "summary": "Info for a specific pet",
+        "responses": {
+          "200": {
+            "description": "asdasd"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "callbacks": {
+      "errorEvent": {
+        "{$request.body#/errorUrl}": {
+          "post": {
+            "responses": {
+              "200": {
+                "description": "Error notified succesfully"
+              }
+            }
+          }
+        }
+      },
+      "unused": {
+        "unused": {
+          "post": {
+            "responses": {
+              "201": {
+                "description": "Error notified succesfully"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
