@@ -49,9 +49,8 @@ object ValidationsExporter extends ImportUtils {
           .map(severity)
           .mkString("\t")
 
-        println(
-          s"${uri(validation)}\t${uriModel(validation.owlClass)}\t${uriModel(validation.owlProperty)}\t${validation.message
-            .getOrElse("")}\t${validation.ramlErrorMessage}\t${validation.openApiErrorMessage}\t$levelsString")
+        println(s"${uri(validation)}\t${validation.owlClass}\t${validation.owlProperty}\t${validation.message
+          .getOrElse("")}\t${validation.ramlErrorMessage}\t${validation.openApiErrorMessage}\t$levelsString")
     }
 
   }
