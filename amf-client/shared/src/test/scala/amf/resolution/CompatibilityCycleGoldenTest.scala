@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.remote.{Oas20, Oas30, OasJsonHint, OasYamlHint, Raml, Raml10, RamlYamlHint}
+import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 
 import scala.concurrent.ExecutionContext
@@ -64,9 +64,25 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
 
   test("OAS 3.0 Callbacks are inlined and unused ones are removed") {
     cycle("oas30/component-callbacks.json",
-          "cycled-apis/raml/oas3-callbacks.raml",
-          OasYamlHint,
-          Raml10,
-          transformWith = Some(Raml10))
+      "cycled-apis/raml/oas3-callbacks.raml",
+      OasYamlHint,
+      Raml10,
+      transformWith = Some(Raml10))
+  }
+
+  test("OAS 2.0 Module emitter emits swagger: 2.0 key") {
+    cycle("invalid-apis/library.raml",
+      "cycled-apis/oas20/library.json",
+      RamlYamlHint,
+      Oas20,
+      transformWith = Some(Oas20))
+  }
+
+  test("OAS 3.0 Module emitter emits openapi: 3.0.0 key") {
+    cycle("invalid-apis/library.raml",
+      "cycled-apis/oas30/library.json",
+      RamlYamlHint,
+      Oas30,
+      transformWith = Some(Oas30))
   }
 }
