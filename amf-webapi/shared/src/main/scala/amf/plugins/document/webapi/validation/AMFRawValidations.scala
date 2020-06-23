@@ -22,8 +22,8 @@ object AMFRawValidations {
     */
   class AMFValidation(val uri: Option[String],
                       val message: Option[String],
-                      val owlClass: Option[String],
-                      val owlProperty: Option[String],
+                      val owlClass: String,
+                      val owlProperty: String,
                       val target: String,
                       val constraint: String,
                       val value: String,
@@ -43,16 +43,17 @@ object AMFRawValidations {
         openApiErrorMessage: String = "",
         severity: String = Severity.VIOLATION,
     ): AMFValidation = {
-
+      
+      def iri(s: String) = Namespace.uri(s).iri()
       val sameMessage = !message.isEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
 
       new AMFValidation(
         uri = optional(uri).map(Namespace.uri(_).iri()),
         message = optional(message),
-        owlClass = optional(owlClass).map(Namespace.uri(_).iri()),
-        owlProperty = optional(owlProperty).map(Namespace.uri(_).iri()),
-        target = Namespace.uri(target).iri(),
-        constraint = Namespace.uri(constraint).iri(),
+        owlClass = iri(owlClass),
+        owlProperty = iri(owlProperty),
+        target = iri(target),
+        constraint = iri(constraint),
         value = adaptValue(constraint, value),
         ramlErrorMessage = if (sameMessage) message else ramlErrorMessage,
         openApiErrorMessage = if (sameMessage) message else openApiErrorMessage,
@@ -63,8 +64,8 @@ object AMFRawValidations {
     def apply(
         uri: Option[ValueType] = None,
         message: String = "",
-        owlClass: Option[ValueType],
-        owlProperty: Option[ValueType],
+        owlClass: ValueType,
+        owlProperty: ValueType,
         target: ValueType = sh("path"),
         constraint: ValueType,
         value: String = "0",
@@ -78,8 +79,8 @@ object AMFRawValidations {
       new AMFValidation(
         uri = uri.map(_.iri()),
         message = optional(message),
-        owlClass = owlClass.map(_.iri()),
-        owlProperty = owlProperty.map(_.iri()),
+        owlClass = owlClass.iri(),
+        owlProperty = owlProperty.iri(),
         target = target.iri(),
         constraint = constraint.iri(),
         value = adaptValue(constraint.iri(), value),
@@ -97,19 +98,19 @@ object AMFRawValidations {
   }
 
   // owl
-  def apiContract(name: String): Option[ValueType] = Some(ValueType(Namespace.ApiContract, name))
+  def apiContract(name: String): ValueType = ValueType(Namespace.ApiContract, name)
 
-  def doc(name: String): Option[ValueType] = Some(ValueType(Namespace.Document, name))
+  def doc(name: String): ValueType = ValueType(Namespace.Document, name)
 
-  def core(name: String): Option[ValueType] = Some(ValueType(Namespace.Core, name))
+  def core(name: String): ValueType = ValueType(Namespace.Core, name)
 
-  def shape(name: String): Option[ValueType] = Some(ValueType(Namespace.Shapes, name))
+  def shape(name: String): ValueType = ValueType(Namespace.Shapes, name)
 
-  def security(name: String): Option[ValueType] = Some(ValueType(Namespace.Security, name))
+  def security(name: String): ValueType = ValueType(Namespace.Security, name)
 
   def amfParser(name: String): Option[ValueType] = Some(ValueType(Namespace.AmfParser, name))
 
-  def apiBinding(name: String): Option[ValueType] = Some(ValueType(Namespace.ApiBinding, name))
+  def apiBinding(name: String): ValueType = ValueType(Namespace.ApiBinding, name)
 
   // constraints
   def sh(name: String): ValueType = ValueType(Namespace.Shacl, name)
@@ -315,15 +316,15 @@ object AMFRawValidations {
         uri = amfParser("xml-wrapped-scalar"),
         message = "XML property 'wrapped' must be false for scalar types",
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("xmlSerialization")),
-        constraint = shape("xmlWrappedScalar").get
+        owlProperty = sh("xmlSerialization"),
+        constraint = shape("xmlWrappedScalar")
       ),
       AMFValidation(
         uri = amfParser("xml-non-scalar-attribute"),
         message = "XML property 'attribute' must be false for non-scalar types",
         owlClass = shape("Shape"),
-        owlProperty = Some(sh("xmlSerialization")),
-        constraint = shape("xmlNonScalarAttribute").get
+        owlProperty = sh("xmlSerialization"),
+        constraint = shape("xmlNonScalarAttribute")
       ),
       AMFValidation(
         message = "XML attribute serialisation info must be boolean",
@@ -392,7 +393,7 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ObjectShape"),
-        owlProperty = Some(sh("closed")),
+        owlProperty = sh("closed"),
         constraint = dataType,
         value = boolean,
         ramlErrorMessage = "additionalProperties for a RAML Object type must be a boolean",
@@ -424,7 +425,7 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ArrayShape"),
-        owlProperty = Some(minCount),
+        owlProperty = minCount,
         constraint = dataType,
         value = integer,
         ramlErrorMessage = "minItems for a RAML Array type must be an integer",
@@ -432,14 +433,14 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ArrayShape"),
-        owlProperty = Some(minCount),
+        owlProperty = minCount,
         constraint = sh("minInclusive"),
         ramlErrorMessage = "maxItems for a RAML Array type must be greater than 0",
         openApiErrorMessage = "maxItems of a Schema object of type 'array' must be greater than 0"
       ),
       AMFValidation(
         owlClass = shape("ArrayShape"),
-        owlProperty = Some(sh("maxCount")),
+        owlProperty = sh("maxCount"),
         constraint = dataType,
         value = integer,
         ramlErrorMessage = "maxItems for a RAML Array type must be an integer",
@@ -447,14 +448,14 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ArrayShape"),
-        owlProperty = Some(minCount),
+        owlProperty = minCount,
         constraint = sh("minInclusive"),
         ramlErrorMessage = "minItems for a RAML Array type must be greater than 0",
         openApiErrorMessage = "minItems of a Schema object of type 'array' must be greater than 0"
       ),
       AMFValidation(
         owlClass = shape("ArrayShape"),
-        owlProperty = Some(sh("maxCount")),
+        owlProperty = sh("maxCount"),
         constraint = sh("minInclusive"),
         ramlErrorMessage = "maxItems for a RAML Array type must be greater than 0",
         openApiErrorMessage = "maxItems of a Schema object of type 'array' must be greater than 0"
@@ -469,7 +470,7 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("pattern")),
+        owlProperty = sh("pattern"),
         constraint = dataType,
         value = string,
         ramlErrorMessage = "pattern facet for a RAML scalar type must be a string",
@@ -477,7 +478,7 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("minLength")),
+        owlProperty = sh("minLength"),
         constraint = dataType,
         value = integer,
         ramlErrorMessage = "minLength facet for a RAML scalar type must be a integer",
@@ -485,7 +486,7 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("maxLength")),
+        owlProperty = sh("maxLength"),
         constraint = dataType,
         value = integer,
         ramlErrorMessage = "maxLength facet for a RAML scalar type must be a integer",
@@ -493,7 +494,7 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("minInclusive")),
+        owlProperty = sh("minInclusive"),
         constraint = dataType,
         value = "xsd:double",
         ramlErrorMessage = "minimum facet for a RAML scalar type must be a number",
@@ -501,7 +502,7 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("maxInclusive")),
+        owlProperty = sh("maxInclusive"),
         constraint = dataType,
         value = "xsd:double",
         ramlErrorMessage = "maximum facet for a RAML scalar type must be a number",
@@ -509,7 +510,7 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("minExclusive")),
+        owlProperty = sh("minExclusive"),
         constraint = dataType,
         value = boolean,
         ramlErrorMessage = "x-exclusiveMinimum facet for a RAML scalar type must be a boolean",
@@ -517,7 +518,7 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("maxExclusive")),
+        owlProperty = sh("maxExclusive"),
         constraint = dataType,
         value = boolean,
         ramlErrorMessage = "x-exclusiveMaximum facet for a RAML scalar type must be a boolean",
@@ -526,25 +527,25 @@ object AMFRawValidations {
       AMFValidation(
         message = "Min length facet should be greater or equal than 0",
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("minLength")),
+        owlProperty = sh("minLength"),
         constraint = sh("minInclusive")
       ),
       AMFValidation(
         message = "Max length facet should be greater or equal than 0",
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("maxLength")),
+        owlProperty = sh("maxLength"),
         constraint = sh("minInclusive")
       ),
       AMFValidation(
         message = "Min length facet should be greater or equal than 0",
         owlClass = shape("FileShape"),
-        owlProperty = Some(sh("minLength")),
+        owlProperty = sh("minLength"),
         constraint = sh("minInclusive")
       ),
       AMFValidation(
         message = "Max length facet should be greater or equal than 0",
         owlClass = shape("FileShape"),
-        owlProperty = Some(sh("maxLength")),
+        owlProperty = sh("maxLength"),
         constraint = sh("minInclusive")
       ),
       AMFValidation(
@@ -572,7 +573,7 @@ object AMFRawValidations {
       ),
       AMFValidation(
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(dataType),
+        owlProperty = dataType,
         constraint = minCount,
         value = "1",
         ramlErrorMessage = "type information for a RAML scalar is required",
@@ -645,8 +646,8 @@ object AMFRawValidations {
         uri = amfParser("pattern-validation"),
         message = "Pattern is not valid",
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("pattern")),
-        constraint = shape("patternValidation").get,
+        owlProperty = sh("pattern"),
+        constraint = shape("patternValidation"),
       )
     )
 
@@ -685,7 +686,7 @@ object AMFRawValidations {
         message = "Header parameter name is invalid according to HTTP spec",
         owlClass = apiContract(ParameterModel.doc.displayName),
         owlProperty = apiContract("Name"),
-        constraint = shape("headerParamNameMustBeAscii").get,
+        constraint = shape("headerParamNameMustBeAscii"),
         severity = Severity.WARNING
       )
     )
@@ -762,49 +763,49 @@ object AMFRawValidations {
         message = "Protocols must be a non-empty array of case-insensitive strings with values 'http' and/or 'https'",
         owlClass = apiContract("WebAPI"),
         owlProperty = apiContract("scheme"),
-        constraint = shape("nonEmptyListOfProtocols").get
+        constraint = shape("nonEmptyListOfProtocols")
       ),
       AMFValidation(
         uri = amfParser("raml-operation-schemes-non-empty-array"),
         message = "Protocols must be a non-empty array of case-insensitive strings with values 'http' and/or 'https'",
         owlClass = apiContract("Operation"),
         owlProperty = apiContract("scheme"),
-        constraint = shape("nonEmptyListOfProtocols").get
+        constraint = shape("nonEmptyListOfProtocols")
       ),
       AMFValidation(
         uri = amfParser("min-max-inclusive"),
         message = "Maximum must be greater than or equal to minimum",
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("minInclusive")),
-        constraint = shape("minimumMaximumValidation").get
+        owlProperty = sh("minInclusive"),
+        constraint = shape("minimumMaximumValidation")
       ),
       AMFValidation(
         uri = amfParser("min-max-items"),
         message = "MaxItems must be greater than or equal to minItems",
         owlClass = shape("ArrayShape"),
-        owlProperty = Some(minCount),
-        constraint = shape("minMaxItemsValidation").get
+        owlProperty = minCount,
+        constraint = shape("minMaxItemsValidation")
       ),
       AMFValidation(
         uri = amfParser("min-max-length"),
         message = "MaxLength must be greater than or equal to minLength",
         owlClass = shape("ScalarShape"),
-        owlProperty = Some(sh("minLength")),
-        constraint = shape("minMaxLengthValidation").get
+        owlProperty = sh("minLength"),
+        constraint = shape("minMaxLengthValidation")
       ),
       AMFValidation(
         uri = amfParser("min-max-length"),
         message = "MaxLength must be greater than or equal to minLength",
         owlClass = shape("FileShape"),
-        owlProperty = Some(sh("minLength")),
-        constraint = shape("minMaxLengthValidation").get
+        owlProperty = sh("minLength"),
+        constraint = shape("minMaxLengthValidation")
       ),
       AMFValidation(
         uri = amfParser("min-max-properties"),
         message = "MaxProperties must be greater than or equal to minProperties",
-        owlClass = Some(sh("NodeShape")),
+        owlClass = sh("NodeShape"),
         owlProperty = shape("minProperties"),
-        constraint = shape("minMaxPropertiesValidation").get
+        constraint = shape("minMaxPropertiesValidation")
       ),
       AMFValidation(
         owlClass = apiContract("Payload"),
@@ -864,9 +865,9 @@ object AMFRawValidations {
       AMFValidation(
         uri = amfParser("min-max-properties"),
         message = "MaxProperties must be greater than or equal to minProperties",
-        owlClass = Some(sh("NodeShape")),
+        owlClass = sh("NodeShape"),
         owlProperty = shape("minProperties"),
-        constraint = shape("minMaxPropertiesValidation").get,
+        constraint = shape("minMaxPropertiesValidation"),
       )
     )
 
@@ -929,7 +930,7 @@ object AMFRawValidations {
         uri = amfParser("empty-enum"),
         message = "Enum in types cannot be empty",
         owlClass = shape("Shape"),
-        owlProperty = Some(sh("in")),
+        owlProperty = sh("in"),
         constraint = sh("node"),
         value = amfParser("NonEmptyList").get.iri(),
         ramlErrorMessage = "Property 'enum' must have at least one value",
@@ -950,14 +951,14 @@ object AMFRawValidations {
         message = "Path parameters must have the required property set to true",
         owlClass = apiContract(ParameterModel.doc.displayName),
         owlProperty = apiContract("binding"),
-        constraint = shape("pathParameterRequiredProperty").get
+        constraint = shape("pathParameterRequiredProperty")
       ),
       AMFValidation(
         uri = amfParser("file-parameter-in-form-data"),
         message = "Parameter of type file must set property 'in' to formData",
         owlClass = apiContract(ParameterModel.doc.displayName),
         owlProperty = shape("schema"),
-        constraint = shape("fileParameterMustBeInFormData").get
+        constraint = shape("fileParameterMustBeInFormData")
       ),
       AMFValidation(
         uri = amfParser("description-is-required-in-response"),
@@ -1223,55 +1224,55 @@ object AMFRawValidations {
         message = "'flows' field is mandatory in OAuth2 security scheme",
         owlClass = security("SecurityScheme"),
         owlProperty = security("settings"),
-        constraint = shape("requiredFlowsInOAuth2").get
+        constraint = shape("requiredFlowsInOAuth2")
       ),
       AMFValidation(
         message = "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",
         owlClass = security("SecurityScheme"),
         owlProperty = security("settings"),
-        constraint = shape("requiredOpenIdConnectUrl").get
+        constraint = shape("requiredOpenIdConnectUrl")
       ),
       AMFValidation(
         message = "'query' property of ws channel binding must be of type object and have properties",
         owlClass = apiBinding("WebSocketsChannelBinding"),
         owlProperty = apiBinding("query"),
-        constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet").get
+        constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet")
       ),
       AMFValidation(
         message = "'headers' property of ws channel binding must be of type object and have properties",
         owlClass = apiBinding("WebSocketsChannelBinding"),
         owlProperty = apiBinding("headers"),
-        constraint = shape("mandatoryHeadersObjectNodeWithPropertiesFacet").get
+        constraint = shape("mandatoryHeadersObjectNodeWithPropertiesFacet")
       ),
       AMFValidation(
         message = "'headers' property of ws channel binding must be of type object and have properties",
         owlClass = apiBinding("HttpMessageBinding"),
         owlProperty = apiBinding("headers"),
-        constraint = shape("mandatoryHeadersObjectNodeWithPropertiesFacet").get
+        constraint = shape("mandatoryHeadersObjectNodeWithPropertiesFacet")
       ),
       AMFValidation(
         message = "'headers' property of ws channel binding must be of type object and have properties",
         owlClass = apiBinding("HttpOperationBinding"),
         owlProperty = apiBinding("query"),
-        constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet").get
+        constraint = shape("mandatoryQueryObjectNodeWithPropertiesFacet")
       ),
       AMFValidation(
         message = "Does not comply with runtime expression ABNF syntax",
         owlClass = core("CorrelationId"),
         owlProperty = core("location"),
-        constraint = shape("validCorrelationIdLocation").get
+        constraint = shape("validCorrelationIdLocation")
       ),
       AMFValidation(
         message = "Does not comply with runtime expression ABNF syntax",
         owlClass = apiContract(ParameterModel.doc.displayName),
         owlProperty = apiContract("binding"),
-        constraint = shape("validParameterLocation").get
+        constraint = shape("validParameterLocation")
       ),
       AMFValidation(
         message = "Message headers must be of type object",
         owlClass = apiContract("Message"),
         owlProperty = apiContract("headers"),
-        constraint = shape("mandatoryHeadersObjectNode").get
+        constraint = shape("mandatoryHeadersObjectNode")
       ),
       emailValidation(core("Organization"), core("email")),
       urlValidation(core("Organization"), core("url")),
@@ -1316,7 +1317,7 @@ object AMFRawValidations {
         message = "Example 'value' and 'externalValue' fields are mutually exclusive",
         owlClass = apiContract("Example"),
         owlProperty = doc("externalValue"),
-        constraint = shape("exampleMutuallyExclusiveFields").get,
+        constraint = shape("exampleMutuallyExclusiveFields"),
         openApiErrorMessage = "Example 'value' and 'externalValue' fields are mutually exclusive"
       ),
       AMFValidation(
@@ -1352,31 +1353,31 @@ object AMFRawValidations {
         message = "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",
         owlClass = security("SecurityScheme"),
         owlProperty = security("settings"),
-        constraint = shape("requiredOpenIdConnectUrl").get
+        constraint = shape("requiredOpenIdConnectUrl")
       ),
       AMFValidation(
         message = "'flows' field is mandatory in OAuth2 security scheme",
         owlClass = security("SecurityScheme"),
         owlProperty = security("settings"),
-        constraint = shape("requiredFlowsInOAuth2").get
+        constraint = shape("requiredFlowsInOAuth2")
       ),
       AMFValidation(
         message = "Does not comply with runtime expression ABNF syntax",
         owlClass = apiContract("Callback"),
         owlProperty = apiContract("expression"),
-        constraint = shape("validCallbackExpression").get
+        constraint = shape("validCallbackExpression")
       ),
       AMFValidation(
         message = "Does not comply with runtime expression ABNF syntax",
         owlClass = apiContract("TemplatedLink"),
         owlProperty = apiContract("requestBody"),
-        constraint = shape("validLinkRequestBody").get
+        constraint = shape("validLinkRequestBody")
       ),
       AMFValidation(
         message = "Does not comply with runtime expression ABNF syntax",
         owlClass = apiContract("TemplatedLink"),
         owlProperty = apiContract("mapping"),
-        constraint = shape("validLinkParameterExpressions").get
+        constraint = shape("validLinkParameterExpressions")
       ),
       AMFValidation(
         message = "Property 'name' in Tag object cannot be empty",
@@ -1391,7 +1392,7 @@ object AMFRawValidations {
   }
 
   trait GenericValidations {
-    def urlValidation(owlClass: Option[ValueType], owlProperty: Option[ValueType]): AMFValidation =
+    def urlValidation(owlClass: ValueType, owlProperty: ValueType): AMFValidation =
       AMFValidation(
         message = "Must be in the format of a URL",
         owlClass = owlClass,
@@ -1400,7 +1401,7 @@ object AMFRawValidations {
         value = """^((https?|ftp|file)://)?[-a-zA-Z0-9()+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9()+&@#/%=~_|]$""".stripMargin
       )
 
-    def uriValidation(owlClass: Option[ValueType], owlProperty: Option[ValueType]): AMFValidation =
+    def uriValidation(owlClass: ValueType, owlProperty: ValueType): AMFValidation =
       AMFValidation(
         message = "Must be in the format of a URI",
         owlClass = owlClass,
@@ -1409,7 +1410,7 @@ object AMFRawValidations {
         value = """^\w+:(\/?\/?)[^\s]+$""".stripMargin
       )
 
-    def emailValidation(owlClass: Option[ValueType], owlProperty: Option[ValueType]): AMFValidation =
+    def emailValidation(owlClass: ValueType, owlProperty: ValueType): AMFValidation =
       AMFValidation(
         owlClass = owlClass,
         owlProperty = owlProperty,
