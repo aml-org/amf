@@ -576,8 +576,6 @@ declare module 'amf-client-js' {
 
       export class DocumentationItem extends Fragment {}
 
-      export class DataType extends Fragment {}
-
       export class NamedExample extends Fragment {}
 
       export class ResourceTypeFragment extends Fragment {}
@@ -628,6 +626,8 @@ declare module 'amf-client-js' {
       class AmfScalar {
         value: any
       }
+
+      export class DataType extends document.Fragment {}
 
       /* Not exported */
       abstract class DomainElement implements Annotable {
