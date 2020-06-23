@@ -78,17 +78,18 @@ annotationTypes:
     type: any
   amf-and:
     type: any
-title: Something
-version: "1.0"
-(amf-tags):
-  -
-    name: something
-    description: First tag
-    externalDocs:
-      description: A description
-      x-amf-title: something
-  -
-    description: Second tag
-    externalDocs:
-      description: Another description
-      x-amf-title: Tag 1 documentation
+title: Swagger Petstore
+version: 1.0.0
+/pets:
+  get:
+    (amf-summary): Info for a specific pet
+    responses:
+      "200":
+        description: asdasd
+    (amf-callbacks):
+      error:
+        "{$request.body#/errorUrl}":
+          post:
+            responses:
+              "200":
+                description: Error notified succesfully
