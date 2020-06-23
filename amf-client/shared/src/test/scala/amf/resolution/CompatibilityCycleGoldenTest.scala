@@ -1,7 +1,8 @@
 package amf.resolution
 
-import amf.core.remote.{Oas20, Oas30, OasJsonHint, Raml, RamlYamlHint, Raml10}
+import amf.core.remote.{Oas20, Oas30, OasJsonHint, OasYamlHint, Raml, Raml10, RamlYamlHint}
 import amf.core.resolution.pipelines.ResolutionPipeline
+
 import scala.concurrent.ExecutionContext
 
 class CompatibilityCycleGoldenTest extends ResolutionTest {
@@ -53,11 +54,19 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
 
   test("OAS tag documentation is transformed to RAML with generator count") {
     cycle(
-      "not-validated-apis/documentation-tags-with-no-name.json",
+      "invalid-apis/documentation-tags-with-no-name.json",
       "cycled-apis/raml/documentation-tags-with-no-name.raml",
       OasJsonHint,
       Raml10,
       transformWith = Some(Raml10)
     )
+  }
+
+  test("OAS 3.0 Callbacks are inlined and unused ones are removed") {
+    cycle("oas30/component-callbacks.json",
+          "cycled-apis/raml/oas3-callbacks.raml",
+          OasYamlHint,
+          Raml10,
+          transformWith = Some(Raml10))
   }
 }
