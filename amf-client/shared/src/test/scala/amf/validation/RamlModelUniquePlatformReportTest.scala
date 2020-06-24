@@ -442,4 +442,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("yaml-duplicate-key.raml", Some("yaml-duplicate-key.report"), profile = Raml10Profile)
   }
 
+  test("Invalid recursion defined in trait and operation") {
+    validate("invalid-recursion-in-trait.raml", Some("invalid-recursion-in-trait.report"), profile = Raml10Profile)
+  }
+
 }
