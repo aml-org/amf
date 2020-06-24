@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: recursive shapes in when merging traits
+version: 1.0
+
+types:
+
+  Extension:
+    properties:
+      test: boolean | Conformance
+
+  Conformance:
+    type: object
+    properties:
+      telecom?: Extension
+
+traits:
+  conformance:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Conformance
+
+/metadata:
+  get:
+    is: [conformance]
+    responses:
+      200:
+        body:
+          application/json:
+            type: Conformance

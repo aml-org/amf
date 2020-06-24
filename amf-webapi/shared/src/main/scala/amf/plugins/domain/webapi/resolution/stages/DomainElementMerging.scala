@@ -121,67 +121,66 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       val mainValueIsInferred  = mainValue.value.annotations.contains(classOf[Inferred])
       val mainValueIsDefault   = mainValue.value.annotations.contains(classOf[DefaultNode])
 
-      mainFieldEntry match {
-        case _ if mainValueIsAnyShape && otherValueIsAnyShape && mainValueIsInferred =>
-          /**
-            * Overwrite default-generated Any shapes by shapes coming from overlays/extensions
-            * e.g. default value of a payload
-            */
-          val target: AnyShape = mainFieldEntry.value.value.asInstanceOf[AnyShape]
-          val shape: AnyShape  = otherValue.value.asInstanceOf[AnyShape]
-          val cloned           = shape.cloneShape(None).withName(target.name.value())
+      if (mainValueIsAnyShape && otherValueIsAnyShape && mainValueIsInferred) {
 
-          if (target.examples.nonEmpty) cloned.withExamples(target.examples)
-          main.set(otherField, adoptInner(main.id, cloned))
-          shouldMerge = false
+        /**
+          * Overwrite default-generated Any shapes by shapes coming from overlays/extensions
+          * e.g. default value of a payload
+          */
+        val target: AnyShape = mainFieldEntry.value.value.asInstanceOf[AnyShape]
+        val shape: AnyShape  = otherValue.value.asInstanceOf[AnyShape]
+        val cloned           = shape.cloneShape(None).withName(target.name.value())
 
-        case _ if mainValueIsDefault =>
-          /**
-            * Existing element (mainValue) has an inferred default type. In the AST level merge, when the "type"
-            * node is on the trait side it should be merged
-            */
-          otherField.`type` match {
-            case t: OptionalField if isOptional(t, otherValue.value.asInstanceOf[DomainElement]) =>
-            // Do nothing (Case 2)
-            case Type.ArrayLike(otherElement) =>
-              adoptNonOptionalArrayElements(main, otherField, otherValue, otherElement)
-            case _: DomainElementModel =>
-              mainValue.value match {
-                // This case is for default type String (in parameters)
-                case s: ScalarShape if s.dataType.value() == DataType.String =>
-                  otherValue.value match {
-                    // if both parts are scalar strings, then just merge the dataNodes
-                    case sc: ScalarShape if sc.dataType.value() == DataType.String =>
-                      merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
-                    // if other is an scalar with a different datatype
-                    case sc: ScalarShape =>
-                      s.set(ScalarShapeModel.DataType, sc.dataType.value())
-                      merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
-                    // if other is an array or an object
-                    case a: AnyShape =>
-                      val examples = s.examples
-                      main.set(otherField, adoptInner(main.id, a))
-                      if (examples.nonEmpty)
-                        main.fields
-                          .entry(otherField)
-                          .foreach(_.value.value.asInstanceOf[AnyShape].withExamples(examples))
-                    // else override the shape
-                    case x => main.set(otherField, adoptInner(main.id, x))
-                  }
-                // This case is for default type AnyShape (in payload in an endpoint)
-                case _: AnyShape => merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
-                case _           => main.set(otherField, adoptInner(main.id, otherValue.value))
-              }
-            case _ => main.set(otherField, adoptInner(main.id, otherValue.value))
-          }
-          shouldMerge = false
+        if (target.examples.nonEmpty) cloned.withExamples(target.examples)
+        main.set(otherField, adoptInner(main.id, cloned))
+        shouldMerge = false
+      } else if (mainValueIsDefault) {
 
-        case _ => // Defaults to fallback (shouldMerge = true)
+        /**
+          * Existing element (mainValue) has an inferred default type. In the AST level merge, when the "type"
+          * node is on the trait side it should be merged
+          */
+        otherField.`type` match {
+          case t: OptionalField if isOptional(t, otherValue.value.asInstanceOf[DomainElement]) =>
+          // Do nothing (Case 2)
+          case Type.ArrayLike(otherElement) =>
+            adoptNonOptionalArrayElements(main, otherField, otherValue, otherElement)
+          case _: DomainElementModel =>
+            mainValue.value match {
+              // This case is for default type String (in parameters)
+              case s: ScalarShape if s.dataType.value() == DataType.String =>
+                otherValue.value match {
+                  // if both parts are scalar strings, then just merge the dataNodes
+                  case sc: ScalarShape if sc.dataType.value() == DataType.String =>
+                    merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
+                  // if other is an scalar with a different datatype
+                  case sc: ScalarShape =>
+                    s.set(ScalarShapeModel.DataType, sc.dataType.value())
+                    merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
+                  // if other is an array or an object
+                  case a: AnyShape =>
+                    val examples = s.examples
+                    main.set(otherField, adoptInner(main.id, a))
+                    if (examples.nonEmpty)
+                      main.fields
+                        .entry(otherField)
+                        .foreach(_.value.value.asInstanceOf[AnyShape].withExamples(examples))
+                  // else override the shape
+                  case x => main.set(otherField, adoptInner(main.id, x))
+                }
+              // This case is for default type AnyShape (in payload in an endpoint)
+              case _: AnyShape => merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
+              case _           => main.set(otherField, adoptInner(main.id, otherValue.value))
+            }
+          case _ => main.set(otherField, adoptInner(main.id, otherValue.value))
+        }
+        shouldMerge = false
       }
+      // Defaults to fallback (shouldMerge = true)
     }
 
     // Case 3
-    if (shouldMerge) {
+    if (shouldMerge && mainValue != otherValue) { // avoid merging of identical objects
       otherField.`type` match {
         case Type.Scalar(_) =>
         // Do nothing (3.a)
