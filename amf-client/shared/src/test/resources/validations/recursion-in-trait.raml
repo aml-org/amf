@@ -13,19 +13,37 @@ types:
     properties:
       telecom?: Extension
 
+
+  DirectRecursionCompanion:
+    properties:
+      test: DirectRecursion
+
+  DirectRecursion:
+    properties:
+      telecom?: DirectRecursionCompanion
+
 traits:
   conformance:
     responses:
       200:
         body:
           application/json:
-            type: Conformance
+            type: <<typeName>>
 
 /metadata:
   get:
-    is: [conformance]
+    is: [conformance: {typeName: Conformance}]
     responses:
       200:
         body:
           application/json:
             type: Conformance
+
+/direct-recursion:
+  get:
+    is: [conformance: {typeName: DirectRecursion}]
+    responses:
+      200:
+        body:
+          application/json:
+            type: DirectRecursion

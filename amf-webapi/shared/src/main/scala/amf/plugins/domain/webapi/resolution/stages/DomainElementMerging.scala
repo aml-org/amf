@@ -52,10 +52,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         }
     }
 
-    main match {
-      case shape: Shape if merged => ensureNotRecursive(shape).asInstanceOf[T]
-      case _                      => main
-    }
+    main
   }
 
   def handleNewFieldEntry[T <: DomainElement](main: T, otherFieldEntry: FieldEntry, errorHandler: ErrorHandler): Unit = {
@@ -196,39 +193,6 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       }
     }
     shouldMerge
-  }
-
-  protected def ensureNotRecursive(shape: Shape, ids: Set[String] = Set()): Shape = {
-    try {
-      if (ids.contains(shape.id))
-        shape match {
-          case _: RecursiveShape => shape
-          case p: PropertyShape  => p.withRange(RecursiveShape(p.range))
-          case _                 => RecursiveShape(shape)
-        } else {
-        val newIds = ids ++ Seq(shape.id)
-        shape.fields.foreach {
-          case (f: Field, value: Value) =>
-            val fieldValue  = value.value
-            val annotations = value.annotations
-            fieldValue match {
-              case e: Shape =>
-                shape.fields.setWithoutId(f, ensureNotRecursive(e, newIds), annotations)
-              case arr: AmfArray =>
-                val checked = arr.values.map {
-                  case e: Shape => ensureNotRecursive(e, newIds)
-                  case o        => o
-                }
-                shape.fields.setWithoutId(f, AmfArray(checked, arr.annotations))
-              case o =>
-                shape.fields.setWithoutId(f, o, annotations)
-            }
-        }
-        shape
-      }
-    } catch {
-      case _: Error => shape
-    }
   }
 
   protected case class Adopted() {
