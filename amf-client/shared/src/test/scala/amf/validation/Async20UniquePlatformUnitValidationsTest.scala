@@ -226,4 +226,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Invalid fragment defined in channel uri") {
     validate("invalid-fragment-in-uri.yaml", Some("invalid-fragment-in-uri.report"), profile = Async20Profile)
   }
+
+  test("Invalid yaml tags") {
+    validate("invalid-yaml-tags.yaml", Some("invalid-yaml-tags.report"), profile = Async20Profile)
+  }
 }

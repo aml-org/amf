@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  !!firstInvalid version: !!secondInvalid 0.1.0
+
+servers: !finalInvalid [{
+  url: "https://{username}.gigantic-server.com:{port}/{basePath}",
+  description: "The production API server"
+}]
+
+paths: {}

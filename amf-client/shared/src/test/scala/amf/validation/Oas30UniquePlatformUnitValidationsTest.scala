@@ -93,4 +93,8 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Invalid status code without quotes") {
     validate("invalid-status-code.yaml", Some("invalid-status-code.report"), Oas30Profile)
   }
+
+  test("Invalid yaml tags") {
+    validate("invalid-yaml-tags.yaml", Some("invalid-yaml-tags.report"), Oas30Profile)
+  }
 }
