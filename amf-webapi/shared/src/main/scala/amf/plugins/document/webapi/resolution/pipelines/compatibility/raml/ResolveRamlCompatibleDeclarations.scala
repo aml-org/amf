@@ -9,9 +9,8 @@ import amf.core.resolution.stages.selectors.{LinkSelector, MetaModelSelector, Se
 import amf.core.vocabulary.Namespace.ApiContract
 import amf.plugins.domain.webapi.models.{Response, Payload}
 
-class ResolveResponseAndParameterDeclarations()(override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage {
-  val domainSelector: Selector = ResponseSelector || ParameterSelector || PayloadSelector || CallbackSelector
+class ResolveRamlCompatibleDeclarations()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+  val domainSelector: Selector = ResponseSelector || ParameterSelector || PayloadSelector || CallbackSelector || ExampleSelector
 
   override def resolve[T <: BaseUnit](model: T): T = {
     val result = model.transform(LinkSelector && domainSelector, transformation).asInstanceOf[T]
@@ -44,3 +43,4 @@ object ResponseSelector  extends MetaModelSelector(ApiContract, "Response")
 object ParameterSelector extends MetaModelSelector(ApiContract, "Parameter")
 object PayloadSelector   extends MetaModelSelector(ApiContract, "Payload")
 object CallbackSelector  extends MetaModelSelector(ApiContract, "Callback")
+object ExampleSelector   extends MetaModelSelector(ApiContract, "Example")
