@@ -7,6 +7,8 @@ import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 import amf.plugins.features.validation.Validations
 
+import scala.collection.mutable.ArrayBuffer
+
 trait ImportUtils {
   protected def validationId(validation: AMFValidation): String =
     validation.uri match {
@@ -96,7 +98,7 @@ object DefaultAMFValidations extends ImportUtils {
             case sh @ ValueType(Namespace.Shapes, _) =>
               findComplexShaclConstraint(sh) match {
                 case Some(specs) => specs
-                case _           => Seq(spec.copy(functionConstraint = Option(parseFunctionConstraint(s"$uri/prop", validation, sh))))
+                case _           => Seq(spec.copy(functionConstraint = Option(parseFunctionConstraint(/*s"$uri/prop", */validation, sh))))
               }
 
             case _ => Seq(spec)
@@ -148,11 +150,11 @@ object DefaultAMFValidations extends ImportUtils {
   }
 
   private def findComplexShaclConstraint(sh: ValueType): Option[Seq[ValidationSpecification]] = {
-    complexShaclCustomValidations.defintions.get(sh.name)
+    ComplexShaclCustomValidations.defintions.get(sh.name)
   }
 }
 
-object complexShaclCustomValidations {
+object ComplexShaclCustomValidations {
 
   val xmlWrappedScalar = List(
     ValidationSpecification(
