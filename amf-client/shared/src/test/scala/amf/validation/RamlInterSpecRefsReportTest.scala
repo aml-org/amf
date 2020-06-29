@@ -12,11 +12,11 @@ class RamlInterSpecRefsReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Raml refs json schema Oas API") {
-    validate("raml-json-schema/api.raml", None)
+    validate("raml-oas-jsonpointer/api.raml", None)
   }
 
   test("Raml 0.8 refs Raml 1.0 datatype fragment") {
-    validate("raml08-raml1-datatype/api.raml", None)
+    validate("raml08-raml1-datatype/api.raml", Some("raml08-raml1-datatype.report"))
   }
 
   override val hint: Hint = RamlYamlHint
