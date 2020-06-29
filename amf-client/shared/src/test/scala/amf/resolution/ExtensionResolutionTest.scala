@@ -14,30 +14,37 @@ class ExtensionResolutionTest extends ResolutionTest {
   val basePath = "amf-client/shared/src/test/resources/resolution/extension/"
 
   test("Extension with annotations to Raml") {
-    cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "annotations/")
+    cycle("input.raml", "output.raml", RamlYamlHint, target = Raml, directory = s"${basePath}annotations/")
   }
 
   test("Extension basic to Raml") {
-    cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "basic/")
+    cycle("input.raml", "output.raml", RamlYamlHint, target = Raml, directory = s"${basePath}basic/")
   }
 
   test("Extension with traits to Raml") {
-    cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "traits/")
+    cycle("input.raml", "output.raml", RamlYamlHint, target = Raml, directory = s"${basePath}traits/")
   }
 
-  test("Extension with traits to Amf") {
-    cycle("input.raml", "output.jsonld", RamlYamlHint, Amf, basePath + "traits/")
+  multiGoldenTest("Extension with traits to Amf", "output.%s") { config =>
+    cycle("input.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          directory = s"${basePath}traits/",
+          renderOptions = Some(config.renderOptions))
   }
 
   test("Extension chain to Raml") {
-    cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "chain/")
+    cycle("input.raml", "output.raml", RamlYamlHint, target = Raml, directory = s"${basePath}chain/")
   }
 
   test("Extension with example to Raml") {
-    cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "example/")
+    cycle("input.raml", "output.raml", RamlYamlHint, target = Raml, directory = s"${basePath}example/")
   }
-  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    val target = config.target
-    new AMFRenderer(unit, target, RenderOptions().withSourceMaps.withPrettyPrint, config.syntax).renderToString
+
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
+
+  override def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
+    new AMFRenderer(unit, config.target, options, config.syntax).renderToString
   }
 }
