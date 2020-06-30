@@ -66,4 +66,12 @@ case class Payload(override private[amf] val _internal: InternalPayload)
   def withExample(name: String): Example = _internal.withExample(Some(name))
 
   def withEncoding(name: String): Encoding = _internal.withEncoding(name)
+
+  @deprecated(message = "Use method 'encodings'", "4.1.3")
+  def encoding: ClientList[Encoding] = _internal.encodings.asClient
+  @deprecated(message = "Use method 'withEncodings'", "4.1.3")
+  def withEncoding(encoding: ClientList[Encoding]): this.type = {
+    _internal.withEncodings(encoding.asInternal)
+    this
+  }
 }
