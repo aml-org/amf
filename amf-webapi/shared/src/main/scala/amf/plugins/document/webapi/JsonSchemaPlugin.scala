@@ -7,8 +7,9 @@ import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document._
-import amf.core.model.domain.AnnotationGraphLoader
+import amf.core.model.domain.{Annotation, AnnotationGraphLoader}
 import amf.core.parser.{
+  Annotations,
   EmptyFutureDeclarations,
   ParsedReference,
   ParserContext,
@@ -34,11 +35,15 @@ import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
-import amf.validations.ParserSideValidations.{UnableToParseJsonSchema, MalformedJsonReference}
+import amf.validations.ParserSideValidations.{MalformedJsonReference, UnableToParseJsonSchema}
 import org.yaml.model._
 import org.yaml.parser.{JsonParser, YParser, YamlParser}
 
 import scala.concurrent.{ExecutionContext, Future}
+
+case class ParsedFromJsonSchema(url: String, fragment: String) extends Annotation {
+  def fullRef = url + fragment
+}
 
 class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   override val vendors: Seq[String] = Seq(JsonSchema.name)
@@ -193,6 +198,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
                         version = jsonSchemaContext.computeJsonSchemaVersion(rootAst))(jsonSchemaContext)
             .parse() match {
             case Some(shape) =>
+              shape.annotations += ParsedFromJsonSchema(url, hashFragment.getOrElse(""))
               shape
             case None =>
               jsonSchemaContext.eh.violation(UnableToParseJsonSchema,
