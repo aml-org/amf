@@ -135,8 +135,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
       scheme match {
         case ss: ParametrizedSecurityScheme =>
           ss.scheme.settings match {
-            case se: OAuth2Settings
-                if se.flows.headOption.exists(_.scopes.map(_.name.value()).contains(element.toString)) =>
+            case se: OAuth2Settings if isValidScope(se.flows.headOption, element.toString()) =>
               Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
             case _: OAuth2Settings =>
               val scope = Scope().adopted(flow.getOrCreate.id)
@@ -174,4 +173,8 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
 
     dynamicSettings(settings, "requestTokenUri", "authorizationUri", "tokenCredentialsUri", "signatures")
   }
+
+  private def isValidScope(maybeFlow: Option[OAuth2Flow], scope: String): Boolean =
+    maybeFlow.exists(flow => flow.scopes.isEmpty || flow.scopes.map(_.name.value()).contains(scope))
+
 }
