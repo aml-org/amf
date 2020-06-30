@@ -28,6 +28,8 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
+import amf.internal.environment.{Environment => InternalEnvironment}
+import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.Vocabularies
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
@@ -1799,7 +1801,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseFileAsync(file).asFuture
     } yield {
-      assert(unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+      assert(
+        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 
@@ -1822,7 +1825,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       unit     <- new RamlParser().parseStringAsync(api).asFuture
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
-      json     <- Future(resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
+      json <- Future(
+        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
     } yield {
       val golden = """{
                      |  "$schema": "http://json-schema.org/draft-04/schema#",
@@ -2297,6 +2301,45 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       custom     <- AMF.validate(unit, newProfile, AMFStyle).asFuture
     } yield {
       assert(report.conforms && custom.conforms)
+    }
+  }
+
+  test("Use client defined resource loaders when resolving a recursive unit") {
+    val input = """
+                   |openapi: "3.0.0"
+                   |info:
+                   |  version: 1.0.0
+                   |  title: api-2
+                   |paths: {}
+                   |components:
+                   |  schemas:
+                   |    Author:
+                   |      $ref: https://randomurl/
+    """.stripMargin
+
+    val custom = StringResourceLoader(
+      "https://randomurl/",
+      """
+        |{
+        |  "$schema": "http://json-schema.org/draft-07/schema#",
+        |  "title": "Person",
+        |  "type": "object",
+        |  "properties": {
+        |    "recursive": {
+        |      "$ref": "https://randomurl/"
+        |    }
+        |  }
+        |}
+        """.stripMargin
+    )
+
+    val env: Environment = Environment(InternalEnvironment().withLoaders(List(custom)))
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- new Oas30YamlParser(env).parseStringAsync(input).asFuture
+      report <- AMF.validate(unit, Oas30Profile, OASStyle).asFuture
+    } yield {
+      report.conforms should be(true)
     }
   }
 
