@@ -14,7 +14,11 @@ import amf.plugins.domain.webapi.metamodel.security.{
 }
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
-import amf.validations.ParserSideValidations.{InvalidSecurityRequirementObject, ScopeNamesMustBeEmpty}
+import amf.validations.ParserSideValidations.{
+  InvalidSecurityRequirementObject,
+  ScopeNamesMustBeEmpty,
+  UnknownScopeErrorSpecification
+}
 import org.yaml.model._
 
 case class OasLikeSecurityRequirementParser(node: YNode,
@@ -65,6 +69,23 @@ case class OasLikeSecurityRequirementParser(node: YNode,
             .add(VirtualObject())
             .setArray(OAuth2FlowModel.Scopes, scopes, Annotations(schemeEntry.value)))
 
+        scheme.scheme.settings match {
+          case se: OAuth2Settings =>
+            scopes.foreach(s => {
+              if (!isValidScope(se.flows.headOption, s)) {
+                ctx.eh.violation(
+                  UnknownScopeErrorSpecification,
+                  s.id,
+                  Some(OAuth2FlowModel.Scopes.value.toString),
+                  s"Scope '${s.name.value()}' not found in settings of declared secured by ${scheme.scheme.name.value()}.",
+                  s.position(),
+                  s.location()
+                )
+              }
+            })
+          case _ => //Nothing to do
+        }
+
         scheme.set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows)).add(Annotations(schemeEntry))
       } else if (declaration.`type`.is("openIdConnect")) {
         val settings = OpenIdConnectSettings().adopted(scheme.id)
@@ -79,6 +100,9 @@ case class OasLikeSecurityRequirementParser(node: YNode,
         ctx.eh.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
       }
     }
+
+    private def isValidScope(maybeFlow: Option[OAuth2Flow], scope: Scope): Boolean =
+      maybeFlow.exists(flow => flow.scopes.nonEmpty && flow.scopes.map(_.name.value()).contains(scope.name.value()))
 
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
       ctx.declarations.findSecurityScheme(name, SearchScope.All) match {
