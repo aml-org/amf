@@ -371,7 +371,7 @@
                     ],
                     "http://www.w3.org/ns/shacl#and": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/recursive",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/C/recursive",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#RecursiveShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -395,16 +395,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/recursive/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/C/recursive/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#declared-element": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/recursive/source-map/declared-element/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/C/recursive/source-map/declared-element/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/recursive"
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/C/recursive"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -416,10 +416,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/recursive/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/C/recursive/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/recursive"
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-with-child-recursion.yaml#/declarations/types/C/C/recursive"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -622,11 +622,6 @@
                 ]
               }
             ]
-          }
-        ],
-        "http://a.ml/vocabularies/document#recursive": [
-          {
-            "@value": true
           }
         ],
         "http://www.w3.org/ns/shacl#name": [

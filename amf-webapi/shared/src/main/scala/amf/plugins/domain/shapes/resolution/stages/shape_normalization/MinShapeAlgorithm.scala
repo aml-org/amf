@@ -362,8 +362,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
 
   def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
     val clonedProp = prop.cloneShape(Some(context.errorHandler)) // TODO this might not be working as expected
-    if (clonedProp.annotations.find(classOf[InheritanceProvenance]).isEmpty)
+    if (clonedProp.annotations.find(classOf[InheritanceProvenance]).isEmpty) {
       clonedProp.annotations += InheritanceProvenance(from.id)
+      clonedProp.id = clonedProp.id + "/inherited"
+    }
     clonedProp
   }
 

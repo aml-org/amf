@@ -43,7 +43,8 @@ object WellKnownAnnotation {
     "recursive",
     "pattern",
     "multipleOf",
-    "xone"
+    "xone",
+    "callbacks"
   )
 
   val oasKnownAnnotations = Set(

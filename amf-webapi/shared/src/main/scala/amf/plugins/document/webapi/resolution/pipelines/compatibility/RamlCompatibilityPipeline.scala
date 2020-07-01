@@ -12,6 +12,7 @@ class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends Resolutio
     new MandatoryDocumentationTitle(),
     new MandatoryAnnotationType(),
     new DefaultPayloadMediaType(),
+    new MandatoryCreativeWorkFields(),
     new DefaultToNumericDefaultResponse(),
     new MakeExamplesOptional(),
     new CapitalizeSchemes(),

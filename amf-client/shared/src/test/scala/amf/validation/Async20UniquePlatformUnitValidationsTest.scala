@@ -216,4 +216,14 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Empty binding validation report should have location") {
     validate("empty-binding.yaml", Some("empty-binding.report"), Async20Profile)
   }
+
+  test("Invalid query parameter defined in channel uri") {
+    validate("invalid-query-param-in-channel.yaml",
+             Some("invalid-query-param-in-channel.report"),
+             profile = Async20Profile)
+  }
+
+  test("Invalid fragment defined in channel uri") {
+    validate("invalid-fragment-in-uri.yaml", Some("invalid-fragment-in-uri.report"), profile = Async20Profile)
+  }
 }

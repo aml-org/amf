@@ -13,6 +13,8 @@ import amf.validations.ParserSideValidations.InvalidTypeExpression
 import org.yaml.model.{YMapEntry, YNode, YPart, YScalar}
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
+// TODO: needs simplification. Way to complicated to read for what it has to do.
+// TODO: when simplifying check id generation.
 class RamlTypeExpressionParser(adopt: Shape => Unit, var i: Int = 0, ast: Option[YPart] = None, checking: Boolean)(
     implicit ctx: WebApiContext) {
   var parsedShape: Option[Shape] = None
@@ -234,15 +236,19 @@ class RamlTypeExpressionParser(adopt: Shape => Unit, var i: Int = 0, ast: Option
   private def ensureAnyOfNamesAndIds(t: Shape): Unit = {
     t match {
       case u: UnionShape =>
-        val counter = new SimpleCounter
-        u.anyOf.foreach {
-          case array: ArrayShape =>
-            array.name.option() match {
-              case None => array.withName(s"array_${counter.next()}")
-              case _    => // Nothing
-            }
-            array.adopted(u.id)
-          case _ => // Nothing
+        val arrayCounter = new SimpleCounter
+        val idCounter    = new SimpleCounter
+        u.anyOf.foreach { x =>
+          x match {
+            case array: ArrayShape =>
+              array.name.option() match {
+                case None => array.withName(s"array_${arrayCounter.next()}")
+                case _    => // Nothing
+              }
+            case _ => // Nothing
+          }
+          // TODO: evaluate if after the simplification this is still necessary
+          if (!x.isLink) x.adopted(s"${u.id}_${idCounter.next()}")
         }
       case _ => // Nothing
     }

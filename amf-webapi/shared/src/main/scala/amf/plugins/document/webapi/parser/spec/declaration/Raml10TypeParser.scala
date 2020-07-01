@@ -388,7 +388,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
     map.key("description", ShapeModel.Description in shape)
 
     val counter = new IdCounter
-    map.key("enum", ShapeModel.Values in shape using DataNodeParser.parse(Some(shape.id), counter))
+    map.key("enum", ShapeModel.Values in shape using DataNodeParser.parse(Some(s"${shape.id}/list"), counter))
 
     map.key(
       "pattern",
@@ -671,7 +671,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
           refTuple match {
             case (text: String, Some(s)) =>
-              s.link(text, Annotations.valueNode(node))
+              s.link(text, Annotations(node))
                 .asInstanceOf[Shape]
                 .withName(name, nameAnnotations) // we setup the local reference in the name
                 .withId(shape.id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
@@ -773,6 +773,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       with CommonScalarParsingLogic {
 
     override lazy val dataNodeParser: YNode => DataNode = ScalarNodeParser(parent = Some(shape.id)).parse
+    override lazy val enumParser: YNode => DataNode     = CommonEnumParser(shape.id, enumType = EnumParsing.SCALAR_ENUM)
 
     override def parse(): ScalarShape = {
       super.parse()
@@ -1610,8 +1611,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     val shape: Shape
     val map: YMap
-    private val counter                        = new IdCounter
-    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), counter)
+    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), new IdCounter)
+    lazy val enumParser: YNode => DataNode     = CommonEnumParser(shape.id)
 
     def parse(): Shape = {
 
@@ -1635,7 +1636,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       )
 
-      map.key("enum", ShapeModel.Values in shape using dataNodeParser)
+      map.key("enum", ShapeModel.Values in shape using enumParser)
 
       map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)

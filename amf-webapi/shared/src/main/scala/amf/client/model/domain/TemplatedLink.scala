@@ -16,7 +16,7 @@ case class TemplatedLink(override private[amf] val _internal: InternalTemplatedL
 
   def name: StrField                          = _internal.name
   def description: StrField                   = _internal.description
-  def template: StrField                      = _internal.operationId
+  def template: StrField                      = _internal.template
   def operationId: StrField                   = _internal.operationId
   def operationRef: StrField                  = _internal.operationRef
   def mapping: ClientList[IriTemplateMapping] = _internal.mapping.asClient

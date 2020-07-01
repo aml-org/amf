@@ -2,6 +2,7 @@ package amf.tasks.tsvimport
 
 import java.io.{BufferedReader, File, FileReader}
 
+import amf.core.validation.SeverityLevels
 import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 
 import scala.collection.JavaConverters._
@@ -20,31 +21,25 @@ class ValidationsFile(validationsFile: File) {
     line.split("\t") match {
       case Array(uri,
                  message,
-                 spec: String,
-                 level,
                  owlClass,
                  owlProperty,
-                 shape,
                  target,
                  constraint,
                  value,
                  ramlErrorMessage,
                  openAPIErrorMessage) =>
         Some(
-          AMFValidation(
-            nonNullString(uri.trim),
-            nonNullString(message.trim),
-            spec.trim,
-            level.trim,
-            nonNullString(owlClass.trim),
-            nonNullString(owlProperty.trim),
-            shape.trim,
+          AMFValidation.fromStrings(
+            uri.trim,
+            message.trim,
+            owlClass.trim,
+            owlProperty.trim,
             target.trim,
             constraint.trim,
             value.trim, // this might not be a URI, but trying to expand it is still safe
             ramlErrorMessage.trim,
             openAPIErrorMessage.trim,
-            "Violation"
+            SeverityLevels.VIOLATION
           ))
       case _ => None
     }
@@ -67,6 +62,4 @@ class ValidationsFile(validationsFile: File) {
       .asScala
       .drop(1)
       .toList
-
-  protected def nonNullString(s: String): Option[String] = if (s == "") { None } else { Some(s.trim) }
 }

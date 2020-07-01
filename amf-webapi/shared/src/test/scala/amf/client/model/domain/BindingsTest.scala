@@ -104,6 +104,12 @@ class BindingsTest extends FunSuite with Matchers {
     binding.definition shouldBe node
   }
 
+  test("test EmptyBinding") {
+    val binding = new EmptyBinding()
+      .withType(s)
+    binding.`type`.value() shouldBe s
+  }
+
   test("test HttpMessageBinding") {
     val binding = new HttpMessageBinding()
       .withBindingVersion(s)

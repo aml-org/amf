@@ -1,0 +1,49 @@
+#%RAML 1.0
+title: recursive shapes in when merging traits
+version: 1.0
+
+types:
+
+  Extension:
+    properties:
+      test: boolean | Conformance
+
+  Conformance:
+    type: object
+    properties:
+      telecom?: Extension
+
+
+  DirectRecursionCompanion:
+    properties:
+      test: DirectRecursion
+
+  DirectRecursion:
+    properties:
+      telecom?: DirectRecursionCompanion
+
+traits:
+  conformance:
+    responses:
+      200:
+        body:
+          application/json:
+            type: <<typeName>>
+
+/metadata:
+  get:
+    is: [conformance: {typeName: Conformance}]
+    responses:
+      200:
+        body:
+          application/json:
+            type: Conformance
+
+/direct-recursion:
+  get:
+    is: [conformance: {typeName: DirectRecursion}]
+    responses:
+      200:
+        body:
+          application/json:
+            type: DirectRecursion

@@ -15,22 +15,25 @@ import org.yaml.model.{YMap, YNode}
 /**
   * Web Api internal model
   */
-case class WebApi(fields: Fields, annotations: Annotations) extends NamedDomainElement with ServerContainer {
+case class WebApi(fields: Fields, annotations: Annotations)
+    extends NamedDomainElement
+    with ServerContainer
+    with DocumentedElement {
 
-  def description: StrField              = fields.field(Description)
-  def identifier: StrField               = fields.field(Identifier)
-  def schemes: Seq[StrField]             = fields.field(Schemes)
-  def accepts: Seq[StrField]             = fields.field(Accepts)
-  def contentType: Seq[StrField]         = fields.field(ContentType)
-  def version: StrField                  = fields.field(Version)
-  def termsOfService: StrField           = fields.field(TermsOfService)
-  def provider: Organization             = fields.field(Provider)
-  def license: License                   = fields.field(WebApiLicense)
-  def documentations: Seq[CreativeWork]  = fields.field(Documentations)
-  def endPoints: Seq[EndPoint]           = fields.field(EndPoints)
-  def servers: Seq[Server]               = fields.field(Servers)
-  def security: Seq[SecurityRequirement] = fields.field(Security)
-  def tags: Seq[Tag]                     = fields(Tags)
+  def description: StrField                      = fields.field(Description)
+  def identifier: StrField                       = fields.field(Identifier)
+  def schemes: Seq[StrField]                     = fields.field(Schemes)
+  def accepts: Seq[StrField]                     = fields.field(Accepts)
+  def contentType: Seq[StrField]                 = fields.field(ContentType)
+  def version: StrField                          = fields.field(Version)
+  def termsOfService: StrField                   = fields.field(TermsOfService)
+  def provider: Organization                     = fields.field(Provider)
+  def license: License                           = fields.field(WebApiLicense)
+  override def documentations: Seq[CreativeWork] = fields.field(Documentations)
+  def endPoints: Seq[EndPoint]                   = fields.field(EndPoints)
+  def servers: Seq[Server]                       = fields.field(Servers)
+  def security: Seq[SecurityRequirement]         = fields.field(Security)
+  def tags: Seq[Tag]                             = fields(Tags)
 
   def withDescription(description: String): this.type                  = set(Description, description)
   def withIdentifier(identifier: String): this.type                    = set(Identifier, identifier)

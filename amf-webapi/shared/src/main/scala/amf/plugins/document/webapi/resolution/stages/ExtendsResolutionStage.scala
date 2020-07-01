@@ -301,7 +301,8 @@ class ExtendsResolutionStage(
                 t.id,
                 ExtendsHelper.findUnitLocationOfElement(t.id, context.model),
                 keepEditingInfo,
-                Some(apiContext)
+                Some(apiContext),
+                errorHandler
               )
 
               val children = op.traits.flatMap(resolve(_, context, apiContext, subTree))

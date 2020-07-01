@@ -388,7 +388,6 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
             parser.parse() match {
               case Some(shape) =>
                 if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
-                if (isDirectTypeAlias(shape)) shape.annotations += TypeAlias()
                 ctx.declarations += shape.add(DeclaredElement())
               case None => ctx.eh.violation(UnableToParseShape, parent, s"Error parsing shape '$entry'", entry)
             }
@@ -398,10 +397,6 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
         case t          => ctx.eh.violation(InvalidTypesType, parent, s"Invalid type $t for 'types' node.", e.value)
       }
     }
-  }
-
-  private def isDirectTypeAlias(shape: Shape) = {
-    shape.isInstanceOf[AnyShape] && shape.isLink
   }
 
   /** Get types or schemas facet. If both are available, default to types facet and throw a validation error. */

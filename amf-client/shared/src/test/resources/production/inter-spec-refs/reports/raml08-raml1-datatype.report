@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/production/inter-spec-refs/raml08-raml1-datatype/api.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#invalid-cross-spec
+  Message: Cannot reference fragments of another spec
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(6,5)-(6,27)]))
+  Location: file://amf-client/shared/src/test/resources/production/inter-spec-refs/raml08-raml1-datatype/api.raml

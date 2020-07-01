@@ -7,83 +7,19 @@ import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 import amf.plugins.features.validation.Validations
 
-/**
-  * Created by antoniogarrote on 17/07/2017.
-  */
-//case class AMFValidation(uri: Option[String],
-//                         message: Option[String],
-//                         spec: String,
-//                         level: String,
-//                         owlClass: Option[String],
-//                         owlProperty: Option[String],
-//                         shape: String,
-//                         target: String,
-//                         constraint: String,
-//                         value: String,
-//                         ramlErrorMessage: String,
-//                         openApiErrorMessage: String,
-//                         severity: String)
-//
-//object AMFValidation {
-//
-//  def fromLine(line: String): Option[AMFValidation] =
-//    line.split("\t") match {
-//      case Array(uri,
-//                 message,
-//                 spec: String,
-//                 level,
-//                 owlClass,
-//                 owlProperty,
-//                 shape,
-//                 target,
-//                 constraint,
-//                 value,
-//                 ramlError,
-//                 openApiError,
-//                 severity) =>
-//        val parsedValue =
-//          if (constraint.endsWith("pattern")) value
-//          else Namespace.uri(value).iri() // this might not be a URI, but trying to expand it is still safe
-//        Some(
-//          AMFValidation(
-//            nonNullString(Namespace.uri(uri).iri()),
-//            nonNullString(message),
-//            spec,
-//            level,
-//            nonNullString(Namespace.uri(owlClass).iri()),
-//            nonNullString(Namespace.uri(owlProperty).iri()),
-//            shape,
-//            Namespace.uri(target).iri(),
-//            Namespace.uri(constraint).iri(),
-//            parsedValue,
-//            ramlError,
-//            openApiError,
-//            severity
-//          ))
-//      case _ =>
-//        None
-//    }
-//
-//  protected def nonNullString(s: String): Option[String] = if (s == "") { None } else { Some(s) }
-//
-//}
-
 trait ImportUtils {
-
-  // def validationNS(postfix: String) = (Namespace.AmfParser + postfix).iri()
-
   protected def validationId(validation: AMFValidation): String =
     validation.uri match {
       case Some(s) => Namespace.expand(s.trim).iri()
       case None =>
         val classPostfix    = postfix(validation.owlClass, "domain")
         val propertyPostfix = postfix(validation.owlProperty, "property")
-        val constraint      = postfix(Some(validation.constraint), "constraint")
+        val constraint      = postfix(validation.constraint, "constraint")
         Namespace.AmfParser.base + classPostfix + "-" + propertyPostfix.trim + "-" + constraint.trim
     }
 
-  protected def postfix(s: Option[String], default: String): String = s match {
-    case Some(p) =>
+  protected def postfix(s: String, default: String): String = s match {
+    case p: String if p.nonEmpty =>
       if (p.indexOf("#") > -1) {
         p.split("#")(1).trim
       } else if (p.indexOf("/") == -1 && p.indexOf(":") != -1) {
@@ -91,17 +27,15 @@ trait ImportUtils {
       } else {
         p.split("/").last.trim
       }
-    case None => default
+    case _ => default
   }
 
 }
 
 object DefaultAMFValidations extends ImportUtils {
 
-  private def validations(): Map[ProfileName, Seq[AMFValidation]] = AMFRawValidations.map
-
-  def profiles(): List[ValidationProfile] = {
-    val list = validations().map {
+  def profiles(): List[ValidationProfile] =
+    AMFRawValidations.map.map {
       case (profile, validationsInGroup) =>
         val violationValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
         val infoValidations      = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
@@ -134,8 +68,6 @@ object DefaultAMFValidations extends ImportUtils {
           validations = infoValidations ++ warningValidations ++ violationValidations ++ Validations.validations
         )
     }.toList
-    list
-  }
 
   private def parseValidation(validations: Seq[AMFValidation]): Seq[ValidationSpecification] = {
     validations.map { validation =>
@@ -149,7 +81,7 @@ object DefaultAMFValidations extends ImportUtils {
         message = validation.message.getOrElse(""),
         ramlMessage = Some(validation.ramlErrorMessage),
         oasMessage = Some(validation.openApiErrorMessage),
-        targetClass = Seq(validation.owlClass.getOrElse((Namespace.Document + "DomainElement").iri()))
+        targetClass = Seq(validation.owlClass)
       )
 
       Namespace.expand(validation.target.trim).iri() match {
@@ -162,13 +94,13 @@ object DefaultAMFValidations extends ImportUtils {
             case sh @ ValueType(Namespace.Shacl, _) =>
               spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation, sh)))
             case sh @ ValueType(Namespace.Shapes, _) =>
-              spec.copy(functionConstraint = Option(parseFunctionConstraint(s"$uri/prop", validation, sh)))
+              spec.copy(functionConstraint = Option(parseFunctionConstraint(validation, sh)))
             case _ => spec
           }
 
-        case "http://www.w3.org/ns/shacl#targetObjectsOf" if validation.owlProperty.isDefined =>
+        case "http://www.w3.org/ns/shacl#targetObjectsOf" =>
           spec.copy(
-            targetObject = Seq(validation.owlProperty.get),
+            targetObject = Seq(validation.owlProperty),
             nodeConstraints = Seq(NodeConstraint(validation.constraint, validation.value))
           )
         case _ => throw new Exception(s"Unknown validation target ${validation.target}")
@@ -180,7 +112,7 @@ object DefaultAMFValidations extends ImportUtils {
                                       validation: AMFValidation,
                                       sh: ValueType): PropertyConstraint = {
     val constraint = PropertyConstraint(
-      ramlPropertyId = validation.owlProperty.get,
+      ramlPropertyId = validation.owlProperty,
       name = constraintUri,
       message = validation.message
     )
@@ -202,9 +134,7 @@ object DefaultAMFValidations extends ImportUtils {
     }
   }
 
-  private def parseFunctionConstraint(constraintUri: String,
-                                      validation: AMFValidation,
-                                      sh: ValueType): FunctionConstraint = {
+  private def parseFunctionConstraint(validation: AMFValidation, sh: ValueType): FunctionConstraint = {
     FunctionConstraint(
       message = validation.message,
       functionName = None, // i have to ignore the function name so it will be taken from the generated js library

@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes",
         "@type": [
           "http://www.w3.org/ns/ldp#BasicContainer",
           "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode",
@@ -24,7 +24,7 @@
         ],
         "http://www.w3.org/ns/ldp#contains": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/container",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/container",
             "@type": [
               "http://a.ml/vocabularies/tests#FirstLevelNode",
               "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode",
@@ -33,7 +33,7 @@
             ],
             "http://a.ml/vocabularies/tests#nextLevel": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/container/second",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/container/second",
                 "@type": [
                   "http://mulesoft.com/vocabularies/amf-learning#Person",
                   "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode",
@@ -47,16 +47,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/container/second/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/container/second/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/container/second/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/container/second/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/container/second"
+                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/container/second"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -66,7 +66,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/container/second/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/container/second/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://mulesoft.com/vocabularies/amf-learning#name"
@@ -85,16 +85,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/container/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/container/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/container/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/container/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/container"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/container"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -104,7 +104,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/container/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/container/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/tests#nextLevel"
@@ -123,16 +123,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/"
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -142,7 +142,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance1.raml#/encodes/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/ldp#contains"

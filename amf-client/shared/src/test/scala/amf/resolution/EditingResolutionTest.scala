@@ -272,7 +272,7 @@ class EditingResolutionTest extends ResolutionTest {
   test("Recursion in inheritance with resource type - Array") {
     cycle(
       "recursion-inheritance-array.raml",
-      "recursion-inheritance-array.jsonld",
+      "recursion-inheritance-array.resolved.raml",
       RamlYamlHint,
       Raml08,
       validationsPath
@@ -505,6 +505,17 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  test("raml with declared element link of link of link in api") {
+    cycle(
+      "link-of-link/middle-link-in-api/link-of-link-in-api.raml",
+      "link-of-link/middle-link-in-api/link-of-link-in-api.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
   // JSON-LD is serialized differently every time
   ignore("KG Service API resolution") {
     cycle(
@@ -592,6 +603,21 @@ class EditingResolutionTest extends ResolutionTest {
           Amf,
           directory = resolutionPath,
           transformWith = Some(Oas20))
+  }
+
+  test("Resolve links defined in rt and traits before merging") {
+    cycle("trait-with-link.raml", "trait-with-link.jsonld", RamlYamlHint, Amf, directory = resolutionPath)
+  }
+
+  test("Response with reference to declaration") {
+    cycle(
+      "reference-response-declaration.json",
+      "reference-response-declaration-resolved.json",
+      OasJsonHint,
+      Oas30,
+      directory = cyclePath + "oas3/",
+      transformWith = Some(Oas30)
+    )
   }
 
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {

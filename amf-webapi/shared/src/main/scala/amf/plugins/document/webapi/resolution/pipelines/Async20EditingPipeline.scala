@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.shapes.resolution.stages.{ShapeNormalizationStage, TypeAliasTransformationStage}
+import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages._
 import amf.plugins.domain.webapi.resolution.stages.async.{
   AsyncContentTypeResolutionStage,
@@ -21,7 +21,6 @@ class Async20EditingPipeline(override val eh: ErrorHandler, urlShortening: Boole
     new OpenApiParametersNormalizationStage()
 
   override val steps: Seq[ResolutionStage] = Seq(
-    new TypeAliasTransformationStage(),
     references,
     new ShapeNormalizationStage(profileName, keepEditingInfo = true),
     new JsonMergePatchStage(),

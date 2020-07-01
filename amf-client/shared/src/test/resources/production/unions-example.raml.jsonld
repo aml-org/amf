@@ -1402,7 +1402,7 @@
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/x-union/union/schema/scalar/scalar-expression-0",
+                                "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/x-union/union/schema/union/default-union_0/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1417,7 +1417,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/x-union/union/schema/scalar/scalar-expression-2",
+                                "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/x-union/union/schema/union/default-union_1/scalar/default-scalar",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -2486,7 +2486,7 @@
                                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_1",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_1",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -2509,16 +2509,16 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_1/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_1/source-map/lexical/element_0",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_1/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_1"
+                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2534,7 +2534,7 @@
                                 ],
                                 "http://www.w3.org/2000/01/rdf-schema#_2": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_2",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_2",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -2557,16 +2557,16 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_2/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_2/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_2/source-map/lexical/element_0",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_2/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_2"
+                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_2"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2582,7 +2582,7 @@
                                 ],
                                 "http://www.w3.org/2000/01/rdf-schema#_3": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_3",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_3",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -2605,16 +2605,16 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_3/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_3/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_3/source-map/lexical/element_0",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_3/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/scalar_3"
+                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/parameter/enumable/scalar/schema/enum/scalar_3"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2874,7 +2874,7 @@
                                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_1",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_1",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -2897,16 +2897,16 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_1/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_1/source-map/lexical/element_0",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_1/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_1"
+                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2922,7 +2922,7 @@
                                 ],
                                 "http://www.w3.org/2000/01/rdf-schema#_2": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_2",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_2",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -2945,16 +2945,16 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_2/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_2/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_2/source-map/lexical/element_0",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_2/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_2"
+                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_2"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2970,7 +2970,7 @@
                                 ],
                                 "http://www.w3.org/2000/01/rdf-schema#_3": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_3",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_3",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -2993,16 +2993,16 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_3/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_3/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_3/source-map/lexical/element_0",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_3/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/scalar_3"
+                                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/parameter/fileType/scalar/schema/enum/scalar_3"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [

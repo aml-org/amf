@@ -89,4 +89,8 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Nested yaml refs") {
     validate("nested-yaml-refs/api.yaml", None, Oas30Profile)
   }
+
+  test("Invalid status code without quotes") {
+    validate("invalid-status-code.yaml", Some("invalid-status-code.report"), Oas30Profile)
+  }
 }

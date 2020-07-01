@@ -10,10 +10,10 @@ import amf.core.vocabulary.Namespace.ApiContract
 import amf.plugins.domain.webapi.models.{Response, Payload}
 
 class ResolveResponseAndParameterDeclarations()(override implicit val errorHandler: ErrorHandler)
-  extends ResolutionStage {
-  val domainSelector: Selector = ResponseSelector || ParameterSelector || PayloadSelector
+    extends ResolutionStage {
+  val domainSelector: Selector = ResponseSelector || ParameterSelector || PayloadSelector || CallbackSelector
 
-  override def resolve[T <: BaseUnit](model:  T): T = {
+  override def resolve[T <: BaseUnit](model: T): T = {
     val result = model.transform(LinkSelector && domainSelector, transformation).asInstanceOf[T]
     model match {
       case d: Document =>
@@ -40,6 +40,7 @@ class ResolveResponseAndParameterDeclarations()(override implicit val errorHandl
 
 }
 
-object ResponseSelector extends MetaModelSelector(ApiContract, "Response")
+object ResponseSelector  extends MetaModelSelector(ApiContract, "Response")
 object ParameterSelector extends MetaModelSelector(ApiContract, "Parameter")
-object PayloadSelector extends MetaModelSelector(ApiContract, "Payload")
+object PayloadSelector   extends MetaModelSelector(ApiContract, "Payload")
+object CallbackSelector  extends MetaModelSelector(ApiContract, "Callback")

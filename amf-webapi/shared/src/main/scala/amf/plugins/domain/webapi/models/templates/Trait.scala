@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models.templates
 
+import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.metamodel.Obj
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
@@ -21,21 +22,26 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
   override def meta: Obj = TraitModel
 
   /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
-  def asOperation[T <: BaseUnit](unit: T, profile: ProfileName = RamlProfile): Operation = {
+  def asOperation[T <: BaseUnit](unit: T,
+                                 profile: ProfileName = RamlProfile,
+                                 errorHandler: ErrorHandler = UnhandledErrorHandler): Operation = {
     linkTarget match {
       case Some(_) =>
-        effectiveLinkTarget().asInstanceOf[Trait].asOperation(unit, profile)
+        effectiveLinkTarget().asInstanceOf[Trait].asOperation(unit, profile, errorHandler)
       case _ =>
         Option(dataNode)
           .map(
-            ExtendsHelper.asOperation(profile,
-                                      _,
-                                      unit,
-                                      name.option().getOrElse(""),
-                                      annotations,
-                                      id,
-                                      ExtendsHelper.findUnitLocationOfElement(id, unit),
-                                      keepEditingInfo = false))
+            ExtendsHelper.asOperation(
+              profile,
+              _,
+              unit,
+              name.option().getOrElse(""),
+              annotations,
+              id,
+              ExtendsHelper.findUnitLocationOfElement(id, unit),
+              keepEditingInfo = false,
+              errorHandler = errorHandler
+            ))
           .orNull // TODO should we return null or an empty operation?
     }
   }
@@ -43,14 +49,16 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
   def entryAsOperation[T <: BaseUnit](unit: T,
                                       entry: YMapEntry,
                                       annotations: Annotations,
-                                      profile: ProfileName = RamlProfile): Operation = {
+                                      profile: ProfileName = RamlProfile,
+                                      errorHandler: ErrorHandler = UnhandledErrorHandler): Operation = {
     ExtendsHelper.entryAsOperation(profile,
                                    unit,
                                    name.option().getOrElse(""),
                                    id,
                                    keepEditingInfo = false,
                                    entry,
-                                   annotations = annotations)
+                                   annotations = annotations,
+                                   errorHandler = errorHandler)
   }
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */

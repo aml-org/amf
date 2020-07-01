@@ -22,7 +22,12 @@ class CleanRepeatedOperationIds()(override implicit val errorHandler: ErrorHandl
     }
 
   private def operationsWithRepeatedIds(operations: Seq[Operation]): Seq[Seq[Operation]] =
-    operations.groupBy(_.name.value()).filter(isRepeated).values.toSeq
+    operations
+      .filter(x => x.name.option().isDefined)
+      .groupBy(_.name.value())
+      .filter(isRepeated)
+      .values
+      .toSeq
 
   private def isRepeated(tuple: (String, Seq[Operation])): Boolean = tuple._2.size > 1
 

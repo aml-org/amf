@@ -1,12 +1,10 @@
 #%RAML 0.8
-
 title: RAML 0.8 Headers
 version: v1
 baseUri: https://www.example.com/api/
-
 /headers/array:
-    get:
-        headers:
-          arrayOfFileHeader:
-            type: file
-            repeat: true
+  get:
+    headers:
+      arrayOfFileHeader:
+        type: file
+        repeat: true

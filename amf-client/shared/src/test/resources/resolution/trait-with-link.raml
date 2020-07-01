@@ -1,0 +1,48 @@
+#%RAML 1.0
+title: An Api
+/traitEndpoint:
+  get:
+    is: [hasResponseCollection: { typeName: trait-type }]
+    description: Get a list of all available types within the collection types.
+    responses:
+      200:
+        body:
+          application/json:
+            type: trait-type
+
+/rtEndpoint:
+  type: {definingResponseType : { typeName: rt-type }}
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: rt-type
+
+types:
+  trait-type:
+    properties:
+      something: string
+
+  rt-type:
+    properties:
+      something: string
+
+
+traits:
+  hasResponseCollection:
+    responses:
+      200:
+        body:
+          application/json:
+            type: <<typeName>>
+
+resourceTypes:
+  definingResponseType:
+    get:
+      description: Get a list of all available types within the collection types.
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<typeName>>

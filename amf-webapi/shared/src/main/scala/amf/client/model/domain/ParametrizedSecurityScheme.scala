@@ -17,12 +17,18 @@ case class ParametrizedSecurityScheme(override private[amf] val _internal: Inter
   def this() = this(InternalParametrizedSecurityScheme())
 
   def name: StrField         = _internal.name
+  def description: StrField  = _internal.description
   def scheme: SecurityScheme = _internal.scheme
   def settings: Settings     = _internal.settings
 
   /** Set name property of this ParametrizedSecurityScheme. */
   def withName(name: String): this.type = {
     _internal.withName(name)
+    this
+  }
+
+  def withDescription(description: String): this.type = {
+    _internal.withDescription(description)
     this
   }
 

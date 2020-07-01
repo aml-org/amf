@@ -9,6 +9,6 @@ Level: Violation
   Message: 'required' field has to be an array
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/required/schema4-boolean.raml#/web-api/end-points/%2Fproducts/put/request/application%2Fjson/application%2Fjson
-  Property:
+  Property: 
   Position: Some(LexicalInformation([(17,17)-(17,33)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/required/schema4-boolean.raml
