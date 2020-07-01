@@ -12,14 +12,14 @@ class ResolveLinksWithNonDeclaredTargets()(override implicit val errorHandler: E
 
   override def selector[T <: BaseUnit](l: Linkable, model: T): Boolean = {
     model match {
-      case doc: Document if isExternalJsonSchema(l) =>
+      case doc: Document if isJsonInnerSchema(l) =>
         val targetId = l.effectiveLinkTarget().id
         !doc.declares.exists(_.id == targetId)
       case _ => false
     }
   }
 
-  private def isExternalJsonSchema(linkable: Linkable): Boolean = {
+  private def isJsonInnerSchema(linkable: Linkable): Boolean = {
     linkable.effectiveLinkTarget().annotations.find(classOf[ParsedFromJsonSchema]).exists { annon =>
       annon.fragment.nonEmpty
     }
