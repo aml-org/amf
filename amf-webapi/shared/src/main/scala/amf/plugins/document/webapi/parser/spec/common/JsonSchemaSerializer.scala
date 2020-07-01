@@ -47,7 +47,7 @@ trait JsonSchemaSerializer extends PlatformSecrets {
 
     AMFSerializer.init()
     val originalId = element.id
-    val document   = Document().withDeclares(Seq(fixNameIfNeeded(element)) ++ element.closureShapes)
+    val document   = Document().withDeclares(Seq(fixNameIfNeeded(element)))
     val jsonSchema = RuntimeSerializer(document, "application/schema+json", JsonSchema.name, shapeOptions = options)
     element.withId(originalId)
     element.annotations.reject(a =>
@@ -77,6 +77,7 @@ case class JsonSchemaEntry(version: JSONSchemaVersion) extends EntryEmitter {
   override def position(): Position = Position.ZERO
 }
 
+// TODO improve JsonSchemaEmitter interface
 case class JsonSchemaEmitter(root: Shape,
                              declarations: Seq[DomainElement],
                              ordering: SpecOrdering = SpecOrdering.Lexical,

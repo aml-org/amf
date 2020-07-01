@@ -68,7 +68,6 @@ trait ShapeHelpers { this: Shape =>
       if (cloned.isInstanceOf[NodeShape]) {
         cloned.add(ExplicitField())
       }
-      cloned.closureShapes ++= closureShapes
       if (cloneExamples) cloneAllExamples(cloned, this)
       cloned.asInstanceOf[this.type]
     }
