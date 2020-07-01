@@ -1,7 +1,7 @@
 package amf.validation
 
+import amf.Oas20Profile
 import amf.core.remote.{Hint, OasYamlHint}
-import amf.{Oas20Profile, Oas30Profile}
 import org.scalatest.Matchers
 
 class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
@@ -43,5 +43,9 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
 
   test("Nested yaml refs") {
     validate("nested-yaml-refs/api.yaml", None, Oas20Profile)
+  }
+
+  test("SecuritySchema scope in implemetation that is not defined in declaration") {
+    validate("security-schema-scopes.yaml", Some("security-schema-scopes.report"), Oas20Profile)
   }
 }
