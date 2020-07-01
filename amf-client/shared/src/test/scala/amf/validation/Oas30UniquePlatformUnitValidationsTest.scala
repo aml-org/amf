@@ -12,12 +12,6 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
     validate("paths-property.json", Some("paths-property.report"), Oas30Profile)
   }
 
-  test("Oas path uri is invalid") {
-    validate("invalid-endpoint-path-still-parses.json",
-             Some("invalid-endpoint-path-still-parses.report"),
-             Oas20Profile)
-  }
-
   test("Invalid facets in oauth2 security scheme") {
     validate("invalid-oauth-facets.json", Some("invalid-oauth-facets.report"), Oas30Profile)
   }

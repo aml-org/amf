@@ -9,8 +9,14 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/oas2/"
   override val hint: Hint          = OasYamlHint
 
-  test("Invalid security scheme type in Oas 20") {
-    validate("invalid-security-scheme-type.json", Some("invalid-security-scheme-type.report"), Oas20Profile)
+  test("Oas path uri is invalid") {
+    validate("invalid-endpoint-path-still-parses.json",
+             Some("invalid-endpoint-path-still-parses.report"),
+             Oas20Profile)
+  }
+
+  test("Invalid security scheme type") {
+    validate("security/invalid-security-scheme-type.json", Some("invalid-security-scheme-type.report"), Oas20Profile)
   }
 
   test("invalid ref inside paths object") {
