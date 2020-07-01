@@ -13,14 +13,13 @@ import scala.scalajs.js
 
 class JsOutputBuilderTest extends DocBuilderTest {
 
-  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
     val builder: JsOutputBuilder = new JsOutputBuilder()
-    val options                  = RenderOptions().withSourceMaps.withPrettyPrint.withAmfJsonLdSerialization
     val renderer                 = new AMFSerializer(unit, "application/ld+json", "AMF Graph", options)
     renderer
       .renderToBuilder(builder)
       .map(_ => {
-        val parser: JsonParser = JsonParser(js.JSON.stringify(builder.result))
+        val parser: JsonParser  = JsonParser(js.JSON.stringify(builder.result))
         val document: YDocument = parser.documents()(0)
         JsonRender.render(document)
       })

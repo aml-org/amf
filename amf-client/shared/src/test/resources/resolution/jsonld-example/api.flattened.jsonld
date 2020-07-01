@@ -1,0 +1,291 @@
+{
+  "@graph": [
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Jorge API",
+      "apiContract:server": [
+        {
+          "@id": "#13"
+        }
+      ],
+      "core:version": "v1",
+      "apiContract:endpoint": [
+        {
+          "@id": "#4"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#3": "RAML 1.0"
+        },
+        "lexical": {
+          "core:version": "[(4,0)-(5,0)]",
+          "core:name": "[(3,0)-(4,0)]",
+          "#3": "[(2,0)-(11,51)]",
+          "apiContract:server": "[(2,0)-(3,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#13",
+      "@type": [
+        "apiContract:Server",
+        "doc:DomainElement"
+      ],
+      "core:urlTemplate": "https://jorge.uri.com",
+      "smaps": {
+        "lexical": {
+          "core:urlTemplate": "[(2,0)-(3,0)]"
+        },
+        "synthesized-field": {
+          "#13": "true"
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/jorgeEndpoint",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#5"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#4": "[(5,0)-(11,51)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#6"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(7,4)-(11,51)]",
+          "#5": "[(6,2)-(11,51)]"
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "apiContract:payload": [
+        {
+          "@id": "#7"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:payload": "[(9,8)-(11,51)]",
+          "#6": "[(8,6)-(11,51)]"
+        }
+      }
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#8"
+      },
+      "smaps": {
+        "lexical": {
+          "#7": "[(10,10)-(11,51)]"
+        }
+      }
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "schema",
+      "apiContract:examples": [
+        {
+          "@id": "#9"
+        }
+      ],
+      "smaps": {
+        "auto-generated-name": {
+          "#8": ""
+        },
+        "lexical": {
+          "apiContract:examples": "[(11,12)-(11,51)]",
+          "#8": "[(10,10)-(11,51)]"
+        }
+      }
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "apiContract:Example",
+        "doc:DomainElement"
+      ],
+      "doc:strict": true,
+      "doc:structuredValue": {
+        "@id": "#10"
+      },
+      "doc:reference-id": [
+        {
+          "@id": "#2"
+        }
+      ],
+      "doc:location": "file://amf-client/shared/src/test/resources/resolution/jsonld-example/examples/dialect.json",
+      "smaps": {
+        "synthesized-field": {
+          "doc:strict": "true"
+        },
+        "lexical": {
+          "doc:structuredValue": "[(11,21)-(11,51)]",
+          "#9": "[(11,21)-(11,51)]"
+        },
+        "tracked-element": {
+          "#9": "amf://id#7"
+        }
+      }
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "#11"
+        }
+      ],
+      "core:name": "array_1",
+      "smaps": {
+        "parsed-json-example": {
+          "#10": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
+        },
+        "lexical": {
+          "#10": "[(1,0)-(5,1)]"
+        }
+      }
+    },
+    {
+      "@id": "#11",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:%40id": {
+        "@id": "#12"
+      },
+      "core:name": "object_2",
+      "smaps": {
+        "lexical": {
+          "data:%40id": "[(3,4)-(3,73)]",
+          "#11": "[(2,2)-(4,3)]"
+        }
+      }
+    },
+    {
+      "@id": "#12",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_3",
+      "smaps": {
+        "lexical": {
+          "#12": "[(3,11)-(3,73)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:references": [
+        {
+          "@id": "#1"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#3"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "doc:ExternalFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#2"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": false
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "doc:ExternalDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:raw": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n",
+      "core:mediaType": "application/json"
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  }
+}

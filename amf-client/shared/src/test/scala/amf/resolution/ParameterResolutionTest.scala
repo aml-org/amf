@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.core.emitter.RenderOptions
 import amf.core.remote._
 import amf.remote._
 
@@ -7,15 +8,26 @@ class ParameterResolutionTest extends ResolutionTest {
 
   override val basePath = "amf-client/shared/src/test/resources/resolution/"
 
-  test("resolution AMF") {
-    cycle("parameters.raml", "parameters.raml.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("resolution AMF", "parameters.raml.%s") { config =>
+    cycle("parameters.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  test("resolution OpenAPI") {
-    cycle("parameters.json", "parameters.json.jsonld", OasJsonHint, Amf, transformWith = Some(Oas))
+  multiGoldenTest("resolution OpenAPI", "parameters.json.%s") { config =>
+    cycle("parameters.json",
+          config.golden,
+          OasJsonHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions),
+          transformWith = Some(Oas))
   }
 
-  test("nested parameters AMF") {
-    cycle("nested-parameters.raml", "nested-parameters.raml.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("nested parameters AMF", "nested-parameters.raml.%s") { config =>
+    cycle("nested-parameters.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
+
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
 }

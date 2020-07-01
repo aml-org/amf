@@ -23,16 +23,16 @@ class ReferencesCycleTest extends FunSuiteCycleTests with ListAssertions with Co
     "Simple library oas"                          -> ("libraries.json", OasJsonHint)                 -> ("lib/lib.json", Oas),
     "Library raml to oas"                         -> ("libraries.raml", RamlYamlHint)                -> ("lib/lib.raml.json", Oas),
     "Library oas to raml"                         -> ("libraries.json", OasJsonHint)                 -> ("lib/lib.json.raml", Raml),
-    "Library raml to amf"                         -> ("libraries.raml", RamlYamlHint)                -> ("lib/lib.raml.jsonld", Amf),
-    "Library oas to amf"                          -> ("libraries.json", OasJsonHint)                 -> ("lib/lib.json.jsonld", Amf),
-    "Library amf to oas from include"             -> ("libraries.json.jsonld", AmfJsonHint)          -> ("lib/lib.json", Oas),
-    "Library amf to raml from include"            -> ("libraries.raml.jsonld", AmfJsonHint)          -> ("lib/lib.raml", Raml),
+    "Library raml to amf"                         -> ("libraries.raml", RamlYamlHint)                -> ("lib/lib.raml.%s", Amf),
+    "Library oas to amf"                          -> ("libraries.json", OasJsonHint)                 -> ("lib/lib.json.%s", Amf),
+    "Library amf to oas from include"             -> ("libraries.json.%s", AmfJsonHint)              -> ("lib/lib.json", Oas),
+    "Library amf to raml from include"            -> ("libraries.raml.%s", AmfJsonHint)              -> ("lib/lib.raml", Raml),
     "Data type fragment raml to raml"             -> ("data-type-fragment.raml", RamlYamlHint)       -> ("fragments/person.raml", Raml),
     "Data type fragment oas to oas"               -> ("data-type-fragment.json", OasJsonHint)        -> ("fragments/person.json", Oas),
     "Data type fragment raml to oas"              -> ("data-type-fragment.raml", RamlYamlHint)       -> ("fragments/person.json", Oas),
     "Data type fragment oas to raml"              -> ("data-type-fragment.json", OasJsonHint)        -> ("fragments/person.json.raml", Raml),
-    "Data type fragment amf to raml from include" -> ("data-type-fragment.raml.jsonld", AmfJsonHint) -> ("fragments/person.raml", Raml),
-    "Data type fragment amf to oas from include"  -> ("data-type-fragment.json.jsonld", AmfJsonHint) -> ("fragments/person.json", Oas),
+    "Data type fragment amf to raml from include" -> ("data-type-fragment.raml.%s", AmfJsonHint)     -> ("fragments/person.raml", Raml),
+    "Data type fragment amf to oas from include"  -> ("data-type-fragment.json.%s", AmfJsonHint)     -> ("fragments/person.json", Oas),
     "Resource type fragment raml to raml"         -> ("resource-type-fragment.raml", RamlYamlHint)   -> ("fragments/resource-type.raml", Raml),
     "Trait fragment raml to raml"                 -> ("trait-fragment.raml", RamlYamlHint)           -> ("fragments/trait.raml", Raml),
     "Alias library reference raml test"           -> ("lib-alias-reference.raml", RamlYamlHint)      -> ("lib/lib-declaration.raml", Raml),
@@ -45,9 +45,20 @@ class ReferencesCycleTest extends FunSuiteCycleTests with ListAssertions with Co
   )
 
   fixture.foreach {
+    case ((title, (document, hint)), (reference, Amf)) =>
+      multiGoldenTest(title, reference) { config =>
+        build(s"file://$basePath$document", hint)
+          .flatMap(renderReference(config.golden, Amf, _, config.renderOptions))
+          .flatMap(checkDiff(_, fs.asyncFile(s"$basePath${config.golden}")))
+      }
+    case ((title, (document, AmfJsonHint)), (reference, vendor)) =>
+      multiSourceTest(title, document) { config =>
+        build(s"file://$basePath${config.source}", AmfJsonHint)
+          .flatMap(renderReference(reference, vendor, _))
+          .flatMap(checkDiff(_, fs.asyncFile(s"$basePath$reference")))
+      }
     case ((title, (document, hint)), (reference, vendor)) =>
       test(title) {
-
         build(s"file://$basePath$document", hint)
           .flatMap(renderReference(reference, vendor, _))
           .flatMap(checkDiff(_, fs.asyncFile(basePath + reference)))
@@ -57,10 +68,23 @@ class ReferencesCycleTest extends FunSuiteCycleTests with ListAssertions with Co
   private def renderReference(reference: String, vendor: Vendor, unit: BaseUnit): Future[AsyncFile] = {
     val ref    = unit.references.head
     val actual = fs.asyncFile(tmp(reference.replace("/", "--")))
-    AMFRenderer(ref, vendor, RenderOptions().withSourceMaps).renderToString
+    AMFRenderer(ref, vendor, defaultRenderOptions).renderToString
       .flatMap(actual.write(_))
       .map(_ => actual)
   }
+
+  private def renderReference(reference: String,
+                              vendor: Vendor,
+                              unit: BaseUnit,
+                              renderOptions: RenderOptions): Future[AsyncFile] = {
+    val ref    = unit.references.head
+    val actual = fs.asyncFile(tmp(reference.replace("/", "--")))
+    AMFRenderer(ref, vendor, renderOptions).renderToString
+      .flatMap(actual.write(_))
+      .map(_ => actual)
+  }
+
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
 
   case class ModuleContent(url: String, content: String)
 

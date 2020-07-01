@@ -1,6 +1,6 @@
 package amf.convert
 
-import _root_.org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import _root_.org.scalatest.{Assertion, Matchers}
 import amf._
 import amf.client.AMF
 import amf.client.convert.CoreClientConverters._
@@ -13,7 +13,7 @@ import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
 import amf.client.resolve.{Async20Resolver, Oas20Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
-import amf.common.{Diff, Tests}
+import amf.common.Diff
 import amf.core.errorhandling.StaticErrorCollector
 import amf.core.exception.UnsupportedVendorException
 import amf.core.model.document.{Document => InternalDocument}
@@ -27,7 +27,7 @@ import amf.core.remote.{Aml, Oas20, Raml10}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
-import amf.io.FileAssertionTest
+import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.plugins.document.Vocabularies
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
@@ -35,7 +35,7 @@ import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps with FileAssertionTest {
+trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -1372,10 +1372,18 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps with FileA
     }
   }
 
-  test("Generate unit with compact uris and external file") {
+  multiGoldenTest("Generate unit with compact uris and external file",
+                  "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.%s") { config =>
     val apiPath = "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml"
-    val golden  = "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.jsonld"
-    val options = new RenderOptions().withCompactUris.withSourceMaps.withPrettyPrint
+    val golden  = config.golden
+
+    // TODO migrate to render options converter
+    var options = new RenderOptions().withCompactUris.withSourceMaps.withPrettyPrint
+    if (config.renderOptions.isFlattenedJsonLd) {
+      options = options.withFlattenedJsonLd
+    } else {
+      options = options.withoutFlattenedJsonLd
+    }
 
     for {
       _      <- AMF.init().asFuture

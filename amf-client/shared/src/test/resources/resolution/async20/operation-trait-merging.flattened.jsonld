@@ -1,0 +1,156 @@
+{
+  "@graph": [
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "asdasd",
+      "core:version": "asdasd",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/end-points/someChannel"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#/web-api": "ASYNC 2.0"
+        },
+        "lexical": {
+          "apiContract:endpoint": "[(5,0)-(14,0)]",
+          "core:name": "[(3,2)-(4,0)]",
+          "#/web-api": "[(1,0)-(20,36)]",
+          "core:version": "[(4,2)-(5,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/someChannel",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "someChannel",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/end-points/someChannel/publish"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/someChannel": "[(6,2)-(14,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/someChannel/publish",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "secondTrait",
+      "core:description": "secondDescription",
+      "apiContract:guiSummary": "firstSummary",
+      "apiContract:operationId": "baseId",
+      "doc:extends": [
+        {
+          "@id": "#/declarations/operationTraits/firstTrait"
+        },
+        {
+          "@id": "#/declarations/operationTraits/secondTrait"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "doc:extends": "[(11,6)-(14,0)]",
+          "#/web-api/end-points/someChannel/publish": "[(7,4)-(14,0)]",
+          "apiContract:operationId": "[(8,6)-(9,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/declarations/operationTraits/firstTrait",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "firstTrait",
+      "core:name": "firstTrait",
+      "core:description": "firstDescription",
+      "apiContract:guiSummary": "firstSummary",
+      "apiContract:isAbstract": true,
+      "smaps": {
+        "resolved-link-target": {
+          "#/declarations/operationTraits/firstTrait": "file://amf-client/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml#/declarations/operationTraits/firstTrait"
+        },
+        "declared-element": {
+          "#/declarations/operationTraits/firstTrait": ""
+        },
+        "lexical": {
+          "apiContract:guiSummary": "[(17,6)-(18,0)]",
+          "#/declarations/operationTraits/firstTrait": "[(16,4)-(19,0)]",
+          "core:description": "[(18,6)-(19,0)]"
+        },
+        "resolved-link": {
+          "#/declarations/operationTraits/firstTrait": "file://amf-client/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml#/web-api/end-points/someChannel/publish/default-operation"
+        }
+      }
+    },
+    {
+      "@id": "#/declarations/operationTraits/secondTrait",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "secondTrait",
+      "core:name": "secondTrait",
+      "core:description": "secondDescription",
+      "apiContract:isAbstract": true,
+      "smaps": {
+        "resolved-link-target": {
+          "#/declarations/operationTraits/secondTrait": "file://amf-client/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml#/declarations/operationTraits/secondTrait"
+        },
+        "declared-element": {
+          "#/declarations/operationTraits/secondTrait": ""
+        },
+        "lexical": {
+          "core:description": "[(20,6)-(20,36)]",
+          "#/declarations/operationTraits/secondTrait": "[(19,4)-(20,36)]"
+        },
+        "resolved-link": {
+          "#/declarations/operationTraits/secondTrait": "file://amf-client/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml#/web-api/end-points/someChannel/publish/default-operation"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declarations/operationTraits/firstTrait"
+        },
+        {
+          "@id": "#/declarations/operationTraits/secondTrait"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": true
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-client/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

@@ -1,0 +1,615 @@
+{
+  "@graph": [
+    {
+      "@id": "#/web-api",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "anApi",
+      "apiContract:accepts": [
+        "application/yaml"
+      ],
+      "apiContract:contentType": [
+        "application/yaml"
+      ],
+      "core:version": "some",
+      "apiContract:endpoint": [
+        {
+          "@id": "#/web-api/end-points/overrideChannel"
+        },
+        {
+          "@id": "#/web-api/end-points/noOverrideChannel"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#/web-api": "ASYNC 2.0"
+        },
+        "lexical": {
+          "apiContract:endpoint": "[(6,0)-(38,26)]",
+          "apiContract:contentType": "[(5,0)-(6,0)]",
+          "core:name": "[(3,2)-(4,0)]",
+          "#/web-api": "[(1,0)-(38,26)]",
+          "apiContract:accepts": "[(5,0)-(6,0)]",
+          "core:version": "[(4,2)-(5,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "overrideChannel",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/end-points/overrideChannel/subscribe"
+        },
+        {
+          "@id": "#/web-api/end-points/overrideChannel/publish"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/overrideChannel": "[(7,2)-(24,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "noOverrideChannel",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#/web-api/end-points/noOverrideChannel/subscribe"
+        },
+        {
+          "@id": "#/web-api/end-points/noOverrideChannel/publish"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/noOverrideChannel": "[(24,2)-(38,26)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/subscribe",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "subscribe",
+      "apiContract:returns": [
+        {
+          "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(9,14)-(16,0)]",
+          "#/web-api/end-points/overrideChannel/subscribe": "[(8,4)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/publish",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "publish",
+      "apiContract:expects": [
+        {
+          "@id": "#/web-api/end-points/overrideChannel/publish/request"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:expects": "[(17,14)-(24,0)]",
+          "#/web-api/end-points/overrideChannel/publish": "[(16,4)-(24,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/subscribe",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "subscribe",
+      "apiContract:returns": [
+        {
+          "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(26,14)-(32,0)]",
+          "#/web-api/end-points/noOverrideChannel/subscribe": "[(25,4)-(32,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/publish",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "publish",
+      "apiContract:expects": [
+        {
+          "@id": "#/web-api/end-points/noOverrideChannel/publish/request"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:expects": "[(33,14)-(38,26)]",
+          "#/web-api/end-points/noOverrideChannel/publish": "[(32,4)-(38,26)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/application%2Fjson"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/overrideChannel/subscribe/default-response": "[(10,0)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/publish/request",
+      "@type": [
+        "apiContract:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#/web-api/end-points/overrideChannel/publish/request/application%2Fjson"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/overrideChannel/publish/request": "[(18,0)-(24,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/noOverrideChannel/subscribe/default-response": "[(27,0)-(32,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/publish/request",
+      "@type": [
+        "apiContract:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/noOverrideChannel/publish/request": "[(34,0)-(38,26)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/application%2Fjson",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(11,8)-(16,0)]",
+          "core:mediaType": "[(10,8)-(11,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/publish/request/application%2Fjson",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(19,8)-(24,0)]",
+          "core:mediaType": "[(18,8)-(19,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/yaml",
+      "raml-shapes:schema": {
+        "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(27,8)-(32,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/yaml",
+      "raml-shapes:schema": {
+        "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(34,8)-(38,26)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name"
+        }
+      ],
+      "shacl:name": "schema",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema": "[(12,10)-(12,14)]"
+        },
+        "lexical": {
+          "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema": "[(11,8)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name"
+        }
+      ],
+      "shacl:name": "schema",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#/web-api/end-points/overrideChannel/publish/request/default/schema": "[(20,10)-(20,14)]"
+        },
+        "lexical": {
+          "#/web-api/end-points/overrideChannel/publish/request/default/schema": "[(19,8)-(24,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name"
+        }
+      ],
+      "shacl:name": "schema",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema": "[(28,10)-(28,14)]"
+        },
+        "lexical": {
+          "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema": "[(27,8)-(32,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name"
+        }
+      ],
+      "shacl:name": "schema",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#/web-api/end-points/noOverrideChannel/publish/request/default/schema": "[(35,10)-(35,14)]"
+        },
+        "lexical": {
+          "#/web-api/end-points/noOverrideChannel/publish/request/default/schema": "[(34,8)-(38,26)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#name"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name/scalar/name"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "name",
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name": "[(14,12)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#name"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name/scalar/name"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "name",
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name": "[(22,12)-(24,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#name"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name/scalar/name"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "name",
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name": "[(30,12)-(32,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#name"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name/scalar/name"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "name",
+      "smaps": {
+        "lexical": {
+          "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name": "[(37,12)-(38,26)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name/scalar/name",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "name",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name/scalar/name": "[(15,14)-(15,18)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(15,14)-(16,0)]",
+          "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name/scalar/name": "[(14,12)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name/scalar/name",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "name",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name/scalar/name": "[(23,14)-(23,18)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(23,14)-(24,0)]",
+          "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name/scalar/name": "[(22,12)-(24,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name/scalar/name",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "name",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name/scalar/name": "[(31,14)-(31,18)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(31,14)-(32,0)]",
+          "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name/scalar/name": "[(30,12)-(32,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name/scalar/name",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "name",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name/scalar/name": "[(38,14)-(38,18)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(38,14)-(38,26)]",
+          "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name/scalar/name": "[(37,12)-(38,26)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/web-api"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": true
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-client/shared/src/test/resources/resolution/async20/content-type-override.yaml",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

@@ -1,41 +1,53 @@
 package amf.resolution
 
+import amf.core.emitter.RenderOptions
 import amf.core.remote.{Amf, Oas, OasJsonHint, RamlYamlHint}
 import amf.remote._
 
 class MediaTypeResolutionTest extends ResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/resolution/media-type/"
 
-  test("One mediaType raml to AMF") {
-    cycle("media-type.raml", "media-type.raml.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("One mediaType raml to AMF", "media-type.raml.%s") { config =>
+    cycle("media-type.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  test("Multiple mediaTypes raml to AMF") {
-    cycle("media-types.raml", "media-types.raml.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("Multiple mediaTypes raml to AMF", "media-types.raml.%s") { config =>
+    cycle("media-types.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  test("Override mediaType raml to AMF") {
-    cycle("media-type-override.raml", "media-type-override.raml.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("Override mediaType raml to AMF", "media-type-override.raml.%s") { config =>
+    cycle("media-type-override.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("One mediaType oas to AMF") {
-    cycle("media-type.json", "media-type.json.jsonld", OasJsonHint, Amf)
+  multiGoldenTest("One mediaType oas to AMF", "media-type.json.%s") { config =>
+    cycle("media-type.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  test("Multiple mediaTypes oas to AMF") {
-    cycle("media-types.json", "media-types.json.jsonld", OasJsonHint, Amf)
+  multiGoldenTest("Multiple mediaTypes oas to AMF", "media-types.json.%s") { config =>
+    cycle("media-types.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  test("Override mediaType oas to AMF") {
-    cycle("media-type-override.json", "media-type-override.json.jsonld", OasJsonHint, Amf)
+  multiGoldenTest("Override mediaType oas to AMF", "media-type-override.json.%s") { config =>
+    cycle("media-type-override.json",
+          config.golden,
+          OasJsonHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   // Different target, should keep accepts and consumes fields as they are required in OAS.
-  test("Override mediaType oas to OAS") {
+  multiGoldenTest("Override mediaType oas to OAS", "media-type-override-oas-target.json.%s") { config =>
     cycle("media-type-override.json",
-          "media-type-override-oas-target.json.jsonld",
+          config.golden,
           OasJsonHint,
-          Amf,
+          target = Amf,
+          renderOptions = Some(config.renderOptions),
           transformWith = Some(Oas))
   }
+
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
 }

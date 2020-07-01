@@ -1,0 +1,55 @@
+{
+  "@graph": [
+    {
+      "@id": "testId/message",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "message",
+      "http://a.ml/vocabularies/apiContract#payload": [
+        {
+          "@id": "target/message/default"
+        }
+      ],
+      "http://a.ml/vocabularies/core#documentation": {
+        "@id": "target/message/creative-work/baseUrl"
+      }
+    },
+    {
+      "@id": "target/message/default",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ]
+    },
+    {
+      "@id": "target/message/creative-work/baseUrl",
+      "@type": [
+        "http://a.ml/vocabularies/core#CreativeWork",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#url": [
+        {
+          "@id": "baseUrl"
+        }
+      ],
+      "http://a.ml/vocabularies/core#description": "traitUrl"
+    },
+    {
+      "@id": "testId",
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "testId/message"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#root": false
+    }
+  ]
+}

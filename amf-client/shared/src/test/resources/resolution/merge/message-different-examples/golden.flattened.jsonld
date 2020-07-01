@@ -1,0 +1,205 @@
+{
+  "@graph": [
+    {
+      "@id": "testId/message",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "message",
+      "http://a.ml/vocabularies/apiContract#payload": [
+        {
+          "@id": "target/message/default"
+        }
+      ],
+      "http://a.ml/vocabularies/apiContract#examples": [
+        {
+          "@id": "target/message/example/juancito"
+        },
+        {
+          "@id": "target/message/example/pepito"
+        }
+      ]
+    },
+    {
+      "@id": "target/message/default",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ]
+    },
+    {
+      "@id": "target/message/example/juancito",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Example",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "juancito",
+      "http://a.ml/vocabularies/document#strict": true,
+      "http://a.ml/vocabularies/document#structuredValue": {
+        "@id": "target/message/example/juancito/object_1"
+      },
+      "http://a.ml/vocabularies/document#raw": "user: Juancito\nsignup: Menganito",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "target/message/example/juancito#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "target/message/example/pepito",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Example",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "pepito",
+      "http://a.ml/vocabularies/document#strict": true,
+      "http://a.ml/vocabularies/document#structuredValue": {
+        "@id": "patch/message/example/pepito/object_1"
+      },
+      "http://a.ml/vocabularies/document#raw": "user: Pepito\nsignup: Fulanito",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "target/message/example/pepito#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "target/message/example/juancito/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#user": {
+        "@id": "target/message/example/juancito/object_1/scalar_2"
+      },
+      "http://a.ml/vocabularies/data#signup": {
+        "@id": "target/message/example/juancito/object_1/scalar_3"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1"
+    },
+    {
+      "@id": "target/message/example/juancito#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "target/message/example/juancito#/source-map/tracked-element/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "patch/message/example/pepito/object_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Object",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#user": {
+        "@id": "patch/message/example/pepito/object_1/scalar_2"
+      },
+      "http://a.ml/vocabularies/data#signup": {
+        "@id": "patch/message/example/pepito/object_1/scalar_3"
+      },
+      "http://a.ml/vocabularies/core#name": "object_1"
+    },
+    {
+      "@id": "target/message/example/pepito#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+        {
+          "@id": "target/message/example/pepito#/source-map/tracked-element/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "target/message/example/juancito/object_1/scalar_2",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "Juancito",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "scalar_2"
+    },
+    {
+      "@id": "target/message/example/juancito/object_1/scalar_3",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "Menganito",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "scalar_3"
+    },
+    {
+      "@id": "target/message/example/juancito#/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "target/message/example/juancito",
+      "http://a.ml/vocabularies/document-source-maps#value": "target/message"
+    },
+    {
+      "@id": "patch/message/example/pepito/object_1/scalar_2",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "Pepito",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "scalar_2"
+    },
+    {
+      "@id": "patch/message/example/pepito/object_1/scalar_3",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "Fulanito",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "scalar_3"
+    },
+    {
+      "@id": "target/message/example/pepito#/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "target/message/example/pepito",
+      "http://a.ml/vocabularies/document-source-maps#value": "patch/message"
+    },
+    {
+      "@id": "testId",
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "testId/message"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#root": false
+    }
+  ]
+}
