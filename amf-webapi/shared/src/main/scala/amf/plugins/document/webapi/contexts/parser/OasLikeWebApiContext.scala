@@ -47,6 +47,8 @@ abstract class OasLikeWebApiContext(loc: String,
     copy
   }
 
+  def isMainFileContext: Boolean = loc == jsonSchemaRefGuide.currentLoc
+
   override val declarations: OasLikeWebApiDeclarations =
     ds.getOrElse(
       new OasLikeWebApiDeclarations(
@@ -91,8 +93,10 @@ abstract class OasLikeWebApiContext(loc: String,
 
   def navigateToRemoteYNode[T <: OasLikeWebApiContext](ref: String)(implicit ctx: T): Option[RemoteNodeNavigation[T]] = {
     val nodeOption = jsonSchemaRefGuide.obtainRemoteYNode(ref)
+    val rootNode   = jsonSchemaRefGuide.getRootYNode(ref)
     nodeOption.map { node =>
       val newCtx = ctx.makeCopyWithJsonPointerContext().moveToReference(node.location.sourceName).asInstanceOf[T]
+      rootNode.foreach(newCtx.setJsonSchemaAST)
       RemoteNodeNavigation(node, newCtx)
     }
   }
