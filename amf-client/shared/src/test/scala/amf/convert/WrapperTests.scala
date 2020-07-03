@@ -1342,11 +1342,14 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val options = new RenderOptions().withSourceMaps
 
     for {
-      _      <- AMF.init().asFuture
-      unit   <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(banking).asFuture
+      _ <- AMF.init().asFuture
+      unit <- amf.Core
+        .parser(Raml10.name, "application/yaml")
+        .parseFileAsync(banking)
+        .asFuture // could be use a smaller api for this test?
       jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
     } yield {
-      jsonld should include("[(3,0)-(252,0)]")
+      jsonld should include("[(1,0)-(252,0)]")
     }
   }
 
