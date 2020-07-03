@@ -58,7 +58,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'syaml-recovery-changes-commit-for-publish'
+          branch 'syaml-recovery-changes'
         }
       }
       steps {
