@@ -89,7 +89,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
           parts.tail.headOption.map(t => if (t.startsWith("/")) t.stripPrefix("/") else t)
 
         val jsonSchemaContext = getJsonSchemaContext(doc, ctx, url, ctx.options)
-        val rootAst           = getRootAst(doc, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
+        val rootAst           = getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
         Some(rootAst)
 
       case _ => None
@@ -150,17 +150,17 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
                                 options)
   }
 
-  private def getRootAst(document: Root,
-                         parsedDoc: SyamlParsedDocument,
+  private def getRootAst(parsedDoc: SyamlParsedDocument,
                          shapeId: String,
                          hashFragment: Option[String],
                          url: String,
                          jsonSchemaContext: JsonSchemaWebApiContext): YNode = {
     val documentRoot = parsedDoc.document.node
     val rootAst = findRootNode(documentRoot, jsonSchemaContext, hashFragment).getOrElse {
+      // hashFragment is always defined when return is None
       jsonSchemaContext.eh.violation(UnableToParseJsonSchema,
                                      shapeId,
-                                     s"Cannot find fragment $url in JSON schema ${document.location}",
+                                     s"Cannot find path ${hashFragment.getOrElse("")} in JSON schema $url",
                                      documentRoot)
       documentRoot
     }
@@ -186,7 +186,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
           parts.tail.headOption.map(t => if (t.startsWith("/definitions")) t.stripPrefix("/") else t)
 
         val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url, options)
-        val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
+        val rootAst           = getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
         val parsed =
           OasTypeParser(YMapEntry("schema", rootAst),
                         shape => shape.withId(shapeId),
