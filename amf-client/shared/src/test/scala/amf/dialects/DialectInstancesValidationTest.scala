@@ -25,6 +25,14 @@ class DialectInstancesValidationTest extends DialectInstanceValidation {
     validate("dialect1.raml", "instance1_correct1.raml", 0)
   }
 
+  test("validation of dialect with any type") {
+    validate("any_dialect.raml", "any_example.raml", 0)
+  }
+
+  test("validation of dialect with any type array") {
+    validate("any_array_dialect.raml", "any_array_example.raml", 0)
+  }
+
   test("validation dialect 1b example 1b correct") {
     validate("dialect1b.raml", "example1b.raml", 0)
   }
