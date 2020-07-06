@@ -102,7 +102,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
       ctx.factory.parameterParser(Right(node), parentId, None, new IdCounter()).parse
     }
 
-  private def getYNode(inputFragment: Fragment, ctx: WebApiContext): YNode = {
+  def getYNode(inputFragment: Fragment, ctx: WebApiContext): YNode = {
     inputFragment match {
       case fragment: ExternalFragment                        => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, ctx.eh))
       case fragment: RecursiveUnit if fragment.raw.isDefined => parsedFragment(inputFragment, ctx.eh)
