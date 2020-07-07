@@ -9,14 +9,15 @@ import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.models.SchemaShape
 import amf.validations.ParserSideValidations.InvalidXmlSchemaType
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
+import org.yaml.model.{YMap, YMapEntry, YNode, YPart, YScalar, YType}
 import amf.core.parser.YMapOps
 import amf.core.parser.YNodeLikeOps
 
 case class RamlXmlSchemaExpression(key: YNode,
                                    override val value: YNode,
                                    override val adopt: Shape => Unit,
-                                   parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
+                                   parseExample: Boolean = false,
+                                   parentNode: Option[YPart] = None)(override implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
   override def parseValue(origin: ValueAndOrigin): SchemaShape = {
     val (maybeReferenceId, maybeLocation, maybeFragmentLabel): (Option[String], Option[String], Option[String]) =
@@ -75,8 +76,9 @@ case class RamlXmlSchemaExpression(key: YNode,
                          value)
         shape
       case _ =>
+        val shape = parentNode.map(SchemaShape(_)).getOrElse(SchemaShape())
         val raw   = value.as[YScalar].text
-        val shape = SchemaShape().withRaw(raw).withMediaType("application/xml")
+        shape.withRaw(raw).withMediaType("application/xml")
         shape.withName(key.as[String])
         adopt(shape)
         shape

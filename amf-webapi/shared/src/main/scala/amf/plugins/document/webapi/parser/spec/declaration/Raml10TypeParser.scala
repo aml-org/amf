@@ -245,7 +245,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
             .map(s => s.add(SourceAST(value)).add(SourceLocation(value.sourceName)))
         case _ =>
           value.as[YScalar].text match {
-            case XMLSchema(_)  => Option(RamlXmlSchemaExpression(key, value, adopt).parse())
+            case XMLSchema(_)  => Option(RamlXmlSchemaExpression(key, value, adopt, parentNode = Some(ast)).parse())
             case JSONSchema(_) => Option(RamlJsonSchemaExpression(key, value, adopt).parse())
             case t if RamlTypeDefMatcher.match08Type(t).isDefined =>
               Option(
