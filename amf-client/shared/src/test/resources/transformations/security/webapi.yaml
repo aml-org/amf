@@ -1,85 +1,143 @@
 #%WebAPI Spec 1.0
 unitType: Document
-$id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/rootAsset
+$id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/rootAsset
 declares:
   -
-    elementType: Node
-    $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A
-    name: A
-    property:
+    elementType: SecurityScheme
+    $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0
+    name: oauth_2_0
+    description: |
+      Dropbox supports OAuth 2.0 for authenticating all API requests.
+    response:
       -
-        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/b
-        range:
-          shapeType: Scalar
-          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/b/scalar/b
-          name: b
-          datatype: http://www.w3.org/2001/XMLSchema#integer
-        name: b
-        min.Count: 1
-        path: http://a.ml/vocabularies/data#b
+        $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/401
+        name: "401"
+        description: |
+          Bad or expired token. This can happen if the user or Dropbox
+          revoked or expired an access token. To fix, re-authenticate
+          the user.
+        statusCode: "401"
+    type: OAuth 2.0
+    settings:
+      settingsType: OAuth2
+      $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2
+      flows:
+        -
+          $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow
+          authorizationURI: https://www.dropbox.com/1/oauth2/authorize
+          scope:
+            -
+              $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow/ADMINISTRATOR
+              name: ADMINISTRATOR
+          accessTokenURI: https://api.dropbox.com/1/oauth2/token
+      authorizationGrant:
+        - urn:ietf:params:oauth:grant-type:saml2-bearer
+        - implicit
+        - authorization_code
+    header:
       -
-        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/a
-        range:
+        $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization
+        required: true
+        paramName: Authorization
+        name: Authorization
+        description: |
+          Used to send a valid OAuth 2 access token.
+        binding: header
+        schema:
           shapeType: Scalar
-          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/a/scalar/a
-          name: a
+          $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema
+          name: schema
+          description: |
+            Used to send a valid OAuth 2 access token.
           datatype: http://www.w3.org/2001/XMLSchema#string
-        name: a
-        min.Count: 1
-        path: http://a.ml/vocabularies/data#a
-    closed: false
-version: 2.0.1
+version: 2.1.0
 root: true
 encodes:
   elementType: WebAPI
-  $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api
-  name: test
+  $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api
+  name: GitHub API
   server:
     -
-      $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/falsedomain.com%2Fapis
-      urlTemplate: falsedomain.com/apis
-  accepts:
-    - application/json
-  version: "1.0"
+      $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/https%3A%2F%2Fapi.github.com
+      urlTemplate: https://api.github.com
+  version: v3
   endpoint:
     -
-      $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest
+      $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists
+      parameter:
+        -
+          $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/parameter/userid
+          required: true
+          paramName: userid
+          name: userid
+          binding: path
+          schema:
+            shapeType: Scalar
+            $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/parameter/userid/scalar/userid
+            name: userid
+            datatype: http://www.w3.org/2001/XMLSchema#string
       supportedOperation:
         -
-          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get
-          description: an operation
-          returns:
+          $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get
+          security:
             -
-              $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200
-              name: "200"
-              payload:
+              $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_2
+              schemes:
                 -
-                  $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson
-                  schema:
-                    shapeType: Node
-                    $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema
-                    inherits:
+                  $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_2/oauth_2_0
+                  name: oauth_2_0
+                  scheme:
+                    $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0
+                    name: oauth_2_0
+                    description: |
+                      Dropbox supports OAuth 2.0 for authenticating all API requests.
+                    response:
                       -
-                        shapeType: Node
-                        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/link-1074138123
-                        designLink: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A
-                        name: A
-                    name: schema
-                    property:
+                        $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/401
+                        name: "401"
+                        description: |
+                          Bad or expired token. This can happen if the user or Dropbox
+                          revoked or expired an access token. To fix, re-authenticate
+                          the user.
+                        statusCode: "401"
+                    type: OAuth 2.0
+                    settings:
+                      settingsType: OAuth2
+                      $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2
+                      flows:
+                        -
+                          $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow
+                          authorizationURI: https://www.dropbox.com/1/oauth2/authorize
+                          scope:
+                            -
+                              $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/settings/oauth2/default-flow/ADMINISTRATOR
+                              name: ADMINISTRATOR
+                          accessTokenURI: https://api.dropbox.com/1/oauth2/token
+                      authorizationGrant:
+                        - urn:ietf:params:oauth:grant-type:saml2-bearer
+                        - implicit
+                        - authorization_code
+                    header:
                       -
-                        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c
-                        range:
+                        $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization
+                        required: true
+                        paramName: Authorization
+                        name: Authorization
+                        description: |
+                          Used to send a valid OAuth 2 access token.
+                        binding: header
+                        schema:
                           shapeType: Scalar
-                          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c/scalar/c
-                          name: c
+                          $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema
+                          name: schema
+                          description: |
+                            Used to send a valid OAuth 2 access token.
                           datatype: http://www.w3.org/2001/XMLSchema#string
-                        name: c
-                        min.Count: 1
-                        path: http://a.ml/vocabularies/data#c
-                    closed: false
-                  mediaType: application/json
-              statusCode: "200"
+            -
+              $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_1
+              schemes:
+                -
+                  $id: file://amf-client/shared/src/test/resources/transformations/security/api.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/default-requirement_1/null
+                  name: "null"
           method: get
-      path: /test
-  contentType:
-    - application/json
+      path: /users/{userid}/gists
