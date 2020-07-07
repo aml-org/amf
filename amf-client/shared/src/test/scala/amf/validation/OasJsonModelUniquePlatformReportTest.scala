@@ -195,5 +195,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("oas3/oas3-closed-shapes.json", Some("oas3-closed-shapes.report"), Oas30Profile)
   }
 
+  test("Json Ref - Invalid path in valid external fragment") {
+    validate("oas2/invalid-ref-valid-fragment/api.json", Some("invalid-ref-valid-fragment.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }
