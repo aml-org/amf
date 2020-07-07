@@ -1,13 +1,14 @@
 package amf.resolution
 
-import amf.Oas30Profile
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.{Json, Yaml}
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.remote.Syntax.Yaml
 import amf.core.remote.Vendor.AMF
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
+import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -24,496 +25,729 @@ class EditingResolutionTest extends ResolutionTest {
   val referencesPath  = "amf-client/shared/src/test/resources/references/"
   val validationsPath = "amf-client/shared/src/test/resources/validations/"
 
-  test("API with recursive shapes") {
-    cycle("recursive3.raml", "recursive3.editing.jsonld", RamlYamlHint, Amf, productionPath)
-  }
-  test("Simple extends resolution to Raml") {
-    cycle("simple-merge.raml", "simple-merge.editing.jsonld", RamlYamlHint, Amf, extendsPath)
-  }
-
-  test("Types resolution to Raml") {
-    cycle("data.raml", "data.editing.jsonld", RamlYamlHint, Amf, extendsPath)
+  multiGoldenTest("API with recursive shapes", "recursive3.editing.%s") { config =>
+    cycle("recursive3.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          productionPath,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Example1 resolution to Raml") {
-    cycle("example1.yaml", "example1.resolved.yaml", OasYamlHint, Oas20, resolutionPath, syntax = Some(Yaml))
+  multiGoldenTest("Simple extends resolution to Raml", "simple-merge.editing.%s") { config =>
+    cycle("simple-merge.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          extendsPath,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Include type resolution to Raml") {
-    cycle("simple_example_type.raml", "simple_example_type.resolved.jsonld", RamlYamlHint, Amf, cyclePath)
+  multiGoldenTest("Types resolution to Raml", "data.editing.%s") { config =>
+    cycle("data.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          extendsPath,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Test data type fragment resolution to Amf") {
+  multiGoldenTest("Include type resolution to Raml", "simple_example_type.resolved.%s") { config =>
+    cycle("simple_example_type.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          cyclePath,
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Test data type fragment resolution to Amf", "data-type-fragment.reference.resolved.%s") { config =>
     cycle("data-type-fragment.reference.raml",
-          "data-type-fragment.reference.resolved.jsonld",
+          config.golden,
           RamlYamlHint,
-          Amf,
-          referencesPath)
+          target = Amf,
+          referencesPath,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Test union arrays") {
-    cycle("union_arrays.raml", "union_arrays.resolved.jsonld", RamlYamlHint, Amf, cyclePath)
-  }
-
-  test("Exchange issueNil API resolution to Amf") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, validationsPath + "examples/inline-named-examples/")
-  }
-
-  test("Location in annotation of Trait declared in lib") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, productionPath + "lib-trait-location/")
-  }
-
-  test("Test merge examples in local against declared type") {
-    cycle("merge-examples.raml", "merge-examples.resolved.raml", RamlYamlHint, Raml, resolutionPath + "examples/")
-  }
-
-  test("Test extension merging") {
-    cycle("input.raml",
-          "input.resolved.jsonld",
+  multiGoldenTest("Test union arrays", "union_arrays.resolved.%s") { config =>
+    cycle("union_arrays.raml",
+          config.golden,
           RamlYamlHint,
-          Amf,
-          "amf-client/shared/src/test/resources/resolution/extension/traits/")
+          target = Amf,
+          cyclePath,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Unresolved shape") {
-    cycle("unresolved-shape.raml", "unresolved-shape.raml.jsonld", RamlYamlHint, Amf, resolutionPath)
-  }
-
-  test("Test url shortener with external references") {
+  multiGoldenTest("Exchange issueNil API resolution to Amf", "api.resolved.%s") { config =>
     cycle("api.raml",
-          "api.resolved.jsonld",
+          config.golden,
           RamlYamlHint,
-          Amf,
-          resolutionPath + "externalfragment/test-links-with-references/")
+          target = Amf,
+          validationsPath + "examples/inline-named-examples/",
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Test tracked examples annotations parent shortened") {
-    cycle("payloads-examples-resolution.raml",
-          "payloads-examples-resolution.resolved.jsonld",
-          RamlYamlHint,
-          Amf,
-          resolutionPath)
-  }
-
-  test("Test recursive annotations of extension provenance") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "recursive-extension-provenance/")
-  }
-
-  test("Test url shortener at example (dynamic)") {
-    cycle("examples-shortener.raml", "examples-shortener.resolved.jsonld", RamlYamlHint, Amf, resolutionPath)
-  }
-
-  test("Test double declared included type") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "double-declare-type/")
-  }
-
-  test("Test declared type from library") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "declared-from-library/")
-  }
-
-  test("Test union of declared elements") {
-    cycle("api.raml", "api.raml.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "union-of-declarations/")
-  }
-
-  test("Check for stack overflow in event api") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "event-api/")
-  }
-
-  test("Test tracked examples in oas responses") {
-    cycle("oas-multiple-example.json", "oas-multiple-example.resolved.jsonld", OasJsonHint, Amf, productionPath)
-  }
-
-  test("Parse correctly non-AMF graph JSON-LD example") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "jsonld-example/")
-  }
-
-  test("Root mediaType propagation should also adopt tracked-element annotation") {
-    cycle("root-mediatype-propagation.raml",
-          "root-mediatype-propagation.jsonld",
-          RamlYamlHint,
-          Amf,
-          validationsPath + "root-mediatype-propagation/")
-  }
-
-  test("Propagate tracked-element to linked examples") {
-    cycle("tracked-to-linked.raml",
-          "tracked-to-linked.jsonld",
-          RamlYamlHint,
-          Amf,
-          validationsPath + "tracked-to-linked/")
-  }
-
-  test("Adopt tracked-element when merging abstract declarations") {
-    cycle("tracked-from-resource-type.raml",
-          "tracked-from-resource-type.jsonld",
-          RamlYamlHint,
-          Amf,
-          validationsPath + "tracked-from-resource-type/")
-  }
-
-  test("Auto generated payload name annotation in raml") {
-    cycle("auto-generated-schema-name.raml",
-          "auto-generated-schema-name.jsonld",
-          RamlYamlHint,
-          Amf,
-          validationsPath + "auto-generated-schema-name/")
-  }
-
-  test("Auto generated payload name annotation in oas") {
-    cycle("auto-generated-schema-name-oas.yaml",
-          "auto-generated-schema-name-oas.jsonld",
-          OasYamlHint,
-          Amf,
-          validationsPath + "auto-generated-schema-name/")
-  }
-
-  test("Auto generated payload name annotation with default mediaType") {
-    cycle(
-      "auto-generated-schema-name-with-default.raml",
-      "auto-generated-schema-name-with-default.jsonld",
-      RamlYamlHint,
-      Amf,
-      validationsPath + "auto-generated-schema-name/"
-    )
-  }
-
-  test("Declared type union with inherit array link") {
-    cycle("union-type-array.raml", "union-type-array.jsonld", RamlYamlHint, Amf, validationsPath)
-  }
-
-  test("Tracked oas examples") {
-    cycle(
-      "tracked-oas-examples.json",
-      "tracked-oas-examples.jsonld",
-      OasJsonHint,
-      Amf,
-      validationsPath + "tracked-oas-examples/"
-    )
-  }
-
-  test("Keep schema name in body link schema") {
-    cycle("body-link-name.raml", "body-link-name.jsonld", RamlYamlHint, Amf, validationsPath + "body-link-name/")
-  }
-
-  test("Union type defined under composing types, with one type defined as closed") {
-    cycle(
-      "additional-prop-and-defined-after.raml",
-      "additional-prop-and-defined-after.jsonld",
-      RamlYamlHint,
-      Amf,
-      productionPath + "union-type-with-composing-closed-type/"
-    )
-  }
-
-  test("Union type defined before composing types, with one type defined as closed") {
-    cycle(
-      "additional-prop-and-defined-before.raml",
-      "additional-prop-and-defined-before.jsonld",
-      RamlYamlHint,
-      Amf,
-      productionPath + "union-type-with-composing-closed-type/"
-    )
-  }
-
-  test("Tracking equal example in different endpoints") {
-    cycle(
-      "dup-name-example-tracking.raml",
-      "dup-name-example-tracking.jsonld",
-      RamlYamlHint,
-      Amf,
-      validationsPath + "dup-name-example-tracking/"
-    )
-  }
-
-  test("Library with types") {
-    cycle("lib.raml", "lib.jsonld", RamlYamlHint, Amf, productionPath + "lib-types/")
-  }
-
-  test("Union of arrays") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "union-of-arrays/")
-  }
-
-  test("Inheritance provenance annotation from declaration") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, validationsPath + "inheritance-provenance/from-declaration/")
-  }
-
-  test("Inheritance provenance annotation with recursive inheritance") {
+  multiGoldenTest("Location in annotation of Trait declared in lib", "api.resolved.%s") { config =>
     cycle("api.raml",
-          "api.jsonld",
+          config.golden,
           RamlYamlHint,
-          Amf,
-          validationsPath + "inheritance-provenance/with-recursive-inheritance/")
+          target = Amf,
+          productionPath + "lib-trait-location/",
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Resolved link annotation with types") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, validationsPath + "resolved-link-annotation/")
-  }
-
-  test("Inheritance provenance annotation with regular inheritance") {
-    cycle("api.raml",
-          "api.jsonld",
-          RamlYamlHint,
-          Amf,
-          validationsPath + "inheritance-provenance/with-regular-inheritance/")
-  }
-
-  test("Inheritance provenance annotation with library") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, validationsPath + "inheritance-provenance/with-library/")
-  }
-
-  test("Recursion in inheritance with resource type - Properties") {
-    cycle("recursion-inheritance-properties.raml",
-          "recursion-inheritance-properties.jsonld",
-          RamlYamlHint,
-          Amf,
-          validationsPath)
-  }
-
-  test("Recursion in inheritance with resource type - Array") {
-    cycle(
-      "recursion-inheritance-array.raml",
-      "recursion-inheritance-array.resolved.raml",
-      RamlYamlHint,
-      Raml08,
-      validationsPath
-    )
-  }
-
-  test("Generate jsonld with sourcemaps") {
-    cycle(
-      "payloads-examples-resolution.raml",
-      "../validations/jsonld-compact-uris/no-raw-source-maps-compact-uris.jsonld",
-      RamlYamlHint,
-      Amf,
-      resolutionPath
-    )
-  }
-
-  test("Parsing compacted jsonld using context of compact uris") {
-    cycle(
-      "no-raw-source-maps-compact-uris.jsonld",
-      "parsed-result.jsonld",
-      AmfJsonHint,
-      Amf,
-      validationsPath + "jsonld-compact-uris/"
-    )
-  }
-
-  test("Annotated scalar node with no value should default to an empty node") {
-    cycle(
-      "optional-scalar-value.raml",
-      "optional-scalar-value.jsonld",
-      RamlYamlHint,
-      Amf,
-      validationsPath + "optional-scalar-value/"
-    )
-  }
-
-  test("Union type containing array type") {
-    cycle(
-      "union-type-containg-array.raml",
-      "union-type-containg-array.jsonld",
-      RamlYamlHint,
-      Amf,
-      validationsPath + "union-type-containg-array/"
-    )
-  }
-
-  test("Resolution of server objects") {
-    cycle(
-      "overriding-server-object.json",
-      "overriding-server-object-resolved.json",
-      OasJsonHint,
-      Oas30,
-      cyclePath + "oas3/"
-    )
-  }
-
-  test("Overriding parameters in operation") {
-    cycle(
-      "overriding-parameters.json",
-      "overriding-param-output.json",
-      OasJsonHint,
-      Oas30,
-      cyclePath + "oas3/basic-parameters/"
-    )
-  }
-
-  test("Summary and description from path applied to operations") {
-    cycle(
-      "description-applied-to-operations.json",
-      "description-applied-to-operations-editing.json",
-      OasJsonHint,
-      Oas30,
-      cyclePath + "oas3/summary-description-in-path/"
-    )
-  }
-
-  test("Tracked examples from parameters and payloads") {
-    cycle(
-      "parameter-payload-examples.json",
-      "parameter-payload-examples.jsonld",
-      OasJsonHint,
-      Amf,
-      cyclePath + "oas3/parameter-payload-resolution/"
-    )
-  }
-
-  test("Resolving parameter without type doesnt throw NPE") {
-    cycle(
-      "parameter-without-type.json",
-      "parameter-without-type.jsonld",
-      OasJsonHint,
-      Amf,
-      resolutionPath + "parameter-without-type/"
-    )
-  }
-
-  // This test hangs diff
-  ignore("Emission of API with JSON Schema's schema as references") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")
-  }
-
-  /*
-  test("Exchange experience API resolution to Amf") {
-    cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")
-  }
-
-  ignore("Github API resolution to Raml") {
-    cycle("api.raml", "api.yaml.jsonld", RamlYamlHint, Amf, productionPath + "github-api-1.0.0-raml/")
-  }
-
-  test("Google API resolution to Raml") {
-    cycle("googleapis.compredictionv1.2swagger.raml", "googleapis.compredictionv1.2swagger.raml", RamlYamlHint, Amf, productionPath)
-  }
-
-  test("Financial API resolution to Raml") {
-    cycle("infor-financial-api.raml", "infor-financial-api.yaml.jsonld", RamlYamlHint, Amf, productionPath + "financial-api/")
-  }
-   */
-
-  test("Tracked examples in OAS body parameter with mediatype annotation") {
-    cycle(
-      "tracked-oas-param-body.yaml",
-      "tracked-oas-param-body.jsonld",
-      OasYamlHint,
-      Amf,
-      validationsPath + "tracked-oas-param-body/"
-    )
-  }
-
-  test("Test reference resolution with chained links") {
+  multiGoldenTest("Test url shortener with external references", "api.resolved.%s") { config =>
     cycle(
       "api.raml",
-      "api.jsonld",
+      config.golden,
       RamlYamlHint,
-      Amf,
-      validationsPath + "links/"
+      target = Amf,
+      resolutionPath + "externalfragment/test-links-with-references/",
+      renderOptions = Some(config.renderOptions)
     )
   }
 
-  test("Security schemes with requirements") {
+  multiGoldenTest("Test tracked examples annotations parent shortened", "payloads-examples-resolution.resolved.%s") {
+    config =>
+      cycle("payloads-examples-resolution.raml",
+            config.golden,
+            RamlYamlHint,
+            target = Amf,
+            resolutionPath,
+            renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Test extension merging", "input.resolved.%s") { config =>
     cycle(
-      "security-requirements.raml",
-      "security-requirements.jsonld",
+      "input.raml",
+      config.golden,
       RamlYamlHint,
-      Amf,
-      resolutionPath + "security-requirements/"
+      target = Amf,
+      "amf-client/shared/src/test/resources/resolution/extension/traits/",
+      renderOptions = Some(config.renderOptions)
     )
   }
 
-  test("tracked element in example defined in resource type") {
+  multiGoldenTest("Unresolved shape", "unresolved-shape.raml.%s") { config =>
+    cycle("unresolved-shape.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          resolutionPath,
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Test recursive annotations of extension provenance", "api.resolved.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          resolutionPath + "recursive-extension-provenance/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Test url shortener at example (dynamic)", "examples-shortener.resolved.%s") { config =>
+    cycle("examples-shortener.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          resolutionPath,
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Test double declared included type", "api.resolved.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          resolutionPath + "double-declare-type/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Test declared type from library", "api.resolved.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          resolutionPath + "declared-from-library/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Test union of declared elements", "api.raml.resolved.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          resolutionPath + "union-of-declarations/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Check for stack overflow in event api", "api.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          productionPath + "event-api/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Test tracked examples in oas responses", "oas-multiple-example.resolved.%s") { config =>
+    cycle("oas-multiple-example.json",
+          config.golden,
+          OasJsonHint,
+          target = Amf,
+          productionPath,
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Parse correctly non-AMF graph JSON-LD example", "api.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          resolutionPath + "jsonld-example/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Root mediaType propagation should also adopt tracked-element annotation",
+                  "root-mediatype-propagation.%s") { config =>
+    cycle(
+      "root-mediatype-propagation.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      validationsPath + "root-mediatype-propagation/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Propagate tracked-element to linked examples", "tracked-to-linked.%s") { config =>
+    cycle("tracked-to-linked.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          validationsPath + "tracked-to-linked/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Adopt tracked-element when merging abstract declarations", "tracked-from-resource-type.%s") {
+    config =>
+      cycle(
+        "tracked-from-resource-type.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        validationsPath + "tracked-from-resource-type/",
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
+  multiGoldenTest("Auto generated payload name annotation in raml", "auto-generated-schema-name.%s") { config =>
+    cycle(
+      "auto-generated-schema-name.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      validationsPath + "auto-generated-schema-name/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Auto generated payload name annotation in oas", "auto-generated-schema-name-oas.%s") { config =>
+    cycle(
+      "auto-generated-schema-name-oas.yaml",
+      config.golden,
+      OasYamlHint,
+      target = Amf,
+      validationsPath + "auto-generated-schema-name/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Auto generated payload name annotation with default mediaType",
+                  "auto-generated-schema-name-with-default.%s") { config =>
+    cycle(
+      "auto-generated-schema-name-with-default.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      validationsPath + "auto-generated-schema-name/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Declared type union with inherit array link", "union-type-array.%s") { config =>
+    cycle("union-type-array.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          validationsPath,
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Tracked oas examples", "tracked-oas-examples.%s") { config =>
+    cycle("tracked-oas-examples.json",
+          config.golden,
+          OasJsonHint,
+          target = Amf,
+          validationsPath + "tracked-oas-examples/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Keep schema name in body link schema", "body-link-name.%s") { config =>
+    cycle("body-link-name.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          validationsPath + "body-link-name/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Union type defined under composing types, with one type defined as closed",
+                  "additional-prop-and-defined-after.%s") { config =>
+    cycle(
+      "additional-prop-and-defined-after.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      productionPath + "union-type-with-composing-closed-type/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Union type defined before composing types, with one type defined as closed",
+                  "additional-prop-and-defined-before.%s") { config =>
+    cycle(
+      "additional-prop-and-defined-before.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      productionPath + "union-type-with-composing-closed-type/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Tracking equal example in different endpoints", "dup-name-example-tracking.%s") { config =>
+    cycle(
+      "dup-name-example-tracking.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      validationsPath + "dup-name-example-tracking/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Library with types", "lib.%s") { config =>
+    cycle("lib.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          productionPath + "lib-types/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Union of arrays", "api.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          resolutionPath + "union-of-arrays/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Inheritance provenance annotation from declaration", "api.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          validationsPath + "inheritance-provenance/from-declaration/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Inheritance provenance annotation with recursive inheritance", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      validationsPath + "inheritance-provenance/with-recursive-inheritance/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Resolved link annotation with types", "api.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          validationsPath + "resolved-link-annotation/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Inheritance provenance annotation with regular inheritance", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      validationsPath + "inheritance-provenance/with-regular-inheritance/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Inheritance provenance annotation with library", "api.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          validationsPath + "inheritance-provenance/with-library/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Recursion in inheritance with resource type - Properties", "recursion-inheritance-properties.%s") {
+    config =>
+      cycle("recursion-inheritance-properties.raml",
+            config.golden,
+            RamlYamlHint,
+            target = Amf,
+            validationsPath,
+            renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Generate jsonld with sourcemaps",
+                  "../validations/jsonld-compact-uris/no-raw-source-maps-compact-uris.%s") { config =>
+    cycle("payloads-examples-resolution.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          resolutionPath,
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiTest("Parsing compacted jsonld using context of compact uris",
+            "no-raw-source-maps-compact-uris.%s",
+            "parsed-result.%s") { config =>
+    cycle(
+      config.source,
+      config.golden,
+      AmfJsonHint,
+      target = Amf,
+      validationsPath + "jsonld-compact-uris/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Annotated scalar node with no value should default to an empty node", "optional-scalar-value.%s") {
+    config =>
+      cycle("optional-scalar-value.raml",
+            config.golden,
+            RamlYamlHint,
+            target = Amf,
+            validationsPath + "optional-scalar-value/",
+            renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Union type containing array type", "union-type-containg-array.%s") { config =>
+    cycle(
+      "union-type-containg-array.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      validationsPath + "union-type-containg-array/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Tracked examples from parameters and payloads", "parameter-payload-examples.%s") { config =>
+    cycle(
+      "parameter-payload-examples.json",
+      config.golden,
+      OasJsonHint,
+      target = Amf,
+      cyclePath + "oas3/parameter-payload-resolution/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Resolving parameter without type doesnt throw NPE", "parameter-without-type.%s") { config =>
+    cycle("parameter-without-type.json",
+          config.golden,
+          OasJsonHint,
+          target = Amf,
+          resolutionPath + "parameter-without-type/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Tracked examples in OAS body parameter with mediatype annotation", "tracked-oas-param-body.%s") {
+    config =>
+      cycle("tracked-oas-param-body.yaml",
+            config.golden,
+            OasYamlHint,
+            target = Amf,
+            validationsPath + "tracked-oas-param-body/",
+            renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Test reference resolution with chained links", "api.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          validationsPath + "links/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Security schemes with requirements", "security-requirements.%s") { config =>
+    cycle("security-requirements.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          resolutionPath + "security-requirements/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("tracked element in example defined in resource type", "examples-defined-in-rt.%s") { config =>
     cycle(
       "examples-defined-in-rt.raml",
-      "examples-defined-in-rt.jsonld",
+      config.golden,
       RamlYamlHint,
-      Amf,
-      resolutionPath + "example-in-resource-type/"
+      target = Amf,
+      resolutionPath + "example-in-resource-type/",
+      renderOptions = Some(config.renderOptions)
     )
   }
 
-  test("recursivity in additional properties") {
-    cycle("recursive-additional-properties.yaml",
-          "recursive-additional-properties.jsonld",
-          OasYamlHint,
-          Amf,
-          s"${resolutionPath}recursive-additional-properties/")
+  multiGoldenTest("recursivity in additional properties", "recursive-additional-properties.%s") { config =>
+    cycle(
+      "recursive-additional-properties.yaml",
+      config.golden,
+      OasYamlHint,
+      target = Amf,
+      s"${resolutionPath}recursive-additional-properties/",
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
-  test("recursivity in additional properties 2") {
+  multiGoldenTest("recursivity in additional properties 2", "recursive-additional-properties-2.%s") { config =>
     cycle(
       "recursive-additional-properties-2.yaml",
-      "recursive-additional-properties-2.jsonld",
+      config.golden,
       OasYamlHint,
-      Amf,
-      s"${resolutionPath}recursive-additional-properties/"
+      target = Amf,
+      s"${resolutionPath}recursive-additional-properties/",
+      renderOptions = Some(config.renderOptions)
     )
   }
 
-  test("types with properties that must not be extracted to declares") {
-    cycle(
-      "avoid-extract-to-declares.raml",
-      "avoid-extract-to-declares.jsonld",
-      RamlYamlHint,
-      Amf,
-      resolutionPath + "links-to-declares-and-references/"
-    )
+  multiGoldenTest("types with properties that must not be extracted to declares", "avoid-extract-to-declares.%s") {
+    config =>
+      cycle(
+        "avoid-extract-to-declares.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        resolutionPath + "links-to-declares-and-references/",
+        renderOptions = Some(config.renderOptions)
+      )
   }
 
-  test("jsonld with links to declares and references") {
+  multiGoldenTest("jsonld with links to declares and references", "link-to-declares-and-refs-editing.%s") { config =>
     cycle(
       "link-to-declares-and-refs.raml",
-      "link-to-declares-and-refs-editing.jsonld",
+      config.golden,
       RamlYamlHint,
-      Amf,
-      resolutionPath + "links-to-declares-and-references/"
+      target = Amf,
+      resolutionPath + "links-to-declares-and-references/",
+      renderOptions = Some(config.renderOptions)
     )
   }
 
-  test("References to message definitions") {
-    cycle("message-references.yaml", "message-references.jsonld", AsyncYamlHint, AMF, resolutionPath + "async20/")
+  multiGoldenTest("References to message definitions", "message-references.%s") { config =>
+    cycle("message-references.yaml",
+          config.golden,
+          AsyncYamlHint,
+          target = Amf,
+          resolutionPath + "async20/",
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("raml with declared element link of link") {
-    cycle("link-of-link/link-of-link.raml",
-          "link-of-link/link-of-link.jsonld",
+  multiGoldenTest("raml with declared element link of link", "link-of-link/link-of-link.%s") { config =>
+    cycle(
+      "link-of-link/link-of-link.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("raml with declared element link of link of link", "link-of-link/link-of-link-of-link.%s") {
+    config =>
+      cycle(
+        "link-of-link/link-of-link-of-link.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        directory = resolutionPath,
+        transformWith = Some(Raml10),
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
+  multiGoldenTest("raml with declared element link of link in api", "link-of-link/in-api/link-of-link-in-api.%s") {
+    config =>
+      cycle(
+        "link-of-link/in-api/link-of-link-in-api.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        directory = resolutionPath,
+        transformWith = Some(Raml10),
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
+  multiGoldenTest("raml with declared element link of link of link in api",
+                  "link-of-link/middle-link-in-api/link-of-link-in-api.%s") { config =>
+    cycle(
+      "link-of-link/middle-link-in-api/link-of-link-in-api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Oas declared type alias inheritance with scalar type is valid", "oas-declared-link-of-scalar.%s") {
+    config =>
+      cycle(
+        "oas-declared-link-of-scalar.json",
+        config.golden,
+        OasJsonHint,
+        target = Amf,
+        directory = resolutionPath,
+        transformWith = Some(Oas30),
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
+  multiGoldenTest("Shared response references in OAS 2.0", "shared-response-reference/oas20/api.%s") { config =>
+    cycle(
+      "shared-response-reference/oas20/api.yaml",
+      config.golden,
+      OasYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas20),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Shared response references in OAS 3.0", "shared-response-reference/oas30/api.%s") { config =>
+    cycle(
+      "shared-response-reference/oas30/api.yaml",
+      config.golden,
+      OasYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Shared request body references in OAS 3.0", "shared-request-body-reference/oas30/api.%s") {
+    config =>
+      cycle(
+        "shared-request-body-reference/oas30/api.yaml",
+        config.golden,
+        OasYamlHint,
+        target = Amf,
+        directory = resolutionPath,
+        transformWith = Some(Oas30),
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
+  multiGoldenTest("Shared examples in OAS 3.0", "shared-oas-30-examples/api.%s") { config =>
+    cycle(
+      "shared-oas-30-examples/api.yaml",
+      config.golden,
+      OasYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Oas 3 autogenerated name in for inlined shapes", "oas3-inlined-shapes.%s") { config =>
+    cycle("oas3-inlined-shapes.yaml",
+          config.golden,
+          OasYamlHint,
+          target = Amf,
+          directory = resolutionPath,
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Oas 3 resolve request links that have parameters", "request-link-parameters/api.%s") { config =>
+    cycle(
+      "request-link-parameters/api.yaml",
+      config.golden,
+      OasYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Oas 2 recursion detection", "oas-recursion.%s") { config =>
+    cycle("oas-recursion.json",
+          config.golden,
+          OasJsonHint,
+          target = Amf,
+          directory = resolutionPath,
+          transformWith = Some(Oas20),
+          renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Resolve links defined in rt and traits before merging", "trait-with-link.%s") { config =>
+    cycle("trait-with-link.raml",
+          config.golden,
           RamlYamlHint,
           target = Amf,
           directory = resolutionPath,
-          transformWith = Some(Raml10))
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("raml with declared element link of link of link") {
+  multiGoldenTest("Internal json schema link in OAS", "oas-internal-json-schema-link/api.%s") { config =>
     cycle(
-      "link-of-link/link-of-link-of-link.raml",
-      "link-of-link/link-of-link-of-link.jsonld",
-      RamlYamlHint,
+      "oas-internal-json-schema-link/api.yaml",
+      config.golden,
+      OasYamlHint,
       target = Amf,
       directory = resolutionPath,
-      transformWith = Some(Raml10)
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledParserErrorHandler)
     )
   }
 
-  test("raml with declared element link of link in api") {
-    cycle(
-      "link-of-link/in-api/link-of-link-in-api.raml",
-      "link-of-link/in-api/link-of-link-in-api.jsonld",
-      RamlYamlHint,
-      target = Amf,
-      directory = resolutionPath,
-      transformWith = Some(Raml10)
-    )
+  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
+    new AMFRenderer(unit, config.target, defaultRenderOptions, config.syntax).renderToString
   }
 
-  test("raml with declared element link of link of link in api") {
-    cycle(
-      "link-of-link/middle-link-in-api/link-of-link-in-api.raml",
-      "link-of-link/middle-link-in-api/link-of-link-in-api.jsonld",
-      RamlYamlHint,
-      target = Amf,
-      directory = resolutionPath,
-      transformWith = Some(Raml10)
-    )
+  override def defaultRenderOptions: RenderOptions =
+    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint
+
+  // This test hangs diff
+  ignore("Emission of API with JSON Schema's schema as references") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, target = Amf, resolutionPath + "stackoverflow-case/")
   }
 
   // JSON-LD is serialized differently every time
@@ -528,85 +762,12 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
-  test("Oas declared type alias inheritance with scalar type is valid") {
-    cycle("oas-declared-link-of-scalar.json",
-          "oas-declared-link-of-scalar.jsonld",
-          OasJsonHint,
-          Amf,
-          directory = resolutionPath,
-          transformWith = Some(Oas30))
+  test("Example1 resolution to Raml") {
+    cycle("example1.yaml", "example1.resolved.yaml", OasYamlHint, Oas20, resolutionPath, syntax = Some(Yaml))
   }
 
-  test("Shared response references in OAS 2.0") {
-    cycle(
-      "shared-response-reference/oas20/api.yaml",
-      "shared-response-reference/oas20/api.jsonld",
-      OasYamlHint,
-      Amf,
-      directory = resolutionPath,
-      transformWith = Some(Oas20)
-    )
-  }
-
-  test("Shared response references in OAS 3.0") {
-    cycle(
-      "shared-response-reference/oas30/api.yaml",
-      "shared-response-reference/oas30/api.jsonld",
-      OasYamlHint,
-      Amf,
-      directory = resolutionPath,
-      transformWith = Some(Oas30)
-    )
-  }
-
-  test("Shared request body references in OAS 3.0") {
-    cycle(
-      "shared-request-body-reference/oas30/api.yaml",
-      "shared-request-body-reference/oas30/api.jsonld",
-      OasYamlHint,
-      Amf,
-      directory = resolutionPath,
-      transformWith = Some(Oas30)
-    )
-  }
-
-  test("Shared examples in OAS 3.0") {
-    cycle(
-      "shared-oas-30-examples/api.yaml",
-      "shared-oas-30-examples/api.jsonld",
-      OasYamlHint,
-      Amf,
-      directory = resolutionPath,
-      transformWith = Some(Oas30)
-    )
-  }
-
-  test("Oas 3 autogenerated name in for inlined shapes") {
-    cycle("oas3-inlined-shapes.yaml", "oas3-inlined-shapes.jsonld", OasYamlHint, Amf, directory = resolutionPath)
-  }
-
-  test("Oas 3 resolve request links that have parameters") {
-    cycle(
-      "request-link-parameters/api.yaml",
-      "request-link-parameters/api.jsonld",
-      OasYamlHint,
-      Amf,
-      directory = resolutionPath,
-      transformWith = Some(Oas30)
-    )
-  }
-
-  test("Oas 2 recursion detection") {
-    cycle("oas-recursion.json",
-          "oas-recursion.jsonld",
-          OasJsonHint,
-          Amf,
-          directory = resolutionPath,
-          transformWith = Some(Oas20))
-  }
-
-  test("Resolve links defined in rt and traits before merging") {
-    cycle("trait-with-link.raml", "trait-with-link.jsonld", RamlYamlHint, Amf, directory = resolutionPath)
+  test("Test merge examples in local against declared type") {
+    cycle("merge-examples.raml", "merge-examples.resolved.raml", RamlYamlHint, Raml, resolutionPath + "examples/")
   }
 
   test("Response with reference to declaration") {
@@ -620,11 +781,38 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    new AMFRenderer(unit,
-                    config.target,
-                    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint,
-                    config.syntax).renderToString
+  test("Resolution of server objects") {
+    cycle("overriding-server-object.json",
+          "overriding-server-object-resolved.json",
+          OasJsonHint,
+          Oas30,
+          cyclePath + "oas3/")
+  }
+
+  test("Overriding parameters in operation") {
+    cycle("overriding-parameters.json",
+          "overriding-param-output.json",
+          OasJsonHint,
+          Oas30,
+          cyclePath + "oas3/basic-parameters/")
+  }
+
+  test("Summary and description from path applied to operations") {
+    cycle(
+      "description-applied-to-operations.json",
+      "description-applied-to-operations-editing.json",
+      OasJsonHint,
+      Oas30,
+      cyclePath + "oas3/summary-description-in-path/"
+    )
+  }
+
+  test("Recursion in inheritance with resource type - Array") {
+    cycle("recursion-inheritance-array.raml",
+          "recursion-inheritance-array.resolved.raml",
+          RamlYamlHint,
+          Raml08,
+          validationsPath)
   }
 
   override val basePath: String = ""

@@ -250,5 +250,14 @@ class ValidRamlModelParserTest extends ValidModelTest {
   test("Nested json schema references") {
     checkValid("json-schema-nested-refs/api.raml")
   }
+
+  test("Valid recursive model defined in trait and operation") {
+    checkValid("recursion-in-trait.raml")
+  }
+
+  test("Valid SecurityScheme scope for empty scopes in declaration") {
+    checkValid("security-schema-scope.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

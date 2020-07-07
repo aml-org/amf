@@ -1,0 +1,53 @@
+{
+  "@graph": [
+    {
+      "@id": "testId/message",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Response",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "message",
+      "http://a.ml/vocabularies/apiContract#payload": [
+        {
+          "@id": "target/message/default"
+        }
+      ],
+      "http://a.ml/vocabularies/apiContract#tag": [
+        {
+          "@id": "target/message/tag/traitTag"
+        }
+      ]
+    },
+    {
+      "@id": "target/message/default",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ]
+    },
+    {
+      "@id": "target/message/tag/traitTag",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Tag",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "traitTag",
+      "http://a.ml/vocabularies/core#description": "traitDescription"
+    },
+    {
+      "@id": "testId",
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "testId/message"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#root": false
+    }
+  ]
+}

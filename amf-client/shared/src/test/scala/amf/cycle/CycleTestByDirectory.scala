@@ -3,6 +3,7 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{AmfJsonHint, Hint}
 import amf.io.BuildCycleTests
+import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm, JsonLdSerialization, NoForm}
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.{Assertion, AsyncFreeSpec}
 
@@ -47,29 +48,59 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
   protected lazy val withEnableValidations: Seq[String] = Seq()
 
   dirs.foreach { d =>
-    if (d.name.endsWith(".ignore")) {
-      s"Source: ${d.name}" ignore { Future.successful(succeed) }
+    val dirName = d.name
+    if (dirName.endsWith(".ignore")) {
+      s"Source: $dirName" ignore { Future.successful(succeed) }
     } else {
-      s"Source: ${d.name}" - {
-        simpleCycle(d.name)
+      s"Source: $dirName" - {
+        simpleCycle(dirName)
 
-        goldenCycle(d.name, d.name + "/dumped" + fileExtension)
+        goldenCycle(dirName, s"$dirName/dumped$fileExtension")
 
-        s"Steps for jsonld serialization ${d.name}" - {
-          s"Generate jsonld for ${d.name}" in {
-            val t = d.name + "/api" + fileExtension + ".jsonld" + (if (Fs.syncFile(
-                                                                           basePath + d.name + "/api" + fileExtension + ".jsonld" + ".ignore")
-                                                                         .exists) ".ignore"
-                                                                   else "")
-            runCycle(d.name + "/api" + fileExtension, t, origin, AmfJsonHint, None)
+        s"Steps for json-ld serialization $dirName" - {
+          val knownJsonLdForms = Seq(NoForm, FlattenedForm, ExpandedForm)
+          knownJsonLdForms.foreach { form =>
+            val jsonLdPath         = s"$dirName/api$fileExtension${form.extension}"
+            val specFromJsonLdPath = s"$jsonLdPath$fileExtension"
+
+            if (existGoldenForForm(d, form)) {
+              val serialization = JsonLdSerialization(form)
+
+              generateJsonLD(d, serialization)
+
+              amfToSpec(d, serialization)
+
+              specToAmfForAmf(dirName, specFromJsonLdPath)
+            }
           }
-          amfToSpec(d.name,
-                    d.name + "/api" + fileExtension + ".jsonld",
-                    d.name + "/api" + fileExtension + ".jsonld" + fileExtension)
-          specToAmfForAmf(d.name, d.name + "/api" + fileExtension + ".jsonld" + fileExtension)
         }
       }
     }
+  }
+
+  private def sanitize(path: String) = path.replace("//", "/")
+
+  private def generateJsonLD(d: SyncFile, serialization: JsonLdSerialization): Unit = {
+    val dirName = d.name
+    s"Generate json-ld for $dirName with form ${serialization.form.name}" in {
+      val jsonldExtension     = serialization.form.extension
+      val additionalExtension = if (isIgnored(d, Some(jsonldExtension))) ".ignore" else ""
+      val input               = s"$dirName/api.$fileExtension"
+      val target              = s"$dirName/api.$fileExtension$jsonldExtension$additionalExtension"
+      runCycle(input, target, origin, AmfJsonHint, None)
+    }
+  }
+
+  private def isIgnored(d: SyncFile, additionalExtensionOpt: Option[String] = None): Boolean = {
+    val additionalExtension = additionalExtensionOpt.getOrElse("")
+    val path                = sanitize(s"$basePath/${d.name}/api.$fileExtension$additionalExtension.ignore")
+    Fs.syncFile(path).exists
+  }
+
+  private def existGoldenForForm(d: SyncFile, form: JsonLdDocumentForm): Boolean = {
+    val jsonldExtension = form.extension
+    val path            = sanitize(s"$basePath/${d.name}/api.$fileExtension$jsonldExtension")
+    Fs.syncFile(path).exists
   }
 
   private def goldenCycle(name: String, f: String): Unit = {
@@ -92,16 +123,28 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
     }
   }
 
+  private def amfToSpec(d: SyncFile, serialization: JsonLdSerialization): Unit = {
+    val base = s"${d.name}/api$fileExtension"
+    val jsonLdExtension =
+      if (Fs.syncFile(s"$base${serialization.form.extension}").exists) {
+        serialization.form.extension
+      } else {
+        // default extension
+        NoForm.extension
+      }
+    amfToSpec(d.name, s"$base$jsonLdExtension", s"$base$jsonLdExtension$fileExtension")
+  }
+
   private def amfToSpec(name: String, o: String, t: String): Unit = {
     val tar = if (Fs.syncFile(basePath + "/" + t + ".ignore").exists) t + ".ignore" else t
 
     if (Fs.syncFile(basePath + "/" + o + ".ignore").exists) {
 
-      s"Generate golden from jsonld for $name" ignore {
+      s"Generate golden from json-ld for $name" ignore {
         runCycle(o + ".ignore", tar, AmfJsonHint, target, syntax = Some(target.syntax))
       }
     } else {
-      s"Generate golden from jsonld for $name" in {
+      s"Generate golden from json-ld for $name" in {
         runCycle(o, tar, AmfJsonHint, target, syntax = Some(target.syntax))
       }
     }
@@ -109,11 +152,11 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
 
   private def specToAmfForAmf(name: String, f: String): Unit = {
     if (Fs.syncFile(basePath + "/" + f + ".ignore").exists) {
-      s"Parse golden from jsonld for $name" ignore {
+      s"Parse golden from json-ld for $name" ignore {
         runCycle(f + ".ignore", f + ".ignore", target, target, syntax = Some(target.syntax))
       }
     } else {
-      s"Parse golden from jsonld for $name" in {
+      s"Parse golden from json-ld for $name" in {
         runCycle(f, f, target, target, syntax = Some(target.syntax))
       }
     }

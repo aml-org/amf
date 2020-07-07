@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.core.emitter.RenderOptions
 import amf.core.remote.{Amf, OasJsonHint, RamlYamlHint}
 
 /**
@@ -8,19 +9,29 @@ import amf.core.remote.{Amf, OasJsonHint, RamlYamlHint}
 class QueryStringResolutionTest extends ResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/resolution/queryString/"
 
-  test("QueryString raml to AMF") {
-    cycle("query-string.raml", "query-string.raml.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("QueryString raml to AMF", "query-string.raml.%s") { config =>
+    cycle("query-string.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  test("QueryString oas to AMF") {
-    cycle("query-string.json", "query-string.json.jsonld", OasJsonHint, Amf)
+  multiGoldenTest("QueryString oas to AMF", "query-string.json.%s") { config =>
+    cycle("query-string.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  test("Security Scheme with Query String oas to AMF") {
-    cycle("security-with-query-string.json", "security-with-query-string.json.jsonld", OasJsonHint, Amf)
+  multiGoldenTest("Security Scheme with Query String oas to AMF", "security-with-query-string.json.%s") { config =>
+    cycle("security-with-query-string.json",
+          config.golden,
+          OasJsonHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Security Scheme with Query String raml to AMF") {
-    cycle("security-with-query-string.raml", "security-with-query-string.raml.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("Security Scheme with Query String raml to AMF", "security-with-query-string.raml.%s") { config =>
+    cycle("security-with-query-string.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
+
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
 }

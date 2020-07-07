@@ -1,7 +1,7 @@
 package amf.validation
 
+import amf.Oas20Profile
 import amf.core.remote.{Hint, OasYamlHint}
-import amf.{Oas20Profile, Oas30Profile}
 import org.scalatest.Matchers
 
 class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
@@ -9,8 +9,14 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/oas2/"
   override val hint: Hint          = OasYamlHint
 
-  test("Invalid security scheme type in Oas 20") {
-    validate("invalid-security-scheme-type.json", Some("invalid-security-scheme-type.report"), Oas20Profile)
+  test("Oas path uri is invalid") {
+    validate("invalid-endpoint-path-still-parses.json",
+             Some("invalid-endpoint-path-still-parses.report"),
+             Oas20Profile)
+  }
+
+  test("Invalid security scheme type") {
+    validate("security/invalid-security-scheme-type.json", Some("invalid-security-scheme-type.report"), Oas20Profile)
   }
 
   test("invalid ref inside paths object") {
@@ -43,5 +49,9 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
 
   test("Nested yaml refs") {
     validate("nested-yaml-refs/api.yaml", None, Oas20Profile)
+  }
+
+  test("SecuritySchema scope in implemetation that is not defined in declaration") {
+    validate("security-schema-scopes.yaml", Some("security-schema-scopes.report"), Oas20Profile)
   }
 }

@@ -1,53 +1,8 @@
 package amf.resolution
 
-import amf.client.parse.DefaultParserErrorHandler
-import amf.core.emitter.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.metamodel.document.DocumentModel
-import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
+import amf.core.model.document.Document
 import amf.core.remote._
-import amf.core.resolution.stages.ReferenceResolutionStage
-import amf.emit.AMFRenderer
-import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
-import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
-import org.scalatest.Assertion
-
-import scala.concurrent.Future
-
-abstract class RamlResolutionTest extends ResolutionTest {
-  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    new AMFRenderer(unit, config.target, RenderOptions().withSourceMaps.withPrettyPrint, config.syntax).renderToString
-  }
-}
-
-class ProductionValidationTest extends RamlResolutionTest {
-  override val basePath = "amf-client/shared/src/test/resources/production/"
-  override def build(config: CycleConfig,
-                     eh: Option[ParserErrorHandler],
-                     useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
-    Validation(platform).flatMap { v =>
-      AMFCompiler(s"file://${config.sourcePath}",
-                  platform,
-                  config.hint,
-                  eh = eh.getOrElse(DefaultParserErrorHandler.withRun())).build()
-    }
-  }
-
-  test("Recursive union raml to amf") {
-    cycle("recursive-union.raml", "recursive-union.raml.jsonld", RamlYamlHint, Amf)
-  }
-
-  test("Recursive union raml to raml") {
-    cycle("recursive-union.raml", "recursive-union.raml.raml", RamlYamlHint, Raml)
-  }
-
-  test("Patch method raml to raml") {
-    cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, directory = basePath + "patch-method/")
-  }
-
-}
 
 class ProductionResolutionTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
@@ -57,16 +12,24 @@ class ProductionResolutionTest extends RamlResolutionTest {
   val productionRaml10  = "amf-client/shared/src/test/resources/production/raml10/"
   val productionRaml08  = "amf-client/shared/src/test/resources/production/raml08/"
 
-  test("Test declared type with facet added") {
-    cycle("add-facet.raml", "add-facet.raml.jsonld", RamlYamlHint, Amf, basePath + "inherits-resolution-declares/")
+  multiGoldenTest("Test declared type with facet added", "add-facet.raml.%s") { config =>
+    cycle("add-facet.raml",
+          config.golden,
+          RamlYamlHint,
+          renderOptions = Some(config.renderOptions),
+          target = Amf,
+          directory = basePath + "inherits-resolution-declares/")
   }
 
-  test("Test inline type from includes") {
-    cycle("test-ramlfragment.raml",
-          "test-ramlfragment.raml.jsonld",
-          RamlYamlHint,
-          Amf,
-          basePath + "inherits-resolution-declares/")
+  multiGoldenTest("Test inline type from includes", "test-ramlfragment.raml.%s") { config =>
+    cycle(
+      "test-ramlfragment.raml",
+      config.golden,
+      RamlYamlHint,
+      renderOptions = Some(config.renderOptions),
+      target = Amf,
+      directory = basePath + "inherits-resolution-declares/"
+    )
   }
 
   test("Resolves googleapis.compredictionv1.2swagger.raml") {
@@ -76,15 +39,21 @@ class ProductionResolutionTest extends RamlResolutionTest {
           Raml)
   }
 
-  test("Resolves googleapis.compredictionv1.2swagger.raml to jsonld") {
+  multiGoldenTest("Resolves googleapis.compredictionv1.2swagger.raml to jsonld",
+                  "googleapis.compredictionv1.2swagger.raml.resolved.%s") { config =>
     cycle("googleapis.compredictionv1.2swagger.raml",
-          "googleapis.compredictionv1.2swagger.raml.resolved.jsonld",
+          config.golden,
           RamlYamlHint,
-          Amf)
+          renderOptions = Some(config.renderOptions),
+          target = Amf)
   }
 
-  test("azure_blob_service raml to jsonld") {
-    cycle("microsoft_azure_blob_service.raml", "microsoft_azure_blob_service.raml.resolved.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("azure_blob_service raml to jsonld", "microsoft_azure_blob_service.raml.resolved.%s") { config =>
+    cycle("microsoft_azure_blob_service.raml",
+          config.golden,
+          RamlYamlHint,
+          renderOptions = Some(config.renderOptions),
+          target = Amf)
   }
 
   test("test definition_loops input") {
@@ -95,12 +64,16 @@ class ProductionResolutionTest extends RamlResolutionTest {
           productionRaml08 + "definitions-loops-crossfiles2/")
   }
 
-  test("Types with unions raml to AMF") {
-    cycle("unions-example.raml", "unions-example.raml.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("Types with unions raml to AMF", "unions-example.raml.%s") { config =>
+    cycle("unions-example.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  test("Examples in header of type union") {
-    cycle("example-in-union.raml", "example-in-union.raml.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("Examples in header of type union", "example-in-union.raml.%s") { config =>
+    cycle("example-in-union.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   test("Complex types raml to raml") {
@@ -117,10 +90,6 @@ class ProductionResolutionTest extends RamlResolutionTest {
           RamlYamlHint,
           Raml,
           productionRaml10 + "american-flights-api/")
-  }
-
-  ignore("API Console test api") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, basePath + "api-console/")
   }
 
   test("Test trait resolution null pointer exception test") {
@@ -217,8 +186,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
       _           <- render(doubleModel, config, useAmfJsonldSerialization)
       b           <- render(doubleModel, config, useAmfJsonldSerialization)
     } yield {
-      val simpleDeclares = simpleModel.asInstanceOf[Document].declares
-      val doubleDeclares = doubleModel.asInstanceOf[Document].declares
+      val simpleDeclares =
+        simpleModel.asInstanceOf[Document].declares
+      val doubleDeclares =
+        doubleModel.asInstanceOf[Document].declares
       writeTemporaryFile("demo-api1.jsonld")(a)
       writeTemporaryFile("demo-api2.jsonld")(b)
       assert(simpleDeclares.length == doubleDeclares.length)
@@ -237,217 +208,49 @@ class ProductionResolutionTest extends RamlResolutionTest {
     cycle("api.raml", "api.raml.resolved", RamlYamlHint, Raml, basePath + "simple-inheritance-link-example/")
   }
 
+  // TODO migrate to multiGoldenTest
   test("Test union type anyOf name values") {
     cycle("api.raml", "api.raml.resolved", RamlYamlHint, Amf, basePath + "union-type/")
   }
 
+  // TODO migrate to multiGoldenTest
   test("Test complex recursions in type inheritance 1") {
     cycle("healthcare_reduced_v1.raml", "healthcare_reduced_v1.raml.resolved", RamlYamlHint, Amf, validationPath)
   }
 
+  // TODO migrate to multiGoldenTest
   test("Test complex recursions in type inheritance 2") {
     cycle("healthcare_reduced_v2.raml", "healthcare_reduced_v2.raml.resolved", RamlYamlHint, Amf, validationPath)
   }
 
+  // TODO migrate to multiGoldenTest
   test("Test resource type parameters ids") {
     cycle("rt-parameters.raml", "rt-parameters.raml.resolved", RamlYamlHint, Amf, validationPath)
   }
 
+  // TODO migrate to multiGoldenTest
   test("Test nil type with additional facets") {
     cycle("nil-type.raml", "nil-type.raml.resolved", RamlYamlHint, Amf, validationPath)
   }
 
-  test("Test first enum value and default value witha applied trait have different ids") {
+  multiGoldenTest("Test first enum value and default value witha applied trait have different ids",
+                  "enum-id-with-applied-trait/golden.%s") { config =>
     cycle("enum-id-with-applied-trait/api.raml",
-          "enum-id-with-applied-trait/golden.jsonld",
+          config.golden,
           RamlYamlHint,
-          Amf,
+          target = Amf,
+          renderOptions = Some(config.renderOptions),
           transformWith = Some(Raml10))
   }
 
-  test("jsonld with links to declares and references") {
+  multiGoldenTest("jsonld with links to declares and references", "link-to-declares-and-refs-default.%s") { config =>
     cycle(
       "link-to-declares-and-refs.raml",
-      "link-to-declares-and-refs-default.jsonld",
+      config.golden,
       RamlYamlHint,
-      Amf,
-      resolutionPath + "links-to-declares-and-references/"
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = resolutionPath + "links-to-declares-and-references/"
     )
-  }
-}
-
-class OASProductionResolutionTest extends ResolutionTest {
-  override val basePath = "amf-client/shared/src/test/resources/production/"
-  val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
-
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    if (config.target.equals(Amf) && config.transformWith.isEmpty) Oas20Plugin.resolve(unit, UnhandledErrorHandler)
-    else super.transform(unit, config)
-  }
-
-  test("OAS Response parameters resolution") {
-    cycle("oas_response_declaration.yaml",
-          "oas_response_declaration.resolved.jsonld",
-          OasYamlHint,
-          Amf,
-          completeCyclePath)
-  }
-
-  test("OAS with foward references in definitions") {
-    cycle("oas_foward_definitions.json", "oas_foward_definitions.resolved.jsonld", OasJsonHint, Amf, completeCyclePath)
-  }
-
-  test("OAS with external fragment reference in upper folder") {
-    cycle("master/master.json", "api.resolved.jsonld", OasJsonHint, Amf, completeCyclePath + "oas-fragment-ref/")
-  }
-
-  test("OAS complex example") {
-    cycle("spec/swagger.json", "api.resolved.jsonld", OasJsonHint, Amf, basePath + "oas-complex-example/")
-  }
-
-  test("OAS examples test") {
-    cycle("oas-example.json", "oas-example.json.jsonld", OasJsonHint, Amf)
-  }
-
-  test("OAS multiple examples test") {
-    cycle("oas-multiple-example.json", "oas-multiple-example.json.jsonld", OasJsonHint, Amf)
-  }
-
-  test("OAS XML payload test") {
-    cycle("oas20/xml-payload.json", "oas20/xml-payload.json.jsonld", OasYamlHint, Amf)
-  }
-
-  test("Summary and description from path applied to operations") {
-    cycle(
-      "description-applied-to-operations.json",
-      "description-applied-to-operations-resolution.jsonld",
-      OasJsonHint,
-      Amf,
-      completeCyclePath + "oas3/summary-description-in-path/",
-      transformWith = Some(Oas30)
-    )
-  }
-}
-
-class Raml08ResolutionTest extends RamlResolutionTest {
-  override val basePath: String = "amf-client/shared/src/test/resources/resolution/08/"
-  val productionPath: String    = "amf-client/shared/src/test/resources/production/"
-
-  test("Resolve WebForm 08 Types test") {
-    cycle("mincount-webform-types.raml", "mincount-webform-types.resolved.raml", RamlYamlHint, Raml08)
-  }
-
-  test("Resolve Min and Max in header 08 test") {
-    cycle("min-max-in-header.raml", "min-max-in-header.resolved.raml", RamlYamlHint, Raml08)
-  }
-
-  test("Test failing with exception") {
-    recoverToExceptionIf[Exception] {
-      cycle("wrong-key.raml", "wrong-key.raml", RamlYamlHint, Raml08, eh = Some(UnhandledParserErrorHandler))
-    }.map { ex =>
-      assert(ex.getMessage.contains(s"Message: Property 'errorKey' not supported in a ${Raml08.name} webApi node"))
-    }
-  }
-
-  test("Test empty trait in operations") {
-    cycle("empty-is-operation-endpoint.raml", "empty-is-operation-endpoint.raml.raml", RamlYamlHint, Raml08)
-  }
-
-  test("Test included schema") {
-    cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml08, basePath + "included-schema/")
-  }
-
-  test("Test included schema and example") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, basePath + "included-schema-and-example/")
-  }
-
-  test("Test json_schemasa refs") {
-    cycle("json_schemas.raml", "json_schemas.resolved.raml", RamlYamlHint, Raml08)
-  }
-}
-
-/**
-  * This unit tests run as one, we need several steps to check that the dumped json ld, after resolve types, it's correct.
-  * That means, that not only the graph can be parsed, but also it's similar to the resolved model dumped as raml.
-  * In order to check that, first dump a raml to jsonld to clean the annotations. Then, we parse that jsonld, resolve the model and dump it to raml.
-  * We do that, to get a raml api generated from a resolved model without annotations
-  * After check that, we parse the resolved jsonld model, and generates the raml, to check that the final raml it's equivalent to the raml resolved and dumped.
-  * */
-class ProductionServiceTest extends RamlResolutionTest {
-
-  override def build(config: CycleConfig,
-                     eh: Option[ParserErrorHandler],
-                     useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
-    Validation(platform).flatMap { v =>
-      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, eh = UnhandledParserErrorHandler).build()
-    }
-  }
-  private def dummyFunc: (BaseUnit, CycleConfig) => BaseUnit = (u: BaseUnit, _: CycleConfig) => u
-
-  override val basePath = "amf-client/shared/src/test/resources/production/resolution-dumpjsonld/"
-
-  /* Generate the jsonld from a resolved raml */
-  test("Test step1: resolve and emit jsonld") {
-    run("api.raml", "api.resolved.raml.jsonld", RamlYamlHint, Amf, transform)
-  }
-
-  /* Generate the api resolved directly, without serialize the jsonld */
-  test("Test step2: resolve and emit raml") {
-    run("api.raml", "api.resolved.raml", RamlYamlHint, Raml, transform)
-  }
-
-  /* Generate the jsonld without resolve (to clean the annotations) */
-  test("Test step3: emit jsonld without resolve") {
-    run("api.raml", "api.raml.jsonld", RamlYamlHint, Amf, dummyFunc)
-  }
-
-  /* Generate the resolved raml after read the jsonld(without annotations) */
-  test("Test step4: emit jsonld with resolve") {
-    run("api.raml.jsonld", "api.raml.jsonld.resolved.raml", AmfJsonHint, Raml, transform)
-  }
-
-  /* Now we really test the case, parse the json ld and compare to a similar jsonld (this should have the declarations) */
-  test("Test step5: parse resolved api and dump raml") {
-    run("api.resolved.raml.jsonld", "api.resolved.jsonld.raml", AmfJsonHint, Raml, dummyFunc)
-  }
-
-  /* Generate the raml from a json ld without resolve */
-  test("Test step6: parse resolved api and dump raml") {
-    run("api.raml.jsonld", "api.jsonld.raml", AmfJsonHint, Raml, dummyFunc)
-  }
-
-  /* Generate the raml from a jsonld resolved raml */
-  test("Test step7: emit resolved jsonld and check against normal raml") {
-    run("api.resolved.raml.jsonld", "api.jsonld.raml", AmfJsonHint, Raml, dummyFunc)
-  }
-
-  /* Generate the raml api from a resolved raml to jsonld cleaning the declarations and refs stage */
-  test("Test step8: emit resolved jsonld and check against normal raml") {
-    run(
-      "api.resolved.raml.jsonld",
-      "api.raml.jsonld.resolved.raml",
-      AmfJsonHint,
-      Raml,
-      (u: BaseUnit, _: CycleConfig) => {
-        val resolved = new ReferenceResolutionStage(false)(UnhandledErrorHandler).resolve(u)
-        resolved.fields.removeField(DocumentModel.Declares)
-        resolved
-      }
-    )
-  }
-
-  def run(source: String,
-          golden: String,
-          hint: Hint,
-          target: Vendor,
-          tFn: (BaseUnit, CycleConfig) => BaseUnit): Future[Assertion] = {
-
-    val config = CycleConfig(source, golden, hint, target, basePath, None, None)
-
-    build(config, None, useAmfJsonldSerialization = true)
-      .map(tFn(_, config))
-      .flatMap(render(_, config, useAmfJsonldSerialization = true))
-      .flatMap(writeTemporaryFile(golden))
-      .flatMap(assertDifferences(_, config.goldenPath))
   }
 }

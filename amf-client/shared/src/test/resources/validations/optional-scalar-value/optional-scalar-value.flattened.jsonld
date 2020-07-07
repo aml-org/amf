@@ -1,0 +1,143 @@
+{
+  "@graph": [
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "API",
+      "apiContract:endpoint": [
+        {
+          "@id": "#4"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#3": "RAML 1.0"
+        },
+        "lexical": {
+          "core:name": "[(2,0)-(4,0)]",
+          "#3": "[(2,0)-(9,13)]"
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/resource",
+      "core:description": "",
+      "amf://id#4/scalar-valued/1/a": {
+        "@id": "#4/scalar-valued/1/a/scalar_1"
+      },
+      "doc:customDomainProperties": [
+        {
+          "@id": "#4/scalar-valued/1/a"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "core:description": "[(8,2)-(9,13)]",
+          "#4": "[(7,0)-(9,13)]"
+        }
+      }
+    },
+    {
+      "core:extensionName": "a",
+      "doc:element": "http://a.ml/vocabularies/core#description",
+      "@id": "#4/scalar-valued/1/a/scalar_1",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "some",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "scalar_1",
+      "smaps": {
+        "lexical": {
+          "#4/scalar-valued/1/a/scalar_1": "[(9,9)-(9,13)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#3"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "doc:DomainProperty",
+        "rdf:Property",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:schema": {
+        "@id": "#2"
+      },
+      "core:name": "a",
+      "smaps": {
+        "declared-element": {
+          "#1": ""
+        },
+        "lexical": {
+          "core:name": "[(5,2)-(5,3)]",
+          "#1": "[(5,2)-(7,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "a",
+      "smaps": {
+        "lexical": {
+          "#2": "[(5,2)-(7,0)]"
+        }
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  }
+}

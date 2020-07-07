@@ -1,0 +1,30 @@
+Model: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-yaml-tags.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 3
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#unknown-yaml-tag
+  Message: Unknown tag '!!firstInvalid', must be allowed by json schema ruleset
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(5,2)-(5,16)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-yaml-tags.yaml
+
+- Source: http://a.ml/vocabularies/amf/parser#unknown-yaml-tag
+  Message: Unknown tag '!!secondInvalid', must be allowed by json schema ruleset
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(5,26)-(5,41)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-yaml-tags.yaml
+
+- Source: http://a.ml/vocabularies/amf/parser#unknown-yaml-tag
+  Message: Unknown tag '!finalInvalid', must be allowed by json schema ruleset
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(14,20)-(14,33)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-yaml-tags.yaml

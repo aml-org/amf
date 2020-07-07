@@ -10,6 +10,9 @@ import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor}
 import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
+import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm, NoForm}
+import org.scalactic.Fail
+import org.scalatest.words.{IncludeWord, ShouldVerb}
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -17,11 +20,71 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   * Cycle tests using temporary file and directory creator
   */
-abstract class FunSuiteCycleTests extends AsyncFunSuite with BuildCycleTests {
+abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite {
+  def testedForms: Seq[JsonLdDocumentForm] = Seq(FlattenedForm, ExpandedForm)
+
+  def defaultRenderOptions: RenderOptions = RenderOptions()
+
+  def renderOptionsFor(documentForm: JsonLdDocumentForm): RenderOptions = {
+    documentForm match {
+      case FlattenedForm => defaultRenderOptions.withFlattenedJsonLd
+      case ExpandedForm  => defaultRenderOptions.withoutFlattenedJsonLd
+      case _             => defaultRenderOptions
+
+    }
+  }
+
+  private def validatePattern(pattern: String, patternName: String): Unit = {
+    if (!pattern.contains("%s")) {
+      Fail(s"$pattern is not a valid $patternName pattern. Must contain %s as the handled JSON-LD extension")
+    }
+  }
+
+  // Single source, multiple JSON-LD outputs
+  def multiGoldenTest(testText: String, goldenNamePattern: String)(
+      testFn: MultiGoldenTestConfig => Future[Assertion]): Unit = {
+    testedForms.foreach { form =>
+      validatePattern(goldenNamePattern, "goldenNamePattern")
+      val golden = goldenNamePattern.format(form.extension)
+      val config = MultiGoldenTestConfig(golden, renderOptionsFor(form))
+      test(s"$testText for ${form.name} JSON-LD golden")(testFn(config))
+    }
+  }
+
+  // Multiple JSON-LD sources, single output
+  def multiSourceTest(testText: String, sourceNamePattern: String)(
+      testFn: MultiSourceTestConfig => Future[Assertion]): Unit = {
+    testedForms.foreach { form =>
+      validatePattern(sourceNamePattern, "sourceNamePattern")
+      val source = sourceNamePattern.format(form.extension)
+      val config = MultiSourceTestConfig(source)
+      test(s"$testText for ${form.name} JSON-LD source")(testFn(config))
+    }
+  }
+
+  // Multiple JSON-LD sources, multiple JSON-LD outputs. Each source matches exactly one output
+  def multiTest(testText: String, sourceNamePattern: String, goldenNamePattern: String)(
+      testFn: MultiTestConfig => Future[Assertion]): Unit = {
+    testedForms.foreach { form =>
+      validatePattern(sourceNamePattern, "sourceNamePattern")
+      validatePattern(goldenNamePattern, "goldenNamePattern")
+      val source = sourceNamePattern.format(form.extension)
+      val golden = goldenNamePattern.format(form.extension)
+      val config = MultiTestConfig(source, golden, renderOptionsFor(form))
+      test(s"$testText for ${form.name} JSON-LD")(testFn(config))
+    }
+  }
+}
+
+case class MultiGoldenTestConfig(golden: String, renderOptions: RenderOptions)
+case class MultiSourceTestConfig(source: String)
+case class MultiTestConfig(source: String, golden: String, renderOptions: RenderOptions)
+
+abstract class FunSuiteCycleTests extends MultiJsonldAsyncFunSuite with BuildCycleTests {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 }
 
-abstract class FunSuiteRdfCycleTests extends AsyncFunSuite with BuildCycleRdfTests {
+abstract class FunSuiteRdfCycleTests extends MultiJsonldAsyncFunSuite with BuildCycleRdfTests {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 }
 
@@ -70,6 +133,12 @@ trait BuildCycleTestCommon extends FileAssertionTest {
       if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
     new AMFRenderer(unit, target, options, config.syntax).renderToString
   }
+
+  /** Method to render parsed unit. Override if necessary. */
+  def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
+    val target = config.target
+    new AMFRenderer(unit, target, options, config.syntax).renderToString
+  }
 }
 
 trait BuildCycleTests extends BuildCycleTestCommon {
@@ -95,17 +164,24 @@ trait BuildCycleTests extends BuildCycleTestCommon {
                   hint: Hint,
                   target: Vendor,
                   directory: String = basePath,
+                  renderOptions: Option[RenderOptions] = None,
                   useAmfJsonldSerialization: Boolean = true,
                   syntax: Option[Syntax] = None,
                   pipeline: Option[String] = None,
                   transformWith: Option[Vendor] = None,
                   eh: Option[ParserErrorHandler] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
+    val config                 = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
+    val amfJsonLdSerialization = renderOptions.map(_.isAmfJsonLdSerilization).getOrElse(useAmfJsonldSerialization)
 
-    build(config, eh.orElse(Some(DefaultParserErrorHandler.withRun())), useAmfJsonldSerialization)
+    build(config, eh.orElse(Some(DefaultParserErrorHandler.withRun())), amfJsonLdSerialization)
       .map(transform(_, config))
-      .flatMap(render(_, config, useAmfJsonldSerialization))
+      .flatMap {
+        renderOptions match {
+          case Some(options) => render(_, config, options)
+          case None          => render(_, config, useAmfJsonldSerialization)
+        }
+      }
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }
@@ -121,6 +197,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
                    hint: Hint,
                    target: Vendor = Amf,
                    directory: String = basePath,
+                   renderOptions: Option[RenderOptions] = None,
                    syntax: Option[Syntax] = None,
                    pipeline: Option[String] = None): Future[Assertion] = {
 
@@ -128,7 +205,12 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
 
     build(config, None, useAmfJsonldSerialisation = true)
       .map(transformThroughRdf(_, config))
-      .flatMap(render(_, config, useAmfJsonldSerialization = true))
+      .flatMap {
+        renderOptions match {
+          case Some(options) => render(_, config, options)
+          case None          => render(_, config, useAmfJsonldSerialization = true)
+        }
+      }
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }

@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: GitHub API
+
+securitySchemes:
+  oauth_2_0:
+    description: This API supports OAuth 2.0 for authenticating all API requests.
+    type: OAuth 2.0
+    settings:
+      accessTokenUri:   https://esboam-dev.hhq.hud.dev/openam/oauth2/access_token
+      authorizationGrants: [ client_credentials ]
+
+/users:
+  get:
+    securedBy: [ oauth_2_0: { scopes: [ USER ] } ]

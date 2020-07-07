@@ -1,0 +1,27 @@
+swagger: '2.0'
+info:
+  title: Sample API
+  version: ''
+
+securityDefinitions:
+  auth_2_0:
+      type: oauth2
+      tokenUrl: https://someurl.com/open/oauth2/access_token
+      flow: application
+      scopes:
+        ADMIN: admin
+
+paths:
+  /resource1:
+    get:
+      operationId: GET_resource1
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: string
+      security:
+        - auth_2_0:
+            - USER

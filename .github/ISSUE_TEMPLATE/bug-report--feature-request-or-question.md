@@ -31,4 +31,3 @@ Your issue may already be reported! Please search on Github issues before creati
   - Link to your project:
 
 * **Other information** (e.g. detailed explanation, stack traces, related issues, suggestions how to fix, links for us to have context, eg. StackOverflow, Gitter, etc)
-

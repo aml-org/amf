@@ -11,7 +11,7 @@ pipeline {
   environment {
     NEXUS = credentials('exchange-nexus')
     NEXUSIQ = credentials('nexus-iq')
-    GITHUB_ORG = 'mulesoft'
+    GITHUB_ORG = 'aml-org'
     GITHUB_REPO = 'amf'
   }
   stages {
@@ -58,7 +58,6 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'release/*'
         }
       }
       steps {
@@ -156,7 +155,6 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'release/*'
         }
       }
       steps {

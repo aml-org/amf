@@ -6,6 +6,7 @@ import amf.core.model.domain.NamedDomainElement
 import amf.core.parser._
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.parser.spec.common.YamlTagValidator
 import amf.plugins.document.webapi.parser.spec.declaration.AbstractDeclarationsParser
 import amf.plugins.document.webapi.parser.spec.domain.{
   OasLinkParser,
@@ -22,6 +23,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     extends OasDocumentParser(root) {
 
   override def parseWebApi(map: YMap): WebApi = {
+    YamlTagValidator.validate(root)
     val api = super.parseWebApi(map)
 
     map.key("consumes".asOasExtension, WebApiModel.Accepts in api)

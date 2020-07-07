@@ -1,0 +1,153 @@
+#%RAML 1.0
+types:
+  Pet:
+    type: object
+    examples:
+      generated_1:
+        strict: false
+        value:
+          id: 5
+          name: MyAnonymousPet
+      one:
+        description: pet1
+        strict: false
+        value:
+          id: 233
+          name: Bielsa
+    properties:
+      id:
+        type: number
+        format: int64
+        required: true
+      name:
+        type: string
+        required: true
+      tag?:
+        type: string
+  Pets:
+    type: array
+    examples:
+      petsArrayExample:
+        description: aaa
+        strict: false
+        value:
+          -
+            pet1:
+              id: 233
+              name: A
+          -
+            pet2:
+              id: 455
+              name: B
+    items: Pet
+  SimplePet:
+    type: object
+    example:
+      strict: false
+      value:
+        message: Hello
+    properties:
+      message?:
+        type: string
+annotationTypes:
+  amf-serverDescription:
+    type: any
+  amf-exclusiveMinimum:
+    type: any
+  amf-binding:
+    type: any
+  amf-pattern:
+    type: any
+  amf-payloads:
+    type: any
+  amf-exclusiveMaximum:
+    type: any
+  amf-consumes:
+    type: any
+  amf-additionalProperties:
+    type: any
+  amf-or:
+    type: any
+  amf-url:
+    type: any
+  amf-externalDocs:
+    type: any
+  amf-flow:
+    type: any
+  amf-oasDeprecated:
+    type: any
+  amf-contact:
+    type: any
+  amf-multipleOf:
+    type: any
+  amf-xor:
+    type: any
+  amf-not:
+    type: any
+  amf-callbacks:
+    type: any
+  amf-produces:
+    type: any
+  amf-format:
+    type: any
+  amf-license:
+    type: any
+  amf-summary:
+    type: any
+  amf-responses:
+    type: any
+  amf-maximum:
+    type: any
+  amf-tags:
+    type: any
+  amf-dependencies:
+    type: any
+  amf-readOnly:
+    type: any
+  amf-tuple:
+    type: any
+  amf-examples:
+    type: any
+  amf-collectionFormat:
+    type: any
+  amf-termsOfService:
+    type: any
+  amf-servers:
+    type: any
+  amf-xone:
+    type: any
+  amf-defaultResponse:
+    type: any
+  amf-baseUriParameters:
+    type: any
+  amf-parameters:
+    type: any
+  amf-minimum:
+    type: any
+  amf-recursive:
+    type: any
+  amf-and:
+    type: any
+title: Swagger Petstore
+version: 1.0.0
+/pets:
+  get:
+    responses:
+      "200":
+        description: A paged array of pets
+        body:
+          application/json: Pets
+/petsReloaded:
+  get:
+    responses:
+      "200":
+        description: Expected response to a valid request
+        body:
+          application/json: Pet
+/petsReloadedPlus:
+  get:
+    responses:
+      "200":
+        description: Expected response to a valid request
+        body:
+          application/json: SimplePet
