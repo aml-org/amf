@@ -3,14 +3,15 @@ package amf.validations
 import java.util.regex.Pattern
 
 import amf.core.annotations.SynthesizedField
-import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
+import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement, Shape}
 import amf.core.parser.Annotations
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.utils.RegexConverter
 import amf.plugins.document.webapi.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.{FileShape, NodeShape, ScalarShape}
-import amf.plugins.domain.webapi.metamodel.bindings.{BindingHeaders, BindingQuery}
+import amf.plugins.domain.webapi.metamodel.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
 import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.{IriTemplateMapping, Parameter}
@@ -39,21 +40,6 @@ object CustomShaclFunctions {
                 violation(None)
             case _ => None
         })
-    }),
-    "headerParamNameMustBeAscii" -> ((element, violation) => {
-      for {
-        name    <- element.fields.?[AmfScalar](ParameterModel.Name)
-        binding <- element.fields.?[AmfScalar](ParameterModel.Binding)
-      } yield {
-        val isAscii: (String) => Boolean = (toMatch) => toMatch.matches("^[\\x00-\\x7F]+$")
-        val bindingVal                   = binding.value.toString
-        val nameVal                      = name.value.toString
-        (bindingVal, nameVal) match {
-          case ("header", name) if !isAscii(name) => violation(None)
-          case _                                  => // ignore
-        }
-      }
-
     }),
     "minimumMaximumValidation" ->
       ((element, violation) => {
@@ -231,13 +217,41 @@ object CustomShaclFunctions {
     "mandatoryHeadersObjectNode" -> ((element, violation) => {
       for {
         headerElement <- element.fields.?[AmfArray](MessageModel.Headers)
-        header <- headerElement.values.headOption
+        header        <- headerElement.values.headOption
       } yield {
         header match {
-          case p: Parameter => p.schema match {
-            case _: NodeShape => // ignore
-            case _ => violation(None)
-          }
+          case p: Parameter =>
+            p.schema match {
+              case _: NodeShape => // ignore
+              case _            => violation(None)
+            }
+        }
+      }
+    }),
+    "mandatoryHeaderNamePattern" -> ((element, violation) => {
+      for {
+        headerName <- element.fields ? [AmfScalar] ParameterModel.ParameterName
+        binding    <- element.fields ? [AmfScalar] ParameterModel.Binding
+      } yield {
+        binding.toString match {
+          case "header" if isInvalidHttpHeaderName(headerName.toString) => violation(None)
+          case _                                                    => // ignore
+        }
+      }
+    }),
+    "mandatoryHeaderBindingNamePattern" -> ((element, violation) => {
+      for {
+        header <- element.fields.?[Shape](HttpMessageBindingModel.Headers)
+      } yield {
+        header match {
+          case n: NodeShape =>
+            n.properties.foreach { p =>
+              p.name.option() match {
+                case Some(name) if isInvalidHttpHeaderName(name) => violation(Some(p.name.annotations(), PropertyShapeModel.Name))
+                case _                                       => // ignore
+              }
+            }
+          case _ => // ignore
         }
       }
     }),
@@ -265,4 +279,7 @@ object CustomShaclFunctions {
         throwValidation()
     case _ =>
   }
+
+  // Obtained from the BNF in: https://tools.ietf.org/html/rfc7230#section-3.2
+  private def isInvalidHttpHeaderName(name: String): Boolean = !name.matches("^[!#$%&'*\\+\\-\\.^\\_\\`\\|\\~0-9a-zA-Z]+$")
 }

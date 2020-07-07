@@ -298,6 +298,18 @@ object JsCustomValidations {
         |function(shape) {
         |  return true;
         |}
+      """.stripMargin,
+    "mandatoryHeaderNamePattern" ->
+      """
+        |function(shape) {
+        |  return true;
+        |}
+      """.stripMargin,
+    "mandatoryHeaderBindingNamePattern" ->
+      """
+        |function(shape) {
+        |  return true;
+        |}
       """.stripMargin
   )
 
