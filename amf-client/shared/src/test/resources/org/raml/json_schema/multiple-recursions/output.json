@@ -2,24 +2,6 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "$ref": "#/definitions/root",
   "definitions": {
-    "BoolFilter": {
-      "type": "object",
-      "additionalProperties": true,
-      "required": [
-        "filters"
-      ],
-      "properties": {
-        "filters": {
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "boolFilter": {
-              "$ref": "#/definitions/BoolFilter"
-            }
-          }
-        }
-      }
-    },
     "root": {
       "type": "object",
       "additionalProperties": true,
@@ -48,6 +30,24 @@
                   }
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "BoolFilter": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "filters"
+      ],
+      "properties": {
+        "filters": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "boolFilter": {
+              "$ref": "#/definitions/BoolFilter"
             }
           }
         }
