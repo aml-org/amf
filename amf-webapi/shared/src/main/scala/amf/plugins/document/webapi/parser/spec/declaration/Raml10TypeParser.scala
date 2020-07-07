@@ -170,7 +170,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
                            defaultType) {
 
   override def parse(): Option[AnyShape] = {
-    val shape = ScalarShape(node).withName(name, Annotations(key))
+    val shape = ScalarShape(ast).withName(name, Annotations(key))
     adopt(shape)
     node.tagType match {
       case YType.Map =>
