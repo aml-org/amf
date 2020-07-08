@@ -205,7 +205,20 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
                                 node).parse())
       case _ => Raml08TextParser(node, adopt, name, defaultType).parse()
     }
-    result.map(_.withName(name, Annotations(key)))
+    correctRaml08TypeAnnotations(result)
+  }
+
+  private def correctRaml08TypeAnnotations(result: Option[AnyShape]) = {
+    result.foreach(_.withName(name, Annotations(key)))
+    result.map(_.annotations) match {
+      case Some(a) =>
+        a.find(classOf[SourceAST]).foreach(s => a.reject(p => p == s))
+        a.find(classOf[SourceNode]).foreach(s => a.reject(p => p == s))
+        a.find(classOf[LexicalInformation]).foreach(s => a.reject(p => p == s))
+      case _ => // do nothing
+    }
+    result.foreach(_.add(Annotations(ast)))
+    result
   }
 
   override def typeParser: (Either[YMapEntry, YNode], String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
