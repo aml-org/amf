@@ -1,12 +1,6 @@
 #%RAML 0.8
 title: Filesystem API
 version: "0.1"
-/files:
-  get:
-    responses:
-      "200":
-        body:
-          application/xml: Invoice
 schemas:
   Invoice: |
     <?xml version="1.0" encoding="UTF-8" ?>
@@ -20,3 +14,9 @@ schemas:
             </xs:complexType>
         </xs:element>
     </xs:schema>
+/files:
+  get:
+    responses:
+      "200":
+        body:
+          application/xml: Invoice
