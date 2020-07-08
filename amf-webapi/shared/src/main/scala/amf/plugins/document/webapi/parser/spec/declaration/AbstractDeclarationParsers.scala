@@ -6,7 +6,7 @@ import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser}
+import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser, YMapEntryLike}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.validations.ParserSideValidations.{InvalidAbstractDeclarationType, NullAbstractDeclaration}
 import org.yaml.model._
@@ -48,12 +48,23 @@ object AbstractDeclarationParser {
 
   def apply(declaration: AbstractDeclaration, parent: String, entry: YMapEntry)(
       implicit ctx: WebApiContext): AbstractDeclarationParser =
-    new AbstractDeclarationParser(declaration, parent, entry.key.as[YScalar].text, entry.value)
+    new AbstractDeclarationParser(declaration, parent, YMapEntryLike(entry))
 }
 
-case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, key: String, entryValue: YNode)(
+case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, map: YMapEntryLike)(
     implicit ctx: WebApiContext) {
+  val key: String = map.key
+    .map(_.as[YScalar].text)
+    .getOrElse(declaration match {
+      case _: Trait        => "trait"
+      case _: ResourceType => "resourceType"
+      case _               => "abstractDeclaration"
+    })
+  val annotations: Annotations = map.key.map(k => Annotations(k)).getOrElse(Annotations())
+
   def parse(): AbstractDeclaration = {
+
+    val entryValue: YNode = map.value
 
     if (entryValue.tagType == YType.Null)
       ctx.eh.warning(NullAbstractDeclaration,
@@ -83,7 +94,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
         }
         val dataNode = DataNodeParser(filteredNode, variables, Some(parentUri)).parse()
 
-        declaration.withName(key).adopted(parent).withDataNode(dataNode)
+        declaration.withName(key, annotations).adopted(parent).withDataNode(dataNode)
 
         variables.ifNonEmpty(p => declaration.withVariables(p))
 
@@ -98,6 +109,6 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
     }
     val copied: AbstractDeclaration = d.link(parsedUrl, Annotations(ast))
     copied.withId(d.id)
-    copied.withName(key)
+    copied.withName(key, annotations)
   }
 }
