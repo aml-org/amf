@@ -1,0 +1,128 @@
+{
+  "@graph": [
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Npcf_PolicyAuthorization Service API",
+      "core:description": "This is the Policy Authorization Service",
+      "core:version": "1.0.0",
+      "smaps": {
+        "source-vendor": {
+          "#3": "OAS 3.0"
+        },
+        "lexical": {
+          "core:version": "[(5,4)-(5,22)]",
+          "core:name": "[(4,4)-(4,51)]",
+          "#3": "[(1,0)-(22,1)]",
+          "core:description": "[(6,4)-(6,61)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        },
+        {
+          "@id": "#2"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#3"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:minInclusive": 0.0,
+      "raml-shapes:format": "int32",
+      "shacl:name": "Uint32",
+      "smaps": {
+        "declared-element": {
+          "#1": ""
+        },
+        "lexical": {
+          "shacl:name": "[(12,6)-(12,14)]",
+          "shacl:minInclusive": "[(15,8)-(15,20)]",
+          "#1": "[(12,6)-(16,7)]",
+          "shacl:datatype": "[(14,8)-(14,25)]",
+          "raml-shapes:format": "[(13,8)-(13,25)]"
+        },
+        "type-property-lexical-info": {
+          "#1": "[(14,8)-(14,14)]"
+        }
+      }
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:minInclusive": 0.0,
+      "raml-shapes:format": "int32",
+      "doc:recursive": true,
+      "shacl:name": "ServiceId",
+      "smaps": {
+        "resolved-link-target": {
+          "#2": "amf://id#1"
+        },
+        "declared-element": {
+          "#2": ""
+        },
+        "lexical": {
+          "raml-shapes:format": "[(13,8)-(13,25)]",
+          "shacl:datatype": "[(14,8)-(14,25)]",
+          "#2": "[(12,6)-(16,7)]",
+          "shacl:minInclusive": "[(15,8)-(15,20)]"
+        },
+        "type-property-lexical-info": {
+          "#2": "[(14,8)-(14,14)]"
+        },
+        "resolved-link": {
+          "#2": "amf://id#2"
+        }
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

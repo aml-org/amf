@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/oas2/invalid-security-scheme-type.json
+Model: file://amf-client/shared/src/test/resources/validations/oas2/security/invalid-security-scheme-type.json
 Profile: OAS 2.0
 Conforms? false
 Number of results: 3
@@ -8,23 +8,23 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-security-scheme-type
   Message: 'http' is not a valid security scheme type in OAS 2.0
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas2/invalid-security-scheme-type.json#/declarations/securitySchemes/bearerToken
+  Target: file://amf-client/shared/src/test/resources/validations/oas2/security/invalid-security-scheme-type.json#/declarations/securitySchemes/bearerToken
   Property: http://a.ml/vocabularies/security#type
   Position: Some(LexicalInformation([(12,14)-(12,20)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas2/invalid-security-scheme-type.json
+  Location: file://amf-client/shared/src/test/resources/validations/oas2/security/invalid-security-scheme-type.json
 
 - Source: http://a.ml/vocabularies/amf/aml#closed-shape
   Message: Property 'scheme' not supported in a OAS 2.0 securityScheme node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas2/invalid-security-scheme-type.json#/declarations/securitySchemes/bearerToken
+  Target: file://amf-client/shared/src/test/resources/validations/oas2/security/invalid-security-scheme-type.json#/declarations/securitySchemes/bearerToken
   Property: 
   Position: Some(LexicalInformation([(13,6)-(13,24)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas2/invalid-security-scheme-type.json
+  Location: file://amf-client/shared/src/test/resources/validations/oas2/security/invalid-security-scheme-type.json
 
 - Source: http://a.ml/vocabularies/amf/aml#closed-shape
   Message: Property 'bearerFormat' not supported in a OAS 2.0 securityScheme node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas2/invalid-security-scheme-type.json#/declarations/securitySchemes/bearerToken
+  Target: file://amf-client/shared/src/test/resources/validations/oas2/security/invalid-security-scheme-type.json#/declarations/securitySchemes/bearerToken
   Property: 
   Position: Some(LexicalInformation([(14,6)-(14,27)]))
-  Location: file://amf-client/shared/src/test/resources/validations/oas2/invalid-security-scheme-type.json
+  Location: file://amf-client/shared/src/test/resources/validations/oas2/security/invalid-security-scheme-type.json

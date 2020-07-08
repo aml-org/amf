@@ -1,6 +1,6 @@
 package amf.convert
 
-import _root_.org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import _root_.org.scalatest.{Assertion, Matchers}
 import amf._
 import amf.client.AMF
 import amf.client.convert.CoreClientConverters._
@@ -13,7 +13,7 @@ import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
 import amf.client.resolve.{Async20Resolver, Oas20Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
-import amf.common.{Diff, Tests}
+import amf.common.Diff
 import amf.core.errorhandling.StaticErrorCollector
 import amf.core.exception.UnsupportedVendorException
 import amf.core.model.document.{Document => InternalDocument}
@@ -27,7 +27,9 @@ import amf.core.remote.{Aml, Oas20, Raml10}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
-import amf.io.FileAssertionTest
+import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
+import amf.internal.environment.{Environment => InternalEnvironment}
+import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.Vocabularies
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
@@ -35,7 +37,7 @@ import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps with FileAssertionTest {
+trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -1372,10 +1374,18 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps with FileA
     }
   }
 
-  test("Generate unit with compact uris and external file") {
+  multiGoldenTest("Generate unit with compact uris and external file",
+                  "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.%s") { config =>
     val apiPath = "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml"
-    val golden  = "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.jsonld"
-    val options = new RenderOptions().withCompactUris.withSourceMaps.withPrettyPrint
+    val golden  = config.golden
+
+    // TODO migrate to render options converter
+    var options = new RenderOptions().withCompactUris.withSourceMaps.withPrettyPrint
+    if (config.renderOptions.isFlattenedJsonLd) {
+      options = options.withFlattenedJsonLd
+    } else {
+      options = options.withoutFlattenedJsonLd
+    }
 
     for {
       _      <- AMF.init().asFuture
@@ -1791,7 +1801,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps with FileA
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseFileAsync(file).asFuture
     } yield {
-      assert(unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+      assert(
+        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 
@@ -1814,7 +1825,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps with FileA
       unit     <- new RamlParser().parseStringAsync(api).asFuture
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
-      json     <- Future(resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
+      json <- Future(
+        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
     } yield {
       val golden = """{
                      |  "$schema": "http://json-schema.org/draft-04/schema#",
@@ -2289,6 +2301,45 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps with FileA
       custom     <- AMF.validate(unit, newProfile, AMFStyle).asFuture
     } yield {
       assert(report.conforms && custom.conforms)
+    }
+  }
+
+  test("Use client defined resource loaders when resolving a recursive unit") {
+    val input = """
+                   |openapi: "3.0.0"
+                   |info:
+                   |  version: 1.0.0
+                   |  title: api-2
+                   |paths: {}
+                   |components:
+                   |  schemas:
+                   |    Author:
+                   |      $ref: https://randomurl/
+    """.stripMargin
+
+    val custom = StringResourceLoader(
+      "https://randomurl/",
+      """
+        |{
+        |  "$schema": "http://json-schema.org/draft-07/schema#",
+        |  "title": "Person",
+        |  "type": "object",
+        |  "properties": {
+        |    "recursive": {
+        |      "$ref": "https://randomurl/"
+        |    }
+        |  }
+        |}
+        """.stripMargin
+    )
+
+    val env: Environment = Environment(InternalEnvironment().withLoaders(List(custom)))
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- new Oas30YamlParser(env).parseStringAsync(input).asFuture
+      report <- AMF.validate(unit, Oas30Profile, OASStyle).asFuture
+    } yield {
+      report.conforms should be(true)
     }
   }
 

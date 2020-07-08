@@ -1,4 +1,5 @@
 package amf.dialects
+import amf.core.emitter.RenderOptions
 import amf.core.remote.{Amf, Aml, VocabularyYamlHint}
 import amf.core.unsafe.PlatformSecrets
 import amf.io.{FunSuiteCycleTests, FunSuiteRdfCycleTests}
@@ -12,7 +13,7 @@ class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets {
 
   override def basePath: String = "amf-client/shared/src/test/resources/vocabularies2/dialects/"
 
-  test("RDF 1 test") {
+  test("HERE_HERE RDF 1 test") {
     cycleFullRdf("example1.raml", "example1.raml", VocabularyYamlHint, Aml, basePath)
   }
 
@@ -20,19 +21,41 @@ class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets {
     cycleFullRdf("example2.raml", "example2.raml", VocabularyYamlHint, Aml, basePath)
   }
 
-  test("RDF 3 test") {
-    cycleFullRdf("example3.raml", "example3.jsonld", VocabularyYamlHint, Amf, basePath)
+  multiGoldenTest("RDF 3 test", "example3.%s") { config =>
+    cycleFullRdf("example3.raml",
+                 config.golden,
+                 VocabularyYamlHint,
+                 target = Amf,
+                 directory = basePath,
+                 renderOptions = Some(config.renderOptions))
   }
 
-  test("RDF 13 test") {
-    cycleFullRdf("example13.raml", "example13.jsonld", VocabularyYamlHint, Amf, basePath)
+  multiGoldenTest("RDF 13 test", "example13.%s") { config =>
+    cycleFullRdf("example13.raml",
+                 config.golden,
+                 VocabularyYamlHint,
+                 target = Amf,
+                 directory = basePath,
+                 renderOptions = Some(config.renderOptions))
   }
 
-  test("RDF Production system2 dialect ex1  test") {
-    cycleFullRdf("dialectex1.raml", "dialectex1.jsonld", VocabularyYamlHint, Amf, productionPath + "system2/")
+  multiGoldenTest("RDF Production system2 dialect ex1  test", "dialectex1.%s") { config =>
+    cycleFullRdf("dialectex1.raml",
+                 config.golden,
+                 VocabularyYamlHint,
+                 target = Amf,
+                 directory = s"${productionPath}system2/",
+                 renderOptions = Some(config.renderOptions))
   }
 
-  test("RDF Production system2 dialect ex2  test") {
-    cycleFullRdf("dialectex2.raml", "dialectex2.jsonld", VocabularyYamlHint, Amf, productionPath + "system2/")
+  multiGoldenTest("RDF Production system2 dialect ex2  test", "dialectex2.%s") { config =>
+    cycleFullRdf("dialectex2.raml",
+                 config.golden,
+                 VocabularyYamlHint,
+                 target = Amf,
+                 directory = s"${productionPath}system2/",
+                 renderOptions = Some(config.renderOptions))
   }
+
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
 }

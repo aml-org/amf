@@ -1,14 +1,16 @@
 package amf.dialects
 
+import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.FunSuiteCycleTests
+import amf.io.{FunSuiteCycleTests, MultiJsonldAsyncFunSuite}
 import amf.plugins.document.vocabularies.AMLPlugin
+import org.scalatest.Assertion
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 trait DialectInstanceTester { this: FunSuiteCycleTests =>
 
@@ -17,12 +19,13 @@ trait DialectInstanceTester { this: FunSuiteCycleTests =>
                             golden: String,
                             hint: Hint,
                             target: Vendor,
-                            directory: String = basePath) = {
+                            directory: String = basePath,
+                            renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
     for {
       v <- Validation(platform)
       _ <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, eh = UnhandledParserErrorHandler)
         .build()
-      res <- cycle(source, golden, hint, target, directory)
+      res <- cycle(source, golden, hint, target, directory, renderOptions)
     } yield {
       res
     }
@@ -34,14 +37,40 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/production/"
 
-  ignore("Can parse the canonical webapi dialect") {
-    cycle("canonical_webapi.yaml", "canonical_webapi.json", VocabularyYamlHint, Amf, "vocabularies/dialects/")
+  test("Can parse and generated ABOUT dialect") {
+    cycle("ABOUT-dialect.raml", "ABOUT-dialect.raml.raml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
   }
 
+  ignore("Can parse the canonical webapi dialect") {
+    cycle("canonical_webapi.yaml", "canonical_webapi.json", VocabularyYamlHint, target = Amf, "vocabularies/dialects/")
+  }
+
+  multiGoldenTest("Can parse ABOUT dialect", "ABOUT-dialect.%s") { config =>
+    cycle("ABOUT-dialect.raml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          directory = basePath + "ABOUT/",
+          renderOptions = Some(config.renderOptions))
+  }
+
+  // TODO migrate to multiGoldenTest
   test("Can parse validation dialect") {
-    cycle("validation_dialect.raml", "validation_dialect.json", VocabularyYamlHint, Amf)
+    cycle("validation_dialect.raml", "validation_dialect.json", VocabularyYamlHint, target = Amf)
+  }
+
+  // TODO migrate to multiGoldenTest
+  test("Can parse and generate the Instagram dialect") {
+    cycle("dialect.raml", "dialect.json", VocabularyYamlHint, target = Amf, basePath + "Instagram/")
+  }
+
+  // TODO migrate to multiGoldenTest
+  test("Can parse and generate the activity dialect") {
+    cycle("activity.yaml", "activity.json", VocabularyYamlHint, target = Amf, basePath + "streams/")
   }
 
   test("Can parse validation dialect instance") {
@@ -52,39 +81,40 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
                 Aml)
   }
 
-  test("Can parse validation dialect cfg1 instance") {
-    withDialect("example1.raml",
-                "example1_instance.raml",
-                "example1_instance.jsonld",
-                VocabularyYamlHint,
-                Amf,
-                basePath + "cfg/")
+  multiGoldenTest("Can parse validation dialect cfg1 instance", "example1_instance.%s") { config =>
+    withDialect(
+      "example1.raml",
+      "example1_instance.raml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"${basePath}cfg/",
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
-  test("Can parse validation dialect cfg2 instance") {
-    withDialect("example2.raml",
-                "example2_instance.raml",
-                "example2_instance.jsonld",
-                VocabularyYamlHint,
-                Amf,
-                basePath + "cfg/")
+  multiGoldenTest("Can parse validation dialect cfg2 instance", "example2_instance.%s") { config =>
+    withDialect(
+      "example2.raml",
+      "example2_instance.raml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = basePath + "cfg/",
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
-  test("Can parse validation dialect cfg3 instance") {
-    withDialect("example3.raml",
-                "example3_instance.raml",
-                "example3_instance.jsonld",
-                VocabularyYamlHint,
-                Amf,
-                basePath + "cfg/")
-  }
-
-  test("Can parse ABOUT dialect") {
-    cycle("ABOUT-dialect.raml", "ABOUT-dialect.jsonld", VocabularyYamlHint, Amf, basePath + "ABOUT/")
-  }
-
-  test("Can parse and generated ABOUT dialect") {
-    cycle("ABOUT-dialect.raml", "ABOUT-dialect.raml.raml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
+  multiGoldenTest("Can parse validation dialect cfg3 instance", "example3_instance.%s") { config =>
+    withDialect(
+      "example3.raml",
+      "example3_instance.raml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = basePath + "cfg/",
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   test("Can parse and generate ABOUT dialect instance") {
@@ -100,33 +130,44 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
                 basePath + "ABOUT/github/")
   }
 
-  test("Can parse ABOUT-hosted dialectinstance") {
-    withDialect("ABOUT-hosted-vcs-dialect.yaml",
-                "ABOUT_hosted.yaml",
-                "ABOUT_hosted.jsonld",
-                VocabularyYamlHint,
-                Amf,
-                basePath + "ABOUT/")
+  multiGoldenTest("Can parse ABOUT-hosted dialectinstance", "ABOUT_hosted.%s") { config =>
+    withDialect(
+      "ABOUT-hosted-vcs-dialect.yaml",
+      "ABOUT_hosted.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"${basePath}ABOUT/",
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
-  test("Can parse and generate the Instagram dialect") {
-    cycle("dialect.raml", "dialect.json", VocabularyYamlHint, Amf, basePath + "Instagram/")
-  }
-
+  // TODO migrate to multiGoldenTest
   test("Can parse and generate Instance dialect instance 1") {
-    withDialect("dialect.raml", "instance1.raml", "instance1.json", VocabularyYamlHint, Amf, basePath + "Instagram/")
+    withDialect("dialect.raml",
+                "instance1.raml",
+                "instance1.json",
+                VocabularyYamlHint,
+                target = Amf,
+                basePath + "Instagram/")
   }
 
   test("Can parse and generate Instance dialect instance 2") {
-    withDialect("dialect.raml", "instance2.raml", "instance2.json", VocabularyYamlHint, Amf, basePath + "Instagram/")
-  }
-
-  test("Can parse and generate the activity dialect") {
-    cycle("activity.yaml", "activity.json", VocabularyYamlHint, Amf, basePath + "streams/")
+    withDialect("dialect.raml",
+                "instance2.raml",
+                "instance2.json",
+                VocabularyYamlHint,
+                target = Amf,
+                basePath + "Instagram/")
   }
 
   test("Can parse activity instances") {
-    withDialect("activity.yaml", "stream1.yaml", "stream1.json", VocabularyYamlHint, Amf, basePath + "streams/")
+    withDialect("activity.yaml",
+                "stream1.yaml",
+                "stream1.json",
+                VocabularyYamlHint,
+                target = Amf,
+                basePath + "streams/")
   }
 
   test("Can parse activity deployments demo") {
@@ -134,7 +175,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
                 "deployment.yaml",
                 "deployment.json",
                 VocabularyYamlHint,
-                Amf,
+                target = Amf,
                 basePath + "deployments_demo/")
   }
 }
@@ -150,12 +191,7 @@ class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectIns
 
   // Order is not predictable
   ignore("Can parse asyncapi overlay instances") {
-    withDialect("dialect6.yaml",
-                "patch6.yaml",
-                "patch6.resolved.yaml",
-                VocabularyYamlHint,
-                Aml,
-                basePath + "asyncapi/")
+    withDialect("dialect6.yaml", "patch6.yaml", "patch6.resolved.yaml", VocabularyYamlHint, Aml, basePath + "asyncapi/")
   }
 
 }

@@ -15,33 +15,54 @@ import scala.concurrent.Future
 class Async20ResolutionTest extends FunSuiteCycleTests {
   override def basePath: String = "amf-client/shared/src/test/resources/resolution/async20/"
 
-  test("Message examples are propagated to payload shapes") {
-    cycle("message-example-propagation.yaml", "message-example-propagation.jsonld", AsyncYamlHint, AMF)
+  multiGoldenTest("Message examples are propagated to payload shapes", "message-example-propagation.%s") { config =>
+    cycle("message-example-propagation.yaml",
+          config.golden,
+          AsyncYamlHint,
+          target = AMF,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("defaultContentType overrides message contentType") {
-    cycle("content-type-override.yaml", "content-type-override.jsonld", AsyncYamlHint, AMF)
+  multiGoldenTest("defaultContentType overrides message contentType", "content-type-override.%s") { config =>
+    cycle("content-type-override.yaml",
+          config.golden,
+          AsyncYamlHint,
+          target = AMF,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Message traits are merged to message") {
-    cycle("message-trait-merging.yaml", "message-trait-merging.jsonld", AsyncYamlHint, AMF)
+  multiGoldenTest("Message traits are merged to message", "message-trait-merging.%s") { config =>
+    cycle("message-trait-merging.yaml",
+          config.golden,
+          AsyncYamlHint,
+          target = AMF,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Operation traits are merged to operation") {
-    cycle("operation-trait-merging.yaml", "operation-trait-merging.jsonld", AsyncYamlHint, AMF)
+  multiGoldenTest("Operation traits are merged to operation", "operation-trait-merging.%s") { config =>
+    cycle("operation-trait-merging.yaml",
+          config.golden,
+          AsyncYamlHint,
+          target = AMF,
+          renderOptions = Some(config.renderOptions))
   }
 
-  test("Named parameter with reference to parameter in components") {
-    cycle("named-parameter-with-ref.yaml", "named-parameter-with-ref.jsonld", AsyncYamlHint, AMF)
+  multiGoldenTest("Named parameter with reference to parameter in components", "named-parameter-with-ref.%s") {
+    config =>
+      cycle("named-parameter-with-ref.yaml",
+            config.golden,
+            AsyncYamlHint,
+            target = AMF,
+            renderOptions = Some(config.renderOptions))
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     Async20Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
 
-  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    new AMFRenderer(unit,
-                    config.target,
-                    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint,
-                    config.syntax).renderToString
+  override def defaultRenderOptions: RenderOptions =
+    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint
+
+  override def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
+    new AMFRenderer(unit, config.target, options, config.syntax).renderToString
   }
 }

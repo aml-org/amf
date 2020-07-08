@@ -255,5 +255,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("recursion-in-trait.raml")
   }
 
+  test("Valid SecurityScheme scope for empty scopes in declaration") {
+    checkValid("security-schema-scope.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

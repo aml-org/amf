@@ -147,6 +147,24 @@ case class NamedMultipleExampleEmitter(key: String,
   }
 }
 
+case class SafeNamedMultipleExampleEmitter(key: String,
+                                           examples: Seq[Example],
+                                           ordering: SpecOrdering,
+                                           references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+    extends MultipleExampleEmitter(key, examples, ordering, references) {
+  override def emit(b: PartBuilder): Unit = {
+    val idCounter = new IdCounter()
+    val emitters = examples.map { e =>
+      val key = e.name.option() match {
+        case Some(name) => name
+        case None       => idCounter.genId("example")
+      }
+      new KeyedExampleEmitter(key, e, ordering)
+    }
+    b.obj(traverse(ordering.sorted(emitters), _))
+  }
+}
+
 case class ExampleArrayEmitter(key: String, examples: Seq[Example], ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: SpecEmitterContext)
     extends MultipleExampleEmitter(key, examples, ordering, references) {
@@ -182,11 +200,18 @@ case class SingleExampleEmitter(key: String, example: Example, ordering: SpecOrd
 
 }
 
-case class NamedExampleEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+class KeyedExampleEmitter(key: String, example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(example.name.value(), ExampleValuesEmitter(example, ordering).emit(_))
+    b.entry(key, ExampleValuesEmitter(example, ordering).emit(_))
   }
+
+  override def position(): Position = pos(example.annotations)
+}
+
+case class NamedExampleEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = new KeyedExampleEmitter(example.name.value(), example, ordering).emit(b)
 
   override def position(): Position = pos(example.annotations)
 }

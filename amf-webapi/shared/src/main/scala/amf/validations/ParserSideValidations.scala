@@ -618,6 +618,11 @@ object ParserSideValidations extends Validations {
     "Status code for a Response object must be a string"
   )
 
+  val UnknownYamlTag = validation(
+    "unknown-yaml-tag",
+    "Unknown tag detected, must be allowed by json schema ruleset"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -762,6 +767,7 @@ object ParserSideValidations extends Validations {
     InvalidIdentifier,
     InvalidComponents,
     ExeededMaxYamlReferences,
-    InvalidStatusCode
+    InvalidStatusCode,
+    UnknownYamlTag
   )
 }

@@ -11,7 +11,7 @@ pipeline {
   environment {
     NEXUS = credentials('exchange-nexus')
     NEXUSIQ = credentials('nexus-iq')
-    GITHUB_ORG = 'mulesoft'
+    GITHUB_ORG = 'aml-org'
     GITHUB_REPO = 'amf'
   }
   stages {
@@ -54,6 +54,13 @@ pipeline {
 //      }
 //    }
     stage('Publish') {
+      when {
+        anyOf {
+          branch 'master'
+          branch 'develop'
+          branch 'custom_validations_expanded'
+        }
+      }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
           script {
@@ -149,7 +156,6 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'release/*'
         }
       }
       steps {

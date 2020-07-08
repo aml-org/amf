@@ -3,6 +3,41 @@ unitType: Document
 $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/rootAsset
 declares:
   -
+    elementType: CustomDomainProperty
+    $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/simple
+    name: simple
+    schema:
+      shapeType: Scalar
+      $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/simple/scalar/schema
+      name: schema
+      datatype: http://www.w3.org/2001/XMLSchema#string
+  -
+    elementType: CustomDomainProperty
+    $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot
+    name: annot
+    schema:
+      shapeType: Node
+      $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema
+      inherits:
+        -
+          shapeType: Node
+          $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type
+          name: type
+          property:
+            -
+              $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type/property/lala
+              range:
+                shapeType: Scalar
+                $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type/property/lala/scalar/lala
+                name: lala
+                datatype: http://www.w3.org/2001/XMLSchema#string
+              name: lala
+              min.Count: 1
+              path: http://a.ml/vocabularies/data#lala
+          closed: false
+      name: schema
+      closed: false
+  -
     elementType: Node
     $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A
     name: A
@@ -30,15 +65,6 @@ declares:
     closed: false
   -
     elementType: CustomDomainProperty
-    $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/simple
-    name: simple
-    schema:
-      shapeType: Scalar
-      $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/simple/scalar/schema
-      name: schema
-      datatype: http://www.w3.org/2001/XMLSchema#string
-  -
-    elementType: CustomDomainProperty
     $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/arrAnot
     name: arrAnot
     schema:
@@ -52,29 +78,50 @@ declares:
         datatype: http://www.w3.org/2001/XMLSchema#string
   -
     elementType: CustomDomainProperty
-    $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot
-    name: annot
+    $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel
+    name: clearanceLevel
     schema:
       shapeType: Node
-      $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema
-      inherits:
-        -
-          shapeType: Node
-          $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type
-          name: type
-          property:
-            -
-              $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type/property/lala
-              range:
-                shapeType: Scalar
-                $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/annot/schema/type/property/lala/scalar/lala
-                name: lala
-                datatype: http://www.w3.org/2001/XMLSchema#string
-              name: lala
-              min.Count: 1
-              path: http://a.ml/vocabularies/data#lala
-          closed: false
+      $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema
       name: schema
+      property:
+        -
+          $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/signature
+          range:
+            shapeType: Scalar
+            $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/signature/scalar/signature
+            pattern: ^\d{3}-\w{12}$
+            name: signature
+            datatype: http://www.w3.org/2001/XMLSchema#string
+          name: signature
+          min.Count: 1
+          path: http://a.ml/vocabularies/data#signature
+        -
+          $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level
+          range:
+            shapeType: Scalar
+            $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level
+            name: level
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            in:
+              -
+                elementType: Scalar
+                $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/enum/scalar_3
+                value: high
+                dataType: http://www.w3.org/2001/XMLSchema#string
+              -
+                elementType: Scalar
+                $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/enum/scalar_2
+                value: medium
+                dataType: http://www.w3.org/2001/XMLSchema#string
+              -
+                elementType: Scalar
+                $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel/schema/property/level/scalar/level/enum/scalar_1
+                value: low
+                dataType: http://www.w3.org/2001/XMLSchema#string
+          name: level
+          min.Count: 1
+          path: http://a.ml/vocabularies/data#level
       closed: false
 version: 2.1.0
 root: true
@@ -94,7 +141,7 @@ encodes:
       $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest
       designAnnotations:
         -
-          $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_0
+          $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_1
           extension:
             elementType: Array
             $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/arrAnot/array_1
@@ -110,9 +157,35 @@ encodes:
                 value: a
                 dataType: http://www.w3.org/2001/XMLSchema#string
           definedBy:
-            $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_0_link
+            $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_1_link
             name: arrAnot
             designLink: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/arrAnot
+        -
+          $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_0
+          extension:
+            elementType: Object
+            $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1
+            properties:
+              -
+                $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1_prop_signature
+                name: signature
+                range:
+                  elementType: Scalar
+                  $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1/scalar_3
+                  value: 230-ghtwvfrs1itr
+                  dataType: http://www.w3.org/2001/XMLSchema#string
+              -
+                $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1_prop_level
+                name: level
+                range:
+                  elementType: Scalar
+                  $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/clearanceLevel/object_1/scalar_2
+                  value: high
+                  dataType: http://www.w3.org/2001/XMLSchema#string
+          definedBy:
+            $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest_annotations_0_link
+            name: clearanceLevel
+            designLink: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/annotations/clearanceLevel
       supportedOperation:
         -
           $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api/end-points/%2Ftest/get
@@ -130,7 +203,7 @@ encodes:
                     inherits:
                       -
                         shapeType: Node
-                        $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/link-859413225
+                        $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/link-1777247175
                         designLink: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A
                         name: A
                     name: schema

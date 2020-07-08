@@ -16,6 +16,12 @@ case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReferenc
     }
   }
 
+  def getRootYNode(ref: String): Option[YNode] = {
+    withFragmentAndInFileReference(ref) { (fragment, _) =>
+      Some(JsonSchemaPlugin.getYNode(fragment, context))
+    }
+  }
+
   def withFragmentAndInFileReference[T](ref: String)(action: (Fragment, Option[String]) => Option[T]): Option[T] = {
     if (!context.validateRefFormatWithError(ref)) return None
     val fileUrl      = getFileUrl(ref)
