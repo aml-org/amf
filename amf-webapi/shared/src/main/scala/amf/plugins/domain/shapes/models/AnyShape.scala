@@ -82,7 +82,7 @@ trait InheritanceChain { this: AnyShape =>
   }
 }
 
-class AnyShape(val fields: Fields, val annotations: Annotations)
+class AnyShape(val fields: Fields, val annotations: Annotations = Annotations())
     extends Shape
     with JsonSchemaSecrets
     with ShapeHelpers
