@@ -172,7 +172,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
   override def parse(): Option[AnyShape] = {
     val shape = ScalarShape(ast).withName(name, Annotations(key))
     adopt(shape)
-    node.tagType match {
+    val result = node.tagType match {
       case YType.Map =>
         // has schema or its simple raml type declaration
         val map = node.as[YMap]
@@ -205,6 +205,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
                                 node).parse())
       case _ => Raml08TextParser(node, adopt, name, defaultType).parse()
     }
+    result.map(_.withName(name, Annotations(key)))
   }
 
   override def typeParser: (Either[YMapEntry, YNode], String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
