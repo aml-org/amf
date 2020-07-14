@@ -60,7 +60,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
       case _: ResourceType => "resourceType"
       case _               => "abstractDeclaration"
     })
-  val annotations: Annotations = map.key.map(k => Annotations(k)).getOrElse(Annotations())
+  val annotations: Annotations = Annotations(map.annotations)
 
   def parse(): AbstractDeclaration = {
 
