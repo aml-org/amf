@@ -1,0 +1,21 @@
+#%Vocabulary 1.0
+vocabulary: My Vocabulary
+usage: This is my vocabulary
+base: http://mulesoft.com/vocabularies/my-vocabulary#
+
+classTerms:
+  Person:
+    displayName: person
+    description: This is the person class
+    properties:
+      - Name
+
+propertyTerms:
+  Name:
+    displayName: name
+    description: This is a name
+    range: string
+  Person:
+    displayName: person
+    description: This is the person property
+    range: string
