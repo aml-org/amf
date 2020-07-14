@@ -91,8 +91,6 @@ class Oas2SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends O
 
 case class InlinedJsonSchemaEmitterFactory()(override implicit val spec: JsonSchemaEmitterContext)
     extends Oas2SpecEmitterFactory(spec) {
-  override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
-    OasDeclaredTypesEmitters.apply
 
   override def typeEmitters(shape: Shape,
                             ordering: SpecOrdering,
@@ -102,8 +100,6 @@ case class InlinedJsonSchemaEmitterFactory()(override implicit val spec: JsonSch
                             schemaPath: Seq[(String, String)]): Seq[Emitter] =
     OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
 
-  override def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter =
-    OasRecursiveShapeEmitter.apply
 }
 
 case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {

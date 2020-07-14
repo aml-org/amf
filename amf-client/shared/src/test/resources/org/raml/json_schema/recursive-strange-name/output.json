@@ -14,18 +14,18 @@
           "additionalProperties": true,
           "properties": {
             "a": {
-              "$ref": "#/definitions/root/properties/other"
+              "$ref": "#/definitions/default"
             }
           }
         }
       }
     },
-    "oth#er": {
+    "default": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
         "a": {
-          "$ref": "#/definitions/oth#er"
+          "$ref": "#/definitions/default"
         }
       }
     }

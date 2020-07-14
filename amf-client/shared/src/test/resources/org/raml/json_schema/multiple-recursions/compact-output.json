@@ -11,18 +11,6 @@
         }
       }
     },
-    "BoolFilter": {
-      "type": "object",
-      "additionalProperties": true,
-      "required": [
-        "filters"
-      ],
-      "properties": {
-        "filters": {
-          "$ref": "#/definitions/Filter"
-        }
-      }
-    },
     "Query": {
       "type": "object",
       "additionalProperties": true,
@@ -35,6 +23,18 @@
         }
       }
     },
+    "FilteredQuery": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "filter"
+      ],
+      "properties": {
+        "filter": {
+          "$ref": "#/definitions/Filter"
+        }
+      }
+    },
     "Filter": {
       "type": "object",
       "additionalProperties": true,
@@ -44,14 +44,14 @@
         }
       }
     },
-    "FilteredQuery": {
+    "BoolFilter": {
       "type": "object",
       "additionalProperties": true,
       "required": [
-        "filter"
+        "filters"
       ],
       "properties": {
-        "filter": {
+        "filters": {
           "$ref": "#/definitions/Filter"
         }
       }

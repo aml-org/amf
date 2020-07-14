@@ -1,0 +1,43 @@
+#%RAML 1.0
+title: GLYNT API
+description: The Data Extraction API
+mediaType:
+  - application/json
+version: "6"
+protocols:
+  - HTTPS
+/data-pools/{data_pool_id}/documents/:
+  get:
+    displayName: listDocuments
+    description: List all documents in a data pool.
+    (amf-baseUriParameters):
+      data_pool_id:
+        description: string parameter
+        required: true
+        type: string
+    responses:
+      "200":
+        description: Ok
+  post:
+    displayName: createDocument
+    description: Upload a document to a target data pool.
+    (amf-baseUriParameters):
+      data_pool_id:
+        description: integer parameter
+        required: true
+        type: integer
+    responses:
+      "201":
+        description: Ok
+
+/documents/{document_id}/file/:
+  get:
+    displayName: fileDocument
+    description: Return a temporary file access URL which can be used to retrieve the document file.
+    responses:
+      "200":
+        description: Ok
+  uriParameters:
+    document_id:
+      description: The id of the document to be retrieved.
+      type: string
