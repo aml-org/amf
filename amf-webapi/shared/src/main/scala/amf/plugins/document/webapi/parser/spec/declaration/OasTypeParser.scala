@@ -462,7 +462,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(s"item$index"), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/or/" + index), version).parse()
+                    OasTypeParser(entry, item => if (!item.isLink) item.adopted(shape.id + "/or/" + index), version)
+                      .parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -491,7 +492,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(s"item$index"), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/and/" + index), version).parse()
+                    OasTypeParser(entry, item => if (!item.isLink) item.adopted(shape.id + "/and/" + index), version)
+                      .parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -512,26 +514,29 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     def parse(): Unit = {
       map.key(
-        "oneOf", { entry =>
-          adopt(shape)
-          entry.value.to[Seq[YNode]] match {
-            case Right(seq) =>
-              val nodes = seq.zipWithIndex
-                .map {
-                  case (node, index) =>
-                    val entry = YMapEntry(YNode(s"item$index"), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/xone/" + index), version).parse()
-                }
-                .filter(_.isDefined)
-                .map(_.get)
-              shape.setArrayWithoutId(ShapeModel.Xone, nodes, Annotations(entry.value))
-            case _ =>
-              ctx.eh.violation(InvalidXoneType,
-                               shape.id,
-                               "Xone constraints are built from multiple shape nodes",
-                               entry.value)
+        "oneOf", {
+          entry =>
+            adopt(shape)
+            entry.value.to[Seq[YNode]] match {
+              case Right(seq) =>
+                val nodes = seq.zipWithIndex
+                  .map {
+                    case (node, index) =>
+                      val entry = YMapEntry(YNode(s"item$index"), node)
+                      OasTypeParser(entry,
+                                    item => if (!item.isLink) item.adopted(shape.id + "/xone/" + index),
+                                    version).parse()
+                  }
+                  .filter(_.isDefined)
+                  .map(_.get)
+                shape.setArrayWithoutId(ShapeModel.Xone, nodes, Annotations(entry.value))
+              case _ =>
+                ctx.eh.violation(InvalidXoneType,
+                                 shape.id,
+                                 "Xone constraints are built from multiple shape nodes",
+                                 entry.value)
 
-          }
+            }
         }
       )
     }

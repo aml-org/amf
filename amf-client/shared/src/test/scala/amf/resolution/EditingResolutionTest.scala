@@ -750,6 +750,18 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("duplicate id fix for references in external schemas with composition", "result.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = validationsPath + "json-schema-nested-refs/",
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit, config.target, defaultRenderOptions, config.syntax).renderToString
   }
