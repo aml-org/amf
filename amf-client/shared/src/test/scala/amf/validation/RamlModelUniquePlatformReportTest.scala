@@ -446,4 +446,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-recursion-in-trait.raml", Some("invalid-recursion-in-trait.report"), profile = Raml10Profile)
   }
 
+  test("Invalid header names according to RFC-7230") {
+    validate("invalid-header-names.raml", Some("invalid-header-names.report"), Raml10Profile)
+  }
 }

@@ -1,0 +1,16 @@
+openapi: "3.0.0"
+info:
+  title: anApi
+  version: "1.0"
+paths:
+  /myPath:
+    description: something
+    parameters:
+      - in: header
+        name: X-@-ID
+        schema:
+          type: string
+      - in: header
+        name: valid-header
+        schema:
+          type: string
