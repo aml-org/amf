@@ -3,6 +3,7 @@ package amf.plugins.domain.shapes.resolution.stages.merge
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.{DataNodeModel, ShapeModel}
 import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
+import amf.core.parser.FieldEntry
 import amf.plugins.domain.webapi.models.{Key, Payload}
 
 case class JsonMergePatch(isNull: AmfElement => Boolean, keyCriteria: KeyCriteria, ignoredFields: Seq[Field] = Seq()) {
@@ -41,16 +42,19 @@ case class JsonMergePatch(isNull: AmfElement => Boolean, keyCriteria: KeyCriteri
   private def bogusTarget = AmfScalar(0)
 
   private def mergeObjects(target: AmfObject, patch: AmfObject) = {
-    patch.fields.foreach {
-      case (field, fieldValue) =>
-        val element = fieldValue.value
-        if (isNull(element)) target.fields.removeField(field)
-        else if (skipRecursiveMerge(field)) target.set(field, fieldValue.value)
-        else if (!ignoredFields.contains(field)) { // TODO: should be filtered beforehand. Can't do it because Fields object is mutable :-(
-          val nextValue = merge(target.fields.get(field), element)
-          target.set(field, nextValue)
-        }
-    }
+    patch.fields
+      .fields()
+      .filter(entry => !ignoredFields.contains(entry.field))
+      .foreach {
+        case FieldEntry(field, fieldValue) =>
+          val element = fieldValue.value
+          if (isNull(element)) target.fields.removeField(field)
+          else if (skipRecursiveMerge(field)) target.set(field, fieldValue.value)
+          else {
+            val nextValue = merge(target.fields.get(field), element)
+            target.set(field, nextValue)
+          }
+      }
     target
   }
 
