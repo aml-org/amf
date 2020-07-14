@@ -147,6 +147,15 @@ object AMFRawValidations {
         openApiErrorMessage = "Names must be string"
       ),
       AMFValidation(
+        owlClass = apiContract("Parameter"),
+        owlProperty = apiContract("paramName"),
+        uri = amfParser("mandatory-header-name-pattern"),
+        constraint = shape("mandatoryHeaderNamePattern"),
+        ramlErrorMessage = "Header name must comply RFC-7230",
+        openApiErrorMessage = "Header name must comply RFC-7230",
+        severity = Severity.WARNING
+      ),
+      AMFValidation(
         owlClass = doc("DomainElement"),
         owlProperty = core("description"),
         constraint = dataType,
@@ -681,13 +690,6 @@ object AMFRawValidations {
         value = "get,put,post,delete,options,head,patch,connect,trace",
         ramlErrorMessage = "Unknown method type",
         openApiErrorMessage = "Unknown Operation method"
-      ),
-      AMFValidation(
-        message = "Header parameter name is invalid according to HTTP spec",
-        owlClass = apiContract(ParameterModel.doc.displayName),
-        owlProperty = apiContract("Name"),
-        constraint = shape("headerParamNameMustBeAscii"),
-        severity = Severity.WARNING
       )
     )
 
@@ -1016,6 +1018,15 @@ object AMFRawValidations {
         value = "1",
         ramlErrorMessage = "API version is mandatory",
         openApiErrorMessage = "Info object 'version' is mandatory"
+      ),
+      AMFValidation(
+        owlClass = apiBinding("HttpMessageBinding"),
+        owlProperty = apiBinding("headers"),
+        uri = amfParser("mandatory-header-name-pattern"),
+        constraint = shape("mandatoryHeaderBindingNamePattern"),
+        ramlErrorMessage = "Header name must comply RFC-7230",
+        openApiErrorMessage = "Header name must comply RFC-7230",
+        severity = Severity.WARNING
       ),
       AMFValidation(
         message = "Documentation 'url' field is mandatory",

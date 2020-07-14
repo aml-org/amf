@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: ZEncoder API
+version: v2
+baseUri: https://app.zencoder.com/api/{version}
+/jobs:
+  post:
+    description: Create a job
+    headers:
+      valid-header:
+        description: A valid header.
+      invalid@header:
+        description: An invalid header.
