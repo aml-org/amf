@@ -1868,6 +1868,18 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                         |  "$schema": "http://json-schema.org/draft-04/schema#",
                         |  "$ref": "#/definitions/C",
                         |  "definitions": {
+                        |    "C": {
+                        |      "type": "object",
+                        |      "additionalProperties": true,
+                        |      "properties": {
+                        |        "c1": {
+                        |          "type": "array",
+                        |          "items": {
+                        |            "$ref": "#/definitions/A"
+                        |          }
+                        |        }
+                        |      }
+                        |    },
                         |    "A": {
                         |      "type": "object",
                         |      "additionalProperties": true,
@@ -1882,18 +1894,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                         |                "$ref": "#/definitions/A"
                         |              }
                         |            }
-                        |          }
-                        |        }
-                        |      }
-                        |    },
-                        |    "C": {
-                        |      "type": "object",
-                        |      "additionalProperties": true,
-                        |      "properties": {
-                        |        "c1": {
-                        |          "type": "array",
-                        |          "items": {
-                        |            "$ref": "#/definitions/A"
                         |          }
                         |        }
                         |      }

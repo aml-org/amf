@@ -3,15 +3,16 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.Root
 import amf.core.annotations.SourceVendor
 import amf.core.metamodel.document.FragmentModel
-import amf.core.model.document.{Fragment, ExternalFragment}
+import amf.core.model.document.{ExternalFragment, Fragment}
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{Shape, AmfScalar, ExternalDomainElement}
+import amf.core.model.domain.{AmfScalar, ExternalDomainElement, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.Raml10
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
+import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.validations.ParserSideValidations.InvalidFragmentType
@@ -119,7 +120,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       val resourceType = ResourceTypeFragment().adopted(root.location + "#")
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(ResourceType(map).withId(resourceType.id), resourceType.id, "resourceType", map)
+        new AbstractDeclarationParser(ResourceType(map).withId(resourceType.id), resourceType.id, YMapEntryLike(map))
           .parse()
 
       resourceType.withEncodes(abstractDeclaration)
@@ -132,7 +133,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       val traitFragment = TraitFragment().adopted(root.location + "#")
 
       val abstractDeclaration =
-        new AbstractDeclarationParser(Trait(map).withId(traitFragment.id), traitFragment.id, "trait", map)
+        new AbstractDeclarationParser(Trait(map).withId(traitFragment.id), traitFragment.id, YMapEntryLike(map))
           .parse()
 
       traitFragment.withEncodes(abstractDeclaration)

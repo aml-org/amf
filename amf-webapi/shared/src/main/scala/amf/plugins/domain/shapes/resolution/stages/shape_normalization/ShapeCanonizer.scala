@@ -53,7 +53,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       case any: AnyShape             => canonicalAny(any)
     }
     if (!withoutCaching) context.cache + canonical // i should never add a shape if is not resolved yet
-    context.cache.updateFixPointsAndClosures(canonical, withoutCaching)
+    context.cache.updateFixPoints(canonical, withoutCaching)
 
     canonical
   }

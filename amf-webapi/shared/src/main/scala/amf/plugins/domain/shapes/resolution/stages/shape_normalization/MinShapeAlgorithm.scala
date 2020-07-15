@@ -48,7 +48,6 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
     val superShape   = copy(superShapeOri)
     val derivedShape = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
-    context.propagateClosures(superShape, derivedShape)
 //    context.cache.updateRecursiveTargets(derivedShape)
     try {
       derivedShape match {

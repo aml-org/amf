@@ -54,4 +54,8 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("SecuritySchema scope in implemetation that is not defined in declaration") {
     validate("security-schema-scopes.yaml", Some("security-schema-scopes.report"), Oas20Profile)
   }
+
+  test("Invalid header names according to RFC-7230") {
+    validate("invalid-header-names.yaml", Some("invalid-header-names.report"), Oas20Profile)
+  }
 }

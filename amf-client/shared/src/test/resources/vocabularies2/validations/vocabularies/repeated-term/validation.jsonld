@@ -1,0 +1,19 @@
+{
+  "@type": "http://www.w3.org/ns/shacl#ValidationReport",
+  "http://www.w3.org/ns/shacl#conforms": false,
+  "http://www.w3.org/ns/shacl#result": [
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "http://mulesoft.com/vocabularies/my-vocabulary#Person"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "'http://mulesoft.com/vocabularies/my-vocabulary#Person' term cannot be both a class term and property term",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#duplicate-term"
+      }
+    }
+  ]
+}
