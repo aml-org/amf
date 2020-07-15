@@ -1,10 +1,13 @@
 package amf.dialects
 import amf.AmlProfile
 import amf.client.parse.DefaultParserErrorHandler
+import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationReport
 import amf.core.{AMFCompiler, CompilerContextBuilder}
+import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
@@ -28,6 +31,14 @@ class VocabularyDefinitionValidationTest
     validate("vocabulary.yaml", Some("validation.jsonld"), "repeated-term")
   }
 
+  test("Test missing class term") {
+    validate("vocabulary.yaml", Some("validation.jsonld"), "missing-class-term")
+  }
+
+  test("Test missing property term") {
+    validate("vocabulary.yaml", Some("validation.jsonld"), "missing-property-term")
+  }
+
   private def compilerContext(url: String) =
     new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
 
@@ -38,7 +49,7 @@ class VocabularyDefinitionValidationTest
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     val vocabularyContext = compilerContext(s"file://$basePath/$path/$vocabulary")
     val report = for {
-      _ <- amf.core.AMF.init()
+      _ <- Validation(platform)
       vocabulary <- {
         new AMFCompiler(
           vocabularyContext,
