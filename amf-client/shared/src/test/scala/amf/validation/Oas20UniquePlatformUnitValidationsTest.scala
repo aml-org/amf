@@ -15,6 +15,10 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
              Oas20Profile)
   }
 
+  test("invalid fields when security type is basic") {
+    validate("security/invalid-fields-basic-type.json", Some("invalid-fields-basic-type.report"), Oas20Profile)
+  }
+
   test("Invalid security scheme type") {
     validate("security/invalid-security-scheme-type.json", Some("invalid-security-scheme-type.report"), Oas20Profile)
   }

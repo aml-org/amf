@@ -2,31 +2,32 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, ScalarNode}
-import org.yaml.model.{YMap, YScalar, YNode, YMapEntry}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, DataNodeParser}
+import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
 import amf.plugins.domain.webapi.metamodel.security.{
-  OAuth1SettingsModel,
   ApiKeySettingsModel,
-  SettingsModel,
+  OAuth1SettingsModel,
   OAuth2FlowModel,
-  ScopeModel
+  ScopeModel,
+  SettingsModel
 }
 import amf.plugins.domain.webapi.models.security.{
-  Settings,
-  SecurityScheme,
-  Scope,
   ApiKeySettings,
-  OAuth2Flow,
-  WithSettings,
   OAuth1Settings,
-  OAuth2Settings
+  OAuth2Flow,
+  OAuth2Settings,
+  Scope,
+  SecurityScheme,
+  Settings,
+  WithSettings
 }
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.core.parser.YMapOps
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.WebApiContext
 
-abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: OasLikeWebApiContext)
+abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext)
     extends SpecParserOps {
 
   protected def parseAnnotations(settings: Settings): Settings = {

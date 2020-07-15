@@ -1,38 +1,33 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations.VirtualObject
-import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import org.yaml.model.{YMap, YMapEntry}
-import amf.plugins.domain.webapi.metamodel.security.{
-  OAuth2SettingsModel,
-  HttpSettingsModel,
-  OAuth2FlowModel,
-  OpenIdConnectSettingsModel
-}
-import amf.plugins.domain.webapi.models.security._
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
-import amf.core.utils.{Lazy, AmfStrings}
+import amf.core.utils.{AmfStrings, Lazy}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.domain.webapi.metamodel.security.{OAuth2FlowModel, OAuth2SettingsModel}
+import amf.plugins.domain.webapi.models.security._
+import org.yaml.model.YMap
 
-class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: OasWebApiContext)
+class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext)
     extends OasLikeSecuritySettingsParser(map, scheme) {
 
-  override def parse(): Option[Settings] = {
-    produceSettings.map { settings =>
-      val parsedSettings = settings match {
-        case s: OAuth1Settings => parseOauth1Settings(s)
-        case s: OAuth2Settings => parseOauth2Settings(s)
-        case s: ApiKeySettings => parseApiKeySettings(s)
-        case defaultSettings =>
-          map
-            .key("settings".asOasExtension)
-            .map(entry => parseDynamicSettings(entry.value.as[YMap], defaultSettings))
-            .getOrElse(defaultSettings)
+  override def parse(): Option[Settings] =
+    produceSettings
+      .map { settings =>
+        val parsedSettings = settings match {
+          case s: OAuth1Settings => parseOauth1Settings(s)
+          case s: OAuth2Settings => parseOauth2Settings(s)
+          case s: ApiKeySettings => parseApiKeySettings(s)
+          case defaultSettings =>
+            map
+              .key("settings".asOasExtension)
+              .map(entry => parseDynamicSettings(entry.value.as[YMap], defaultSettings))
+              .getOrElse(defaultSettings)
+        }
+        parsedSettings.annotations += VirtualObject()
+        parseAnnotations(parsedSettings)
       }
-      parsedSettings.annotations += VirtualObject()
-      parseAnnotations(parsedSettings)
-    }
-  }
 
   override def parseOauth2Settings(settings: OAuth2Settings): OAuth2Settings = {
     val flow = new Lazy[OAuth2Flow](() => OAuth2Flow(map).adopted(settings.id))
@@ -56,6 +51,7 @@ class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
       }
     )
 
+    // shouldn't be just parseScopes(flow.getOrCreate, map)?
     map.key("scopes").foreach(_ => parseScopes(flow.getOrCreate, map))
 
     map.key(

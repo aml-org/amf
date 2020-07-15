@@ -1,0 +1,15 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Simple Inventory API"
+  },
+  "paths": {},
+  "securityDefinitions": {
+    "basic": {
+      "description": "basic security type that shouldn't have 'flow' field",
+      "type": "basic",
+      "flow": "password"
+    }
+  }
+}
