@@ -1,0 +1,61 @@
+asyncapi: '2.0.0'
+info:
+  title: components
+  version: '1.0.0'
+
+components:
+  schemas:
+
+    conditional-subschemas:
+      type: object
+      properties:
+        country:
+          enum: ["United States of America", "Canada"]
+      if:
+        properties:
+          country:
+            type: object
+            propertyNames:
+              pattern: "^[A-Za-z]*$"
+          const-keyword:
+            type: string
+            const: some value
+            examples: [
+              "invalid","some value"
+            ]
+      then:
+        properties:
+          postal_code:
+            type: array
+            contains:
+              type: number
+      else:
+        properties:
+          a:
+            type: number
+            minimum: 0
+            exclusiveMaximum: 100
+          b:
+            type: number
+            exclusiveMinimum: 0
+            maximum: 100
+          postal_code:
+            items: [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string",
+              "enum": ["Street", "Avenue", "Boulevard"]
+            }
+            ]
+            additionalItems:
+              type: number
+      examples: [
+      {
+        "country": "United States of America",
+        "postal_code": "dlkfjslfj"
+      }
+      ]
+
+channels: {}

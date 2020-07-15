@@ -1,0 +1,18 @@
+description: A representation of a cat
+allOf:
+  -
+    $ref: "#/definitions/Pet"
+  -
+    type: object
+    required:
+      - huntingSkill
+    properties:
+      huntingSkill:
+        type: string
+        description: The measured skill for hunting
+        default: lazy
+        enum:
+          - clueless
+          - lazy
+          - adventurous
+          - aggressive
