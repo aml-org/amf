@@ -1,0 +1,31 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0.0",
+    "title": "garage",
+    "description": "Authentication API"
+  },
+  "components": {
+    "schemas": {
+      "LoginResponse": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/APIResponse"
+          },
+          {
+            "not": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "external.json#/first"
+          }
+        ]
+      },
+      "APIResponse": {
+        "type": "object"
+      }
+    }
+  },
+  "paths": {}
+}
