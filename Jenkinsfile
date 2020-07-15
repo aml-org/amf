@@ -54,13 +54,6 @@ pipeline {
 //      }
 //    }
     stage('Publish') {
-      when {
-        anyOf {
-          branch 'master'
-          branch 'develop'
-          branch 'custom_validations_expanded'
-        }
-      }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
           script {
