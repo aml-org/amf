@@ -132,7 +132,7 @@ Using this JAR, you can run tasks from command line, for instance:
 ```bash
 java -jar amf-x.y.z.jar parse -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
 ```
-or 
+or
 ```bash
 java -jar amf-x.y.z.jar validate -in "RAML 1.0" -mime-in "application/yaml" -p "RAML" yourAPIfile
 ```
@@ -162,7 +162,6 @@ Refer to the usage of the application for additional commands and explanations.
 Go to [amf examples repository](https://github.com/mulesoft/amf-examples) There are examples for each one of the three usages and a *converter* project that add some UI on top of the library.
 
 ## Validation
-
 Validation is one of the key features of AMF. Please check the following link to get more information:
 
 [Validation insights](./documentation/validation.md)
