@@ -11,6 +11,7 @@ disabled:
 
 violation:
   - at-least-one-2xx-or-3xx-response
+  - upper-camelcase-datatype
   - camelcase-method-displayname
   - camelcase-query-parameters
   - https-required
@@ -25,6 +26,13 @@ violation:
   - version-format
 
 validations:
+
+  upper-camelcase-datatype:
+    message: Data type definitions should be UpperCamelCase
+    targetClass: doc.Unit
+    propertyConstraints:
+      doc.declares/shacl.name:
+        pattern: /^[A-Z]+([A-Z]?[a-z0-9]?)*$/
 
   at-least-one-2xx-or-3xx-response:
     message: Methods must have at least one 2xx or 3xx response

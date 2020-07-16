@@ -13,8 +13,8 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val path = "file://amf-client/shared/src/test/resources/validations/"
-  val testValidations = Map()
-  /*
+//  val testValidations = Map()
+
   val testValidations = Map(
     "bad_domain/valid.jsonld"                               -> ExpectedReport(conforms = true, 0, OasProfile),
     "endpoint/amf.jsonld"                                   -> ExpectedReport(conforms = true, 0, AmfProfile),
@@ -36,9 +36,6 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "types/scalars/valid_facet.jsonld"                      -> ExpectedReport(conforms = true, 0, RamlProfile),
     "types/scalars/invalid_xml_attribute_non_scalar.jsonld" -> ExpectedReport(conforms = false, 1, RamlProfile),
     "types/scalars/invalid_xml_wrapped_scalar.jsonld"       -> ExpectedReport(conforms = false, 1, RamlProfile),
-    //   we commentated the range of items validation
-    //    "types/arrays/wrong_items.jsonld"         -> ExpectedReport(conforms = false, 1, RAMLProfile),
-    //    "types/arrays/right_items.jsonld"         -> ExpectedReport(conforms = true, 0, RAMLProfile),
     "types/arrays/empty_items.jsonld"                        -> ExpectedReport(conforms = true, 0, RamlProfile),
     "types/arrays/empty_items.jsonld"                        -> ExpectedReport(conforms = false, 1, OasProfile),
     "annotationTypes/invalid.jsonld"                         -> ExpectedReport(conforms = false, 1, RamlProfile),
@@ -46,14 +43,13 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "path-parameter-required/required-is-not-present.jsonld" -> ExpectedReport(conforms = false, 1, OasProfile),
     "path-parameter-required/required-set-to-true.jsonld"    -> ExpectedReport(conforms = true, 0, OasProfile),
     "file-parameter/invalid.jsonld"                          -> ExpectedReport(conforms = false, 1, OasProfile),
-//  "file-parameter/valid.jsonld"                            -> ExpectedReport(conforms = true, 0, OasProfile) fails in clientJVM with unkown error
     "../upanddown/oas3/basic-content.jsonld" -> ExpectedReport(conforms = false, 1, Oas30Profile)
   )
-*/
+
   for {
     (file, expectedReport) <- testValidations
   } yield {
-    test(s"SHACL Validator $file") {
+    test(s"SHACL Validator $file HERE_HERE_HERE") {
       validate(file, expectedReport)
     }
   }
@@ -65,12 +61,12 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
         val effectiveValidations = validation.computeValidations(expectedReport.profile)
         val shapes               = validation.shapesGraph(effectiveValidations)
         val jsLibrary            = new JSLibraryEmitter(None).emitJS(effectiveValidations.effective.values.toSeq)
-
         jsLibrary match {
           case Some(code) =>
             PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
           case _ => // ignore
         }
+
         PlatformValidator.instance.report(
           model,
           "application/ld+json",

@@ -1,15 +1,6 @@
 package amf.client.model.document
 
-import amf.core.model.document.{PayloadFragment => InternalPayloadFragment}
-import amf.plugins.document.webapi.model.{
-  AnnotationTypeDeclarationFragment => InternalAnnotationTypeDeclarationFragment,
-  DataTypeFragment => InternalDataTypeFragment,
-  DocumentationItemFragment => InternalDocumentationItemFragment,
-  NamedExampleFragment => InternalNamedExampleFragment,
-  ResourceTypeFragment => InternalResourceTypeFragment,
-  SecuritySchemeFragment => InternalSecuritySchemeFragment,
-  TraitFragment => InternalTraitFragment
-}
+import amf.plugins.document.webapi.model.{AnnotationTypeDeclarationFragment => InternalAnnotationTypeDeclarationFragment, DataTypeFragment => InternalDataTypeFragment, DocumentationItemFragment => InternalDocumentationItemFragment, NamedExampleFragment => InternalNamedExampleFragment, ResourceTypeFragment => InternalResourceTypeFragment, SecuritySchemeFragment => InternalSecuritySchemeFragment, TraitFragment => InternalTraitFragment}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

@@ -10,7 +10,7 @@ class CustomValidationTest extends UniquePlatformReportGenTest {
 
 
   test("Load dialect") {
-    validate("mercury.raml", Some("mercury1.report"), ProfileName("mercury"), Some("profiles/mercury.yaml"))
+    validate("mercury.raml", Some(s"mercury1.report.${platform.name}"), ProfileName("mercury"), Some("profiles/mercury.yaml"))
   }
 
   test("Additional raml validations") {

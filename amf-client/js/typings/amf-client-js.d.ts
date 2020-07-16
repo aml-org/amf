@@ -496,6 +496,8 @@ declare module 'amf-client-js' {
         findById(id: string): domain.DomainElement | undefined
 
         findByType(typeId: string): domain.DomainElement[]
+
+        withReferenceAlias(alias: string, fullUrl: string, relativeUrl: string): this
       }
 
       /* Not exported */

@@ -148,4 +148,5 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
   def withDefaultServer(url: String): Server = _internal.withDefaultServer(url)
 
   def sourceVendor: Option[Vendor] = _internal.sourceVendor
+
 }
