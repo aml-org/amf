@@ -56,14 +56,14 @@ object Raml08EmitterFactory extends DomainElementEmitterFactory {
 
 object Oas20EmitterFactory extends OasLikeEmitterFactory {
   // TODO ajust error handler
-  implicit val ctx: Oas2SpecEmitterContext = new Oas2SpecEmitterContext(UnhandledErrorHandler)
+  implicit val ctx: Oas2SpecEmitterContext = new Oas2SpecEmitterContext(UnhandledErrorHandler, compactEmission = false)
 
   override def responseEmitter(e: Response): Option[PartEmitter] = ???
 }
 
 object Oas30EmitterFactory extends OasLikeEmitterFactory {
   // TODO ajust error handler
-  implicit val ctx: Oas3SpecEmitterContext = new Oas3SpecEmitterContext(UnhandledErrorHandler)
+  implicit val ctx: Oas3SpecEmitterContext = new Oas3SpecEmitterContext(UnhandledErrorHandler, compactEmission = false)
 
   override def responseEmitter(e: Response): Option[PartEmitter] = ???
 }
@@ -80,10 +80,6 @@ trait OasLikeEmitterFactory extends DomainElementEmitterFactory {
   implicit val ctx: OasLikeSpecEmitterContext
 
   def typeEmitter(s: Shape): Option[PartEmitter] = {
-    ctx match {
-      case oasCtx: OasSpecEmitterContext => oasCtx.forceEmission = Some(s.id)
-      case _                             =>
-    }
     Some(OasTypePartEmitter(s, SpecOrdering.Lexical, references = Nil))
   }
 
