@@ -8,13 +8,18 @@ class CustomValidationTest extends UniquePlatformReportGenTest {
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/"
   override val hint: Hint  = RamlYamlHint
 
-
   test("Load dialect") {
-    validate("mercury.raml", Some("mercury1.report"), ProfileName("mercury"), Some("profiles/mercury.yaml"))
+    validate("mercury.raml",
+             Some(s"mercury1.report.${platform.name}"),
+             ProfileName("mercury"),
+             Some("profiles/mercury.yaml"))
   }
 
   test("Additional raml validations") {
-    validate("amf_extended.raml", Some("amf_extended.report"), ProfileName("amf_extended"), Some("profiles/amf_extended.yaml"))
+    validate("amf_extended.raml",
+             Some("amf_extended.report"),
+             ProfileName("amf_extended"),
+             Some("profiles/amf_extended.yaml"))
   }
 
   test("Property pairs validations") {

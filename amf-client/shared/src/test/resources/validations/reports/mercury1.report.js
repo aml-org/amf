@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/validations/mercury.raml
 Profile: mercury
 Conforms? false
-Number of results: 3
+Number of results: 5
 
 Level: Violation
 
@@ -10,7 +10,7 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/mercury.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/get/request/parameter/expand_param
   Property: 
-  Position: Some(LexicalInformation([(27,16)-(34,0)]))
+  Position: Some(LexicalInformation([(32,16)-(39,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/mercury.raml
 
 - Source: http://a.ml/vocabularies/data#no-todo-text-in-description-fields
@@ -18,7 +18,23 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/mercury.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/post
   Property: 
-  Position: Some(LexicalInformation([(50,8)-(58,0)]))
+  Position: Some(LexicalInformation([(55,8)-(63,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/mercury.raml
+
+- Source: http://a.ml/vocabularies/data#upper-camelcase-datatype
+  Message: Data type definitions should be UpperCamelCase
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/mercury.raml
+  Property: 
+  Position: Some(LexicalInformation([(0,0)-(0,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/mercury.raml
+
+- Source: http://a.ml/vocabularies/data#upper-camelcase-datatype
+  Message: Data type definitions should be UpperCamelCase
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/mercury.raml
+  Property: 
+  Position: Some(LexicalInformation([(0,0)-(0,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/mercury.raml
 
 - Source: http://a.ml/vocabularies/data#at-least-one-2xx-or-3xx-response
@@ -26,5 +42,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/mercury.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/put
   Property: http://a.ml/vocabularies/apiContract#returns
-  Position: Some(LexicalInformation([(61,12)-(64,0)]))
+  Position: Some(LexicalInformation([(66,12)-(69,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/mercury.raml

@@ -142,7 +142,7 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
 
   }
   override def load(mediaType: String, text: String): Unit = {
-    var effectiveMediaType = if (mediaType == "application/json") "application/ld+json" else mediaType
+    val effectiveMediaType = if (mediaType == "application/json") "application/ld+json" else mediaType
     rdf.parse(text, model, "", effectiveMediaType)
   }
 
