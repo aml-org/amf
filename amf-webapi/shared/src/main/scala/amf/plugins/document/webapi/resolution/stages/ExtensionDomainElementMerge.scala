@@ -17,23 +17,18 @@ import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
-import scala.collection.mutable
-
 trait DomainElementArrayMergeStrategy {
   def merge(target: DomainElement, field: Field, o: AmfArray, extensionId: String, extensionLocation: Option[String])
 }
 
 class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                                   keepEditingInfo: Boolean,
-                                  domainElemdomainElementArrayMergeStrategy: DomainElementArrayMergeStrategy)(
-    implicit val errorHandler: ErrorHandler)
+                                  domainElemdomainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,
+                                  extensionId: String,
+                                  extensionLocation: Option[String])(implicit val errorHandler: ErrorHandler)
     extends InnerAdoption {
 
-  def merge(master: DomainElement,
-            overlay: DomainElement,
-            extensionId: String,
-            extensionLocation: Option[String],
-            idTracker: IdTracker): DomainElement = {
+  def merge(master: DomainElement, overlay: DomainElement, idTracker: IdTracker): DomainElement = {
     val ids = master.id :: overlay.id :: Nil
     if (idTracker.notTracking(ids)) {
       idTracker.track(ids)
@@ -41,23 +36,18 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       overlay.fields
         .fields()
         .filter(f => ignored(f, master))
-        .foreach(mergeField(_, master, overlay, idTracker, extensionId, extensionLocation))
+        .foreach(mergeField(_, master, overlay, idTracker))
     }
     master
   }
 
-  private def skipNode(): Unit = Unit
-
   private def mergeField(entry: FieldEntry,
                          master: DomainElement,
                          overlay: DomainElement,
-                         idTracker: IdTracker,
-                         extensionId: String,
-                         extensionLocation: Option[String]): Unit = {
+                         idTracker: IdTracker): Unit = {
     val FieldEntry(field, value) = entry
     master.fields.entry(field) match {
-      case None if restrictions allowsNodeInsertionIn field =>
-        insertNode(master, idTracker, extensionId, extensionLocation, entry)
+      case None if restrictions allowsNodeInsertionIn field                => insertNode(master, idTracker, entry)
       case None if field == ScalarShapeModel.DataType && isInferred(value) => skipNode()
       // If the overlay field is a datatype and the type is inferred it must be a type that add only an example
       // Nothing to do
@@ -69,19 +59,17 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
             if (keepEditingInfo) entry.element.annotations += ExtensionProvenance(extensionId, extensionLocation)
             master.set(field, entry.element)
           case Type.ArrayLike(element) =>
-            mergeArrays(master, field, element, existing.array, entry.array, extensionId, extensionLocation)
+            mergeArrays(master, field, element, existing.array, entry.array)
           case DataNodeModel =>
             mergeDataNode(master,
                           field,
                           existing.element.asInstanceOf[DomainElement],
-                          entry.element.asInstanceOf[DomainElement],
-                          extensionId,
-                          extensionLocation)
+                          entry.element.asInstanceOf[DomainElement])
           case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
             master
               .set(field, entry.domainElement, Annotations(ExtensionProvenance(overlay.id, extensionLocation)))
           case _: DomainElementModel =>
-            merge(existing.domainElement, entry.domainElement, extensionId, extensionLocation, idTracker)
+            merge(existing.domainElement, entry.domainElement, idTracker)
           case _ =>
             errorHandler.violation(
               ResolutionValidation,
@@ -102,16 +90,14 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
 
   }
 
-  private def insertNode(master: DomainElement,
-                         idTracker: IdTracker,
-                         extensionId: String,
-                         extensionLocation: Option[String],
-                         entry: FieldEntry): Unit = {
+  private def insertNode(master: DomainElement, idTracker: IdTracker, entry: FieldEntry): Unit = {
     val FieldEntry(field, value) = entry
     val newValue                 = adoptInner(master.id, value.value, idTracker)
     if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
     master.set(field, newValue)
   }
+
+  private def skipNode(): Unit = Unit
 
   private def forbiddenInsertionError(entry: FieldEntry): Unit = {
     val FieldEntry(field, value) = entry
@@ -144,56 +130,43 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
   }
 
   private def incompatibleType(master: DomainElement, overlay: DomainElement): Boolean = (master, overlay) match {
-    case (_: Shape, _: Shape) => master.getClass != overlay.getClass
+    case (_: Shape, _: Shape) => !areSameType(master, overlay)
     case _                    => false
   }
+
+  private def areSameType(master: DomainElement, overlay: DomainElement) = master.getClass == overlay.getClass
 
   private def mergeDataNode(master: DomainElement,
                             field: Field,
                             existing: DomainElement,
-                            overlay: DomainElement,
-                            extensionId: String,
-                            extensionLocation: Option[String]): Unit = {
+                            overlay: DomainElement): Unit = {
     (existing, overlay) match {
-      case (e: DataNode, o: DataNode) if existing.getClass == overlay.getClass => DataNodeMerging.merge(e, o)
-      case _                                                                   =>
+      case (e: DataNode, o: DataNode) if areSameType(existing, overlay) => DataNodeMerging.merge(e, o)
+      case _                                                            =>
         // Different types of nodes means the overlay has redefined this extension, so replace it
         if (keepEditingInfo) overlay.annotations += ExtensionProvenance(extensionId, extensionLocation)
         master.set(field, overlay)
     }
   }
 
-  private def mergeArrays(target: DomainElement,
-                          field: Field,
-                          element: Type,
-                          main: AmfArray,
-                          other: AmfArray,
-                          extensionId: String,
-                          extensionLocation: Option[String]): Unit = {
+  private def mergeArrays(target: DomainElement, field: Field, element: Type, main: AmfArray, other: AmfArray): Unit = {
     element match {
-      case _: Type.Scalar => mergeScalarArrays(target, field, main, other, extensionId, extensionLocation)
-      case key: KeyField  => mergeByKeyValue(target, field, key, main, other, extensionId, extensionLocation)
+      case _: Type.Scalar => mergeScalarArrays(target, field, main, other)
+      case key: KeyField  => mergeByKeyValue(target, field, key, main, other)
       case _: DomainElementModel =>
         domainElemdomainElementArrayMergeStrategy.merge(target, field, other, extensionId, extensionLocation)
       case _ =>
         errorHandler.violation(ResolutionValidation,
                                extensionId,
-                               None,
                                s"Cannot merge '$element': not a KeyField nor a Scalar",
-                               target.position(),
-                               target.location())
+                               target.annotations)
     }
   }
 
-  private def mergeScalarArrays(target: DomainElement,
-                                field: Field,
-                                main: AmfArray,
-                                other: AmfArray,
-                                extensionId: String,
-                                extensionLocation: Option[String]): Unit = {
+  private def mergeScalarArrays(target: DomainElement, field: Field, main: AmfArray, other: AmfArray): Unit = {
     val existing = main.values.map(_.asInstanceOf[AmfScalar].value).toSet
-    other.values.foreach { value =>
-      val scalar = value.asInstanceOf[AmfScalar].value
+    other.scalars.foreach { scalarValue =>
+      val scalar = scalarValue.value
       if (!existing.contains(scalar)) {
         val scalarValue = AmfScalar(scalar)
         if (keepEditingInfo) scalarValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
@@ -206,9 +179,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                               field: Field,
                               key: KeyField,
                               master: AmfArray,
-                              extension: AmfArray,
-                              extensionId: String,
-                              extensionLocation: Option[String]): Unit = {
+                              extension: AmfArray): Unit = {
 
     val asSimpleProperty                  = isSimpleProperty(key)
     var existing: Map[Any, DomainElement] = buildElementByKeyMap(key, master)
@@ -224,14 +195,11 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                                                      asSimpleProperty,
                                                      existing.get(keyValue),
                                                      obj,
-                                                     extensionId,
-                                                     extensionLocation,
                                                      field,
                                                      tracker)
 
           case _ => // If key is null and nullKey exists, merge if it is not a simpleProperty. Else just override.
-            nullKey = Some(
-              mergeByKeyResult(target, asSimpleProperty, nullKey, obj, extensionId, extensionLocation, field, tracker))
+            nullKey = Some(mergeByKeyResult(target, asSimpleProperty, nullKey, obj, field, tracker))
         }
     }
 
@@ -262,12 +230,10 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                                asSimpleProperty: Boolean,
                                existing: Option[DomainElement],
                                obj: DomainElement,
-                               extensionId: String,
-                               extensionLocation: Option[String],
                                field: Field,
                                idTracker: IdTracker) = {
     existing match {
-      case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), extensionId, extensionLocation, idTracker)
+      case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), idTracker)
       case None if !(restrictions allowsNodeInsertionIn field) =>
         errorHandler.violation(
           ResolutionValidation,
@@ -276,8 +242,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
           obj.annotations
         )
         obj
-      case _ =>
-        adoptInner(target.id, obj, idTracker).asInstanceOf[DomainElement]
+      case _ => adoptInner(target.id, obj, idTracker).asInstanceOf[DomainElement]
     }
   }
 

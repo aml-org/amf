@@ -199,12 +199,12 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
           case extension: ExtensionLike[_] =>
             val iriMerger = IriMerger(document.id + "#", extension.id + "#")
 
-            new ExtensionDomainElementMerge(restrictions, keepEditingInfo, domainElementArrayMergeStrategy).merge(
-              masterTree,
-              extension.encodes,
-              extension.id,
-              ExtendsHelper.findUnitLocationOfElement(extension.id, model),
-              IdTracker())
+            new ExtensionDomainElementMerge(restrictions,
+                                            keepEditingInfo,
+                                            domainElementArrayMergeStrategy,
+                                            extension.id,
+                                            ExtendsHelper.findUnitLocationOfElement(extension.id, model))
+              .merge(masterTree, extension.encodes, IdTracker())
 
             adoptIris(iriMerger, masterTree, IdTracker())
 
@@ -236,12 +236,11 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     extension.declares.foreach { declaration =>
       declarations.findEquivalent(declaration) match {
         case Some(equivalent) =>
-          new ExtensionDomainElementMerge(restrictions, keepEditingInfo, domainElementArrayMergeStrategy).merge(
-            equivalent,
-            declaration,
-            extensionId,
-            extensionLocation,
-            mergingTracker)
+          new ExtensionDomainElementMerge(restrictions,
+                                          keepEditingInfo,
+                                          domainElementArrayMergeStrategy,
+                                          extensionId,
+                                          extensionLocation).merge(equivalent, declaration, mergingTracker)
         case None =>
           val extendedDeclaration =
             adoptInner(master.id + "#/declarations", declaration, mergingTracker).asInstanceOf[DomainElement]
