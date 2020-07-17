@@ -1,0 +1,112 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "components": {
+    "parameters": {
+      "simple-header": {
+        "name": "token",
+        "in": "header",
+        "description": "token to be passed as a header",
+        "required": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "examples": {
+          "a": {
+            "summary": "simple example",
+            "description": "description of the example",
+            "value": [1,2,3,4],
+            "externalValue": "http://test.com/external_doc"
+          }
+        },
+        "explode": true,
+        "style": "simple"
+      },
+      "query-with-content": {
+        "in": "query",
+        "name": "coordinates",
+        "deprecated": true,
+        "allowEmptyValue": true,
+        "allowReserved": true,
+        "example": {
+          "lat": 5,
+          "long": 4
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "lat",
+                "long"
+              ],
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "long": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "path-param": {
+        "name": "username",
+        "in": "path",
+        "description": "username to fetch",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "cookie-param": {
+        "in": "cookie",
+        "name": "aCookie",
+        "description": "description of cookie that will be overridden",
+        "required": true,
+        "deprecated": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "headers": {
+      "Other-Header": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "lat",
+                "long"
+              ],
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "long": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "lat": 5,
+          "long": 4
+        }
+      }
+    }
+  },
+  "paths": {}
+
+}

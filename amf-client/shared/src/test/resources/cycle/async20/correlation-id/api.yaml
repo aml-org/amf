@@ -1,0 +1,12 @@
+asyncapi: '2.0.0'
+info:
+  title: aTitle
+  version: '1.0.0'
+channels:
+  aChannel:
+    publish:
+      message:
+        correlationId:
+          description: Default Correlation ID
+          location: $message.header#/correlationId
+

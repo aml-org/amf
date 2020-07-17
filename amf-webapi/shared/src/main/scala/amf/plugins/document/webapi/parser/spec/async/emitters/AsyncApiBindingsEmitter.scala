@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.async.emitters
 import amf.core.emitter.BaseEmitters.{EmptyMapEmitter, MapEntryEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{AmfElement, DataNode, DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.Position.ZERO
@@ -38,18 +38,27 @@ abstract class AsyncApiBindingsEntryEmitter(
   def key: String
 
   def emit(b: EntryBuilder): Unit = {
-    val emitters: Seq[EntryEmitter] = obtainBindings(bindings)
-      .flatMap(emitterForElement) ++ extensionEmitters
     b.entry(
       key,
-      partBuilder =>
-        if (isLink)
-          emitLink(partBuilder)
-        else
-          partBuilder.obj { emitter =>
-            traverse(ordering.sorted(emitters), emitter)
-        }
+      AsyncApiBindingsPartEmitter(bindings, ordering, extensions).emit(_)
     )
+  }
+
+  override def position(): Position = pos(bindings.annotations)
+}
+
+case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrdering, extensions: Seq[DomainExtension])(
+    implicit val spec: OasLikeSpecEmitterContext)
+    extends PartEmitter {
+
+  def emit(b: PartBuilder): Unit = {
+    val emitters: Seq[EntryEmitter] = obtainBindings(bindings)
+      .flatMap(emitterForElement) ++ extensionEmitters
+    if (isLink) emitLink(b)
+    else
+      b.obj { emitter =>
+        traverse(ordering.sorted(emitters), emitter)
+      }
   }
 
   def isLink: Boolean = bindings match {
