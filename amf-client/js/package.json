@@ -16,7 +16,11 @@
   "types": "./typings/amf-client-js.d.ts",
   "typings": "./typings/amf-client-js.d.ts",
   "dependencies": {
-    "amf-shacl-node": "1.1.1",
+    "amf-shacl-node": "2.0.0-INTERNAL.3",
     "ajv": "6.5.2"
+  },
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
   }
 }
