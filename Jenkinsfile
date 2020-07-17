@@ -15,20 +15,7 @@ pipeline {
     GITHUB_REPO = 'amf'
   }
   stages {
-    stage('Test') {
-      steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-          script {
-            try{
-              sh 'sbt -mem 4096 -Dfile.encoding=UTF-8 clean coverage test coverageReport'
-            } catch (ignored) {
-              failedStage = failedStage + " TEST "
-              unstable "Failed tests"
-            }
-          }
-        }
-      }
-    }
+
     stage('Coverage') {
       when {
         anyOf {
