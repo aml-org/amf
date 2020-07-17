@@ -2,5 +2,4 @@ language: scala
 scala:
   - 2.12.11
 sbt_args: -mem 4096 -Dfile.encoding=UTF-8
-if: fork = true
-  script: sbt ++$TRAVIS_SCALA_VERSION clean coverage test coverageReport
+script: sbt ++$TRAVIS_SCALA_VERSION clean coverage test coverageReport
