@@ -44,7 +44,7 @@ class RamlTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
   override def path: String                         = "amf-client/shared/src/test/resources/org/raml/json_schema/"
   override def inputFileName: String                = "input.raml"
   override def outputFileName: String               = "compact-output.json"
-  override def renderShape(shape: AnyShape): String = shape.buildJsonSchema(ShapeRenderOptions().withCompactedEmission)
+  override def renderShape(shape: AnyShape): String = shape.buildJsonSchema(ShapeRenderOptions())
 }
 
 // Uncomment to add suite
@@ -62,5 +62,5 @@ class OasTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
   override def inputFileName: String                = "input.json"
   override def outputFileName: String               = "compact-output.json"
   override def hint: Hint                           = OasJsonHint
-  override def renderShape(shape: AnyShape): String = shape.buildJsonSchema(ShapeRenderOptions().withCompactedEmission)
+  override def renderShape(shape: AnyShape): String = shape.buildJsonSchema(ShapeRenderOptions())
 }
