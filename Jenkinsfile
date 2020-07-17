@@ -15,17 +15,6 @@ pipeline {
     GITHUB_REPO = 'amf'
   }
   stages {
-    stage('Test') {
-      steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-          script {
-            sh '''
-                  echo "skipping suite"
-              '''
-          }
-        }
-      }
-    }
     stage('Coverage') {
       when {
         anyOf {
