@@ -17,15 +17,12 @@ import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
-trait DomainElementArrayMergeStrategy {
-  def merge(target: DomainElement, field: Field, o: AmfArray, extensionId: String, extensionLocation: Option[String])
-}
-
 class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                                   keepEditingInfo: Boolean,
                                   domainElemdomainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,
                                   extensionId: String,
-                                  extensionLocation: Option[String])(implicit val errorHandler: ErrorHandler)
+                                  extensionLocation: Option[String],
+                                  preMergeTransform: PreMergeTransform)(implicit val errorHandler: ErrorHandler)
     extends InnerAdoption {
 
   def merge(master: DomainElement, overlay: DomainElement, idTracker: IdTracker): DomainElement = {
@@ -33,7 +30,9 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
     if (idTracker.notTracking(ids)) {
       idTracker.track(ids)
       cleanSynthesizedFacets(master)
-      overlay.fields
+      preMergeTransform
+        .transform(master, overlay)
+        .fields
         .fields()
         .filter(f => ignored(f, master))
         .foreach(mergeField(_, master, overlay, idTracker))
@@ -251,5 +250,4 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
     case ExtensionLikeModel.Extends if domainElement.isInstanceOf[ExtensionLikeModel] => false
     case _                                                                            => true
   }
-
 }

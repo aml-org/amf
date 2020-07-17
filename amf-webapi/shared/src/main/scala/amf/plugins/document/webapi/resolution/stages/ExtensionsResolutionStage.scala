@@ -73,6 +73,10 @@ abstract class MergingRestrictions() {
   def allowsNodeInsertionIn(field: Field): Boolean
 }
 
+trait DomainElementArrayMergeStrategy {
+  def merge(target: DomainElement, field: Field, o: AmfArray, extensionId: String, extensionLocation: Option[String])
+}
+
 abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElement]](
     val profile: ProfileName,
     val keepEditingInfo: Boolean)(implicit val errorHandler: ErrorHandler)
@@ -199,12 +203,14 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
           case extension: ExtensionLike[_] =>
             val iriMerger = IriMerger(document.id + "#", extension.id + "#")
 
-            new ExtensionDomainElementMerge(restrictions,
-                                            keepEditingInfo,
-                                            domainElementArrayMergeStrategy,
-                                            extension.id,
-                                            ExtendsHelper.findUnitLocationOfElement(extension.id, model))
-              .merge(masterTree, extension.encodes, IdTracker())
+            new ExtensionDomainElementMerge(
+              restrictions,
+              keepEditingInfo,
+              domainElementArrayMergeStrategy,
+              extension.id,
+              ExtendsHelper.findUnitLocationOfElement(extension.id, model),
+              new InferredOverlayTypeExampleTransform()
+            ).merge(masterTree, extension.encodes, IdTracker())
 
             adoptIris(iriMerger, masterTree, IdTracker())
 
@@ -236,11 +242,13 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     extension.declares.foreach { declaration =>
       declarations.findEquivalent(declaration) match {
         case Some(equivalent) =>
-          new ExtensionDomainElementMerge(restrictions,
-                                          keepEditingInfo,
-                                          domainElementArrayMergeStrategy,
-                                          extensionId,
-                                          extensionLocation).merge(equivalent, declaration, mergingTracker)
+          new ExtensionDomainElementMerge(
+            restrictions,
+            keepEditingInfo,
+            domainElementArrayMergeStrategy,
+            extensionId,
+            extensionLocation,
+            new InferredOverlayTypeExampleTransform()).merge(equivalent, declaration, mergingTracker)
         case None =>
           val extendedDeclaration =
             adoptInner(master.id + "#/declarations", declaration, mergingTracker).asInstanceOf[DomainElement]
