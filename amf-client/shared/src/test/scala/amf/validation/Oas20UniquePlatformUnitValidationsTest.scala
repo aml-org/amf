@@ -19,6 +19,24 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
     validate("security/invalid-fields-basic-type.json", Some("invalid-fields-basic-type.report"), Oas20Profile)
   }
 
+  test("Oauth2 security scheme missing flow and scopes required fields") {
+    validate("security/missing-oauth2-fields.json", Some("missing-oauth2-fields.report"), Oas20Profile)
+  }
+
+  test("missing tokenUrl in Oauth2 flow") {
+    validate("security/missing-tokenUrl-oauth2.json", Some("missing-tokenUrl-oauth2.report"), Oas20Profile)
+  }
+
+  test("missing authorizationUrl in Oauth2 flow") {
+    validate("security/missing-authorizationUrl-oauth2.json",
+             Some("missing-authorizationUrl-oauth2.report"),
+             Oas20Profile)
+  }
+
+  test("invalid Oauth2 flow fields") {
+    validate("security/invalid-oauth2-fields.json", Some("invalid-oauth2-fields.report"), Oas20Profile)
+  }
+
   test("Invalid security scheme type") {
     validate("security/invalid-security-scheme-type.json", Some("invalid-security-scheme-type.report"), Oas20Profile)
   }

@@ -166,24 +166,22 @@ abstract class WebApiContext(val loc: String,
     syntax.nodes.get(shape) match {
       case Some(properties) =>
         ast.entries.foreach { entry =>
-          val key: String = entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
-          if (ignore(shape, key)) {
-            // annotation or path in endpoint/webapi => ignore
-          } else if (!properties(key)) {
-            throwClosedShapeError(shape, node, s"Property '$key' not supported in a $vendor $shape node", entry)
+          val key: String = getEntryKey(entry)
+          if (!ignore(shape, key) && !properties(key)) {
+            throwClosedShapeError(node, s"Property '$key' not supported in a $vendor $shape node", entry)
           }
         }
-      case None => specificClosedShape(node, shape, ast)
+      case None => nextValidation(node, shape, ast)
     }
 
-  protected def throwClosedShapeError(shape: String,
-                                      node: String,
-                                      message: String,
-                                      entry: YPart,
-                                      isWarning: Boolean = false): Unit =
+  protected def getEntryKey(entry: YMapEntry): String = {
+    entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
+  }
+
+  protected def nextValidation(node: String, shape: String, ast: YMap): Unit =
+    throwClosedShapeError(node, s"Cannot validate unknown node type $shape for $vendor", ast)
+
+  protected def throwClosedShapeError(node: String, message: String, entry: YPart, isWarning: Boolean = false): Unit =
     if (isWarning) eh.warning(ClosedShapeSpecificationWarning, node, message, entry)
     else eh.violation(ClosedShapeSpecification, node, message, entry)
-
-  def specificClosedShape(node: String, shape: String, ast: YMap): Unit =
-    throwClosedShapeError(shape, node, s"Cannot validate unknown node type $shape for $vendor", ast)
 }

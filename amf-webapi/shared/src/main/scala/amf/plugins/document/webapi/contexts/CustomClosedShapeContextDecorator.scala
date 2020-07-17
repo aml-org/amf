@@ -7,9 +7,7 @@ import amf.plugins.document.webapi.contexts.parser.{OasLikeSpecVersionFactory, O
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 import org.yaml.model.{YMap, YNode, YPart}
 
-class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext,
-                                        customSyntax: SpecSyntax,
-                                        severities: Map[String, String])
+class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customSyntax: Map[String, SpecNode])
     extends OasLikeWebApiContext(
       decorated.loc,
       decorated.refs,
@@ -17,6 +15,7 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext,
       decorated,
       Some(decorated.declarations)
     ) {
+
   override val syntax: SpecSyntax = decorated.syntax
   override val vendor: Vendor     = decorated.vendor
 
@@ -28,17 +27,45 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext,
 
   override def makeCopy(): OasLikeWebApiContext = decorated.makeCopy()
 
-  override def specificClosedShape(node: String, shape: String, ast: YMap): Unit =
-    closedShape(node, ast, shape, customSyntax)
-
-  override protected def throwClosedShapeError(shape: String,
-                                               node: String,
-                                               message: String,
-                                               entry: YPart,
-                                               isWarning: Boolean): Unit = {
-    val severity  = severities.getOrElse(shape, SeverityLevels.VIOLATION)
-    val isWarning = severity == SeverityLevels.WARNING
-    super.throwClosedShapeError(shape, node, message, entry, isWarning)
+  override def nextValidation(node: String, shape: String, ast: YMap): Unit = {
+    if (customSyntax.contains(shape)) {
+      val keys = ast.entries.map(getEntryKey)
+      validateCustomSyntax(node, ast, shape, keys)
+    } else super.nextValidation(node, shape, ast)
   }
 
+  private def validateCustomSyntax(node: String, ast: YMap, shape: String, keys: Seq[String]): Unit = {
+    if (customSyntax.contains(shape)) {
+      val SpecNode(requiredFields, possible) = customSyntax(shape)
+
+      // if entries don't contain required fields
+      requiredFields.foreach { field =>
+        if (!keys.contains(field.name)) {
+          val isWarning = field.severity == SeverityLevels.WARNING
+          throwClosedShapeError(node, s"Property '${field.name}' is required in a $vendor $shape node", ast, isWarning)
+        }
+      }
+
+      // if invalid fields are present
+      val required = requiredFields.map(_.name)
+      keys.foreach(key => {
+        if (!possible.contains(key) && !required.contains(key) && !ignore(shape, key)) {
+          throwClosedShapeError(node,
+                                s"Property '$key' not supported in a $vendor $shape node",
+                                getAstEntry(ast, key),
+                                isWarning = true)
+        }
+      })
+    }
+  }
+
+  private def getAstEntry(ast: YMap, entry: String): YPart =
+    ast.entries.find(yMapEntry => yMapEntry.key.asScalar.map(_.text).get == entry).get
 }
+
+case class SpecNode(
+    requiredFields: Set[SpecField] = Set(),
+    possibleFields: Set[String] = Set()
+)
+
+case class SpecField(name: String, severity: String = SeverityLevels.VIOLATION)

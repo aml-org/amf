@@ -51,7 +51,6 @@ class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
       }
     )
 
-    // shouldn't be just parseScopes(flow.getOrCreate, map)?
     map.key("scopes").foreach(_ => parseScopes(flow.getOrCreate, map))
 
     map.key(
