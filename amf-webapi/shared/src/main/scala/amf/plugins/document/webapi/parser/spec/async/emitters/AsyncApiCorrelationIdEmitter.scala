@@ -30,7 +30,7 @@ class AsyncApiCorrelationIdEmitter(correlationId: CorrelationId, ordering: SpecO
   override def position(): Position = pos(correlationId.annotations)
 }
 
-private case class AsyncApiCorrelationIdContentEmitter(idObj: CorrelationId, ordering: SpecOrdering)(
+case class AsyncApiCorrelationIdContentEmitter(idObj: CorrelationId, ordering: SpecOrdering)(
     implicit val spec: OasLikeSpecEmitterContext)
     extends PartEmitter {
 

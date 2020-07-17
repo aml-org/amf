@@ -1,0 +1,28 @@
+headers:
+  type: object
+  properties:
+    a:
+      type: string
+    b:
+      type: integer
+payload:
+  type: string
+schemaFormat: application/schema+json;version=draft-07
+correlationId:
+  description: some description
+  location: $message.header#/MQMD/CorrelId
+contentType: application/json
+name: lightMeasured
+title: Light measured
+summary: Inform about environmental lighting conditions of a particular streetlight.
+description: some description
+tags:
+  -
+    name: some name
+    description: description of tag
+externalDocs:
+  url: http://www.google.com
+examples:
+  someExample:
+    value:
+      key: value
