@@ -80,7 +80,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
   val restrictions: MergingRestrictions
 
-  private val domainElementArrayMergeStrategy = new DomainElementArrayValueMerge {
+  private val domainElementArrayMergeStrategy = new DomainElementArrayMergeStrategy {
     override def merge(target: DomainElement,
                        field: Field,
                        o: AmfArray,
