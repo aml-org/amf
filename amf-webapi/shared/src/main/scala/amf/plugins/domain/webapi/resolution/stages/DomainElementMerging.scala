@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.core.annotations.{DefaultNode, ExplicitField}
+import amf.core.annotations.{DeclaredElement, DefaultNode, ExplicitField}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
@@ -215,10 +215,20 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     * @return adopted element with newly set ID
     */
   def adoptInner(parentId: String, target: AmfElement, adopted: Adopted = Adopted()): AmfElement = {
+    val notAdopted = (element: DomainElement) => adopted notYet element.id
+
+    // We use this to avoid re-adopting shapes in declarations
+    val isDeclaredShape = (element: DomainElement) => {
+      element match {
+        case s: Shape => s.annotations.contains(classOf[DeclaredElement])
+        case _        => false
+      }
+    }
+
     target match {
       case array: AmfArray =>
         AmfArray(array.values.map(adoptInner(parentId, _, adopted)), array.annotations)
-      case element: DomainElement if adopted notYet element.id =>
+      case element: DomainElement if notAdopted(element) && !isDeclaredShape(element) =>
         val previousId = element.id
         adoptElementByType(element, parentId)
         adopted += element.id

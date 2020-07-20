@@ -55,5 +55,5 @@ class ExamplesResolutionTest extends ResolutionTest {
             renderOptions = Some(config.renderOptions))
   }
 
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 }

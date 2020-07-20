@@ -44,7 +44,7 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
   }
    */
 
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {

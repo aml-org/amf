@@ -37,7 +37,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/production/"
 
@@ -191,7 +191,12 @@ class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectIns
 
   // Order is not predictable
   ignore("Can parse asyncapi overlay instances") {
-    withDialect("dialect6.yaml", "patch6.yaml", "patch6.resolved.yaml", VocabularyYamlHint, Aml, basePath + "asyncapi/")
+    withDialect("dialect6.yaml",
+                "patch6.yaml",
+                "patch6.resolved.yaml",
+                VocabularyYamlHint,
+                Aml,
+                basePath + "asyncapi/")
   }
 
 }

@@ -25,5 +25,5 @@ class ExternalSourceResolutionTest extends ResolutionTest {
     cycle("jsonexample.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 }
