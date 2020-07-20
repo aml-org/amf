@@ -23,7 +23,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
     }
   }
 
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 
   def cyclesAsyncAmf: Seq[FixtureData] = Seq(
     FixtureData("Simple publish and subscribe", "publish-subscribe.yaml", "publish-subscribe.%s"),
@@ -35,7 +35,9 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Amqp 0.9.1 exchange channel binding",
                 "amqp-exchange-channel-binding.yaml",
                 "amqp-exchange-channel-binding.%s"),
-    FixtureData("Amqp 0.9.1 queue channel binding", "amqp-queue-channel-binding.yaml", "amqp-queue-channel-binding.%s"),
+    FixtureData("Amqp 0.9.1 queue channel binding",
+                "amqp-queue-channel-binding.yaml",
+                "amqp-queue-channel-binding.%s"),
     FixtureData("Amqp 0.9.1 message binding", "amqp-message-binding.yaml", "amqp-message-binding.%s"),
     FixtureData("Amqp 0.9.1 operation binding", "amqp-operation-binding.yaml", "amqp-operation-binding.%s"),
     FixtureData("Http message binding", "http-message-binding.yaml", "http-message-binding.%s"),

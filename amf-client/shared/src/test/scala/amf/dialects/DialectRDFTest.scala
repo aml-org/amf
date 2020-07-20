@@ -57,5 +57,5 @@ class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets {
                  renderOptions = Some(config.renderOptions))
   }
 
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 }
