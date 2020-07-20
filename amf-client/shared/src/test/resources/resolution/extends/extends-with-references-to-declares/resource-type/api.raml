@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: API
+types:
+  MyString:
+    type: string
+
+resourceTypes:
+  MyResourceType:
+    get:
+      queryParameters:
+        myParam: MyString
+
+/myEndpoint0:
+  type: MyResourceType
+
+/myEndpoint1:
+  type: MyResourceType
+
+/myEndpoint2:
+  type: MyResourceType
