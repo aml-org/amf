@@ -805,5 +805,5 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     *
     * Oas20 to Oas20 -> Oas20CycleTestByDirectory
     */
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 }

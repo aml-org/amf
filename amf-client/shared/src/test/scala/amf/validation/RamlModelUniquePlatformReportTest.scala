@@ -449,4 +449,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Invalid header names according to RFC-7230") {
     validate("invalid-header-names.raml", Some("invalid-header-names.report"), Raml10Profile)
   }
+
+  test("Raml overlay with example without overloading type") {
+    validate("overlays/overlay-with-example-overloading/overlay.raml", None, Raml10Profile)
+  }
 }

@@ -15,5 +15,5 @@ class SecurityResolutionTest extends ResolutionTest {
     cycle("security.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 }

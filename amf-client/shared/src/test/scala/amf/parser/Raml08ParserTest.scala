@@ -11,6 +11,6 @@ class Raml08ParserTest extends FunSuiteCycleTests {
           config.golden,
           RamlYamlHint,
           Amf,
-          renderOptions = Some(config.renderOptions.withSourceMaps))
+          renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint))
   }
 }
