@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.emitter.BaseEmitters._
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.validations.RenderSideValidations.RenderValidation
-import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 
 /**
@@ -49,23 +49,32 @@ case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
 
     b.entry(
       name,
-      b => {
-        if (declaration.isLink)
-          declaration.linkTarget.foreach(l =>
-            spec.factory.tagToReferenceEmitter(l, declaration.linkLabel.option(), references).emit(b))
-        else {
-          var emitters =
-            Option(declaration.dataNode).map(DataNodeEmitter(_, ordering)(spec.eh).emitters()).getOrElse(Nil)
-          declaration.description.option().foreach { description =>
-            emitters ++= Seq(
-              MapEntryEmitter("usage", description, YType.Str, pos(declaration.description.annotations())))
-          }
-          b.obj { b =>
-            ordering.sorted(emitters).foreach(_.emit(b))
-          }
-        }
-      }
+      AbstractDeclarationPartEmitter(declaration, ordering, references).emit(_)
     )
+  }
+
+  override def position(): Position = pos(declaration.annotations)
+}
+
+case class AbstractDeclarationPartEmitter(declaration: AbstractDeclaration,
+                                          ordering: SpecOrdering,
+                                          references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
+    extends PartEmitter {
+
+  override def emit(b: PartBuilder): Unit = {
+    if (declaration.isLink)
+      declaration.linkTarget.foreach(l =>
+        spec.factory.tagToReferenceEmitter(l, declaration.linkLabel.option(), references).emit(b))
+    else {
+      var emitters =
+        Option(declaration.dataNode).map(DataNodeEmitter(_, ordering)(spec.eh).emitters()).getOrElse(Nil)
+      declaration.description.option().foreach { description =>
+        emitters ++= Seq(MapEntryEmitter("usage", description, YType.Str, pos(declaration.description.annotations())))
+      }
+      b.obj { b =>
+        ordering.sorted(emitters).foreach(_.emit(b))
+      }
+    }
   }
 
   override def position(): Position = pos(declaration.annotations)

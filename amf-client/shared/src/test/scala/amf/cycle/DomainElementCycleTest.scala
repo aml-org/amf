@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.{DefaultErrorHandler, DefaultParserErrorHandler}
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.SyamlParsedDocument
@@ -65,9 +65,15 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   private def renderDomainElement(shape: Option[DomainElement]): String = {
-    val node     = shape.map(DomainElementEmitter.emit(_, vendor)).getOrElse(YNode.Empty)
-    val document = SyamlParsedDocument(document = YDocument(node))
-    SYamlSyntaxPlugin.unparse("application/yaml", document).getOrElse("").toString
+    val eh     = DefaultErrorHandler()
+    val node   = shape.map(DomainElementEmitter.emit(_, vendor, eh)).getOrElse(YNode.Empty)
+    val errors = eh.getErrors
+    if (errors.nonEmpty)
+      errors.map(_.completeMessage).mkString("\n")
+    else {
+      val document = SyamlParsedDocument(document = YDocument(node))
+      SYamlSyntaxPlugin.unparse("application/yaml", document).getOrElse("").toString
+    }
   }
 
 }
