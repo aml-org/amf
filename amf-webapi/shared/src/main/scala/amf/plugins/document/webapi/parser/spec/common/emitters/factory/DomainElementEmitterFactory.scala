@@ -1,11 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.common.emitters.factory
 
 import amf.core.emitter.PartEmitter
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.remote.Vendor
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
+import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 
 trait DomainElementEmitterFactory {
 
@@ -24,6 +26,9 @@ trait DomainElementEmitterFactory {
     case o: OperationBindings => operationBindingsEmitter(o)
     case c: ChannelBindings   => channelBindingsEmitter(c)
     case s: ServerBindings    => serverBindingsEmitter(s)
+    case t: Trait             => traitEmitter(t)
+    case r: ResourceType      => resourceTypeEmitter(r)
+    case o: Operation         => operationEmitter(o)
     case _                    => None
   }
 
@@ -41,15 +46,18 @@ trait DomainElementEmitterFactory {
   def operationBindingsEmitter(o: OperationBindings): Option[PartEmitter] = None
   def channelBindingsEmitter(c: ChannelBindings): Option[PartEmitter]     = None
   def serverBindingsEmitter(s: ServerBindings): Option[PartEmitter]       = None
+  def traitEmitter(t: Trait): Option[PartEmitter]                         = None
+  def resourceTypeEmitter(t: ResourceType): Option[PartEmitter]           = None
+  def operationEmitter(o: Operation): Option[PartEmitter]                 = None
 }
 
 object DomainElementEmitterFactory {
-  def apply(vendor: Vendor): Option[DomainElementEmitterFactory] = vendor match {
-    case Vendor.RAML08  => Some(Raml08EmitterFactory)
-    case Vendor.RAML10  => Some(Raml10EmitterFactory)
-    case Vendor.OAS20   => Some(Oas20EmitterFactory)
-    case Vendor.OAS30   => Some(Oas30EmitterFactory)
-    case Vendor.ASYNC20 => Some(AsyncEmitterFactory)
+  def apply(vendor: Vendor, eh: ErrorHandler): Option[DomainElementEmitterFactory] = vendor match {
+    case Vendor.RAML08  => Some(Raml08EmitterFactory(eh))
+    case Vendor.RAML10  => Some(Raml10EmitterFactory(eh))
+    case Vendor.OAS20   => Some(Oas20EmitterFactory(eh))
+    case Vendor.OAS30   => Some(Oas30EmitterFactory(eh))
+    case Vendor.ASYNC20 => Some(AsyncEmitterFactory(eh))
     case _              => None
   }
 }

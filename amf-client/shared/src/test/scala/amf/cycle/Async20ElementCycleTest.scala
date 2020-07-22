@@ -106,4 +106,24 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
     )
   }
 
+  test("operation trait") {
+    renderElement(
+      "operation-traits.yaml",
+      CommonExtractors.declaresIndex(0),
+      "operation-traits-emission.yaml",
+      AsyncYamlHint,
+      directory = validationsPath + "components/"
+    )
+  }
+
+  test("message trait") {
+    renderElement(
+      "message-traits.yaml",
+      CommonExtractors.declaresIndex(0),
+      "message-traits-emission.yaml",
+      AsyncYamlHint,
+      directory = validationsPath + "components/"
+    )
+  }
+
 }

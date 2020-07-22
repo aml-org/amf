@@ -36,4 +36,22 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
     )
   }
 
+  test("trait") {
+    renderElement(
+      "abstract/rt-and-trait-definition.raml",
+      CommonExtractors.declaresIndex(1),
+      "abstract/trait-emission.yaml",
+      RamlYamlHint
+    )
+  }
+
+  test("resource type") {
+    renderElement(
+      "abstract/rt-and-trait-definition.raml",
+      CommonExtractors.declaresIndex(0),
+      "abstract/rt-emission.yaml",
+      RamlYamlHint
+    )
+  }
+
 }

@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.common.emitters.factory
 
 import amf.core.annotations.DeclaredElement
 import amf.core.emitter.{PartEmitter, SpecOrdering}
-import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.Shape
 import amf.plugins.document.webapi.annotations.{FormBodyParameter, RequiredParamPayload}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
@@ -24,9 +24,7 @@ import amf.plugins.document.webapi.parser.spec.oas.Oas3RequestBodyPartEmitter
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.{Callback, Parameter, Payload, Request, Response, TemplatedLink}
 
-object Oas20EmitterFactory extends OasEmitterFactory {
-  // TODO ajust error handler
-  implicit val ctx: Oas2SpecEmitterContext = new Oas2SpecEmitterContext(UnhandledErrorHandler, compactEmission = false)
+case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) extends OasEmitterFactory {
 
   override def payloadEmitter(p: Payload): Option[PartEmitter] = {
     if (isParamPayload(p))
@@ -45,9 +43,12 @@ object Oas20EmitterFactory extends OasEmitterFactory {
   }
 }
 
-object Oas30EmitterFactory extends OasEmitterFactory {
-  // TODO ajust error handler
-  implicit val ctx: Oas3SpecEmitterContext = new Oas3SpecEmitterContext(UnhandledErrorHandler, compactEmission = false)
+object Oas20EmitterFactory {
+  def apply(eh: ErrorHandler): Oas20EmitterFactory =
+    Oas20EmitterFactory()(new Oas2SpecEmitterContext(eh, compactEmission = false))
+}
+
+case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) extends OasEmitterFactory {
 
   override def exampleEmitter(example: Example): Option[PartEmitter] =
     Some(Oas3ExampleValuesPartEmitter(example, SpecOrdering.Lexical))
@@ -60,6 +61,11 @@ object Oas30EmitterFactory extends OasEmitterFactory {
 
   override def requestEmitter(r: Request): Option[PartEmitter] =
     Some(Oas3RequestBodyPartEmitter(r, SpecOrdering.Lexical, Nil))
+}
+
+object Oas30EmitterFactory {
+  def apply(eh: ErrorHandler): Oas30EmitterFactory =
+    Oas30EmitterFactory()(new Oas3SpecEmitterContext(eh, compactEmission = false))
 }
 
 trait OasEmitterFactory extends OasLikeEmitterFactory {

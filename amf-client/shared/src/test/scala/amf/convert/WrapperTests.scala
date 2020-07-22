@@ -8,6 +8,7 @@ import amf.client.convert.NativeOps
 import amf.client.environment.{DefaultEnvironment, Environment}
 import amf.client.model.document._
 import amf.client.model.domain._
+import amf.plugins.domain.webapi.models.{CorrelationId => InternalCorrelationId}
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
@@ -23,7 +24,7 @@ import amf.core.model.domain.{
   ScalarNode => InternalScalarNode
 }
 import amf.core.parser.Range
-import amf.core.remote.{Aml, Oas20, Raml10}
+import amf.core.remote.{Aml, Oas20, Raml10, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
@@ -31,6 +32,7 @@ import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.internal.environment.{Environment => InternalEnvironment}
 import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.Vocabularies
+import amf.plugins.document.webapi.parser.spec.common.emitters.DomainElementEmitter
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
@@ -2306,6 +2308,18 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     } yield {
       report.conforms should be(true)
     }
+  }
+
+  test("Test domain element emitter with unknown vendor") {
+    val eh = DefaultErrorHandler()
+    DomainElementEmitter.emit(InternalArrayNode(), Vendor.PAYLOAD, eh)
+    assert(eh.getErrors.head.message == "Unknown vendor provided")
+  }
+
+  test("Test domain element emitter with unhandled domain element") {
+    val eh = DefaultErrorHandler()
+    DomainElementEmitter.emit(InternalCorrelationId(), Vendor.RAML10, eh)
+    assert(eh.getErrors.head.message == "Unhandled domain element for given vendor")
   }
 
   // todo: move to common (file system)
