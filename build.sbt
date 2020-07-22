@@ -21,6 +21,8 @@ lazy val sonarUrl = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
 lazy val sonarToken = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")
 lazy val branch = sys.env.getOrElse("BRANCH_NAME", "develop")
 
+//enablePlugins(ScalaJSBundlerPlugin)
+
 sonarProperties ++= Map(
   "sonar.login" -> sonarToken,
   "sonar.projectKey" -> "mulesoft.amf",
@@ -106,7 +108,8 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
-    libraryDependencies += "org.topbraid"           % "shacl"                   % "1.3.0",
+    libraryDependencies += "org.apache.jena"        % "apache-jena-libs"        % "3.14.0" pomOnly(),
+    libraryDependencies += "org.apache.jena"        % "jena-shacl"              % "3.14.0",
     libraryDependencies += "org.apache.commons" % "commons-compress" % "1.19",
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
@@ -147,7 +150,15 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     assemblyMergeStrategy in assembly := {
       case x if x.toString.contains("commons/logging") => MergeStrategy.discard
       case x if x.toString.endsWith("JS_DEPENDENCIES") => MergeStrategy.discard
-      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => MergeStrategy.discard
+      case PathList(ps @ _*) if ps.last endsWith "module-info.class" => {
+        MergeStrategy.first
+      }
+      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => {
+        MergeStrategy.discard
+      }
+      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => {
+        MergeStrategy.discard
+      }
       case x =>
         val oldStrategy = (assemblyMergeStrategy in assembly).value
         oldStrategy(x)

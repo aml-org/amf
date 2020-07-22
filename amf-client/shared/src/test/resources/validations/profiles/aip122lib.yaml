@@ -1,0 +1,66 @@
+#%Library / Validation Profile 1.0
+
+validations:
+
+  unique-resource-names:
+    message: |
+      All resource names defined by an API must be unique within that API.
+      (See the section on full resource names below for more information on referring
+      to resources across APIs.)
+    targetClass: apiContract.WebAPI
+    query: |
+      SELECT ?this (?endpoint1 AS ?value) {
+        ?this a apiContract:WebAPI ;
+           apiContract:endpoint ?endpoint1 ;
+           apiContract:endpoint ?endpoint2 .
+        ?endpoint1 apiContract:path ?path1 .
+        ?endpoint2 apiContract:path ?path2 .
+        FILTER(?endpoint1 != ?endpoint2 && ?path1 = ?path2)
+      }
+
+
+  ascii-characters-resource-names:
+    targetClass: apiContract.EndPoint
+    message: |
+      Resource names should only use ASCII characters that do not require URL-escaping when possible.
+    propertyConstraints:
+      apiContract.path:
+        pattern: "[\x00-\x7F]+"
+
+
+
+  fields-representing-resource-names:
+    targetClass: apiContract.Payload
+    message: |
+      When defining a resource, the first field should be the resource name, which must be of
+      type string and must be called name for the resource name. The message should include a
+      google.api.resource annotation declaring the type (see AIP-123 for more on this).
+    propertyConstraints:
+      raml-shapes.schema / shacl.property:
+        atLeast:
+          count: 1
+          validation:
+            propertyConstraints:
+              shacl.name:
+                minCount: 1
+                in: [ name ]
+
+
+  collection-resource-names:
+    targetClass: apiContract.EndPoint
+    message: |
+      - Collection identifiers must be in camelCase.
+      - Collection identifiers must begin with a lower-cased letter and contain only ASCII letters and numbers (/[a-z][a-zA-Z0-9]*/).
+    or:
+      - not:
+          propertyConstraints:
+            doc.customDomainProperties / core.name:
+              in: [ "collection" ]
+      - propertyConstraints:
+          file://amf-client/shared/src/test/resources/validations/aip/standards.raml#/declarations/annotations/collection:
+            minCount: 1
+            nested:
+              propertyConstraints:
+                data.value:
+                  minCount: 1
+                  pattern: ^[a-z][a-z0-9]*([A-Z][a-z0-9]+)*$

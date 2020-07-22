@@ -5,22 +5,25 @@ import java.io.{PrintWriter, StringWriter, Writer => JavaWriter}
 import amf.core.rdf._
 import amf.core.vocabulary.Namespace
 import org.apache.jena.graph.Graph
-import org.apache.jena.rdf.model.Model
+import org.apache.jena.rdf.model.{AnonId, Model, ModelFactory, Resource}
 import org.apache.jena.riot._
 import org.apache.jena.riot.system.RiotLib
 import org.apache.jena.sparql.util.Context
 import org.mulesoft.common.io.Output
-import org.topbraid.jenax.util.JenaUtil
 
-class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfModel {
+class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends RdfModel {
+
+  override def nextAnonId(): String = synchronized {
+    "_:" + model.createResource().getId.toString
+  }
 
   override def addTriple(subject: String, predicate: String, objResource: String): RdfModel = {
     nodesCache = nodesCache - subject
     model.add(
       model.createStatement(
-        model.createResource(subject),
+        checkAnon(subject),
         model.createProperty(predicate),
-        model.createResource(objResource)
+        checkAnon(objResource)
       )
     )
     this
@@ -33,7 +36,7 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
     nodesCache = nodesCache - subject
     model.add(
       model.createStatement(
-        model.createResource(subject),
+        checkAnon(subject),
         model.createProperty(predicate),
         objLiteralType match {
           case Some(typeId) => model.createTypedLiteral(objLiteralValue, typeId)
@@ -42,6 +45,14 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
       )
     )
     this
+  }
+
+  protected def checkAnon(s: String): Resource = {
+    if (s.startsWith("_:")) {
+      model.createResource(new AnonId(s.replace("_:", "")))
+    } else {
+      model.createResource(s)
+    }
   }
 
   override def toN3(): String = RDFPrinter(model, "N3")

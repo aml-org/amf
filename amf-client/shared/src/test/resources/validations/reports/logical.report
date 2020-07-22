@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/logical.raml
+Profile: logical
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/data#patch-xor-put
+  Message: Any operation must optionally support either support put or post
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/logical.raml#/web-api/end-points/%2Fendpoint1
+  Property: http://a.ml/vocabularies/apiContract#supportedOperation
+  Position: Some(LexicalInformation([(6,2)-(7,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/logical.raml

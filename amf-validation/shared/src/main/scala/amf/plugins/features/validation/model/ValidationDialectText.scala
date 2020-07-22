@@ -68,6 +68,27 @@ object ValidationDialectText {
       |      in:
       |        propertyTerm: shacl.in
       |        allowMultiple: true
+      |        range: any
+      |      nested:
+      |        propertyTerm: shacl.node
+      |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
+      |      atLeast:
+      |        propertyTerm: shacl.atLeastNode
+      |        range: qualifiedShapeValidationNode
+      |      atMost:
+      |        propertyTerm: shacl.atMostNode
+      |        range: qualifiedShapeValidationNode
+      |      equalsToProperty:
+      |        propertyTerm: shacl.equals
+      |        range: string
+      |      disjointWithProperty:
+      |        propertyTerm: shacl.disjoint
+      |        range: string
+      |      lessThanProperty:
+      |        propertyTerm: shacl.lessThan
+      |        range: string
+      |      lessThanOrEqualsToProperty:
+      |        propertyTerm: shacl.lessThanOrEquals
       |        range: string
       |  functionValidationNode:
       |    classTerm: validation.FunctionValidation
@@ -86,6 +107,17 @@ object ValidationDialectText {
       |        mandatory: true
       |        propertyTerm: shacl.js
       |        range: functionConstraintNode
+      |  qualifiedShapeValidationNode:
+      |    classTerm: validation.QualifiedShapevalidationNode
+      |    mapping:
+      |      count:
+      |        propertyTerm: shacl.count
+      |        range: integer
+      |        mandatory: true
+      |      validation:
+      |        propertyTerm: shacl.valueShape
+      |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
+      |        mandatory: true
       |  shapeValidationNode:
       |    classTerm: validation.ShapeValidation
       |    mapping:
@@ -99,11 +131,82 @@ object ValidationDialectText {
       |        propertyTerm: validation.ramlClassId
       |        range: string
       |        allowMultiple: true
+      |      classConstraints:
+      |        propertyTerm: shacl.class
+      |        range: string
+      |        allowMultiple: true
       |      propertyConstraints:
       |        mandatory: true
       |        propertyTerm: shacl.property
       |        mapKey: name
       |        range: propertyConstraintNode
+      |  andShapeValidationNode:
+      |    classTerm: validation.AndShapeValidation
+      |    mapping:
+      |      name:
+      |        propertyTerm: schema-org.name
+      |        range: string
+      |      message:
+      |        propertyTerm: shacl.message
+      |        range: string
+      |      targetClass:
+      |        propertyTerm: validation.ramlClassId
+      |        range: string
+      |        allowMultiple: true
+      |      and:
+      |        propertyTerm: shacl.and
+      |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
+      |        allowMultiple: true
+      |  notShapeValidationNode:
+      |    classTerm: validation.NotShapeValidation
+      |    mapping:
+      |      name:
+      |        propertyTerm: schema-org.name
+      |        range: string
+      |      message:
+      |        propertyTerm: shacl.message
+      |        range: string
+      |      targetClass:
+      |        propertyTerm: validation.ramlClassId
+      |        range: string
+      |        allowMultiple: true
+      |      not:
+      |        propertyTerm: shacl.not
+      |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
+      |  orShapeValidationNode:
+      |    classTerm: validation.OrShapeValidation
+      |    mapping:
+      |      name:
+      |        propertyTerm: schema-org.name
+      |        range: string
+      |      message:
+      |        propertyTerm: shacl.message
+      |        range: string
+      |      targetClass:
+      |        propertyTerm: validation.ramlClassId
+      |        range: string
+      |        allowMultiple: true
+      |      or:
+      |        propertyTerm: shacl.or
+      |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
+      |        allowMultiple: true
+      |  xoneShapeValidationNode:
+      |    classTerm: validation.XoneShapeValidation
+      |    mapping:
+      |      name:
+      |        propertyTerm: schema-org.name
+      |        range: string
+      |      message:
+      |        propertyTerm: shacl.message
+      |        range: string
+      |      targetClass:
+      |        propertyTerm: validation.ramlClassId
+      |        range: string
+      |        allowMultiple: true
+      |      xone:
+      |        propertyTerm: shacl.xone
+      |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
+      |        allowMultiple: true
       |  queryValidationNode:
       |    classTerm: validation.QueryValidation
       |    mapping:
@@ -117,15 +220,10 @@ object ValidationDialectText {
       |        propertyTerm: validation.ramlClassId
       |        range: string
       |        allowMultiple: true
-      |      propertyConstraints:
-      |        propertyTerm: shacl.property
-      |        mapKey: name
-      |        range: propertyConstraintNode
-      |      targetQuery:
+      |      query:
       |        mandatory: true
       |        propertyTerm: validation.targetQuery
       |        range: string
-      |
       |  ramlPrefixNode:
       |    classTerm: validation.RamlPrefix
       |    mapping:
@@ -173,7 +271,17 @@ object ValidationDialectText {
       |      validations:
       |        propertyTerm: validation.validations
       |        mapKey: name
-      |        range: [ shapeValidationNode, queryValidationNode,functionValidationNode]
+      |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
+
+      |  validationShapesUnion:
+      |    union:
+      |      - shapeValidationNode
+      |      - queryValidationNode
+      |      - xoneShapeValidationNode
+      |      - orShapeValidationNode
+      |      - notShapeValidationNode
+      |      - andShapeValidationNode
+      |
       |documents:
       |  fragments:
       |    encodes:
@@ -182,7 +290,7 @@ object ValidationDialectText {
       |
       |  library:
       |    declares:
-      |      shapes: queryValidationNode
+      |      validations: validationShapesUnion
       |      functions: functionValidationNode
       |
       |  root:

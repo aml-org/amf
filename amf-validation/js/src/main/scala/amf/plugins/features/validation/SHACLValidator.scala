@@ -23,10 +23,10 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
   var functionCode: Option[String] = None
 
   def nativeShacl: js.Dynamic =
-    if (js.isUndefined(js.Dynamic.global.SHACLValidator)) {
+    if (js.isUndefined(js.Dynamic.global.GlobalSHACLValidator)) {
       throw new Exception("Cannot find global SHACLValidator object")
     } else {
-      js.Dynamic.global.SHACLValidator
+      js.Dynamic.global.GlobalSHACLValidator
     }
 
   /**
@@ -49,27 +49,36 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
 
   override def report(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
       implicit executionContext: ExecutionContext): Future[ValidationReport] = {
-    val promise   = Promise[ValidationReport]()
-    val validator = js.Dynamic.newInstance(nativeShacl)()
-    loadLibrary(validator)
-    validator.validate(
-      data,
-      dataMediaType,
-      shapes,
-      shapesMediaType, { (e: js.Error, report: js.Dynamic) =>
-        if (js.isUndefined(e) || e == null) {
-          val result = new JSValidationReport(report)
-          promise.success(result)
-        } else {
-          promise.failure(js.JavaScriptException(e))
+    val promise = Promise[ValidationReport]()
+    try {
+      val validator = js.Dynamic.newInstance(nativeShacl)()
+      loadLibrary(validator)
+
+      val dataModel   = platform.rdfFramework.get.syntaxToRdfModel(dataMediaType, data).get
+      val shapesModel = platform.rdfFramework.get.syntaxToRdfModel(shapesMediaType, shapes).get
+
+      validator.validateFromModels(
+        dataModel.model.native().asInstanceOf[js.Dynamic],
+        shapesModel.model.native().asInstanceOf[js.Dynamic], { (e: js.Dynamic, report: js.Dynamic) =>
+          if (js.isUndefined(e) || e == null) {
+            val repeater: js.Array[js.Any] = js.Array()
+            val result                     = new JSValidationReport(report)
+            promise.success(result)
+          } else {
+            promise.failure(js.JavaScriptException(e))
+          }
         }
-      }
-    )
-    promise.future
+      )
+
+      promise.future
+    } catch {
+      case e: Exception =>
+        promise.failure(e).future
+    }
   }
 
   /**
-    * Version of the report function that retuern a JS promise instead of a Scala future
+    * Version of the report function that returns a JS promise instead of a Scala future
     * @param data string representation of the data graph
     * @param dataMediaType media type for the data graph
     * @param shapes string representation of the shapes graph
@@ -138,7 +147,6 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
       ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
       val shapesModel = new RdflibRdfModel()
       new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
-
       validator.validateFroModels(
         dataModel.model,
         shapesModel.model, { (e: js.Dynamic, r: js.Dynamic) =>
@@ -198,4 +206,6 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
   }
 
   override def emptyRdfModel(): RdfModel = new RdflibRdfModel()
+
+  override def supportsJSFunctions: Boolean = true
 }

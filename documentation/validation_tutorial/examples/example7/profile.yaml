@@ -1,0 +1,22 @@
+#%Validation Profile 1.0
+
+profile: Test7
+
+violation:
+  - test-equals
+  - test-different
+
+validations:
+  test-equals:
+    targetClass: raml-shapes.ScalarShape
+    message: Min and max length must match in scalar
+    propertyConstraints:
+      shacl.maxLength:
+        equalsToProperty: shacl.minLength
+
+  test-different:
+    targetClass: raml-shapes.ScalarShape
+    message: Min and max length must not match in scalar
+    propertyConstraints:
+      shacl.maxLength:
+        disjointWithProperty: shacl.minLength
