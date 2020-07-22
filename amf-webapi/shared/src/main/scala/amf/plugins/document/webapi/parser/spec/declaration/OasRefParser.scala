@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.annotations.ExternalFragmentRef
 import amf.core.model.domain.Shape
 import amf.core.parser._
+import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -138,14 +139,12 @@ class OasRefParser(map: YMap,
             tmpShape.unresolved(text, e, "warning").withSupportsRecursion(true)
             Some(tmpShape)
           case Some(jsonSchemaShape) =>
+            jsonSchemaShape.annotations.+=(ExternalJsonSchemaShape(e))
             if (ctx.declarations.fragments.contains(text)) {
               // case when in an OAS spec we point with a regular $ref to something that is external
               // and holds a JSON schema we need to promote an external fragment to data type fragment
               promoteParsedShape(ref, text, fullRef, jsonSchemaShape)
-            } else {
-
-              Some(jsonSchemaShape)
-            }
+            } else Some(jsonSchemaShape)
         }
     }
   }
