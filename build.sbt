@@ -198,6 +198,7 @@ lazy val clientJS  = client.js.in(file("./amf-client/js")).sourceDependency(amfA
 val buildJS = TaskKey[Unit]("buildJS", "Build npm module")
 buildJS := {
   val _ = (fullOptJS in Compile in clientJS).value
+  "./amf-client/js/build-scripts/buildjs.sh" !
 }
 
 addCommandAlias(
