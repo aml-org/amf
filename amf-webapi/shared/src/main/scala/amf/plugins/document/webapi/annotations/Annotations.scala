@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.annotations
 
 import amf.core.model.domain._
 import amf.core.parser.Range
+import org.yaml.model.YMapEntry
 
 case class ParsedJSONSchema(rawText: String) extends EternalSerializedAnnotation {
   override val name: String  = "parsed-json-schema"
@@ -143,3 +144,5 @@ case class ReferencedElement(parsedUrl: String, referenced: DomainElement) exten
 case class Inferred() extends Annotation
 
 case class CollectionFormatFromItems() extends Annotation
+
+case class ExternalJsonSchemaShape(original: YMapEntry) extends Annotation
