@@ -1,0 +1,236 @@
+{
+  "@graph": [
+    {
+      "@id": "#10",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "AES Key Synchronisation",
+      "core:description": "A REST API for the exchange and synchronisation of AES Keys following the OpenAPI 3.0 specification",
+      "core:version": "0.1",
+      "smaps": {
+        "source-vendor": {
+          "#10": "OAS 3.0"
+        },
+        "lexical": {
+          "core:version": "[(4,4)-(4,20)]",
+          "core:name": "[(5,4)-(5,38)]",
+          "#10": "[(1,0)-(34,1)]",
+          "core:description": "[(6,4)-(6,120)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        },
+        {
+          "@id": "#2"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#10"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "OmsKey",
+      "shacl:and": [
+        {
+          "@id": "#2"
+        },
+        {
+          "@id": "#7"
+        }
+      ],
+      "smaps": {
+        "declared-element": {
+          "#1": ""
+        },
+        "lexical": {
+          "shacl:and": "[(12,17)-(23,9)]",
+          "#1": "[(11,6)-(24,7)]",
+          "shacl:name": "[(11,6)-(11,14)]"
+        }
+      }
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#3"
+        }
+      ],
+      "shacl:name": "NewOmsKey",
+      "smaps": {
+        "resolved-link-target": {
+          "#2": "amf://id#6"
+        },
+        "declared-element": {
+          "#2": ""
+        },
+        "lexical": {
+          "shacl:name": "[(25,6)-(25,17)]",
+          "#2": "[(25,6)-(31,7)]"
+        },
+        "resolved-link": {
+          "#2": "amf://id#5"
+        }
+      }
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#8"
+        }
+      ],
+      "shacl:name": "item1",
+      "smaps": {
+        "lexical": {
+          "#7": "[(16,10)-(22,11)]"
+        }
+      }
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#deviceId"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#4"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "deviceId",
+      "smaps": {
+        "lexical": {
+          "#3": "[(27,10)-(29,11)]"
+        }
+      }
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#id"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#9"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "id",
+      "smaps": {
+        "lexical": {
+          "#8": "[(18,14)-(20,15)]"
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "deviceId",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#4": "[(28,12)-(28,18)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(28,12)-(28,28)]",
+          "#4": "[(27,10)-(29,11)]"
+        }
+      }
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:name": "id",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#9": "[(19,16)-(19,22)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(19,16)-(19,33)]",
+          "#9": "[(18,14)-(20,15)]"
+        }
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

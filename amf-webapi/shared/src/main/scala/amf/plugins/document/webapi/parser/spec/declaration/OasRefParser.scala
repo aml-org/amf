@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations.ExternalFragmentRef
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{Linkable, Shape}
 import amf.core.parser._
 import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
@@ -48,7 +48,7 @@ class OasRefParser(map: YMap,
           case Some((_, _)) => searchLocalJsonSchema(ref, if (ctx.linkTypes) strippedPrefixRef else ref, e)
           case _            => searchRemoteJsonSchema(ref, if (ctx.linkTypes) strippedPrefixRef else ref, e)
         }
-        referencedShape.foreach(adopt(_))
+        referencedShape.foreach(safeAdoption)
         referencedShape
     }
   }
@@ -75,7 +75,6 @@ class OasRefParser(map: YMap,
         val annots = Annotations(ast)
         val copied =
           s.link(ref, annots).asInstanceOf[AnyShape].withName(name, Annotations()).withSupportsRecursion(true)
-        adopt(copied)
         Some(copied)
       // Local reference
       case None =>
@@ -107,6 +106,16 @@ class OasRefParser(map: YMap,
             case None => Some(tmpShape)
           }
         }
+    }
+  }
+
+  def safeAdoption(s: AnyShape): Unit = {
+    val oldId = Option(s.id)
+    adopt(s)
+    s match {
+      case l: Linkable if l.isLink && s.id == l.effectiveLinkTarget().id =>
+        oldId.foreach(s.id = _)
+      case _ =>
     }
   }
 

@@ -762,6 +762,18 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("reference to declared schema from allOf facet", "result.%s") { config =>
+    cycle(
+      "api.json",
+      config.golden,
+      OasJsonHint,
+      target = Amf,
+      directory = validationsPath + "ref-from-allof-facet/",
+      transformWith = Some(Oas30),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit, config.target, defaultRenderOptions, config.syntax).renderToString
   }
