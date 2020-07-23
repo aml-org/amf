@@ -56,13 +56,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
   private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
-  private val aml_doc        = "file://vocabularies/vocabularies/aml_doc.yaml"
-  private val aml_meta       = "file://vocabularies/vocabularies/aml_meta.yaml"
-  private val api_contract   = "file://vocabularies/vocabularies/api_contract.yaml"
-  private val core           = "file://vocabularies/vocabularies/core.yaml"
-  private val data_model     = "file://vocabularies/vocabularies/data_model.yaml"
-  private val data_shapes    = "file://vocabularies/vocabularies/data_shapes.yaml"
-  private val security_model = "file://vocabularies/vocabularies/security.yaml"
   private val apiWithSpaces =
     "file://amf-client/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
   private val scalarAnnotations =
@@ -565,34 +558,6 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     assert(acc.size == 14)
   }
    */
-
-  test("Vocabularies parsing aml_doc") {
-    testVocabulary(aml_doc, 14, 30)
-  }
-
-  test("Vocabularies parsing aml_meta") {
-    testVocabulary(aml_meta, 17, 29)
-  }
-
-  test("Vocabularies parsing api_contract") {
-    testVocabulary(api_contract, 29, 45)
-  }
-
-  test("Vocabularies parsing core") {
-    testVocabulary(core, 4, 20)
-  }
-
-  test("Vocabularies parsing data_model") {
-    testVocabulary(data_model, 6, 3)
-  }
-
-  test("Vocabularies parsing data_shapes") {
-    testVocabulary(data_shapes, 14, 33)
-  }
-
-  test("Vocabularies parsing security_model") {
-    testVocabulary(security_model, 13, 19)
-  }
 
   test("Parsing text document with base url") {
     val baseUrl = "http://test.com/myApp"
