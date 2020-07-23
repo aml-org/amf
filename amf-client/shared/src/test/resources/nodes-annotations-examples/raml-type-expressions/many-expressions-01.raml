@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Example API
+types:
+  Atype: string
+  Btype: number
+  Ct: number
+  Aarray: Atype[]
+  Aunion: Aarray | Ct
+  Aunion2: Aarray   |   Ct[]
+  tripleUnion: (Atype | Btype | Ct)
+  unionArray: (Atype | Btype)[]
