@@ -82,8 +82,11 @@ case class RamlTypeDetector(parent: String,
         case JSONSchema(_) => Some(JSONSchemaType)
 
         case RamlTypeDefMatcher.TypeExpression(text) =>
-          RamlTypeExpressionParser(shape => shape.withId("/"), Some(node.as[YScalar]), checking = true)
-            .parse(text)
+          RamlTypeExpressionParser(shape => shape.withId("/"),
+                                   Some(node.as[YScalar]),
+                                   checking = true,
+                                   expression = text)
+            .parse()
             .flatMap(s => ShapeClassTypeDefMatcher(s, node, recursive))
             .map {
               case TypeDef.UnionType | TypeDef.ArrayType if !recursive => TypeExpressionType
