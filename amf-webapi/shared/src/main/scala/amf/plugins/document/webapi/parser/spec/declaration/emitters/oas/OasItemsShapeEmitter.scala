@@ -34,8 +34,9 @@ case class OasItemsShapeEmitter(array: ArrayShape,
 
   override def position(): Position = {
     Option(array.fields.getValue(ArrayShapeModel.Items)) match {
-      case Some(value) => pos(value.annotations)
-      case _           => ZERO
+      case Some(value) =>
+        pos(value.value.annotations)
+      case _ => ZERO
     }
   }
 }

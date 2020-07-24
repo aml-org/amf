@@ -13,11 +13,11 @@
           "type": "string"
         },
         "children": {
-          "type": "array",
-          "uniqueItems": true,
           "items": {
             "$ref": "#/definitions/root"
-          }
+          },
+          "type": "array",
+          "uniqueItems": true
         }
       }
     }

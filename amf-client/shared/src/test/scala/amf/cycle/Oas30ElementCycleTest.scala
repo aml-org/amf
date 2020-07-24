@@ -35,6 +35,16 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
     )
   }
 
+  test("parameter - response header") {
+    renderElement(
+      "basic-headers-response.json",
+      CommonExtractors.firstResponse.andThen(_.map(_.headers.head)),
+      "basic-headers-emission.yaml",
+      OasJsonHint,
+      directory = upanddownPath
+    )
+  }
+
   test("parameter - header parameter") {
     renderElement(
       "parameter/parameter-definitions.json",

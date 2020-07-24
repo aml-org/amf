@@ -1,9 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.common.emitters.factory
 
-import amf.core.annotations.DeclaredElement
+import amf.core.annotations.{DeclaredElement, DeclaredHeader, SynthesizedField}
 import amf.core.emitter.{PartEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{AmfScalar, Shape}
+import amf.core.parser.{Annotations, Value}
 import amf.plugins.document.webapi.annotations.{FormBodyParameter, RequiredParamPayload}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.{
@@ -11,6 +12,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas3SpecEmitterContext,
   OasSpecEmitterContext
 }
+import amf.plugins.document.webapi.parser.spec.declaration.AnnotationEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypePartEmitter
 import amf.plugins.document.webapi.parser.spec.domain.{
   Oas3ExampleValuesPartEmitter,
@@ -22,6 +24,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 }
 import amf.plugins.document.webapi.parser.spec.oas.Oas3RequestBodyPartEmitter
 import amf.plugins.domain.shapes.models.Example
+import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.{Callback, Parameter, Payload, Request, Response, TemplatedLink}
 
 case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) extends OasEmitterFactory {
@@ -72,9 +75,19 @@ trait OasEmitterFactory extends OasLikeEmitterFactory {
 
   implicit val ctx: OasSpecEmitterContext
 
-  override def parameterEmitter(p: Parameter): Option[PartEmitter] =
-    // TODO verify if parameter is an explicit header to adjust boolean of emitter
-    Some(ParameterEmitter(p, SpecOrdering.Lexical, Nil, asHeader = false))
+  override def parameterEmitter(p: Parameter): Option[PartEmitter] = {
+    val isHeader = isExplicitHeader(p)
+    Some(ParameterEmitter(p, SpecOrdering.Lexical, Nil, asHeader = isHeader))
+  }
+
+  private def isExplicitHeader(p: Parameter): Boolean =
+    p.annotations.contains(classOf[DeclaredHeader]) || {
+      val bindingValue = p.fields.getValueAsOption(ParameterModel.Binding)
+      bindingValue.exists {
+        case Value(v: AmfScalar, a: Annotations) =>
+          a.contains(classOf[SynthesizedField]) && v.toString == "header"
+      }
+    }
 
   override def responseEmitter(r: Response): Option[PartEmitter] =
     Some(OasResponsePartEmitter(r, SpecOrdering.Lexical, Nil))
