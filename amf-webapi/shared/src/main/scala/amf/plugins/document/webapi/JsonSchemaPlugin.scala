@@ -34,7 +34,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
-import amf.validations.ParserSideValidations.{UnableToParseJsonSchema, MalformedJsonReference}
+import amf.validations.ParserSideValidations.{MalformedJsonReference, UnableToParseJsonSchema}
 import org.yaml.model._
 import org.yaml.parser.{JsonParser, YParser, YamlParser}
 

@@ -17,7 +17,6 @@ import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, 
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.toJsonSchema
@@ -30,6 +29,7 @@ import org.yaml.model._
 import org.yaml.parser.JsonParser
 import amf.core.utils.AmfStrings
 import amf.core.parser.YMapOps
+import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.declaration.utils.JsonSchemaParsingHelper
 
 import scala.collection.mutable
