@@ -102,7 +102,7 @@ case class JsonSchemaEmitter(root: Shape,
       val name =
         if (options.isWithCompactedEmission) ctx.definitionsQueue.normalizeName(root.name.option())
         else root.name.value()
-      b.entry("$ref", OasDefinitions.appendDefinitionsPrefix(name))
+      b.entry("$ref", OasDefinitions.appendSchemasPrefix(name))
     }
 
     override def position(): Position = Position.ZERO

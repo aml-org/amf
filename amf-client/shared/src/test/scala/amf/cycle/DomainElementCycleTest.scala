@@ -98,11 +98,10 @@ object CommonExtractors {
 
   val firstResponse: BaseUnit => Option[Response] = firstOperation.andThen(_.flatMap(_.responses.headOption))
 
-  val firstRequest: BaseUnit => Option[Request] =
-    firstOperation.andThen(_.flatMap(_.requests.headOption))
+  val firstRequest: BaseUnit => Option[Request] = firstOperation.andThen(_.flatMap(_.requests.headOption))
 
   val firstExample: BaseUnit => Option[Example] =
-    firstResponse.andThen(_.flatMap(r => r.payloads(0).examples.headOption))
+    firstResponse.andThen(_.flatMap(r => r.payloads.head.examples.headOption))
 
   val firstTemplatedLink: BaseUnit => Option[TemplatedLink] = firstResponse.andThen(_.flatMap(r => r.links.headOption))
 
