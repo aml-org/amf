@@ -11,6 +11,7 @@ import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.core.emitter.BaseEmitters._
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
 
 import scala.collection.mutable.ListBuffer
 
@@ -53,10 +54,7 @@ case class AsyncApiCorrelationIdContentEmitter(idObj: CorrelationId, ordering: S
     )
   }
 
-  private def emitLink(b: PartBuilder): Unit = {
-    val label = OasDefinitions.appendOas3ComponentsPrefix(idObj.linkLabel.value(), "correlationIds")
-    spec.ref(b, label)
-  }
+  private def emitLink(b: PartBuilder): Unit = OasTagToReferenceEmitter(idObj, idObj.linkLabel.option()).emit(b)
 
   override def position(): Position = pos(idObj.annotations)
 }

@@ -29,7 +29,7 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
     extends OasLikeSpecEmitterFactory
     with OasCompactEmitterFactory {
   override def tagToReferenceEmitter: (DomainElement, Option[String], Seq[BaseUnit]) => TagToReferenceEmitter =
-    OasTagToReferenceEmitter.apply
+    (domainElement, label, _) => OasTagToReferenceEmitter(domainElement, label)
 
   override def customFacetsEmitter: (FieldEntry, SpecOrdering, Seq[BaseUnit]) => CustomFacetsEmitter =
     OasCustomFacetsEmitter.apply
