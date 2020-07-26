@@ -1,0 +1,25 @@
+#%Dialect 1.0
+dialect: ValidationExample
+version: 11.0
+nodeMappings:
+  B:
+    mapping:
+      mandatory:
+        mandatory: true
+        range: string
+      optional:
+        range: string
+  A:
+    mapping:
+      a:
+        mandatory: true
+        range: string
+      bNested:
+        range: B
+      bLink:
+        range: B
+        isLink: true
+
+documents:
+  root:
+    encodes: A

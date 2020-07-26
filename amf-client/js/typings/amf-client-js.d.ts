@@ -580,7 +580,7 @@ declare module 'amf-client-js' {
         declares: domain.DomainElement[];
         encodes: domain.DomainElement;
         version: StrField;
-        documents: model.domain.DocumentsModel;
+        documents(): model.domain.DocumentsModel;
         nameAndVersion: string
         withName(name: string): Dialect;
         withVersion(version: string): Dialect
@@ -697,7 +697,7 @@ declare module 'amf-client-js' {
         documentName(): StrField;
         withDocumentName(name: String): DocumentMapping;
         encoded(): StrField;
-        withEncoded(encodedNode: StrField): DocumentMapping;
+        withEncoded(encodedNode: string): DocumentMapping;
         declaredNodes(): PublicNodeMapping[];
         withDeclaredNodes(declarations: PublicNodeMapping[]): DocumentMapping;
       }
@@ -727,7 +727,7 @@ declare module 'amf-client-js' {
 
         withName(name: string): NodeMapping;
         withNodeTypeMapping(nodeType: string): NodeMapping;
-        withPropertiesMapping(props: string[]): NodeMapping;
+        withPropertiesMapping(props: PropertyMapping[]): NodeMapping;
         withIdTemplate(idTemplate: string): NodeMapping;
         withMergePolicy(mergePolicy: string): NodeMapping;
       }
@@ -782,6 +782,8 @@ declare module 'amf-client-js' {
         typeDiscriminatorName(): StrField;
         withTypeDiscriminatorName(name: string): PropertyMapping
         classification(): string;
+        externallyLinkable(): BoolField
+        withExternallyLinkable(linkable: boolean): PropertyMapping
       }
 
       export class ClassTerm extends DomainElement {

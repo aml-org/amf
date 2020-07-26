@@ -116,6 +116,10 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation with Repo
     validate("dialect10.yaml", "instance10_correct1.yaml")
   }
 
+  test("validation dialect 11 example 1 correct") {
+    validate("dialect11.raml", "instance11_correct1.raml")
+  }
+
   // TODO: un-ignore when AML re-implements the validation
   ignore("validation dialect 10 example 1 incorrect - Dialect ID in comment (instead of key)") {
     recoverToSucceededIf[Exception] { // Unknown type of dialect header
