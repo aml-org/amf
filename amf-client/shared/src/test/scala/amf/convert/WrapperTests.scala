@@ -2139,7 +2139,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new Async20Parser().parseFileAsync(api).asFuture
-      resolved <- Future(new Async20Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future(new Async20Resolver().resolve(unit, ResolutionPipeline.CACHE_PIPELINE))
     } yield {
       val golden  = """{
                         |  "$schema": "http://json-schema.org/draft-07/schema#",
