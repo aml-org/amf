@@ -20,6 +20,7 @@ import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{
+  OasTypeParser,
   Raml08TypeParser,
   Raml10TypeParser,
   RamlTypeSyntax,
@@ -385,7 +386,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
       payload,
       "formData",
       () => {
-        OasTypeParser(
+        new OasTypeParser(
           entryOrNode,
           "schema",
           map,
