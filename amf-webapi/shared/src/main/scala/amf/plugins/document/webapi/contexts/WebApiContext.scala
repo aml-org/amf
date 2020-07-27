@@ -8,7 +8,6 @@ import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.JsonSchemaPlugin
-import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaAstIndex, OasWebApiContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration.{
@@ -64,14 +63,12 @@ abstract class WebApiContext(val loc: String,
   protected def normalizedJsonPointer(url: String): String = if (url.endsWith("/")) url.dropRight(1) else url
 
   def findJsonSchema(url: String): Option[AnyShape] =
-    globalSpace.get(normalizedJsonPointer(url)) match {
-      case Some(shape: AnyShape) => Some(shape)
-      case _                     => None
-    }
+    globalSpace
+      .get(normalizedJsonPointer(url))
+      .collect { case shape: AnyShape => shape }
 
-  def registerJsonSchema(url: String, shape: AnyShape): Unit = {
+  def registerJsonSchema(url: String, shape: AnyShape): Unit =
     globalSpace.update(normalizedJsonPointer(url), shape)
-  }
 
   // TODO this should not have OasWebApiContext as a dependency
   def parseRemoteOasParameter(fileUrl: String, parentId: String)(
@@ -132,13 +129,12 @@ abstract class WebApiContext(val loc: String,
     }
   }
 
-  def resolvedPath(base: String, str: String): String = {
+  def resolvedPath(base: String, str: String): String =
     if (str.isEmpty) platform.normalizePath(base)
     else if (str.startsWith("/")) str
     else if (str.contains(":")) str
     else if (str.startsWith("#")) base.split("#").head + str
     else platform.normalizePath(basePath(base).urlDecoded + str)
-  }
 
   def basePath(path: String): String = {
     val withoutHash = if (path.contains("#")) path.split("#").head else path
@@ -152,14 +148,12 @@ abstract class WebApiContext(val loc: String,
       if (s.startsWith("/")) s.stripPrefix("/") else s
     }
   }
-  def findLocalJSONPath(path: String): Option[(String, YNode)] = {
+  def findLocalJSONPath(path: String): Option[(String, Either[YNode, YMapEntry])] =
     // todo: past uri?
     jsonSchemaIndex match {
-      case Some(jsi) => jsi.getNode(normalizeJsonPath(path)).map { (path, _) }
+      case Some(jsi) => jsi.getNodeAndEntry(normalizeJsonPath(path)).map { (path, _) }
       case _         => None
-
     }
-  }
 
   def link(node: YNode): Either[String, YNode]
   def ignore(shape: String, property: String): Boolean

@@ -92,15 +92,25 @@ class OasRefParser(map: YMap,
           ctx.registerJsonSchema(ref, tmpShape)
           ctx.findLocalJSONPath(r) match {
             case Some((_, shapeNode)) =>
-              OasTypeParser(YMapEntry(name, shapeNode), adopt, version)
+              val entry = shapeNode match {
+                case Right(e) => e
+                case Left(n)  => YMapEntry(name, n)
+              }
+              OasTypeParser(entry, adopt, version)
                 .parse()
                 .map { shape =>
                   ctx.futureDeclarations.resolveRef(text, shape)
-                  //            tmpShape.resolve(shape) // useless?
                   ctx.registerJsonSchema(ref, shape)
                   if (ctx.linkTypes || ref.equals("#"))
-                    shape.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
-                  else shape
+                    shapeNode match {
+                      case Right(entry) =>
+                        shape
+                          .link(text, Annotations(ast))
+                          .asInstanceOf[AnyShape]
+                          .withName(entry.key.asScalar.map(_.text).getOrElse(name), Annotations(entry.key))
+                      case _ =>
+                        shape.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
+                    } else shape
                 } orElse { Some(tmpShape) }
 
             case None => Some(tmpShape)
