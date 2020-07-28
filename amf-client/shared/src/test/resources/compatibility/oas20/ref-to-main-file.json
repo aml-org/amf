@@ -1,0 +1,49 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2015-04-01",
+    "title": "GalleryManagementClient",
+    "description": "The Admin Gallery Management Client."
+  },
+  "paths": {
+    "/providers/Microsoft.Gallery.Admin/operations": {
+      "get": {
+
+        "parameters": [
+          {
+            "$ref": "ref-to-main-file.json#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+
+      }
+    }
+  },
+  "definitions": {
+    "Operation": {
+      "type": "object"
+    },
+    "OperationList": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/Operation"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "type": "string"
+    }
+  }
+}
