@@ -74,7 +74,7 @@ abstract class SpecEmitterContext(val eh: ErrorHandler, refEmitter: RefEmitter, 
         val linkTarget = element.id
         refs.find {
           case fragment: EncodesModel =>
-            fragment.encodes.id == linkTarget
+            Option(fragment.encodes).exists(_.id == linkTarget)
           case library: DeclaresModel =>
             library.declares.exists(_.id == linkTarget)
           case _ => false
