@@ -22,10 +22,6 @@ class DialectSHACLTest extends FunSuiteRdfCycleTests with PlatformSecrets {
     cycleRdf("example1.raml", s"example1.shacl")
   }
 
-  test("generate validations for unreferenced node mappings") {
-    cycleRdf("dialect.yaml", s"validations.shacl", directory = s"${basePath}unreferenced-node-mappings-validations/")
-  }
-
   /** Method for transforming parsed unit. Override if necessary. */
   override def transformRdf(unit: BaseUnit, config: CycleConfig): RdfModel = {
     AMLPlugin().shapesForDialect(unit.asInstanceOf[Dialect], "http://metadata.org/validations.js")
