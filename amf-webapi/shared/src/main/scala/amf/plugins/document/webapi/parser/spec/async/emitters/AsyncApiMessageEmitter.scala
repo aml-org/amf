@@ -101,7 +101,7 @@ private class AsyncApiOneOfMessageEmitter(fieldEntry: FieldEntry, ordering: Spec
   override def position(): Position = pos(fieldEntry.value.annotations)
 }
 
-private class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, ordering: SpecOrdering)(
+class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, ordering: SpecOrdering)(
     implicit val spec: OasLikeSpecEmitterContext)
     extends PartEmitter {
 
@@ -148,7 +148,8 @@ private class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean =
 
   def emitLink(b: PartBuilder): Unit = {
     val label =
-      OasDefinitions.appendOas3ComponentsPrefix(message.linkLabel.value(), if (isTrait) "messageTraits" else "messages")
+      OasDefinitions.appendOas3ComponentsPrefix(message.linkLabel.value(),
+                                                if (isTrait) "messageTraits" else "messages")
     spec.ref(b, label)
   }
 

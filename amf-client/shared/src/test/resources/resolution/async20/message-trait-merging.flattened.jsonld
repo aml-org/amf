@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#/web-api",
+      "@id": "#6",
       "@type": [
         "apiContract:WebAPI",
         "doc:RootDomainElement",
@@ -11,23 +11,23 @@
       "core:version": "aversion",
       "apiContract:endpoint": [
         {
-          "@id": "#/web-api/end-points/aChannel"
+          "@id": "#7"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#/web-api": "ASYNC 2.0"
+          "#6": "ASYNC 2.0"
         },
         "lexical": {
           "apiContract:endpoint": "[(5,0)-(15,0)]",
           "core:name": "[(3,2)-(4,0)]",
-          "#/web-api": "[(1,0)-(22,24)]",
+          "#6": "[(1,0)-(22,24)]",
           "core:version": "[(4,2)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/aChannel",
+      "@id": "#7",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -35,17 +35,17 @@
       "apiContract:path": "aChannel",
       "apiContract:supportedOperation": [
         {
-          "@id": "#/web-api/end-points/aChannel/publish"
+          "@id": "#8"
         }
       ],
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/aChannel": "[(6,2)-(15,0)]"
+          "#7": "[(6,2)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/aChannel/publish",
+      "@id": "#8",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -53,18 +53,18 @@
       "apiContract:method": "publish",
       "apiContract:expects": [
         {
-          "@id": "#/web-api/end-points/aChannel/publish/request"
+          "@id": "#9"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:expects": "[(8,14)-(15,0)]",
-          "#/web-api/end-points/aChannel/publish": "[(7,4)-(15,0)]"
+          "#8": "[(7,4)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/aChannel/publish/request",
+      "@id": "#9",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -72,7 +72,7 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#/web-api/end-points/aChannel/publish/request/baseContentType"
+          "@id": "#10"
         }
       ],
       "core:displayName": "secondMessage",
@@ -80,21 +80,21 @@
       "core:summary": "firstSummary",
       "doc:extends": [
         {
-          "@id": "#/declarations/messageTraits/firstTrait"
+          "@id": "#1"
         },
         {
-          "@id": "#/declarations/messageTraits/secondTrait"
+          "@id": "#4"
         }
       ],
       "smaps": {
         "lexical": {
           "doc:extends": "[(12,8)-(15,0)]",
-          "#/web-api/end-points/aChannel/publish/request": "[(9,0)-(15,0)]"
+          "#9": "[(9,0)-(15,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/aChannel/publish/request/baseContentType",
+      "@id": "#10",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -107,7 +107,7 @@
       }
     },
     {
-      "@id": "#/declarations/messageTraits/firstTrait",
+      "@id": "#1",
       "@type": [
         "apiContract:Message",
         "doc:DomainElement"
@@ -115,7 +115,7 @@
       "core:name": "firstTrait",
       "apiContract:payload": [
         {
-          "@id": "#/declarations/messageTraits/firstTrait/default"
+          "@id": "#2"
         }
       ],
       "core:displayName": "firstMessage",
@@ -123,23 +123,23 @@
       "apiContract:isAbstract": true,
       "smaps": {
         "resolved-link-target": {
-          "#/declarations/messageTraits/firstTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/declarations/messageTraits/firstTrait"
+          "#1": "amf://id#1"
         },
         "declared-element": {
-          "#/declarations/messageTraits/firstTrait": ""
+          "#1": ""
         },
         "lexical": {
           "core:summary": "[(19,6)-(20,0)]",
-          "#/declarations/messageTraits/firstTrait": "[(18,0)-(20,0)]",
+          "#1": "[(18,0)-(20,0)]",
           "core:displayName": "[(18,6)-(19,0)]"
         },
         "resolved-link": {
-          "#/declarations/messageTraits/firstTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/web-api/end-points/aChannel/publish/request/message"
+          "#1": "amf://id#3"
         }
       }
     },
     {
-      "@id": "#/declarations/messageTraits/secondTrait",
+      "@id": "#4",
       "@type": [
         "apiContract:Message",
         "doc:DomainElement"
@@ -147,7 +147,7 @@
       "core:name": "secondTrait",
       "apiContract:payload": [
         {
-          "@id": "#/declarations/messageTraits/secondTrait/default"
+          "@id": "#5"
         }
       ],
       "core:displayName": "secondMessage",
@@ -155,30 +155,30 @@
       "apiContract:isAbstract": true,
       "smaps": {
         "resolved-link-target": {
-          "#/declarations/messageTraits/secondTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/declarations/messageTraits/secondTrait"
+          "#4": "amf://id#4"
         },
         "declared-element": {
-          "#/declarations/messageTraits/secondTrait": ""
+          "#4": ""
         },
         "lexical": {
           "core:title": "[(22,6)-(22,24)]",
-          "#/declarations/messageTraits/secondTrait": "[(21,0)-(22,24)]",
+          "#4": "[(21,0)-(22,24)]",
           "core:displayName": "[(21,6)-(22,0)]"
         },
         "resolved-link": {
-          "#/declarations/messageTraits/secondTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/web-api/end-points/aChannel/publish/request/message"
+          "#4": "amf://id#3"
         }
       }
     },
     {
-      "@id": "#/declarations/messageTraits/firstTrait/default",
+      "@id": "#2",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ]
     },
     {
-      "@id": "#/declarations/messageTraits/secondTrait/default",
+      "@id": "#5",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
@@ -188,10 +188,10 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#/declarations/messageTraits/firstTrait"
+          "@id": "#1"
         },
         {
-          "@id": "#/declarations/messageTraits/secondTrait"
+          "@id": "#4"
         }
       ],
       "@type": [
@@ -201,14 +201,14 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#/web-api"
+        "@id": "#6"
       },
       "doc:version": "2.1.0",
       "doc:root": true
     }
   ],
   "@context": {
-    "@base": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml",
+    "@base": "amf://id",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#"

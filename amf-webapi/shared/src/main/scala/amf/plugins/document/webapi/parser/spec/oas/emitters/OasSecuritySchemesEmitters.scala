@@ -105,7 +105,7 @@ class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
   private def emitLink(b: PartBuilder): Unit = {
     securityScheme.linkTarget.foreach { l =>
-      OasTagToReferenceEmitter(l, securityScheme.linkLabel.option(), Nil).emit(b)
+      OasTagToReferenceEmitter(l, securityScheme.linkLabel.option()).emit(b)
     }
   }
 

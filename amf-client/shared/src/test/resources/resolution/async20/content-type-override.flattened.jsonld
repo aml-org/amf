@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#/web-api",
+      "@id": "#1",
       "@type": [
         "apiContract:WebAPI",
         "doc:RootDomainElement",
@@ -17,28 +17,28 @@
       "core:version": "some",
       "apiContract:endpoint": [
         {
-          "@id": "#/web-api/end-points/overrideChannel"
+          "@id": "#2"
         },
         {
-          "@id": "#/web-api/end-points/noOverrideChannel"
+          "@id": "#15"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#/web-api": "ASYNC 2.0"
+          "#1": "ASYNC 2.0"
         },
         "lexical": {
           "apiContract:endpoint": "[(6,0)-(38,26)]",
           "apiContract:contentType": "[(5,0)-(6,0)]",
           "core:name": "[(3,2)-(4,0)]",
-          "#/web-api": "[(1,0)-(38,26)]",
+          "#1": "[(1,0)-(38,26)]",
           "apiContract:accepts": "[(5,0)-(6,0)]",
           "core:version": "[(4,2)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel",
+      "@id": "#2",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -46,20 +46,20 @@
       "apiContract:path": "overrideChannel",
       "apiContract:supportedOperation": [
         {
-          "@id": "#/web-api/end-points/overrideChannel/subscribe"
+          "@id": "#3"
         },
         {
-          "@id": "#/web-api/end-points/overrideChannel/publish"
+          "@id": "#9"
         }
       ],
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/overrideChannel": "[(7,2)-(24,0)]"
+          "#2": "[(7,2)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel",
+      "@id": "#15",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -67,20 +67,20 @@
       "apiContract:path": "noOverrideChannel",
       "apiContract:supportedOperation": [
         {
-          "@id": "#/web-api/end-points/noOverrideChannel/subscribe"
+          "@id": "#16"
         },
         {
-          "@id": "#/web-api/end-points/noOverrideChannel/publish"
+          "@id": "#22"
         }
       ],
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/noOverrideChannel": "[(24,2)-(38,26)]"
+          "#15": "[(24,2)-(38,26)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/subscribe",
+      "@id": "#3",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -88,18 +88,18 @@
       "apiContract:method": "subscribe",
       "apiContract:returns": [
         {
-          "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response"
+          "@id": "#4"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(9,14)-(16,0)]",
-          "#/web-api/end-points/overrideChannel/subscribe": "[(8,4)-(16,0)]"
+          "#3": "[(8,4)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/publish",
+      "@id": "#9",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -107,18 +107,18 @@
       "apiContract:method": "publish",
       "apiContract:expects": [
         {
-          "@id": "#/web-api/end-points/overrideChannel/publish/request"
+          "@id": "#10"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:expects": "[(17,14)-(24,0)]",
-          "#/web-api/end-points/overrideChannel/publish": "[(16,4)-(24,0)]"
+          "#9": "[(16,4)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/subscribe",
+      "@id": "#16",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -126,18 +126,18 @@
       "apiContract:method": "subscribe",
       "apiContract:returns": [
         {
-          "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response"
+          "@id": "#17"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(26,14)-(32,0)]",
-          "#/web-api/end-points/noOverrideChannel/subscribe": "[(25,4)-(32,0)]"
+          "#16": "[(25,4)-(32,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/publish",
+      "@id": "#22",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -145,18 +145,18 @@
       "apiContract:method": "publish",
       "apiContract:expects": [
         {
-          "@id": "#/web-api/end-points/noOverrideChannel/publish/request"
+          "@id": "#23"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:expects": "[(33,14)-(38,26)]",
-          "#/web-api/end-points/noOverrideChannel/publish": "[(32,4)-(38,26)]"
+          "#22": "[(32,4)-(38,26)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response",
+      "@id": "#4",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -164,17 +164,17 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/application%2Fjson"
+          "@id": "#5"
         }
       ],
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/overrideChannel/subscribe/default-response": "[(10,0)-(16,0)]"
+          "#4": "[(10,0)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/publish/request",
+      "@id": "#10",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -182,17 +182,17 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#/web-api/end-points/overrideChannel/publish/request/application%2Fjson"
+          "@id": "#11"
         }
       ],
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/overrideChannel/publish/request": "[(18,0)-(24,0)]"
+          "#10": "[(18,0)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response",
+      "@id": "#17",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -200,17 +200,17 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default"
+          "@id": "#18"
         }
       ],
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/noOverrideChannel/subscribe/default-response": "[(27,0)-(32,0)]"
+          "#17": "[(27,0)-(32,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/publish/request",
+      "@id": "#23",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -218,24 +218,24 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default"
+          "@id": "#24"
         }
       ],
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/noOverrideChannel/publish/request": "[(34,0)-(38,26)]"
+          "#23": "[(34,0)-(38,26)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/application%2Fjson",
+      "@id": "#5",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema"
+        "@id": "#6"
       },
       "smaps": {
         "lexical": {
@@ -245,14 +245,14 @@
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/publish/request/application%2Fjson",
+      "@id": "#11",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema"
+        "@id": "#12"
       },
       "smaps": {
         "lexical": {
@@ -262,14 +262,14 @@
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default",
+      "@id": "#18",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/yaml",
       "raml-shapes:schema": {
-        "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema"
+        "@id": "#19"
       },
       "smaps": {
         "lexical": {
@@ -278,14 +278,14 @@
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default",
+      "@id": "#24",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/yaml",
       "raml-shapes:schema": {
-        "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema"
+        "@id": "#25"
       },
       "smaps": {
         "lexical": {
@@ -294,7 +294,7 @@
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema",
+      "@id": "#6",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -305,21 +305,21 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name"
+          "@id": "#7"
         }
       ],
       "shacl:name": "schema",
       "smaps": {
         "type-property-lexical-info": {
-          "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema": "[(12,10)-(12,14)]"
+          "#6": "[(12,10)-(12,14)]"
         },
         "lexical": {
-          "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema": "[(11,8)-(16,0)]"
+          "#6": "[(11,8)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema",
+      "@id": "#12",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -330,21 +330,21 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name"
+          "@id": "#13"
         }
       ],
       "shacl:name": "schema",
       "smaps": {
         "type-property-lexical-info": {
-          "#/web-api/end-points/overrideChannel/publish/request/default/schema": "[(20,10)-(20,14)]"
+          "#12": "[(20,10)-(20,14)]"
         },
         "lexical": {
-          "#/web-api/end-points/overrideChannel/publish/request/default/schema": "[(19,8)-(24,0)]"
+          "#12": "[(19,8)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema",
+      "@id": "#19",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -355,21 +355,21 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name"
+          "@id": "#20"
         }
       ],
       "shacl:name": "schema",
       "smaps": {
         "type-property-lexical-info": {
-          "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema": "[(28,10)-(28,14)]"
+          "#19": "[(28,10)-(28,14)]"
         },
         "lexical": {
-          "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema": "[(27,8)-(32,0)]"
+          "#19": "[(27,8)-(32,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema",
+      "@id": "#25",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -380,21 +380,21 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name"
+          "@id": "#26"
         }
       ],
       "shacl:name": "schema",
       "smaps": {
         "type-property-lexical-info": {
-          "#/web-api/end-points/noOverrideChannel/publish/request/default/schema": "[(35,10)-(35,14)]"
+          "#25": "[(35,10)-(35,14)]"
         },
         "lexical": {
-          "#/web-api/end-points/noOverrideChannel/publish/request/default/schema": "[(34,8)-(38,26)]"
+          "#25": "[(34,8)-(38,26)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name",
+      "@id": "#7",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -407,18 +407,18 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name/scalar/name"
+        "@id": "#8"
       },
       "shacl:minCount": 0,
       "shacl:name": "name",
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name": "[(14,12)-(16,0)]"
+          "#7": "[(14,12)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name",
+      "@id": "#13",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -431,18 +431,18 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name/scalar/name"
+        "@id": "#14"
       },
       "shacl:minCount": 0,
       "shacl:name": "name",
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name": "[(22,12)-(24,0)]"
+          "#13": "[(22,12)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name",
+      "@id": "#20",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -455,18 +455,18 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name/scalar/name"
+        "@id": "#21"
       },
       "shacl:minCount": 0,
       "shacl:name": "name",
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name": "[(30,12)-(32,0)]"
+          "#20": "[(30,12)-(32,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name",
+      "@id": "#26",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -479,18 +479,18 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name/scalar/name"
+        "@id": "#27"
       },
       "shacl:minCount": 0,
       "shacl:name": "name",
       "smaps": {
         "lexical": {
-          "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name": "[(37,12)-(38,26)]"
+          "#26": "[(37,12)-(38,26)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name/scalar/name",
+      "@id": "#8",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -506,16 +506,16 @@
       "shacl:name": "name",
       "smaps": {
         "type-property-lexical-info": {
-          "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name/scalar/name": "[(15,14)-(15,18)]"
+          "#8": "[(15,14)-(15,18)]"
         },
         "lexical": {
           "shacl:datatype": "[(15,14)-(16,0)]",
-          "#/web-api/end-points/overrideChannel/subscribe/default-response/default/schema/property/name/scalar/name": "[(14,12)-(16,0)]"
+          "#8": "[(14,12)-(16,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name/scalar/name",
+      "@id": "#14",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -531,16 +531,16 @@
       "shacl:name": "name",
       "smaps": {
         "type-property-lexical-info": {
-          "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name/scalar/name": "[(23,14)-(23,18)]"
+          "#14": "[(23,14)-(23,18)]"
         },
         "lexical": {
           "shacl:datatype": "[(23,14)-(24,0)]",
-          "#/web-api/end-points/overrideChannel/publish/request/default/schema/property/name/scalar/name": "[(22,12)-(24,0)]"
+          "#14": "[(22,12)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name/scalar/name",
+      "@id": "#21",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -556,16 +556,16 @@
       "shacl:name": "name",
       "smaps": {
         "type-property-lexical-info": {
-          "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name/scalar/name": "[(31,14)-(31,18)]"
+          "#21": "[(31,14)-(31,18)]"
         },
         "lexical": {
           "shacl:datatype": "[(31,14)-(32,0)]",
-          "#/web-api/end-points/noOverrideChannel/subscribe/default-response/default/schema/property/name/scalar/name": "[(30,12)-(32,0)]"
+          "#21": "[(30,12)-(32,0)]"
         }
       }
     },
     {
-      "@id": "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name/scalar/name",
+      "@id": "#27",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -581,11 +581,11 @@
       "shacl:name": "name",
       "smaps": {
         "type-property-lexical-info": {
-          "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name/scalar/name": "[(38,14)-(38,18)]"
+          "#27": "[(38,14)-(38,18)]"
         },
         "lexical": {
           "shacl:datatype": "[(38,14)-(38,26)]",
-          "#/web-api/end-points/noOverrideChannel/publish/request/default/schema/property/name/scalar/name": "[(37,12)-(38,26)]"
+          "#27": "[(37,12)-(38,26)]"
         }
       }
     },
@@ -598,14 +598,14 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#/web-api"
+        "@id": "#1"
       },
       "doc:version": "2.1.0",
       "doc:root": true
     }
   ],
   "@context": {
-    "@base": "file://amf-client/shared/src/test/resources/resolution/async20/content-type-override.yaml",
+    "@base": "amf://id",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#",

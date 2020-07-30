@@ -1,0 +1,58 @@
+type: object
+properties:
+  country:
+    enum:
+      - United States of America
+      - Canada
+if:
+  properties:
+    country:
+      type: object
+      propertyNames:
+        pattern: ^[A-Za-z]*$
+        type: string
+    const-keyword:
+      type: string
+      enum:
+        - some value
+      examples:
+        - invalid
+        -
+          value: some value
+  type: object
+then:
+  properties:
+    postal_code:
+      type: array
+      contains:
+        type: number
+      items: {}
+  type: object
+else:
+  properties:
+    a:
+      type: number
+      minimum: 0
+      exclusiveMaximum: 100
+    b:
+      type: number
+      exclusiveMinimum: 0
+      maximum: 100
+    postal_code:
+      additionalItems:
+        type: number
+      type: array
+      items:
+        -
+          type: number
+        -
+          enum:
+            - Street
+            - Avenue
+            - Boulevard
+          type: string
+  type: object
+examples:
+  -
+    country: United States of America
+    postal_code: dlkfjslfj
