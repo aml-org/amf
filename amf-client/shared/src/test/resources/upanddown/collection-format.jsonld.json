@@ -14,19 +14,19 @@
             "name": "param1",
             "in": "header",
             "type": "array",
-            "collectionFormat": "csv",
             "items": {
               "type": "string"
-            }
+            },
+            "collectionFormat": "csv"
           },
           {
             "name": "param2",
             "in": "query",
             "type": "array",
-            "collectionFormat": "tsv",
             "items": {
               "type": "string"
-            }
+            },
+            "collectionFormat": "tsv"
           }
         ],
         "responses": {}

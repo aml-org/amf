@@ -10,12 +10,12 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
 }
 import amf.plugins.document.webapi.contexts.emitter.raml.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.parser.oas.{
+  JsonSchemaWebApiContext,
   Oas2WebApiContext,
   Oas3WebApiContext,
-  OasWebApiContext,
-  JsonSchemaWebApiContext
+  OasWebApiContext
 }
-import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml10WebApiContext}
+import amf.plugins.document.webapi.contexts.parser.raml.{Raml10WebApiContext, RamlWebApiContext}
 
 /**
   * Oas package object
@@ -55,7 +55,7 @@ package object spec {
         url.stripPrefix(responsesDefinitionsPrefix)
     }
 
-    def appendDefinitionsPrefix(url: String, vendor: Option[Vendor] = None): String = vendor match {
+    def appendSchemasPrefix(url: String, vendor: Option[Vendor] = None): String = vendor match {
       case Some(Vendor.OAS30) | Some(Vendor.ASYNC20) =>
         if (!url.startsWith(oas3DefinitionsPrefix)) appendPrefix(oas3DefinitionsPrefix, url) else url
       case _ =>

@@ -14,10 +14,10 @@
           "type": "string"
         },
         "friends": {
-          "type": "array",
           "items": {
             "$ref": "#/definitions/Friend"
-          }
+          },
+          "type": "array"
         }
       }
     },

@@ -28,5 +28,5 @@ class Async20EditingPipeline(override val eh: ErrorHandler, urlShortening: Boole
     new AsyncExamplePropagationResolutionStage(),
     new ServerVariableExampleResolutionStage(),
     new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true)
-  )
+  ) ++ url
 }
