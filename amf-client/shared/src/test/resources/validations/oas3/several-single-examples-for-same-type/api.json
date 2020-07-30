@@ -1,0 +1,90 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "api"
+  },
+  "components": {
+    "schemas": {
+      "Pet": {
+        "$ref": "schemas/pet.json"
+      }
+    }
+  },
+  "paths": {
+    "/test": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              },
+              "example": {
+                "pp": 1,
+                "id": 4,
+                "name": "A",
+                "tag": "dog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "text/plain; charset=utf-8": {
+                "example": "OK"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "detele",
+        "responses": {
+          "202": {
+            "description": "w",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                },
+                "example": {
+                  "id": 12,
+                  "name": "D"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              },
+              "example": {
+                "name": "Doggie",
+                "id": 123,
+                "tag": "dog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "text/plain; charset=utf-8": {
+                "example": "OK"
+              }
+            }
+          }
+        }
+      },
+    }
+  }
+}

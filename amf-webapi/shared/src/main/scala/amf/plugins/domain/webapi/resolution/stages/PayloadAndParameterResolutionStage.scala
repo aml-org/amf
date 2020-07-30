@@ -1,13 +1,13 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.core.annotations.TrackedElement
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfObject
 import amf.core.resolution.stages.ResolutionStage
+import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ExampleTracking}
 import amf.plugins.domain.webapi.models._
-import amf.{AmfProfile, Oas30Profile, ProfileName, Raml08Profile, Raml10Profile, RamlProfile}
+import amf._
 
 /**
   * Propagate examples defined in parameters and payloads onto their corresponding shape so they are validated
@@ -31,9 +31,9 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
   def resolveExamples(model: BaseUnit): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        val webApiSchemas   = searchPayloadAndParams(doc.encodes.asInstanceOf[WebApi])
-        val declaredSchemas = searchDeclarations(doc)
-        (webApiSchemas ++ declaredSchemas).foreach(setExamplesInSchema)
+        val webApiContainers   = searchPayloadAndParams(doc.encodes.asInstanceOf[WebApi])
+        val declaredContainers = searchDeclarations(doc)
+        (webApiContainers ++ declaredContainers).foreach(setExamplesInSchema)
       case _ =>
     }
     model
@@ -70,21 +70,22 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
     req.payloads ++ reqParams.flatMap(_.payloads) ++ reqParams
   }
 
-  private def setExamplesInSchema(payloadOrParam: SchemaContainerWithId): Unit =
-    payloadOrParam.schema match {
+  private def setExamplesInSchema(container: SchemaContainerWithId): Unit =
+    container.schema match {
       case shape: AnyShape =>
-        payloadOrParam.examples.foreach { example =>
+        container.examples.foreach { example =>
           if (!shape.examples.exists(_.id == example.id)) {
-            example.add(ExampleTracking.tracked(payloadOrParam.id, example, None))
+            example.add(ExampleTracking.tracked(container.id, example, None))
             addExampleToShape(shape, example)
-            payloadOrParam.removeExamples()
+            container.removeExamples()
           }
         }
       case _ =>
     }
 
-  protected def addExampleToShape(shape: AnyShape, example: Example): Unit =
-    shape.withExamples(shape.examples ++ Seq(example))
+  protected def addExampleToShape(shape: AnyShape, example: Example): Unit = {
+    shape.setArrayWithoutId(ExamplesField.Examples, shape.examples ++ Seq(example))
+  }
 }
 
 class RamlCompatiblePayloadAndParameterResolutionStage(profile: ProfileName)(implicit errorHandler: ErrorHandler)

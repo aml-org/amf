@@ -12,7 +12,7 @@ import amf.plugins.domain.webapi.models.{CorrelationId => InternalCorrelationId}
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Async20Resolver, Oas20Resolver, Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Async20Resolver, Oas20Resolver, Oas30Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.errorhandling.StaticErrorCollector
@@ -2320,6 +2320,20 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val eh = DefaultErrorHandler()
     DomainElementEmitter.emit(InternalCorrelationId(), Vendor.RAML10, eh)
     assert(eh.getErrors.head.message == "Unhandled domain element for given vendor")
+  }
+
+  test("OAS 3.0 Response examples for a same type have different ids") {
+    val file =
+      "file://amf-client/shared/src/test/resources/validations/oas3/several-single-examples-for-same-type/api.json"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new Oas30Parser().parseFileAsync(file).asFuture
+      resolved <- Future.successful(new Oas30Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+    } yield {
+      val exampleIds =
+        resolved.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[AnyShape].examples.asSeq.map(x => x.id)
+      exampleIds.toSet should have size 3
+    }
   }
 
   // todo: move to common (file system)
