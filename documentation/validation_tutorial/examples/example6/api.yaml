@@ -1,0 +1,13 @@
+openapi: 3.0.0
+
+info:
+  title: Example API
+
+components:
+  schemas:
+    name:
+      type: string
+      minLength: 500
+      maxLength: 100
+
+paths: {}

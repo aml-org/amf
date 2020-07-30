@@ -5,9 +5,9 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfObject
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.shapes.models.{AnyShape, ExampleTracking}
+import amf.plugins.domain.shapes.models.{AnyShape, Example, ExampleTracking}
 import amf.plugins.domain.webapi.models._
-import amf.{AmfProfile, Oas30Profile, ProfileName}
+import amf.{AmfProfile, Oas30Profile, ProfileName, Raml08Profile, Raml10Profile, RamlProfile}
 
 /**
   * Propagate examples defined in parameters and payloads onto their corresponding shape so they are validated
@@ -19,11 +19,13 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
 
   private type SchemaContainerWithId = SchemaContainer with AmfObject
 
-  override def resolve[T <: BaseUnit](model: T): T = {
-    profile match {
-      case Oas30Profile | AmfProfile => resolveExamples(model).asInstanceOf[T]
-      case _                         => model
-    }
+  override def resolve[T <: BaseUnit](model: T): T =
+    if (appliesTo(profile)) resolveExamples(model).asInstanceOf[T]
+    else model
+
+  protected def appliesTo(profile: ProfileName) = profile match {
+    case Oas30Profile | AmfProfile => true
+    case _                         => false
   }
 
   def resolveExamples(model: BaseUnit): BaseUnit = {
@@ -68,16 +70,34 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
     req.payloads ++ reqParams.flatMap(_.payloads) ++ reqParams
   }
 
-  def setExamplesInSchema(payloadOrParam: SchemaContainerWithId): Unit =
+  private def setExamplesInSchema(payloadOrParam: SchemaContainerWithId): Unit =
     payloadOrParam.schema match {
       case shape: AnyShape =>
         payloadOrParam.examples.foreach { example =>
           if (!shape.examples.exists(_.id == example.id)) {
             example.add(ExampleTracking.tracked(payloadOrParam.id, example, None))
-            shape.withExamples(shape.examples ++ Seq(example))
+            addExampleToShape(shape, example)
             payloadOrParam.removeExamples()
           }
         }
       case _ =>
+    }
+
+  protected def addExampleToShape(shape: AnyShape, example: Example): Unit =
+    shape.withExamples(shape.examples ++ Seq(example))
+}
+
+class RamlCompatiblePayloadAndParameterResolutionStage(profile: ProfileName)(implicit errorHandler: ErrorHandler)
+    extends PayloadAndParameterResolutionStage(profile)(errorHandler) {
+
+  override protected def appliesTo(profile: ProfileName): Boolean = profile match {
+    case RamlProfile | Raml10Profile | Raml08Profile => true
+    case _                                           => false
+  }
+
+  override protected def addExampleToShape(shape: AnyShape, example: Example): Unit =
+    shape.effectiveLinkTarget() match {
+      case linkedShape: AnyShape => super.addExampleToShape(linkedShape, example)
+      case _                     => // ignore
     }
 }

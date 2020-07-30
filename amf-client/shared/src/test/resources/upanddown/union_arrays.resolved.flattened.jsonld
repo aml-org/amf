@@ -1,0 +1,315 @@
+{
+  "@graph": [
+    {
+      "@id": "#14",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "test",
+      "smaps": {
+        "source-vendor": {
+          "#14": "RAML 1.0"
+        },
+        "lexical": {
+          "core:name": "[(2,0)-(3,0)]",
+          "#14": "[(2,0)-(13,39)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        },
+        {
+          "@id": "#3"
+        },
+        {
+          "@id": "#9"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#14"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "Product",
+      "smaps": {
+        "resolved-link-target": {
+          "#1": "amf://id#1"
+        },
+        "declared-element": {
+          "#1": ""
+        },
+        "lexical": {
+          "shacl:name": "[(4,2)-(4,9)]",
+          "#1": "[(4,2)-(5,0)]"
+        },
+        "resolved-link": {
+          "#1": "amf://id#2"
+        }
+      }
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#4"
+        }
+      ],
+      "shacl:name": "PropertyArray",
+      "smaps": {
+        "declared-element": {
+          "#3": ""
+        },
+        "lexical": {
+          "shacl:name": "[(5,2)-(5,15)]",
+          "#3": "[(5,2)-(10,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#10"
+        }
+      ],
+      "shacl:name": "PropertyNoArray",
+      "smaps": {
+        "declared-element": {
+          "#9": ""
+        },
+        "lexical": {
+          "shacl:name": "[(10,2)-(10,17)]",
+          "#9": "[(10,2)-(13,39)]"
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#complex"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#5"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "complex",
+      "smaps": {
+        "lexical": {
+          "#4": "[(7,6)-(10,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#complex"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#11"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "complex",
+      "smaps": {
+        "lexical": {
+          "#10": "[(12,6)-(13,39)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:items": {
+        "@id": "#6"
+      },
+      "shacl:name": "complex",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#5": "[(8,8)-(8,12)]"
+        },
+        "lexical": {
+          "#5": "[(7,6)-(10,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#11",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#12"
+        },
+        {
+          "@id": "#13"
+        },
+        {
+          "@id": "#1"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#11": "[(13,8)-(13,39)]"
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#7"
+        },
+        {
+          "@id": "#8"
+        },
+        {
+          "@id": "#1"
+        }
+      ],
+      "shacl:name": "items",
+      "smaps": {
+        "lexical": {
+          "#6": "[(9,8)-(10,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#12",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#13",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ]
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ]
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

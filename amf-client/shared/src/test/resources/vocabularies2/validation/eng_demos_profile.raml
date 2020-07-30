@@ -9,8 +9,6 @@ prefixes:
 violation:
   - test-custom-validation
   - other-validation
-  - js-validation
-  - js-validation-2
 
 validations:
 
@@ -27,21 +25,3 @@ validations:
     propertyConstraints:
       http://mulesoft.com/vocabularies/eng-demos#nonExistent:
         minCount: 1
-
-  js-validation:
-    message: js error
-    targetClass: eng-demos.Speaker
-    functionConstraint:
-      code: |
-        function(e) {
-          return false
-        }
-
-  js-validation-2:
-    message: js error
-    targetClass: eng-demos.Speaker
-    functionConstraint:
-      code: |
-        function(e) {
-          return true
-        }

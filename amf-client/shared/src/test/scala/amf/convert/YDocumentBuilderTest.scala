@@ -6,7 +6,7 @@ import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.io.FunSuiteCycleTests
+import amf.io.{FunSuiteCycleTests, MultiJsonldAsyncFunSuite}
 import amf.plugins.document.webapi.Raml10Plugin
 import org.scalatest.Assertion
 import org.yaml.builder.YDocumentBuilder
@@ -20,30 +20,32 @@ abstract class DocBuilderTest extends FunSuiteCycleTests {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   override def basePath: String                            = "amf-client/shared/src/test/resources/render/"
 
+  override def defaultRenderOptions: RenderOptions =
+    RenderOptions().withSourceMaps.withPrettyPrint.withAmfJsonLdSerialization
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     Raml10Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
 
-  private def run(source: String, golden: String): Future[Assertion] =
-    cycle(source, golden, RamlYamlHint, Amf, eh = None)
+  private def run(source: String, golden: String, renderOptions: RenderOptions): Future[Assertion] =
+    cycle(source, golden, RamlYamlHint, target = Amf, eh = None, renderOptions = Some(renderOptions))
 
-  test("Test types with references") {
-    run("types.raml", "types.jsonld")
+  multiGoldenTest("Test types with references", "types.%s") { config =>
+    run("types.raml", config.golden, config.renderOptions)
   }
 
-  test("Test union type") {
-    run("union.raml", "union.jsonld")
+  multiGoldenTest("Test union type", "union.%s") { config =>
+    run("union.raml", config.golden, config.renderOptions)
   }
 
-  test("Test recursion type") {
-    run("recursion.raml", "recursion.jsonld")
+  multiGoldenTest("Test recursion type", "recursion.%s") { config =>
+    run("recursion.raml", config.golden, config.renderOptions)
   }
 }
 
 class YDocumentBuilderTest extends DocBuilderTest {
 
-  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
     val builder: YDocumentBuilder = new YDocumentBuilder()
-    val options                   = RenderOptions().withSourceMaps.withPrettyPrint.withAmfJsonLdSerialization
     val renderer                  = new AMFSerializer(unit, "application/ld+json", "AMF Graph", options)
     renderer
       .renderToBuilder(builder)

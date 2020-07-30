@@ -144,8 +144,23 @@ class CustomShaclValidator(model: BaseUnit,
       case Some(_) => validateFunctionConstraint(validationSpecification, element)
       case _       => // ignore
     }
-    validationSpecification.propertyConstraints.foreach { propertyConstraint =>
-      validatePropertyConstraint(validationSpecification, propertyConstraint, element)
+
+    validationSpecification.replacesFunctionConstraint match {
+      // some JS functions have been replaced by custom validations.
+      // The custom SHACL validator cannot execute them, it still relies on the custom Scala function
+      case Some(functionConstraintName) =>
+        validateFunctionConstraint(
+          validationSpecification.copy(functionConstraint = Some(FunctionConstraint(
+            message = Some(validationSpecification.message),
+            internalFunction = Some(functionConstraintName)
+          ))),
+          element
+        )
+      // Normal constraints here
+      case _                        =>
+        validationSpecification.propertyConstraints.foreach { propertyConstraint =>
+          validatePropertyConstraint(validationSpecification, propertyConstraint, element)
+        }
     }
 
   }
@@ -156,7 +171,7 @@ class CustomShaclValidator(model: BaseUnit,
 
   def validateCustom(validationSpecification: ValidationSpecification, element: DomainElement): Unit = {
     throw new Exception(
-      s"Arbitray SHACL validations not supported in customm SHACL validator: ${validationSpecification.id}")
+      s"Arbitray SHACL validations not supported in custom SHACL validator: ${validationSpecification.id}")
   }
 
   def validateFunctionConstraint(validationSpecification: ValidationSpecification, element: DomainElement): Unit = {

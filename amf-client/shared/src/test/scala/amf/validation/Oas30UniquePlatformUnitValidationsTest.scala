@@ -12,12 +12,6 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
     validate("paths-property.json", Some("paths-property.report"), Oas30Profile)
   }
 
-  test("Oas path uri is invalid") {
-    validate("invalid-endpoint-path-still-parses.json",
-             Some("invalid-endpoint-path-still-parses.report"),
-             Oas20Profile)
-  }
-
   test("Invalid facets in oauth2 security scheme") {
     validate("invalid-oauth-facets.json", Some("invalid-oauth-facets.report"), Oas30Profile)
   }
@@ -92,5 +86,13 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
 
   test("Invalid status code without quotes") {
     validate("invalid-status-code.yaml", Some("invalid-status-code.report"), Oas30Profile)
+  }
+
+  test("Invalid yaml tags") {
+    validate("invalid-yaml-tags.yaml", Some("invalid-yaml-tags.report"), Oas30Profile)
+  }
+
+  test("Invalid header names according to RFC-7230") {
+    validate("invalid-header-names.yaml", Some("invalid-header-names.report"), Oas30Profile)
   }
 }

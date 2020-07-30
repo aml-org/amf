@@ -1,0 +1,88 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Swagger Petstore",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/pets": {
+      "get": {
+        "summary": "Info for specific pet",
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                },
+                "examples": {
+                  "one": {
+                    "$ref": "#/components/examples/petExample1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "examples": {
+      "petsArrayExample": {
+        "summary": "s",
+        "description": "aaa",
+        "value": [
+        {
+          "pet1": {
+            "id": 233,
+            "name": "A"
+          }
+        },
+        {
+          "pet2": {
+            "id": 455,
+            "name": "B"
+          }
+        }
+        ]
+      },
+      "petExample1": {
+        "description": "pet1",
+        "value": {
+          "id": 233,
+          "name": "Bielsa"
+        }
+      },
+      "petExample2": {
+        "description": "pet2",
+        "value": {
+          "id": 344,
+          "name": "Brea"
+        }
+      }
+    },
+    "schemas": {
+      "Pet": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

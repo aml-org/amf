@@ -25,6 +25,14 @@ class DialectInstancesValidationTest extends DialectInstanceValidation {
     validate("dialect1.raml", "instance1_correct1.raml", 0)
   }
 
+  test("validation of dialect with any type") {
+    validate("any_dialect.raml", "any_example.raml", 0)
+  }
+
+  test("validation of dialect with any type array") {
+    validate("any_array_dialect.raml", "any_array_example.raml", 0)
+  }
+
   test("validation dialect 1b example 1b correct") {
     validate("dialect1b.raml", "example1b.raml", 0)
   }
@@ -137,7 +145,7 @@ class DialectInstancesValidationTest extends DialectInstanceValidation {
                                 "eng_demos_instance1.raml",
                                 ProfileName("eng_demos_profile.raml"),
                                 "Custom Eng-Demos Validation",
-                                6)
+                                4)
   }
 
   test("custom validation profile for dialect default profile") {

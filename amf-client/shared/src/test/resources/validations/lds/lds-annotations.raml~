@@ -1,0 +1,57 @@
+#%RAML 1.0 Library
+
+annotationTypes:
+ttl:
+  allowedTargets: [TypeDeclaration]
+  type: number
+key:
+  allowedTargets: [TypeDeclaration, Method]
+  type: object
+  properties:
+    //:
+      type: string
+merge:
+  allowedTargets: [TypeDeclaration]
+  type: string
+coerceFunction:
+  allowedTargets: [TypeDeclaration]
+  type: string
+adapter:
+  allowedTargets: [Method]
+  type: object
+  additionalProperties: false
+  properties:
+    name:
+      type: string
+    coercedParams:
+      type: object
+      required: false
+      properties:
+        //:
+          type: string
+    oneOfParams:
+      type: array
+      items: string
+      required: false
+integrity:
+  allowedTargets: [TypeDeclaration]
+  type: array
+  items: string
+opaque:
+  allowedTargets: [TypeDeclaration]
+  type: boolean
+private:
+  allowedTargets: [TypeDeclaration]
+  type: array
+  items: string
+keyPrefix:
+  allowedTargets: [API]
+paginated:
+  allowedTargets: [TypeDeclaration]
+  type: string
+fulfill:
+  allowedTargets: [Method]
+  type: string
+polymorph:
+  allowedTargets: [TypeDeclaration]
+  type: string

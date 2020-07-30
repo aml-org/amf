@@ -257,6 +257,21 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     case _ =>
   }
 
+  def generateParam(endpoint: EndPoint, variable: String): Option[Parameter] = {
+    val operationsDefineParam: Boolean =
+      endpoint.operations.nonEmpty && endpoint.operations.forall { op =>
+        Option(op.request).exists(_.uriParameters.exists(_.parameterName.option().contains(variable)))
+      }
+
+    if (operationsDefineParam) None
+    else {
+      val pathParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
+      pathParam.withScalarSchema(variable).withDataType(DataType.String)
+      pathParam.annotations += SynthesizedField()
+      Some(pathParam)
+    }
+  }
+
   private def implicitPathParamsOrdered(endpoint: EndPoint,
                                         isResourceType: Boolean,
                                         filter: String => Boolean = _ => true,
@@ -275,23 +290,18 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     val pathParams: Seq[String] = TemplateUri.variables(parsePath())
     val params: Seq[Parameter] = pathParams
       .filter(filter)
-      .map { variable =>
-        val implicitParam: Parameter = parentParams.get(variable) match {
+      .flatMap { variable =>
+        parentParams.get(variable) match {
           case Some(param) =>
             val pathParam = param.cloneParameter(endpoint.id)
             pathParam.annotations += SynthesizedField()
-            pathParam
+            Some(pathParam)
           case None =>
             explicitParams.find(p => p.name.value().equals(variable) && p.binding.value().equals("path")) match {
-              case Some(p) => p
-              case None =>
-                val pathParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
-                pathParam.withScalarSchema(variable).withDataType(DataType.String)
-                pathParam.annotations += SynthesizedField()
-                pathParam
+              case Some(p) => Some(p)
+              case None    => generateParam(endpoint, variable)
             }
         }
-        implicitParam
       }
     if (!isResourceType) {
       checkParamsUsage(endpoint, pathParams, explicitParams)

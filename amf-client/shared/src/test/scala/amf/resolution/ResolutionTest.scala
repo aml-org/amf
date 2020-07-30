@@ -1,16 +1,12 @@
 package amf.resolution
 
-import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.emit.AMFRenderer
-import amf.io.FunSuiteCycleTests
+import amf.io.{FunSuiteCycleTests, MultiJsonldAsyncFunSuite}
 import amf.plugins.document.webapi.resolution.pipelines.{AmfEditingPipeline, AmfResolutionPipeline}
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
-
-import scala.concurrent.Future
 
 abstract class ResolutionTest extends FunSuiteCycleTests {
 

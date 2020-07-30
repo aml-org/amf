@@ -1,0 +1,525 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/web-api",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "someThing"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "1.0.0"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#/web-api/end-points/aChannel",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "aChannel"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/web-api/end-points/aChannel/publish",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "publish"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#/web-api/end-points/aChannel/publish/request",
+                    "@type": [
+                      "apiContract:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#/web-api/end-points/aChannel/publish/request/default",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#/web-api/end-points/aChannel/publish/request/default/schema",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [
+                              {
+                                "@id": "#/web-api/end-points/aChannel/publish/request/default/schema/property/name",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#name"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#/web-api/end-points/aChannel/publish/request/default/schema/property/name/scalar/name",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "name"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "type-property-lexical-info": {
+                                        "#/web-api/end-points/aChannel/publish/request/default/schema/property/name/scalar/name": "[(13,14)-(13,18)]"
+                                      },
+                                      "lexical": {
+                                        "shacl:datatype": "[(13,14)-(14,0)]",
+                                        "#/web-api/end-points/aChannel/publish/request/default/schema/property/name/scalar/name": "[(12,12)-(14,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "name"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "#/web-api/end-points/aChannel/publish/request/default/schema/property/name": "[(12,12)-(14,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "apiContract:examples": [
+                              {
+                                "@id": "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_1",
+                                "@type": [
+                                  "apiContract:Example",
+                                  "doc:DomainElement"
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "default-example_1"
+                                  }
+                                ],
+                                "doc:strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_1/object_1",
+                                    "@type": [
+                                      "data:Object",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:name": [
+                                      {
+                                        "@id": "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_1/object_1/scalar_2",
+                                        "@type": [
+                                          "data:Scalar",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:value": [
+                                          {
+                                            "@value": "Pipi"
+                                          }
+                                        ],
+                                        "shacl:datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "name"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_1/object_1/scalar_2": "[(15,20)-(15,24)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "object_1"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "data:name": "[(15,14)-(16,0)]",
+                                        "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_1/object_1": "[(15,14)-(16,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "doc:raw": [
+                                  {
+                                    "@value": "name: Pipi"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "doc:raw": "[(15,14)-(16,0)]",
+                                    "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_1": "[(15,14)-(16,0)]",
+                                    "doc:structuredValue": "[(15,14)-(16,0)]"
+                                  },
+                                  "tracked-element": {
+                                    "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_1": "file://amf-client/shared/src/test/resources/resolution/async20/message-example-propagation.yaml#/web-api/end-points/aChannel/publish/request/default"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_2",
+                                "@type": [
+                                  "apiContract:Example",
+                                  "doc:DomainElement"
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "default-example_2"
+                                  }
+                                ],
+                                "doc:strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_2/object_1",
+                                    "@type": [
+                                      "data:Object",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:name": [
+                                      {
+                                        "@id": "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_2/object_1/scalar_2",
+                                        "@type": [
+                                          "data:Scalar",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:value": [
+                                          {
+                                            "@value": "Romagnoli"
+                                          }
+                                        ],
+                                        "shacl:datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "name"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_2/object_1/scalar_2": "[(16,20)-(16,29)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "object_1"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "data:name": "[(16,14)-(17,0)]",
+                                        "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_2/object_1": "[(16,14)-(17,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "doc:raw": [
+                                  {
+                                    "@value": "name: Romagnoli"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "doc:raw": "[(16,14)-(17,0)]",
+                                    "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_2": "[(16,14)-(17,0)]",
+                                    "doc:structuredValue": "[(16,14)-(17,0)]"
+                                  },
+                                  "tracked-element": {
+                                    "#/web-api/end-points/aChannel/publish/request/default/schema/example/default-example_2": "file://amf-client/shared/src/test/resources/resolution/async20/message-example-propagation.yaml#/web-api/end-points/aChannel/publish/request/default"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#/web-api/end-points/aChannel/publish/request/default/schema/example/john",
+                                "@type": [
+                                  "apiContract:Example",
+                                  "doc:DomainElement"
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "john"
+                                  }
+                                ],
+                                "doc:strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "#/web-api/end-points/aChannel/publish/request/example/john/scalar_1",
+                                    "@type": [
+                                      "data:Scalar",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:value": [
+                                      {
+                                        "@value": "Johnny"
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "scalar_1"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#/web-api/end-points/aChannel/publish/request/example/john/scalar_1": "[(18,16)-(18,22)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "doc:raw": [
+                                  {
+                                    "@value": "Johnny"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "doc:raw": "[(18,16)-(18,22)]",
+                                    "#/web-api/end-points/aChannel/publish/request/default/schema/example/john": "[(18,10)-(19,0)]",
+                                    "doc:structuredValue": "[(18,16)-(18,22)]"
+                                  },
+                                  "tracked-element": {
+                                    "#/web-api/end-points/aChannel/publish/request/default/schema/example/john": "file://amf-client/shared/src/test/resources/resolution/async20/message-example-propagation.yaml#/web-api/end-points/aChannel/publish/request"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#/web-api/end-points/aChannel/publish/request/default/schema/example/good",
+                                "@type": [
+                                  "apiContract:Example",
+                                  "doc:DomainElement"
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "good"
+                                  }
+                                ],
+                                "doc:strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "#/web-api/end-points/aChannel/publish/request/example/good/scalar_1",
+                                    "@type": [
+                                      "data:Scalar",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:value": [
+                                      {
+                                        "@value": "Goode"
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "scalar_1"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#/web-api/end-points/aChannel/publish/request/example/good/scalar_1": "[(19,16)-(19,21)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "doc:raw": [
+                                  {
+                                    "@value": "Goode"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "doc:raw": "[(19,16)-(19,21)]",
+                                    "#/web-api/end-points/aChannel/publish/request/default/schema/example/good": "[(19,10)-(19,21)]",
+                                    "doc:structuredValue": "[(19,16)-(19,21)]"
+                                  },
+                                  "tracked-element": {
+                                    "#/web-api/end-points/aChannel/publish/request/default/schema/example/good": "file://amf-client/shared/src/test/resources/resolution/async20/message-example-propagation.yaml#/web-api/end-points/aChannel/publish/request"
+                                  }
+                                }
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "#/web-api/end-points/aChannel/publish/request/default/schema": "[(10,10)-(10,14)]"
+                              },
+                              "lexical": {
+                                "#/web-api/end-points/aChannel/publish/request/default/schema": "[(9,8)-(17,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "raml-shapes:schema": "[(9,8)-(17,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#/web-api/end-points/aChannel/publish/request": "[(9,0)-(19,21)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:expects": "[(8,14)-(19,21)]",
+                    "#/web-api/end-points/aChannel/publish": "[(7,4)-(19,21)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#/web-api/end-points/aChannel": "[(6,2)-(19,21)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#/web-api": "ASYNC 2.0"
+          },
+          "lexical": {
+            "apiContract:endpoint": "[(5,0)-(19,21)]",
+            "core:name": "[(3,2)-(4,0)]",
+            "#/web-api": "[(1,0)-(19,21)]",
+            "core:version": "[(4,2)-(5,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-client/shared/src/test/resources/resolution/async20/message-example-propagation.yaml",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

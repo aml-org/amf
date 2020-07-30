@@ -3,28 +3,14 @@ import amf.core.model.domain.{RecursiveShape, Shape}
 
 import scala.collection.mutable
 
-private[shape_normalization] case class NormalizationCache() extends ClosureHelper {
+private[shape_normalization] case class NormalizationCache() {
 
   private val cache = mutable.Map[String, Shape]()
-  /* Shape in the closure -> Shape that in s.closures contains the shape */
-  private val cacheWithClosures = mutable.Map[String, Seq[Shape]]()
 
   private val fixPointCache = mutable.Map[String, Seq[RecursiveShape]]()
   private val mappings      = mutable.Map[String, String]()
 
-  def cacheClosure(id: String, array: Shape): this.type = {
-    cacheWithClosures.get(id) match {
-      case Some(seq) => cacheWithClosures.update(id, seq :+ array)
-      case _         => cacheWithClosures.update(id, Seq(array))
-    }
-    this
-  }
-
-  def cacheWithClosures(id: String): Option[Seq[Shape]] = cacheWithClosures.get(id)
-
-  def updateFixPointsAndClosures(canonical: Shape, withoutCaching: Boolean): Unit = {
-    // First check if the shape has itself as closure or fixpoint target (because of it still not in the cache)
-    updateClosure(canonical, _.id == canonical.id, canonical)
+  def updateFixPoints(canonical: Shape, withoutCaching: Boolean): Unit = {
 
     canonical match {
       case r: RecursiveShape if r.fixpointTarget.isDefined && r.fixpointTarget.get.id == canonical.id =>
@@ -35,14 +21,6 @@ private[shape_normalization] case class NormalizationCache() extends ClosureHelp
     // Then if the flag of caching is enabled, check and update other shapes
     if (!withoutCaching) {
       updateRecursiveTargets(canonical)
-      cacheWithClosures.get(canonical.id) match {
-        case Some(seq) =>
-          seq.foreach { s =>
-            val predicate: Shape => Boolean = clo => clo.id == canonical.id && clo != canonical
-            updateClosure(s, predicate, canonical)
-          }
-        case _ => // ignore
-      }
     }
   }
 

@@ -1,0 +1,490 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#8",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "test"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#9",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/resource"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#11",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#12",
+                    "@type": [
+                      "apiContract:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:parameter": [
+                      {
+                        "@id": "#13",
+                        "@type": [
+                          "apiContract:Parameter",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "qp1"
+                          }
+                        ],
+                        "apiContract:paramName": [
+                          {
+                            "@value": "qp1"
+                          }
+                        ],
+                        "apiContract:required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "apiContract:binding": [
+                          {
+                            "@value": "query"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#14",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "smaps": {
+                              "extension-provenance": {
+                                "shacl:name": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                                "shacl:datatype": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                              },
+                              "lexical": {
+                                "#14": "[(6,8)-(6,12)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "extension-provenance": {
+                            "apiContract:binding": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "apiContract:paramName": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "#13": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "core:name": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "apiContract:required": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                          },
+                          "lexical": {
+                            "raml-shapes:schema": "[(6,8)-(6,12)]",
+                            "#13": "[(6,8)-(6,12)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "extension-provenance": {
+                        "apiContract:parameter": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                        "#12": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                      },
+                      "lexical": {
+                        "apiContract:parameter": "[(5,6)-(6,12)]",
+                        "#12": "[(5,6)-(6,12)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "apiContract:expects": "true"
+                  },
+                  "lexical": {
+                    "#11": "[(4,4)-(6,12)]"
+                  },
+                  "extension-provenance": {
+                    "apiContract:expects": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                    "#11": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                    "apiContract:method": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                  }
+                }
+              }
+            ],
+            "doc:extends": [
+              {
+                "@id": "#10",
+                "@type": [
+                  "apiContract:ParametrizedResourceType",
+                  "doc:ParametrizedDeclaration",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "lib.rt"
+                  }
+                ],
+                "doc:target": [
+                  {
+                    "@id": "#2",
+                    "@type": [
+                      "apiContract:ResourceType",
+                      "doc:AbstractDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "rt"
+                      }
+                    ],
+                    "doc:dataNode": [
+                      {
+                        "@id": "#3",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:post": [
+                          {
+                            "@id": "#4",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:queryParameters": [
+                              {
+                                "@id": "#5",
+                                "@type": [
+                                  "data:Object",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:qp1": [
+                                  {
+                                    "@id": "#6",
+                                    "@type": [
+                                      "data:Scalar",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:value": [
+                                      {
+                                        "@value": ""
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "qp1"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#6": "[(6,12)-(6,12)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "queryParameters"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "data:qp1": "[(6,8)-(6,12)]",
+                                    "#5": "[(6,0)-(6,12)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "post"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "data:queryParameters": "[(5,6)-(6,12)]",
+                                "#4": "[(5,0)-(6,12)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "object_1"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "data:post": "[(4,4)-(6,12)]",
+                            "#3": "[(4,4)-(6,12)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "resolved-link-target": {
+                        "#2": "amf://id#2"
+                      },
+                      "declared-element": {
+                        "#2": ""
+                      },
+                      "lexical": {
+                        "#2": "[(3,2)-(6,12)]"
+                      },
+                      "resolved-link": {
+                        "#2": "amf://id#7"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "core:name": "[(8,8)-(8,14)]",
+                    "#10": "[(8,8)-(8,14)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#9": "[(7,0)-(8,14)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#8": "RAML 1.0"
+          },
+          "lexical": {
+            "core:name": "[(2,0)-(4,0)]",
+            "#8": "[(2,0)-(8,14)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "smaps": {
+      "aliases-array": {
+        "": "lib->amf://id#1::lib.raml"
+      }
+    },
+    "doc:references": [
+      {
+        "@id": "#1",
+        "@type": [
+          "doc:Module",
+          "doc:Unit"
+        ],
+        "doc:declares": [
+          {
+            "@id": "#2",
+            "@type": [
+              "apiContract:ResourceType",
+              "doc:AbstractDeclaration",
+              "doc:DomainElement"
+            ],
+            "core:name": [
+              {
+                "@value": "rt"
+              }
+            ],
+            "doc:dataNode": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:post": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:queryParameters": [
+                      {
+                        "@id": "#5",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:qp1": [
+                          {
+                            "@id": "#6",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": ""
+                              }
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "qp1"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#6": "[(6,12)-(6,12)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "queryParameters"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "data:qp1": "[(6,8)-(6,12)]",
+                            "#5": "[(6,0)-(6,12)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "post"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:queryParameters": "[(5,6)-(6,12)]",
+                        "#4": "[(5,0)-(6,12)]"
+                      }
+                    }
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "data:post": "[(4,4)-(6,12)]",
+                    "#3": "[(4,4)-(6,12)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "resolved-link-target": {
+                "#2": "amf://id#2"
+              },
+              "declared-element": {
+                "#2": ""
+              },
+              "lexical": {
+                "#2": "[(3,2)-(6,12)]"
+              },
+              "resolved-link": {
+                "#2": "amf://id#7"
+              }
+            }
+          }
+        ],
+        "doc:version": [
+          {
+            "@value": "2.1.0"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#1": "RAML 1.0"
+          },
+          "lexical": {
+            "#1": "[(2,0)-(6,12)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

@@ -1,0 +1,17 @@
+swagger: "2.0"
+info:
+  title: anApi
+  version: "1.0"
+paths:
+  /myPath:
+    get:
+      responses:
+        200:
+          description: Something
+      parameters:
+        - in: header
+          name: X-@-ID
+          type: string
+        - in: header
+          name: valid-header
+          type: string

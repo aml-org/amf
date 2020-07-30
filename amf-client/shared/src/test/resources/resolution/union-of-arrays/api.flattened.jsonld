@@ -1,0 +1,348 @@
+{
+  "@graph": [
+    {
+      "@id": "#14",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "API",
+      "apiContract:endpoint": [
+        {
+          "@id": "#15"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#14": "RAML 1.0"
+        },
+        "lexical": {
+          "core:name": "[(2,0)-(3,0)]",
+          "#14": "[(2,0)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#15",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/test",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#16"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#15": "[(11,0)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#16",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:expects": [
+        {
+          "@id": "#17"
+        }
+      ],
+      "smaps": {
+        "synthesized-field": {
+          "apiContract:expects": "true"
+        },
+        "lexical": {
+          "#16": "[(12,2)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#17",
+      "@type": [
+        "apiContract:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#18"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:payload": "[(13,4)-(16,0)]",
+          "#17": "[(13,0)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#18",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#9"
+      },
+      "smaps": {
+        "lexical": {
+          "#18": "[(14,6)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#10"
+        },
+        {
+          "@id": "#12"
+        }
+      ],
+      "shacl:name": "unionType",
+      "smaps": {
+        "inherited-shapes": {
+          "#9": "amf://id#13"
+        },
+        "lexical": {
+          "shacl:name": "[(9,2)-(9,11)]",
+          "#9": "[(10,4)-(11,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:items": {
+        "@id": "#1"
+      },
+      "shacl:name": "array_0",
+      "smaps": {
+        "resolved-link-target": {
+          "#10": "amf://id#9"
+        },
+        "declared-element": {
+          "#10": ""
+        },
+        "lexical": {
+          "#10": "[(9,2)-(11,0)]"
+        },
+        "type-property-lexical-info": {
+          "#10": "[(10,4)-(10,8)]"
+        },
+        "resolved-link": {
+          "#10": "amf://id#11"
+        }
+      }
+    },
+    {
+      "@id": "#12",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:items": {
+        "@id": "#7"
+      },
+      "shacl:name": "type2",
+      "smaps": {
+        "resolved-link-target": {
+          "#12": "amf://id#9"
+        },
+        "declared-element": {
+          "#12": ""
+        },
+        "lexical": {
+          "#12": "[(9,2)-(11,0)]"
+        },
+        "type-property-lexical-info": {
+          "#12": "[(10,4)-(10,8)]"
+        },
+        "resolved-link": {
+          "#12": "amf://id#11"
+        }
+      }
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#2"
+        }
+      ],
+      "shacl:name": "type1",
+      "smaps": {
+        "resolved-link-target": {
+          "#1": "amf://id#5"
+        },
+        "declared-element": {
+          "#1": ""
+        },
+        "lexical": {
+          "shacl:name": "[(4,2)-(4,7)]",
+          "#1": "[(4,2)-(7,0)]"
+        },
+        "resolved-link": {
+          "#1": "amf://id#4"
+        }
+      }
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#prop1"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#3"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "prop1",
+      "smaps": {
+        "lexical": {
+          "#2": "[(6,6)-(7,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "prop1",
+      "smaps": {
+        "lexical": {
+          "#3": "[(6,6)-(7,0)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        },
+        {
+          "@id": "#6"
+        },
+        {
+          "@id": "#9"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#14"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": true
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:items": {
+        "@id": "#7"
+      },
+      "shacl:name": "type2",
+      "smaps": {
+        "resolved-link-target": {
+          "#6": "amf://id#6"
+        },
+        "declared-element": {
+          "#6": ""
+        },
+        "lexical": {
+          "shacl:name": "[(7,2)-(7,7)]",
+          "#6": "[(7,2)-(9,0)]"
+        },
+        "type-property-lexical-info": {
+          "#6": "[(8,4)-(8,8)]"
+        },
+        "resolved-link": {
+          "#6": "amf://id#8"
+        }
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

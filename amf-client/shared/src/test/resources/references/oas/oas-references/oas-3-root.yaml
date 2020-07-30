@@ -1,0 +1,12 @@
+openapi: '3.0.0'
+info:
+  title: test-circular-references
+  version: 1.1.0
+components:
+  schemas:
+    pet:
+      type: object
+      properties:
+        animalRef:
+          $ref: 'oas-3-ref.yaml#/definitions/animal'
+paths: {}

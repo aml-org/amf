@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: API
+types:
+  MyString:
+    type: string
+
+traits:
+  MyTrait:
+    queryParameters:
+      myParam: MyString
+
+/myEndpoint:
+  get:
+    is: MyTrait
+  post:
+    is: MyTrait
+  put:
+    is: MyTrait

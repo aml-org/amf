@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/paths.raml
+Profile: paths
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/data#test-sequence-2
+  Message: Paths must do something
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/paths.raml#/web-api/end-points/%2Fresource2
+  Property: 
+  Position: Some(LexicalInformation([(18,0)-(27,24)]))
+  Location: file://amf-client/shared/src/test/resources/validations/paths.raml

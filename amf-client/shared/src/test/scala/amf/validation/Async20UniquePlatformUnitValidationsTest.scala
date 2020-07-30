@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.Async20Profile
+import amf.{Async20Profile, Oas30Profile}
 import amf.core.remote.{AsyncYamlHint, Hint}
 import org.scalatest.Matchers
 
@@ -225,5 +225,13 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
 
   test("Invalid fragment defined in channel uri") {
     validate("invalid-fragment-in-uri.yaml", Some("invalid-fragment-in-uri.report"), profile = Async20Profile)
+  }
+
+  test("Invalid yaml tags") {
+    validate("invalid-yaml-tags.yaml", Some("invalid-yaml-tags.report"), profile = Async20Profile)
+  }
+
+  test("Valid header binding names according to RFC-7230") {
+    validate("invalid-header-names.yaml", Some("invalid-header-names.report"), Async20Profile)
   }
 }

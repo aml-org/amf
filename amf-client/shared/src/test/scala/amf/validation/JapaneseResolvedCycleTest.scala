@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
@@ -12,20 +13,20 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
 
   override def basePath = "amf-client/shared/src/test/resources/validations/japanese/resolve/"
 
-  test("Raml10 to Json-LD resolves") {
-    cycle("ramlapi.raml", "ramlapi.jsonld", RamlYamlHint, Amf)
+  multiGoldenTest("Raml10 to Json-LD resolves", "ramlapi.%s") { config =>
+    cycle("ramlapi.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  test("Json-LD resolves to Raml") {
-    cycle("ramlapi.jsonld", "resolved-ramlapi.raml", AmfJsonHint, Raml10)
+  multiSourceTest("Flattened Json-LD resolves to Raml", "ramlapi.%s") { config =>
+    cycle(config.source, "resolved-ramlapi.raml", AmfJsonHint, Raml10)
   }
 
-  test("Oas20 to Json-LD resolves") {
-    cycle("oasapi.json", "oasapi.jsonld", OasYamlHint, Amf)
+  multiGoldenTest("Oas20 to Json-LD resolves", "oasapi.%s") { config =>
+    cycle("oasapi.json", config.golden, OasYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  test("Oas30 to JSON-LD resolves") {
-    cycle("oas30api.json", "oas30api.jsonld", OasYamlHint, Amf)
+  multiGoldenTest("Oas30 to JSON-LD resolves", "oas30api.%s") { config =>
+    cycle("oas30api.json", config.golden, OasYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
   test("RAML emission applies singularize") {
@@ -42,6 +43,8 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
     cycle("oas30api.jsonld", "resolved-oas30api.json", AmfJsonHint, Oas30)
   }
    */
+
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {

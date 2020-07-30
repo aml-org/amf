@@ -1,0 +1,2266 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#29",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "test"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#30",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/organizations"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#31",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "put"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#32",
+                    "@type": [
+                      "apiContract:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#33",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#34",
+                            "@type": [
+                              "raml-shapes:ArrayShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "raml-shapes:items": [
+                              {
+                                "@id": "#20/link-1343242579",
+                                "@type": [
+                                  "shacl:NodeShape",
+                                  "raml-shapes:AnyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "doc:link-target": [
+                                  {
+                                    "@id": "#20"
+                                  }
+                                ],
+                                "doc:link-label": [
+                                  {
+                                    "@value": "Organization"
+                                  }
+                                ]
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "apiContract:examples": [
+                              {
+                                "@id": "#35",
+                                "@type": [
+                                  "apiContract:Example",
+                                  "doc:DomainElement"
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "value"
+                                  }
+                                ],
+                                "doc:strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "#36",
+                                    "@type": [
+                                      "data:Array",
+                                      "rdf:Seq",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "rdfs:member": [
+                                      {
+                                        "@id": "#37",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:category": [
+                                          {
+                                            "@id": "#38",
+                                            "@type": [
+                                              "data:Object",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:id": [
+                                              {
+                                                "@id": "#39",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "39691"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "id"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#39": "[(6,10)-(6,15)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "data:name": [
+                                              {
+                                                "@id": "#40",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "Religious and Spiritual"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "name"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#40": "[(7,12)-(7,35)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "category"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "data:name": "[(7,6)-(8,0)]",
+                                                "#38": "[(6,0)-(8,0)]",
+                                                "data:id": "[(6,6)-(7,0)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "data:created_at": [
+                                          {
+                                            "@id": "#41",
+                                            "@type": [
+                                              "data:Scalar",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:value": [
+                                              {
+                                                "@value": "2013-01-02T22:21:34Z"
+                                              }
+                                            ],
+                                            "shacl:datatype": [
+                                              {
+                                                "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "created_at"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "#41": "[(8,16)-(8,36)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "object_2"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "data:created_at": "[(8,4)-(10,0)]",
+                                            "#37": "[(5,0)-(10,0)]",
+                                            "data:category": "[(5,4)-(8,0)]"
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "@id": "#42",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:category": [
+                                          {
+                                            "@id": "#43",
+                                            "@type": [
+                                              "data:Object",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:id": [
+                                              {
+                                                "@id": "#44",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "61111"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "id"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#44": "[(12,10)-(12,15)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "data:name": [
+                                              {
+                                                "@id": "#45",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "Service"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "name"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#45": "[(13,12)-(13,19)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "category"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "data:name": "[(13,6)-(14,0)]",
+                                                "#43": "[(12,0)-(14,0)]",
+                                                "data:id": "[(12,6)-(13,0)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "data:created_at": [
+                                          {
+                                            "@id": "#46",
+                                            "@type": [
+                                              "data:Scalar",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:value": [
+                                              {
+                                                "@value": "2016-02-01T16:37:02Z"
+                                              }
+                                            ],
+                                            "shacl:datatype": [
+                                              {
+                                                "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "created_at"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "#46": "[(14,16)-(14,36)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "object_7"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "data:created_at": "[(14,4)-(15,3)]",
+                                            "#42": "[(11,0)-(15,3)]",
+                                            "data:category": "[(11,4)-(14,0)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "array_1"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#36": "[(3,0)-(15,3)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "doc:raw": [
+                                  {
+                                    "@value": "-\n  category:\n    id: 39691\n    name: Religious and Spiritual\n  created_at: 2013-01-02T22:21:34Z\n-\n  category:\n    id: 61111\n    name: Service\n  created_at: 2016-02-01T16:37:02Z"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "doc:raw": "[(3,0)-(15,3)]",
+                                    "core:name": "[(2,0)-(15,3)]",
+                                    "#35": "[(2,0)-(15,3)]",
+                                    "doc:structuredValue": "[(2,6)-(15,3)]"
+                                  },
+                                  "tracked-element": {
+                                    "#35": "amf://id#33"
+                                  }
+                                }
+                              }
+                            ],
+                            "smaps": {
+                              "auto-generated-name": {
+                                "#34": ""
+                              },
+                              "lexical": {
+                                "apiContract:examples": "[(14,8)-(15,0)]",
+                                "#34": "[(12,6)-(15,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#34": "[(13,8)-(13,12)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#33": "[(12,6)-(15,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(11,4)-(15,0)]",
+                        "#32": "[(11,0)-(15,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "apiContract:expects": "true"
+                  },
+                  "lexical": {
+                    "#31": "[(10,2)-(15,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "#47",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "Get organizations"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#48",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#49",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#50",
+                            "@type": [
+                              "raml-shapes:ArrayShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "raml-shapes:items": [
+                              {
+                                "@id": "#20/link-1343242579",
+                                "@type": [
+                                  "shacl:NodeShape",
+                                  "raml-shapes:AnyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "doc:link-target": [
+                                  {
+                                    "@id": "#20"
+                                  }
+                                ],
+                                "doc:link-label": [
+                                  {
+                                    "@value": "Organization"
+                                  }
+                                ]
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "apiContract:examples": [
+                              {
+                                "@id": "#51",
+                                "@type": [
+                                  "apiContract:Example",
+                                  "doc:DomainElement"
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "value"
+                                  }
+                                ],
+                                "doc:strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "#52",
+                                    "@type": [
+                                      "data:Array",
+                                      "rdf:Seq",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "rdfs:member": [
+                                      {
+                                        "@id": "#53",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:category": [
+                                          {
+                                            "@id": "#54",
+                                            "@type": [
+                                              "data:Object",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:id": [
+                                              {
+                                                "@id": "#55",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "39691"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "id"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#55": "[(6,10)-(6,15)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "data:name": [
+                                              {
+                                                "@id": "#56",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "Religious and Spiritual"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "name"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#56": "[(7,12)-(7,35)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "category"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "data:name": "[(7,6)-(8,0)]",
+                                                "#54": "[(6,0)-(8,0)]",
+                                                "data:id": "[(6,6)-(7,0)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "data:created_at": [
+                                          {
+                                            "@id": "#57",
+                                            "@type": [
+                                              "data:Scalar",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:value": [
+                                              {
+                                                "@value": "2013-01-02T22:21:34Z"
+                                              }
+                                            ],
+                                            "shacl:datatype": [
+                                              {
+                                                "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "created_at"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "#57": "[(8,16)-(8,36)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "object_2"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "data:created_at": "[(8,4)-(10,0)]",
+                                            "#53": "[(5,0)-(10,0)]",
+                                            "data:category": "[(5,4)-(8,0)]"
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "@id": "#58",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:category": [
+                                          {
+                                            "@id": "#59",
+                                            "@type": [
+                                              "data:Object",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:id": [
+                                              {
+                                                "@id": "#60",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "61111"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "id"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#60": "[(12,10)-(12,15)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "data:name": [
+                                              {
+                                                "@id": "#61",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "Service"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "name"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#61": "[(13,12)-(13,19)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "category"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "data:name": "[(13,6)-(14,0)]",
+                                                "#59": "[(12,0)-(14,0)]",
+                                                "data:id": "[(12,6)-(13,0)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "data:created_at": [
+                                          {
+                                            "@id": "#62",
+                                            "@type": [
+                                              "data:Scalar",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:value": [
+                                              {
+                                                "@value": "2016-02-01T16:37:02Z"
+                                              }
+                                            ],
+                                            "shacl:datatype": [
+                                              {
+                                                "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "created_at"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "#62": "[(14,16)-(14,36)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "object_7"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "data:created_at": "[(14,4)-(15,3)]",
+                                            "#58": "[(11,0)-(15,3)]",
+                                            "data:category": "[(11,4)-(14,0)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "array_1"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#52": "[(3,0)-(15,3)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "doc:raw": [
+                                  {
+                                    "@value": "-\n  category:\n    id: 39691\n    name: Religious and Spiritual\n  created_at: 2013-01-02T22:21:34Z\n-\n  category:\n    id: 61111\n    name: Service\n  created_at: 2016-02-01T16:37:02Z"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "doc:raw": "[(3,0)-(15,3)]",
+                                    "core:name": "[(2,0)-(15,3)]",
+                                    "#51": "[(2,0)-(15,3)]",
+                                    "doc:structuredValue": "[(2,6)-(15,3)]"
+                                  },
+                                  "tracked-element": {
+                                    "#51": "amf://id#49"
+                                  }
+                                }
+                              }
+                            ],
+                            "smaps": {
+                              "auto-generated-name": {
+                                "#50": ""
+                              },
+                              "lexical": {
+                                "apiContract:examples": "[(22,12)-(24,0)]",
+                                "#50": "[(20,10)-(24,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#50": "[(21,12)-(21,16)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#49": "[(20,10)-(24,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(19,8)-(24,0)]",
+                        "#48": "[(18,6)-(24,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:returns": "[(17,4)-(24,0)]",
+                    "#47": "[(15,2)-(24,0)]",
+                    "core:name": "[(16,4)-(17,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#30": "[(9,0)-(37,3)]"
+              }
+            }
+          },
+          {
+            "@id": "#63",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/organizations/{organization_id}"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#64",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "Get organizations by organization ID"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#66",
+                    "@type": [
+                      "apiContract:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:uriParameter": [
+                      {
+                        "@id": "#67",
+                        "@type": [
+                          "apiContract:Parameter",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "organization_id"
+                          }
+                        ],
+                        "apiContract:paramName": [
+                          {
+                            "@value": "organization_id"
+                          }
+                        ],
+                        "core:description": [
+                          {
+                            "@value": "The organization's specific ID"
+                          }
+                        ],
+                        "apiContract:required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "apiContract:binding": [
+                          {
+                            "@value": "path"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#68",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://a.ml/vocabularies/shapes#number"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "core:description": [
+                              {
+                                "@value": "The organization's specific ID"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "#68": "[(27,8)-(27,12)]"
+                              },
+                              "lexical": {
+                                "core:description": "[(28,8)-(29,0)]",
+                                "#68": "[(26,6)-(29,0)]",
+                                "shacl:datatype": "[(27,8)-(28,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "raml-shapes:schema": "[(26,6)-(29,0)]",
+                            "#67": "[(26,6)-(29,0)]",
+                            "core:description": "[(28,8)-(29,0)]"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#65",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#28",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#20/link-1343242579",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#20"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "Organization"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#28": "[(34,12)-(37,3)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(33,10)-(37,3)]",
+                        "#65": "[(32,8)-(37,3)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:returns": "[(31,6)-(37,3)]",
+                    "#64": "[(29,4)-(37,3)]",
+                    "core:name": "[(30,6)-(31,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "parent-end-point": {
+                "#63": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations"
+              },
+              "lexical": {
+                "#63": "[(24,2)-(37,3)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#29": "RAML 1.0"
+          },
+          "lexical": {
+            "core:name": "[(3,0)-(6,0)]",
+            "#29": "[(3,0)-(37,3)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:references": [
+      {
+        "@id": "#1",
+        "@type": [
+          "doc:ExternalFragment",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#2",
+            "@type": [
+              "doc:ExternalDomainElement",
+              "doc:DomainElement"
+            ],
+            "doc:raw": [
+              {
+                "@value": "#%RAML 1.0 NamedExample\nvalue:\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+              }
+            ],
+            "core:mediaType": [
+              {
+                "@value": "application/raml+yaml"
+              }
+            ],
+            "smaps": {
+              "source-vendor": {
+                "#2": "RAML 1.0"
+              }
+            }
+          }
+        ],
+        "doc:version": [
+          {
+            "@value": "2.1.0"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "#1": "[(2,0)-(9,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#3",
+        "@type": [
+          "raml-shapes:DataTypeFragment",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#4",
+            "@type": [
+              "shacl:NodeShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:closed": [
+              {
+                "@value": false
+              }
+            ],
+            "shacl:property": [
+              {
+                "@id": "#5",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#alternate_id"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#6",
+                    "@type": [
+                      "raml-shapes:UnionShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "raml-shapes:anyOf": [
+                      {
+                        "@id": "#7",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://a.ml/vocabularies/shapes#number"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "#8",
+                        "@type": [
+                          "raml-shapes:NilShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ]
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "alternate_id?"
+                      }
+                    ],
+                    "core:description": [
+                      {
+                        "@value": "The alternate ID of the organization"
+                      }
+                    ],
+                    "smaps": {
+                      "inherited-shapes": {
+                        "#6": "amf://id#9"
+                      },
+                      "lexical": {
+                        "core:description": "[(6,4)-(7,0)]",
+                        "#6": "[(4,16)-(7,0)]"
+                      },
+                      "type-property-lexical-info": {
+                        "#6": "[(5,4)-(5,8)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "alternate_id"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#5": "[(4,2)-(7,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "#10",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#category"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#11",
+                    "@type": [
+                      "shacl:NodeShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:closed": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "shacl:property": [
+                      {
+                        "@id": "#12",
+                        "@type": [
+                          "shacl:PropertyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#id"
+                          }
+                        ],
+                        "raml-shapes:range": [
+                          {
+                            "@id": "#13",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://a.ml/vocabularies/shapes#number"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "id"
+                              }
+                            ],
+                            "core:description": [
+                              {
+                                "@value": "ID of the category"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "#13": "[(12,8)-(12,12)]"
+                              },
+                              "lexical": {
+                                "core:description": "[(13,8)-(14,0)]",
+                                "#13": "[(11,6)-(14,0)]",
+                                "shacl:datatype": "[(12,8)-(13,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "shacl:minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#12": "[(11,6)-(14,0)]"
+                          }
+                        }
+                      },
+                      {
+                        "@id": "#14",
+                        "@type": [
+                          "shacl:PropertyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#name"
+                          }
+                        ],
+                        "raml-shapes:range": [
+                          {
+                            "@id": "#15",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "name"
+                              }
+                            ],
+                            "core:description": [
+                              {
+                                "@value": "The name of the category"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "#15": "[(15,8)-(15,12)]"
+                              },
+                              "lexical": {
+                                "core:description": "[(16,8)-(17,0)]",
+                                "#15": "[(14,6)-(17,0)]",
+                                "shacl:datatype": "[(15,8)-(16,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "shacl:minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "name"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#14": "[(14,6)-(17,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "category"
+                      }
+                    ],
+                    "core:description": [
+                      {
+                        "@value": "Contains the ID and name of the category the organization is in"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "#11": "[(9,4)-(9,8)]"
+                      },
+                      "lexical": {
+                        "core:description": "[(8,4)-(9,0)]",
+                        "#11": "[(7,2)-(17,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "category"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#10": "[(7,2)-(17,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "#16",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#created_at"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#17",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "created_at"
+                      }
+                    ],
+                    "core:description": [
+                      {
+                        "@value": "The date of creation of the organization"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "#17": "[(18,4)-(18,8)]"
+                      },
+                      "lexical": {
+                        "core:description": "[(19,4)-(20,0)]",
+                        "#17": "[(17,2)-(20,0)]",
+                        "shacl:datatype": "[(18,4)-(19,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "created_at"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#16": "[(17,2)-(20,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "type"
+              }
+            ],
+            "smaps": {
+              "source-vendor": {
+                "#4": "RAML 1.0"
+              },
+              "lexical": {
+                "#4": "[(2,0)-(20,0)]"
+              },
+              "type-property-lexical-info": {
+                "#4": "[(2,0)-(2,4)]"
+              }
+            }
+          }
+        ],
+        "doc:version": [
+          {
+            "@value": "2.1.0"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "#3": "[(2,0)-(20,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#18",
+        "@type": [
+          "doc:ExternalFragment",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#19",
+            "@type": [
+              "doc:ExternalDomainElement",
+              "doc:DomainElement"
+            ],
+            "doc:raw": [
+              {
+                "@value": "#%RAML 1.0 NamedExample\nvalue:\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
+              }
+            ],
+            "core:mediaType": [
+              {
+                "@value": "application/raml+yaml"
+              }
+            ],
+            "smaps": {
+              "source-vendor": {
+                "#19": "RAML 1.0"
+              }
+            }
+          }
+        ],
+        "doc:version": [
+          {
+            "@value": "2.1.0"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "#18": "[(2,0)-(15,3)]"
+          }
+        }
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#20",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#5",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#alternate_id"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#6",
+                "@type": [
+                  "raml-shapes:UnionShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "raml-shapes:anyOf": [
+                  {
+                    "@id": "#7",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://a.ml/vocabularies/shapes#number"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#8",
+                    "@type": [
+                      "raml-shapes:NilShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ]
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "alternate_id?"
+                  }
+                ],
+                "core:description": [
+                  {
+                    "@value": "The alternate ID of the organization"
+                  }
+                ],
+                "smaps": {
+                  "inherited-shapes": {
+                    "#6": "amf://id#9"
+                  },
+                  "lexical": {
+                    "core:description": "[(6,4)-(7,0)]",
+                    "#6": "[(4,16)-(7,0)]"
+                  },
+                  "type-property-lexical-info": {
+                    "#6": "[(5,4)-(5,8)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "alternate_id"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#5": "[(4,2)-(7,0)]"
+              }
+            }
+          },
+          {
+            "@id": "#10",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#category"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#11",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:property": [
+                  {
+                    "@id": "#12",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#id"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#13",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://a.ml/vocabularies/shapes#number"
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "core:description": [
+                          {
+                            "@value": "ID of the category"
+                          }
+                        ],
+                        "smaps": {
+                          "type-property-lexical-info": {
+                            "#13": "[(12,8)-(12,12)]"
+                          },
+                          "lexical": {
+                            "core:description": "[(13,8)-(14,0)]",
+                            "#13": "[(11,6)-(14,0)]",
+                            "shacl:datatype": "[(12,8)-(13,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "id"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#12": "[(11,6)-(14,0)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#14",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#name"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#15",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "name"
+                          }
+                        ],
+                        "core:description": [
+                          {
+                            "@value": "The name of the category"
+                          }
+                        ],
+                        "smaps": {
+                          "type-property-lexical-info": {
+                            "#15": "[(15,8)-(15,12)]"
+                          },
+                          "lexical": {
+                            "core:description": "[(16,8)-(17,0)]",
+                            "#15": "[(14,6)-(17,0)]",
+                            "shacl:datatype": "[(15,8)-(16,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "name"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#14": "[(14,6)-(17,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "category"
+                  }
+                ],
+                "core:description": [
+                  {
+                    "@value": "Contains the ID and name of the category the organization is in"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#11": "[(9,4)-(9,8)]"
+                  },
+                  "lexical": {
+                    "core:description": "[(8,4)-(9,0)]",
+                    "#11": "[(7,2)-(17,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "category"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#10": "[(7,2)-(17,0)]"
+              }
+            }
+          },
+          {
+            "@id": "#16",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#created_at"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#17",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "created_at"
+                  }
+                ],
+                "core:description": [
+                  {
+                    "@value": "The date of creation of the organization"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#17": "[(18,4)-(18,8)]"
+                  },
+                  "lexical": {
+                    "core:description": "[(19,4)-(20,0)]",
+                    "#17": "[(17,2)-(20,0)]",
+                    "shacl:datatype": "[(18,4)-(19,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "created_at"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#16": "[(17,2)-(20,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Organization"
+          }
+        ],
+        "apiContract:examples": [
+          {
+            "@id": "#21",
+            "@type": [
+              "apiContract:Example",
+              "doc:DomainElement"
+            ],
+            "core:name": [
+              {
+                "@value": "value"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#22",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:alternate_id": [
+                  {
+                    "@id": "#23",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "1"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "alternate_id"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#23": "[(3,18)-(3,19)]"
+                      }
+                    }
+                  }
+                ],
+                "data:category": [
+                  {
+                    "@id": "#24",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:id": [
+                      {
+                        "@id": "#25",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "39691"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#25": "[(5,10)-(5,15)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:name": [
+                      {
+                        "@id": "#26",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "Religious and Spiritual"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "name"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#26": "[(6,12)-(6,35)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "category"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:name": "[(6,6)-(7,0)]",
+                        "#24": "[(5,0)-(7,0)]",
+                        "data:id": "[(5,6)-(6,0)]"
+                      }
+                    }
+                  }
+                ],
+                "data:created_at": [
+                  {
+                    "@id": "#27",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "2013-01-02T22:21:34Z"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "created_at"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#27": "[(7,16)-(7,36)]"
+                      }
+                    }
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "data:created_at": "[(7,4)-(9,0)]",
+                    "data:alternate_id": "[(3,4)-(4,0)]",
+                    "#22": "[(3,0)-(9,0)]",
+                    "data:category": "[(4,4)-(7,0)]"
+                  }
+                }
+              }
+            ],
+            "doc:raw": [
+              {
+                "@value": "alternate_id: 1\ncategory:\n  id: 39691\n  name: Religious and Spiritual\ncreated_at: 2013-01-02T22:21:34Z"
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "lexical": {
+                "doc:raw": "[(3,0)-(9,0)]",
+                "core:name": "[(2,0)-(9,0)]",
+                "#21": "[(2,0)-(9,0)]",
+                "doc:structuredValue": "[(2,6)-(9,0)]"
+              },
+              "local-element": {
+                "#21": ""
+              },
+              "tracked-element": {
+                "#21": "amf://id#28"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#20": ""
+          },
+          "resolved-link": {
+            "#20": "amf://id#20"
+          },
+          "type-property-lexical-info": {
+            "#20": "[(2,0)-(2,4)]"
+          },
+          "lexical": {
+            "#20": "[(2,0)-(20,0)]"
+          },
+          "source-vendor": {
+            "#20": "RAML 1.0"
+          },
+          "resolved-link-target": {
+            "#20": "amf://id#4"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    }
+  }
+]

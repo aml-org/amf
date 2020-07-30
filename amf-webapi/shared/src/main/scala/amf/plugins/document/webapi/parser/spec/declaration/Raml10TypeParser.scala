@@ -172,39 +172,58 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
   override def parse(): Option[AnyShape] = {
     val shape = ScalarShape(node).withName(name, Annotations(key))
     adopt(shape)
-    node.tagType match {
-      case YType.Map =>
-        // has schema or its simple raml type declaration
-        val map = node.as[YMap]
-        map
-          .key("schema")
-          .fold {
-            Option(SimpleTypeParser(name, adopt, map, defaultType.typeDef).parse())
-          } { _ =>
-            val maybeShape = Raml08SchemaParser(map, adopt).parse()
-
-            maybeShape.map { s =>
-              val inherits = s.meta.modelInstance.withName("inherits", Annotations())
-              adopt(inherits)
-
-              RamlSingleExampleParser("example",
-                                      map,
-                                      inherits.withExample,
-                                      ExampleOptions(strictDefault = true, quiet = true).checkScalar(s))
-                .parse()
-                .fold(s) { e =>
-                  inherits.set(ShapeModel.Inherits, AmfArray(Seq(s)))
-                  inherits.setArray(ScalarShapeModel.Examples, Seq(e))
-                }
-            }
-          }
-      case YType.Seq =>
-        Option(
-          Raml08UnionTypeParser(UnionShape(node).withName(name, Annotations(key)).adopted(shape.id),
-                                node.as[Seq[YNode]],
-                                node).parse())
-      case _ => Raml08TextParser(node, adopt, name, defaultType).parse()
+    val optionalParsedShape = node.tagType match {
+      case YType.Map => parseSchemaOrTypeDeclarationAndExamples
+      case YType.Seq => parseUnion(shape)
+      case _         => Raml08TextParser(node, adopt, name, defaultType).parse()
     }
+    // TODO: Hack to fix lexical info for ALS. Should be done correctly on RAML08 Parser refactor
+    optionalParsedShape.map(correctTypeAnnotations)
+  }
+
+  private def correctTypeAnnotations(result: AnyShape) = {
+    result.name.option().foreach(_ => result.withName(name, Annotations(key)))
+    result.annotations.reject(isLexical)
+    result.add(Annotations(ast))
+  }
+
+  private def isLexical =
+    (a: Annotation) =>
+      a.isInstanceOf[SourceAST] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceLocation] || a
+        .isInstanceOf[LexicalInformation]
+
+  private def parseSchemaOrTypeDeclarationAndExamples = {
+    // has schema or its simple raml type declaration
+    val map = node.as[YMap]
+    map
+      .key("schema")
+      .fold {
+        Option(SimpleTypeParser(name, adopt, map, defaultType.typeDef).parse())
+      } { _ =>
+        val maybeShape = Raml08SchemaParser(map, adopt).parse()
+
+        maybeShape.map { s =>
+          val inherits = s.meta.modelInstance.withName("inherits", Annotations())
+          adopt(inherits)
+
+          RamlSingleExampleParser("example",
+                                  map,
+                                  inherits.withExample,
+                                  ExampleOptions(strictDefault = true, quiet = true).checkScalar(s))
+            .parse()
+            .fold(s) { e =>
+              inherits.set(ShapeModel.Inherits, AmfArray(Seq(s)))
+              inherits.setArray(ScalarShapeModel.Examples, Seq(e))
+            }
+        }
+      }
+  }
+
+  private def parseUnion(shape: ScalarShape) = {
+    Option(
+      Raml08UnionTypeParser(UnionShape(node).withName(name, Annotations(key)).adopted(shape.id),
+                            node.as[Seq[YNode]],
+                            node).parse())
   }
 
   override def typeParser: (Either[YMapEntry, YNode], String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
@@ -565,8 +584,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
   private def parseTypeExpression(): Shape = {
     node.value match {
       case expression: YScalar =>
-        val shape = RamlTypeExpressionParser(adopt, Some(ast))
-          .parse(expression.text)
+        val shape = RamlTypeExpressionParser(adopt, Some(ast), expression.text)
+          .parse()
           .get
         if (name != "schema" && name != "type") adopt(shape.withName(name, nameAnnotations))
         shape
@@ -1137,9 +1156,11 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             val isTypeExpression = isPlainArrayTypeExpression(typeEntry)
             if (isTypeExpression) {
               val typeExpression = typeEntry.value.toString.replaceFirst("\\[\\]", "")
-              RamlTypeExpressionParser(items => items.adopted(shape.id)).parse(typeExpression).foreach { value =>
-                shape.withItems(value)
-              }
+              RamlTypeExpressionParser(items => items.adopted(shape.id), expression = typeExpression)
+                .parse()
+                .foreach { value =>
+                  shape.withItems(value)
+                }
             } else super.parseInheritance()
           }
           .getOrElse {
@@ -1291,7 +1312,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               val id = if (isMultipleInheritance) shape.id + i else shape.id
               node.as[YScalar].text match {
                 case RamlTypeDefMatcher.TypeExpression(s) =>
-                  RamlTypeExpressionParser(adopt, Some(node)).parse(s).get.adopted(id)
+                  RamlTypeExpressionParser(adopt, Some(node), s).parse().get.adopted(id)
                 case s if wellKnownType(s) =>
                   parseWellKnownTypeRef(s).withName(s, Annotations(entry.key)).adopted(id)
                 case s =>

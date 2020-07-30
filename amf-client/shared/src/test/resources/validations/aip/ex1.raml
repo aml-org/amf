@@ -1,0 +1,38 @@
+#%RAML 1.0
+
+uses:
+  std: ./standards.raml
+
+title: Test API
+
+/endpoint1:
+  (std.resource): Resource1
+  get:
+    body:
+      application/json:
+        properties:
+          name: string
+          noName: string
+
+/endpoint2:
+  (std.resource): Resource2
+  get:
+    body:
+      application/json:
+        properties:
+          noName: string
+
+/endpoint3:
+  (std.resource): Resource3
+  get:
+    body:
+      application/json:
+        type: string[]
+
+/endpoint4:
+  (std.collection): collection-Should-Fail
+  get:
+    body:
+      application/json:
+        properties:
+          name: string

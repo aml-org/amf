@@ -1,0 +1,188 @@
+{
+  "@graph": [
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        },
+        {
+          "@id": "#3"
+        },
+        {
+          "@id": "#6"
+        }
+      ],
+      "@type": [
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:version": "2.1.0",
+      "doc:root": true,
+      "smaps": {
+        "source-vendor": {
+          "": "RAML 1.0"
+        },
+        "lexical": {
+          "": "[(2,0)-(14,20)]"
+        }
+      }
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": true,
+      "shacl:property": [],
+      "shacl:name": "RestrictedObject",
+      "smaps": {
+        "resolved-link-target": {
+          "#1": "amf://id#1"
+        },
+        "declared-element": {
+          "#1": ""
+        },
+        "lexical": {
+          "shacl:name": "[(4,2)-(4,18)]",
+          "#1": "[(4,2)-(8,0)]",
+          "shacl:closed": "[(6,4)-(8,0)]"
+        },
+        "type-property-lexical-info": {
+          "#1": "[(5,4)-(5,8)]"
+        },
+        "resolved-link": {
+          "#1": "amf://id#2"
+        }
+      }
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": true,
+      "shacl:property": [
+        {
+          "@id": "#4"
+        }
+      ],
+      "shacl:name": "User",
+      "smaps": {
+        "inherited-shapes": {
+          "#3": "amf://id#7"
+        },
+        "resolved-link": {
+          "#3": "amf://id#3"
+        },
+        "type-property-lexical-info": {
+          "#3": "[(11,4)-(11,8)]"
+        },
+        "lexical": {
+          "#3": "[(10,2)-(14,20)]"
+        },
+        "declared-element": {
+          "#3": ""
+        },
+        "resolved-link-target": {
+          "#3": "amf://id#6"
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": true,
+      "shacl:property": [
+        {
+          "@id": "#4"
+        }
+      ],
+      "shacl:name": "Identifier",
+      "smaps": {
+        "inherited-shapes": {
+          "#6": "amf://id#7"
+        },
+        "type-property-lexical-info": {
+          "#6": "[(11,4)-(11,8)]"
+        },
+        "lexical": {
+          "shacl:name": "[(10,2)-(10,12)]",
+          "#6": "[(10,2)-(14,20)]"
+        },
+        "declared-element": {
+          "#6": ""
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#identifier"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#5"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "identifier",
+      "smaps": {
+        "lexical": {
+          "#4": "[(13,6)-(14,20)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "identifier",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#5": "[(14,8)-(14,12)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(14,8)-(14,20)]",
+          "#5": "[(13,6)-(14,20)]"
+        }
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "doc": "http://a.ml/vocabularies/document#"
+  }
+}

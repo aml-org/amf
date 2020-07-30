@@ -1,0 +1,1125 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#37",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "TurboConnect"
+          }
+        ],
+        "core:description": [
+          {
+            "@value": "Pepper Asset Finance loan application APIs."
+          }
+        ],
+        "apiContract:server": [
+          {
+            "@id": "#38",
+            "@type": [
+              "apiContract:Server",
+              "doc:DomainElement"
+            ],
+            "core:urlTemplate": [
+              {
+                "@value": "https://api-test.pepper.com.au/turboconnect"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "core:urlTemplate": "[(2,0)-(4,0)]"
+              },
+              "synthesized-field": {
+                "#38": "true"
+              }
+            }
+          }
+        ],
+        "apiContract:accepts": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "apiContract:contentType": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "1.0"
+          }
+        ],
+        "smaps": {
+          "single-value-array": {
+            "apiContract:contentType": "",
+            "apiContract:accepts": ""
+          },
+          "lexical": {
+            "core:version": "[(5,0)-(6,0)]",
+            "apiContract:accepts": "[(6,0)-(7,0)]",
+            "core:description": "[(7,0)-(9,0)]",
+            "#37": "[(2,0)-(16,0)]",
+            "core:name": "[(4,0)-(5,0)]",
+            "apiContract:server": "[(2,0)-(4,0)]",
+            "apiContract:contentType": "[(6,0)-(7,0)]"
+          },
+          "source-vendor": {
+            "#37": "RAML 1.0"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:references": [
+      {
+        "@id": "#1",
+        "@type": [
+          "doc:ExternalFragment",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#2",
+            "@type": [
+              "doc:ExternalDomainElement",
+              "doc:DomainElement"
+            ],
+            "doc:raw": [
+              {
+                "@value": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
+              }
+            ],
+            "core:mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ]
+          }
+        ],
+        "doc:version": [
+          {
+            "@value": "2.1.0"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ]
+      },
+      {
+        "@id": "#3",
+        "@type": [
+          "doc:ExternalFragment",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#6",
+            "@type": [
+              "doc:ExternalDomainElement",
+              "doc:DomainElement"
+            ],
+            "doc:raw": [
+              {
+                "@value": "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"merchant\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"operator\": {\r\n      \"type\": \"string\"\r\n    },\r\n\r\n    \"primaryApplicant\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    },\r\n    \"additionalApplicants\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    }\r\n  },\r\n  \"required\": [\r\n    \"merchant\",\r\n    \"operator\"\r\n  ]\r\n}"
+              }
+            ],
+            "core:mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ]
+          }
+        ],
+        "doc:version": [
+          {
+            "@value": "2.1.0"
+          }
+        ],
+        "doc:references": [
+          {
+            "@id": "#4",
+            "@type": [
+              "doc:ExternalFragment",
+              "doc:Fragment",
+              "doc:Unit"
+            ],
+            "doc:encodes": [
+              {
+                "@id": "#5",
+                "@type": [
+                  "doc:ExternalDomainElement",
+                  "doc:DomainElement"
+                ],
+                "doc:raw": [
+                  {
+                    "@value": "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema\",\r\n\r\n  \"expensesLiving\": {\r\n    \"type\": \"object\"\r\n  },\r\n  \"fullAddress\": {\r\n    \"type\": \"object\"\r\n  },\r\n  \"applicant\": {\r\n    \"type\": \"object\",\r\n    \"properties\": {\r\n      \"addresses\": {\r\n        \"allOf\": [\r\n          {\r\n            \"$ref\": \"#/fullAddress\"\r\n          }\r\n        ]\r\n      },\r\n      \"expenses\": {\r\n        \"anyOf\": [\r\n          {\r\n            \"$ref\": \"#/expensesLiving\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}"
+                  }
+                ],
+                "core:mediaType": [
+                  {
+                    "@value": "application/json"
+                  }
+                ]
+              }
+            ],
+            "doc:version": [
+              {
+                "@value": "2.1.0"
+              }
+            ],
+            "doc:root": [
+              {
+                "@value": false
+              }
+            ]
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#7",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": true
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#17",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#merchant"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#18",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "merchant"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#18": "[(7,6)-(7,12)]"
+                  },
+                  "lexical": {
+                    "shacl:datatype": "[(7,6)-(7,22)]",
+                    "#18": "[(6,4)-(8,5)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "merchant"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "shacl:minCount": "[(21,4)-(21,14)]",
+                "#17": "[(6,4)-(8,5)]"
+              }
+            }
+          },
+          {
+            "@id": "#19",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#operator"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#20",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "operator"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#20": "[(10,6)-(10,12)]"
+                  },
+                  "lexical": {
+                    "shacl:datatype": "[(10,6)-(10,22)]",
+                    "#20": "[(9,4)-(11,5)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "operator"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "shacl:minCount": "[(22,4)-(22,14)]",
+                "#19": "[(9,4)-(11,5)]"
+              }
+            }
+          },
+          {
+            "@id": "#21",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#primaryApplicant"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#22",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:property": [
+                  {
+                    "@id": "#23",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#addresses"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#24",
+                        "@type": [
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "addresses"
+                          }
+                        ],
+                        "shacl:and": [
+                          {
+                            "@id": "#25",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "item0"
+                              }
+                            ],
+                            "smaps": {
+                              "resolved-link-target": {
+                                "#25": "amf://id#25"
+                              },
+                              "type-property-lexical-info": {
+                                "#25": "[(8,4)-(8,10)]"
+                              },
+                              "lexical": {
+                                "#25": "[(7,17)-(9,3)]"
+                              },
+                              "resolved-link": {
+                                "#25": "amf://id#26"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "shacl:and": "[(14,17)-(18,9)]",
+                            "#24": "[(13,6)-(19,7)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "addresses"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#23": "[(13,6)-(19,7)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#27",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#expenses"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#28",
+                        "@type": [
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "expenses"
+                          }
+                        ],
+                        "shacl:or": [
+                          {
+                            "@id": "#29",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "item0"
+                              }
+                            ],
+                            "smaps": {
+                              "resolved-link-target": {
+                                "#29": "amf://id#29"
+                              },
+                              "type-property-lexical-info": {
+                                "#29": "[(5,4)-(5,10)]"
+                              },
+                              "lexical": {
+                                "#29": "[(4,20)-(6,3)]"
+                              },
+                              "resolved-link": {
+                                "#29": "amf://id#30"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "shacl:or": "[(21,17)-(25,9)]",
+                            "#28": "[(20,6)-(26,7)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "expenses"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#27": "[(20,6)-(26,7)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "schema"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#22": "[(11,4)-(11,10)]"
+                  },
+                  "lexical": {
+                    "#22": "[(10,15)-(28,3)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "primaryApplicant"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#21": "[(13,4)-(15,5)]"
+              }
+            }
+          },
+          {
+            "@id": "#31",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#additionalApplicants"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#32",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:property": [
+                  {
+                    "@id": "#33",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#addresses"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#34",
+                        "@type": [
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "addresses"
+                          }
+                        ],
+                        "shacl:and": [
+                          {
+                            "@id": "#25",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "item0"
+                              }
+                            ],
+                            "smaps": {
+                              "resolved-link-target": {
+                                "#25": "amf://id#25"
+                              },
+                              "type-property-lexical-info": {
+                                "#25": "[(8,4)-(8,10)]"
+                              },
+                              "lexical": {
+                                "#25": "[(7,17)-(9,3)]"
+                              },
+                              "resolved-link": {
+                                "#25": "amf://id#26"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "shacl:and": "[(14,17)-(18,9)]",
+                            "#34": "[(13,6)-(19,7)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "addresses"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#33": "[(13,6)-(19,7)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#35",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#expenses"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#36",
+                        "@type": [
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "expenses"
+                          }
+                        ],
+                        "shacl:or": [
+                          {
+                            "@id": "#29",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "item0"
+                              }
+                            ],
+                            "smaps": {
+                              "resolved-link-target": {
+                                "#29": "amf://id#29"
+                              },
+                              "type-property-lexical-info": {
+                                "#29": "[(5,4)-(5,10)]"
+                              },
+                              "lexical": {
+                                "#29": "[(4,20)-(6,3)]"
+                              },
+                              "resolved-link": {
+                                "#29": "amf://id#30"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "shacl:or": "[(21,17)-(25,9)]",
+                            "#36": "[(20,6)-(26,7)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "expenses"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#35": "[(20,6)-(26,7)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "schema"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#32": "[(11,4)-(11,10)]"
+                  },
+                  "lexical": {
+                    "#32": "[(10,15)-(28,3)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "additionalApplicants"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#31": "[(16,4)-(18,5)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "someType"
+          }
+        ],
+        "apiContract:examples": [
+          {
+            "@id": "#8",
+            "@type": [
+              "apiContract:Example",
+              "doc:DomainElement"
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#9",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:additionalApplicants": [
+                  {
+                    "@id": "#10",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:addresses": [
+                      {
+                        "@id": "#11",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:randomKey": [
+                          {
+                            "@id": "#12",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Current"
+                              }
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "randomKey"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#12": "[(4,19)-(4,28)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "addresses"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "data:randomKey": "[(4,6)-(4,28)]",
+                            "#11": "[(3,17)-(5,5)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:expenses": [
+                      {
+                        "@id": "#13",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:otherRandomKey": [
+                          {
+                            "@id": "#14",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Basic"
+                              }
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "otherRandomKey"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#14": "[(7,24)-(7,31)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "expenses"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "data:otherRandomKey": "[(7,6)-(7,31)]",
+                            "#13": "[(6,16)-(8,5)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "additionalApplicants"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:expenses": "[(6,4)-(8,5)]",
+                        "#10": "[(2,26)-(9,3)]",
+                        "data:addresses": "[(3,4)-(5,5)]"
+                      }
+                    }
+                  }
+                ],
+                "data:merchant": [
+                  {
+                    "@id": "#15",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "STRATTON - QLD"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "merchant"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#15": "[(10,14)-(10,30)]"
+                      }
+                    }
+                  }
+                ],
+                "data:operator": [
+                  {
+                    "@id": "#16",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "kenandrajog_adm"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "operator"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#16": "[(11,14)-(11,31)]"
+                      }
+                    }
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
+                "smaps": {
+                  "parsed-json-example": {
+                    "#9": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
+                  },
+                  "lexical": {
+                    "data:operator": "[(11,2)-(11,31)]",
+                    "data:additionalApplicants": "[(2,2)-(9,3)]",
+                    "#9": "[(1,0)-(12,1)]",
+                    "data:merchant": "[(10,2)-(10,30)]"
+                  }
+                }
+              }
+            ],
+            "doc:reference-id": [
+              {
+                "@id": "#2"
+              }
+            ],
+            "doc:location": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/validations/json-schema-nested-refs/examples/CreateApplicationRequest.json"
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "lexical": {
+                "doc:structuredValue": "[(12,13)-(12,60)]",
+                "#8": "[(12,13)-(12,60)]"
+              }
+            }
+          }
+        ],
+        "doc:reference-id": [
+          {
+            "@id": "#6"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#7": ""
+          },
+          "lexical": {
+            "apiContract:examples": "[(12,4)-(16,0)]",
+            "shacl:closed": "[(4,2)-(4,31)]",
+            "#7": "[(10,2)-(24,1)]",
+            "shacl:name": "[(10,2)-(10,10)]"
+          },
+          "type-property-lexical-info": {
+            "#7": "[(3,2)-(3,8)]"
+          },
+          "parsed-json-schema": {
+            "#7": "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"merchant\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"operator\": {\r\n      \"type\": \"string\"\r\n    },\r\n\r\n    \"primaryApplicant\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    },\r\n    \"additionalApplicants\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    }\r\n  },\r\n  \"required\": [\r\n    \"merchant\",\r\n    \"operator\"\r\n  ]\r\n}"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

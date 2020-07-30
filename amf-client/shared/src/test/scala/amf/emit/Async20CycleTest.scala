@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.core.emitter.RenderOptions
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote.{Amf, AsyncApi20, AsyncYamlHint}
 import amf.io.FunSuiteCycleTests
@@ -11,49 +12,51 @@ class Async20CycleTest extends FunSuiteCycleTests {
   case class FixtureData(name: String, apiFrom: String, apiTo: String)
 
   cyclesAsyncAmf.foreach { f =>
-    test(s"${f.name} - async to amf") {
-      cycle(f.apiFrom, f.apiTo, AsyncYamlHint, Amf)
+    multiGoldenTest(s"${f.name} - async to amf", f.apiTo) { config =>
+      cycle(f.apiFrom, config.golden, AsyncYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
     }
   }
 
   cyclesAsyncAsync.foreach { f =>
     test(s"${f.name} - async to async") {
-      cycle(f.apiFrom, f.apiTo, AsyncYamlHint, AsyncApi20, directory = upanddown, syntax = Some(Yaml))
+      cycle(f.apiFrom, f.apiTo, AsyncYamlHint, target = AsyncApi20, directory = upanddown, syntax = Some(Yaml))
     }
   }
 
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
+
   def cyclesAsyncAmf: Seq[FixtureData] = Seq(
-    FixtureData("Simple publish and subscribe", "publish-subscribe.yaml", "publish-subscribe.jsonld"),
-    FixtureData("Message object", "message-obj.yaml", "message-obj.jsonld"),
-    FixtureData("Draft 7 schemas", "draft-7-schemas.yaml", "draft-7-schemas.jsonld"),
-    FixtureData("Parameters object", "channel-parameters.yaml", "channel-parameters.jsonld"),
-    FixtureData("Security schemes", "security-schemes.yaml", "security-schemes.jsonld"),
-    FixtureData("Empty and dynamic binding", "empty-dynamic-binding.yaml", "empty-dynamic-binding.jsonld"),
+    FixtureData("Simple publish and subscribe", "publish-subscribe.yaml", "publish-subscribe.%s"),
+    FixtureData("Message object", "message-obj.yaml", "message-obj.%s"),
+    FixtureData("Draft 7 schemas", "draft-7-schemas.yaml", "draft-7-schemas.%s"),
+    FixtureData("Parameters object", "channel-parameters.yaml", "channel-parameters.%s"),
+    FixtureData("Security schemes", "security-schemes.yaml", "security-schemes.%s"),
+    FixtureData("Empty and dynamic binding", "empty-dynamic-binding.yaml", "empty-dynamic-binding.%s"),
     FixtureData("Amqp 0.9.1 exchange channel binding",
                 "amqp-exchange-channel-binding.yaml",
-                "amqp-exchange-channel-binding.jsonld"),
+                "amqp-exchange-channel-binding.%s"),
     FixtureData("Amqp 0.9.1 queue channel binding",
                 "amqp-queue-channel-binding.yaml",
-                "amqp-queue-channel-binding.jsonld"),
-    FixtureData("Amqp 0.9.1 message binding", "amqp-message-binding.yaml", "amqp-message-binding.jsonld"),
-    FixtureData("Amqp 0.9.1 operation binding", "amqp-operation-binding.yaml", "amqp-operation-binding.jsonld"),
-    FixtureData("Http message binding", "http-message-binding.yaml", "http-message-binding.jsonld"),
-    FixtureData("Http operation binding", "http-operation-binding.yaml", "http-operation-binding.jsonld"),
-    FixtureData("Kafka message binding", "kafka-message-binding.yaml", "kafka-message-binding.jsonld"),
-    FixtureData("Kafka operation binding", "kafka-operation-binding.yaml", "kafka-operation-binding.jsonld"),
-    FixtureData("Mqtt message binding", "mqtt-message-binding.yaml", "mqtt-message-binding.jsonld"),
-    FixtureData("Mqtt operation binding", "mqtt-operation-binding.yaml", "mqtt-operation-binding.jsonld"),
-    FixtureData("Mqtt server binding", "mqtt-server-binding.yaml", "mqtt-server-binding.jsonld"),
-    FixtureData("Websockets channel binding", "ws-channel-binding.yaml", "ws-channel-binding.jsonld"),
-    FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.jsonld"),
+                "amqp-queue-channel-binding.%s"),
+    FixtureData("Amqp 0.9.1 message binding", "amqp-message-binding.yaml", "amqp-message-binding.%s"),
+    FixtureData("Amqp 0.9.1 operation binding", "amqp-operation-binding.yaml", "amqp-operation-binding.%s"),
+    FixtureData("Http message binding", "http-message-binding.yaml", "http-message-binding.%s"),
+    FixtureData("Http operation binding", "http-operation-binding.yaml", "http-operation-binding.%s"),
+    FixtureData("Kafka message binding", "kafka-message-binding.yaml", "kafka-message-binding.%s"),
+    FixtureData("Kafka operation binding", "kafka-operation-binding.yaml", "kafka-operation-binding.%s"),
+    FixtureData("Mqtt message binding", "mqtt-message-binding.yaml", "mqtt-message-binding.%s"),
+    FixtureData("Mqtt operation binding", "mqtt-operation-binding.yaml", "mqtt-operation-binding.%s"),
+    FixtureData("Mqtt server binding", "mqtt-server-binding.yaml", "mqtt-server-binding.%s"),
+    FixtureData("Websockets channel binding", "ws-channel-binding.yaml", "ws-channel-binding.%s"),
+    FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.%s"),
     FixtureData("Components declarations and references",
                 "components/async-components.yaml",
-                "components/async-components.jsonld"),
-    FixtureData("Operation traits", "components/operation-traits.yaml", "components/operation-traits.jsonld"),
+                "components/async-components.%s"),
+    FixtureData("Operation traits", "components/operation-traits.yaml", "components/operation-traits.%s"),
     FixtureData("Operation with inline external traits",
                 "components/external-operation-traits.yaml",
-                "components/external-operation-traits.jsonld"),
-    FixtureData("Message traits", "components/message-traits.yaml", "components/message-traits.jsonld")
+                "components/external-operation-traits.%s"),
+    FixtureData("Message traits", "components/message-traits.yaml", "components/message-traits.%s")
   )
 
   def cyclesAsyncAsync: Seq[FixtureData] = Seq(

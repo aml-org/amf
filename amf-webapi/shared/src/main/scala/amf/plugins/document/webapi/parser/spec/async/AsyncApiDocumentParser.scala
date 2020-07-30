@@ -16,7 +16,8 @@ import amf.plugins.document.webapi.parser.spec.common.{
   AnnotationParser,
   SpecParserOps,
   WebApiBaseSpecParser,
-  YMapEntryLike
+  YMapEntryLike,
+  YamlTagValidator
 }
 import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -59,6 +60,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
   }
 
   def parseWebApi(map: YMap): WebApi = {
+    YamlTagValidator.validate(root)
     val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
     map.key("info", entry => OasLikeInformationParser(entry, api, ctx).parse())
     map.key("id", entry => IdentifierParser(entry, api, ctx).parse())

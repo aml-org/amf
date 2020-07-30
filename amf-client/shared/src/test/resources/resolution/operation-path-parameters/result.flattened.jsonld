@@ -1,0 +1,441 @@
+{
+  "@graph": [
+    {
+      "@id": "#1",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "GLYNT API",
+      "core:description": "The Data Extraction API",
+      "apiContract:accepts": [
+        "application/json"
+      ],
+      "apiContract:contentType": [
+        "application/json"
+      ],
+      "apiContract:scheme": [
+        "HTTPS"
+      ],
+      "core:version": "6",
+      "apiContract:endpoint": [
+        {
+          "@id": "#2"
+        },
+        {
+          "@id": "#13"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#1": "RAML 1.0"
+        },
+        "lexical": {
+          "core:version": "[(6,0)-(7,0)]",
+          "apiContract:contentType": "[(4,0)-(6,0)]",
+          "core:description": "[(3,0)-(4,0)]",
+          "#1": "[(2,0)-(44,0)]",
+          "core:name": "[(2,0)-(3,0)]",
+          "apiContract:accepts": "[(4,0)-(6,0)]",
+          "apiContract:scheme": "[(7,0)-(9,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/data-pools/{data_pool_id}/documents/",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#3"
+        },
+        {
+          "@id": "#8"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#2": "[(9,0)-(33,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#13",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/documents/{document_id}/file/",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#14"
+        }
+      ],
+      "apiContract:parameter": [
+        {
+          "@id": "#16"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:parameter": "[(40,16)-(44,0)]",
+          "#13": "[(33,0)-(44,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "core:name": "listDocuments",
+      "core:description": "List all documents in a data pool.",
+      "apiContract:expects": [
+        {
+          "@id": "#4"
+        }
+      ],
+      "apiContract:returns": [
+        {
+          "@id": "#7"
+        }
+      ],
+      "smaps": {
+        "synthesized-field": {
+          "apiContract:expects": "true"
+        },
+        "lexical": {
+          "apiContract:returns": "[(18,4)-(21,0)]",
+          "core:name": "[(11,4)-(12,0)]",
+          "#3": "[(10,2)-(21,0)]",
+          "core:description": "[(12,4)-(13,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "post",
+      "core:name": "createDocument",
+      "core:description": "Upload a document to a target data pool.",
+      "apiContract:expects": [
+        {
+          "@id": "#9"
+        }
+      ],
+      "apiContract:returns": [
+        {
+          "@id": "#12"
+        }
+      ],
+      "smaps": {
+        "synthesized-field": {
+          "apiContract:expects": "true"
+        },
+        "lexical": {
+          "apiContract:returns": "[(29,4)-(33,0)]",
+          "core:name": "[(22,4)-(23,0)]",
+          "#8": "[(21,2)-(33,0)]",
+          "core:description": "[(23,4)-(24,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#14",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "core:name": "fileDocument",
+      "core:description": "Return a temporary file access URL which can be used to retrieve the document file.",
+      "apiContract:returns": [
+        {
+          "@id": "#15"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(37,4)-(40,0)]",
+          "core:name": "[(35,4)-(36,0)]",
+          "#14": "[(34,2)-(40,0)]",
+          "core:description": "[(36,4)-(37,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#16",
+      "@type": [
+        "apiContract:Parameter",
+        "doc:DomainElement"
+      ],
+      "core:name": "document_id",
+      "apiContract:paramName": "document_id",
+      "core:description": "The id of the document to be retrieved.",
+      "apiContract:required": true,
+      "apiContract:binding": "path",
+      "raml-shapes:schema": {
+        "@id": "#17"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(41,4)-(44,0)]",
+          "#16": "[(41,4)-(44,0)]",
+          "core:description": "[(42,6)-(43,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:uriParameter": [
+        {
+          "@id": "#5"
+        }
+      ],
+      "apiContract:payload": [],
+      "smaps": {
+        "lexical": {
+          "apiContract:uriParameter": "[(13,4)-(18,0)]",
+          "#4": "[(11,0)-(21,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "core:description": "Ok",
+      "apiContract:payload": [],
+      "smaps": {
+        "lexical": {
+          "core:description": "[(20,8)-(21,0)]",
+          "#7": "[(19,6)-(21,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "apiContract:Request",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:uriParameter": [
+        {
+          "@id": "#10"
+        }
+      ],
+      "apiContract:payload": [],
+      "smaps": {
+        "lexical": {
+          "apiContract:uriParameter": "[(24,4)-(29,0)]",
+          "#9": "[(22,0)-(33,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#12",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "201",
+      "core:name": "201",
+      "core:description": "Ok",
+      "apiContract:payload": [],
+      "smaps": {
+        "lexical": {
+          "core:description": "[(31,8)-(33,0)]",
+          "#12": "[(30,6)-(33,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#15",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "core:description": "Ok",
+      "apiContract:payload": [],
+      "smaps": {
+        "lexical": {
+          "core:description": "[(39,8)-(40,0)]",
+          "#15": "[(38,6)-(40,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#17",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "schema",
+      "core:description": "The id of the document to be retrieved.",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#17": "[(43,6)-(43,10)]"
+        },
+        "lexical": {
+          "core:description": "[(42,6)-(43,0)]",
+          "#17": "[(41,4)-(44,0)]",
+          "shacl:datatype": "[(43,6)-(44,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "apiContract:Parameter",
+        "doc:DomainElement"
+      ],
+      "core:name": "data_pool_id",
+      "apiContract:paramName": "data_pool_id",
+      "core:description": "string parameter",
+      "apiContract:required": true,
+      "apiContract:binding": "path",
+      "raml-shapes:schema": {
+        "@id": "#6"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(14,6)-(18,0)]",
+          "core:description": "[(15,8)-(16,0)]",
+          "#5": "[(14,6)-(18,0)]",
+          "apiContract:required": "[(16,8)-(17,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "apiContract:Parameter",
+        "doc:DomainElement"
+      ],
+      "core:name": "data_pool_id",
+      "apiContract:paramName": "data_pool_id",
+      "core:description": "integer parameter",
+      "apiContract:required": true,
+      "apiContract:binding": "path",
+      "raml-shapes:schema": {
+        "@id": "#11"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(25,6)-(29,0)]",
+          "core:description": "[(26,8)-(27,0)]",
+          "#10": "[(25,6)-(29,0)]",
+          "apiContract:required": "[(27,8)-(28,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "schema",
+      "core:description": "string parameter",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#6": "[(17,8)-(17,12)]"
+        },
+        "lexical": {
+          "core:description": "[(15,8)-(16,0)]",
+          "#6": "[(14,6)-(18,0)]",
+          "shacl:datatype": "[(17,8)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#11",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:name": "schema",
+      "core:description": "integer parameter",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#11": "[(28,8)-(28,12)]"
+        },
+        "lexical": {
+          "core:description": "[(26,8)-(27,0)]",
+          "#11": "[(25,6)-(29,0)]",
+          "shacl:datatype": "[(28,8)-(29,0)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#1"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": true
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

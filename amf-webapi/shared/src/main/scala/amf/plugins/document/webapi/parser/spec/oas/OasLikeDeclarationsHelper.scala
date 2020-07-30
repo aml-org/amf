@@ -23,10 +23,12 @@ trait OasLikeDeclarationsHelper {
           .entries
           .foreach(e => {
             val typeName = e.key.as[YScalar].text
-            OasTypeParser(e, shape => {
-              shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
-              shape.adopted(typesPrefix)
-            })(ctx).parse() match {
+            OasTypeParser
+              .buildDeclarationParser(e, shape => {
+                shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
+                shape.adopted(typesPrefix)
+              })(ctx)
+              .parse() match {
               case Some(shape) =>
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>
@@ -39,6 +41,4 @@ trait OasLikeDeclarationsHelper {
       }
     )
   }
-
-  private def isDirectTypeAlias(shape: Shape) = shape.isInstanceOf[AnyShape] && shape.isLink
 }

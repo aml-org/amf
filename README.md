@@ -167,6 +167,11 @@ Validation is one of the key features of AMF. Please check the following link to
 
 [Validation insights](./documentation/validation.md)
 
+## AML Vocabulary
+
+The AML Vocabulary that could be found in this repository under the **vocabularies** directory has been migrated to the \
+[amf metadata repository](https://github.com/aml-org/amf-metadata)
+
 ## Want to learn more?
 [Click here for more documentation and playground](https://a.ml)
 

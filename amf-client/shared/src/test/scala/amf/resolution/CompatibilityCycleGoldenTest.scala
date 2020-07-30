@@ -64,25 +64,41 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
 
   test("OAS 3.0 Callbacks are inlined and unused ones are removed") {
     cycle("oas30/component-callbacks.json",
-      "cycled-apis/raml/oas3-callbacks.raml",
-      OasYamlHint,
-      Raml10,
-      transformWith = Some(Raml10))
+          "cycled-apis/raml/oas3-callbacks.raml",
+          OasYamlHint,
+          Raml10,
+          transformWith = Some(Raml10))
   }
 
   test("OAS 2.0 Module emitter emits swagger: 2.0 key") {
     cycle("invalid-apis/library.raml",
-      "cycled-apis/oas20/library.json",
-      RamlYamlHint,
-      Oas20,
-      transformWith = Some(Oas20))
+          "cycled-apis/oas20/library.json",
+          RamlYamlHint,
+          Oas20,
+          transformWith = Some(Oas20))
   }
 
   test("OAS 3.0 Module emitter emits openapi: 3.0.0 key") {
     cycle("invalid-apis/library.raml",
-      "cycled-apis/oas30/library.json",
-      RamlYamlHint,
-      Oas30,
-      transformWith = Some(Oas30))
+          "cycled-apis/oas30/library.json",
+          RamlYamlHint,
+          Oas30,
+          transformWith = Some(Oas30))
+  }
+
+  test("Unused OAS 3.0 examples are deleted and used ones inlined") {
+    cycle("oas30/oas-unused-examples-deleted.json",
+          "cycled-apis/raml/oas-unused-examples-deleted.raml",
+          OasYamlHint,
+          Raml,
+          transformWith = Some(Raml10))
+  }
+
+  test("OAS 3.0 examples are translated correctly to Raml example and examples") {
+    cycle("oas30/oas-anonymous-named-examples.json",
+          "cycled-apis/raml/oas-anonymous-named-examples.raml",
+          OasYamlHint,
+          Raml,
+          transformWith = Some(Raml10))
   }
 }
