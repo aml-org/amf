@@ -41,6 +41,10 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
     validate("security/invalid-security-scheme-type.json", Some("invalid-security-scheme-type.report"), Oas20Profile)
   }
 
+  test("apiKey security type missing in and name fields") {
+    validate("security/invalid-apikey-type.json", Some("invalid-apikey-type.report"), Oas20Profile)
+  }
+
   test("invalid ref inside paths object") {
     validate("invalid-ref-inside-paths-object.json", Some("invalid-ref-inside-paths-object.report"), Oas20Profile)
   }

@@ -4,10 +4,10 @@ import amf.core.model.domain.Shape
 import amf.core.remote.Vendor
 import amf.core.validation.SeverityLevels
 import amf.plugins.document.webapi.contexts.parser.{OasLikeSpecVersionFactory, OasLikeWebApiContext}
-import amf.plugins.document.webapi.parser.spec.SpecSyntax
+import amf.plugins.document.webapi.parser.spec.{CustomSyntax, SpecNode, SpecSyntax}
 import org.yaml.model.{YMap, YNode, YPart}
 
-class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customSyntax: Map[String, SpecNode])
+class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customSyntax: CustomSyntax)
     extends OasLikeWebApiContext(
       decorated.loc,
       decorated.refs,
@@ -62,10 +62,3 @@ class CustomClosedShapeContextDecorator(decorated: OasLikeWebApiContext, customS
   private def getAstEntry(ast: YMap, entry: String): YPart =
     ast.entries.find(yMapEntry => yMapEntry.key.asScalar.map(_.text).get == entry).get
 }
-
-case class SpecNode(
-    requiredFields: Set[SpecField] = Set(),
-    possibleFields: Set[String] = Set()
-)
-
-case class SpecField(name: String, severity: String = SeverityLevels.VIOLATION)
