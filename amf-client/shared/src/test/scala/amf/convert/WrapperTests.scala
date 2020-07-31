@@ -2336,6 +2336,18 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
+  test("Oas and JsonSchema refs don't have double-linking for refs") {
+    val file = "file://amf-client/shared/src/test/resources/validations/oas2/double-linking.yaml"
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new Oas20YamlParser().parseFileAsync(file).asFuture
+    } yield {
+      val personProperties = unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[NodeShape].properties.asSeq
+      personProperties(1).range.linkTarget.asOption.get.asInstanceOf[Linkable].isLink shouldBe false
+      personProperties(2).range.linkTarget.asOption.get.asInstanceOf[Linkable].isLink shouldBe false
+    }
+  }
+
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }
