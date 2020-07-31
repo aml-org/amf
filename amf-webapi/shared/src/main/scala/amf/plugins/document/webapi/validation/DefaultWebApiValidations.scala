@@ -61,13 +61,16 @@ object DefaultAMFValidations extends ImportUtils {
           }
           .map(_.name)
 
+        val severityMapping = SeverityMapping()
+          .set(infoParserSideValidations ++ infoValidations.map(_.name), SeverityLevels.INFO)
+          .set(warningParserSideValidations ++ warningValidations.map(_.name), SeverityLevels.WARNING)
+          .set(violationParserSideValidations ++ violationValidations.map(_.name), SeverityLevels.VIOLATION)
+
         ValidationProfile(
           name = profile,
           baseProfile = if (profile == AmfProfile) None else Some(AmfProfile),
-          infoLevel = infoParserSideValidations ++ infoValidations.map(_.name),
-          warningLevel = warningParserSideValidations ++ warningValidations.map(_.name),
-          violationLevel = violationParserSideValidations ++ violationValidations.map(_.name),
-          validations = infoValidations ++ warningValidations ++ violationValidations ++ Validations.validations
+          validations = infoValidations ++ warningValidations ++ violationValidations ++ Validations.validations,
+          severities = severityMapping
         )
     }.toList
 
@@ -105,10 +108,11 @@ object DefaultAMFValidations extends ImportUtils {
           }
 
         case "http://www.w3.org/ns/shacl#targetObjectsOf" =>
-          Seq(spec.copy(
-            targetObject = Seq(validation.owlProperty),
-            nodeConstraints = Seq(NodeConstraint(validation.constraint, validation.value))
-          ))
+          Seq(
+            spec.copy(
+              targetObject = Seq(validation.owlProperty),
+              nodeConstraints = Seq(NodeConstraint(validation.constraint, validation.value))
+            ))
         case _ => throw new Exception(s"Unknown validation target ${validation.target}")
       }
     }
@@ -255,7 +259,8 @@ object complexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "raml-shapes.xmlSerialization",
           name = "raml-shapes.xmlSerialization",
-          node = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_1_raml-shapes.xmlSerialization_node")
+          node =
+            Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_1_raml-shapes.xmlSerialization_node")
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute")
@@ -269,7 +274,8 @@ object complexShaclCustomValidations {
         PropertyConstraint(
           ramlPropertyId = "raml-shapes.xmlSerialization",
           name = "raml-shapes.xmlSerialization",
-          node = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_2_raml-shapes.xmlSerialization_node"),
+          node =
+            Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute_or_2_raml-shapes.xmlSerialization_node"),
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#xml-non-scalar-attribute")
@@ -308,7 +314,7 @@ object complexShaclCustomValidations {
       name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data",
       message = "Parameter of type file must set property 'in' to formData",
       ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
-      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage = Some("Parameter of type file must set property 'in' to formData"),
       targetClass = List("http://a.ml/vocabularies/apiContract#Parameter"),
       unionConstraints = List(
         "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0",
@@ -320,7 +326,7 @@ object complexShaclCustomValidations {
       name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0",
       message = "Parameter of type file must set property 'in' to formData",
       ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
-      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage = Some("Parameter of type file must set property 'in' to formData"),
       notConstraint = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not"),
       nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
     ),
@@ -328,7 +334,7 @@ object complexShaclCustomValidations {
       name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1",
       message = "Parameter of type file must set property 'in' to formData",
       ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
-      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage = Some("Parameter of type file must set property 'in' to formData"),
       andConstraints = List(
         "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_0",
         "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1"
@@ -339,12 +345,13 @@ object complexShaclCustomValidations {
       name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not",
       message = "Parameter of type file must set property 'in' to formData",
       ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
-      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage = Some("Parameter of type file must set property 'in' to formData"),
       propertyConstraints = ArrayBuffer(
         PropertyConstraint(
           ramlPropertyId = "http://a.ml/vocabularies/shapes#schema",
           name = "raml-shapes.schema",
-          node = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not_raml-shapes.schema_node"),
+          node =
+            Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not_raml-shapes.schema_node"),
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
@@ -353,7 +360,7 @@ object complexShaclCustomValidations {
       name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_0_not_raml-shapes.schema_node",
       message = "Parameter of type file must set property 'in' to formData",
       ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
-      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage = Some("Parameter of type file must set property 'in' to formData"),
       propertyConstraints = List(
         PropertyConstraint(
           ramlPropertyId = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
@@ -367,7 +374,7 @@ object complexShaclCustomValidations {
       name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_0",
       message = "Parameter of type file must set property 'in' to formData",
       ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
-      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage = Some("Parameter of type file must set property 'in' to formData"),
       propertyConstraints = ArrayBuffer(
         PropertyConstraint(
           ramlPropertyId = "http://a.ml/vocabularies/apiContract#binding",
@@ -381,12 +388,13 @@ object complexShaclCustomValidations {
       name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1",
       message = "Parameter of type file must set property 'in' to formData",
       ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
-      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage = Some("Parameter of type file must set property 'in' to formData"),
       propertyConstraints = ArrayBuffer(
         PropertyConstraint(
           ramlPropertyId = "http://a.ml/vocabularies/shapes#schema",
           name = "raml-shapes.schema",
-          node = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1_raml-shapes.schema_node"),
+          node =
+            Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1_raml-shapes.schema_node"),
         )
       ),
       nested = Some("http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data")
@@ -395,7 +403,7 @@ object complexShaclCustomValidations {
       name = "http://a.ml/vocabularies/amf/parser#file-parameter-in-form-data_or_1_and_1_raml-shapes.schema_node",
       message = "Parameter of type file must set property 'in' to formData",
       ramlMessage = Some("Parameter of type file must set property 'in' to formData"),
-      oasMessage =  Some("Parameter of type file must set property 'in' to formData"),
+      oasMessage = Some("Parameter of type file must set property 'in' to formData"),
       propertyConstraints = List(
         PropertyConstraint(
           ramlPropertyId = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
@@ -413,9 +421,8 @@ object complexShaclCustomValidations {
       ramlMessage = Some("Path parameters must have the required property set to true"),
       oasMessage = Some("Path parameters must have the required property set to true"),
       targetClass = List("http://a.ml/vocabularies/apiContract#Parameter"),
-      unionConstraints = List(
-        "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_0",
-        "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_1"),
+      unionConstraints = List("http://a.ml/vocabularies/amf/parser#path-parameter-required_or_0",
+                              "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_1"),
       replacesFunctionConstraint = Some("pathParameterRequiredProperty")
     ),
     ValidationSpecification(
@@ -488,12 +495,13 @@ object complexShaclCustomValidations {
       ramlMessage = Some("Maximum must be greater than or equal to minimum"),
       oasMessage = Some("Maximum must be greater than or equal to minimum"),
       targetClass = List("http://a.ml/vocabularies/shapes#ScalarShape"),
-      propertyConstraints = ArrayBuffer(
-        PropertyConstraint(
-          ramlPropertyId = "http://www.w3.org/ns/shacl#minInclusive",
-          name = "shacl.minInclusive",
-          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxInclusive"))),
-      replacesFunctionConstraint = Some("minimumMaximumValidation")))
+      propertyConstraints = ArrayBuffer(PropertyConstraint(
+        ramlPropertyId = "http://www.w3.org/ns/shacl#minInclusive",
+        name = "shacl.minInclusive",
+        lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxInclusive")
+      )),
+      replacesFunctionConstraint = Some("minimumMaximumValidation")
+    ))
   val minMaxItemsValidation = List(
     ValidationSpecification(
       name = "http://a.ml/vocabularies/amf/parser#min-max-items",
@@ -502,11 +510,11 @@ object complexShaclCustomValidations {
       oasMessage = Some("MaxItems must be greater than or equal to minItems"),
       targetClass = List("http://a.ml/vocabularies/shapes#ArrayShape"),
       propertyConstraints = ArrayBuffer(
-        PropertyConstraint(
-          ramlPropertyId = "http://www.w3.org/ns/shacl#minCount",
-          name = "shacl.minCount",
-          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxCount"))),
-      replacesFunctionConstraint = Some("minMaxItemsValidation")))
+        PropertyConstraint(ramlPropertyId = "http://www.w3.org/ns/shacl#minCount",
+                           name = "shacl.minCount",
+                           lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxCount"))),
+      replacesFunctionConstraint = Some("minMaxItemsValidation")
+    ))
   val minMaxLengthValidation = List(
     ValidationSpecification(
       name = "http://a.ml/vocabularies/amf/parser#min-max-length",
@@ -515,34 +523,36 @@ object complexShaclCustomValidations {
       oasMessage = Some("MaxLength must be greater than or equal to minLength"),
       targetClass = List("http://a.ml/vocabularies/shapes#Shape"),
       propertyConstraints = ArrayBuffer(
-        PropertyConstraint(
-          ramlPropertyId = "http://www.w3.org/ns/shacl#minLength",
-          name = "shacl.minLength",
-          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxLength"))),
-      replacesFunctionConstraint = Some("minMaxLengthValidation")))
-  val minMaxPropertiesValidation = List(ValidationSpecification(
-    name = "http://a.ml/vocabularies/amf/parser#min-max-properties",
-    message = "MaxProperties must be greater than or equal to minProperties",
-    ramlMessage = Some("MaxProperties must be greater than or equal to minProperties"),
-    oasMessage = Some("MaxProperties must be greater than or equal to minProperties"),
-    targetClass = List("http://www.w3.org/ns/shacl#NodeShape"),
-    propertyConstraints = ArrayBuffer(
-      PropertyConstraint(
+        PropertyConstraint(ramlPropertyId = "http://www.w3.org/ns/shacl#minLength",
+                           name = "shacl.minLength",
+                           lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxLength"))),
+      replacesFunctionConstraint = Some("minMaxLengthValidation")
+    ))
+  val minMaxPropertiesValidation = List(
+    ValidationSpecification(
+      name = "http://a.ml/vocabularies/amf/parser#min-max-properties",
+      message = "MaxProperties must be greater than or equal to minProperties",
+      ramlMessage = Some("MaxProperties must be greater than or equal to minProperties"),
+      oasMessage = Some("MaxProperties must be greater than or equal to minProperties"),
+      targetClass = List("http://www.w3.org/ns/shacl#NodeShape"),
+      propertyConstraints = ArrayBuffer(PropertyConstraint(
         ramlPropertyId = "http://a.ml/vocabularies/shapes#minProperties",
         name = "shapes.minProperties",
-        lessThanOrEqualsToProperty = Some("http://a.ml/vocabularies/shapes#maxProperties"))),
-    replacesFunctionConstraint = Some("minMaxPropertiesValidation")))
+        lessThanOrEqualsToProperty = Some("http://a.ml/vocabularies/shapes#maxProperties")
+      )),
+      replacesFunctionConstraint = Some("minMaxPropertiesValidation")
+    ))
 
   val defintions: Map[String, Seq[ValidationSpecification]] = Map(
-    "xmlWrappedScalar" -> xmlWrappedScalar,
-    "xmlNonScalarAttribute" -> xmlNonScalarAttribute,
-    "fileParameterMustBeInFormData" -> fileParameterMustBeInFormData,
-    "pathParameterRequiredProperty" -> pathParameterRequiredProperty,
+    "xmlWrappedScalar"               -> xmlWrappedScalar,
+    "xmlNonScalarAttribute"          -> xmlNonScalarAttribute,
+    "fileParameterMustBeInFormData"  -> fileParameterMustBeInFormData,
+    "pathParameterRequiredProperty"  -> pathParameterRequiredProperty,
     "exampleMutuallyExclusiveFields" -> exampleMutuallyExclusiveFields,
-    "minimumMaximumValidation" -> minimumMaximumValidation,
-    "minMaxItemsValidation" -> minMaxItemsValidation,
-    "minMaxLengthValidation" -> minMaxLengthValidation,
-    "minMaxPropertiesValidation" -> minMaxPropertiesValidation
+    "minimumMaximumValidation"       -> minimumMaximumValidation,
+    "minMaxItemsValidation"          -> minMaxItemsValidation,
+    "minMaxLengthValidation"         -> minMaxLengthValidation,
+    "minMaxPropertiesValidation"     -> minMaxPropertiesValidation
   )
 
 }
