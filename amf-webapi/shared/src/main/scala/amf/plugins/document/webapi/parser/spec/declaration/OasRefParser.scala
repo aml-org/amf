@@ -151,6 +151,7 @@ class OasRefParser(map: YMap,
       case Some(shape)              => createLinkToParsedShape(ref, shape)
       case _ =>
         val fileUrl = ctx.jsonSchemaRefGuide.getFileUrl(ref)
+        // TODO: parsed json schema is registered with ref but searched with fullRef, leads to repeated parsing
         parseRemoteSchema(ref) match {
           case None =>
             val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fileUrl)

@@ -1,0 +1,17 @@
+{
+  "definitions": {
+    "error400": {
+      "type": "object",
+      "example": {
+        "errors": [
+          {
+            "code": 400,
+            "message": "Bad Request",
+            "more_info": "The parameters are not valid.Authentication failed due to incorrect username or password.",
+            "help": "http://www.correos.es/docs/errors/PSI-012"
+          }
+        ]
+      }
+    }
+  }
+}

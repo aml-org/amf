@@ -774,6 +774,18 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("multiple references to external schema", "result.%s") { config =>
+    cycle(
+      "api.json",
+      config.golden,
+      OasJsonHint,
+      target = Amf,
+      directory = resolutionPath + "multiple-ref-to-external-schema/",
+      transformWith = Some(Oas20),
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit, config.target, defaultRenderOptions, config.syntax).renderToString
   }
