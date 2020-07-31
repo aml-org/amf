@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.declaration
-import amf.plugins.document.webapi.parser.spec.declaration.Oas3SettingsProducers.{SettingsProducer, SettingsType}
-import amf.plugins.domain.webapi.models.security.{OpenIdConnectSettings, HttpSettings, WithSettings, Settings}
+import amf.plugins.domain.webapi.models.security.{Settings, WithSettings}
 
 trait SettingsProducers {
   type SettingsType     = String

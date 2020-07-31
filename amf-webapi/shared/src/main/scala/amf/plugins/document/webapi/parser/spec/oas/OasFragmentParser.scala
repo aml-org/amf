@@ -153,7 +153,8 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       val security = SecuritySchemeFragment().adopted(root.location)
 
       security.withEncodes(
-        OasSecuritySchemeParser(map,
+        ctx.factory
+          .securitySchemeParser(map,
                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme) =>
                                   security.adopted(root.location + "#/"))
           .parse())
