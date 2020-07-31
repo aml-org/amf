@@ -1,0 +1,507 @@
+{
+  "@graph": [
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Geolocalizacion",
+      "apiContract:scheme": [
+        "https"
+      ],
+      "core:version": "v1",
+      "apiContract:endpoint": [
+        {
+          "@id": "#4"
+        },
+        {
+          "@id": "#17"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#3": "OAS 2.0"
+        },
+        "lexical": {
+          "apiContract:endpoint": "[(10,11)-(43,3)]",
+          "apiContract:scheme": "[(7,2)-(9,3)]",
+          "#3": "[(1,0)-(44,1)]",
+          "core:name": "[(4,4)-(4,30)]",
+          "core:version": "[(5,4)-(5,19)]"
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/envios/{envio}",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#5"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#4": "[(11,4)-(26,5)]"
+        }
+      }
+    },
+    {
+      "@id": "#17",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/citypaq",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#18"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#17": "[(27,4)-(42,5)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "core:description": "Este servicio se encarga de recuperar la informaci\u00F3n relacionada con Envios.",
+      "core:mediaType": [
+        "application/json"
+      ],
+      "apiContract:returns": [
+        {
+          "@id": "#6"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(14,8)-(21,9)]",
+          "#5": "[(12,6)-(25,7)]",
+          "core:description": "[(13,8)-(13,101)]"
+        }
+      }
+    },
+    {
+      "@id": "#18",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "core:description": "Esta operacion se encarga de recuperar toda la informaci\u00F3n de geolocalizacion relacionada con citypaq, permitiendo al usuario encontrar la localizacion geografica del citypaq y los datos del mismo, esta busqueda es realizada a travez de coordenadas",
+      "core:mediaType": [
+        "application/json"
+      ],
+      "apiContract:returns": [
+        {
+          "@id": "#19"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(30,8)-(37,9)]",
+          "#18": "[(28,6)-(41,7)]",
+          "core:description": "[(29,8)-(29,273)]"
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "400",
+      "core:name": "400",
+      "core:description": "Cuando el parametro template envio no se env\u00EDa.",
+      "apiContract:payload": [
+        {
+          "@id": "#7"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "core:description": "[(16,12)-(16,76)]",
+          "#6": "[(15,10)-(20,11)]"
+        }
+      }
+    },
+    {
+      "@id": "#19",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "400",
+      "core:name": "400",
+      "core:description": "Cuando uno o ambos par\u00E1metros (coordenadas y distancia) siendo requeridos no se env\u00EDan.",
+      "apiContract:payload": [
+        {
+          "@id": "#20"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "core:description": "[(32,12)-(32,116)]",
+          "#19": "[(31,10)-(36,11)]"
+        }
+      }
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#8"
+      },
+      "smaps": {
+        "lexical": {
+          "#7": "[(17,12)-(19,13)]"
+        }
+      }
+    },
+    {
+      "@id": "#20",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#21"
+      },
+      "smaps": {
+        "lexical": {
+          "#20": "[(33,12)-(35,13)]"
+        }
+      }
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [],
+      "shacl:name": "default",
+      "apiContract:examples": [
+        {
+          "@id": "#9"
+        }
+      ],
+      "smaps": {
+        "auto-generated-name": {
+          "#8": ""
+        },
+        "lexical": {
+          "apiContract:examples": "[(5,6)-(14,7)]",
+          "#8": "[(3,4)-(15,5)]"
+        },
+        "type-property-lexical-info": {
+          "#8": "[(4,6)-(4,12)]"
+        }
+      }
+    },
+    {
+      "@id": "#21",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [],
+      "shacl:name": "default",
+      "apiContract:examples": [
+        {
+          "@id": "#22"
+        }
+      ],
+      "smaps": {
+        "auto-generated-name": {
+          "#21": ""
+        },
+        "lexical": {
+          "apiContract:examples": "[(5,6)-(14,7)]",
+          "#21": "[(3,4)-(15,5)]"
+        },
+        "type-property-lexical-info": {
+          "#21": "[(4,6)-(4,12)]"
+        }
+      }
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "apiContract:Example",
+        "doc:DomainElement"
+      ],
+      "doc:strict": true,
+      "doc:structuredValue": {
+        "@id": "#10"
+      },
+      "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
+      "smaps": {
+        "synthesized-field": {
+          "doc:strict": "true"
+        },
+        "lexical": {
+          "doc:raw": "[(5,17)-(14,7)]",
+          "#9": "[(5,6)-(14,7)]",
+          "doc:structuredValue": "[(5,17)-(14,7)]"
+        },
+        "tracked-element": {
+          "#9": "amf://id#7"
+        }
+      }
+    },
+    {
+      "@id": "#22",
+      "@type": [
+        "apiContract:Example",
+        "doc:DomainElement"
+      ],
+      "doc:strict": true,
+      "doc:structuredValue": {
+        "@id": "#10"
+      },
+      "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
+      "smaps": {
+        "synthesized-field": {
+          "doc:strict": "true"
+        },
+        "lexical": {
+          "doc:raw": "[(5,17)-(14,7)]",
+          "#22": "[(5,6)-(14,7)]",
+          "doc:structuredValue": "[(5,17)-(14,7)]"
+        },
+        "tracked-element": {
+          "#22": "amf://id#20"
+        }
+      }
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:errors": {
+        "@id": "#11"
+      },
+      "core:name": "object_1",
+      "smaps": {
+        "lexical": {
+          "data:errors": "[(6,8)-(13,9)]",
+          "#10": "[(5,17)-(14,7)]"
+        }
+      }
+    },
+    {
+      "@id": "#11",
+      "@type": [
+        "data:Array",
+        "rdf:Seq",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "rdfs:member": [
+        {
+          "@id": "#12"
+        }
+      ],
+      "core:name": "errors",
+      "smaps": {
+        "lexical": {
+          "#11": "[(6,18)-(13,9)]"
+        }
+      }
+    },
+    {
+      "@id": "#12",
+      "@type": [
+        "data:Object",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:code": {
+        "@id": "#13"
+      },
+      "data:message": {
+        "@id": "#14"
+      },
+      "data:more_info": {
+        "@id": "#15"
+      },
+      "data:help": {
+        "@id": "#16"
+      },
+      "core:name": "object_3",
+      "smaps": {
+        "lexical": {
+          "data:help": "[(11,12)-(11,63)]",
+          "data:message": "[(9,12)-(9,36)]",
+          "#12": "[(7,10)-(12,11)]",
+          "data:code": "[(8,12)-(8,23)]",
+          "data:more_info": "[(10,12)-(10,116)]"
+        }
+      }
+    },
+    {
+      "@id": "#13",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "400",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "core:name": "code",
+      "smaps": {
+        "lexical": {
+          "#13": "[(8,20)-(8,23)]"
+        }
+      }
+    },
+    {
+      "@id": "#14",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "Bad Request",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "message",
+      "smaps": {
+        "lexical": {
+          "#14": "[(9,23)-(9,36)]"
+        }
+      }
+    },
+    {
+      "@id": "#15",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "The parameters are not valid.Authentication failed due to incorrect username or password.",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "more_info",
+      "smaps": {
+        "lexical": {
+          "#15": "[(10,25)-(10,116)]"
+        }
+      }
+    },
+    {
+      "@id": "#16",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "http://www.correos.es/docs/errors/PSI-012",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "help",
+      "smaps": {
+        "lexical": {
+          "#16": "[(11,20)-(11,63)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:references": [
+        {
+          "@id": "#1"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#3"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "doc:ExternalFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#2"
+      },
+      "doc:version": "2.1.0",
+      "doc:root": false
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "doc:ExternalDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:raw": "{\n  \"definitions\": {\n    \"error400\": {\n      \"type\": \"object\",\n      \"example\": {\n        \"errors\": [\n          {\n            \"code\": 400,\n            \"message\": \"Bad Request\",\n            \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\",\n            \"help\": \"http://www.correos.es/docs/errors/PSI-012\"\n          }\n        ]\n      }\n    }\n  }\n}\n",
+      "core:mediaType": "application/json"
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  }
+}
