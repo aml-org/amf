@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.NullSecurity
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, Lazy}
@@ -11,82 +10,10 @@ import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
-import amf.validations.ParserSideValidations.{
-  MissingRequiredFieldForGrantType,
-  UnknownScopeErrorSpecification,
-  UnknownSecuritySchemeErrorSpecification
-}
+import amf.validations.ParserSideValidations.{UnknownScopeErrorSpecification, MissingRequiredFieldForGrantType}
 import org.yaml.model._
 
 import scala.collection.mutable
-
-object RamlParametrizedSecuritySchemeParser {
-  def parse(producer: String => ParametrizedSecurityScheme)(node: YNode)(
-      implicit ctx: RamlWebApiContext): ParametrizedSecurityScheme = {
-    RamlParametrizedSecuritySchemeParser(node, producer).parse()
-  }
-}
-
-case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String => ParametrizedSecurityScheme)(
-    implicit ctx: RamlWebApiContext) {
-  def parse(): ParametrizedSecurityScheme = node.tagType match {
-    case YType.Null => producer("null").add(Annotations(node) += NullSecurity())
-    case YType.Map =>
-      val schemeEntry = node.as[YMap].entries.head
-      val name        = schemeEntry.key.as[YScalar].text
-      val scheme      = producer(name).add(Annotations(node))
-
-      ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
-        case Some(declaration) =>
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration)
-
-          val settings =
-            RamlSecuritySettingsParser(schemeEntry.value.as[YMap], declaration.`type`.value(), scheme).parse()
-
-          scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
-        case None =>
-          ctx.eh.violation(
-            UnknownSecuritySchemeErrorSpecification,
-            scheme.id,
-            s"Security scheme '$name' not found in declarations (and name cannot be 'null').",
-            node
-          )
-      }
-
-      scheme
-    case YType.Include =>
-      ctx.eh.violation(
-        UnknownSecuritySchemeErrorSpecification,
-        "",
-        "'securedBy' property doesn't accept !include tag, only references to security schemes.",
-        node
-      )
-      producer("invalid").add(Annotations(node))
-    case _ =>
-      val name: String = node.as[YScalar].text
-      val scheme       = producer(name).add(Annotations(node))
-
-      ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
-        case Some(declaration) =>
-          scheme.fields.setWithoutId(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations())
-          scheme
-        case None =>
-          ctx.eh.violation(
-            UnknownSecuritySchemeErrorSpecification,
-            scheme.id,
-            s"Security scheme '$name' not found in declarations.",
-            node
-          )
-          scheme
-      }
-  }
-}
-
-object RamlSecuritySettingsParser {
-  def parse(scheme: SecurityScheme)(node: YNode)(implicit ctx: RamlWebApiContext): Settings = {
-    ctx.factory.securitySettingsParser(node.as[YMap], scheme.`type`.value(), scheme).parse()
-  }
-}
 
 case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainElement with WithSettings)(
     implicit val ctx: RamlWebApiContext)
@@ -187,9 +114,15 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
 
 }
 
+object RamlSecuritySettingsParser {
+  def parse(scheme: SecurityScheme)(node: YNode)(implicit ctx: RamlWebApiContext): Settings = {
+    ctx.factory.securitySettingsParser(node.as[YMap], scheme.`type`.value(), scheme).parse()
+  }
+}
+
 class Raml10SecuritySettingsParser(map: YMap, `type`: String, scheme: DomainElement with WithSettings)(
-    implicit override val ctx: RamlWebApiContext)
-    extends RamlSecuritySettingsParser(map, `type`, scheme) {
+  implicit override val ctx: RamlWebApiContext)
+  extends RamlSecuritySettingsParser(map, `type`, scheme) {
 
   override protected def oauth2(): OAuth2Settings = {
     val settings = super.oauth2()
