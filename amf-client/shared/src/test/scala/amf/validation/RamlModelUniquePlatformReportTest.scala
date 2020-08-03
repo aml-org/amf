@@ -127,11 +127,11 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("security scheme authorizationGrant RAML 1.0") {
-    validate("/securitySchemes/raml10AuthorizationGrant.raml", Some("invalid-auth-grant-10.report"))
+    validate("/security-schemes/raml10AuthorizationGrant.raml", Some("invalid-auth-grant-10.report"))
   }
 
   test("security scheme authorizationGrant RAML 0.8") {
-    validate("/securitySchemes/raml08AuthorizationGrant.raml",
+    validate("/security-schemes/raml08AuthorizationGrant.raml",
              Some("invalid-auth-grant-08.report"),
              profile = Raml08Profile)
 
@@ -158,7 +158,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Invalid security scheme key") {
-    validate("/securitySchemes/invalid-key.raml", Some("invalid-key.report"))
+    validate("/security-schemes/invalid-key.raml", Some("invalid-key.report"))
   }
 
   test("Test null value in json when expecting scalar value") {
@@ -170,7 +170,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Security schemes with empty type") {
-    validate("securitySchemes/empty-type.raml", Some("empty-type.report"))
+    validate("security-schemes/empty-type.raml", Some("empty-type.report"))
   }
 
   test("Extension with empty extends") {

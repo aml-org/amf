@@ -60,7 +60,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Empty describe by") {
-    checkValid("securitySchemes/empty-described-by.raml")
+    checkValid("security-schemes/empty-described-by.raml")
   }
 
   test("Empty uri parameters") {

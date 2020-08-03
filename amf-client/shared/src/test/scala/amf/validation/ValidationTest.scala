@@ -149,7 +149,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val eh = DefaultParserErrorHandler.withRun()
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/securitySchemes/security1.raml", platform, RamlYamlHint, eh = eh)
+      doc <- AMFCompiler(validationsPath + "/security-schemes/security1.raml", platform, RamlYamlHint, eh = eh)
         .build()
       resolved <- Future {
         Raml10Plugin.resolve(doc, eh)
