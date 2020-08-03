@@ -453,4 +453,35 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Raml overlay with example without overloading type") {
     validate("overlays/overlay-with-example-overloading/overlay.raml", None, Raml10Profile)
   }
+
+  test("OAuth 2.0 security settings - authorization code") {
+    validate("security-schemes/oauth-2/authorization-code.raml",
+             Some("missing-authorization-code-fields.report"),
+             Raml10Profile)
+  }
+
+  test("OAuth 2.0 security settings - client credentials grant") {
+    validate("security-schemes/oauth-2/client-credentials.raml",
+             Some("missing-client-credential-fields.report"),
+             Raml10Profile)
+  }
+
+  test("OAuth 2.0 security settings - implicit grant") {
+    validate("security-schemes/oauth-2/implicit.raml", Some("missing-implicit-fields.report"), Raml10Profile)
+  }
+
+  test("OAuth 2.0 security settings - password") {
+    validate("security-schemes/oauth-2/password.raml", Some("missing-password-fields.report"), Raml10Profile)
+  }
+
+  test("OAuth 2.0 security settings - mulitple grants") {
+    validate("security-schemes/oauth-2/multiple-grants.raml",
+             Some("missing-fields-multiple-grants.report"),
+             Raml10Profile)
+  }
+
+  test("OAuth 2.0 security settings - custom setting defined in securedBy facet") {
+    validate("security-schemes/oauth-2/secured-by.raml", None, Raml10Profile)
+  }
+
 }
