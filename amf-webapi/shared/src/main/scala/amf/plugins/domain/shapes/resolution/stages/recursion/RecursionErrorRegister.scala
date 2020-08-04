@@ -19,18 +19,20 @@ class RecursionErrorRegister(errorHandler: ErrorHandler) {
   def recursionAndError(root: Shape,
                         base: Option[String],
                         s: Shape,
-                        traversal: ModelTraversalRegistry): RecursiveShape = {
+                        traversal: ModelTraversalRegistry,
+                        criteria: RegisterCriteria = DefaultRegisterCriteria()): RecursiveShape = {
     val recursion = buildRecursion(base, s)
-    recursionError(root, recursion, traversal: ModelTraversalRegistry, Some(root.id))
+    recursionError(root, recursion, traversal: ModelTraversalRegistry, Some(root.id), criteria)
   }
 
   def recursionError(original: Shape,
                      r: RecursiveShape,
                      traversal: ModelTraversalRegistry,
-                     checkId: Option[String] = None): RecursiveShape = {
+                     checkId: Option[String] = None,
+                     criteria: RegisterCriteria = DefaultRegisterCriteria()): RecursiveShape = {
 
-    val canRegister = !errorRegister.contains(r.id)
-    if (!r.supportsRecursion.option().getOrElse(false) && !traversal.avoidError(r, checkId) && canRegister) {
+    val hasNotRegisteredItYet = !errorRegister.contains(r.id)
+    if (criteria.decide(r) && !traversal.avoidError(r, checkId) && hasNotRegisteredItYet) {
       errorHandler.violation(
         RecursiveShapeSpecification,
         original.id,
@@ -42,5 +44,20 @@ class RecursionErrorRegister(errorHandler: ErrorHandler) {
       errorRegister += r.id
     } else if (traversal.avoidError(r, checkId)) r.withSupportsRecursion(true)
     r
+  }
+}
+
+trait RegisterCriteria {
+  def decide(r: RecursiveShape): Boolean
+}
+
+case class DefaultRegisterCriteria() extends RegisterCriteria {
+  override def decide(r: RecursiveShape): Boolean = !r.supportsRecursion.option().getOrElse(false)
+}
+
+case class LinkableRegisterCriteria(root: Shape, linkable: Shape) extends RegisterCriteria {
+  override def decide(r: RecursiveShape): Boolean = linkable.linkTarget match {
+    case Some(element) => element.id.equals(root.id)
+    case None          => false
   }
 }
