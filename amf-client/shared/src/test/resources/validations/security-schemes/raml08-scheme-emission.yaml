@@ -1,0 +1,8 @@
+type: OAuth 2.0
+settings:
+  authorizationUri: https://www.domain.com/1/oauth2/authorize
+  accessTokenUri: https://api.domain.com/1/oauth2/token
+  authorizationGrants:
+    - code
+    - token
+    - password

@@ -1,11 +1,14 @@
 package amf.cycle
 
 import amf.core.remote.{RamlYamlHint, Vendor}
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 class Raml08ElementCycleTest extends DomainElementCycleTest {
 
   override def basePath: String = "amf-client/shared/src/test/resources/upanddown/"
   val cyclePath: String         = "amf-client/shared/src/test/resources/cycle/raml08/"
+  val validationsPath: String   = "amf-client/shared/src/test/resources/validations/"
+  val resourcesPath: String     = "amf-client/shared/src/test/resources/"
   val vendor: Vendor            = Vendor.RAML08
 
   test("type - inlined json schema") {
@@ -46,4 +49,85 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       directory = cyclePath
     )
   }
+
+  test("security scheme") {
+    renderElement(
+      "raml08AuthorizationGrant.raml",
+      CommonExtractors.declaresIndex(0),
+      "raml08-scheme-emission.yaml",
+      RamlYamlHint,
+      directory = validationsPath + "security-schemes/"
+    )
+  }
+
+  test("parameters") {
+    renderElement(
+      "input.raml",
+      CommonExtractors.firstOperation.andThen(_.map(_.request.queryParameters.head)),
+      "param-emission.yaml",
+      RamlYamlHint,
+      directory = resourcesPath + "org/raml/api/v08/full/"
+    )
+  }
+
+  test("operation") {
+    renderElement(
+      "api.raml",
+      CommonExtractors.firstOperation,
+      "operation-emission.yaml",
+      RamlYamlHint,
+      directory = basePath + "cycle/raml08/americanflightapi/"
+    )
+  }
+
+  test("endpoint") {
+    renderElement(
+      "api.raml",
+      CommonExtractors.firstEndpoint,
+      "endpoint-emission.yaml",
+      RamlYamlHint,
+      directory = basePath + "cycle/raml08/americanflightapi/"
+    )
+  }
+
+  test("example") {
+    renderElement(
+      "api.raml",
+      CommonExtractors.firstResponse.andThen(_.map(r => r.payloads.head.schema.asInstanceOf[AnyShape].examples.head)),
+      "example-emission.yaml",
+      RamlYamlHint,
+      directory = basePath + "cycle/raml08/americanflightapi/"
+    )
+  }
+
+  test("payload") {
+    renderElement(
+      "api.raml",
+      CommonExtractors.firstResponse.andThen(_.map(r => r.payloads.head)),
+      "payload-emission.yaml",
+      RamlYamlHint,
+      directory = basePath + "cycle/raml08/americanflightapi/"
+    )
+  }
+
+  test("security requirement") {
+    renderElement(
+      "valid-raml08-oauth2.raml",
+      CommonExtractors.firstOperation.andThen(_.map(_.security(1))),
+      "requirement-emission.yaml",
+      RamlYamlHint,
+      directory = validationsPath + "security-schemes/"
+    )
+  }
+
+  test("documentation facet - creative work") {
+    renderElement(
+      "valid-raml08-oauth2.raml",
+      CommonExtractors.webapi.andThen(_.map(_.documentations.head)),
+      "documentation-emission.yaml",
+      RamlYamlHint,
+      directory = validationsPath + "security-schemes/"
+    )
+  }
+
 }

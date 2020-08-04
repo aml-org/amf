@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.async.emitters
 
 import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
@@ -28,14 +28,22 @@ class AsyncApiEndpointsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit v
   override def position(): Position = pos(f.element.annotations)
 }
 
-private class AsyncApiSingleEndpointEmitter(channel: EndPoint, ordering: SpecOrdering)(
+class AsyncApiSingleEndpointEmitter(channel: EndPoint, ordering: SpecOrdering)(
     implicit val spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
+    extends EntryEmitter
+    with PartEmitter {
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
-    val result      = ListBuffer[EntryEmitter]()
     val channelPath = channel.path.value()
-    val fs          = channel.fields
+    b.entry(
+      YNode(channelPath),
+      emit(_)
+    )
+  }
+
+  override def emit(b: YDocument.PartBuilder): Unit = {
+    val result = ListBuffer[EntryEmitter]()
+    val fs     = channel.fields
     val bindingOrphanAnnotations =
       channel.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
     fs.entry(EndPointModel.Description).foreach(f => result += ValueEmitter("description", f))
@@ -44,10 +52,7 @@ private class AsyncApiSingleEndpointEmitter(channel: EndPoint, ordering: SpecOrd
       .foreach(f => result += new AsyncApiParametersEmitter(f.arrayValues[Parameter], ordering))
     fs.entry(EndPointModel.Bindings)
       .foreach(f => result += AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
-    b.entry(
-      YNode(channelPath),
-      _.obj(traverse(ordering.sorted(result), _))
-    )
+    b.obj(traverse(ordering.sorted(result), _))
   }
 
   def operations(f: FieldEntry): Seq[AsyncApiOperationEmitter] =

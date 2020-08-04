@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.async.emitters
 
 import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
@@ -30,13 +30,21 @@ class AsyncApiServersEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit val
   override def position(): Position = pos(f.element.annotations)
 }
 
-private class AsyncApiSingleServerEmitter(server: Server, ordering: SpecOrdering)(
-    implicit val spec: OasLikeSpecEmitterContext)
+class AsyncApiSingleServerEmitter(server: Server, ordering: SpecOrdering)(implicit val spec: OasLikeSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
-    val result     = ListBuffer[EntryEmitter]()
     val serverName = server.name.value()
-    val fs         = server.fields
+    b.entry(YNode(serverName), new AsyncApiServerPartEmitter(server, ordering).emit(_))
+  }
+
+  override def position(): Position = pos(server.annotations)
+}
+
+class AsyncApiServerPartEmitter(server: Server, ordering: SpecOrdering)(implicit val spec: OasLikeSpecEmitterContext)
+    extends PartEmitter {
+  override def emit(b: YDocument.PartBuilder): Unit = {
+    val result = ListBuffer[EntryEmitter]()
+    val fs     = server.fields
 
     val bindingOrphanAnnotations =
       server.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
@@ -52,7 +60,7 @@ private class AsyncApiSingleServerEmitter(server: Server, ordering: SpecOrdering
 
     result ++= AnnotationsEmitter(server, ordering).emitters
 
-    b.entry(YNode(serverName), _.obj(traverse(ordering.sorted(result), _)))
+    b.obj(traverse(ordering.sorted(result), _))
   }
 
   override def position(): Position = pos(server.annotations)

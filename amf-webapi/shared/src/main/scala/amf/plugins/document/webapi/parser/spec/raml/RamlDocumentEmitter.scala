@@ -18,7 +18,7 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, Ram
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.oas.emitters.TagsEmitter
+import amf.plugins.document.webapi.parser.spec.oas.emitters.{LicenseEmitter, OrganizationEmitter, TagsEmitter}
 import amf.plugins.document.webapi.parser.spec.oas.{OasDeclaredParametersEmitter, OasDeclaredResponsesEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.emitters.RamlSecuritySchemesEmitters
 import amf.plugins.domain.shapes.models.CreativeWork
@@ -312,7 +312,12 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
       fs.entry(WebApiModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
 
-      fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("contact".asRamlAnnotation, f, ordering))
+      fs.entry(WebApiModel.Provider)
+        .map(
+          f =>
+            result += OrganizationEmitter("contact".asRamlAnnotation,
+                                          f.value.value.asInstanceOf[Organization],
+                                          ordering))
 
       fs.entry(WebApiModel.Tags)
         .map(f =>
@@ -320,7 +325,8 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
       fs.entry(WebApiModel.Documentations).map(f => result += UserDocumentationsEmitter(f, ordering))
 
-      fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("license".asRamlAnnotation, f, ordering))
+      fs.entry(WebApiModel.License)
+        .map(f => result += LicenseEmitter("license".asRamlAnnotation, f.value.value.asInstanceOf[License], ordering))
 
       fs.entry(WebApiModel.EndPoints).map(f => result ++= endpoints(f, ordering, vendor))
 
@@ -371,55 +377,6 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
       }
 
     }
-  }
-
-  case class LicenseEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      sourceOr(
-        f.value,
-        b.entry(
-          key,
-          _.obj { b =>
-            val fs     = f.obj.fields
-            val result = mutable.ListBuffer[EntryEmitter]()
-
-            fs.entry(LicenseModel.Url).map(f => result += ValueEmitter("url", f))
-            fs.entry(LicenseModel.Name).map(f => result += ValueEmitter("name", f))
-
-            result ++= AnnotationsEmitter(f.domainElement, ordering).emitters
-
-            traverse(ordering.sorted(result), b)
-          }
-        )
-      )
-    }
-
-    override def position(): Position = pos(f.value.annotations)
-  }
-
-  case class OrganizationEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      sourceOr(
-        f.value,
-        b.entry(
-          key,
-          _.obj { b =>
-            val fs     = f.obj.fields
-            val result = mutable.ListBuffer[EntryEmitter]()
-
-            fs.entry(OrganizationModel.Url).map(f => result += ValueEmitter("url", f))
-            fs.entry(OrganizationModel.Name).map(f => result += ValueEmitter("name", f))
-            fs.entry(OrganizationModel.Email).map(f => result += ValueEmitter("email", f))
-
-            result ++= AnnotationsEmitter(f.domainElement, ordering).emitters
-
-            traverse(ordering.sorted(result), b)
-          }
-        )
-      )
-    }
-
-    override def position(): Position = pos(f.value.annotations)
   }
 
 }

@@ -88,18 +88,35 @@ case class Raml08PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrder
           val emitters = payloads.flatMap { p =>
             Raml08PayloadEmitter(p, ordering).emitters
           }
-          emitters match {
-            case Seq(pe: PartEmitter) => pe.emit(ob)
-            case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
-              ob.obj(traverse(ordering.sorted(es.collect({ case e: EntryEmitter => e })), _))
-            case other => throw new Exception(s"IllegalTypeDeclarations found: $other")
-          }
+          Raml08PayloadsEmitter.processEmitters(ob, emitters, ordering)
         }
       }
     )
   }
 
   override def position(): Position = pos(f.value.annotations)
+}
+
+object Raml08PayloadsEmitter {
+  def processEmitters(b: PartBuilder, emitters: Seq[Emitter], ordering: SpecOrdering): Unit = {
+    emitters match {
+      case Seq(pe: PartEmitter) => pe.emit(b)
+      case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
+        b.obj(traverse(ordering.sorted(es.collect({ case e: EntryEmitter => e })), _))
+      case other => throw new Exception(s"IllegalTypeDeclarations found: $other")
+    }
+  }
+}
+
+case class Raml10PayloadPartEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends PartEmitter {
+  override def emit(b: PartBuilder): Unit = {
+    val emitters = Raml08PayloadEmitter(payload, ordering).emitters
+    Raml08PayloadsEmitter.processEmitters(b, emitters, ordering)
+  }
+
+  override def position(): Position = pos(payload.annotations)
 }
 
 case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext) {

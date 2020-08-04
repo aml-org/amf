@@ -84,51 +84,7 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
     } else {
       b.complexEntry(
         emitParameterKey(fs, _),
-        _.obj { b =>
-          val result = mutable.ListBuffer[EntryEmitter]()
-
-          fs.entry(ParameterModel.Description).map(f => result += RamlScalarEmitter("description", f))
-
-          fs.entry(ParameterModel.Required)
-            .filter(_.value.annotations.contains(classOf[ExplicitField]))
-            .map(f => result += RamlScalarEmitter("required", f))
-
-          Option(parameter.schema) match {
-            case Some(shape: AnyShape) if shape.isLink =>
-              Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references)
-                .emitters()
-                .headOption
-                .foreach { h =>
-                  result += EntryPartEmitter("type", h.asInstanceOf[PartEmitter])
-                }
-            case Some(shape: AnyShape) =>
-              result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references)
-                .entries()
-            case Some(other) =>
-              spec.eh.violation(ResolutionValidation,
-                                other.id,
-                                None,
-                                "Cannot emit parameter for a non WebAPI shape",
-                                other.position(),
-                                other.location())
-            // Emit annotations for parameter only if those have not been emitted by shape
-            case None => result ++= AnnotationsEmitter(parameter, ordering).emitters
-          }
-
-          Option(parameter.fields.getValue(ParameterModel.Binding)) match {
-            case Some(v) =>
-              v.annotations.find(classOf[ExplicitField]) match {
-                case Some(_) =>
-                  fs.entry(ParameterModel.Binding).map { f =>
-                    result += ValueEmitter("binding".asRamlAnnotation, f)
-                  }
-                case None => // ignore
-              }
-            case _ => // ignore
-          }
-
-          traverse(ordering.sorted(result), b)
-        }
+        Raml10ParameterPartEmitter(parameter, ordering, references).emit(_)
       )
     }
   }
@@ -147,6 +103,62 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
 
 }
 
+case class Raml10ParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends PartEmitter {
+
+  override def emit(b: PartBuilder): Unit = {
+    val fs = parameter.fields
+    b.obj { b =>
+      val result = mutable.ListBuffer[EntryEmitter]()
+
+      fs.entry(ParameterModel.Description).map(f => result += RamlScalarEmitter("description", f))
+
+      fs.entry(ParameterModel.Required)
+        .filter(_.value.annotations.contains(classOf[ExplicitField]))
+        .map(f => result += RamlScalarEmitter("required", f))
+
+      Option(parameter.schema) match {
+        case Some(shape: AnyShape) if shape.isLink =>
+          Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references)
+            .emitters()
+            .headOption
+            .foreach { h =>
+              result += EntryPartEmitter("type", h.asInstanceOf[PartEmitter])
+            }
+        case Some(shape: AnyShape) =>
+          result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references)
+            .entries()
+        case Some(other) =>
+          spec.eh.violation(ResolutionValidation,
+                            other.id,
+                            None,
+                            "Cannot emit parameter for a non WebAPI shape",
+                            other.position(),
+                            other.location())
+        // Emit annotations for parameter only if those have not been emitted by shape
+        case None => result ++= AnnotationsEmitter(parameter, ordering).emitters
+      }
+
+      Option(parameter.fields.getValue(ParameterModel.Binding)) match {
+        case Some(v) =>
+          v.annotations.find(classOf[ExplicitField]) match {
+            case Some(_) =>
+              fs.entry(ParameterModel.Binding).map { f =>
+                result += ValueEmitter("binding".asRamlAnnotation, f)
+              }
+            case None => // ignore
+          }
+        case _ => // ignore
+      }
+
+      traverse(ordering.sorted(result), b)
+    }
+  }
+
+  override def position(): Position = pos(parameter.annotations)
+}
+
 case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
     extends RamlParameterEmitter(parameter, ordering, references) {
@@ -154,34 +166,45 @@ case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
   override protected def emitParameter(builder: EntryBuilder): Unit = {
     builder.complexEntry(
       emitParameterKey(parameter.fields, _),
-      parameter.schema match {
-        case anyShape: AnyShape =>
-          _.obj(eb => {
-            val result = ListBuffer[EntryEmitter]()
-            Raml08TypePartEmitter(anyShape, ordering, references).emitter match {
-              case Left(p: PartEmitter) =>
-                result += new EntryEmitter {
-                  override def emit(b: EntryBuilder): Unit =
-                    b.entry(YNode("schema"), b => p.emit(b))
-
-                  override def position(): Position = p.position()
-                }
-              case Right(e: Seq[EntryEmitter]) => result ++= e
-            }
-            parameter.fields
-              .entry(ParameterModel.Required)
-              .filter(_.value.annotations.contains(classOf[ExplicitField]))
-              .map(f => result += RamlScalarEmitter("required", f))
-            traverse(ordering.sorted(result), eb)
-          })
-        case other => CommentEmitter(other, s"Cannot emit ${other.getClass.toString} type of shape in raml 08").emit
-      }
+      Raml08ParameterPartEmitter(parameter, ordering, references).emit(_)
     )
-
   }
 
   override protected def emitParameterKey(fields: Fields, builder: PartBuilder): Unit =
     ScalarEmitter(fields.entry(ParameterModel.Name).get.scalar).emit(builder)
+}
+
+case class Raml08ParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends PartEmitter {
+
+  override def emit(b: PartBuilder): Unit = {
+    parameter.schema match {
+      case anyShape: AnyShape =>
+        b.obj(eb => {
+          val result = ListBuffer[EntryEmitter]()
+          Raml08TypePartEmitter(anyShape, ordering, references).emitter match {
+            case Left(p: PartEmitter) =>
+              result += new EntryEmitter {
+                override def emit(b: EntryBuilder): Unit =
+                  b.entry(YNode("schema"), b => p.emit(b))
+
+                override def position(): Position = p.position()
+              }
+            case Right(e: Seq[EntryEmitter]) => result ++= e
+          }
+          parameter.fields
+            .entry(ParameterModel.Required)
+            .filter(_.value.annotations.contains(classOf[ExplicitField]))
+            .map(f => result += RamlScalarEmitter("required", f))
+          traverse(ordering.sorted(result), eb)
+        })
+      case other => CommentEmitter(other, s"Cannot emit ${other.getClass.toString} type of shape in raml 08").emit(b)
+    }
+
+  }
+
+  override def position(): Position = pos(parameter.annotations)
 }
 
 abstract class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -311,8 +334,10 @@ case class OasParametersEmitter(key: String,
   }
 }
 
-case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit], asHeader: Boolean)(
-    implicit val spec: OasSpecEmitterContext)
+case class ParameterEmitter(parameter: Parameter,
+                            ordering: SpecOrdering,
+                            references: Seq[BaseUnit],
+                            asHeader: Boolean)(implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
 
   private def emitLink(b: PartBuilder): Unit = {
