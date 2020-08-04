@@ -1,0 +1,61 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Hello World API"
+  },
+  "parameters": {
+    "queryParam": {
+      "name": "id",
+      "in": "query",
+      "description": "ID of the object to fetch",
+      "required": false,
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "collectionFormat": "multi"
+    },
+    "formDataParam": {
+      "name": "avatar",
+      "in": "formData",
+      "description": "The avatar of the user",
+      "required": true,
+      "type": "file"
+    },
+    "bodyParam": {
+      "name": "user",
+      "in": "body",
+      "description": "user to add to the system",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/User"
+      }
+    },
+    "headerParam": {
+      "name": "token",
+      "in": "header",
+      "description": "token to be passed as a header",
+      "required": true,
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "format": "int64"
+      },
+      "collectionFormat": "csv"
+    },
+    "pathParam": {
+      "name": "username",
+      "in": "path",
+      "description": "username to fetch",
+      "required": true,
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object"
+    }
+  },
+  "paths": {}
+}

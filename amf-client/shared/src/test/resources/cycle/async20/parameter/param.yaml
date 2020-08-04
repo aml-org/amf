@@ -1,0 +1,4 @@
+description: id of the user
+location: $message.payload#/user/id
+schema:
+  $ref: "#/components/schemas/simple-obj"

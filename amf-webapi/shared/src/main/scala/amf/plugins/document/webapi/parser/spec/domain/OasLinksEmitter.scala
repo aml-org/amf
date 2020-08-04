@@ -27,7 +27,7 @@ case class OasLinksEmitter(links: Seq[TemplatedLink],
         val emitters = links.map(
           link =>
             EntryPartEmitter(link.name.value(),
-                             OasLinkEmitter(link, ordering, references),
+                             OasLinkPartEmitter(link, ordering, references),
                              YType.Str,
                              pos(link.annotations)))
         traverse(ordering.sorted(emitters), b)
@@ -38,27 +38,21 @@ case class OasLinksEmitter(links: Seq[TemplatedLink],
   override def position(): Position = pos(annotations)
 }
 
-case class OasLinkEmitter(link: TemplatedLink, ordering: SpecOrdering, references: Seq[BaseUnit])(
+case class OasLinkPartEmitter(link: TemplatedLink, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
   override def emit(p: PartBuilder): Unit = {
     if (link.isLink) {
       link.linkTarget.foreach { l =>
-        OasTagToReferenceEmitter(l, link.linkLabel.option(), references).emit(p)
+        OasTagToReferenceEmitter(l, link.linkLabel.option()).emit(p)
       }
     } else {
-      val result = OasLinkEmitter.emitters(link, ordering, references)
-      p.obj(traverse(ordering.sorted(result), _))
+      p.obj(traverse(ordering.sorted(emitters), _))
     }
   }
 
-  override def position(): Position = pos(link.annotations)
-}
-
-object OasLinkEmitter {
-  def emitters(link: TemplatedLink, ordering: SpecOrdering, references: Seq[BaseUnit])(
-      implicit spec: OasSpecEmitterContext): ListBuffer[EntryEmitter] = {
+  val emitters: ListBuffer[EntryEmitter] = {
     val fs = link.fields
 
     val result = mutable.ListBuffer[EntryEmitter]()
@@ -82,6 +76,8 @@ object OasLinkEmitter {
     fs.entry(TemplatedLinkModel.RequestBody).map(f => result += ValueEmitter("requestBody", f))
     result
   }
+
+  override def position(): Position = pos(link.annotations)
 }
 
 case class Oas3LinkDeclarationEmitter(links: Seq[TemplatedLink], ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -90,11 +86,9 @@ case class Oas3LinkDeclarationEmitter(links: Seq[TemplatedLink], ordering: SpecO
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "links",
-      _.obj(decBuilder => {
+      _.obj(b => {
         links.foreach(link => {
-          val result = OasLinkEmitter.emitters(link, ordering, references)
-          if (result.nonEmpty)
-            decBuilder.entry(link.name.value(), _.obj(traverse(ordering.sorted(result), _)))
+          b.entry(link.name.value(), OasLinkPartEmitter(link, ordering, references).emit(_))
         })
       })
     )

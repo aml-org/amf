@@ -160,13 +160,15 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
     // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
     // validations.effective.keys.foreach(v => println(s" - $v"))
 
-    // TODO: Check the validation profile passed to JSLibraryEmitter, it contains the prefixes
-    // for the functions
-    val jsLibrary = new JSLibraryEmitter(None).emitJS(validations.effective.values.toSeq)
+    if (PlatformValidator.instance.supportsJSFunctions) {
+      // TODO: Check the validation profile passed to JSLibraryEmitter, it contains the prefixes
+      // for the functions
+      val jsLibrary = new JSLibraryEmitter(None).emitJS(validations.effective.values.toSeq)
 
-    jsLibrary match {
-      case Some(code) => PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
-      case _          => // ignore
+      jsLibrary match {
+        case Some(code) => PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
+        case _ => // ignore
+      }
     }
 
     ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: jsLibrary generated")
@@ -176,13 +178,11 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
 
     ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: Invoking platform validation")
 
-//    ValidationMutex.synchronized {
     PlatformValidator.instance.report(data, shapes, options).map {
       case report =>
         ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: validation finished")
         report
     }
-//    }
   }
 
   private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {

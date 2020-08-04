@@ -54,7 +54,8 @@ validations:
 
   get-operations-with-responses-sparql:
     message: GET operations must have a response
-    targetQuery: ?request a hydra:Operation ;
+    targetClass: hydra.Operation
+    query: ?request a hydra:Operation ;
 
 
   get-operations-with-response-js:

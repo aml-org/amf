@@ -1,0 +1,17 @@
+|-
+  {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://jsonschema.net/wip",
+    "type": "object",
+    "properties": {
+      "questionnaires": {
+        "id": "http://jsonschema.net/wip/questionnaires",
+        "type": "array",
+        "items": [{
+          "id": "http://jsonschema.net/wip/questionnaires/0",
+          "type": "object",
+          "description": "Metadata about which questionnaires apply to this WIP, and their current state. There will be one item for each questionnaire."
+        }]
+      }
+    }
+  }

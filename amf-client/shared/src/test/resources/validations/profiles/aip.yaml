@@ -1,0 +1,29 @@
+#%Validation Profile 1.0
+
+profile: AIP
+
+uses:
+  aip122: aip122lib.yaml
+  aip126: aip126lib.yaml
+
+violation:
+  - aip-122-unique-resource-names
+  - aip-122-fields-representing-resource-names
+  - aip-122-collection-resource-names
+  - aip-126-enumeration-upper-snake-case
+
+warning:
+  - aip-122-ascii-characters-resource-names
+  - aip-126-enumeration-unspecified-starting-value
+
+validations:
+
+  # AIP.122 Resource Names
+  aip-122-unique-resource-names: aip122.unique-resource-names
+  aip-122-ascii-characters-resource-names: aip122.ascii-characters-resource-names
+  aip-122-fields-representing-resource-names: aip122.fields-representing-resource-names
+  aip-122-collection-resource-names: aip122.collection-resource-names
+
+  # AIP.126 Enumerations
+  aip-126-enumeration-upper-snake-case: aip126.enumeration-upper-snake-case
+  aip-126-enumeration-unspecified-starting-value: aip126.enumeration-unspecified-starting-value

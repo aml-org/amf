@@ -11,6 +11,7 @@ import amf.plugins.domain.webapi.models.templates.ResourceType
 import amf.plugins.domain.webapi.models.{Parameter, Response, WebApi}
 import org.scalatest.AsyncFunSuite
 import amf.core.parser.Range
+import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
 
 import scala.concurrent.ExecutionContext
 
@@ -187,7 +188,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference.json")
-      assert(targets.head._2 == Range(Position(6, 5), Position(6, 28)))
+      assert(targets.head._2 == Range(Position(6, 14), Position(6, 28)))
       succeed
     }
   }
@@ -200,7 +201,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference.raml")
-      assert(targets.head._2 == Range(Position(6, 5), Position(6, 28)))
+      assert(targets.head._2 == Range(Position(6, 14), Position(6, 28)))
       succeed
     }
   }
@@ -220,7 +221,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
       assert(reftargets.size == 1)
       assert(reftargets.head._1 == s"${uri}reference.json")
-      assert(reftargets.head._2 == Range(Position(1, 6), Position(1, 29)))
+      assert(reftargets.head._2 == Range(Position(1, 15), Position(1, 29)))
 
       succeed
     }
@@ -237,6 +238,33 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       assert(targets.size == 1)
       assert(unit.references.size == 1)
       assert(targets.head._1 == unit.references.head.id)
+
+      succeed
+    }
+  }
+
+  test("Test ExternalJsonSchemaShape in JSON ref to shape in external fragment") {
+    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/ref-to-shape/api.yaml"
+    for {
+      unit <- build(uri, OasYamlHint)
+    } yield {
+      val shape = unit
+        .asInstanceOf[Document]
+        .encodes
+        .asInstanceOf[WebApi]
+        .endPoints
+        .head
+        .operations
+        .head
+        .responses
+        .head
+        .payloads
+        .head
+        .schema
+
+      val annotation = shape.annotations.find(classOf[ExternalJsonSchemaShape])
+      assert(annotation.nonEmpty)
+      assert(annotation.get.original != null)
 
       succeed
     }

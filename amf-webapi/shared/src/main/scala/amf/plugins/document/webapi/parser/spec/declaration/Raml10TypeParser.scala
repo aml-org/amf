@@ -584,8 +584,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
   private def parseTypeExpression(): Shape = {
     node.value match {
       case expression: YScalar =>
-        val shape = RamlTypeExpressionParser(adopt, Some(ast))
-          .parse(expression.text)
+        val shape = RamlTypeExpressionParser(adopt, Some(ast), expression.text)
+          .parse()
           .get
         if (name != "schema" && name != "type") adopt(shape.withName(name, nameAnnotations))
         shape
@@ -1156,9 +1156,11 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             val isTypeExpression = isPlainArrayTypeExpression(typeEntry)
             if (isTypeExpression) {
               val typeExpression = typeEntry.value.toString.replaceFirst("\\[\\]", "")
-              RamlTypeExpressionParser(items => items.adopted(shape.id)).parse(typeExpression).foreach { value =>
-                shape.withItems(value)
-              }
+              RamlTypeExpressionParser(items => items.adopted(shape.id), expression = typeExpression)
+                .parse()
+                .foreach { value =>
+                  shape.withItems(value)
+                }
             } else super.parseInheritance()
           }
           .getOrElse {
@@ -1310,7 +1312,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               val id = if (isMultipleInheritance) shape.id + i else shape.id
               node.as[YScalar].text match {
                 case RamlTypeDefMatcher.TypeExpression(s) =>
-                  RamlTypeExpressionParser(adopt, Some(node)).parse(s).get.adopted(id)
+                  RamlTypeExpressionParser(adopt, Some(node), s).parse().get.adopted(id)
                 case s if wellKnownType(s) =>
                   parseWellKnownTypeRef(s).withName(s, Annotations(entry.key)).adopted(id)
                 case s =>

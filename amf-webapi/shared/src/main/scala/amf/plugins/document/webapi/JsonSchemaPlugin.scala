@@ -34,7 +34,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
-import amf.validations.ParserSideValidations.{UnableToParseJsonSchema, MalformedJsonReference}
+import amf.validations.ParserSideValidations.{MalformedJsonReference, UnableToParseJsonSchema}
 import org.yaml.model._
 import org.yaml.parser.{JsonParser, YParser, YamlParser}
 
@@ -89,7 +89,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
           parts.tail.headOption.map(t => if (t.startsWith("/")) t.stripPrefix("/") else t)
 
         val jsonSchemaContext = getJsonSchemaContext(doc, ctx, url, ctx.options)
-        val rootAst           = getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
+        val rootAst = getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext) match {
+          case Right(value) => value.value
+          case Left(value)  => value
+        }
         Some(rootAst)
 
       case _ => None
@@ -154,7 +157,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
                          shapeId: String,
                          hashFragment: Option[String],
                          url: String,
-                         jsonSchemaContext: JsonSchemaWebApiContext): YNode = {
+                         jsonSchemaContext: JsonSchemaWebApiContext): Either[YNode, YMapEntry] = {
     val documentRoot = parsedDoc.document.node
     val rootAst = findRootNode(documentRoot, jsonSchemaContext, hashFragment).getOrElse {
       // hashFragment is always defined when return is None
@@ -162,7 +165,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
                                      shapeId,
                                      s"Cannot find path ${hashFragment.getOrElse("")} in JSON schema $url",
                                      documentRoot)
-      documentRoot
+      Left(documentRoot)
     }
 
     jsonSchemaContext.setJsonSchemaAST(documentRoot)
@@ -186,11 +189,14 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
           parts.tail.headOption.map(t => if (t.startsWith("/definitions")) t.stripPrefix("/") else t)
 
         val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url, options)
-        val rootAst           = getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
+        val rootAst = getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext) match {
+          case Right(value) => value
+          case Left(value)  => YMapEntry("schema", value)
+        }
         val parsed =
-          OasTypeParser(YMapEntry("schema", rootAst),
+          OasTypeParser(rootAst,
                         shape => shape.withId(shapeId),
-                        version = jsonSchemaContext.computeJsonSchemaVersion(rootAst))(jsonSchemaContext)
+                        version = jsonSchemaContext.computeJsonSchemaVersion(rootAst.value))(jsonSchemaContext)
             .parse() match {
             case Some(shape) =>
               shape
@@ -198,7 +204,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
               jsonSchemaContext.eh.violation(UnableToParseJsonSchema,
                                              shapeId,
                                              s"Cannot parse JSON Schema at ${document.location}",
-                                             rootAst)
+                                             rootAst.value)
               SchemaShape().withId(shapeId).withMediaType("application/json").withRaw(document.raw)
           }
         jsonSchemaContext.localJSONSchemaContext = None
@@ -212,16 +218,21 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
   }
 
-  def findRootNode(ast: YNode, ctx: JsonSchemaWebApiContext, path: Option[String]): Option[YNode] = {
+  def findRootNode(ast: YNode, ctx: JsonSchemaWebApiContext, path: Option[String]): Option[Either[YNode, YMapEntry]] =
     if (path.isDefined) {
       ctx.setJsonSchemaAST(ast)
       val res = ctx.findLocalJSONPath(path.get)
       ctx.localJSONSchemaContext = None
       res.map(_._2)
-    } else {
-      Some(ast)
-    }
-  }
+    } else Some(Left(ast))
+
+  def findRootEntry(ast: YMapEntry, ctx: JsonSchemaWebApiContext, path: Option[String]): Option[YMapEntry] =
+    if (path.isDefined) {
+      ctx.setJsonSchemaAST(ast.value)
+      val res = ctx.findLocalJSONPath(path.get)
+      ctx.localJSONSchemaContext = None
+      res.flatMap(_._2.right.toOption)
+    } else Some(ast)
 
   override protected def unparseAsYDocument(
       unit: BaseUnit,

@@ -1,0 +1,34 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.1",
+    "title": "AES Key Synchronisation",
+    "description": "A REST API for the exchange and synchronisation of AES Keys following the OpenAPI 3.0 specification"
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "OmsKey": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NewOmsKey"
+          },
+          {
+            "properties": {
+              "id": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "NewOmsKey": {
+        "properties": {
+          "deviceId": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

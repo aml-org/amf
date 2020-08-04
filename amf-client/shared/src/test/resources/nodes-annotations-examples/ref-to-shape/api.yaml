@@ -1,0 +1,15 @@
+swagger: '2.0'
+
+info:
+  title: title
+  version: 1.0.0
+
+paths:
+  /person:
+    get:
+      responses:
+        "200":
+          description: "Some description"
+          schema:
+            $ref: './fragment.yaml#/person'
+

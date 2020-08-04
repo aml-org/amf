@@ -50,10 +50,6 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 
-  test("Reference in imports with cycles (json)") {
-    assertCycles(Json, OasJsonHint)
-  }
-
   test("Reference in imports with cycles (yaml)") {
     assertCycles(Yaml, RamlYamlHint)
   }

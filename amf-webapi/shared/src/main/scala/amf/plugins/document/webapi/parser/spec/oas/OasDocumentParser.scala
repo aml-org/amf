@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
-import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, _}
+import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, OasTypeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings

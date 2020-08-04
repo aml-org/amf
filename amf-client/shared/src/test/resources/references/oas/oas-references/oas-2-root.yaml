@@ -1,0 +1,11 @@
+swagger: '2.0'
+info:
+  title: test-circular-references
+  version: 1.1.0
+definitions:
+  pet:
+    type: object
+    properties:
+      animalRef:
+        $ref: 'oas-2-ref.yaml#/definitions/animal'
+paths: {}

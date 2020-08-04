@@ -17,6 +17,16 @@ object RenderSideValidations extends Validations {
     "Default render validation"
   )
 
+  val UnknownVendor = validation(
+    "unknown-vendor",
+    "Unknown vendor provided"
+  )
+
+  val UnhandledDomainElement = validation(
+    "unhandled-element",
+    "Unhandled domain element for given vendor"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map()
 
   override val validations: List[ValidationSpecification] = List(RenderValidation)

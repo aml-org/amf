@@ -1,0 +1,15 @@
+#%Validation Profile 1.0
+
+profile: Test2 Modified
+
+violation:
+  - allowed-protocols
+
+validations:
+
+  allowed-protocols:
+    targetClass: apiContract.WebAPI
+    propertyConstraints:
+      apiContract.scheme:
+        pattern: ^http|https$
+        maxCount: 1

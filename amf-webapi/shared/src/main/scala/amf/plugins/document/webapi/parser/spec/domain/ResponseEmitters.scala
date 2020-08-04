@@ -1,15 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{SpecOrdering, EntryEmitter}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{Position, FieldEntry, Fields}
+import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.Response
-import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.emitter.raml.{RamlSpecEmitterContext, RamlScalarEmitter}
+import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -49,9 +49,9 @@ case class RamlResponsesEmitter(key: String,
     }
 }
 
-case class Raml10ResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
+case class Raml10ResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
-    extends RamlResponseEmitter(response, ordering, references) {
+    extends RamlResponsePartEmitter(response, ordering, references) {
 
   override protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
@@ -66,9 +66,21 @@ case class Raml10ResponseEmitter(response: Response, ordering: SpecOrdering, ref
 
 }
 
+case class Raml08ResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends RamlResponsePartEmitter(response, ordering, references) {}
+
+case class Raml10ResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends RamlResponseEmitter(response, ordering, references) {
+  override def partBuilder: RamlResponsePartEmitter = Raml10ResponsePartEmitter(response, ordering, references)
+}
+
 case class Raml08ResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
-    extends RamlResponseEmitter(response, ordering, references) {}
+    extends RamlResponseEmitter(response, ordering, references) {
+  override def partBuilder: RamlResponsePartEmitter = Raml08ResponsePartEmitter(response, ordering, references)
+}
 
 abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
@@ -83,6 +95,8 @@ abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, r
     result
   }
 
+  def partBuilder: RamlResponsePartEmitter
+
   override def emit(b: EntryBuilder): Unit = {
     val fs = response.fields
     sourceOr(
@@ -90,15 +104,40 @@ abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, r
       b.complexEntry(
         ScalarEmitter(fs.entry(ResponseModel.StatusCode).get.scalar).emit(_),
         p => {
-          if (response.isLink) {
-            spec.localReference(response).emit(p)
-          } else {
-            p.obj { b =>
-              traverse(ordering.sorted(emitters(fs)), b)
-            }
-          }
+          partBuilder.emit(p)
         }
       )
+    )
+  }
+
+  override def position(): Position = pos(response.annotations)
+}
+
+abstract class RamlResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends PartEmitter {
+
+  protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
+    val result = mutable.ListBuffer[EntryEmitter]()
+
+    fs.entry(ResponseModel.Description).map(f => result += RamlScalarEmitter("description", f))
+    fs.entry(RequestModel.Headers).map(f => result += RamlParametersEmitter("headers", f, ordering, references))
+    fs.entry(RequestModel.Payloads).map(f => result += spec.factory.payloadsEmitter("body", f, ordering, references))
+    result
+  }
+
+  def emit(b: PartBuilder): Unit = {
+    val fs = response.fields
+    sourceOr(
+      response.annotations, {
+        if (response.isLink) {
+          spec.localReference(response).emit(b)
+        } else {
+          b.obj { p =>
+            traverse(ordering.sorted(emitters(fs)), p)
+          }
+        }
+      }
     )
   }
 

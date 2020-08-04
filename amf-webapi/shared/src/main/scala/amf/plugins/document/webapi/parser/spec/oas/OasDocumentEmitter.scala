@@ -34,7 +34,7 @@ import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument
-import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -267,18 +267,30 @@ case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, refe
       val refUrl = OasDefinitions.appendOas3ComponentsPrefix(request.linkLabel.value(), "requestBodies")
       b.entry("requestBody", _.obj(_.entry("$ref", refUrl)))
     } else {
-      val result = Oas3RequestBodyEmitter.emitters(request, ordering, references)
-      if (result.nonEmpty)
-        b.entry("requestBody", _.obj(traverse(ordering.sorted(result), _)))
+      val partEmitter: Oas3RequestBodyPartEmitter = Oas3RequestBodyPartEmitter(request, ordering, references)
+      if (partEmitter.emitters.nonEmpty)
+        b.entry("requestBody", partEmitter.emit(_))
     }
   }
 
   override def position(): Position = pos(request.payloads.headOption.getOrElse(request).annotations)
 }
 
-object Oas3RequestBodyEmitter {
-  def emitters(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(
-      implicit spec: OasSpecEmitterContext): ListBuffer[EntryEmitter] = {
+case class Oas3RequestBodyPartEmitter(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext)
+    extends PartEmitter {
+
+  override def emit(b: PartBuilder): Unit = {
+    if (request.isLink) {
+      val refUrl = OasDefinitions.appendOas3ComponentsPrefix(request.linkLabel.value(), "requestBodies")
+      b.obj(_.entry("$ref", refUrl))
+    } else {
+      val result = emitters
+      b.obj(traverse(ordering.sorted(result), _))
+    }
+  }
+
+  val emitters: ListBuffer[EntryEmitter] = {
     val fs     = request.fields
     val result = mutable.ListBuffer[EntryEmitter]()
 
@@ -291,6 +303,8 @@ object Oas3RequestBodyEmitter {
     }
     result
   }
+
+  override def position(): Position = pos(request.payloads.headOption.getOrElse(request).annotations)
 }
 
 case class Oas3RequestBodyDeclarationsEmitter(requests: Seq[Request],
@@ -303,9 +317,9 @@ case class Oas3RequestBodyDeclarationsEmitter(requests: Seq[Request],
       "requestBodies",
       _.obj(decBuilder => {
         requests.foreach(request => {
-          val result = Oas3RequestBodyEmitter.emitters(request, ordering, references)
-          if (result.nonEmpty)
-            decBuilder.entry(request.name.value(), _.obj(traverse(ordering.sorted(result), _)))
+          val partEmitter: Oas3RequestBodyPartEmitter = Oas3RequestBodyPartEmitter(request, ordering, references)
+          if (partEmitter.emitters.nonEmpty)
+            decBuilder.entry(request.name.value(), partEmitter.emit(_))
         })
       })
     )

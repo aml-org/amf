@@ -9,19 +9,16 @@ import org.reflections.Reflections
 object ModelExporter {
 
   def exportText(startingModels: List[Obj] = getModelsByReflection): String = {
-//    println(s"Starting model export...")
-    val models = ModelTraverser.traverse(startingModels, new Context())
-//    println("Traversed depended model...")
+    val models     = ModelTraverser.traverse(startingModels, new Context())
     val exportable = ExportableModelAdapter.adapt(models)
     MarkdownExporter.exportToMarkdown("AMF Model Documentation", exportable)
   }
 
   def exportTo(path: String, startingModels: List[Obj] = getModelsByReflection): Unit = {
-    val exportedText = exportText(getModelsByReflection)
+    val exportedText = exportText(startingModels)
     withWriter(path) { writer =>
       writer.write(exportedText)
     }
-//    println("Exported OK...")
   }
 
   def getModelsByReflection: List[Obj] = {

@@ -1,0 +1,6 @@
+definitions:
+  animal:
+    type: object
+    properties:
+      petRef:
+        $ref: 'oas-3-root.yaml#/components/schemas/pet'

@@ -1,0 +1,19 @@
+#%Library / Validation Profile 1.0
+
+validations:
+
+  enumeration-upper-snake-case:
+    message: All enum values must use UPPER_SNAKE_CASE
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraints:
+      shacl.in / (rdfs._1 | rdfs._2 | rdfs._3 | rdfs._4 | rdfs._5 | rdfs._6 | rdfs._7 | rdfs._8 | rdfs._9) / data.value:
+        pattern: ^[A-Z][A-Z0-9]*(_[A-Z][A-Z0-9]*)*$
+      shacl.in / rdfs._10:
+        maxCount: 0
+
+  enumeration-unspecified-starting-value:
+    message: The first value of the enum should be the name of the enum itself followed by the suffix _UNSPECIFIED.
+    targetClass: raml-shapes.ScalarShape
+    propertyConstraints:
+      shacl.in / rdfs._1 / data.value:
+        pattern: ^[A-Z][A-Z0-9]*(_[A-Z][A-Z0-9]*)*_UNSPECIFIED$

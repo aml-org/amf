@@ -40,7 +40,7 @@ abstract class OasLikeWebApiContext(loc: String,
 
   val factory: OasLikeSpecVersionFactory
 
-  protected def makeCopy(): OasLikeWebApiContext
+  def makeCopy(): OasLikeWebApiContext
   private def makeCopyWithJsonPointerContext() = {
     val copy = makeCopy()
     copy.jsonSchemaRefGuide = this.jsonSchemaRefGuide

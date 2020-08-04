@@ -20,6 +20,7 @@ import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{
+  OasTypeParser,
   Raml08TypeParser,
   Raml10TypeParser,
   RamlTypeSyntax,
@@ -131,8 +132,9 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
                 parameter.withSchema(schema)
 
               case Right(ref) if isTypeExpression(ref.text) =>
-                RamlTypeExpressionParser(shape => shape.withName("schema").adopted(parameter.id))
-                  .parse(ref.text) match {
+                RamlTypeExpressionParser(shape => shape.withName("schema").adopted(parameter.id),
+                                         expression = ref.text)
+                  .parse() match {
                   case Some(schema) => parameter.withSchema(schema)
                   case _ =>
                     ctx.eh.violation(UnresolvedReference,
@@ -384,7 +386,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
       payload,
       "formData",
       () => {
-        OasTypeParser(
+        new OasTypeParser(
           entryOrNode,
           "schema",
           map,

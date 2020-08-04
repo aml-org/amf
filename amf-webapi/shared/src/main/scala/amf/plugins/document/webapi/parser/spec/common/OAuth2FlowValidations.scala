@@ -16,10 +16,15 @@ object OAuth2FlowValidations {
   val scopes: FlowField           = FlowField("scopes", OAuth2FlowModel.Scopes)
 
   val requiredFieldsPerFlow: Map[String, ParticularFlow] = Seq(
+    // oas20 & 0as30
     ParticularFlow("implicit", List(authorizationUrl, scopes)),
     ParticularFlow("password", List(tokenUrl, scopes)),
+    // oas30
     ParticularFlow("clientCredentials", List(tokenUrl, scopes)),
-    ParticularFlow("authorizationCode", List(authorizationUrl, tokenUrl, scopes))
+    ParticularFlow("authorizationCode", List(authorizationUrl, tokenUrl, scopes)),
+    // oas20
+    ParticularFlow("application", List(tokenUrl, scopes)),
+    ParticularFlow("accessCode", List(authorizationUrl, tokenUrl, scopes))
   ).map(x => (x.name, x)).toMap
 
   def validateFlowFields(flow: OAuth2Flow, errorHandler: ErrorHandler): Unit = {
@@ -29,7 +34,10 @@ object OAuth2FlowValidations {
       val missingFields =
         requiredFlowsOption.get.requiredFields.filter(flowField => flow.fields.entry(flowField.field).isEmpty)
       missingFields.foreach { flowField =>
-        errorHandler.violation(MissingOAuthFlowField, flow.id, s"Missing ${flowField.name} for $flowName flow")
+        {
+          val message = s"Missing ${flowField.name} for $flowName flow"
+          errorHandler.violation(MissingOAuthFlowField, flow.id, message)
+        }
       }
     }
   }
