@@ -12,27 +12,54 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas3SpecEmitterContext,
   OasSpecEmitterContext
 }
-import amf.plugins.document.webapi.parser.spec.declaration.AnnotationEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationEmitter, OasCreativeWorkEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypePartEmitter
 import amf.plugins.document.webapi.parser.spec.domain.{
+  ExampleValuesEmitter,
   Oas3ExampleValuesPartEmitter,
   OasCallbackEmitter,
   OasLinkPartEmitter,
+  OasPayloadEmitter,
   OasResponsePartEmitter,
+  OasServerEmitter,
   ParameterEmitter,
   PayloadAsParameterEmitter
 }
-import amf.plugins.document.webapi.parser.spec.oas.Oas3RequestBodyPartEmitter
-import amf.plugins.domain.shapes.models.Example
+import amf.plugins.document.webapi.parser.spec.oas.{
+  EndPointPartEmitter,
+  Oas3RequestBodyPartEmitter,
+  OasLikeSecuritySchemeTypeMappings
+}
+import amf.plugins.document.webapi.parser.spec.oas.emitters.{
+  LicensePartEmitter,
+  Oas3SecuritySchemeEmitter,
+  OasSecuritySchemeEmitter,
+  OrganizationPartEmitter,
+  TagEmitter
+}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
-import amf.plugins.domain.webapi.models.{Callback, Parameter, Payload, Request, Response, TemplatedLink}
+import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
+import amf.plugins.domain.webapi.models.{
+  Callback,
+  EndPoint,
+  License,
+  Organization,
+  Parameter,
+  Payload,
+  Request,
+  Response,
+  Server,
+  Tag,
+  TemplatedLink
+}
 
 case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) extends OasEmitterFactory {
 
   override def payloadEmitter(p: Payload): Option[PartEmitter] = {
     if (isParamPayload(p))
       Some(PayloadAsParameterEmitter(p, SpecOrdering.Lexical, Nil))
-    else None
+    else Some(OasPayloadEmitter(p, SpecOrdering.Lexical, Nil))
   }
 
   private def isParamPayload(p: Payload) = {
@@ -44,6 +71,15 @@ case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) exten
       })
       .isDefined
   }
+
+  override def securitySchemeEmitter(s: SecurityScheme): Option[PartEmitter] =
+    Some(
+      new OasSecuritySchemeEmitter(s,
+                                   OasLikeSecuritySchemeTypeMappings.mapsTo(ctx.vendor, s.`type`.value()),
+                                   SpecOrdering.Lexical))
+
+  override def exampleEmitter(example: Example): Option[PartEmitter] =
+    Some(ExampleValuesEmitter(example, SpecOrdering.Lexical))
 }
 
 object Oas20EmitterFactory {
@@ -64,6 +100,15 @@ case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) exten
 
   override def requestEmitter(r: Request): Option[PartEmitter] =
     Some(Oas3RequestBodyPartEmitter(r, SpecOrdering.Lexical, Nil))
+
+  override def securitySchemeEmitter(s: SecurityScheme): Option[PartEmitter] =
+    Some(
+      Oas3SecuritySchemeEmitter(s,
+                                OasLikeSecuritySchemeTypeMappings.mapsTo(ctx.vendor, s.`type`.value()),
+                                SpecOrdering.Lexical))
+
+  override def payloadEmitter(p: Payload): Option[PartEmitter] =
+    Some(OasPayloadEmitter(p, SpecOrdering.Lexical, Nil))
 }
 
 object Oas30EmitterFactory {
@@ -91,14 +136,33 @@ trait OasEmitterFactory extends OasLikeEmitterFactory {
 
   override def responseEmitter(r: Response): Option[PartEmitter] =
     Some(OasResponsePartEmitter(r, SpecOrdering.Lexical, Nil))
+
+  override def serverEmitter(s: Server): Option[PartEmitter] = Some(OasServerEmitter(s, SpecOrdering.Lexical))
+
+  override def endpointEmitter(e: EndPoint): Option[PartEmitter] =
+    Some(EndPointPartEmitter(e, SpecOrdering.Lexical, Nil))
 }
 
 trait OasLikeEmitterFactory extends DomainElementEmitterFactory {
 
   implicit val ctx: OasLikeSpecEmitterContext
 
-  override def typeEmitter(s: Shape): Option[PartEmitter] = {
+  override def typeEmitter(s: Shape): Option[PartEmitter] =
     Some(OasTypePartEmitter(s, SpecOrdering.Lexical, references = Nil))
-  }
 
+  override def parametrizedSecuritySchemeEmitter(s: ParametrizedSecurityScheme): Option[PartEmitter] =
+    Some(ctx.factory.parametrizedSecurityEmitter(s, SpecOrdering.Lexical))
+
+  override def securityRequirementEmitter(s: SecurityRequirement): Option[PartEmitter] =
+    Some(ctx.factory.securityRequirementEmitter(s, SpecOrdering.Lexical))
+
+  override def creativeWorkEmitter(c: CreativeWork): Option[PartEmitter] =
+    Some(OasCreativeWorkEmitter(c, SpecOrdering.Lexical))
+
+  override def licenseEmitter(l: License): Option[PartEmitter] = Some(LicensePartEmitter(l, SpecOrdering.Lexical))
+
+  override def organizationEmitter(o: Organization): Option[PartEmitter] =
+    Some(OrganizationPartEmitter(o, SpecOrdering.Lexical))
+
+  override def tagEmitter(t: Tag): Option[PartEmitter] = Some(TagEmitter(t, SpecOrdering.Lexical))
 }

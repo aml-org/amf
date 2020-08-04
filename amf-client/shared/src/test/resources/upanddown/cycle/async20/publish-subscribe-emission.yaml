@@ -1,0 +1,19 @@
+description: some channel
+publish:
+  operationId: some unique id
+  summary: some summary
+  description: some description
+  tags:
+    -
+      name: some name
+      description: description of tag
+  externalDocs:
+    url: www.some-url.com
+  message:
+    payload:
+      type: string
+subscribe:
+  operationId: subscribe operation
+  message:
+    payload:
+      type: string

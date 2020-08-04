@@ -8,11 +8,26 @@ import amf.plugins.document.webapi.parser.spec.async.emitters.{
   AsyncApiBindingsPartEmitter,
   AsyncApiCorrelationIdContentEmitter,
   AsyncApiMessageContentEmitter,
+  AsyncApiServerPartEmitter,
+  AsyncApiSingleEndpointEmitter,
   AsyncApiSingleParameterPartEmitter,
-  AsyncOperationPartEmitter
+  AsyncOperationPartEmitter,
+  AsyncSingleSchemePartEmitter
 }
-import amf.plugins.domain.webapi.models.{CorrelationId, Message, Operation, Parameter, Request, Response}
+import amf.plugins.document.webapi.parser.spec.domain.ExampleValuesEmitter
+import amf.plugins.domain.shapes.models.Example
+import amf.plugins.domain.webapi.models.{
+  CorrelationId,
+  EndPoint,
+  Message,
+  Operation,
+  Parameter,
+  Request,
+  Response,
+  Server
+}
 import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
+import amf.plugins.domain.webapi.models.security.SecurityScheme
 
 case class AsyncEmitterFactory()(implicit val ctx: Async20SpecEmitterContext) extends OasLikeEmitterFactory {
 
@@ -42,6 +57,18 @@ case class AsyncEmitterFactory()(implicit val ctx: Async20SpecEmitterContext) ex
 
   private def bindingsEmitter(element: DomainElement): Option[PartEmitter] =
     Some(AsyncApiBindingsPartEmitter(element, SpecOrdering.Lexical, Nil))
+
+  override def serverEmitter(s: Server): Option[PartEmitter] =
+    Some(new AsyncApiServerPartEmitter(s, SpecOrdering.Lexical))
+
+  override def securitySchemeEmitter(s: SecurityScheme): Option[PartEmitter] =
+    Some(AsyncSingleSchemePartEmitter(s, SpecOrdering.Lexical))
+
+  override def exampleEmitter(example: Example): Option[PartEmitter] =
+    Some(ExampleValuesEmitter(example, SpecOrdering.Lexical))
+
+  override def endpointEmitter(e: EndPoint): Option[PartEmitter] =
+    Some(new AsyncApiSingleEndpointEmitter(e, SpecOrdering.Lexical))
 }
 
 object AsyncEmitterFactory {

@@ -1,14 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.async.emitters
 
 import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.Oas3OAuth2SettingsEmitters
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
-import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 
 import scala.collection.mutable.ListBuffer
@@ -34,17 +34,28 @@ private case class AsyncSingleSchemeEmitter(scheme: SecurityScheme, ordering: Sp
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       scheme.name.value(),
-      _.obj { emitter =>
-        val result = ListBuffer[EntryEmitter]()
-        val fs     = scheme.fields
-        fs.entry(SecuritySchemeModel.Type)
-          .foreach(f => result += MapEntryEmitter("type", scheme.name.value(), position = pos(f.value.annotations)))
-        fs.entry(SecuritySchemeModel.Description).foreach(f => result += ValueEmitter("description", f))
-        fs.entry(SecuritySchemeModel.Settings)
-          .foreach(_ => result ++= new AsyncSecuritySettingsEmitter(scheme.settings, ordering).emitters)
-        traverse(ordering.sorted(result), emitter)
-      }
+      AsyncSingleSchemePartEmitter(scheme, ordering).emit(_)
     )
+  }
+
+  override def position(): Position = pos(scheme.annotations)
+}
+
+case class AsyncSingleSchemePartEmitter(scheme: SecurityScheme, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends PartEmitter {
+
+  override def emit(b: PartBuilder): Unit = {
+    b.obj { emitter =>
+      val result = ListBuffer[EntryEmitter]()
+      val fs     = scheme.fields
+      fs.entry(SecuritySchemeModel.Type)
+        .foreach(f => result += MapEntryEmitter("type", scheme.name.value(), position = pos(f.value.annotations)))
+      fs.entry(SecuritySchemeModel.Description).foreach(f => result += ValueEmitter("description", f))
+      fs.entry(SecuritySchemeModel.Settings)
+        .foreach(_ => result ++= new AsyncSecuritySettingsEmitter(scheme.settings, ordering).emitters)
+      traverse(ordering.sorted(result), emitter)
+    }
   }
 
   override def position(): Position = pos(scheme.annotations)
