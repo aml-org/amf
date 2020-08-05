@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#10",
+      "@id": "#9",
       "@type": [
         "apiContract:WebAPI",
         "doc:RootDomainElement",
@@ -12,12 +12,12 @@
       "core:version": "0.1",
       "smaps": {
         "source-vendor": {
-          "#10": "OAS 3.0"
+          "#9": "OAS 3.0"
         },
         "lexical": {
           "core:version": "[(4,4)-(4,20)]",
           "core:name": "[(5,4)-(5,38)]",
-          "#10": "[(1,0)-(34,1)]",
+          "#9": "[(1,0)-(34,1)]",
           "core:description": "[(6,4)-(6,120)]"
         }
       }
@@ -39,7 +39,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#10"
+        "@id": "#9"
       },
       "doc:version": "2.1.0",
       "doc:root": true
@@ -58,7 +58,7 @@
           "@id": "#2"
         },
         {
-          "@id": "#7"
+          "@id": "#6"
         }
       ],
       "smaps": {
@@ -90,7 +90,7 @@
       "shacl:name": "NewOmsKey",
       "smaps": {
         "resolved-link-target": {
-          "#2": "amf://id#6"
+          "#2": "amf://id#2"
         },
         "declared-element": {
           "#2": ""
@@ -105,7 +105,7 @@
       }
     },
     {
-      "@id": "#7",
+      "@id": "#6",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -116,13 +116,13 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#8"
+          "@id": "#7"
         }
       ],
       "shacl:name": "item1",
       "smaps": {
         "lexical": {
-          "#7": "[(16,10)-(22,11)]"
+          "#6": "[(16,10)-(22,11)]"
         }
       }
     },
@@ -151,7 +151,7 @@
       }
     },
     {
-      "@id": "#8",
+      "@id": "#7",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -164,13 +164,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#9"
+        "@id": "#8"
       },
       "shacl:minCount": 0,
       "shacl:name": "id",
       "smaps": {
         "lexical": {
-          "#8": "[(18,14)-(20,15)]"
+          "#7": "[(18,14)-(20,15)]"
         }
       }
     },
@@ -200,7 +200,7 @@
       }
     },
     {
-      "@id": "#9",
+      "@id": "#8",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -216,11 +216,11 @@
       "shacl:name": "id",
       "smaps": {
         "type-property-lexical-info": {
-          "#9": "[(19,16)-(19,22)]"
+          "#8": "[(19,16)-(19,22)]"
         },
         "lexical": {
           "shacl:datatype": "[(19,16)-(19,33)]",
-          "#9": "[(18,14)-(20,15)]"
+          "#8": "[(18,14)-(20,15)]"
         }
       }
     }

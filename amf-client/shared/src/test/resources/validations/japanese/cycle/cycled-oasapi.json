@@ -69,7 +69,9 @@
           "type": "integer",
           "format": "int32"
         },
-        "車両詳細": {}
+        "車両詳細": {
+          "$ref": "#/definitions/車両詳細"
+        }
       },
       "example": {
         "約マイル": "約マイル",

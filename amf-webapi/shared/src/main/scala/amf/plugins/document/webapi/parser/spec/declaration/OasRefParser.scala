@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations.ExternalFragmentRef
+import amf.core.metamodel.domain.LinkableElementModel
 import amf.core.model.domain.{Linkable, Shape}
 import amf.core.parser._
 import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
@@ -77,46 +78,58 @@ class OasRefParser(map: YMap,
           s.link(ref, annots).asInstanceOf[AnyShape].withName(name, Annotations()).withSupportsRecursion(true)
         Some(copied)
       // Local reference
-      case None =>
-        val tmpShape = UnresolvedShape(ref, map).withName(text, Annotations()).withSupportsRecursion(true)
+      case None if isOasContext && isDeclaration(ref) && ctx.isMainFileContext =>
+        val shape = AnyShape(ast).withName(name, nameAnnotations)
+        val tmpShape = UnresolvedShape(Fields(),
+                                       Annotations(map),
+                                       ref,
+                                       None,
+                                       Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
+                                       shouldLink = false).withName(text, Annotations()).withSupportsRecursion(true)
         tmpShape.unresolved(text, e, "warning")(ctx)
         tmpShape.withContext(ctx)
         adopt(tmpShape)
+        shape.withLinkTarget(tmpShape).withLinkLabel(text)
+        adopt(shape)
+        Some(shape)
+      case None =>
+        val tmpShape: UnresolvedShape = createAndRegisterUnresolvedShape(e, ref, text)
+        ctx.registerJsonSchema(ref, tmpShape)
+        ctx.findLocalJSONPath(r) match {
+          case Some((_, shapeNode)) =>
+            val entry = shapeNode match {
+              case Right(e) => e
+              case Left(n)  => YMapEntry(name, n)
+            }
+            OasTypeParser(entry, adopt, version)
+              .parse()
+              .map { shape =>
+                ctx.futureDeclarations.resolveRef(text, shape)
+                ctx.registerJsonSchema(ref, shape)
+                if (ctx.linkTypes || ref.equals("#"))
+                  shapeNode match {
+                    case Right(entry) =>
+                      shape
+                        .link(text, Annotations(ast))
+                        .asInstanceOf[AnyShape]
+                        .withName(entry.key.asScalar.map(_.text).getOrElse(name), Annotations(entry.key))
+                    case _ =>
+                      shape.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
+                  } else shape
+              } orElse { Some(tmpShape) }
 
-        if (isOasContext && isDeclaration(ref) && ctx.isMainFileContext) {
-          val shape = AnyShape(ast).withName(name, nameAnnotations)
-          shape.withLinkTarget(tmpShape).withLinkLabel(text)
-          adopt(shape)
-          Some(shape)
-        } else {
-          ctx.registerJsonSchema(ref, tmpShape)
-          ctx.findLocalJSONPath(r) match {
-            case Some((_, shapeNode)) =>
-              val entry = shapeNode match {
-                case Right(e) => e
-                case Left(n)  => YMapEntry(name, n)
-              }
-              OasTypeParser(entry, adopt, version)
-                .parse()
-                .map { shape =>
-                  ctx.futureDeclarations.resolveRef(text, shape)
-                  ctx.registerJsonSchema(ref, shape)
-                  if (ctx.linkTypes || ref.equals("#"))
-                    shapeNode match {
-                      case Right(entry) =>
-                        shape
-                          .link(text, Annotations(ast))
-                          .asInstanceOf[AnyShape]
-                          .withName(entry.key.asScalar.map(_.text).getOrElse(name), Annotations(entry.key))
-                      case _ =>
-                        shape.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
-                    } else shape
-                } orElse { Some(tmpShape) }
-
-            case None => Some(tmpShape)
-          }
+          case None => Some(tmpShape)
         }
+
     }
+  }
+
+  private def createAndRegisterUnresolvedShape(e: YMapEntry, ref: String, text: String) = {
+    val tmpShape = UnresolvedShape(ref, map).withName(text, Annotations()).withSupportsRecursion(true)
+    tmpShape.unresolved(text, e, "warning")(ctx)
+    tmpShape.withContext(ctx)
+    adopt(tmpShape)
+    tmpShape
   }
 
   def safeAdoption(s: AnyShape): Unit = {

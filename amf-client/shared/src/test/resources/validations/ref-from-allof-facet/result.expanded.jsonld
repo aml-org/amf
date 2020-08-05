@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#10",
+        "@id": "#9",
         "@type": [
           "apiContract:WebAPI",
           "doc:RootDomainElement",
@@ -32,12 +32,12 @@
         ],
         "smaps": {
           "source-vendor": {
-            "#10": "OAS 3.0"
+            "#9": "OAS 3.0"
           },
           "lexical": {
             "core:version": "[(4,4)-(4,20)]",
             "core:name": "[(5,4)-(5,38)]",
-            "#10": "[(1,0)-(34,1)]",
+            "#9": "[(1,0)-(34,1)]",
             "core:description": "[(6,4)-(6,120)]"
           }
         }
@@ -151,7 +151,7 @@
             ],
             "smaps": {
               "resolved-link-target": {
-                "#2": "amf://id#6"
+                "#2": "amf://id#2"
               },
               "declared-element": {
                 "#2": ""
@@ -166,7 +166,7 @@
             }
           },
           {
-            "@id": "#7",
+            "@id": "#6",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -181,7 +181,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#8",
+                "@id": "#7",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -195,7 +195,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#9",
+                    "@id": "#8",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -215,11 +215,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#9": "[(19,16)-(19,22)]"
+                        "#8": "[(19,16)-(19,22)]"
                       },
                       "lexical": {
                         "shacl:datatype": "[(19,16)-(19,33)]",
-                        "#9": "[(18,14)-(20,15)]"
+                        "#8": "[(18,14)-(20,15)]"
                       }
                     }
                   }
@@ -236,7 +236,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#8": "[(18,14)-(20,15)]"
+                    "#7": "[(18,14)-(20,15)]"
                   }
                 }
               }
@@ -248,7 +248,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#7": "[(16,10)-(22,11)]"
+                "#6": "[(16,10)-(22,11)]"
               }
             }
           }
@@ -347,7 +347,7 @@
         ],
         "smaps": {
           "resolved-link-target": {
-            "#2": "amf://id#6"
+            "#2": "amf://id#2"
           },
           "declared-element": {
             "#2": ""
