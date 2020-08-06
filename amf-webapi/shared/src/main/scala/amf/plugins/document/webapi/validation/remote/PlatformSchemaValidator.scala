@@ -139,7 +139,7 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
 
   private def generateSchemaString(dataType: DataTypeFragment): Option[CharSequence] = {
     val renderOptions =
-      new ShapeRenderOptions().withoutDocumentation.withSchemaVersion(JsonSchemaDraft7)
+      new ShapeRenderOptions().withoutDocumentation.withCompactedEmission.withSchemaVersion(JsonSchemaDraft7)
     val declarations = List(dataType.encodes)
     val emitter      = JsonSchemaEmitter(dataType.encodes, declarations, options = renderOptions)
     val document     = SyamlParsedDocument(document = emitter.emitDocument())
