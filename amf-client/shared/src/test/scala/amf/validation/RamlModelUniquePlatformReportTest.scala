@@ -454,6 +454,20 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("overlays/overlay-with-example-overloading/overlay.raml", None, Raml10Profile)
   }
 
+  // OAuth 1.0
+  test("Missing requestTokenUri field in OAuth 1.0 security type") {
+    validate("/raml/oauth1/missing-requestTokenUri-oauth1.raml", Some("missing-requestTokenUri-oauth1.report"))
+  }
+
+  test("Missing authorizationUri field in OAuth 1.0 security type") {
+    validate("/raml/oauth1/missing-authorizationUri-oauth1.raml", Some("missing-authorizationUri-oauth1.report"))
+  }
+
+  test("Missing tokenCredentialsUri field in OAuth 1.0 security type") {
+    validate("/raml/oauth1/missing-tokenCredentialsUri-oauth1.raml", Some("missing-tokenCredentialsUri-oauth1.report"))
+  }
+
+  // OAuth 2.0
   test("OAuth 2.0 security settings - authorization code") {
     validate("security-schemes/oauth-2/authorization-code.raml",
              Some("missing-authorization-code-fields.report"),
