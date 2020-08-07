@@ -165,6 +165,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   }
 
   protected def expandTuple(tuple: TupleShape): TupleShape = {
+    expandInherits(tuple)
     expandLogicalConstraints(tuple)
     val oldItems = tuple.fields.getValue(TupleShapeModel.TupleItems)
     if (Option(oldItems).isDefined) {
