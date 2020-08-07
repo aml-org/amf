@@ -1,0 +1,8 @@
+oneOf:
+  -
+    $ref: "#/components/schemas/APIResponse"
+  -
+    not:
+      type: string
+  -
+    type: integer

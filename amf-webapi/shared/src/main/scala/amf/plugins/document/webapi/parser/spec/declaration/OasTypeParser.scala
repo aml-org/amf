@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, ExternalFragmentRef, NilUnion, SynthesizedField}
+import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
-import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
@@ -14,15 +13,14 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext}
+import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser}
-import amf.plugins.document.webapi.parser.spec.declaration.utils.JsonSchemaParsingHelper
 import amf.plugins.document.webapi.parser.spec.domain.{
+  ExampleDataParser,
   ExampleOptions,
   NodeDataNodeParser,
-  ExampleDataParser,
   RamlExamplesParser
 }
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
@@ -32,7 +30,6 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.models.IriTemplateMapping
-import amf.plugins.features.validation.CoreValidations
 import amf.validation.DialectValidations.InvalidUnionType
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
@@ -59,10 +56,25 @@ object OasTypeParser {
       entry.key.as[YScalar].text,
       entry.value.as[YMap],
       adopt,
-      if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion("schema")(ctx.eh)
-      else if (ctx.vendor == Vendor.ASYNC20) JSONSchemaDraft7SchemaVersion
-      else OAS20SchemaVersion("schema")(ctx.eh)
+      getSchemaVersion(ctx)
     )
+
+  def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit)(
+      implicit ctx: OasLikeWebApiContext): OasTypeParser =
+    new OasTypeParser(
+      Left(entry),
+      entry.key.as[YScalar].text,
+      entry.value.as[YMap],
+      adopt,
+      getSchemaVersion(ctx),
+      true
+    )
+
+  private def getSchemaVersion(ctx: OasLikeWebApiContext) = {
+    if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion("schema")(ctx.eh)
+    else if (ctx.vendor == Vendor.ASYNC20) JSONSchemaDraft7SchemaVersion
+    else OAS20SchemaVersion("schema")(ctx.eh)
+  }
 
   def apply(node: YNode, name: String, adopt: Shape => Unit, version: JSONSchemaVersion)(
       implicit ctx: OasLikeWebApiContext): OasTypeParser =
@@ -76,7 +88,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                          name: String,
                          map: YMap,
                          adopt: Shape => Unit,
-                         version: JSONSchemaVersion)(implicit val ctx: OasLikeWebApiContext)
+                         version: JSONSchemaVersion,
+                         isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext)
     extends OasSpecParser {
 
   private val ast: YPart = entryOrNode match {
@@ -159,7 +172,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     detectDependency()
       .orElse(detectType())
       .orElse(detectObjectProperties())
-      .orElse(detectUnion())
+      .orElse(detectAmfUnion())
       .orElse(detectItemProperties())
       .orElse(detectNumberProperties())
       .orElse(detectStringProperties())
@@ -205,14 +218,14 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   private def detectDependency(): Option[TypeDef] = map.key("$ref").map(_ => LinkType)
 
-  private def detectUnion(): Option[TypeDef.UnionType.type] = map.key("x-amf-union").map(_ => UnionType)
+  private def detectAmfUnion(): Option[TypeDef.UnionType.type] = map.key("x-amf-union").map(_ => UnionType)
 
   private def detectType(): Option[TypeDef] = map.key("type").flatMap { e =>
-    val t      = e.value.as[YScalar].text
-    val f      = map.key("format").flatMap(e => e.value.toOption[YScalar].map(_.text)).getOrElse("")
-    val result = matchType(t, f, UndefinedType)
+    val typeText          = e.value.as[YScalar].text
+    val formatTextOrEmpty = map.key("format").flatMap(e => e.value.toOption[YScalar].map(_.text)).getOrElse("")
+    val result            = matchType(typeText, formatTextOrEmpty, UndefinedType)
     if (result == UndefinedType) {
-      ctx.eh.violation(InvalidJsonSchemaType, "", s"Invalid type $t", e.value)
+      ctx.eh.violation(InvalidJsonSchemaType, "", s"Invalid type $typeText", e.value)
       None
     } else Some(result)
   }
@@ -338,13 +351,20 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           ctx.registerJsonSchema(id, shape)
         }
       }
+    } else if (isOas && isDeclaration && ctx.isMainFileContext && shape.name.option().isDefined) {
+      val localRef = buildLocalRef(shape.name.option().get)
+      val fullRef  = ctx.loc + localRef
+      ctx.registerJsonSchema(fullRef, shape)
+    }
+
+    def buildLocalRef(name: String) = ctx match {
+      case _: Oas3WebApiContext    => s"#/components/schemas/$name"
+      case _: Async20WebApiContext => s"#/components/schemas/$name"
+      case _                       => s"#/definitions/$name"
     }
   }
 
-  private def parseUnionType(): UnionShape = {
-
-    UnionShapeParser(entryOrNode, name).parse()
-  }
+  private def parseUnionType(): UnionShape = UnionShapeParser(entryOrNode, name).parse()
 
   trait CommonScalarParsingLogic {
     def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): TypeDef = {
@@ -462,7 +482,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(s"item$index"), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/or/" + index), version).parse()
+                    OasTypeParser(entry, item => item.adopted(shape.id + "/or/" + index), version)
+                      .parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -491,7 +512,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 .map {
                   case (node, index) =>
                     val entry = YMapEntry(YNode(s"item$index"), node)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/and/" + index), version).parse()
+                    OasTypeParser(entry, item => item.adopted(shape.id + "/and/" + index), version)
+                      .parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)

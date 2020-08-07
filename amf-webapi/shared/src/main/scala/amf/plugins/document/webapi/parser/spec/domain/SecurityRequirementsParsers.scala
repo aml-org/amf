@@ -4,8 +4,8 @@ import amf.core.annotations.VirtualObject
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, SearchScope}
 import amf.core.utils.IdCounter
-import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.webapi.metamodel.security.{
   OAuth2FlowModel,
   OpenIdConnectSettingsModel,
@@ -129,12 +129,12 @@ case class OasLikeSecurityRequirementParser(node: YNode,
 
 object RamlSecurityRequirementParser {
   def parse(producer: String => SecurityRequirement, idCounter: IdCounter)(node: YNode)(
-      implicit ctx: WebApiContext): SecurityRequirement = {
+      implicit ctx: RamlWebApiContext): SecurityRequirement = {
     RamlSecurityRequirementParser(node, producer, idCounter).parse()
   }
 }
 case class RamlSecurityRequirementParser(node: YNode, producer: String => SecurityRequirement, idCounter: IdCounter)(
-    implicit val ctx: WebApiContext) {
+    implicit val ctx: RamlWebApiContext) {
   def parse(): SecurityRequirement = {
     val requirement = producer(idCounter.genId("default-requirement")).add(Annotations(node))
     RamlParametrizedSecuritySchemeParser(node, requirement.withScheme).parse()

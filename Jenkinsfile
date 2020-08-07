@@ -58,6 +58,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
+          branch 'release/*'
         }
       }
       steps {
@@ -84,7 +85,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-exchange', passwordVariable: 'GITHUB_PASS', usernameVariable: 'GITHUB_USER']]) {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-salt', passwordVariable: 'GITHUB_PASS', usernameVariable: 'GITHUB_USER']]) {
           script {
             try{
               if (failedStage.isEmpty()) {
@@ -137,11 +138,18 @@ pipeline {
               echo "Starting TCKutor Applications/AMF/amfTCKutor/master"
               build job: 'application/AMF/amfTCKutor/master', wait: false
 
-              echo "Starting TCKutor Applications/AMF/amfexamples/master"
+              echo "Starting Amf Examples Applications/AMF/amfexamples/master"
               build job: 'application/AMF/amf-examples/snapshot', wait: false
 
-              echo "Starting TCKutor Applications/AMF/amfinterfacetests/master"
+              echo "Starting Amf Interface Tests Applications/AMF/amfinterfacetests/master"
               build job: 'application/AMF/amf-interface-tests/master', wait: false
+
+              if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop') {
+                echo "Starting Amf Metadata Tests Applications/AMF/amf-metadata/master"
+                build job: "application/AMF/amf-metadata/${env.BRANCH_NAME}", wait: false
+              } else {
+                echo "Skipping Amf Metadata Tests Build Trigger as env.BRANCH_NAME is not master or develop"
+              }
             }
           } catch(ignored) {
             failedStage = failedStage + " TCKUTOR "

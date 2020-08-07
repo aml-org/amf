@@ -38,6 +38,11 @@ sealed trait OasPlugin extends OasLikePlugin {
 
   override def specContext(options: RenderOptions): OasSpecEmitterContext
 
+  /**
+    * Does references in this type of documents be recursive?
+    */
+  override val allowRecursiveReferences: Boolean = true
+
   def context(loc: String,
               refs: Seq[ParsedReference],
               options: ParsingOptions,

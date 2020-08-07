@@ -1,0 +1,38 @@
+#%Validation Profile 1.0
+profile: paths
+
+violation:
+#  - test-sequence-1
+  - test-sequence-2
+
+validations:
+
+#  test-sequence-1:
+#    targetClass: apiContract.WebAPI
+#    message: Paths must do something
+#    propertyConstraints:
+#      apiContract.endpoint / apiContract.supportedOperation / apiContract.method:
+#        in: [ lala ]
+
+  test-sequence-2:
+    targetClass: apiContract.EndPoint
+    message: Paths must do something
+    propertyConstraints:
+      apiContract.supportedOperation / apiContract.method:
+        in: [ lolo ]
+
+#  test-sequence-1:
+#    targetClass: apiContract.WebAPI
+#    message: Paths must not include POST methods
+#    not:
+#      propertyConstraints:
+#        apiContract.endpoint / apiContract.supportedOperation / apiContract.method:
+#          in: [ post ]
+
+#  test-sequence-2:
+#    targetClass: apiContract.WebAPI
+#    message: Paths must not include DELETE methods
+#    not:
+#      propertyConstraints:
+#        apiContract.endpoint / apiContract.supportedOperation / apiContract.method:
+#          in: [ delete ]

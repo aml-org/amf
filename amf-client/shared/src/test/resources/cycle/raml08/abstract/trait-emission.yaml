@@ -1,0 +1,8 @@
+usage: Apply this to any method that needs to be secured
+description: Some requests require authentication.
+queryParameters:
+  access_token:
+    description: Access Token
+    type: string
+    example: ACCESS_TOKEN
+    required: true

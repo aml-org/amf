@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#/web-api",
+        "@id": "#3",
         "@type": [
           "apiContract:WebAPI",
           "doc:RootDomainElement",
@@ -27,7 +27,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured",
+            "@id": "#4",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -39,7 +39,7 @@
             ],
             "apiContract:parameter": [
               {
-                "@id": "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId",
+                "@id": "#5",
                 "@type": [
                   "apiContract:Parameter",
                   "doc:DomainElement"
@@ -61,7 +61,7 @@
                 ],
                 "raml-shapes:schema": [
                   {
-                    "@id": "#/declarations/parameters/parameter/userId/scalar/schema",
+                    "@id": "#2",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -81,30 +81,30 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#/declarations/parameters/parameter/userId/scalar/schema": "[(12,8)-(12,12)]"
+                        "#2": "[(12,8)-(12,12)]"
                       },
                       "lexical": {
                         "shacl:datatype": "[(12,8)-(15,0)]",
-                        "#/declarations/parameters/parameter/userId/scalar/schema": "[(11,6)-(15,0)]"
+                        "#2": "[(11,6)-(15,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "resolved-link-target": {
-                    "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId": "file://amf-client/shared/src/test/resources/resolution/async20/named-parameter-with-ref.yaml#/declarations/parameters/parameter/userId"
+                    "#5": "amf://id#1"
                   },
                   "declared-element": {
-                    "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId": ""
+                    "#5": ""
                   },
                   "lexical": {
                     "raml-shapes:schema": "[(11,6)-(15,0)]",
                     "core:description": "[(9,6)-(10,0)]",
-                    "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId": "[(8,4)-(15,0)]",
+                    "#5": "[(8,4)-(15,0)]",
                     "apiContract:binding": "[(10,6)-(11,0)]"
                   },
                   "resolved-link": {
-                    "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId": "file://amf-client/shared/src/test/resources/resolution/async20/named-parameter-with-ref.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/parameter/someId"
+                    "#5": "amf://id#5"
                   }
                 }
               }
@@ -112,19 +112,19 @@
             "smaps": {
               "lexical": {
                 "apiContract:parameter": "[(17,15)-(19,46)]",
-                "#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured": "[(16,2)-(19,46)]"
+                "#4": "[(16,2)-(19,46)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#/web-api": "ASYNC 2.0"
+            "#3": "ASYNC 2.0"
           },
           "lexical": {
             "apiContract:endpoint": "[(15,0)-(19,46)]",
             "core:name": "[(3,2)-(4,0)]",
-            "#/web-api": "[(1,0)-(19,46)]",
+            "#3": "[(1,0)-(19,46)]",
             "core:version": "[(4,2)-(6,0)]"
           }
         }
@@ -142,7 +142,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#/declarations/parameters/parameter/userId",
+        "@id": "#1",
         "@type": [
           "apiContract:Parameter",
           "doc:DomainElement"
@@ -164,7 +164,7 @@
         ],
         "raml-shapes:schema": [
           {
-            "@id": "#/declarations/parameters/parameter/userId/scalar/schema",
+            "@id": "#2",
             "@type": [
               "raml-shapes:ScalarShape",
               "raml-shapes:AnyShape",
@@ -184,30 +184,30 @@
             ],
             "smaps": {
               "type-property-lexical-info": {
-                "#/declarations/parameters/parameter/userId/scalar/schema": "[(12,8)-(12,12)]"
+                "#2": "[(12,8)-(12,12)]"
               },
               "lexical": {
                 "shacl:datatype": "[(12,8)-(15,0)]",
-                "#/declarations/parameters/parameter/userId/scalar/schema": "[(11,6)-(15,0)]"
+                "#2": "[(11,6)-(15,0)]"
               }
             }
           }
         ],
         "smaps": {
           "declared-element": {
-            "#/declarations/parameters/parameter/userId": ""
+            "#1": ""
           },
           "lexical": {
             "raml-shapes:schema": "[(11,6)-(15,0)]",
             "core:description": "[(9,6)-(10,0)]",
-            "#/declarations/parameters/parameter/userId": "[(8,4)-(15,0)]",
+            "#1": "[(8,4)-(15,0)]",
             "apiContract:binding": "[(10,6)-(11,0)]"
           }
         }
       }
     ],
     "@context": {
-      "@base": "file://amf-client/shared/src/test/resources/resolution/async20/named-parameter-with-ref.yaml",
+      "@base": "amf://id",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",

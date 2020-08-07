@@ -9,7 +9,7 @@ import amf.core.parser.Annotations
 import amf.core.traversal.ModelTraversalRegistry
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.shapes.resolution.stages.recursion.RecursionErrorRegister
+import amf.plugins.domain.shapes.resolution.stages.recursion.{LinkableRegisterCriteria, RecursionErrorRegister}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
 private[stages] object ShapeExpander {
@@ -41,7 +41,12 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
   override def normalizeAction(shape: Shape): Shape = {
     shape match {
-      case l: Linkable if l.isLink => recursionRegister.recursionAndError(root, Some(root.id), shape, traversal)
+      case l: Linkable if l.isLink =>
+        recursionRegister.recursionAndError(root,
+                                            Some(root.id),
+                                            shape,
+                                            traversal,
+                                            LinkableRegisterCriteria(root, shape))
 
       case _ if traversal.shouldFailIfRecursive(root, shape) && !shape.isInstanceOf[RecursiveShape] =>
         recursionRegister.recursionAndError(root, None, shape, traversal)

@@ -12,7 +12,7 @@ chapters[3].name should be string
 name should NOT be longer than 10 characters
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/shape/example/default-example
-  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/shape/example/default-example
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/type/example/default-example
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/type/example/default-example
   Position: Some(LexicalInformation([(14,0)-(23,16)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml

@@ -1,0 +1,9 @@
+mqtt:
+  clientId: someid
+  cleanSession: true
+  lastWill:
+    topic: some
+    qos: 2
+    retain: true
+  keepAlive: 12
+  bindingVersion: 3.4.3

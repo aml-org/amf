@@ -1,0 +1,6 @@
+definitions:
+  animal:
+    type: object
+    properties:
+      petRef:
+        $ref: 'oas-2-root.yaml#/definitions/pet'

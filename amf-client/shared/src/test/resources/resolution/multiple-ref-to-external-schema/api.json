@@ -1,0 +1,44 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Geolocalizacion",
+    "version": "v1"
+  },
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/envios/{envio}": {
+      "get": {
+        "description": "Este servicio se encarga de recuperar la información relacionada con Envios.",
+        "responses": {
+          "400": {
+            "description": "Cuando el parametro template envio no se envía.",
+            "schema": {
+              "$ref": "external.json#/definitions/error400"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/citypaq": {
+      "get": {
+        "description": "Esta operacion se encarga de recuperar toda la información de geolocalizacion relacionada con citypaq, permitiendo al usuario encontrar la localizacion geografica del citypaq y los datos del mismo, esta busqueda es realizada a travez de coordenadas",
+        "responses": {
+          "400": {
+            "description": "Cuando uno o ambos parámetros (coordenadas y distancia) siendo requeridos no se envían.",
+            "schema": {
+              "$ref": "external.json#/definitions/error400"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  }
+}

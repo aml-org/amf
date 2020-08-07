@@ -29,5 +29,15 @@ class ParameterResolutionTest extends ResolutionTest {
           renderOptions = Some(config.renderOptions))
   }
 
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  multiGoldenTest("RAML 0.8 overrided baseUriParams are propagated to request", "overrided-baseUriParams.%s") {
+    config =>
+      cycle("overrided-baseUriParams.raml",
+            config.golden,
+            RamlYamlHint,
+            target = Amf,
+            renderOptions = Some(config.renderOptions),
+            transformWith = Some(Raml08))
+  }
+
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 }

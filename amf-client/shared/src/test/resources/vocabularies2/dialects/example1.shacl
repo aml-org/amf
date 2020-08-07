@@ -10,6 +10,18 @@
 <file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeA_a_notCollection_validation> <http://www.w3.org/ns/shacl#message> "Property 'a' cannot have more than 1 value" .
 <file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeA_a_notCollection_validation> <http://www.w3.org/ns/shacl#property> <file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeA_a_notCollection_validation/prop> .
 <file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeA_a_notCollection_validation> <http://www.w3.org/ns/shacl#targetClass> <file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeA> .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_dataRange_validation/prop> <http://www.w3.org/ns/shacl#datatype> <http://www.w3.org/2001/XMLSchema#string> .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_dataRange_validation/prop> <http://www.w3.org/ns/shacl#path> <http://a.ml/vocabularies/vocab2#a> .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_dataRange_validation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_dataRange_validation> <http://www.w3.org/ns/shacl#message> "Property 'za'  value must be of type http://www.w3.org/2001/XMLSchema#string" .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_dataRange_validation> <http://www.w3.org/ns/shacl#property> <file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_dataRange_validation/prop> .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_dataRange_validation> <http://www.w3.org/ns/shacl#targetClass> <file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB> .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_notCollection_validation/prop> <http://www.w3.org/ns/shacl#maxCount> "1"^^<http://www.w3.org/2001/XMLSchema#long> .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_notCollection_validation/prop> <http://www.w3.org/ns/shacl#path> <http://a.ml/vocabularies/vocab2#a> .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_notCollection_validation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_notCollection_validation> <http://www.w3.org/ns/shacl#message> "Property 'za' cannot have more than 1 value" .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_notCollection_validation> <http://www.w3.org/ns/shacl#property> <file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_notCollection_validation/prop> .
+<file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB_za_notCollection_validation> <http://www.w3.org/ns/shacl#targetClass> <file://amf-client/shared/src/test/resources/vocabularies2/dialects/example1.raml#/declarations/nodeB> .
 <http://a.ml/vocabularies/amf/aml#closed-shape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/aml#closed-shape> <http://www.w3.org/ns/shacl#message> "Invalid property for node" .
 <http://a.ml/vocabularies/amf/aml#closed-shape> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .
@@ -22,6 +34,9 @@
 <http://a.ml/vocabularies/amf/aml#different-terms-in-mapkey> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/aml#different-terms-in-mapkey> <http://www.w3.org/ns/shacl#message> "Different terms in map key" .
 <http://a.ml/vocabularies/amf/aml#different-terms-in-mapkey> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .
+<http://a.ml/vocabularies/amf/aml#duplicate-term> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/aml#duplicate-term> <http://www.w3.org/ns/shacl#message> "Vocabulary defines duplicate terms" .
+<http://a.ml/vocabularies/amf/aml#duplicate-term> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .
 <http://a.ml/vocabularies/amf/aml#guid-scalar-non-unique> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/aml#guid-scalar-non-unique> <http://www.w3.org/ns/shacl#message> "GUID scalar type declared without unique constraint" .
 <http://a.ml/vocabularies/amf/aml#guid-scalar-non-unique> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .
@@ -40,15 +55,18 @@
 <http://a.ml/vocabularies/amf/aml#mandatory-property-shape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/aml#mandatory-property-shape> <http://www.w3.org/ns/shacl#message> "Missing mandatory property" .
 <http://a.ml/vocabularies/amf/aml#mandatory-property-shape> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .
+<http://a.ml/vocabularies/amf/aml#missing-class-term> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/aml#missing-class-term> <http://www.w3.org/ns/shacl#message> "Missing class term" .
+<http://a.ml/vocabularies/amf/aml#missing-class-term> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .
 <http://a.ml/vocabularies/amf/aml#missing-dialect-fragment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/aml#missing-dialect-fragment> <http://www.w3.org/ns/shacl#message> "Missing dialect fragment" .
 <http://a.ml/vocabularies/amf/aml#missing-dialect-fragment> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .
 <http://a.ml/vocabularies/amf/aml#missing-node-mapping-range-term> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/aml#missing-node-mapping-range-term> <http://www.w3.org/ns/shacl#message> "Missing property range term" .
 <http://a.ml/vocabularies/amf/aml#missing-node-mapping-range-term> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .
-<http://a.ml/vocabularies/amf/aml#missing-vocabulary-term> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
-<http://a.ml/vocabularies/amf/aml#missing-vocabulary-term> <http://www.w3.org/ns/shacl#message> "Missing vocabulary term" .
-<http://a.ml/vocabularies/amf/aml#missing-vocabulary-term> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .
+<http://a.ml/vocabularies/amf/aml#missing-property-term> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/aml#missing-property-term> <http://www.w3.org/ns/shacl#message> "Missing property term" .
+<http://a.ml/vocabularies/amf/aml#missing-property-term> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .
 <http://a.ml/vocabularies/amf/aml#missing-vocabulary> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/aml#missing-vocabulary> <http://www.w3.org/ns/shacl#message> "Missing vocabulary" .
 <http://a.ml/vocabularies/amf/aml#missing-vocabulary> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#AmlShape> .

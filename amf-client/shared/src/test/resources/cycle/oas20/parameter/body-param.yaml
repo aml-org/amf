@@ -1,0 +1,6 @@
+name: user
+in: body
+schema:
+  $ref: "#/definitions/User"
+description: user to add to the system
+required: true

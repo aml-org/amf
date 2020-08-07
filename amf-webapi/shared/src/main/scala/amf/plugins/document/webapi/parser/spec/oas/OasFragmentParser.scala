@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.{OasTypeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
@@ -153,7 +153,8 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       val security = SecuritySchemeFragment().adopted(root.location)
 
       security.withEncodes(
-        OasSecuritySchemeParser(map,
+        ctx.factory
+          .securitySchemeParser(map,
                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme) =>
                                   security.adopted(root.location + "#/"))
           .parse())

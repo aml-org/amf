@@ -24,19 +24,19 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         implicit val ctx: Raml10WebApiContext =
           new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledParserErrorHandler))
 
-        var res = RamlTypeExpressionParser(adopt).parse("integer")
+        var res = RamlTypeExpressionParser(adopt, expression = "integer").parse()
         assert(res.get.isInstanceOf[ScalarShape])
         assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
-        res = RamlTypeExpressionParser(adopt).parse("(integer)")
+        res = RamlTypeExpressionParser(adopt, expression = "(integer)").parse()
         assert(res.get.isInstanceOf[ScalarShape])
         assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
-        res = RamlTypeExpressionParser(adopt).parse("((integer))")
+        res = RamlTypeExpressionParser(adopt, expression = "((integer))").parse()
         assert(res.get.isInstanceOf[ScalarShape])
         assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
-        res = RamlTypeExpressionParser(adopt).parse("integer[]")
+        res = RamlTypeExpressionParser(adopt, expression = "integer[]").parse()
         assert(res.get.isInstanceOf[ArrayShape])
         assert(
           res.get
@@ -47,7 +47,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
             .is((Namespace.Xsd + "integer").iri()))
         assert(res != null)
 
-        res = RamlTypeExpressionParser(adopt).parse("(integer)[]")
+        res = RamlTypeExpressionParser(adopt, expression = "(integer)[]").parse()
         assert(res.get.isInstanceOf[ArrayShape])
         assert(
           res.get
@@ -62,13 +62,13 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         try {
 
           val fail = new Raml10WebApiContext("", Nil, ctx)
-          RamlTypeExpressionParser(adopt)(fail).parse("[]")
+          RamlTypeExpressionParser(adopt, expression = "[]")(fail).parse()
         } catch {
           case e: Exception => error = true
         }
         assert(error)
 
-        res = RamlTypeExpressionParser(adopt).parse("integer | string")
+        res = RamlTypeExpressionParser(adopt, expression = "integer | string").parse()
         assert(res.get.isInstanceOf[UnionShape])
         var union = res.get.asInstanceOf[UnionShape]
         assert(union.anyOf.length == 2)
@@ -77,7 +77,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
         assert(res != null)
 
-        res = RamlTypeExpressionParser(adopt).parse("(integer )| (string)")
+        res = RamlTypeExpressionParser(adopt, expression = "(integer )| (string)").parse()
         assert(res.get.isInstanceOf[UnionShape])
         union = res.get.asInstanceOf[UnionShape]
         assert(union.anyOf.length == 2)
@@ -86,7 +86,8 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
         assert(res != null)
 
-        res = RamlTypeExpressionParser(adopt).parse("(integer | string) | number")
+        res = RamlTypeExpressionParser(adopt, expression = "(integer | string) | number")
+          .parse()
         assert(res.get.isInstanceOf[UnionShape])
         union = res.get.asInstanceOf[UnionShape]
         assert(union.anyOf.length == 3)
@@ -97,7 +98,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
                  (Namespace.Shapes + "number").iri()))
         assert(res != null)
 
-        res = RamlTypeExpressionParser(adopt).parse("(integer | string)[]")
+        res = RamlTypeExpressionParser(adopt, expression = "(integer | string)[]").parse()
         assert(res.get.isInstanceOf[ArrayShape])
         var array = res.get.asInstanceOf[ArrayShape]
         assert(array.items.isInstanceOf[UnionShape])
@@ -107,7 +108,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
         assert(res != null)
 
-        res = RamlTypeExpressionParser(adopt).parse("(integer | string[])")
+        res = RamlTypeExpressionParser(adopt, expression = "(integer | string[])").parse()
         assert(res != null)
         assert(res.get.isInstanceOf[UnionShape])
         union = res.get.asInstanceOf[UnionShape]
@@ -124,7 +125,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
             .is((Namespace.Xsd + "string").iri()))
 
         val caught = intercept[Exception] { // Result type: Assertion
-          res = RamlTypeExpressionParser(adopt).parse("[]string")
+          res = RamlTypeExpressionParser(adopt, expression = "[]string").parse()
           assert(res != null)
           assert(res.get.isInstanceOf[UnionShape])
           union = res.get.asInstanceOf[UnionShape]
@@ -142,7 +143,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         }
         assert(caught.getMessage.contains("Error parsing type expression, cannot accept type ScalarShape"))
 
-        res = RamlTypeExpressionParser(adopt).parse("integer | string[]")
+        res = RamlTypeExpressionParser(adopt, expression = "integer | string[]").parse()
         assert(res != null)
         assert(res.get.isInstanceOf[UnionShape])
         union = res.get.asInstanceOf[UnionShape]
@@ -158,7 +159,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
             .dataType
             .is((Namespace.Xsd + "string").iri()))
 
-        res = RamlTypeExpressionParser(adopt).parse("integer[][]")
+        res = RamlTypeExpressionParser(adopt, expression = "integer[][]").parse()
         assert(res != null)
         assert(res.get.isInstanceOf[MatrixShape])
         var matrix = res.get.asInstanceOf[MatrixShape]

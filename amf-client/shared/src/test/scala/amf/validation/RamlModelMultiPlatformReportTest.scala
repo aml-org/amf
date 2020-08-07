@@ -1,4 +1,5 @@
 package amf.validation
+import amf.Raml10Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
@@ -41,6 +42,12 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
 
   test("Invalid values in user defined facets") {
     validate("facets/invalid-facet-value-type.raml", Some("invalid-facet-value-type.report"))
+  }
+
+  test("Raml overlay with invalid example without overloading type") {
+    validate("overlays/overlay-with-inferred-type-invalid-example/overlay.raml",
+             Some("overlay-with-inferred-type-invalid-example.report"),
+             Raml10Profile)
   }
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"

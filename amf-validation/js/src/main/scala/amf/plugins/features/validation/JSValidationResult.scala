@@ -10,7 +10,14 @@ import scala.scalajs.js.annotation.JSExportAll
 class JSValidationResult(wrapped: js.Dynamic) extends  ValidationResult {
   override def message: Option[String] = JSUtils.maybe(wrapped.message())
 
-  override def path: String = JSUtils.default(wrapped.path(), "")
+  override def path: String = {
+    val res = JSUtils.default(wrapped.path(), "")
+    if (res.startsWith("_:")) { // removing blank nodes from the report
+      ""
+    } else {
+      res
+    }
+  }
 
   override def sourceConstraintComponent: String = JSUtils.default(wrapped.sourceConstraintComponent(), "")
 

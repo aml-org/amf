@@ -34,5 +34,5 @@ class JapaneseCycleTest extends FunSuiteCycleTests {
     cycle(config.source, "cycled-oas30api.json", AmfJsonHint, Oas30)
   }
 
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 }

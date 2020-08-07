@@ -1,0 +1,35 @@
+#%RAML 1.0
+title: API
+types:
+  Person:
+    properties:
+      name: string
+      job: string
+  Dog:
+    properties:
+      name: string
+      breed: string
+
+traits:
+  MyTrait:
+    queryParameters:
+      myParam: Person
+
+resourceTypes:
+  MyResrouceType:
+    get:
+      queryParameters:
+        myParam: Person
+
+/resourceTypeMerging:
+  type: MyResrouceType
+  get:
+    queryParameters:
+      myParam: Dog
+
+
+/traitMerging:
+  get:
+    is: MyTrait
+    queryParameters:
+      myParam: Dog

@@ -1,0 +1,38 @@
+#%Validation Profile 1.0
+profile: pairs
+
+violation:
+  - test-equals
+  - test-disjoint
+  - test-less-than
+  - test-less-than-equal
+
+validations:
+
+  test-equals:
+    targetClass: raml-shapes.ScalarShape
+    message: Min and max length must match in scalar
+    propertyConstraints:
+      shacl.maxLength:
+        equalsToProperty: shacl.minLength
+
+  test-disjoint:
+    targetClass: raml-shapes.ScalarShape
+    message: Min and max length must not be equal
+    propertyConstraints:
+      shacl.maxLength:
+        disjointWithProperty: shacl.minLength
+
+  test-less-than:
+    targetClass: raml-shapes.ScalarShape
+    message: Min and max length must be <
+    propertyConstraints:
+      shacl.minLength:
+        lessThanProperty: shacl.maxLength
+
+  test-less-than-equal:
+    targetClass: raml-shapes.ScalarShape
+    message: Min and max length must be <=
+    propertyConstraints:
+      shacl.minLength:
+        lessThanOrEqualsToProperty: shacl.maxLength

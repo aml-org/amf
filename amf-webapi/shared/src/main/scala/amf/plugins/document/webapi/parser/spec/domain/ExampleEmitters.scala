@@ -49,11 +49,25 @@ object OasResponseExamplesEmitter {
 case class Oas3ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
+    b.entry(keyName(example), Oas3ExampleValuesPartEmitter(example, ordering).emit(_))
+  }
+
+  protected def keyName(example: Example): String = {
+    example.name.option().getOrElse("default")
+  }
+
+  override def position(): Position = pos(example.annotations)
+}
+
+case class Oas3ExampleValuesPartEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends PartEmitter {
+  override def emit(p: PartBuilder): Unit = {
     if (example.isLink) {
       val refUrl = OasDefinitions.appendOas3ComponentsPrefix(example.linkLabel.value(), "examples")
-      b.entry(keyName(example), _.obj(_.entry("$ref", refUrl)))
-    } else
-      b.entry(keyName(example), _.obj(traverse(ordering.sorted(emitters), _)))
+      p.obj(_.entry("$ref", refUrl))
+    } else {
+      p.obj(traverse(ordering.sorted(emitters), _))
+    }
   }
 
   val emitters: Seq[EntryEmitter] = {
@@ -73,10 +87,6 @@ case class Oas3ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(im
     results ++= AnnotationsEmitter(example, ordering).emitters
 
     results
-  }
-
-  protected def keyName(example: Example): String = {
-    example.name.option().getOrElse("default")
   }
 
   override def position(): Position = pos(example.annotations)

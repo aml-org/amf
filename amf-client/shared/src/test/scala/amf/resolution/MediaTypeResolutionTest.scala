@@ -49,5 +49,5 @@ class MediaTypeResolutionTest extends ResolutionTest {
           transformWith = Some(Oas))
   }
 
-  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 }

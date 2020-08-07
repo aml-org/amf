@@ -3,6 +3,7 @@ package amf.resolution
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Amf, Raml, Raml08, RamlYamlHint}
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
 import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm}
 
@@ -35,7 +36,10 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   test("Extends resolution with parameter and multiple transformation resolution to Raml") {
-    cycle("resource-type-multi-transformation.raml", "resource-type-multi-transformation.raml.raml", RamlYamlHint, Raml)
+    cycle("resource-type-multi-transformation.raml",
+          "resource-type-multi-transformation.raml.raml",
+          RamlYamlHint,
+          Raml)
   }
 
   test("Extends resolution with optional method to Raml") {
@@ -43,7 +47,11 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   multiGoldenTest("Extends resolution with optional method to Amf", "optional-method.raml.%s") { config =>
-    cycle("optional-method.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("optional-method.raml",
+          config.golden,
+          RamlYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   test("Extends resolution with scalar collection to Raml") {
@@ -193,6 +201,42 @@ trait ExtendsResolutionTest extends ResolutionTest {
           RamlYamlHint,
           Raml,
           basePath)
+  }
+
+  multiGoldenTest("Test api with declared shaped reference in trait", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE),
+      renderOptions = Some(config.renderOptions.withoutSourceMaps),
+      directory = basePath + "extends-with-references-to-declares/trait/"
+    )
+  }
+
+  multiGoldenTest("Test api with declared shape reference in rt", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE),
+      renderOptions = Some(config.renderOptions.withoutSourceMaps),
+      directory = basePath + "extends-with-references-to-declares/resource-type/"
+    )
+  }
+
+  multiGoldenTest("Types in extends merging", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE),
+      renderOptions = Some(config.renderOptions.withoutSourceMaps),
+      directory = basePath + "extends-with-references-to-declares/merging/"
+    )
   }
 
   test("Test complex trait with infered type") {

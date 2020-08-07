@@ -23,8 +23,8 @@ case class CompactOasTypeEmitter(shape: Shape,
       OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
     } else {
       val label = definitionQueue.enqueue(shape)
-      val tag   = OasDefinitions.appendDefinitionsPrefix(label, Some(spec.vendor))
-      Seq(OasTagToReferenceEmitter(shape, Some(tag), Nil))
+      val tag   = OasDefinitions.appendSchemasPrefix(label, Some(spec.vendor))
+      Seq(OasTagToReferenceEmitter(shape, Some(tag)))
     }
   }
 

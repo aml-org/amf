@@ -1,0 +1,30 @@
+#%RAML 1.0
+
+uses:
+  lds: ./lds-annotations.raml
+
+title: Test API
+
+/endpoint1:
+  get:
+    (lds.key):
+      id: id_value
+    responses:
+      200:
+        body:
+          application/json:
+            properties:
+              name: string
+              noName: string
+
+/endpoint2:
+  get:
+    (lds.key):
+      id: id_value
+    responses:
+      200:
+        body:
+          application/json:
+            properties:
+              id: string
+              noName: string

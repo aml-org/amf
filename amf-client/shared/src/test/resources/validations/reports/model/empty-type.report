@@ -1,4 +1,4 @@
-Model: file://amf-client/shared/src/test/resources/validations/securitySchemes/empty-type.raml
+Model: file://amf-client/shared/src/test/resources/validations/security-schemes/empty-type.raml
 Profile: RAML 1.0
 Conforms? false
 Number of results: 1
@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#missing-security-scheme-type
   Message: Security Scheme must have a mandatory value from 'OAuth 1.0', 'OAuth 2.0', 'Basic Authentication', 'Digest Authentication', 'Pass Through', x-<other>'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/securitySchemes/empty-type.raml#/declarations/securitySchemes/oauth_2_0
+  Target: file://amf-client/shared/src/test/resources/validations/security-schemes/empty-type.raml#/declarations/securitySchemes/oauth_2_0
   Property: http://a.ml/vocabularies/security#type
   Position: Some(LexicalInformation([(7,0)-(9,9)]))
-  Location: file://amf-client/shared/src/test/resources/validations/securitySchemes/empty-type.raml
+  Location: file://amf-client/shared/src/test/resources/validations/security-schemes/empty-type.raml

@@ -71,6 +71,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
     if (!isCycle) {
       val newCycle: Seq[String] = cycle :+ id
       properties.foreach(_.adopted(id, newCycle))
+      examples.foreach(_.adopted(id, newCycle))
       Option(additionalPropertiesSchema).foreach { shape =>
         shape.adopted(id, newCycle)
       }

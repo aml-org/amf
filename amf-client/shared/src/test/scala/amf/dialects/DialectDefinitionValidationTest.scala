@@ -1,5 +1,5 @@
 package amf.dialects
-  import amf.ProfileName
+import amf.ProfileName
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
@@ -19,45 +19,35 @@ trait DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with F
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test missing version") {
-    validate("/missing-version/dialect.yaml", Some("/missing-version/report.json"), None)
+    validate("/missing-version/dialect.yaml", Some("/missing-version/report.json"))
   }
 
   test("Test missing dialect name") {
-    validate("/missing-dialect-name/dialect.yaml", Some("/missing-dialect-name/report.json"), None)
+    validate("/missing-dialect-name/dialect.yaml", Some("/missing-dialect-name/report.json"))
   }
 
   test("Test invalid property term uri for description") {
-    validate("/schema-uri/dialect.yaml", Some("/schema-uri/report.json"), Some("/schema-uri/instance.yaml"))
+    validate("/schema-uri/dialect.yaml", Some("/schema-uri/report.json"))
   }
 
   test("Test missing range in property mapping") {
-    validate("/missing-range-in-mapping/dialect.yaml", Some("/missing-range-in-mapping/report.json"), None)
+    validate("/missing-range-in-mapping/dialect.yaml", Some("/missing-range-in-mapping/report.json"))
   }
 
   private val path: String = "amf-client/shared/src/test/resources/vocabularies2/instances/invalids"
 
-  protected def validate(dialect: String, goldenReport: Option[String], instance: Option[String]): Future[Assertion] = {
+  protected def validate(dialect: String, goldenReport: Option[String]): Future[Assertion] = {
     amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     val report = for {
       _ <- Validation(platform)
       dialect <- {
         new AMFCompiler(
-          new CompilerContextBuilder("file://" + path + dialect,platform, eh = DefaultParserErrorHandler.withRun()).build(),
+          new CompilerContextBuilder("file://" + path + dialect, platform, eh = DefaultParserErrorHandler.withRun())
+            .build(),
           Some("application/yaml"),
           Some(AMLPlugin.ID)
         ).build()
-      }
-      i <- {
-        instance match {
-          case Some(i) =>
-            new AMFCompiler(
-              new CompilerContextBuilder("file://" + path + i,platform, eh = DefaultParserErrorHandler.withRun()).build(),
-              Some("application/yaml"),
-              Some(AMLPlugin.ID),
-            ).build()
-          case _ => Future.successful(DialectInstance())
-        }
       }
       r <- {
         RuntimeValidator(
