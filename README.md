@@ -20,7 +20,7 @@ The API Modeling Framework (AMF) allows users to formally describe different kin
 
 ## General scope
 The library supports many of the required uses cases:
-- Parse a 0.8 / 1.0 RAML, 2.0 / 3.0 OAS and JSON-LD AMF model.
+- Parse a 0.8 / 1.0 RAML, 2.0 / 3.0 OAS / ASYNC 2.0 and JSON-LD AMF model.
 - AMF API design model creation.
 - Model edition.
 - Export to any of the mentioned standards.
@@ -31,59 +31,23 @@ To use AMF you should first generate or get the right distribution for your proj
 
 ## Installation
 
-### Requirements
-* Scala 2.12.2
-* sbt 0.13.15
-* Node
+### Download JVM artifacts
 
-### Useful sbt commands
-
-#### Test
-* Tests on jvm and js
-
-```sh
-sbt test
-```
-
-#### Coverage reports
-```sh
-sbt coverage test coverageReport
-```
-### Generate artifacts directly from cloned repository
-
-```sh
-sbt package
-```
-This will generate *jvm* JARs in each of the module's targets.
-
-```sh
-sbt buildJS
-```
-This will generate a *js* artifact in ./file://amf-client/js/amf.js
-
-### JVM artifacts
-
-To use, specify dependency.
-
-Gradle example:
+Gradle snippet:
 
 ```groovy
+// add mulesoft repository
+repositories {
+    maven {
+        url 'https://repository-master.mulesoft.org/nexus/content/repositories/releases'
+    }
+}
 dependencies {
     compile 'com.github.amlorg:amf-client_2.12:x.y.z'
 }
 ```
 
-```groovy
-repositories {
-    ...
-    maven {
-            url 'https://repository-master.mulesoft.org/nexus/content/repositories/releases'
-        }
-    ...
-}
-```
-
-Maven example:
+Maven snippet:
 
 ```xml
 <dependency>
@@ -93,30 +57,55 @@ Maven example:
 </dependency>
 ```
 
-NOTE: you may use the `-SNAPSHOT` versions of the JVM artifacts at your own risk since those snapshot versions may contain breaking changes.
+NOTE: `-SNAPSHOT` versions of the JVM artifacts are available but may contain breaking changes.
 
-### JS artifacts
+### Download JS artifacts
 
-Execute the command
-
+NPM:
 ```bash
-npm install --save amf-client-js
+$ npm install --save amf-client-js
 ```
 
-Using *Node.js* just import it using:
+Yarn:
 ```bash
-import amf from 'amf-client-js'
+$ yarn add --save amf-client-js
 ```
 
-The *amf* package will contain all exported classes:
+### To generate artifacts directly from cloned repository
+
+To build into a JVM jar:
+```sh
+sbt package
+```
+To build into a JS bundle:
+```sh
+sbt buildJS
+```
+
+### Usage
+
+To use AMF you must first initialize it
+
+With Node.js: 
 ```javascript
-amf.plugins.document.WebApi.register();
-amf.plugins.document.Vocabularies.register();
-amf.plugins.features.AMFValidation.register();
+const amf = require('./lib/amf-client-module.js')
 
-amf.Core.init().then(function () {
-  // AMF code here
-})
+await AMF.init();
+
+// ... your code
+```
+
+With Java:
+```java
+import amf.client.AMF;
+
+class App {
+    public static void main(String[] args){
+      AMF.init().thenApply(() -> {
+              // ... your code
+      });
+    }
+}
 ```
 
 ### Command line usage
@@ -130,19 +119,19 @@ This will generate an executable JAR at the top level directory that can be used
 
 Using this JAR, you can run tasks from command line, for instance:
 ```bash
-java -jar amf-x.y.z.jar parse -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
+$ java -jar amf-x.y.z.jar parse -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
 ```
 or 
 ```bash
-java -jar amf-x.y.z.jar validate -in "RAML 1.0" -mime-in "application/yaml" -p "RAML" yourAPIfile
+$ java -jar amf-x.y.z.jar validate -in "RAML 1.0" -mime-in "application/yaml" -p "RAML" yourAPIfile
 ```
 or
 ```bash
-java -jar amf-x.y.z.jar translate  yourAPIOASfile --format-in "OAS 3.0" -mime-in "application/json" --format-out "RAML 1.0" -mime-out "application/raml+yaml"
+$ java -jar amf-x.y.z.jar translate  yourAPIOASfile --format-in "OAS 3.0" -mime-in "application/json" --format-out "RAML 1.0" -mime-out "application/raml+yaml"
 ```
 To get all available options:
 ```bash
-java -jar amf-x.y.z.jar
+$ java -jar amf-x.y.z.jar
 ```
 
 Using this JAR you can execute AMF by passing one of the following commands:
@@ -169,8 +158,7 @@ Validation is one of the key features of AMF. Please check the following link to
 
 ## AML Vocabulary
 
-The AML Vocabulary that could be found in this repository under the **vocabularies** directory has been migrated to the \
-[amf metadata repository](https://github.com/aml-org/amf-metadata)
+The AML Vocabulary that could be found in this repository under the **vocabularies** directory has been migrated to the [amf metadata repository](https://github.com/aml-org/amf-metadata)
 
 ## Want to learn more?
 [Click here for more documentation and playground](https://a.ml)
