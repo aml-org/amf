@@ -14,7 +14,12 @@ import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
+import amf.plugins.document.webapi.parser.spec.common.{
+  AnnotationParser,
+  SpecParserOps,
+  WebApiBaseSpecParser,
+  YMapEntryLike
+}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, OasTypeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -197,10 +202,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             val typeName      = e.key
             val nameGenerator = new IdCounter()
             val oasParameter: domain.OasParameter = e.value.to[YMap] match {
-              case Right(_) => ctx.factory.parameterParser(Left(e), parentPath, Some(typeName), nameGenerator).parse
+              case Right(_) =>
+                ctx.factory.parameterParser(YMapEntryLike(e), parentPath, Some(typeName), nameGenerator).parse
               case _ =>
                 val parameter =
-                  ctx.factory.parameterParser(Right(YMap.empty), parentPath, Some(typeName), nameGenerator).parse
+                  ctx.factory
+                    .parameterParser(YMapEntryLike(YMap.empty), parentPath, Some(typeName), nameGenerator)
+                    .parse
                 ctx.eh.violation(InvalidParameterType,
                                  parameter.domainElement.id,
                                  "Map needed to parse a parameter declaration",

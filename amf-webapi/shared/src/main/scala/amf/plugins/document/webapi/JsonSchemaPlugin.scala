@@ -29,7 +29,7 @@ import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaWebApiContext,
 import amf.plugins.document.webapi.contexts.parser.raml.Raml08WebApiContext
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.common.{JsonSchemaEmitter, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
@@ -102,7 +102,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   def parseParameterFragment(inputFragment: Fragment, pointer: Option[String], parentId: String)(
       implicit ctx: OasWebApiContext): Option[OasParameter] =
     obtainRootAst(inputFragment, pointer).map { node =>
-      ctx.factory.parameterParser(Right(node), parentId, None, new IdCounter()).parse
+      ctx.factory.parameterParser(YMapEntryLike(node), parentId, None, new IdCounter()).parse
     }
 
   def getYNode(inputFragment: Fragment, ctx: WebApiContext): YNode = {

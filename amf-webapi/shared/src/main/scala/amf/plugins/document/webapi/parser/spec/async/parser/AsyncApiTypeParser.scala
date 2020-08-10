@@ -5,6 +5,7 @@ import amf.core.model.domain.Shape
 import amf.plugins.document.webapi.contexts.{SpecEmitterContext, WebApiContext}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{
   AnyDefaultType,
   JSONSchemaDraft7SchemaVersion,
@@ -53,10 +54,10 @@ object AsyncSchemaFormats {
 object AsyncApiTypeParser {
   def apply(entry: YMapEntry, adopt: Shape => Unit, version: JSONSchemaVersion)(
       implicit ctx: OasLikeWebApiContext): AsyncApiTypeParser =
-    new AsyncApiTypeParser(Left(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
+    new AsyncApiTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
 }
 
-class AsyncApiTypeParser(entryOrNode: Either[YMapEntry, YNode],
+class AsyncApiTypeParser(entryOrNode: YMapEntryLike,
                          name: String,
                          map: YMap,
                          adopt: Shape => Unit,

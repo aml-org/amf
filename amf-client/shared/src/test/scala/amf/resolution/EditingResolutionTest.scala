@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
@@ -861,6 +862,19 @@ class EditingResolutionTest extends ResolutionTest {
           RamlYamlHint,
           Raml08,
           validationsPath)
+  }
+
+  multiGoldenTest("Recursive Tuple scheme", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath + "recursive-tuple/",
+      transformWith = Some(Raml08),
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledParserErrorHandler)
+    )
   }
 
   override val basePath: String = ""

@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.contexts.parser.oas
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.SpecAwareContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeSpecVersionFactory
+import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
@@ -17,7 +18,7 @@ abstract class OasSpecVersionFactory(implicit val ctx: OasWebApiContext) extends
   def serversParser(map: YMap, endpoint: EndPoint): OasServersParser
   def serversParser(map: YMap, operation: Operation): OasServersParser
   def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser
-  def parameterParser(entryOrNode: Either[YMapEntry, YNode],
+  def parameterParser(entryOrNode: YMapEntryLike,
                       parentId: String,
                       nameNode: Option[YNode],
                       nameGenerator: IdCounter): OasParameterParser
@@ -38,7 +39,7 @@ case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
     Oas2SecuritySchemeParser.apply
 
-  override def parameterParser(entryOrNode: Either[YMapEntry, YNode],
+  override def parameterParser(entryOrNode: YMapEntryLike,
                                parentId: String,
                                nameNode: Option[YNode],
                                nameGenerator: IdCounter): OasParameterParser =
@@ -71,7 +72,7 @@ case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =
     new Oas3SecuritySettingsParser(map, scheme)(ctx)
 
-  override def parameterParser(entryOrNode: Either[YMapEntry, YNode],
+  override def parameterParser(entryOrNode: YMapEntryLike,
                                parentId: String,
                                nameNode: Option[YNode],
                                nameGenerator: IdCounter): OasParameterParser =
