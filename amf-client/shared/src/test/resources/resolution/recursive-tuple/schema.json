@@ -1,0 +1,36 @@
+{
+  "type": "array",
+  "items": [{
+    "$ref": "#/definitions/Person"
+  },{
+    "$ref": "#/definitions/Animal"
+  }],
+  "definitions": {
+    "Person": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "pet": {
+          "$ref": "#/definitions/Animal"
+        }
+      }
+    },
+    "Animal": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer"
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Person"
+          }
+        }
+      }
+    }
+  }
+}

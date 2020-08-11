@@ -174,7 +174,7 @@ abstract class WebApiContext(val loc: String,
       case None => nextValidation(node, shape, ast)
     }
 
-  protected def getEntryKey(entry: YMapEntry): String = {
+  def getEntryKey(entry: YMapEntry): String = {
     entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
   }
 

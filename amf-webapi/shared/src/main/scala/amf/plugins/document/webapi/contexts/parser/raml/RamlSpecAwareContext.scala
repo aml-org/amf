@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.contexts.parser.raml
 
 import amf.core.Root
-import amf.core.model.domain.Shape
-import amf.plugins.document.webapi.contexts.{SpecVersionFactory, SpecAwareContext}
+import amf.core.model.domain.{DomainElement, Shape}
+import amf.plugins.document.webapi.contexts.{SpecAwareContext, SpecVersionFactory}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentParser, Raml10DocumentParser, Raml08DocumentParser}
+import amf.plugins.document.webapi.parser.spec.raml.{Raml08DocumentParser, Raml10DocumentParser, RamlDocumentParser}
 import amf.plugins.domain.webapi.models._
-import amf.plugins.domain.webapi.models.security.SecurityScheme
+import amf.plugins.domain.webapi.models.security.{SecurityScheme, WithSettings}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -19,6 +19,8 @@ abstract class RamlSpecVersionFactory(implicit val ctx: RamlWebApiContext) exten
 
   override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
     RamlSecuritySchemeParser.apply
+
+  def securitySettingsParser: (YMap, String, DomainElement with WithSettings) => RamlSecuritySettingsParser
 
   def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser = RamlOperationParser.apply
 
@@ -44,6 +46,9 @@ class Raml10VersionFactory(implicit override val ctx: RamlWebApiContext) extends
     : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
     Raml10EndpointParser.apply
 
+  override def securitySettingsParser: (YMap, String, DomainElement with WithSettings) => RamlSecuritySettingsParser =
+    (map, typeValue, element) => new Raml10SecuritySettingsParser(map, typeValue, element)
+
   override def parameterParser: (YMapEntry, Parameter => Unit, Boolean) => RamlParameterParser =
     Raml10ParameterParser.apply
 
@@ -66,6 +71,9 @@ class Raml08VersionFactory(implicit override val ctx: RamlWebApiContext) extends
   override def endPointParser
     : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
     Raml08EndpointParser.apply
+
+  override def securitySettingsParser: (YMap, String, DomainElement with WithSettings) => RamlSecuritySettingsParser =
+    RamlSecuritySettingsParser.apply
 
   override def parameterParser: (YMapEntry, (Parameter) => Unit, Boolean) => RamlParameterParser =
     Raml08ParameterParser.apply
