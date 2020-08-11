@@ -6,6 +6,7 @@ import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.Module
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.annotations.DeclarationKeys
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
 import org.yaml.model._
@@ -27,6 +28,8 @@ case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext) exten
       val references = ReferencesParser(module, "uses".asOasExtension, rootMap, root.references).parse(root.location)
 
       Oas2DocumentParser(root).parseDeclarations(root, rootMap)
+      val declarationKeys = ctx.getDeclarationKeys
+      if (declarationKeys.nonEmpty) module.add(DeclarationKeys(declarationKeys))
 
       UsageParser(rootMap, module).parse()
 

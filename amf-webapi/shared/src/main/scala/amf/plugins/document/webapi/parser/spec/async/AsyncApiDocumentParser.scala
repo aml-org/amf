@@ -1,9 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.async
 import amf.core.Root
-import amf.core.annotations.{DeclaredElement, SourceVendor}
+import amf.core.annotations.{DeclaredElement, LexicalInformation, SourceVendor}
+import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
+import amf.core.parser.{Annotations, Range, ScalarNode, SyamlParsedDocument, YMapOps}
+import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.async.parser.{
   AsyncCorrelationIdParser,
@@ -28,7 +30,19 @@ import amf.plugins.document.webapi.parser.spec.domain.binding.{
   AsyncServerBindingsParser
 }
 import amf.plugins.document.webapi.parser.spec.oas.OasLikeDeclarationsHelper
-import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.metamodel.bindings.{
+  ChannelBindingsModel,
+  MessageBindingsModel,
+  OperationBindingsModel,
+  ServerBindingsModel
+}
+import amf.plugins.domain.webapi.metamodel.{
+  CorrelationIdModel,
+  MessageModel,
+  OperationModel,
+  ParameterModel,
+  WebApiModel
+}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, WebApi}
@@ -47,6 +61,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
     parseDeclarations(map)
+    val declarationKeys = ctx.getDeclarationKeys
+    if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
 
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
     document
@@ -137,6 +153,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       "messages",
       e => {
+        ctx.addDeclarationKey(DeclarationKey(MessageModel, e))
         e.value.as[YMap].entries.foreach { entry =>
           val message = AsyncMessageParser(YMapEntryLike(entry), parent, None).parse()
           message.add(DeclaredElement())
@@ -149,6 +166,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       "operationTraits",
       entry => {
+        ctx.addDeclarationKey(DeclarationKey(OperationModel, entry, "Operation trait"))
         entry.value.as[YMap].entries.foreach { entry =>
           val produceOperation = (name: String) => Operation().withName(name).withMethod(name).adopted(parent)
           val operation        = AsyncOperationParser(entry, produceOperation, isTrait = true).parse()
@@ -162,6 +180,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       "messageTraits",
       entry => {
+        ctx.addDeclarationKey(DeclarationKey(MessageModel, entry, "Message trait"))
         entry.value.as[YMap].entries.foreach { entry =>
           val message = AsyncMessageParser(YMapEntryLike(entry), parent, None, isTrait = true).parse()
           message.add(DeclaredElement())
@@ -174,6 +193,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     map.key(
       "securitySchemes",
       e => {
+        ctx.addDeclarationKey(DeclarationKey(SecuritySchemeModel, e))
         e.value.as[YMap].entries.foreach { entry =>
           ctx.declarations += ctx.factory
             .securitySchemeParser(
@@ -197,6 +217,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       "parameters",
       paramsMap => {
+        ctx.addDeclarationKey(DeclarationKey(ParameterModel, paramsMap))
         val parameters: Seq[Parameter] = AsyncParametersParser(parent, paramsMap.value.as[YMap]).parse()
         parameters map { param =>
           param.add(DeclaredElement())
@@ -210,6 +231,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       "correlationIds",
       e => {
+        ctx.addDeclarationKey(DeclarationKey(CorrelationIdModel, e))
         e.value.as[YMap].entries.foreach { entry =>
           val correlationId = AsyncCorrelationIdParser(YMapEntryLike(entry), parent).parse()
           ctx.declarations += correlationId.add(DeclaredElement())
@@ -224,7 +246,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       componentsMap,
       entry => {
         AsyncMessageBindingsParser(YMapEntryLike(entry), parent).parse()
-      }
+      },
+      MessageBindingsModel
     )
   }
 
@@ -234,7 +257,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       componentsMap,
       entry => {
         AsyncServerBindingsParser(YMapEntryLike(entry), parent).parse()
-      }
+      },
+      ServerBindingsModel
     )
   }
 
@@ -244,7 +268,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       componentsMap,
       entry => {
         AsyncOperationBindingsParser(YMapEntryLike(entry), parent).parse()
-      }
+      },
+      OperationBindingsModel
     )
   }
 
@@ -254,16 +279,19 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       componentsMap,
       entry => {
         AsyncChannelBindingsParser(YMapEntryLike(entry), parent).parse()
-      }
+      },
+      ChannelBindingsModel
     )
   }
 
   def parseBindingsDeclarations[T <: DomainElement](keyword: String,
                                                     componentsMap: YMap,
-                                                    parse: YMapEntry => T): Unit = {
+                                                    parse: YMapEntry => T,
+                                                    model: DomainElementModel): Unit = {
     componentsMap.key(
       keyword,
       e => {
+        ctx.addDeclarationKey(DeclarationKey(model, e))
         e.value.as[YMap].entries.foreach { entry =>
           val bindings: T = parse(entry)
           bindings.add(DeclaredElement())

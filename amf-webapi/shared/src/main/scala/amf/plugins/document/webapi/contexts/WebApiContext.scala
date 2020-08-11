@@ -8,6 +8,7 @@ import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.JsonSchemaPlugin
+import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaAstIndex, OasWebApiContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration.{
@@ -35,7 +36,7 @@ abstract class WebApiContext(val loc: String,
 
   val syntax: SpecSyntax
   val vendor: Vendor
-
+  private var declarationKeys: List[DeclarationKey] = List.empty
   val declarations: WebApiDeclarations = declarationsOption.getOrElse(
     new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
 
@@ -177,6 +178,12 @@ abstract class WebApiContext(val loc: String,
   def getEntryKey(entry: YMapEntry): String = {
     entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
   }
+
+  def addDeclarationKey(key: DeclarationKey): Unit = {
+    declarationKeys = key :: declarationKeys
+  }
+
+  def getDeclarationKeys: List[DeclarationKey] = this.declarationKeys
 
   protected def nextValidation(node: String, shape: String, ast: YMap): Unit =
     throwClosedShapeError(node, s"Cannot validate unknown node type $shape for $vendor", ast)

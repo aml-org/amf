@@ -1,10 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations.DeclaredElement
+import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.{Annotations, _}
+import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser, YMapEntryLike}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
@@ -17,11 +19,13 @@ import org.yaml.model._
 case class AbstractDeclarationsParser(key: String,
                                       producer: YMapEntry => AbstractDeclaration,
                                       map: YMap,
-                                      customProperties: String)(implicit ctx: WebApiContext) {
+                                      customProperties: String,
+                                      model: DomainElementModel)(implicit ctx: WebApiContext) {
   def parse(): Unit = {
     map.key(
       key,
       e => {
+        ctx.addDeclarationKey(DeclarationKey(model, e))
         e.value.tagType match {
           case YType.Map =>
             e.value
