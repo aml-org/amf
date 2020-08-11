@@ -1,11 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
-import amf.core.annotations.DeclaredElement
+import amf.core.annotations.{DeclaredElement, LexicalInformation}
+import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.YMapOps
+import amf.core.parser.{Range, YMapOps}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
+import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.spec.declaration.{
@@ -14,14 +16,17 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   SecuritySchemeParser,
   _
 }
+import amf.plugins.domain.shapes.metamodel.AnyShapeModel
+import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
+import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.validations.ParserSideValidations.{
   InvalidAbstractDeclarationType,
   InvalidSecuredByType,
-  InvalidTypesType,
-  InvalidTypeDefinition
+  InvalidTypeDefinition,
+  InvalidTypesType
 }
-import org.yaml.model.{YType, YMap, YScalar, YMapEntry}
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 /**
   * Raml 0.8 spec parser
@@ -36,19 +41,23 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
     parseSchemaDeclarations(map, parent + "/schemas")
     parseAbstractDeclarations(
       "resourceTypes",
-      entry =>
+      entry => {
+        ctx.addDeclarationKey(DeclarationKey(ResourceTypeModel, entry))
         ResourceType(entry)
           .withName(entry.key.as[YScalar].text)
-          .withId(parent + s"/resourceTypes/${entry.key.as[YScalar].text.urlComponentEncoded}"),
+          .withId(parent + s"/resourceTypes/${entry.key.as[YScalar].text.urlComponentEncoded}")
+      },
       map,
       parent + "/resourceTypes"
     )
     parseAbstractDeclarations(
       "traits",
-      entry =>
+      entry => {
+        ctx.addDeclarationKey(DeclarationKey(TraitModel, entry))
         Trait(entry)
           .withName(entry.key.as[YScalar].text)
-          .withId(parent + s"/traits/${entry.key.as[YScalar].text.urlComponentEncoded}"),
+          .withId(parent + s"/traits/${entry.key.as[YScalar].text.urlComponentEncoded}")
+      },
       map,
       parent + "/traits"
     )
@@ -81,6 +90,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
     map.key(
       "securitySchemes",
       e => {
+        ctx.addDeclarationKey(DeclarationKey(SecuritySchemeModel, e))
         e.value.tagType match {
           case YType.Seq =>
             e.value.as[Seq[YMap]].foreach(map => parseEntries(map.entries, parent))
@@ -105,6 +115,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
   private def parseSchemaDeclarations(map: YMap, parent: String): Unit = {
     map.key("schemas").foreach { e =>
+      ctx.addDeclarationKey(DeclarationKey(AnyShapeModel, e))
       e.value.tagType match {
         case YType.Map =>
           parseSchemaEntries(e.value.as[YMap].entries, parent)

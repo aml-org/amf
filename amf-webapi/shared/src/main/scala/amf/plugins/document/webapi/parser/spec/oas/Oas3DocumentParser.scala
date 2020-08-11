@@ -1,19 +1,22 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.core.annotations.{DeclaredElement, DeclaredHeader}
+import amf.core.annotations.{DeclaredElement, DeclaredHeader, LexicalInformation}
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser._
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YamlTagValidator
 import amf.plugins.document.webapi.parser.spec.declaration.AbstractDeclarationsParser
 import amf.plugins.document.webapi.parser.spec.domain.{
-  OasLinkParser,
+  Oas3NamedExamplesParser,
   OasHeaderParametersParser,
-  Oas3NamedExamplesParser
+  OasLinkParser
 }
+import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.webapi.metamodel._
+import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{Parameter, WebApi}
 import amf.validations.ParserSideValidations
@@ -54,8 +57,13 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
       AbstractDeclarationsParser("resourceTypes".asOasExtension,
                                  (entry: YMapEntry) => ResourceType(entry),
                                  map,
-                                 parent + "/resourceTypes").parse()
-      AbstractDeclarationsParser("traits".asOasExtension, (entry: YMapEntry) => Trait(entry), map, parent + "/traits")
+                                 parent + "/resourceTypes",
+                                 ResourceTypeModel).parse()
+      AbstractDeclarationsParser("traits".asOasExtension,
+                                 (entry: YMapEntry) => Trait(entry),
+                                 map,
+                                 parent + "/traits",
+                                 TraitModel)
         .parse()
       ctx.closedShape(parent, map, "components")
       validateNames()
@@ -65,6 +73,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "examples",
       e => {
+        ctx.addDeclarationKey(DeclarationKey(ExampleModel, e))
         Oas3NamedExamplesParser(e, parent)
           .parse()
           .foreach(ex => ctx.declarations += ex.add(DeclaredElement()))
@@ -76,6 +85,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "requestBodies",
       e => {
+        ctx.addDeclarationKey(DeclarationKey(RequestModel, e, "Request body"))
         e.value
           .as[YMap]
           .entries
@@ -92,6 +102,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "headers",
       entry => {
+        ctx.addDeclarationKey(DeclarationKey(ParameterModel, entry, "Headers"))
         val headers: Seq[Parameter] =
           OasHeaderParametersParser(entry.value.as[YMap], _.adopted(parent)).parse()
         headers.foreach(header => {
@@ -105,11 +116,13 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
   def parseLinkDeclarations(map: YMap, parent: String): Unit = {
     map.key(
       "links",
-      entry =>
+      entry => {
+        ctx.addDeclarationKey(DeclarationKey(TemplatedLinkModel, entry))
         entry.value
           .as[YMap]
           .entries
           .foreach(entry => ctx.declarations += OasLinkParser(parent, entry).parse().add(DeclaredElement()))
+      }
     )
   }
 
@@ -117,6 +130,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "callbacks",
       entry => {
+        ctx.addDeclarationKey(DeclarationKey(CallbackModel, entry))
         entry.value
           .as[YMap]
           .entries
