@@ -92,6 +92,10 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
     validate("invalid-yaml-tags.yaml", Some("invalid-yaml-tags.report"), Oas30Profile)
   }
 
+  test("Implicit invalid yaml tags location") {
+    validate("implicit-invalid-yaml-tags.yaml", Some("implicit-invalid-yaml-tags.report"), Oas30Profile)
+  }
+
   test("Invalid header names according to RFC-7230") {
     validate("invalid-header-names.yaml", Some("invalid-header-names.report"), Oas30Profile)
   }
