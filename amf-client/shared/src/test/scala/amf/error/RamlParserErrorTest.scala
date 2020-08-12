@@ -322,6 +322,17 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Invalid scope at secured by defined in fragment") {
+    validate(
+      "/error/invalid-scope-secured-by-in-fragment.raml",
+      violation => {
+        violation.level should be("Violation")
+        violation.message should be("Scope 'USER' not found in settings of declared secured by oauth_2_0.")
+        violation.position.map(_.range) should be(Some(Range((9, 45), (9, 49))))
+      }
+    )
+  }
+
   test("Test invalid map in resource type use") {
     validate("/valid/invalid-map-resource-type.raml")
   }
