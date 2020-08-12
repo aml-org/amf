@@ -29,12 +29,11 @@ object YamlTagValidator {
   private def validateTag(severity: String)(node: YNode)(implicit ctx: WebApiContext): Unit = {
     val tagText = node.tag.text
     YType(tagText) match {
-      case YType.Unknown | YType.Timestamp =>
-        val ast = if (tagIsExplicit(node)) node.tag else node
+      case YType.Unknown | YType.Timestamp if tagIsExplicit(node) =>
         ctx.eh.reportConstraint(ParserSideValidations.UnknownYamlTag,
                                 "",
                                 s"Unknown tag '$tagText', must be allowed by json schema ruleset",
-                                ast,
+                                node.tag,
                                 severity)
       case _ => // valid tag
     }
