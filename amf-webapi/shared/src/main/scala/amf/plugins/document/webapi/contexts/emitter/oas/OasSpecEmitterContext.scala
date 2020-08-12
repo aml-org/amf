@@ -110,9 +110,9 @@ class Oas2SpecEmitterFactory(override val spec: OasSpecEmitterContext)
     extends OasSpecEmitterFactory()(spec)
     with Oas2SpecEmitterFactoryBase
 
-// class InlinedOas2SpecEmitterFactory(override val spec: InlinedOasSpecEmitterContext)
-//     extends InlinedOasSpecEmitterFactory()(spec)
-//     with Oas2SpecEmitterFactoryBase
+class InlinedOas2SpecEmitterFactory(override val spec: InlinedOasSpecEmitterContext)
+    extends InlinedOasSpecEmitterFactory()(spec)
+    with Oas2SpecEmitterFactoryBase
 
 /**
   * Overrides type emitter to avoid extracting nested types to definitions.
@@ -161,9 +161,9 @@ case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext)
     extends OasSpecEmitterFactory()(spec)
     with Oas3SpecEmitterFactoryBase
 
-// case class InlinedOas3SpecEmitterFactory(override val spec: InlinedOasSpecEmitterContext)
-//     extends InlinedOasSpecEmitterFactory()(spec)
-//     with Oas3SpecEmitterFactoryBase
+case class InlinedOas3SpecEmitterFactory(override val spec: InlinedOasSpecEmitterContext)
+    extends InlinedOasSpecEmitterFactory()(spec)
+    with Oas3SpecEmitterFactoryBase
 
 abstract class OasSpecEmitterContext(eh: ErrorHandler,
                                      refEmitter: RefEmitter = OasRefEmitter,
@@ -234,17 +234,17 @@ class Oas3SpecEmitterContext(eh: ErrorHandler,
   override def schemasDeclarationsPath: String = "/components/schemas/"
 }
 
-// class InlinedOas3SpecEmitterContext(eh: ErrorHandler,
-//                                     refEmitter: RefEmitter = OasRefEmitter,
-//                                     options: ShapeRenderOptions = ShapeRenderOptions(),
-//                                     compactEmission: Boolean = false)
-//     extends InlinedOasSpecEmitterFactory(eh, refEmitter, options, compactEmission) {
-//   override val anyOfKey: String                       = "anyOf"
-//   val schemaVersion: JSONSchemaVersion                = OAS30SchemaVersion("schema")(eh)
-//   override val factory: InlinedOasSpecEmitterFactory  = InlinedOas3SpecEmitterFactory(this)
-//   override val vendor: Vendor                         = Oas30
-//   override def schemasDeclarationsPath: String        = "/components/schemas/"
-// }
+class InlinedOas3SpecEmitterContext(eh: ErrorHandler,
+                                    refEmitter: RefEmitter = OasRefEmitter,
+                                    options: ShapeRenderOptions = ShapeRenderOptions(),
+                                    compactEmission: Boolean = false)
+    extends InlinedOasSpecEmitterContext(eh, refEmitter, options, compactEmission) {
+  override val anyOfKey: String                       = "anyOf"
+  val schemaVersion: JSONSchemaVersion                = OAS30SchemaVersion("schema")(eh)
+  override val factory: InlinedOasSpecEmitterFactory  = InlinedOas3SpecEmitterFactory(this)
+  override val vendor: Vendor                         = Oas30
+  override def schemasDeclarationsPath: String        = "/components/schemas/"
+}
 
 class Oas2SpecEmitterContext(eh: ErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
@@ -257,16 +257,16 @@ class Oas2SpecEmitterContext(eh: ErrorHandler,
   override def schemasDeclarationsPath: String = "/definitions/"
 }
 
-// class InlinedOas2SpecEmitterContext(eh: ErrorHandler,
-//                                     refEmitter: RefEmitter = OasRefEmitter,
-//                                     options: ShapeRenderOptions = ShapeRenderOptions(),
-//                                     compactEmission: Boolean = false)
-//     extends InlinedOasSpecEmitterContext(eh, refEmitter, options, compactEmission) {
-//   val schemaVersion: JSONSchemaVersion                = OAS20SchemaVersion("schema")(eh)
-//   override val factory: InlinedOasSpecEmitterFactory  = new InlinedOas2SpecEmitterFactory(this)
-//   override val vendor: Vendor                         = Oas20
-//   override def schemasDeclarationsPath: String        = "/definitions/"
-// }
+class InlinedOas2SpecEmitterContext(eh: ErrorHandler,
+                                    refEmitter: RefEmitter = OasRefEmitter,
+                                    options: ShapeRenderOptions = ShapeRenderOptions(),
+                                    compactEmission: Boolean = false)
+    extends InlinedOasSpecEmitterContext(eh, refEmitter, options, compactEmission) {
+  val schemaVersion: JSONSchemaVersion                = OAS20SchemaVersion("schema")(eh)
+  override val factory: InlinedOasSpecEmitterFactory  = new InlinedOas2SpecEmitterFactory(this)
+  override val vendor: Vendor                         = Oas20
+  override def schemasDeclarationsPath: String        = "/definitions/"
+}
 
 object OasRefEmitter extends RefEmitter {
 
