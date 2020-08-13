@@ -82,7 +82,10 @@ pipeline {
     }
     stage('Tag version') {
       when {
-        branch 'master'
+        anyOf {
+          branch 'master'
+          branch 'support/*'
+        }
       }
       steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-salt', passwordVariable: 'GITHUB_PASS', usernameVariable: 'GITHUB_USER']]) {
@@ -94,8 +97,7 @@ pipeline {
                       version=$(sbt version | tail -n 1 | grep -o '[0-9].[0-9].[0-9].*')
                       url="https://${GITHUB_USER}:${GITHUB_PASS}@github.com/${GITHUB_ORG}/${GITHUB_REPO}"
                       git tag $version
-                      git push $url $version
-                      echo "tagging successful"
+                      git push $url $version && echo "tagging successful"
                 '''
               }
             } catch(ignored) {
