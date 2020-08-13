@@ -1,16 +1,16 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, Lazy}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.{SpecField, SpecNode}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common._
+import amf.plugins.document.webapi.parser.spec.{SpecField, SpecNode}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
-import amf.validations.ParserSideValidations.{UnknownScopeErrorSpecification, MissingRequiredFieldForGrantType}
+import amf.validations.ParserSideValidations.{MissingRequiredFieldForGrantType, UnknownScopeErrorSpecification}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -68,11 +68,13 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
       val element = ScalarNode(n).text()
       scheme match {
         case ss: ParametrizedSecurityScheme =>
-          ss.scheme.settings match {
+          val effectiveScheme =
+            if (ss.scheme.isLink) ss.scheme.effectiveLinkTarget().asInstanceOf[SecurityScheme] else ss.scheme
+          effectiveScheme.settings match {
             case se: OAuth2Settings if isValidScope(se.flows.headOption, element.toString()) =>
               Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
             case _: OAuth2Settings =>
-              val scope = Scope().adopted(flow.getOrCreate.id)
+              val scope = Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
               ctx.eh.violation(
                 UnknownScopeErrorSpecification,
                 scope.id,
@@ -121,8 +123,8 @@ object RamlSecuritySettingsParser {
 }
 
 class Raml10SecuritySettingsParser(map: YMap, `type`: String, scheme: DomainElement with WithSettings)(
-  implicit override val ctx: RamlWebApiContext)
-  extends RamlSecuritySettingsParser(map, `type`, scheme) {
+    implicit override val ctx: RamlWebApiContext)
+    extends RamlSecuritySettingsParser(map, `type`, scheme) {
 
   override protected def oauth2(): OAuth2Settings = {
     val settings = super.oauth2()

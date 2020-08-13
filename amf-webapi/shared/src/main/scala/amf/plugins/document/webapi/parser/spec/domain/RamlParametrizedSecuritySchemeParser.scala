@@ -28,8 +28,13 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
         case Some(declaration) =>
           scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration)
 
+          val effectiveDeclaration =
+            if (declaration.isLink)
+              declaration.effectiveLinkTarget().asInstanceOf[SecurityScheme]
+            else declaration
+
           val settings =
-            RamlSecuritySettingsParser(schemeEntry.value.as[YMap], declaration.`type`.value(), scheme).parse()
+            RamlSecuritySettingsParser(schemeEntry.value.as[YMap], effectiveDeclaration.`type`.value(), scheme).parse()
 
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>
