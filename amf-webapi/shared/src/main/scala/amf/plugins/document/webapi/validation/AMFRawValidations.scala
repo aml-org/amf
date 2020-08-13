@@ -739,8 +739,7 @@ object AMFRawValidations {
         value = "^authorization_code|password|client_credentials|implicit|(\\w+:(\\/?\\/?)[^\\s]+)$"
       ),
       AMFValidation(
-        message =
-          "requestTokenUri is required when security type is OAuth 1.0",
+        message = "requestTokenUri is required when security type is OAuth 1.0",
         owlClass = security("OAuth1Settings"),
         owlProperty = security("requestTokenUri"),
         constraint = minCount,
@@ -748,8 +747,7 @@ object AMFRawValidations {
         severity = Severity.WARNING
       ),
       AMFValidation(
-        message =
-          "authorizationUri is required when security type is OAuth 1.0",
+        message = "authorizationUri is required when security type is OAuth 1.0",
         owlClass = security("OAuth1Settings"),
         owlProperty = security("authorizationUri"),
         constraint = minCount,
@@ -757,8 +755,7 @@ object AMFRawValidations {
         severity = Severity.WARNING
       ),
       AMFValidation(
-        message =
-          "tokenCredentialsUri is required when security type is OAuth 1.0",
+        message = "tokenCredentialsUri is required when security type is OAuth 1.0",
         owlClass = security("OAuth1Settings"),
         owlProperty = security("tokenCredentialsUri"),
         constraint = minCount,

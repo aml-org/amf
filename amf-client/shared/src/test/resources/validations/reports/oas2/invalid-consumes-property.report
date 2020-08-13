@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/oas2/invalid-consumes-property.json
+Profile: OAS 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-consumes-with-file-parameter
+  Message: Consumes must be either 'multipart/form-data', 'application/x-www-form-urlencoded', or both when a file parameter is present
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas2/invalid-consumes-property.json#/web-api/end-points/%2Ftest/get/request/formData/formData/property/file
+  Property: 
+  Position: Some(LexicalInformation([(14,10)-(18,11)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas2/invalid-consumes-property.json
