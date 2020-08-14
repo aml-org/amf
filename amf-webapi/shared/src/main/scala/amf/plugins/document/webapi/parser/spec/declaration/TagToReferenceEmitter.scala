@@ -80,7 +80,7 @@ case class RamlTagToReferenceEmitter(target: DomainElement, label: Option[String
       case m: Module   => m.declares.contains(target)
       case f: Fragment => f.encodes == target
     } match {
-      case Some(_: Fragment) => spec.ref(b, referenceLabel)
+      case Some(_: Fragment) => spec.ref(b, referenceLabel) // emits with !include
       case _                 => raw(b, referenceLabel)
     }
   }
