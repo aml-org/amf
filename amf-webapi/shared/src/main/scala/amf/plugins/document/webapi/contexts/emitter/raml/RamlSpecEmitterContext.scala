@@ -333,7 +333,7 @@ abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
   def localReferenceEntryEmitter(key: String, reference: Linkable): EntryEmitter =
     new RamlLocalReferenceEntryEmitter(key, reference)
 
-  def externalReference(location: String, reference: Linkable): PartEmitter =
+  def externalReference(reference: Linkable): PartEmitter =
     new PartEmitter {
       override def emit(b: PartBuilder): Unit =
         b += YNode.include(reference.linkLabel.option().getOrElse(reference.location().get))
