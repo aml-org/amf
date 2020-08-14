@@ -53,7 +53,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
     clean
   }
 
-  override def specContext(options: RenderOptions): RamlSpecEmitterContext
+  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): RamlSpecEmitterContext
 
   override def parse(root: Root,
                      parentContext: ParserContext,
@@ -171,8 +171,8 @@ object Raml08Plugin extends RamlPlugin {
       renderOptions: RenderOptions,
       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
     unit match {
-      case document: Document => Some(RamlDocumentEmitter(document)(specContext(renderOptions)).emitDocument())
-      case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
+      case document: Document => Some(RamlDocumentEmitter(document)(specContext(renderOptions, shapeRenderOptions)).emitDocument())
+      case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext(renderOptions, shapeRenderOptions)).emitFragment())
       case _                  => None
     }
 
@@ -186,7 +186,7 @@ object Raml08Plugin extends RamlPlugin {
                             ds.map(d => RamlWebApiDeclarations(d)),
                             options = options)
 
-  def specContext(options: RenderOptions): RamlSpecEmitterContext = new Raml08SpecEmitterContext(options.errorHandler)
+  def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): RamlSpecEmitterContext = new Raml08SpecEmitterContext(options.errorHandler)
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
@@ -239,10 +239,10 @@ object Raml10Plugin extends RamlPlugin {
       renderOptions: RenderOptions,
       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
     unit match {
-      case module: Module             => Some(RamlModuleEmitter(module)(specContext(renderOptions)).emitModule())
-      case document: Document         => Some(RamlDocumentEmitter(document)(specContext(renderOptions)).emitDocument())
+      case module: Module             => Some(RamlModuleEmitter(module)(specContext(renderOptions, shapeRenderOptions)).emitModule())
+      case document: Document         => Some(RamlDocumentEmitter(document)(specContext(renderOptions, shapeRenderOptions)).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-      case fragment: Fragment         => Some(new RamlFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
+      case fragment: Fragment         => Some(new RamlFragmentEmitter(fragment)(specContext(renderOptions, shapeRenderOptions)).emitFragment())
       case _                          => None
     }
 
@@ -256,7 +256,7 @@ object Raml10Plugin extends RamlPlugin {
                             ds.map(d => RamlWebApiDeclarations(d)),
                             options = options)
 
-  def specContext(options: RenderOptions): RamlSpecEmitterContext = new Raml10SpecEmitterContext(options.errorHandler)
+  def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): RamlSpecEmitterContext = new Raml10SpecEmitterContext(options.errorHandler)
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document

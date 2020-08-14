@@ -30,13 +30,14 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   OasResolutionPipeline
 }
 import amf.plugins.domain.webapi.models.WebApi
+import org.yaml.builder.DocBuilder
 import org.yaml.model.{YDocument, YNode}
 
 sealed trait OasPlugin extends OasLikePlugin {
 
   override val vendors: Seq[String] = Seq(vendor.name, Oas.name)
 
-  override def specContext(options: RenderOptions): OasSpecEmitterContext
+  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): OasSpecEmitterContext
 
   /**
     * Does references in this type of documents be recursive?
@@ -92,12 +93,22 @@ sealed trait OasPlugin extends OasLikePlugin {
     "application/openapi",
     "application/swagger"
   )
+
+  /**
+    * Override the method to default to compacted emission.
+    */
+  override def emit[T](unit: BaseUnit,
+                       builder: DocBuilder[T],
+                       renderOptions: RenderOptions = RenderOptions(),
+                       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission): Boolean = {
+    super.emit[T](unit, builder, renderOptions, shapeRenderOptions)
+  }
 }
 
 object Oas20Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions): OasSpecEmitterContext =
-    new Oas2SpecEmitterContext(options.errorHandler)
+  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): OasSpecEmitterContext =
+    new Oas2SpecEmitterContext(options.errorHandler, options = shapeRenderOptions)
 
   override protected def vendor: Vendor = Oas20
 
@@ -129,10 +140,10 @@ object Oas20Plugin extends OasPlugin {
       renderOptions: RenderOptions,
       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
     unit match {
-      case module: Module             => Some(Oas20ModuleEmitter(module)(specContext(renderOptions)).emitModule())
-      case document: Document         => Some(Oas2DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
+      case module: Module             => Some(Oas20ModuleEmitter(module)(specContext(renderOptions, shapeRenderOptions)).emitModule())
+      case document: Document         => Some(Oas2DocumentEmitter(document)(specContext(renderOptions, shapeRenderOptions)).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
+      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions, shapeRenderOptions)).emitFragment())
       case _                          => None
     }
 
@@ -161,8 +172,8 @@ object Oas20Plugin extends OasPlugin {
 
 object Oas30Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions): Oas3SpecEmitterContext =
-    new Oas3SpecEmitterContext(options.errorHandler)
+  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): Oas3SpecEmitterContext =
+    new Oas3SpecEmitterContext(options.errorHandler, options = shapeRenderOptions)
 
   override protected def vendor: Vendor = Oas30
 
@@ -194,10 +205,10 @@ object Oas30Plugin extends OasPlugin {
       renderOptions: RenderOptions,
       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
     unit match {
-      case module: Module             => Some(Oas30ModuleEmitter(module)(specContext(renderOptions)).emitModule())
-      case document: Document         => Some(Oas3DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
+      case module: Module             => Some(Oas30ModuleEmitter(module)(specContext(renderOptions, shapeRenderOptions)).emitModule())
+      case document: Document         => Some(Oas3DocumentEmitter(document)(specContext(renderOptions, shapeRenderOptions)).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
+      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions, shapeRenderOptions)).emitFragment())
       case _                          => None
     }
 

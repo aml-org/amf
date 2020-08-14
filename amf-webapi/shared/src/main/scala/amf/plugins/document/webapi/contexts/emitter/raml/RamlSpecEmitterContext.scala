@@ -299,7 +299,7 @@ class Raml10SpecEmitterContext(eh: ErrorHandler,
                                refEmitter: RefEmitter = RamlRefEmitter,
                                options: ShapeRenderOptions = ShapeRenderOptions())
     extends RamlSpecEmitterContext(eh, refEmitter, options) {
-  override val factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
+  override def factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml10
 }
 
@@ -316,7 +316,7 @@ class XRaml10SpecEmitterContext(eh: ErrorHandler,
 
 class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = ShapeRenderOptions())
     extends RamlSpecEmitterContext(eh, RamlRefEmitter, options) {
-  override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
+  override def factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml08
 
 }
@@ -340,7 +340,7 @@ abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
       override def position(): Position = pos(reference.annotations)
     }
 
-  val factory: RamlEmitterVersionFactory
+  def factory: RamlEmitterVersionFactory
 
 }
 
