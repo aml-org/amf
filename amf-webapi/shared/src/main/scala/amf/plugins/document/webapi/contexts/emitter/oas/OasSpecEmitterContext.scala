@@ -68,6 +68,9 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
 abstract class InlinedOasSpecEmitterFactory(override implicit val spec: OasSpecEmitterContext)
     extends OasSpecEmitterFactory {
 
+  override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
+      OasDeclaredTypesEmitters.apply
+
   override def typeEmitters(shape: Shape,
                             ordering: SpecOrdering,
                             ignored: Seq[Field] = Nil,
