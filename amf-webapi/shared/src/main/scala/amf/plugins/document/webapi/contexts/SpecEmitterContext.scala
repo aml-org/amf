@@ -26,7 +26,7 @@ abstract class SpecEmitterContext(val eh: ErrorHandler, refEmitter: RefEmitter, 
 
   val vendor: Vendor
 
-  def factory: SpecEmitterFactory
+  val factory: SpecEmitterFactory
 
   def getRefEmitter: RefEmitter = refEmitter
 

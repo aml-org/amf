@@ -71,7 +71,7 @@ abstract class AsyncSpecEmitterContext(eh: ErrorHandler,
   override def localReference(reference: Linkable): PartEmitter =
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
-  override def factory: AsyncSpecEmitterFactory
+  override val factory: AsyncSpecEmitterFactory
 
   val typeDefMatcher: OasTypeDefStringValueMatcher = CommonOasTypeDefMatcher
 }
@@ -81,7 +81,7 @@ class Async20SpecEmitterContext(eh: ErrorHandler,
                                 options: ShapeRenderOptions = ShapeRenderOptions(),
                                 val schemaVersion: JSONSchemaVersion = JSONSchemaDraft7SchemaVersion)
     extends AsyncSpecEmitterContext(eh, refEmitter, options) {
-  override def factory: AsyncSpecEmitterFactory = Async20SpecEmitterFactory(this)
+  override val factory: AsyncSpecEmitterFactory = Async20SpecEmitterFactory(this)
   override val vendor: Vendor                   = AsyncApi20
   override def schemasDeclarationsPath: String  = "/definitions/"
 }

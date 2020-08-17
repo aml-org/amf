@@ -9,7 +9,11 @@ import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{FieldEntry, Position, Value}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts._
-import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.{
+  Oas3SpecEmitterFactory,
+  InlinedOas3SpecEmitterFactory,
+  OasSpecEmitterContext
+}
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.EnumValuesEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
@@ -76,6 +80,8 @@ abstract class Oas3ServersEmitter(elem: DomainElement,
   override protected def asExtension(key: String, servers: Seq[Server], result: ListBuffer[EntryEmitter]): Unit = {
     spec.factory match {
       case _: Oas3SpecEmitterFactory =>
+        super.asExtension(key, servers, result)
+      case _: InlinedOas3SpecEmitterFactory =>
         super.asExtension(key, servers, result)
       case _ => // Nothing
     }

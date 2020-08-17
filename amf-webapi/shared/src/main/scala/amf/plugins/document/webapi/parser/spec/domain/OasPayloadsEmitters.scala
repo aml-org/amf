@@ -9,7 +9,9 @@ import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.annotations.ParameterNameForPayload
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterFactory,
+  InlinedOas2SpecEmitterFactory,
   Oas3SpecEmitterFactory,
+  InlinedOas3SpecEmitterFactory,
   OasSpecEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
@@ -32,7 +34,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         val result = mutable.ListBuffer[EntryEmitter]()
 
         // OAS 3.0.0
-        if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+        if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory]) {
           fs.entry(PayloadModel.Examples)
             .map(f => result += OasResponseExamplesEmitter("examples", f, ordering))
 
@@ -41,7 +43,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         }
 
         // OAS 2.0
-        if (spec.factory.isInstanceOf[Oas2SpecEmitterFactory]) {
+        if (spec.factory.isInstanceOf[Oas2SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas2SpecEmitterFactory]) {
           fs.entry(PayloadModel.Name)
             .map(f => {
               f.value.annotations.find(classOf[ParameterNameForPayload]) match {

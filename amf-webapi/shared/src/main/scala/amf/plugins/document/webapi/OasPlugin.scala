@@ -13,7 +13,9 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterContext,
+  InlinedOas2SpecEmitterContext,
   Oas3SpecEmitterContext,
+  InlinedOas3SpecEmitterContext,
   OasSpecEmitterContext
 }
 import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext, OasWebApiContext}
@@ -107,8 +109,13 @@ sealed trait OasPlugin extends OasLikePlugin {
 
 object Oas20Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): OasSpecEmitterContext =
-    new Oas2SpecEmitterContext(options.errorHandler, options = shapeRenderOptions)
+  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): OasSpecEmitterContext = {
+    if (shapeRenderOptions.isWithCompactedEmission) {
+      new Oas2SpecEmitterContext(options.errorHandler, options = shapeRenderOptions)
+    } else {
+      new InlinedOas2SpecEmitterContext(options.errorHandler, options = shapeRenderOptions)
+    }
+  }
 
   override protected def vendor: Vendor = Oas20
 
@@ -172,8 +179,13 @@ object Oas20Plugin extends OasPlugin {
 
 object Oas30Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): Oas3SpecEmitterContext =
-    new Oas3SpecEmitterContext(options.errorHandler, options = shapeRenderOptions)
+  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): OasSpecEmitterContext = {
+    if (shapeRenderOptions.isWithCompactedEmission) {
+      new Oas3SpecEmitterContext(options.errorHandler, options = shapeRenderOptions)
+    } else {
+      new InlinedOas3SpecEmitterContext(options.errorHandler, options = shapeRenderOptions)
+    }
+  }
 
   override protected def vendor: Vendor = Oas30
 

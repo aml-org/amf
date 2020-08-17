@@ -54,7 +54,7 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
   override def localReference(reference: Linkable): PartEmitter =
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
-  def factory: OasLikeSpecEmitterFactory
+  val factory: OasLikeSpecEmitterFactory
 
   val jsonPointersMap: mutable.Map[String, String] = mutable.Map() // id -> pointer
 

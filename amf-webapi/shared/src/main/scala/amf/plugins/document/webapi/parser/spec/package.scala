@@ -5,6 +5,8 @@ import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterContext,
+  InlinedOas2SpecEmitterContext,
+  InlinedOas3SpecEmitterFactory,
   Oas3SpecEmitterFactory,
   OasSpecEmitterContext
 }
@@ -64,14 +66,14 @@ package object spec {
 
     def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
         implicit spec: SpecEmitterContext): String = {
-      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory])
         appendOas3ComponentsPrefix(url, "parameters")
       else
         appendPrefix(parameterDefinitionsPrefix, url)
     }
 
     def appendResponsesDefinitionsPrefix(url: String)(implicit spec: SpecEmitterContext): String = {
-      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory])
         appendOas3ComponentsPrefix(url, "responses")
       else
         appendPrefix(responsesDefinitionsPrefix, url)
@@ -134,7 +136,11 @@ package object spec {
   }
 
   def toOas(spec: SpecEmitterContext): OasSpecEmitterContext = {
-    new Oas2SpecEmitterContext(spec.eh, spec.getRefEmitter)
+    if (spec.options.isWithCompactedEmission) {
+      new Oas2SpecEmitterContext(spec.eh, spec.getRefEmitter, options = spec.options)
+    } else {
+      new InlinedOas2SpecEmitterContext(spec.eh, spec.getRefEmitter, options = spec.options)
+    }
   }
 
   def toJsonSchema(ctx: WebApiContext): JsonSchemaWebApiContext = {

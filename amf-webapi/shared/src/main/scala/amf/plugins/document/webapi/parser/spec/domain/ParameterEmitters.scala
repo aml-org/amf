@@ -13,7 +13,11 @@ import amf.core.remote.Vendor
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.annotations.{FormBodyParameter, ParameterNameForPayload, RequiredParamPayload}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.{
+  Oas3SpecEmitterFactory,
+  InlinedOas3SpecEmitterFactory,
+  OasSpecEmitterContext
+}
 import amf.plugins.document.webapi.contexts.emitter.raml.{
   RamlScalarEmitter,
   RamlSpecEmitterContext,
@@ -384,7 +388,7 @@ case class ParameterEmitter(parameter: Parameter,
 
         fs.entry(ParameterModel.Schema)
           .foreach { f =>
-            if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || parameter.isBody) {
+            if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory] || parameter.isBody) {
               result += OasSchemaEmitter(f, ordering, references)
               result ++= AnnotationsEmitter(parameter, ordering).emitters
             } else {
@@ -441,7 +445,7 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
     b.entry(
       parameter.name.option().get,
       b => {
-        if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+        if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory]) {
           ParameterEmitter(parameter, ordering, references, asHeader = true).emit(b)
         } else {
           emitOas2Header(b)
@@ -474,7 +478,7 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
       parameter.annotations,
-      if (parameter.isLink && !spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) emitLink(b)
+      if (parameter.isLink && !spec.factory.isInstanceOf[Oas3SpecEmitterFactory] && !spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory]) emitLink(b)
       else emitParameter(b)
     )
   }
