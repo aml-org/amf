@@ -670,22 +670,19 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         case _ if node.toOption[YScalar].isDefined =>
           val refTuple = ctx.link(node) match {
             case Left(key) =>
-              (key,
-               ctx.declarations.findType(
-                 key,
-                 SearchScope.Fragments,
-                 Some((s: String) => ctx.eh.violation(InvalidFragmentType, shape.id, s, node))))
+              val referenced = ctx.declarations.findType(
+                key,
+                SearchScope.Fragments,
+                Some((s: String) => ctx.eh.violation(InvalidFragmentType, shape.id, s, node)))
+              (key, referenced.map(createLink(_, key, shape.id).add(ExternalFragmentRef(key))))
             case _ =>
-              val text = node.as[YScalar].text
-              (text, ctx.declarations.findType(text, SearchScope.Named))
+              val text       = node.as[YScalar].text
+              val referenced = ctx.declarations.findType(text, SearchScope.Named)
+              (text, referenced.map(createLink(_, text, shape.id)))
           }
 
           refTuple match {
-            case (text: String, Some(s)) =>
-              s.link(text, Annotations(node))
-                .asInstanceOf[Shape]
-                .withName(name, nameAnnotations) // we setup the local reference in the name
-                .withId(shape.id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+            case (_, Some(s)) => s
             case (text: String, _)
                 if RamlTypeDefMatcher.matchType(TypeName(text), default = UndefinedType) == ObjectType =>
               shape.annotations += ExplicitField()
@@ -713,6 +710,14 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
           }
       }
     }
+  }
+
+  private def createLink(shape: AnyShape, label: String, linkId: String): Shape = {
+    shape
+      .link(label, Annotations(node))
+      .asInstanceOf[Shape]
+      .withName(name, nameAnnotations) // we setup the local reference in the name
+      .withId(linkId) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
   }
 
   private def isFileType: Boolean = {

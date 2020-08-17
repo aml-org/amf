@@ -122,4 +122,34 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
     )
   }
 
+  test("server") {
+    renderElement(
+      "basic-servers.json",
+      CommonExtractors.webapi.andThen(_.map(_.servers.head)),
+      "basic-servers-emission.yaml",
+      OasJsonHint,
+      directory = upanddownPath
+    )
+  }
+
+  test("security scheme") {
+    renderElement(
+      "basic-security-types.json",
+      CommonExtractors.declaresIndex(0),
+      "basic-security-scheme-emission.yaml",
+      OasJsonHint,
+      directory = upanddownPath
+    )
+  }
+
+  test("payload") {
+    renderElement(
+      "basic-encoding.json",
+      CommonExtractors.firstResponse.andThen(_.map(_.payloads.head)),
+      "basic-encoding-emission.yaml",
+      OasJsonHint,
+      directory = upanddownPath
+    )
+  }
+
 }

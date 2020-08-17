@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.raml.emitters
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DataNode
 import amf.core.parser.{FieldEntry, Fields, Position}
@@ -101,7 +101,12 @@ case class Raml08SecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
                                          references: Seq[BaseUnit],
-                                         ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+                                         ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends PartEmitter {
+
+  override def emit(b: PartBuilder): Unit = b.obj(traverse(ordering.sorted(emitters()), _))
+
+  override def position(): Position = pos(securityScheme.annotations)
 
   protected def describedByEmitter: (String, SecurityScheme, SpecOrdering, Seq[BaseUnit]) => DescribedByEmitter
 
@@ -159,8 +164,7 @@ case class RamlSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(im
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class RamlSecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrdering)(
-    implicit spec: SpecEmitterContext) {
+case class RamlSecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters: Seq[EntryEmitter] = {
     val settings = f.value.value.asInstanceOf[Settings]
     val results  = ListBuffer[EntryEmitter]()

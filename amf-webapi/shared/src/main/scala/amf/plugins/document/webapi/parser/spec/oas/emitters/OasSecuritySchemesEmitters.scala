@@ -1,14 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.oas.emitters
 
 import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.{Fields, Position}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.document.webapi.parser.spec.oas.{
-  OasSecuritySchemeType,
   OasLikeSecuritySchemeTypeMappings,
+  OasSecuritySchemeType,
   SecuritySchemeType
 }
 import amf.plugins.document.webapi.parser.spec.raml.emitters.Raml10DescribedByEmitter
@@ -125,7 +125,8 @@ case class Oas3NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 }
 
 class OasSecuritySchemeEmitter(securityScheme: SecurityScheme, mappedType: SecuritySchemeType, ordering: SpecOrdering)(
-    implicit spec: OasSpecEmitterContext) {
+    implicit spec: OasSpecEmitterContext)
+    extends PartEmitter {
   def emitters(): Seq[EntryEmitter] = {
 
     val results = ListBuffer[EntryEmitter]()
@@ -142,6 +143,10 @@ class OasSecuritySchemeEmitter(securityScheme: SecurityScheme, mappedType: Secur
 
     ordering.sorted(results)
   }
+
+  override def emit(b: PartBuilder): Unit = b.obj(traverse(ordering.sorted(emitters()), _))
+
+  override def position(): Position = pos(securityScheme.annotations)
 
   protected def emitSettings(results: ListBuffer[EntryEmitter], fs: Fields): Unit = {
     fs.entry(SecuritySchemeModel.Settings).foreach(f => results ++= OasSecuritySettingsEmitter(f, ordering).emitters())

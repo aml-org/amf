@@ -1,15 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.annotations.DeclaredElement
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, OasTypeParser}
+import amf.core.metamodel.domain.ShapeModel
+import amf.core.model.domain.AmfScalar
+import amf.core.parser.{Annotations, _}
+import amf.plugins.document.webapi.annotations.DeclarationKey
+import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
+import amf.plugins.domain.shapes.models.NodeShape
 import amf.validations.ParserSideValidations.UnableToParseShape
 import org.yaml.model.{YMap, YScalar}
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.domain.shapes.annotations.TypeAlias
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 trait OasLikeDeclarationsHelper {
   protected val definitionsKey: String
@@ -18,6 +18,7 @@ trait OasLikeDeclarationsHelper {
     map.key(
       definitionsKey,
       entry => {
+        ctx.addDeclarationKey(DeclarationKey(ShapeModel, entry))
         entry.value
           .as[YMap]
           .entries

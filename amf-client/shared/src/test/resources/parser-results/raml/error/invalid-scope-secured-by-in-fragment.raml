@@ -1,0 +1,9 @@
+#%RAML 1.0
+title: GitHub API
+
+securitySchemes:
+  oauth_2_0: !include /invalid-scope-secured-by-fragment.raml
+
+/users:
+  get:
+    securedBy: [null, oauth_2_0: { scopes: [ USER ] } ]

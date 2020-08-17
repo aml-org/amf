@@ -33,7 +33,7 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
           val report = eh.getErrors
           if (report.size != fixture.size) {
             report.foreach(println)
-            fail(s"Expected results has lenght of ${fixture.size} while actual results are ${report.size}")
+            fail(s"Expected results has length of ${fixture.size} while actual results are ${report.size}")
           }
           fixture.zip(report).foreach {
             case (fn, result) => fn(result)
