@@ -109,7 +109,7 @@ sealed trait OasPlugin extends OasLikePlugin {
 
 object Oas20Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): OasSpecEmitterContext = {
+  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission): OasSpecEmitterContext = {
     if (shapeRenderOptions.isWithCompactedEmission) {
       new Oas2SpecEmitterContext(options.errorHandler, options = shapeRenderOptions)
     } else {
@@ -145,7 +145,7 @@ object Oas20Plugin extends OasPlugin {
   override protected def unparseAsYDocument(
       unit: BaseUnit,
       renderOptions: RenderOptions,
-      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
+      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission): Option[YDocument] =
     unit match {
       case module: Module             => Some(Oas20ModuleEmitter(module)(specContext(renderOptions, shapeRenderOptions)).emitModule())
       case document: Document         => Some(Oas2DocumentEmitter(document)(specContext(renderOptions, shapeRenderOptions)).emitDocument())
@@ -179,7 +179,7 @@ object Oas20Plugin extends OasPlugin {
 
 object Oas30Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): OasSpecEmitterContext = {
+  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission): OasSpecEmitterContext = {
     if (shapeRenderOptions.isWithCompactedEmission) {
       new Oas3SpecEmitterContext(options.errorHandler, options = shapeRenderOptions)
     } else {
@@ -215,7 +215,7 @@ object Oas30Plugin extends OasPlugin {
   override protected def unparseAsYDocument(
       unit: BaseUnit,
       renderOptions: RenderOptions,
-      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
+      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission): Option[YDocument] =
     unit match {
       case module: Module             => Some(Oas30ModuleEmitter(module)(specContext(renderOptions, shapeRenderOptions)).emitModule())
       case document: Document         => Some(Oas3DocumentEmitter(document)(specContext(renderOptions, shapeRenderOptions)).emitDocument())

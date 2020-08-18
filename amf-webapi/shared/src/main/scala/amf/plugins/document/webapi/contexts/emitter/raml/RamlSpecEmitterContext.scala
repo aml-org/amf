@@ -307,7 +307,7 @@ class Raml10SpecEmitterContext(eh: ErrorHandler,
 
 class XRaml10SpecEmitterContext(eh: ErrorHandler,
                                 refEmitter: RefEmitter = OasRefEmitter,
-                                options: ShapeRenderOptions = ShapeRenderOptions())
+                                options: ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission)
     extends Raml10SpecEmitterContext(eh, refEmitter, options) {
   override def localReference(reference: Linkable): PartEmitter =
     oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)

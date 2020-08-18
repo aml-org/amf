@@ -81,21 +81,21 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
         Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads)
 
       spec match {
-        case _: Oas3SpecEmitterContext =>
-          fs.entry(EndPointModel.Summary).map(f => result += ValueEmitter("summary", f))
-
-          fs.entry(EndPointModel.Servers).map { f =>
-            result ++= spec.factory
-              .asInstanceOf[Oas3SpecEmitterFactory]
-              .serversEmitter(endpoint, f, ordering, references)
-              .emitters()
-          }
         case _: InlinedOas3SpecEmitterContext =>
           fs.entry(EndPointModel.Summary).map(f => result += ValueEmitter("summary", f))
 
           fs.entry(EndPointModel.Servers).map { f =>
             result ++= spec.factory
               .asInstanceOf[InlinedOas3SpecEmitterFactory]
+              .serversEmitter(endpoint, f, ordering, references)
+              .emitters()
+          }
+        case _: Oas3SpecEmitterContext =>
+          fs.entry(EndPointModel.Summary).map(f => result += ValueEmitter("summary", f))
+
+          fs.entry(EndPointModel.Servers).map { f =>
+            result ++= spec.factory
+              .asInstanceOf[Oas3SpecEmitterFactory]
               .serversEmitter(endpoint, f, ordering, references)
               .emitters()
           }
