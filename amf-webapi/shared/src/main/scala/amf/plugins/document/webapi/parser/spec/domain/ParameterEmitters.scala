@@ -587,10 +587,7 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
       val result = mutable.ListBuffer[EntryEmitter]()
 
       val fs = file.fields
-      fs.entry(FileShapeModel.Name) match {
-        case Some(f) => result += ValueEmitter("name", f)
-        case None    => emitPayloadName(result)
-      }
+      emitPayloadName(result)
       requiredFieldEmitter().foreach(result += _)
 
       fs.entry(FileShapeModel.Description).map(f => result += ValueEmitter("description", f))
