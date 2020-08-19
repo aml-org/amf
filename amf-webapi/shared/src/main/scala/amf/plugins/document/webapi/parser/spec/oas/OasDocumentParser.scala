@@ -132,7 +132,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "annotationTypes".asOasExtension,
       e => {
-        ctx.addDeclarationKey(DeclarationKey(CustomDomainPropertyModel, e, "Annotation type"))
+        ctx.addDeclarationKey(DeclarationKey(e, isAbstract = true))
         e.value
           .as[YMap]
           .entries
@@ -179,7 +179,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       key,
       e => {
-        ctx.addDeclarationKey(DeclarationKey(SecuritySchemeModel, e))
+        ctx.addDeclarationKey(DeclarationKey(e))
         e.value.as[YMap].entries.foreach { entry =>
           val securityScheme: SecurityScheme = ctx.factory
             .securitySchemeParser(
@@ -205,7 +205,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "parameters",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(ParameterModel, entry))
+        ctx.addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries
@@ -237,7 +237,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       key,
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(ResponseModel, entry))
+        ctx.addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries

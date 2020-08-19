@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.core.annotations.{DeclaredElement, DeclaredHeader, LexicalInformation}
+import amf.core.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser._
 import amf.core.utils.AmfStrings
@@ -14,7 +14,6 @@ import amf.plugins.document.webapi.parser.spec.domain.{
   OasHeaderParametersParser,
   OasLinkParser
 }
-import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
@@ -73,7 +72,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "examples",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(ExampleModel, e))
+        ctx.addDeclarationKey(DeclarationKey(e))
         Oas3NamedExamplesParser(e, parent)
           .parse()
           .foreach(ex => ctx.declarations += ex.add(DeclaredElement()))
@@ -85,7 +84,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "requestBodies",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(RequestModel, e, "Request body"))
+        ctx.addDeclarationKey(DeclarationKey(e, isAbstract = true))
         e.value
           .as[YMap]
           .entries
@@ -102,7 +101,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "headers",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(ParameterModel, entry, "Headers"))
+        ctx.addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         val headers: Seq[Parameter] =
           OasHeaderParametersParser(entry.value.as[YMap], _.adopted(parent)).parse()
         headers.foreach(header => {
@@ -117,7 +116,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "links",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(TemplatedLinkModel, entry))
+        ctx.addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries
@@ -130,7 +129,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "callbacks",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(CallbackModel, entry))
+        ctx.addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries

@@ -18,7 +18,7 @@ trait OasLikeDeclarationsHelper {
     map.key(
       definitionsKey,
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(ShapeModel, entry))
+        ctx.addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries
