@@ -78,7 +78,7 @@ trait RamlEmitterFactory extends DomainElementEmitterFactory {
   implicit val ctx: RamlSpecEmitterContext
 
   override def exampleEmitter(example: Example): Option[PartEmitter] =
-    Some(ExampleValuesEmitter(example, SpecOrdering.Lexical))
+    Some(RamlExampleValuesEmitter(example, SpecOrdering.Lexical))
 
   override def traitEmitter(t: Trait): Option[PartEmitter] = Some(abstractDeclarationEmitter(t))
 

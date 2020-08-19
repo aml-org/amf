@@ -4,13 +4,7 @@ import amf.core.utils.AmfStrings
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.domain.{
-  ExampleArrayEmitter,
-  ExampleValuesEmitter,
-  MultipleExampleEmitter,
-  NamedMultipleExampleEmitter,
-  SingleExampleEmitter
-}
+import amf.plugins.document.webapi.parser.spec.domain.{NamedMultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.domain.shapes.models.Example
 
 import scala.collection.mutable.ListBuffer

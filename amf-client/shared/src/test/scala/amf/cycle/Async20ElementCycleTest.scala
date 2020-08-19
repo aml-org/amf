@@ -1,7 +1,7 @@
 package amf.cycle
 
 import amf.core.remote.{AsyncYamlHint, Vendor}
-import amf.plugins.domain.webapi.models.Server
+import amf.plugins.domain.shapes.models.AnyShape
 
 class Async20ElementCycleTest extends DomainElementCycleTest {
 
@@ -149,11 +149,10 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
 
   test("example") {
     renderElement(
-      "security-schemes.yaml",
-      CommonExtractors.declaresIndex(8),
-      "scheme-emission.yaml",
-      AsyncYamlHint,
-      directory = upanddownPath
+      "type/draft-7-schemas.yaml",
+      CommonExtractors.declaresIndex(0)(_).map(_.asInstanceOf[AnyShape].examples.head),
+      "type/example-emission.yaml",
+      AsyncYamlHint
     )
   }
 

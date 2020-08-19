@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationEmitter, OasCreativeWorkEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypePartEmitter
 import amf.plugins.document.webapi.parser.spec.domain.{
-  ExampleValuesEmitter,
+  ExampleDataNodePartEmitter,
   Oas3ExampleValuesPartEmitter,
   OasCallbackEmitter,
   OasLinkPartEmitter,
@@ -79,7 +79,7 @@ case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) exten
                                    SpecOrdering.Lexical))
 
   override def exampleEmitter(example: Example): Option[PartEmitter] =
-    Some(ExampleValuesEmitter(example, SpecOrdering.Lexical))
+    Some(ExampleDataNodePartEmitter(example, SpecOrdering.Lexical))
 }
 
 object Oas20EmitterFactory {
