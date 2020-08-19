@@ -189,7 +189,7 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler,
 }
 
 class JsonSchemaEmitterContext(override val eh: ErrorHandler,
-                               override val options: ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission,
+                               override val options: ShapeRenderOptions = ShapeRenderOptions(),
                                override val schemaVersion: JSONSchemaVersion)
     extends Oas2SpecEmitterContext(eh = eh, options = options) {
   override val typeDefMatcher: OasTypeDefStringValueMatcher = JsonSchemaTypeDefMatcher
@@ -205,7 +205,7 @@ object JsonSchemaEmitterContext {
 }
 
 final case class InlinedJsonSchemaEmitterContext(override val eh: ErrorHandler,
-                                                 override val options: ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission,
+                                                 override val options: ShapeRenderOptions = ShapeRenderOptions(),
                                                  override val schemaVersion: JSONSchemaVersion)
     extends JsonSchemaEmitterContext(eh = eh, options = options, schemaVersion) {
   override val factory: OasSpecEmitterFactory = InlinedJsonSchemaEmitterFactory()(this)

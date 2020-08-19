@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.JSExportTopLevel
 class Oas20Renderer private (private val env: Option[Environment])
     extends Renderer(Oas20.name, "application/json", env) {
 
-  override def defaultShapeRenderOptions(): ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission
+  override protected def defaultShapeRenderOptions(): ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission
 
   @JSExportTopLevel("Oas20Renderer")
   def this() = this(None)
