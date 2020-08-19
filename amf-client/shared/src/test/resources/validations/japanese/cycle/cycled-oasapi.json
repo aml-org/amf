@@ -23,10 +23,10 @@
           {
             "in": "body",
             "name": "ローン申し込み",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/車両"
-            },
-            "required": true
+            }
           }
         ],
         "responses": {
