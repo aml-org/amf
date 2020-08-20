@@ -95,21 +95,11 @@ sealed trait OasPlugin extends OasLikePlugin {
     "application/openapi",
     "application/swagger"
   )
-
-  /**
-    * Override the method to default to compacted emission.
-    */
-  override def emit[T](unit: BaseUnit,
-                       builder: DocBuilder[T],
-                       renderOptions: RenderOptions = RenderOptions(),
-                       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Boolean = {
-    super.emit[T](unit, builder, renderOptions, shapeRenderOptions)
-  }
 }
 
 object Oas20Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions = RenderOptions()): OasSpecEmitterContext = {
+  override def specContext(options: RenderOptions): OasSpecEmitterContext = {
     if (options.isWithCompactedEmission) {
       new Oas2SpecEmitterContext(options.errorHandler)
     } else {
@@ -144,7 +134,7 @@ object Oas20Plugin extends OasPlugin {
 
   override protected def unparseAsYDocument(
       unit: BaseUnit,
-      renderOptions: RenderOptions = RenderOptions(),
+      renderOptions: RenderOptions,
       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
     unit match {
       case module: Module             => Some(Oas20ModuleEmitter(module)(specContext(renderOptions)).emitModule())
@@ -179,7 +169,7 @@ object Oas20Plugin extends OasPlugin {
 
 object Oas30Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions = RenderOptions()): OasSpecEmitterContext = {
+  override def specContext(options: RenderOptions): OasSpecEmitterContext = {
     if (options.isWithCompactedEmission) {
       new Oas3SpecEmitterContext(options.errorHandler)
     } else {
@@ -214,7 +204,7 @@ object Oas30Plugin extends OasPlugin {
 
   override protected def unparseAsYDocument(
       unit: BaseUnit,
-      renderOptions: RenderOptions = RenderOptions(),
+      renderOptions: RenderOptions,
       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
     unit match {
       case module: Module             => Some(Oas30ModuleEmitter(module)(specContext(renderOptions)).emitModule())
