@@ -32,7 +32,6 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   OasResolutionPipeline
 }
 import amf.plugins.domain.webapi.models.WebApi
-import org.yaml.builder.DocBuilder
 import org.yaml.model.{YDocument, YNode}
 
 sealed trait OasPlugin extends OasLikePlugin {
