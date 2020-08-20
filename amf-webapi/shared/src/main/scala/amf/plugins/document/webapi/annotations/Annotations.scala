@@ -151,25 +151,10 @@ case class ExternalJsonSchemaShape(original: YMapEntry) extends Annotation
 
 case class DeclarationKeys(keys: List[DeclarationKey]) extends Annotation
 
-case class DeclarationKey(model: DomainElementModel,
-                          keyLexical: LexicalInformation,
-                          entryLexical: LexicalInformation,
-                          displayName: Option[String] = None)
+case class DeclarationKey(entry: YMapEntry, isAbstract: Boolean)
 
 object DeclarationKey {
 
-  def apply(model: DomainElementModel,
-            keyLexical: LexicalInformation,
-            entryLexical: LexicalInformation,
-            displayName: Option[String]): DeclarationKey =
-    new DeclarationKey(model, keyLexical, entryLexical, displayName)
-
-  def apply(model: DomainElementModel, entry: YMapEntry, displayName: Option[String] = None): DeclarationKey =
-    new DeclarationKey(model,
-                       LexicalInformation(Range(entry.key.range)),
-                       LexicalInformation(Range(entry.range)),
-                       displayName)
-
-  def apply(model: DomainElementModel, entry: YMapEntry, displayName: String): DeclarationKey =
-    DeclarationKey(model, entry, Some(displayName))
+  def apply(entry: YMapEntry, isAbstract: Boolean = false): DeclarationKey =
+    new DeclarationKey(entry, isAbstract = isAbstract)
 }

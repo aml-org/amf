@@ -559,16 +559,21 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
       result += MapEntryEmitter("in", binding(), position = bindingPos(payload.schema))
       emitPayloadName(result)
       emitPayloadDescription(result)
-      payload.annotations.find(classOf[RequiredParamPayload]) match {
-        case Some(a) => if (a.required) result += MapEntryEmitter("required", a.required.toString, YType.Bool)
-        case None    => // ignore
-      }
+      requiredFieldEmitter().foreach(result += _)
       payload.fields
         .entry(PayloadModel.Schema)
         .map(f => result += OasSchemaEmitter(f, ordering, references))
       result ++= AnnotationsEmitter(payload, ordering).emitters
 
       traverse(ordering.sorted(result), b)
+    }
+  }
+
+  private def requiredFieldEmitter(): Option[EntryEmitter] = {
+    payload.annotations.find(classOf[RequiredParamPayload]).flatMap { a =>
+      if (a.required)
+        Some(MapEntryEmitter("required", a.required.toString, YType.Bool, a.range.start))
+      else None
     }
   }
 
@@ -586,10 +591,8 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
       val result = mutable.ListBuffer[EntryEmitter]()
 
       val fs = file.fields
-      fs.entry(FileShapeModel.Name) match {
-        case Some(f) => result += ValueEmitter("name", f)
-        case None    => emitPayloadName(result)
-      }
+      emitPayloadName(result)
+      requiredFieldEmitter().foreach(result += _)
 
       fs.entry(FileShapeModel.Description).map(f => result += ValueEmitter("description", f))
       result += MapEntryEmitter("in", "formData", position = bindingPos(file))

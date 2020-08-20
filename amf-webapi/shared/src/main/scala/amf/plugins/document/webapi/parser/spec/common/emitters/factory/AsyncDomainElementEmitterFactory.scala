@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.spec.async.emitters.{
   AsyncOperationPartEmitter,
   AsyncSingleSchemePartEmitter
 }
-import amf.plugins.document.webapi.parser.spec.domain.ExampleValuesEmitter
+import amf.plugins.document.webapi.parser.spec.domain.ExampleDataNodePartEmitter
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.{
   CorrelationId,
@@ -65,7 +65,7 @@ case class AsyncEmitterFactory()(implicit val ctx: Async20SpecEmitterContext) ex
     Some(AsyncSingleSchemePartEmitter(s, SpecOrdering.Lexical))
 
   override def exampleEmitter(example: Example): Option[PartEmitter] =
-    Some(ExampleValuesEmitter(example, SpecOrdering.Lexical))
+    Some(ExampleDataNodePartEmitter(example, SpecOrdering.Lexical))
 
   override def endpointEmitter(e: EndPoint): Option[PartEmitter] =
     Some(new AsyncApiSingleEndpointEmitter(e, SpecOrdering.Lexical))
