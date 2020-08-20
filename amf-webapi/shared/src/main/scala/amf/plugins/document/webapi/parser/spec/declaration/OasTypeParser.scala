@@ -34,6 +34,8 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
+import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.validation.DialectValidations.InvalidUnionType
 import amf.validations.ParserSideValidations._
@@ -911,8 +913,14 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
     }
 
     private def parseMappings(mappingEntry: YMapEntry): Unit = {
-      val map      = mappingEntry.value.as[YMap]
-      val mappings = map.entries.map(entry => IriTemplateMapping(entry.key.as[String], entry.value.as[String]))
+      val map = mappingEntry.value.as[YMap]
+      val mappings = map.entries.map(entry => {
+        val mapping  = IriTemplateMapping(Annotations(entry))
+        val element  = ScalarNode(entry.key).string()
+        val variable = ScalarNode(entry.value).string()
+        mapping.set(TemplateVariable, element, Annotations(entry.key))
+        mapping.set(LinkExpression, variable, Annotations(entry.value))
+      })
       shape.setArray(NodeShapeModel.DiscriminatorMapping, mappings, Annotations(mappingEntry))
     }
   }

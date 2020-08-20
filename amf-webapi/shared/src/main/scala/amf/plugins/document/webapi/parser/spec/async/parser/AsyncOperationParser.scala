@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.OasLikeTagsParser
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncOperationBindingsParser
 import amf.plugins.document.webapi.parser.spec.domain.OasLikeOperationParser
 import amf.plugins.domain.webapi.metamodel.OperationModel
-import amf.plugins.domain.webapi.models.Operation
+import amf.plugins.domain.webapi.models.{Message, Operation}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations
 import org.yaml.model._
@@ -72,7 +72,7 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, producer: String =>
     messageEntry =>
       AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
         val messages = AsyncMultipleMessageParser(messageEntry.value.as[YMap], operation.id, msgType).parse()
-        operation.setArrayWithoutId(msgType.field, messages, Annotations(messageEntry.value))
+        operation.setArrayWithoutId(msgType.field, messages, Annotations(messageEntry))
     }
   )
 
@@ -82,6 +82,7 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, producer: String =>
       traitEntry => {
         val traits = traitEntry.value.as[YSequence].nodes.map { node =>
           AsyncOperationRefParser(node).parse()
+
         }
         operation.setArray(OperationModel.Extends, traits, Annotations(traitEntry))
       }
@@ -130,7 +131,7 @@ case class AsyncOperationRefParser(node: YNode)(implicit val ctx: AsyncWebApiCon
 
   private def expectedRef(node: YNode, name: String): Operation = {
     ctx.eh.violation(ParserSideValidations.ExpectedReference, "", s"Expected reference", node)
-    new ErrorOperationTrait(name, node).link(name, Annotations(node))
+    new ErrorOperationTrait(name, node).link(name, Annotations(node)).asInstanceOf[Operation].withAbstract(true)
   }
 
   private def linkError(url: String, node: YNode): Operation = {

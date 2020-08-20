@@ -52,7 +52,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
     key foreach { k =>
       m.withName(k.as[YScalar].text, Annotations(k))
     }
-    m.adopted(parent).add(Annotations(entryLike.asMap))
+    m.adopted(parent).add(entryLike.annotations)
   }
 
   protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): Bindings

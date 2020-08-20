@@ -22,7 +22,7 @@ case class License(fields: Fields, annotations: Annotations) extends NamedDomain
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/license"
 
-  override protected def nameField: Field = Name
+  override def nameField: Field = Name
 }
 
 object License {

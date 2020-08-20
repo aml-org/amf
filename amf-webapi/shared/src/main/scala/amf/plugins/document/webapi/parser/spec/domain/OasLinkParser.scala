@@ -4,7 +4,7 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorLink
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.domain.webapi.metamodel.{IriTemplateMappingModel, TemplatedLinkModel}
 import amf.plugins.domain.webapi.models.{IriTemplateMapping, TemplatedLink}
 import amf.plugins.features.validation.CoreValidations
@@ -69,7 +69,7 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
 
     map.key("server").foreach { entry =>
       val m      = entry.value.as[YMap]
-      val server = new OasLikeServerParser(templatedLink.id, m)(ctx).parse()
+      val server = new OasLikeServerParser(templatedLink.id, YMapEntryLike(m))(ctx).parse()
       templatedLink.withServer(server)
     }
 

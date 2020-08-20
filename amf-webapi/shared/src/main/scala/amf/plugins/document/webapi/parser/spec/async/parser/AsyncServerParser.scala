@@ -10,21 +10,21 @@ import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncServerBinding
 import amf.plugins.document.webapi.parser.spec.domain.{OasLikeSecurityRequirementParser, OasLikeServerParser}
 import amf.plugins.domain.webapi.metamodel.ServerModel
 import amf.plugins.domain.webapi.models.{Server, WebApi}
-import org.yaml.model.{YMap, YNode}
+import org.yaml.model.{YMap, YMapEntry, YNode}
 
 case class AsyncServersParser(map: YMap, api: WebApi)(implicit val ctx: AsyncWebApiContext) {
 
   def parse(): Seq[Server] = {
     map.entries.map { entry =>
-      AsyncServerParser(api.id, entry.value.as[YMap])
+      AsyncServerParser(api.id, entry)
         .parse()
         .withName(entry.key)
     }
   }
 }
 
-private case class AsyncServerParser(parent: String, map: YMap)(implicit override val ctx: AsyncWebApiContext)
-    extends OasLikeServerParser(parent, map) {
+private case class AsyncServerParser(parent: String, entry: YMapEntry)(implicit override val ctx: AsyncWebApiContext)
+    extends OasLikeServerParser(parent, YMapEntryLike(entry)) {
 
   override def parse(): Server = {
     val server = super.parse()

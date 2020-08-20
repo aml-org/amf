@@ -14,7 +14,7 @@ import amf.validations.ParserSideValidations.UnexpectedVendor
 
 object OasLikeCreativeWorkParser {
   def parse(node: YNode, parentId: String)(implicit ctx: WebApiContext): CreativeWork =
-    OasLikeCreativeWorkParser(node.as[YMap], parentId).parse()
+    OasLikeCreativeWorkParser(node, parentId).parse()
 }
 
 case class OasLikeCreativeWorkParser(node: YNode, parentId: String)(implicit val ctx: WebApiContext)

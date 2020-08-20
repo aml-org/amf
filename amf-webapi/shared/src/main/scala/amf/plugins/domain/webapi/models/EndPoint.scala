@@ -84,8 +84,8 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
   override def meta: Obj = EndPointModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String        = "/end-points/" + path.value().urlComponentEncoded
-  override protected def nameField: Field = Name
+  override def componentId: String = "/end-points/" + path.value().urlComponentEncoded
+  override def nameField: Field    = Name
 }
 
 object EndPoint {

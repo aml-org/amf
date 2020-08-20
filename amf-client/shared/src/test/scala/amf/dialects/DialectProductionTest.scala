@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.{FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import org.scalatest.Assertion
 
