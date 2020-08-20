@@ -1,7 +1,13 @@
-#%RAML 1.0 ResourceType
-get:
-  responses:
-    200:
-      body:
-        application/json:
-          type: configuration
+#%RAML 1.0
+
+resourceTypes: :
+  rt:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type:
+                properties:
+                  a: string
+                  b: integer

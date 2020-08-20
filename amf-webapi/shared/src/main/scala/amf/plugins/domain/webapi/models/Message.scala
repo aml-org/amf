@@ -50,7 +50,7 @@ class Message(override val fields: Fields, override val annotations: Annotations
 
   override def linkCopy(): Message = Message().withId(id)
 
-  override protected def nameField: Field = MessageModel.Name
+  override def nameField: Field = MessageModel.Name
 
   override def componentId: String = "/" + name.option().getOrElse("message").urlComponentEncoded
 

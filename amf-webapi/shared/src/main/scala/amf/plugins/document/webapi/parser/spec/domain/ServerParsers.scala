@@ -3,18 +3,18 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
 import amf.core.metamodel.Field
 import amf.core.model.DataType
-import amf.core.model.domain.{DomainElement, AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, TemplateUri}
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, RamlScalarNode}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
-import amf.plugins.document.webapi.parser.spec.{toRaml, toOas}
-import amf.plugins.domain.webapi.metamodel.{WebApiModel, ServerModel}
+import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
+import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
 import amf.validations.ParserSideValidations._
-import org.yaml.model.{YType, YMap}
+import org.yaml.model.{YMap, YType}
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
   def parse(): Unit = {
@@ -56,9 +56,12 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     }
 
     map.key("servers".asRamlAnnotation).foreach { entry =>
-      entry.value.as[Seq[YMap]].map(new OasLikeServerParser(api.id, _)(toOas(ctx)).parse()).foreach { server =>
-        api.add(WebApiModel.Servers, server)
-      }
+      entry.value
+        .as[Seq[YMap]]
+        .map(m => new OasLikeServerParser(api.id, YMapEntryLike(m))(toOas(ctx)).parse())
+        .foreach { server =>
+          api.add(WebApiModel.Servers, server)
+        }
     }
   }
 
@@ -66,33 +69,32 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     val maybeEntry = map.key("baseUriParameters")
     maybeEntry match {
       case Some(entry) =>
-        entry.value.tagType match {
+        val parameters = entry.value.tagType match {
           case YType.Map =>
-            val parameters =
-              RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
-                .parse()
-                .map(_.withBinding("path"))
-
-            val flatten: Seq[Parameter] = orderedVariables.map(v =>
-              parameters.find(_.name.value().equals(v)) match {
-                case Some(p) => p
-                case _       => buildParamFromVar(v, server.id)
-
-            })
-            val (_, unused) = parameters.partition(flatten.contains(_))
-            val finalParams = flatten ++ unused
-            server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
-            unused.foreach { p =>
-              ctx.eh.warning(UnusedBaseUriParameter,
-                             p.id,
-                             None,
-                             s"Unused base uri parameter ${p.name.value()}",
-                             p.position(),
-                             p.location())
-            }
-          case YType.Null =>
+            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
+              .parse()
+              .map(_.withBinding("path"))
+          case YType.Null => Nil
           case _ =>
             ctx.eh.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
+            Nil
+        }
+        val flatten: Seq[Parameter] = orderedVariables.map(v =>
+          parameters.find(_.name.value().equals(v)) match {
+            case Some(p) => p
+            case _       => buildParamFromVar(v, server.id)
+
+        })
+        val (_, unused) = parameters.partition(flatten.contains(_))
+        val finalParams = flatten ++ unused
+        server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
+        unused.foreach { p =>
+          ctx.eh.warning(UnusedBaseUriParameter,
+                         p.id,
+                         None,
+                         s"Unused base uri parameter ${p.name.value()}",
+                         p.position(),
+                         p.location())
         }
       case None =>
         if (orderedVariables.nonEmpty)

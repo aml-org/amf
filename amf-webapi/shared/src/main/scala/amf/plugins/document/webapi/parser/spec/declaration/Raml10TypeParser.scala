@@ -595,10 +595,14 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         case YType.Seq =>
           val entry = ast.asInstanceOf[YMapEntry]
           InheritanceParser(entry, shape, None).parse()
-          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry))
+          shape.set(ScalarShapeModel.DataType,
+                    AmfScalar(XsdTypeDefMapping.xsd(typeDef)),
+                    Annotations(entry) += Inferred())
           shape
         case _ =>
-          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node.value)))
+          shape.set(ScalarShapeModel.DataType,
+                    AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node.value)),
+                    Annotations() += Inferred())
       }
     }
   }

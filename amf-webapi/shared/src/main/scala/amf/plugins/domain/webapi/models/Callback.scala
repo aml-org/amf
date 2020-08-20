@@ -32,7 +32,7 @@ case class Callback(fields: Fields, annotations: Annotations) extends NamedDomai
   override def componentId: String =
     "/" + name.option().getOrElse("default-callback").urlComponentEncoded +
       s"/${expression.option().getOrElse("default-expression").urlComponentEncoded}"
-  override protected def nameField: Field = Name
+  override def nameField: Field = Name
 
   override def linkCopy(): Linkable = {
     val callback = Callback().withId(id)

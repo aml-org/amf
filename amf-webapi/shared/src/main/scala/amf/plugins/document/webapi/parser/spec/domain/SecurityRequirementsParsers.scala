@@ -36,9 +36,9 @@ case class OasLikeSecurityRequirementParser(node: YNode,
     case Right(map) if map.entries.isEmpty =>
       None
     case _ =>
-      val requirement = producer(node.toString)
+      val requirement = producer(node.toString).add(Annotations(node))
       ctx.eh.violation(InvalidSecurityRequirementObject, requirement.id, s"Invalid security requirement $node", node)
-      None
+      Some(requirement)
   }
 
   case class OasLikeParametrizedSecuritySchemeParser(schemeEntry: YMapEntry,

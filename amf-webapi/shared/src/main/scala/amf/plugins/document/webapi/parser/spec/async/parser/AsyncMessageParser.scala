@@ -48,16 +48,16 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
       case Left(fullRef) =>
         handleRef(fullRef)
       case Right(_) =>
-        val message = buildMessage(map)
+        val message = buildMessage(entryLike.annotations)
         nameAndAdopt(message, entryLike.key)
         populator.populate(map, message)
     }
   }
 
-  private def buildMessage(map: YMap): Message = messageType match {
-    case Some(Publish)   => Request(Annotations(map))
-    case Some(Subscribe) => Response(Annotations(map))
-    case None            => Message(Annotations(map))
+  private def buildMessage(annotations: Annotations): Message = messageType match {
+    case Some(Publish)   => Request(annotations)
+    case Some(Subscribe) => Response(annotations)
+    case None            => Message(annotations)
   }
 
   def nameAndAdopt(m: Message, key: Option[YNode]): Message = {
@@ -91,7 +91,7 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
   }
 
   private def generateLink(label: String, effectiveTarget: Message, entryLike: YMapEntryLike): Message = {
-    val message = buildMessage(entryLike.asMap)
+    val message = buildMessage(entryLike.annotations)
     val hash    = s"${message.id}$label".hashCode
     message
       .withId(s"${message.id}/link-$hash")

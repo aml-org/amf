@@ -217,9 +217,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
                 ctx.factory.parameterParser(YMapEntryLike(e), parentPath, Some(typeName), nameGenerator).parse
               case _ =>
                 val parameter =
-                  ctx.factory
-                    .parameterParser(YMapEntryLike(YMap.empty), parentPath, Some(typeName), nameGenerator)
-                    .parse
+                  ctx.factory.parameterParser(YMapEntryLike(e), parentPath, Some(typeName), nameGenerator).parse
                 ctx.eh.violation(InvalidParameterType,
                                  parameter.domainElement.id,
                                  "Map needed to parse a parameter declaration",

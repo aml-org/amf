@@ -303,7 +303,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
             /**
               * Binding is required, i'm not setting any default value so It will be some model validation.
               * */
-            val parameter = Parameter(map)
+            val parameter = Parameter(entryOrNode.annotations)
             setName(parameter)
             parameter.adopted(parentId)
             OasParameter(parameter, Some(map))
@@ -603,7 +603,7 @@ class Oas3ParameterParser(entryOrNode: YMapEntryLike,
       "content",
       entry => {
         val payloads = OasContentsParser(entry, payloadProducer)(toOas(ctx)).parse()
-        if (payloads.nonEmpty) param.set(ResponseModel.Payloads, AmfArray(payloads), Annotations(entry))
+        param.set(ResponseModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
       }
     )
   }

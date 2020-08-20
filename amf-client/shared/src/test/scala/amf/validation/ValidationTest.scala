@@ -7,7 +7,7 @@ import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.SeverityLevels
+import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.features.validation.CoreValidations
@@ -356,6 +356,20 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          eh = DefaultParserErrorHandler.withRun())
         .build()
       report <- validation.validate(doc, Oas20Profile)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  test("Test test") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(productionPath + "/api_360_ver_14018-api.raml",
+                         platform,
+                         RamlYamlHint,
+                         eh = DefaultParserErrorHandler.withRun())
+        .build()
+      report <- validation.validate(doc, Raml10Profile)
     } yield {
       assert(report.conforms)
     }

@@ -183,12 +183,12 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       entry => {
         ctx.globalMediatype = true
         val annotations = Annotations(entry)
-        val value = entry.value.tagType match {
+        val value: AmfArray = entry.value.tagType match {
           case YType.Seq =>
             ArrayNode(entry.value).text()
           case _ =>
             annotations += SingleValueArray()
-            AmfArray(Seq(RamlScalarNode(entry.value).text()))
+            AmfArray(Seq(RamlScalarNode(entry.value).text()), Annotations(entry.value))
         }
 
         api.set(WebApiModel.ContentType, value, annotations)

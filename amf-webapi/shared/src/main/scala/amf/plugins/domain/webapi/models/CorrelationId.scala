@@ -20,7 +20,7 @@ class CorrelationId(override val fields: Fields, override val annotations: Annot
   override def meta: Obj           = CorrelationIdModel
   override def componentId: String = "/" + name.option().getOrElse("default-id")
 
-  override protected def nameField: Field = CorrelationIdModel.Name
+  override def nameField: Field = CorrelationIdModel.Name
 
   override def linkCopy(): CorrelationId = CorrelationId().withId(id)
 
