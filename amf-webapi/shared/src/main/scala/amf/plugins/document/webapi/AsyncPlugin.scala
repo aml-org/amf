@@ -27,7 +27,7 @@ sealed trait AsyncPlugin extends OasLikePlugin {
 
   override val vendors: Seq[String] = Seq(vendor.name, AsyncApi.name)
 
-  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): AsyncSpecEmitterContext
+  override def specContext(options: RenderOptions): AsyncSpecEmitterContext
 
   def context(loc: String,
               refs: Seq[ParsedReference],
@@ -78,7 +78,7 @@ sealed trait AsyncPlugin extends OasLikePlugin {
 
 object Async20Plugin extends AsyncPlugin {
 
-  override def specContext(options: RenderOptions, shapeRenderOptions: ShapeRenderOptions): AsyncSpecEmitterContext =
+  override def specContext(options: RenderOptions): AsyncSpecEmitterContext =
     new Async20SpecEmitterContext(options.errorHandler)
 
   override protected def vendor: Vendor = AsyncApi20
@@ -109,7 +109,7 @@ object Async20Plugin extends AsyncPlugin {
       renderOptions: RenderOptions,
       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] = unit match {
 
-    case document: Document => Some(new AsyncApi20DocumentEmitter(document)(specContext(renderOptions, shapeRenderOptions)).emitDocument())
+    case document: Document => Some(new AsyncApi20DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
     case _                  => None
   }
 

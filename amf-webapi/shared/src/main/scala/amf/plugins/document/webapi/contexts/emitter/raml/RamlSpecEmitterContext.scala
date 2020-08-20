@@ -12,9 +12,7 @@ import amf.core.parser.{FieldEntry, Position}
 import amf.core.remote.{Raml08, Raml10, Vendor}
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterContext,
-  InlinedOas2SpecEmitterContext,
   Oas2SpecEmitterFactory,
-  InlinedOas2SpecEmitterFactory,
   OasRefEmitter,
   OasSpecEmitterFactory
 }
@@ -307,18 +305,13 @@ class Raml10SpecEmitterContext(eh: ErrorHandler,
 
 class XRaml10SpecEmitterContext(eh: ErrorHandler,
                                 refEmitter: RefEmitter = OasRefEmitter,
-                                options: ShapeRenderOptions = ShapeRenderOptions().withCompactedEmission)
+                                options: ShapeRenderOptions = ShapeRenderOptions())
     extends Raml10SpecEmitterContext(eh, refEmitter, options) {
   override def localReference(reference: Linkable): PartEmitter =
     oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
-  val oasFactory: OasSpecEmitterFactory = {
-    if (options.isWithCompactedEmission) {
-      new Oas2SpecEmitterFactory(new Oas2SpecEmitterContext(eh, refEmitter, options))
-    } else {
-      new InlinedOas2SpecEmitterFactory(new InlinedOas2SpecEmitterContext(eh, refEmitter, options))
-    }
-  }
+  val oasFactory: OasSpecEmitterFactory = new Oas2SpecEmitterFactory(
+    new Oas2SpecEmitterContext(eh, refEmitter, options))
 }
 
 class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = ShapeRenderOptions())

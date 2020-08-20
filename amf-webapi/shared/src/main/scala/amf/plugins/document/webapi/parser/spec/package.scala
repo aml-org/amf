@@ -136,11 +136,7 @@ package object spec {
   }
 
   def toOas(spec: SpecEmitterContext): OasSpecEmitterContext = {
-    if (spec.options.isWithCompactedEmission) {
-      new Oas2SpecEmitterContext(spec.eh, spec.getRefEmitter, options = spec.options)
-    } else {
-      new InlinedOas2SpecEmitterContext(spec.eh, spec.getRefEmitter, options = spec.options)
-    }
+    new Oas2SpecEmitterContext(spec.eh, spec.getRefEmitter)
   }
 
   def toJsonSchema(ctx: WebApiContext): JsonSchemaWebApiContext = {
