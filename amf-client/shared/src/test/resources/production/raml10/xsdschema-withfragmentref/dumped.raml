@@ -1,42 +1,4 @@
 #%RAML 1.0
 title: test
 types:
-  xmlSchema: |-
-    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-        <xs:element name="office" type="officeType" />
-        <xs:complexType name="officeType">
-            <xs:sequence>
-                <xs:element name="address">
-                    <xs:complexType>
-                        <xs:simpleContent>
-                            <xs:extension base="xs:string">
-                                <xs:attribute type="xs:string" name="street" use="required"/>
-                                <xs:attribute type="xs:string" name="number" use="required"/>
-                                <xs:attribute type="xs:string" name="other"/>
-                                <xs:attribute type="xs:string" name="city" use="required"/>
-                                <xs:attribute type="xs:string" name="zipCode" use="required"/>
-                            </xs:extension>
-                        </xs:simpleContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="phoneNumbers">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="phoneNumber">
-                                <xs:complexType>
-                                    <xs:simpleContent>
-                                        <xs:extension base="xs:string">
-                                            <xs:attribute type="xs:string" name="areaCode" use="required"/>
-                                            <xs:attribute type="xs:string" name="number" use="required"/>
-                                        </xs:extension>
-                                    </xs:simpleContent>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-            <xs:attribute type="xs:string" name="name" use="required"/>
-            <xs:attribute type="xs:short" name="capacity"/>
-        </xs:complexType>
-    </xs:schema>
+  xmlSchema: !include ../xsdschema/schema-lib.xsd#address
