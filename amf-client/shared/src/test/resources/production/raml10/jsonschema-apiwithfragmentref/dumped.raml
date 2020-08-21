@@ -1,22 +1,4 @@
 #%RAML 1.0
 title: test
 types:
-  jsonSchema:
-    type: object
-    properties:
-      street:
-        type: string
-        required: false
-      number:
-        type: number
-        required: false
-      location:
-        type: object
-        properties:
-          state:
-            type: string
-            required: false
-          country:
-            type: string
-            required: false
-        required: false
+  jsonSchema: !include ../jsonschema/schema-lib.json#/definitions/address
