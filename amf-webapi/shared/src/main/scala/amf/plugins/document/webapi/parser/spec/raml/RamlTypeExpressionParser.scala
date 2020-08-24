@@ -109,16 +109,18 @@ class RamlTypeExpressionParser(adopt: Shape => Unit,
         case "string" | "integer" | "number" | "boolean" | "datetime" | "datetime-only" | "time-only" | "date-only" =>
           ScalarShape().withDataType(DataType(acc))
         case other =>
+          val lexicalInformation: Annotations = extractNewLexicalAnnotations(other, expression, part)
           ctx.declarations
             .findType(other, SearchScope.Named) match { // i should not have a reference to fragment in a type expression.
             case Some(s) =>
-              val newShape                 = s.link(other).asInstanceOf[Shape]
-              val annotations: Annotations = extractNewLexicalAnnotations(other, expression, part)
-              newShape.annotations ++= annotations
+              val newShape = s.link(other).asInstanceOf[Shape]
+              newShape.annotations ++= lexicalInformation
               newShape
             case _ =>
               val shape = UnresolvedShape(other, part).withName(other)
               shape.withContext(ctx)
+              shape.annotations.reject(_.isInstanceOf[LexicalInformation])
+              shape.annotations ++= lexicalInformation
               adopt(shape)
               if (!checking) { // if we are just checking a raml type expression type, not parsing it we don't generate unresolved
                 shape.unresolved(other, part.getOrElse(YNode.Null))
