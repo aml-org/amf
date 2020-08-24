@@ -183,11 +183,6 @@ case class Raml08TypeParser(entryOrNode: YMapEntryLike,
     result.add(Annotations(ast))
   }
 
-  private def isLexical =
-    (a: Annotation) =>
-      a.isInstanceOf[SourceAST] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceLocation] || a
-        .isInstanceOf[LexicalInformation]
-
   private def parseSchemaOrTypeDeclarationAndExamples = {
     // has schema or its simple raml type declaration
     val map = node.as[YMap]
@@ -706,6 +701,8 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               } else {
                 unresolve.unresolved(text, node)
               }
+              shape.annotations.reject(isLexical)
+              shape.annotations ++= unresolve.annotations
               shape.withLinkTarget(unresolve).withLinkLabel(text)
           }
       }
@@ -1706,5 +1703,10 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
       typeOrSchema(map).foreach(entry => InheritanceParser(entry, shape, Some(map)).parse())
     }
   }
+
+  def isLexical: Annotation => Boolean =
+    (a: Annotation) =>
+      a.isInstanceOf[SourceAST] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceLocation] || a
+        .isInstanceOf[LexicalInformation]
 
 }
