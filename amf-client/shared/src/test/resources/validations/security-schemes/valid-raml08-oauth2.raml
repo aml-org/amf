@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: test
+version: 1
+baseUri: https://api.domain.com/{version}
+documentation:
+ - title: Home
+   content: |
+     Welcome to the _Zencoder API_ Documentation. The _Zencoder API_
+     allows you to connect your application to our encoding service
+     and encode videos without going through the web  interface. You
+     may also benefit from one of o
+securitySchemes:
+    valid:
+        type: OAuth 2.0
+        settings:
+          authorizationUri: https://www.domain.com/1/oauth2/authorize
+          accessTokenUri: https://api.domain.com/1/oauth2/token
+          authorizationGrants: [ authorization_code, implicit, client_credentials, password, 'urn:ietf:params:oauth:grant-type:saml2-bearer' ]
+/users:
+  get:
+    securedBy: [null, valid: { scopes: [ ADMINISTRATOR ] } ]

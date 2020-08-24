@@ -1,0 +1,21 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.6.0",
+    "title": "Aesop Federated Profile System"
+  },
+  "definitions": {
+    "Cat": {
+      "description": "A representation of a cat",
+      "allOf": [
+        {
+          "$ref": "external.json"
+        },
+        {
+          "$ref": "composition-with-refs.json#definitions/Pet"
+        }
+      ]
+    }
+  },
+  "paths": {}
+}

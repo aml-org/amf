@@ -1,4 +1,4 @@
-[![Build Status](https://jenkins.build.msap.io/buildStatus/icon?job=application/AMF/amf/master)](https://jenkins.build.msap.io/job/application/job/AMF/job/amf/job/master/)
+[![Build Status](https://travis-ci.org/aml-org/amf.svg?branch=develop)](https://travis-ci.org/aml-org/amf)
 
 # AML Modeling Framework
 
@@ -13,7 +13,6 @@ AMF (AML Modeling Framework) is an open-source programming framework, capable of
 - Support for multiple formats with a unified programming interface and model
 - Support for both syntactic and semantic model layers
 - Support for validation at both syntactic and semantic model layers
-- Produce formal specifications of any (specification) language
 - Extensible, single syntactic model for multiple semantic models
 - Ability to create consistent parsing behaviors across different syntactic models
 - Support for bi-directional transformation and export
@@ -63,17 +62,21 @@ dependencies {
 }
 ```
 
+Gradle snippet:
+
 ```groovy
+// add mulesoft repository
 repositories {
-    ...
     maven {
-            url 'https://repository-master.mulesoft.org/nexus/content/repositories/releases'
-        }
-    ...
+        url 'https://repository-master.mulesoft.org/nexus/content/repositories/releases'
+    }
+}
+dependencies {
+    compile 'com.github.amlorg:amf-client_2.12:x.y.z'
 }
 ```
 
-Maven example:
+Maven snippet:
 
 ```xml
 <dependency>
@@ -87,26 +90,53 @@ NOTE: you may use the `-SNAPSHOT` versions of the artifacts at your own risk sin
 
 ### JavaScript artifacts
 
-Execute the command
+### Download JS artifacts
 
+NPM:
 ```bash
-npm install --save amf-client-js
+$ npm install --save amf-client-js
 ```
 
-Using *Node.js* just import it using:
+Yarn:
 ```bash
-import amf from 'amf-client-js'
+$ yarn add --save amf-client-js
 ```
 
-The *amf* package will contain all exported classes:
+### To generate artifacts directly from cloned repository
+
+To build into a JVM jar:
+```sh
+sbt package
+```
+To build into a JS bundle:
+```sh
+sbt buildJS
+```
+
+### Usage
+
+To use AMF you must first initialize it
+
+With Node.js: 
 ```javascript
-amf.plugins.document.WebApi.register();
-amf.plugins.document.Vocabularies.register();
-amf.plugins.features.AMFValidation.register();
+const amf = require('./lib/amf-client-module.js')
 
-amf.Core.init().then(function () {
-  // AMF code here
-})
+await AMF.init();
+
+// ... your code
+```
+
+With Java:
+```java
+import amf.client.AMF;
+
+class App {
+    public static void main(String[] args){
+      AMF.init().thenApply(() -> {
+              // ... your code
+      });
+    }
+}
 ```
 
 ### Command line usage

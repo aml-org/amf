@@ -1,5 +1,7 @@
 package amf.plugins.document.webapi.annotations
 
+import amf.core.annotations.LexicalInformation
+import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain._
 import amf.core.parser.Range
 import org.yaml.model.YMapEntry
@@ -146,3 +148,13 @@ case class Inferred() extends Annotation
 case class CollectionFormatFromItems() extends Annotation
 
 case class ExternalJsonSchemaShape(original: YMapEntry) extends Annotation
+
+case class DeclarationKeys(keys: List[DeclarationKey]) extends Annotation
+
+case class DeclarationKey(entry: YMapEntry, isAbstract: Boolean)
+
+object DeclarationKey {
+
+  def apply(entry: YMapEntry, isAbstract: Boolean = false): DeclarationKey =
+    new DeclarationKey(entry, isAbstract = isAbstract)
+}

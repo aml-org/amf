@@ -1,12 +1,13 @@
 package amf.cycle
 
 import amf.core.remote.{AsyncYamlHint, Vendor}
-import amf.plugins.domain.webapi.models.Server
+import amf.plugins.domain.shapes.models.AnyShape
 
 class Async20ElementCycleTest extends DomainElementCycleTest {
 
   override val basePath: String = "amf-client/shared/src/test/resources/cycle/async20/"
   val validationsPath: String   = "amf-client/shared/src/test/resources/validations/async20/"
+  val upanddownPath: String     = "amf-client/shared/src/test/resources/upanddown/cycle/async20/"
   val vendor: Vendor            = Vendor.ASYNC20
 
   test("type - composition with refs and inlined") {
@@ -123,6 +124,45 @@ class Async20ElementCycleTest extends DomainElementCycleTest {
       "message-traits-emission.yaml",
       AsyncYamlHint,
       directory = validationsPath + "components/"
+    )
+  }
+
+  test("server") {
+    renderElement(
+      "server.yaml",
+      CommonExtractors.webapi.andThen(_.map(_.servers.head)),
+      "server-emission.yaml",
+      AsyncYamlHint,
+      directory = upanddownPath
+    )
+  }
+
+  test("security scheme") {
+    renderElement(
+      "security-schemes.yaml",
+      CommonExtractors.declaresIndex(8),
+      "scheme-emission.yaml",
+      AsyncYamlHint,
+      directory = upanddownPath
+    )
+  }
+
+  test("example") {
+    renderElement(
+      "type/draft-7-schemas.yaml",
+      CommonExtractors.declaresIndex(0)(_).map(_.asInstanceOf[AnyShape].examples.head),
+      "type/example-emission.yaml",
+      AsyncYamlHint
+    )
+  }
+
+  test("endpoint") {
+    renderElement(
+      "publish-subscribe.yaml",
+      CommonExtractors.firstEndpoint,
+      "publish-subscribe-emission.yaml",
+      AsyncYamlHint,
+      directory = upanddownPath
     )
   }
 

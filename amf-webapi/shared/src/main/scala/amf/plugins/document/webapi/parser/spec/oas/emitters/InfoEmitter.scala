@@ -7,6 +7,7 @@ import amf.core.parser.{Fields, Position}
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.models.{License, Organization}
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
@@ -26,9 +27,11 @@ case class InfoEmitter(fs: Fields, ordering: SpecOrdering)(implicit val spec: Sp
     fs.entry(WebApiModel.Version)
       .fold(result += MapEntryEmitter("version", "1.0"))(f => result += ValueEmitter("version", f))
 
-    fs.entry(WebApiModel.License).map(f => result += LicenseEmitter("license", f, ordering))
+    fs.entry(WebApiModel.License)
+      .map(f => result += LicenseEmitter("license", f.value.value.asInstanceOf[License], ordering))
 
-    fs.entry(WebApiModel.Provider).map(f => result += OrganizationEmitter("contact", f, ordering))
+    fs.entry(WebApiModel.Provider)
+      .map(f => result += OrganizationEmitter("contact", f.value.value.asInstanceOf[Organization], ordering))
 
     b.entry(
       "info",

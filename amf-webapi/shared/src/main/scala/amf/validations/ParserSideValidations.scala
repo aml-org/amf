@@ -773,7 +773,6 @@ object ParserSideValidations extends Validations {
     InvalidIdentifier,
     InvalidComponents,
     ExeededMaxYamlReferences,
-    InvalidStatusCode,
-    UnknownYamlTag
+    InvalidStatusCode
   )
 }
