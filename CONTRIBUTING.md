@@ -49,8 +49,7 @@ $ sbt clientJS/testOnly // to run tests only for the JS platform
 
 #### Travis CI
 
-A Travis CI script is available for you to run Travis. To be able to do this you must have a Travis account and 
-setup Travis for your fork in your account.
+Travis CI will automatically run tests upon creationg of your PR, please make sure all tests pass before someone can review you contribution.
 
 #### Test coverage
 
