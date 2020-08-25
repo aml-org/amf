@@ -112,6 +112,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.apache.jena"        % "apache-jena-libs"        % "3.14.0" pomOnly(),
     libraryDependencies += "org.apache.jena"        % "jena-shacl"              % "3.14.0",
     libraryDependencies += "org.apache.commons" % "commons-compress" % "1.19",
+    libraryDependencies += "commons-io" % "commons-io" % "2.7",
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
@@ -140,6 +141,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
     libraryDependencies += "org.topbraid"           % "shacl"                   % "1.3.0",
     libraryDependencies += "org.apache.commons" % "commons-compress" % "1.18",
+    libraryDependencies += "commons-io" % "commons-io" % "2.7",
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
     mainClass in Compile := Some("amf.Main"),
     packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
