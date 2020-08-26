@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{LexicalInformation, SourceLocation}
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, Shape}
 import amf.core.parser.{Annotations, Position, Range, SearchScope}
@@ -136,12 +136,13 @@ class RamlTypeExpressionParser(adopt: Shape => Unit,
     part match {
       case Some(p: YScalar) =>
         val wholeLine = p.text
-        val prevLine  = wholeLine.substring(0, wholeLine.length - expression.length)
+        val prevLine  = wholeLine.substring(0, wholeLine.lastIndexOf(expression))
 
         val lineFrom   = p.range.lineFrom
         val columnFrom = p.range.columnFrom + prevLine.length + expression.prefixLength(_.isWhitespace)
-
-        Annotations(LexicalInformation(Range(Position(lineFrom, columnFrom), name.length)))
+        val ann        = Annotations(LexicalInformation(Range(Position(lineFrom, columnFrom), name.length)))
+        part.map(_.location.sourceName).foreach(p => ann += SourceLocation(p))
+        ann
       case _ => Annotations()
     }
 
