@@ -152,6 +152,8 @@ case class ExternalJsonSchemaShape(original: YMapEntry) extends Annotation
 // used internally for emission of links that have been inlined.
 case class ExternalReferenceUrl(url: String) extends Annotation
 
+case class ForceEntry() extends Annotation
+
 case class DeclarationKeys(keys: List[DeclarationKey]) extends Annotation
 
 case class DeclarationKey(entry: YMapEntry, isAbstract: Boolean)
