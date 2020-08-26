@@ -133,7 +133,8 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
 
               case Right(ref) if isTypeExpression(ref.text) =>
                 RamlTypeExpressionParser(shape => shape.withName("schema").adopted(parameter.id),
-                                         expression = ref.text)
+                                         expression = ref.text,
+                                         part = Some(ref))
                   .parse() match {
                   case Some(schema) => parameter.withSchema(schema)
                   case _ =>
