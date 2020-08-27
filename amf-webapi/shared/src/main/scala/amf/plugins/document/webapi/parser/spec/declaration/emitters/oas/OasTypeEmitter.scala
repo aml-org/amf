@@ -6,10 +6,14 @@ import amf.core.metamodel.Field
 import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
+import amf.core.parser.Position
+import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.domain.shapes.models._
+import org.yaml.model.{YDocument, YNode}
+import amf.core.emitter.BaseEmitters._
 
 case class OasTypeEmitter(shape: Shape,
                           ordering: SpecOrdering,
@@ -35,6 +39,8 @@ case class OasTypeEmitter(shape: Shape,
 
     shape match {
       case l: Linkable if l.isLink => Seq(OasTagToReferenceEmitter(shape, l.linkLabel.option()))
+      case _ if shape.annotations.contains(classOf[ExternalJsonSchemaShape]) =>
+        Seq(ExternalJsonSchemaShapeEmitter(shape))
       case schema: SchemaShape =>
         val copiedNode = schema.copy(fields = schema.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
         OasSchemaShapeEmitter(copiedNode, ordering).emitters()
@@ -90,4 +96,17 @@ case class OasTypeEmitter(shape: Shape,
   def nilUnion(union: UnionShape): Boolean =
     union.anyOf.size == 1 && union.anyOf.head.annotations.contains(classOf[NilUnion])
 
+}
+
+case class ExternalJsonSchemaShapeEmitter(shape: Shape) extends EntryEmitter {
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    shape.annotations.find(classOf[ExternalJsonSchemaShape]).foreach {
+      case ExternalJsonSchemaShape(entry) =>
+        b.entry(nodeToText(entry.key), nodeToText(entry.value))
+      case _ => // ignore
+    }
+  }
+  private def nodeToText(node: YNode) = node.asScalar.map(_.text).getOrElse("")
+
+  override def position(): Position = pos(shape.annotations)
 }

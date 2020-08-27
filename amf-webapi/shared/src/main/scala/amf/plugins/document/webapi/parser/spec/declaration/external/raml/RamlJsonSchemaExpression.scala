@@ -12,8 +12,12 @@ import amf.core.parser.{
   ReferenceFragmentPartition,
   SyamlParsedDocument
 }
-import amf.core.resolution.stages.ReferenceResolutionStage
-import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
+import amf.plugins.document.webapi.annotations.{
+  JSONSchemaId,
+  ParsedJSONSchema,
+  ExternalReferenceUrl,
+  SchemaIsJsonSchema
+}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
@@ -43,7 +47,7 @@ case class RamlJsonSchemaExpression(key: YNode,
   override def parseValue(origin: ValueAndOrigin): AnyShape = {
     val parsed: AnyShape = origin.oriUrl match {
       case Some(url) =>
-        parseValueWithUrl(origin, url)
+        parseValueWithUrl(origin, url).add(ExternalReferenceUrl(url))
       case None =>
         val shape = parseJsonShape(origin.text, key, origin.valueAST, adopt, value, None)
         shape.annotations += ParsedJSONSchema(origin.text)

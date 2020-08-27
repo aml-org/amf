@@ -250,6 +250,21 @@ object Async20Syntax extends SpecSyntax {
       "bearerFormat",
       "flows",
       "openIdConnectUrl"
+    ),
+    "bindings" -> Set(
+      "http",
+      "ws",
+      "kafka",
+      "amqp",
+      "amqp1",
+      "mqtt",
+      "mqtt5",
+      "nats",
+      "jms",
+      "sns",
+      "sqs",
+      "stomp",
+      "redis"
     )
   )
 }
