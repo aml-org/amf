@@ -430,10 +430,10 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     // Force to re-adopt with the new mediatype if exists
     if (payload.mediaType.nonEmpty) validateEntryName(payload)
 
-    map.key(
-      "schema",
-      entry => {
-        OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape].adopted(payload.id))(toOas(ctx)) // i don't need to set param need in here. Its necesary only for form data, because of the properties
+    map.key("schema") match {
+      case Some(entry) =>
+        // i don't need to set param need in here. Its necessary only for form data, because of the properties
+        OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape].adopted(payload.id))(toOas(ctx))
           .parse()
           .map { schema =>
             checkNotFileInBody(schema)
@@ -443,9 +443,9 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
             }
             schema
           }
-      }
-    )
-
+      case None =>
+        ctx.eh.warning(OasInvalidParameterSchema, "", s"Schema is required for a parameter in body", map)
+    }
     payload
   }
 

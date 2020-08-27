@@ -9,6 +9,10 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/oas2/"
   override val hint: Hint          = OasYamlHint
 
+  test("missing schema in body parameter") {
+    validate("missing-schema-body-parameter.json", Some("missing-schema-body-parameter.report"), Oas20Profile)
+  }
+
   test("Oas path uri is invalid") {
     validate("invalid-endpoint-path-still-parses.json",
              Some("invalid-endpoint-path-still-parses.report"),
