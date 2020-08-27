@@ -1336,7 +1336,13 @@ object AMFRawValidations {
       urlValidation(core("CreativeWork"), core("url")),
       urlValidation(security("OAuth2Flow"), security("authorizationUri")),
       urlValidation(security("OAuth2Flow"), security("accessTokenUri")),
-      urlValidation(security("OAuth2Flow"), security("refreshUri"))
+      urlValidation(security("OAuth2Flow"), security("refreshUri")),
+      AMFValidation(
+        message = "Discriminator must be in the objects required properties",
+        constraint = shape("discriminatorInRequiredProperties"),
+        owlClass = sh("NodeShape"),
+        owlProperty = shape("discriminator"),
+      )
     )
 
     override def validations(): Seq[AMFValidation] = result
