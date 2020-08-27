@@ -25,18 +25,27 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class JsonRefsReferenceHandler extends ReferenceHandler {
 
-  private val references           = ReferenceCollector()
-  private var refUrls: Set[String] = Set()
+  private val references            = ReferenceCollector()
+  private var refUrls: Set[RefNode] = Set()
+
+  case class RefNode(node: YNode, nodeValue: String) {
+    override def equals(obj: Any): Boolean = obj match {
+      case RefNode(_, aValue) => nodeValue == aValue
+      case _                  => false
+    }
+
+    override def hashCode(): Int = nodeValue.hashCode
+  }
 
   override def collect(inputParsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
     inputParsed match {
       case parsed: SyamlParsedDocument =>
         links(parsed.document, ctx)
         refUrls.foreach { ref =>
-          if (ref.startsWith("http:") || ref.startsWith("https:"))
-            references += (ref, LinkReference, ref) // this is not for all scalars, link must be a string
+          if (ref.nodeValue.startsWith("http:") || ref.nodeValue.startsWith("https:"))
+            references += (ref.nodeValue, LinkReference, ref.node) // this is not for all scalars, link must be a string
           else
-            references += (ref, InferredLinkReference, ref) // Is inferred because we don't know how to dereference by default
+            references += (ref.nodeValue, InferredLinkReference, ref.node) // Is inferred because we don't know how to dereference by default
         }
       case _ => // ignore
     }
@@ -59,7 +68,7 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
     ref.tagType match {
       case YType.Str =>
         val refValue = ref.as[String]
-        if (!refValue.startsWith("#")) refUrls += refValue.split("#").head
+        if (!refValue.startsWith("#")) refUrls += RefNode(ref, refValue.split("#").head)
       case _ => ctx.eh.violation(UnresolvedReference, "", s"Unexpected $$ref with $ref", ref.value)
     }
   }

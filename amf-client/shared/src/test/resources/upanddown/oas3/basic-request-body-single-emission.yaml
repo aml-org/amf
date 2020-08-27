@@ -1,0 +1,20 @@
+description: description of the request
+required: false
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        a:
+          type: number
+    examples:
+      a:
+        summary: simple example
+        value:
+          a: 10
+  application/xml:
+    schema:
+      type: object
+      properties:
+        b:
+          type: number

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.async.emitters
 
 import amf.core.annotations.SynthesizedField
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position, Value}
 import org.yaml.model.{YDocument, YNode}
 import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
@@ -38,25 +38,34 @@ class AsyncApiSingleParameterEmitter(parameter: Parameter, ordering: SpecOrderin
 
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val paramName = parameter.name.value()
-    val fs        = parameter.fields
     b.entry(
       YNode(paramName),
-      partBuilder =>
-        if (parameter.isLink) {
-          emitLink(partBuilder)
-        } else {
-          partBuilder.obj {
-            emitter =>
-              val result = ListBuffer[EntryEmitter]()
-              fs.entry(ParameterModel.Description).foreach(f => result += ValueEmitter("description", f))
-              fs.entry(ParameterModel.Schema)
-                .foreach(f => result += async.AsyncSchemaEmitter("schema", f.element.asInstanceOf[Shape], ordering, Seq())) // TODO: add references
-              fs.entry(ParameterModel.Binding).foreach(f => emitLocation(f, result))
-              result ++= AnnotationsEmitter(parameter, ordering).emitters
-              traverse(ordering.sorted(result), emitter)
-          }
-      }
+      AsyncApiSingleParameterPartEmitter(parameter, ordering).emit(_)
     )
+  }
+
+  override def position(): Position = pos(parameter.annotations)
+}
+
+case class AsyncApiSingleParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering)(
+    implicit val spec: OasLikeSpecEmitterContext)
+    extends PartEmitter {
+
+  override def emit(b: YDocument.PartBuilder): Unit = {
+    val fs = parameter.fields
+    if (parameter.isLink) {
+      emitLink(b)
+    } else {
+      b.obj { emitter =>
+        val result = ListBuffer[EntryEmitter]()
+        fs.entry(ParameterModel.Description).foreach(f => result += ValueEmitter("description", f))
+        fs.entry(ParameterModel.Schema)
+          .foreach(f => result += async.AsyncSchemaEmitter("schema", f.element.asInstanceOf[Shape], ordering, Seq()))
+        fs.entry(ParameterModel.Binding).foreach(f => emitLocation(f, result))
+        result ++= AnnotationsEmitter(parameter, ordering).emitters
+        traverse(ordering.sorted(result), emitter)
+      }
+    }
   }
 
   def emitLink(b: PartBuilder): Unit = {

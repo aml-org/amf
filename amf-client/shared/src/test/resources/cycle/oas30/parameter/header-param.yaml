@@ -1,0 +1,21 @@
+name: token
+in: header
+description: token to be passed as a header
+required: true
+schema:
+  type: array
+  items:
+    type: integer
+    format: int64
+examples:
+  a:
+    summary: simple example
+    description: description of the example
+    value:
+      - 1
+      - 2
+      - 3
+      - 4
+    externalValue: http://test.com/external_doc
+explode: true
+style: simple

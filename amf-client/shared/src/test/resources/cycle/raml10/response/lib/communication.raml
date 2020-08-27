@@ -1,0 +1,26 @@
+#%RAML 1.0 Library
+usage: communication entities
+
+
+types:
+
+  StatusUpdateRef:
+    type: object
+    example:
+      {
+        "id": 5,
+        "date": "2017-09-01T00:00:00Z",
+        "_links": {
+          "self": {
+            "href": "/statusUpdate/5",
+            "method": "GET"
+          },
+          "message": {
+            "href": "/message/0",
+            "method": "GET"
+          }
+        },
+        "status": "PROVIDER_ACCEPTED"
+      }
+
+

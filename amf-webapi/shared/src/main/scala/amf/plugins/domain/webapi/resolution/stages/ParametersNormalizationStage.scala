@@ -47,7 +47,8 @@ abstract class ParametersNormalizationStage(profile: ProfileName)(override impli
     if (finalParams.query.nonEmpty)
       request.fields.setWithoutId(RequestModel.QueryParameters, AmfArray(finalParams.query))
     if (finalParams.header.nonEmpty) request.fields.setWithoutId(RequestModel.Headers, AmfArray(finalParams.header))
-    if (finalParams.path.nonEmpty) request.fields.setWithoutId(RequestModel.UriParameters, AmfArray(finalParams.path))
+    val pathParams = finalParams.baseUri08 ++ finalParams.path
+    if (pathParams.nonEmpty) request.fields.setWithoutId(RequestModel.UriParameters, AmfArray(pathParams))
   }
 }
 

@@ -23,27 +23,27 @@ case class TagsEmitter(key: String, tags: Seq[Tag], ordering: SpecOrdering)(impl
       _.list(traverse(ordering.sorted(emitters), _))
     )
   }
+}
 
-  private case class TagEmitter(tag: Tag, ordering: SpecOrdering) extends PartEmitter {
+case class TagEmitter(tag: Tag, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) extends PartEmitter {
 
-    override def position(): Position = pos(tag.annotations)
+  override def position(): Position = pos(tag.annotations)
 
-    override def emit(p: PartBuilder): Unit = {
-      p.obj { b =>
-        val fs     = tag.fields
-        val result = mutable.ListBuffer[EntryEmitter]()
+  override def emit(p: PartBuilder): Unit = {
+    p.obj { b =>
+      val fs     = tag.fields
+      val result = mutable.ListBuffer[EntryEmitter]()
 
-        fs.entry(TagModel.Name).map(f => result += ValueEmitter("name", f))
-        fs.entry(TagModel.Description).map(f => result += ValueEmitter("description", f))
-        fs.entry(TagModel.Documentation)
-          .map(_ =>
-            result +=
-              OasEntryCreativeWorkEmitter("externalDocs", tag.documentation, ordering))
+      fs.entry(TagModel.Name).map(f => result += ValueEmitter("name", f))
+      fs.entry(TagModel.Description).map(f => result += ValueEmitter("description", f))
+      fs.entry(TagModel.Documentation)
+        .map(_ =>
+          result +=
+            OasEntryCreativeWorkEmitter("externalDocs", tag.documentation, ordering))
 
-        result ++= AnnotationsEmitter(tag, ordering).emitters
+      result ++= AnnotationsEmitter(tag, ordering).emitters
 
-        traverse(ordering.sorted(result), b)
-      }
+      traverse(ordering.sorted(result), b)
     }
   }
 }

@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: simple object
+
+uses:
+  communication: lib/communication.raml
+
+'/organizations/{organizationId}/promotions':
+  get:
+    responses:
+      '200':
+        description: Retrieved promotion information successfully.
+        body:
+          application/json:
+            type: object
+            examples:
+              promotionGetResponse: !include Examples/get-promotion-response.raml
+

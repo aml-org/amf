@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations._
-import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.model.DataType
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.model.domain.extensions.PropertyShape
@@ -41,7 +41,7 @@ object Raml10TypeParser {
             adopt: Shape => Unit,
             typeInfo: TypeInfo = TypeInfo(),
             defaultType: DefaultType = StringDefaultType)(implicit ctx: RamlWebApiContext): Raml10TypeParser =
-    new Raml10TypeParser(Left(entry), entry.key, adopt, typeInfo, defaultType)(
+    new Raml10TypeParser(YMapEntryLike(entry), entry.key, adopt, typeInfo, defaultType)(
       new Raml10WebApiContext(ctx.rootContextDocument,
                               ctx.refs,
                               ctx,
@@ -51,9 +51,9 @@ object Raml10TypeParser {
 
   def apply(node: YNode, name: String, adopt: Shape => Unit, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml10TypeParser =
-    new Raml10TypeParser(Right(node), name, adopt, TypeInfo(), defaultType)
+    new Raml10TypeParser(YMapEntryLike(node), name, adopt, TypeInfo(), defaultType)
 
-  def apply(entryOrNode: Either[YMapEntry, YNode],
+  def apply(entryOrNode: YMapEntryLike,
             name: String,
             adopt: Shape => Unit,
             isAnnotation: Boolean,
@@ -118,17 +118,17 @@ object AnyDefaultType extends DefaultType {
   override val typeDef: TypeDef = TypeDef.AnyType
 }
 
-case class Raml10TypeParser(entryOrNode: Either[YMapEntry, YNode],
+case class Raml10TypeParser(entryOrNode: YMapEntryLike,
                             key: YNode,
                             adopt: Shape => Unit,
                             typeInfo: TypeInfo,
                             defaultType: DefaultType)(implicit override val ctx: RamlWebApiContext)
-    extends RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
+    extends RamlTypeParser(entryOrNode: YMapEntryLike,
                            key: YNode,
                            adopt: Shape => Unit,
                            typeInfo: TypeInfo,
                            defaultType: DefaultType) {
-  override def typeParser: (Either[YMapEntry, YNode], String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
+  override def typeParser: (YMapEntryLike, String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
     Raml10TypeParser.apply
 
 }
@@ -136,7 +136,7 @@ case class Raml10TypeParser(entryOrNode: Either[YMapEntry, YNode],
 object Raml08TypeParser {
   def apply(node: YNode, name: String, adopt: Shape => Unit, isAnnotation: Boolean, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml08TypeParser =
-    new Raml08TypeParser(Right(node), name, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
+    new Raml08TypeParser(YMapEntryLike(node), name, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
       new Raml08WebApiContext(ctx.rootContextDocument,
                               ctx.refs,
                               ctx,
@@ -146,10 +146,10 @@ object Raml08TypeParser {
 
   def apply(entry: YMapEntry, adopt: Shape => Unit, isAnnotation: Boolean, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml08TypeParser =
-    new Raml08TypeParser(Left(entry), entry.key, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
+    new Raml08TypeParser(YMapEntryLike(entry), entry.key, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
       new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations), options = ctx.options))
 
-  def apply(entryOrNode: Either[YMapEntry, YNode],
+  def apply(entryOrNode: YMapEntryLike,
             name: String,
             adopt: Shape => Unit,
             isAnnotation: Boolean,
@@ -158,16 +158,12 @@ object Raml08TypeParser {
       new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations), options = ctx.options))
 }
 
-case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
+case class Raml08TypeParser(entryOrNode: YMapEntryLike,
                             key: YNode,
                             adopt: Shape => Unit,
                             typeInfo: TypeInfo,
                             defaultType: DefaultType)(implicit override val ctx: RamlWebApiContext)
-    extends RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
-                           key: YNode,
-                           adopt: Shape => Unit,
-                           typeInfo,
-                           defaultType) {
+    extends RamlTypeParser(entryOrNode: YMapEntryLike, key: YNode, adopt: Shape => Unit, typeInfo, defaultType) {
 
   override def parse(): Option[AnyShape] = {
     val shape = ScalarShape(node).withName(name, Annotations(key))
@@ -186,11 +182,6 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
     result.annotations.reject(isLexical)
     result.add(Annotations(ast))
   }
-
-  private def isLexical =
-    (a: Annotation) =>
-      a.isInstanceOf[SourceAST] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceLocation] || a
-        .isInstanceOf[LexicalInformation]
 
   private def parseSchemaOrTypeDeclarationAndExamples = {
     // has schema or its simple raml type declaration
@@ -226,7 +217,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
                             node).parse())
   }
 
-  override def typeParser: (Either[YMapEntry, YNode], String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
+  override def typeParser: (YMapEntryLike, String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
     Raml08TypeParser.apply
 
   case class Raml08ReferenceParser(text: String, node: YNode, name: String)(implicit ctx: RamlWebApiContext) {
@@ -463,7 +454,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
 
 case class TypeInfo(isAnnotation: Boolean = false, isPropertyOrParameter: Boolean = false)
 
-sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
+sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                                      key: YNode,
                                      adopt: Shape => Unit,
                                      typeInfo: TypeInfo,
@@ -472,15 +463,11 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   val name: String = key.as[YScalar].text
 
-  protected val (ast, node) = entryOrNode match {
-    case Right(n) => (n, n)
-    case Left(e)  => (e, e.value)
-  }
+  protected val (ast, node) = (entryOrNode.ast, entryOrNode.value)
 
-  private val nameAnnotations: Annotations =
-    entryOrNode.left.toOption.map(e => Annotations(e.key)).getOrElse(Annotations())
+  private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())
 
-  def typeParser: (Either[YMapEntry, YNode], String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser
+  def typeParser: (YMapEntryLike, String, Shape => Unit, Boolean, DefaultType) => RamlTypeParser
 
   def parseDefaultType(defaultType: DefaultType): Shape = {
     val defaultShape = defaultType.typeDef match {
@@ -678,22 +665,19 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         case _ if node.toOption[YScalar].isDefined =>
           val refTuple = ctx.link(node) match {
             case Left(key) =>
-              (key,
-               ctx.declarations.findType(
-                 key,
-                 SearchScope.Fragments,
-                 Some((s: String) => ctx.eh.violation(InvalidFragmentType, shape.id, s, node))))
+              val referenced = ctx.declarations.findType(
+                key,
+                SearchScope.Fragments,
+                Some((s: String) => ctx.eh.violation(InvalidFragmentType, shape.id, s, node)))
+              (key, referenced.map(createLink(_, key, shape.id).add(ExternalFragmentRef(key))))
             case _ =>
-              val text = node.as[YScalar].text
-              (text, ctx.declarations.findType(text, SearchScope.Named))
+              val text       = node.as[YScalar].text
+              val referenced = ctx.declarations.findType(text, SearchScope.Named)
+              (text, referenced.map(createLink(_, text, shape.id)))
           }
 
           refTuple match {
-            case (text: String, Some(s)) =>
-              s.link(text, Annotations(node))
-                .asInstanceOf[Shape]
-                .withName(name, nameAnnotations) // we setup the local reference in the name
-                .withId(shape.id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+            case (_, Some(s)) => s
             case (text: String, _)
                 if RamlTypeDefMatcher.matchType(TypeName(text), default = UndefinedType) == ObjectType =>
               shape.annotations += ExplicitField()
@@ -717,10 +701,20 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               } else {
                 unresolve.unresolved(text, node)
               }
+              shape.annotations.reject(isLexical)
+              shape.annotations ++= unresolve.annotations
               shape.withLinkTarget(unresolve).withLinkLabel(text)
           }
       }
     }
+  }
+
+  private def createLink(shape: AnyShape, label: String, linkId: String): Shape = {
+    shape
+      .link(label, Annotations(node))
+      .asInstanceOf[Shape]
+      .withName(name, nameAnnotations) // we setup the local reference in the name
+      .withId(linkId) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
   }
 
   private def isFileType: Boolean = {
@@ -886,7 +880,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               val unionNodes = seq.zipWithIndex
                 .map {
                   case (unionNode, index) =>
-                    typeParser(Right(unionNode),
+                    typeParser(YMapEntryLike(unionNode),
                                s"item$index",
                                item => item.adopted(shape.id + "/items/" + index),
                                typeInfo.isAnnotation,
@@ -916,7 +910,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               val nodes = seq.zipWithIndex
                 .map {
                   case (unionNode, index) =>
-                    typeParser(Right(unionNode),
+                    typeParser(YMapEntryLike(unionNode),
                                s"item$index",
                                item => item.adopted(shape.id + "/or/" + index),
                                typeInfo.isAnnotation,
@@ -944,7 +938,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               val nodes = seq.zipWithIndex
                 .map {
                   case (unionNode, index) =>
-                    typeParser(Right(unionNode),
+                    typeParser(YMapEntryLike(unionNode),
                                s"item$index",
                                item => item.adopted(shape.id + "/and/" + index),
                                typeInfo.isAnnotation,
@@ -974,7 +968,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               val nodes = seq.zipWithIndex
                 .map {
                   case (unionNode, index) =>
-                    typeParser(Right(unionNode),
+                    typeParser(YMapEntryLike(unionNode),
                                s"item$index",
                                item => item.adopted(shape.id + "/xor/" + index),
                                typeInfo.isAnnotation,
@@ -1000,7 +994,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     def parse(): Unit = {
       map.key(
         "not".asRamlAnnotation, { entry =>
-          typeParser(Left(entry), "not", (s: Shape) => s.withId(shape.id + "/not"), false, defaultType).parse() match {
+          typeParser(YMapEntryLike(entry), "not", (s: Shape) => s.withId(shape.id + "/not"), false, defaultType)
+            .parse() match {
             case Some(negated) => shape.set(ShapeModel.Not, negated, Annotations(entry.value))
             case _             => // ignore
           }
@@ -1156,7 +1151,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             val isTypeExpression = isPlainArrayTypeExpression(typeEntry)
             if (isTypeExpression) {
               val typeExpression = typeEntry.value.toString.replaceFirst("\\[\\]", "")
-              RamlTypeExpressionParser(items => items.adopted(shape.id), expression = typeExpression)
+              RamlTypeExpressionParser(items => items.adopted(shape.id),
+                                       expression = typeExpression,
+                                       part = Some(typeEntry.value.value))
                 .parse()
                 .foreach { value =>
                   shape.withItems(value)
@@ -1708,5 +1705,10 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       typeOrSchema(map).foreach(entry => InheritanceParser(entry, shape, Some(map)).parse())
     }
   }
+
+  def isLexical: Annotation => Boolean =
+    (a: Annotation) =>
+      a.isInstanceOf[SourceAST] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceLocation] || a
+        .isInstanceOf[LexicalInformation]
 
 }

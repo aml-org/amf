@@ -30,6 +30,47 @@ import scala.collection.mutable.ListBuffer
 case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
     extends RamlOperationEmitter(operation, ordering, references) {
+  override protected val partEmitter: RamlOperationPartEmitter =
+    Raml10OperationPartEmitter(operation, ordering, references)
+}
+
+case class Raml08OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends RamlOperationEmitter(operation, ordering, references) {
+  override protected val partEmitter: RamlOperationPartEmitter =
+    Raml08OperationPartEmitter(operation, ordering, references)
+}
+
+abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends EntryEmitter {
+
+  protected val partEmitter: RamlOperationPartEmitter
+
+  override def emit(b: EntryBuilder): Unit = {
+    val fs = operation.fields
+    sourceOr(
+      operation.annotations,
+      b.complexEntry(
+        ScalarEmitter(fs.entry(OperationModel.Method).get.scalar).emit(_),
+        partEmitter.emit
+      )
+    )
+  }
+
+  override def position(): Position = pos(operation.annotations)
+}
+
+case class Raml08OperationPartEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends RamlOperationPartEmitter(operation, ordering, references) {
+  override protected val baseUriParameterKey: String = "baseUriParameters"
+}
+
+case class Raml10OperationPartEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends RamlOperationPartEmitter(operation, ordering, references) {
+  override protected val baseUriParameterKey: String = "baseUriParameters".asRamlAnnotation
 
   override protected def entries(fs: Fields): Seq[EntryEmitter] = {
     val emitters = super.entries(fs)
@@ -59,21 +100,18 @@ case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, 
 
   }
 
-  override protected val baseUriParameterKey: String = "baseUriParameters".asRamlAnnotation
 }
 
-case class Raml08OperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
+abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
-    extends RamlOperationEmitter(operation, ordering, references) {
-
-  override protected val baseUriParameterKey: String = "baseUriParameters"
-}
-
-abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends EntryEmitter {
+    extends PartEmitter {
 
   protected val baseUriParameterKey: String
+
+  override def emit(b: PartBuilder): Unit = {
+    val fs = operation.fields
+    b.obj { traverse(ordering.sorted(entries(fs)), _) }
+  }
 
   protected def entries(fs: Fields): Seq[EntryEmitter] = {
     val result = mutable.ListBuffer[EntryEmitter]()
@@ -153,19 +191,6 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
     result
   }
 
-  override def emit(b: EntryBuilder): Unit = {
-    val fs = operation.fields
-    sourceOr(
-      operation.annotations,
-      b.complexEntry(
-        ScalarEmitter(fs.entry(OperationModel.Method).get.scalar).emit(_),
-        _.obj { b =>
-          traverse(ordering.sorted(entries(fs)), b)
-        }
-      )
-    )
-  }
-
   override def position(): Position = pos(operation.annotations)
 }
 
@@ -202,7 +227,7 @@ case class OasCallbackEmitter(callbacks: Seq[Callback], ordering: SpecOrdering, 
   override def emit(p: PartBuilder): Unit = {
     if (callbacks.headOption.exists(_.isLink))
       callbacks.head.linkTarget.foreach { l =>
-        OasTagToReferenceEmitter(l, callbacks.head.linkLabel.option(), references).emit(p)
+        OasTagToReferenceEmitter(l, callbacks.head.linkLabel.option()).emit(p)
       } else
       p.obj(
         traverse(callbacks.map { callback =>

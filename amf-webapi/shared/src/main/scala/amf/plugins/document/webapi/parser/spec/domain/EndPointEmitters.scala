@@ -2,15 +2,16 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{SpecOrdering, EntryEmitter}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Position, FieldEntry, Value, Fields}
+import amf.core.parser.{FieldEntry, Fields, Position, Value}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, ExtendsEmitter}
 import amf.plugins.domain.webapi.metamodel.EndPointModel
-import amf.plugins.domain.webapi.models.{Parameter, EndPoint, Operation}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
+import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
@@ -101,7 +102,8 @@ case class Raml08EndPointEmitter(endpoint: EndPoint,
 abstract class RamlEndPointEmitter(ordering: SpecOrdering,
                                    children: mutable.ListBuffer[RamlEndPointEmitter] = mutable.ListBuffer(),
                                    references: Seq[BaseUnit] = Seq())(implicit val spec: RamlSpecEmitterContext)
-    extends EntryEmitter {
+    extends EntryEmitter
+    with PartEmitter {
 
   def endpoint: EndPoint
 
@@ -109,7 +111,6 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
 
   override def emit(b: EntryBuilder): Unit = {
     val fs = endpoint.fields
-
     sourceOr(
       endpoint.annotations,
       b.complexEntry(
@@ -119,11 +120,16 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
             case None    => ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit(b)
           }
         },
-        _.obj { b =>
-          traverse(ordering.sorted(emitters(fs)), b)
-        }
+        emit
       )
     )
+  }
+
+  override def emit(b: YDocument.PartBuilder): Unit = {
+    val fs = endpoint.fields
+    b.obj { b =>
+      traverse(ordering.sorted(emitters(fs)), b)
+    }
   }
 
   protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {

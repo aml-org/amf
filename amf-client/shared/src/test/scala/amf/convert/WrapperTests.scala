@@ -8,10 +8,11 @@ import amf.client.convert.NativeOps
 import amf.client.environment.{DefaultEnvironment, Environment}
 import amf.client.model.document._
 import amf.client.model.domain._
+import amf.plugins.domain.webapi.models.{CorrelationId => InternalCorrelationId}
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Async20Resolver, Oas20Resolver, Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Async20Resolver, Oas20Resolver, Oas30Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.errorhandling.StaticErrorCollector
@@ -23,7 +24,7 @@ import amf.core.model.domain.{
   ScalarNode => InternalScalarNode
 }
 import amf.core.parser.Range
-import amf.core.remote.{Aml, Oas20, Raml10}
+import amf.core.remote.{Aml, Oas20, Raml10, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
@@ -31,6 +32,7 @@ import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.internal.environment.{Environment => InternalEnvironment}
 import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.Vocabularies
+import amf.plugins.document.webapi.parser.spec.common.emitters.DomainElementEmitter
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
@@ -1307,11 +1309,14 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val options = new RenderOptions().withSourceMaps
 
     for {
-      _      <- AMF.init().asFuture
-      unit   <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(banking).asFuture
+      _ <- AMF.init().asFuture
+      unit <- amf.Core
+        .parser(Raml10.name, "application/yaml")
+        .parseFileAsync(banking)
+        .asFuture // could be use a smaller api for this test?
       jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
     } yield {
-      jsonld should include("[(3,0)-(252,0)]")
+      jsonld should include("[(1,0)-(252,0)]")
     }
   }
 
@@ -1838,10 +1843,10 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                         |      "additionalProperties": true,
                         |      "properties": {
                         |        "c1": {
-                        |          "type": "array",
                         |          "items": {
                         |            "$ref": "#/definitions/A"
-                        |          }
+                        |          },
+                        |          "type": "array"
                         |        }
                         |      }
                         |    },
@@ -1854,10 +1859,10 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                         |          "additionalProperties": true,
                         |          "properties": {
                         |            "c1": {
-                        |              "type": "array",
                         |              "items": {
                         |                "$ref": "#/definitions/A"
-                        |              }
+                        |              },
+                        |              "type": "array"
                         |            }
                         |          }
                         |        }
@@ -2139,7 +2144,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new Async20Parser().parseFileAsync(api).asFuture
-      resolved <- Future(new Async20Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future(new Async20Resolver().resolve(unit, ResolutionPipeline.CACHE_PIPELINE))
     } yield {
       val golden  = """{
                         |  "$schema": "http://json-schema.org/draft-07/schema#",
@@ -2305,6 +2310,44 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       report <- AMF.validate(unit, Oas30Profile, OASStyle).asFuture
     } yield {
       report.conforms should be(true)
+    }
+  }
+
+  test("Test domain element emitter with unknown vendor") {
+    val eh = DefaultErrorHandler()
+    DomainElementEmitter.emit(InternalArrayNode(), Vendor.PAYLOAD, eh)
+    assert(eh.getErrors.head.message == "Unknown vendor provided")
+  }
+
+  test("Test domain element emitter with unhandled domain element") {
+    val eh = DefaultErrorHandler()
+    DomainElementEmitter.emit(InternalCorrelationId(), Vendor.RAML10, eh)
+    assert(eh.getErrors.head.message == "Unhandled domain element for given vendor")
+  }
+
+  test("OAS 3.0 Response examples for a same type have different ids") {
+    val file =
+      "file://amf-client/shared/src/test/resources/validations/oas3/several-single-examples-for-same-type/api.json"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new Oas30Parser().parseFileAsync(file).asFuture
+      resolved <- Future.successful(new Oas30Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+    } yield {
+      val exampleIds =
+        resolved.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[AnyShape].examples.asSeq.map(x => x.id)
+      exampleIds.toSet should have size 3
+    }
+  }
+
+  test("Oas and JsonSchema refs don't have double-linking for refs") {
+    val file = "file://amf-client/shared/src/test/resources/validations/oas2/double-linking.yaml"
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new Oas20YamlParser().parseFileAsync(file).asFuture
+    } yield {
+      val personProperties = unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[NodeShape].properties.asSeq
+      personProperties(1).range.linkTarget.asOption.get.asInstanceOf[Linkable].isLink shouldBe false
+      personProperties(2).range.linkTarget.asOption.get.asInstanceOf[Linkable].isLink shouldBe false
     }
   }
 

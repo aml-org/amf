@@ -34,7 +34,7 @@ case class OasTypeEmitter(shape: Shape,
     }
 
     shape match {
-      case l: Linkable if l.isLink => Seq(OasTagToReferenceEmitter(shape, l.linkLabel.option(), Nil))
+      case l: Linkable if l.isLink => Seq(OasTagToReferenceEmitter(shape, l.linkLabel.option()))
       case schema: SchemaShape =>
         val copiedNode = schema.copy(fields = schema.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
         OasSchemaShapeEmitter(copiedNode, ordering).emitters()

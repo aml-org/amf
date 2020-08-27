@@ -127,11 +127,11 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("security scheme authorizationGrant RAML 1.0") {
-    validate("/securitySchemes/raml10AuthorizationGrant.raml", Some("invalid-auth-grant-10.report"))
+    validate("/security-schemes/raml10AuthorizationGrant.raml", Some("invalid-auth-grant-10.report"))
   }
 
   test("security scheme authorizationGrant RAML 0.8") {
-    validate("/securitySchemes/raml08AuthorizationGrant.raml",
+    validate("/security-schemes/raml08AuthorizationGrant.raml",
              Some("invalid-auth-grant-08.report"),
              profile = Raml08Profile)
 
@@ -158,7 +158,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Invalid security scheme key") {
-    validate("/securitySchemes/invalid-key.raml", Some("invalid-key.report"))
+    validate("/security-schemes/invalid-key.raml", Some("invalid-key.report"))
   }
 
   test("Test null value in json when expecting scalar value") {
@@ -170,7 +170,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Security schemes with empty type") {
-    validate("securitySchemes/empty-type.raml", Some("empty-type.report"))
+    validate("security-schemes/empty-type.raml", Some("empty-type.report"))
   }
 
   test("Extension with empty extends") {
@@ -453,4 +453,49 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Raml overlay with example without overloading type") {
     validate("overlays/overlay-with-example-overloading/overlay.raml", None, Raml10Profile)
   }
+
+  // OAuth 1.0
+  test("Missing requestTokenUri field in OAuth 1.0 security type") {
+    validate("/raml/oauth1/missing-requestTokenUri-oauth1.raml", Some("missing-requestTokenUri-oauth1.report"))
+  }
+
+  test("Missing authorizationUri field in OAuth 1.0 security type") {
+    validate("/raml/oauth1/missing-authorizationUri-oauth1.raml", Some("missing-authorizationUri-oauth1.report"))
+  }
+
+  test("Missing tokenCredentialsUri field in OAuth 1.0 security type") {
+    validate("/raml/oauth1/missing-tokenCredentialsUri-oauth1.raml", Some("missing-tokenCredentialsUri-oauth1.report"))
+  }
+
+  // OAuth 2.0
+  test("OAuth 2.0 security settings - authorization code") {
+    validate("security-schemes/oauth-2/authorization-code.raml",
+             Some("missing-authorization-code-fields.report"),
+             Raml10Profile)
+  }
+
+  test("OAuth 2.0 security settings - client credentials grant") {
+    validate("security-schemes/oauth-2/client-credentials.raml",
+             Some("missing-client-credential-fields.report"),
+             Raml10Profile)
+  }
+
+  test("OAuth 2.0 security settings - implicit grant") {
+    validate("security-schemes/oauth-2/implicit.raml", Some("missing-implicit-fields.report"), Raml10Profile)
+  }
+
+  test("OAuth 2.0 security settings - password") {
+    validate("security-schemes/oauth-2/password.raml", Some("missing-password-fields.report"), Raml10Profile)
+  }
+
+  test("OAuth 2.0 security settings - mulitple grants") {
+    validate("security-schemes/oauth-2/multiple-grants.raml",
+             Some("missing-fields-multiple-grants.report"),
+             Raml10Profile)
+  }
+
+  test("OAuth 2.0 security settings - custom setting defined in securedBy facet") {
+    validate("security-schemes/oauth-2/secured-by.raml", None, Raml10Profile)
+  }
+
 }

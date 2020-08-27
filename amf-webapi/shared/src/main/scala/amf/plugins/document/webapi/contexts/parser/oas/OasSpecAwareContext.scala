@@ -3,14 +3,13 @@ package amf.plugins.document.webapi.contexts.parser.oas
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.SpecAwareContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeSpecVersionFactory
+import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.plugins.domain.webapi.models.{EndPoint, Operation, Server, WebApi}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, WebApi}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
-
-import scala.collection.mutable.ListBuffer
 
 trait OasSpecAwareContext extends SpecAwareContext {}
 
@@ -19,13 +18,10 @@ abstract class OasSpecVersionFactory(implicit val ctx: OasWebApiContext) extends
   def serversParser(map: YMap, endpoint: EndPoint): OasServersParser
   def serversParser(map: YMap, operation: Operation): OasServersParser
   def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser
-  def parameterParser(entryOrNode: Either[YMapEntry, YNode],
+  def parameterParser(entryOrNode: YMapEntryLike,
                       parentId: String,
                       nameNode: Option[YNode],
                       nameGenerator: IdCounter): OasParameterParser
-
-  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
-    OasSecuritySchemeParser.apply
 }
 
 case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) extends OasSpecVersionFactory {
@@ -40,7 +36,10 @@ case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =
     new Oas2SecuritySettingsParser(map, scheme)(ctx)
 
-  override def parameterParser(entryOrNode: Either[YMapEntry, YNode],
+  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
+    Oas2SecuritySchemeParser.apply
+
+  override def parameterParser(entryOrNode: YMapEntryLike,
                                parentId: String,
                                nameNode: Option[YNode],
                                nameGenerator: IdCounter): OasParameterParser =
@@ -67,10 +66,13 @@ case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def serversParser(map: YMap, endpoint: EndPoint): OasServersParser =
     Oas3ServersParser(map, endpoint, EndPointModel.Servers)(ctx)
 
+  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
+    Oas3SecuritySchemeParser.apply
+
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =
     new Oas3SecuritySettingsParser(map, scheme)(ctx)
 
-  override def parameterParser(entryOrNode: Either[YMapEntry, YNode],
+  override def parameterParser(entryOrNode: YMapEntryLike,
                                parentId: String,
                                nameNode: Option[YNode],
                                nameGenerator: IdCounter): OasParameterParser =

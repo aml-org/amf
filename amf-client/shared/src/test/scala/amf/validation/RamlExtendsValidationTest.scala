@@ -256,11 +256,11 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   }
 
   // Merging security schemes
-  test("Merging security schemes in RAML 0.8"){
+  test("Merging security schemes in RAML 0.8") {
     validate("extends/raml08-with-security-schemes-in-trait.raml")
   }
 
-  test("Merging security schemes in RAML 1.0"){
+  test("Merging security schemes in RAML 1.0") {
     validate("extends/raml10-with-security-schemes-in-trait.raml")
   }
 

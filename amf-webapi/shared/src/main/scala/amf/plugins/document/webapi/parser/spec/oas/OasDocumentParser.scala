@@ -4,25 +4,31 @@ import amf.core.Root
 import amf.core.annotations._
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter}
+import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
+import amf.plugins.document.webapi.parser.spec.common.{
+  AnnotationParser,
+  SpecParserOps,
+  WebApiBaseSpecParser,
+  YMapEntryLike
+}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, OasTypeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
+import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
+import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
@@ -85,6 +91,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
     val references = ReferencesParser(document, "uses".asOasExtension, map, root.references).parse(root.location)
     parseDeclarations(root, map)
+    val declarationKeys = ctx.getDeclarationKeys
+    if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
 
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
     document
@@ -106,8 +114,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     AbstractDeclarationsParser("resourceTypes".asOasExtension,
                                (entry: YMapEntry) => ResourceType(entry),
                                map,
-                               parent + "/resourceTypes").parse()
-    AbstractDeclarationsParser("traits".asOasExtension, (entry: YMapEntry) => Trait(entry), map, parent + "/traits")
+                               parent + "/resourceTypes",
+                               ResourceTypeModel).parse()
+    AbstractDeclarationsParser("traits".asOasExtension,
+                               (entry: YMapEntry) => Trait(entry),
+                               map,
+                               parent + "/traits",
+                               TraitModel)
       .parse()
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseParameterDeclarations(map, parent + "/parameters")
@@ -119,6 +132,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "annotationTypes".asOasExtension,
       e => {
+        ctx.addDeclarationKey(DeclarationKey(e, isAbstract = true))
         e.value
           .as[YMap]
           .entries
@@ -165,6 +179,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       key,
       e => {
+        ctx.addDeclarationKey(DeclarationKey(e))
         e.value.as[YMap].entries.foreach { entry =>
           val securityScheme: SecurityScheme = ctx.factory
             .securitySchemeParser(
@@ -190,6 +205,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "parameters",
       entry => {
+        ctx.addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries
@@ -197,10 +213,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             val typeName      = e.key
             val nameGenerator = new IdCounter()
             val oasParameter: domain.OasParameter = e.value.to[YMap] match {
-              case Right(_) => ctx.factory.parameterParser(Left(e), parentPath, Some(typeName), nameGenerator).parse
+              case Right(_) =>
+                ctx.factory.parameterParser(YMapEntryLike(e), parentPath, Some(typeName), nameGenerator).parse
               case _ =>
                 val parameter =
-                  ctx.factory.parameterParser(Right(YMap.empty), parentPath, Some(typeName), nameGenerator).parse
+                  ctx.factory
+                    .parameterParser(YMapEntryLike(YMap.empty), parentPath, Some(typeName), nameGenerator)
+                    .parse
                 ctx.eh.violation(InvalidParameterType,
                                  parameter.domainElement.id,
                                  "Map needed to parse a parameter declaration",
@@ -218,6 +237,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       key,
       entry => {
+        ctx.addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries

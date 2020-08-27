@@ -1,0 +1,60 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.6.0",
+    "title": "Aesop Federated Profile System"
+  },
+  "definitions": {
+    "Cat": {
+      "description": "A representation of a cat",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Pet"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "huntingSkill": {
+              "type": "string",
+              "description": "The measured skill for hunting",
+              "default": "lazy",
+              "enum": [
+                "clueless",
+                "lazy",
+                "adventurous",
+                "aggressive"
+              ]
+            }
+          },
+          "required": [
+            "huntingSkill"
+          ]
+        }
+      ]
+    },
+    "Pet": {
+      "type": "object",
+      "discriminator": "petType",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "petType": {
+          "type": "string"
+        },
+        "packSize": {
+          "type": "integer",
+          "format": "int32",
+          "description": "the size of the pack the dog is from",
+          "default": 0,
+          "minimum": 0
+        }
+      },
+      "required": [
+        "name",
+        "petType"
+      ]
+    }
+  },
+  "paths": {}
+}

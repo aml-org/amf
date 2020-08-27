@@ -44,10 +44,13 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
           }
 
         AnnotationParser(scheme, map).parse()
-        ctx.closedShape(scheme.id, map, "securityScheme")
+        closedShape(scheme, map, "securityScheme")
         scheme
     }
   }
+
+  protected def closedShape(scheme: SecurityScheme, map: YMap, shape: String): Unit =
+    ctx.closedShape(scheme.id, map, shape)
 
   def parseType(map: YMap, scheme: SecurityScheme): Unit = {
     map.key("type", SecuritySchemeModel.Type in scheme)

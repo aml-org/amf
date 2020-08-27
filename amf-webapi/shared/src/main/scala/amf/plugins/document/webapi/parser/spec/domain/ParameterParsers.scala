@@ -18,7 +18,7 @@ import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   OasTypeParser,
   Raml08TypeParser,
@@ -133,7 +133,8 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
 
               case Right(ref) if isTypeExpression(ref.text) =>
                 RamlTypeExpressionParser(shape => shape.withName("schema").adopted(parameter.id),
-                                         expression = ref.text)
+                                         expression = ref.text,
+                                         part = Some(ref))
                   .parse() match {
                   case Some(schema) => parameter.withSchema(schema)
                   case _ =>
@@ -222,16 +223,13 @@ trait OasParameterParser extends SpecParserOps {
   def parse: OasParameter
 }
 
-case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
+case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
                                parentId: String,
                                nameNode: Option[YNode],
                                nameGenerator: IdCounter)(implicit ctx: WebApiContext)
     extends OasParameterParser {
 
-  protected val map: YMap = entryOrNode match {
-    case Left(entry) => entry.value.as[YMap]
-    case Right(node) => node.as[YMap]
-  }
+  protected val map: YMap = entryOrNode.asMap
 
   protected def setName(p: DomainElement with NamedDomainElement): DomainElement = {
     p match {
@@ -266,13 +264,11 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
   private def buildFromBinding(in: String, bindingEntry: Option[YMapEntry]): OasParameter = {
     in match {
       case "body" =>
-        OasParameter(parseBodyPayload(bindingEntry.map(a => Range(a.range))),
-                     entryOrNode.toOption.orElse(entryOrNode.left.toOption))
+        OasParameter(parseBodyPayload(bindingEntry.map(a => Range(a.range))), Some(entryOrNode.ast))
       case "formData" =>
-        OasParameter(parseFormDataPayload(bindingEntry.map(a => Range(a.range))),
-                     entryOrNode.toOption.orElse(entryOrNode.left.toOption))
+        OasParameter(parseFormDataPayload(bindingEntry.map(a => Range(a.range))), Some(entryOrNode.ast))
       case "query" | "header" | "path" =>
-        OasParameter(parseCommonParam(in), entryOrNode.toOption.orElse(entryOrNode.left.toOption))
+        OasParameter(parseCommonParam(in), Some(entryOrNode.ast))
       case _ =>
         val oasParam = buildFromBinding(defaultBinding, None)
         invalidBinding(bindingEntry, in, oasParam)
@@ -347,7 +343,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
   }
 
   protected def parseFixedFields(): Parameter = {
-    val parameter = Parameter(entryOrNode.toOption.getOrElse(entryOrNode.left.get))
+    val parameter = Parameter(entryOrNode.ast)
     setName(parameter)
     parameter.adopted(parentId)
     parameter.set(ParameterModel.Required, value = false)
@@ -413,7 +409,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
   }
 
   private def commonPayload(bindingRange: Option[Range]): Payload = {
-    val payload = Payload(entryOrNode.toOption.getOrElse(entryOrNode.left.get))
+    val payload = Payload(entryOrNode.ast)
     setName(payload)
     if (payload.name.option().isEmpty)
       payload.set(ParameterModel.Name, AmfScalar("default"), Annotations() += Inferred())
@@ -524,7 +520,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
   }
 }
 
-class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
+class Oas3ParameterParser(entryOrNode: YMapEntryLike,
                           parentId: String,
                           nameNode: Option[YNode],
                           nameGenerator: IdCounter)(implicit ctx: WebApiContext)
@@ -707,7 +703,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
   def parse(inRequestOrEndpoint: Boolean = false): Parameters = {
     val nameGenerator = new IdCounter()
     val oasParameters = values
-      .map(value => ctx.factory.parameterParser(Right(value), parentId, None, nameGenerator).parse)
+      .map(value => ctx.factory.parameterParser(YMapEntryLike(value), parentId, None, nameGenerator).parse)
 
     val formData = oasParameters.flatMap(_.formData)
     val body     = oasParameters.filter(_.isBody)

@@ -623,6 +623,11 @@ object ParserSideValidations extends Validations {
     "Unknown tag detected, must be allowed by json schema ruleset"
   )
 
+  val MissingRequiredFieldForGrantType = validation(
+    "missing-field-oauth-2-grant-type",
+    "Missing required field for given grant type"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -661,6 +666,7 @@ object ParserSideValidations extends Validations {
     InvalidShapeFormat.id                -> all(WARNING),
     CrossSecurityWarningSpecification.id -> all(WARNING),
     ReadOnlyPropertyMarkedRequired.id    -> all(WARNING),
+    MissingRequiredFieldForGrantType.id  -> all(WARNING),
     MissingDiscriminatorProperty.id      -> all(VIOLATION),
     InvalidPayload.id                    -> all(VIOLATION)
   )
@@ -767,7 +773,6 @@ object ParserSideValidations extends Validations {
     InvalidIdentifier,
     InvalidComponents,
     ExeededMaxYamlReferences,
-    InvalidStatusCode,
-    UnknownYamlTag
+    InvalidStatusCode
   )
 }

@@ -17,7 +17,7 @@ object JsonSchemaAstIndex {
 
 class JsonSchemaAstIndex(root: YNode, val refsCounter: AliasCounter)(implicit val ctx: WebApiContext) {
 
-  private val index: mutable.Map[String, YNode] = mutable.Map.empty
+  private val index: mutable.Map[String, Either[YNode, YMapEntry]] = mutable.Map.empty
 
   init()
   def init(): Unit = root.to[YMap] match {
@@ -26,20 +26,25 @@ class JsonSchemaAstIndex(root: YNode, val refsCounter: AliasCounter)(implicit va
   }
 
   private def indexMap(m: YMap): Unit = {
+    val maybeEntry = m.key("id").orElse(m.key("$id"))
     // root base id
-    val idOpt = m.key("id").orElse(m.key("$id")).flatMap(_.value.asScalar.map(_.text))
+    val idOpt = maybeEntry.flatMap(_.value.asScalar.map(_.text))
     idOpt.foreach { id =>
-      index.put(id, m)
+      index.put(id, maybeEntry.map(Right(_)).getOrElse(Left(m)))
     }
-    index.put("/", m)
+    index.put("/", Left(m))
     m.entries.filter(e => !e.value.asScalar.exists(p => p.text == "id" || p.text == "$id")).foreach { e =>
-      index(e.key.as[YScalar].text, e.value, "", idOpt)
+      index(e.key.as[YScalar].text, e.value, "", idOpt, maybeEntry)
     }
   }
 
-  def getNode(ref: String): Option[YNode] = index.get(ref)
+  def getNodeAndEntry(ref: String): Option[Either[YNode, YMapEntry]] = index.get(ref)
 
-  private def index(key: String, node: YNode, path: String, lastId: Option[String]): Unit = {
+  private def index(key: String,
+                    node: YNode,
+                    path: String,
+                    lastId: Option[String],
+                    maybeEntry: Option[YMapEntry]): Unit = {
 
     if (refsCounter.exceedsThreshold(node)) {
       ctx.violation(
@@ -49,10 +54,10 @@ class JsonSchemaAstIndex(root: YNode, val refsCounter: AliasCounter)(implicit va
       )
     } else {
       lastId.foreach { li =>
-        index.put(li + "/" + key, node)
+        index.put(li + "/" + key, maybeEntry.map(Right(_)).getOrElse(Left(node)))
       }
       val newPath = if (path.nonEmpty) path + "/" + key else key
-      index.put(newPath, node)
+      index.put(newPath, maybeEntry.map(Right(_)).getOrElse(Left(node)))
       node.tagType match {
         case YType.Map =>
           val m     = node.as[YMap]
@@ -62,7 +67,7 @@ class JsonSchemaAstIndex(root: YNode, val refsCounter: AliasCounter)(implicit va
             else newId
           // todo: id with uri htt[://example.com/last => http://example.com/newId
           }
-          newId.foreach { index.put(_, node) }
+          newId.foreach { index.put(_, maybeEntry.map(Right(_)).getOrElse(Left(node))) }
           indexMap(newPath, newId, m)
         case YType.Seq =>
           val s = node.as[YSequence]
@@ -73,12 +78,12 @@ class JsonSchemaAstIndex(root: YNode, val refsCounter: AliasCounter)(implicit va
   }
 
   private def indexSequence(path: String, lastId: Option[String], seq: YSequence): Unit = {
-    seq.nodes.zipWithIndex.foreach { case (n, i) => index(i.toString, n, path, lastId) }
+    seq.nodes.zipWithIndex.foreach { case (n, i) => index(i.toString, n, path, lastId, None) }
   }
 
   private def indexMap(path: String, lastId: Option[String], map: YMap): Unit = {
     map.entries.filter(e => !e.value.asScalar.exists(p => p.text == "id" || p.text == "$id")).foreach { e =>
-      index(e.key.as[YScalar].text, e.value, path, lastId)
+      index(e.key.as[YScalar].text, e.value, path, lastId, Some(e))
     }
   }
 }

@@ -1,0 +1,21 @@
+#%RAML 0.8
+---
+title: La Liga
+version: 1.0
+baseUri: https://{apiDomain}.ec2.amazonaws.com
+baseUriParameters:
+  apiDomain:
+    description: |
+      The sub-domain at which the API is accessible.
+    enum: [ "api" ]
+
+/history/{version}:
+  displayName: Teams History
+  baseUriParameters:
+    apiDomain:
+      enum: [ "api-history" ]
+  get:
+    responses:
+      200:
+        body:
+          application/json:

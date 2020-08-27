@@ -16,7 +16,12 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser}
+import amf.plugins.document.webapi.parser.spec.common.{
+  AnnotationParser,
+  DataNodeParser,
+  ScalarNodeParser,
+  YMapEntryLike
+}
 import amf.plugins.document.webapi.parser.spec.domain.{
   ExampleDataParser,
   ExampleOptions,
@@ -48,11 +53,11 @@ object OasTypeParser {
 
   def apply(entry: YMapEntry, adopt: Shape => Unit, version: JSONSchemaVersion)(
       implicit ctx: OasLikeWebApiContext): OasTypeParser =
-    new OasTypeParser(Left(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
+    new OasTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
 
   def apply(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(
-      Left(entry),
+      YMapEntryLike(entry),
       entry.key.as[YScalar].text,
       entry.value.as[YMap],
       adopt,
@@ -62,7 +67,7 @@ object OasTypeParser {
   def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit)(
       implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(
-      Left(entry),
+      YMapEntryLike(entry),
       entry.key.as[YScalar].text,
       entry.value.as[YMap],
       adopt,
@@ -78,13 +83,13 @@ object OasTypeParser {
 
   def apply(node: YNode, name: String, adopt: Shape => Unit, version: JSONSchemaVersion)(
       implicit ctx: OasLikeWebApiContext): OasTypeParser =
-    new OasTypeParser(Right(node), name, node.as[YMap], adopt, version)
+    new OasTypeParser(YMapEntryLike(node), name, node.as[YMap], adopt, version)
 
   def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
-    new OasTypeParser(Right(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx.eh))
+    new OasTypeParser(YMapEntryLike(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx.eh))
 }
 
-case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
+case class OasTypeParser(entryOrNode: YMapEntryLike,
                          name: String,
                          map: YMap,
                          adopt: Shape => Unit,
@@ -92,13 +97,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                          isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext)
     extends OasSpecParser {
 
-  private val ast: YPart = entryOrNode match {
-    case Left(l)  => l
-    case Right(r) => r
-  }
+  private val ast: YPart = entryOrNode.ast
 
-  private val nameAnnotations: Annotations =
-    entryOrNode.left.toOption.map(e => Annotations(e.key)).getOrElse(Annotations())
+  private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())
 
   def parse(): Option[AnyShape] = {
 
@@ -235,7 +236,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     // val detectedTypes = map.key("type").get.value.as[YSequence].nodes.map(_.as[String])
     val filtered = YMap(map.entries.filter(_.key.as[String] != "type"), map.sourceName)
 
-    val parser = UnionShapeParser(Right(filtered), name)
+    val parser = UnionShapeParser(YMapEntryLike(filtered), name)
     adopt(parser.shape) // We need to set the shape id before parsing to properly adopt nested nodes
     val union = parser.parse()
 
@@ -427,16 +428,12 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class UnionShapeParser(nodeOrEntry: Either[YMapEntry, YNode], name: String) extends AnyShapeParser() {
+  case class UnionShapeParser(nodeOrEntry: YMapEntryLike, name: String) extends AnyShapeParser() {
 
-    val node: YNode = nodeOrEntry match {
-      case Left(entry) => entry.value
-      case Right(n)    => n
-    }
+    val node: YNode = nodeOrEntry.value
 
-    private def nameAnnotations: Annotations =
-      nodeOrEntry.left.toOption.map(e => Annotations(e.key)).getOrElse(Annotations())
-    override val map: YMap = node.as[YMap]
+    private def nameAnnotations: Annotations = nodeOrEntry.key.map(n => Annotations(n)).getOrElse(Annotations())
+    override val map: YMap                   = node.as[YMap]
 
     override val shape: UnionShape = {
       val union = UnionShape(Annotations.valueNode(node)).withName(name, nameAnnotations)
