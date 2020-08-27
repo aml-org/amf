@@ -95,15 +95,6 @@ class BindingsTest extends FunSuite with Matchers {
     channelBindings.bindings.asInternal shouldBe clientChannelBindings.asInternal
   }
 
-  test("test DynamicBinding") {
-    val node = new ScalarNode()
-    val binding = new DynamicBinding()
-      .withType(s)
-      .withDefinition(node)
-    binding.`type`.value() shouldBe s
-    binding.definition shouldBe node
-  }
-
   test("test EmptyBinding") {
     val binding = new EmptyBinding()
       .withType(s)
