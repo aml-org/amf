@@ -1151,7 +1151,9 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
             val isTypeExpression = isPlainArrayTypeExpression(typeEntry)
             if (isTypeExpression) {
               val typeExpression = typeEntry.value.toString.replaceFirst("\\[\\]", "")
-              RamlTypeExpressionParser(items => items.adopted(shape.id), expression = typeExpression)
+              RamlTypeExpressionParser(items => items.adopted(shape.id),
+                                       expression = typeExpression,
+                                       part = Some(typeEntry.value.value))
                 .parse()
                 .foreach { value =>
                   shape.withItems(value)
