@@ -77,7 +77,15 @@ object MqttServerLastWillModel extends DomainElementModel {
              "Whether the broker should retain the Last Will and Testament message or not")
   )
 
-  override def fields: List[Field] = List(Topic, Qos, Retain) ++ DomainElementModel.fields
+  val Message = Field(
+    Str,
+    ApiBinding + "message",
+    ModelDoc(ModelVocabularies.ApiBinding,
+             "message",
+             "Message used to notify other clients about an ungracefully disconnected client.")
+  )
+
+  override def fields: List[Field] = List(Topic, Qos, Retain, Message) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "MqttServerLastWill" :: DomainElementModel.`type`
 
