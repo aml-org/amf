@@ -20,8 +20,6 @@ servers:
       sqs: {}
       stomp: {}
       redis: {}
-      someCustom:
-        and: property
       x-extension: say server
 
 channels:
@@ -38,8 +36,6 @@ channels:
       sqs: {}
       stomp: {}
       redis: {}
-      someCustom:
-        and: property
       x-extension: say channel
 
     description: some channel
@@ -54,8 +50,6 @@ channels:
         sqs: {}
         stomp: {}
         redis: {}
-        someCustom:
-          and: property
         x-extension: say operation
 
       message:
@@ -69,9 +63,6 @@ channels:
           sqs: {}
           stomp: {}
           redis: {}
-          someCustom:
-            and:
-              the: property
           x-extension: say message
 
         payload:

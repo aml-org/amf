@@ -1,61 +1,60 @@
 package amf.client.convert
 
 import amf.client.model.domain.{
-  Request => ClientRequest,
-  Message => ClientMessage,
+  Amqp091ChannelBinding => ClientAmqp091ChannelBinding,
+  Amqp091ChannelExchange => ClientAmqp091ChannelExchange,
+  Amqp091MessageBinding => ClientAmqp091MessageBinding,
   Amqp091OperationBinding => ClientAmqp091OperationBinding,
-  EndPoint => ClientEndPoint,
-  Settings => ClientSettings,
-  Parameter => ClientParameter,
-  OpenIdConnectSettings => ClientOpenIdConnectSettings,
-  SecurityScheme => ClientSecurityScheme,
-  OperationBinding => ClientOperationBinding,
-  Scope => ClientScope,
-  MqttServerBinding => ClientMqttServerBinding,
-  DynamicBinding => ClientDynamicBinding,
+  Amqp091Queue => ClientAmqp091Queue,
+  ApiKeySettings => ClientApiKeySettings,
+  Callback => ClientCallback,
   ChannelBinding => ClientChannelBinding,
   ChannelBindings => ClientChannelBindings,
-  OperationBindings => ClientOperationBindings,
-  MessageBindings => ClientMessageBindings,
-  ServerBindings => ClientServerBindings,
-  Server => ClientServer,
-  ApiKeySettings => ClientApiKeySettings,
-  HttpApiKeySettings => ClientHttpApiKeySettings,
-  KafkaOperationBinding => ClientKafkaOperationBinding,
-  HttpSettings => ClientHttpSettings,
-  License => ClientLicense,
-  TemplatedLink => ClientTemplatedLink,
-  EmptyBinding => ClientEmptyBinding,
-  Amqp091ChannelBinding => ClientAmqp091ChannelBinding,
-  Encoding => ClientEncoding,
-  ResourceType => ClientResourceType,
-  MessageBinding => ClientMessageBinding,
-  Amqp091ChannelExchange => ClientAmqp091ChannelExchange,
   CorrelationId => ClientCorrelationId,
-  Operation => ClientOperation,
-  HttpOperationBinding => ClientHttpOperationBinding,
-  MqttMessageBinding => ClientMqttMessageBinding,
-  Callback => ClientCallback,
   CreativeWork => ClientCreativeWork,
-  Amqp091MessageBinding => ClientAmqp091MessageBinding,
-  IriTemplateMapping => ClientIriTemplatedMaping,
-  OAuth2Flow => ClientOAuth2Flow,
-  WebSocketsChannelBinding => ClientWebSocketsChannelBinding,
-  KafkaMessageBinding => ClientKafkaMessageBinding,
-  Payload => ClientPayload,
-  Tag => ClientTag,
-  Response => ClientResponse,
-  Trait => ClientTrait,
-  OAuth1Settings => ClientOAuth1Settings,
-  Amqp091Queue => ClientAmqp091Queue,
-  Organization => ClientOrganization,
+  EmptyBinding => ClientEmptyBinding,
+  Encoding => ClientEncoding,
+  EndPoint => ClientEndPoint,
+  HttpApiKeySettings => ClientHttpApiKeySettings,
   HttpMessageBinding => ClientHttpMessageBinding,
+  HttpOperationBinding => ClientHttpOperationBinding,
+  HttpSettings => ClientHttpSettings,
+  IriTemplateMapping => ClientIriTemplatedMaping,
+  KafkaMessageBinding => ClientKafkaMessageBinding,
+  KafkaOperationBinding => ClientKafkaOperationBinding,
+  License => ClientLicense,
+  Message => ClientMessage,
+  MessageBinding => ClientMessageBinding,
+  MessageBindings => ClientMessageBindings,
+  MqttMessageBinding => ClientMqttMessageBinding,
   MqttOperationBinding => ClientMqttOperationBinding,
-  SecurityRequirement => ClientSecurityRequirement,
-  ServerBinding => ClientServerBinding,
-  ParametrizedSecurityScheme => ClientParametrizedSecurityScheme,
+  MqttServerBinding => ClientMqttServerBinding,
   MqttServerLastWill => ClientMqttServerLastWill,
-  OAuth2Settings => ClientOAuth2Settings
+  OAuth1Settings => ClientOAuth1Settings,
+  OAuth2Flow => ClientOAuth2Flow,
+  OAuth2Settings => ClientOAuth2Settings,
+  OpenIdConnectSettings => ClientOpenIdConnectSettings,
+  Operation => ClientOperation,
+  OperationBinding => ClientOperationBinding,
+  OperationBindings => ClientOperationBindings,
+  Organization => ClientOrganization,
+  Parameter => ClientParameter,
+  ParametrizedSecurityScheme => ClientParametrizedSecurityScheme,
+  Payload => ClientPayload,
+  Request => ClientRequest,
+  ResourceType => ClientResourceType,
+  Response => ClientResponse,
+  Scope => ClientScope,
+  SecurityRequirement => ClientSecurityRequirement,
+  SecurityScheme => ClientSecurityScheme,
+  Server => ClientServer,
+  ServerBinding => ClientServerBinding,
+  ServerBindings => ClientServerBindings,
+  Settings => ClientSettings,
+  Tag => ClientTag,
+  TemplatedLink => ClientTemplatedLink,
+  Trait => ClientTrait,
+  WebSocketsChannelBinding => ClientWebSocketsChannelBinding
 }
 import amf.client.validate.{PayloadValidator => ClientInternalPayloadValidator}
 import amf.core.unsafe.PlatformSecrets
@@ -63,22 +62,11 @@ import amf.core.validation.PayloadValidator
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.bindings.amqp._
-import amf.plugins.domain.webapi.models.bindings.mqtt._
 import amf.plugins.domain.webapi.models.bindings.http._
 import amf.plugins.domain.webapi.models.bindings.kafka._
+import amf.plugins.domain.webapi.models.bindings.mqtt._
 import amf.plugins.domain.webapi.models.bindings.websockets._
-import amf.plugins.domain.webapi.models.bindings.{
-  ChannelBinding,
-  ChannelBindings,
-  ServerBindings,
-  MessageBindings,
-  DynamicBinding,
-  EmptyBinding,
-  MessageBinding,
-  OperationBinding,
-  OperationBindings,
-  ServerBinding
-}
+import amf.plugins.domain.webapi.models.bindings._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 
@@ -115,7 +103,6 @@ trait WebApiBaseConverter
     with Amqp091ChannelBindingConverter
     with Amqp091MessageBindingConverter
     with Amqp091OperationBindingConverter
-    with DynamicBindingConverter
     with EmptyBindingConverter
     with HttpMessageBindingConverter
     with HttpOperationBindingConverter
@@ -212,13 +199,6 @@ trait Amqp091OperationBindingConverter extends PlatformSecrets {
     override def asClient(from: Amqp091OperationBinding): ClientAmqp091OperationBinding =
       platform.wrap[ClientAmqp091OperationBinding](from)
     override def asInternal(from: ClientAmqp091OperationBinding): Amqp091OperationBinding = from._internal
-  }
-}
-trait DynamicBindingConverter extends PlatformSecrets {
-  implicit object DynamicBindingMatcher extends BidirectionalMatcher[DynamicBinding, ClientDynamicBinding] {
-    override def asClient(from: DynamicBinding): ClientDynamicBinding =
-      platform.wrap[ClientDynamicBinding](from)
-    override def asInternal(from: ClientDynamicBinding): DynamicBinding = from._internal
   }
 }
 trait EmptyBindingConverter extends PlatformSecrets {

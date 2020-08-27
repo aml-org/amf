@@ -22,7 +22,7 @@ class ValidAsyncModelParserTest extends ValidModelTest {
   }
 
   test("Empty and dynamic binding") {
-    checkValid("empty-dynamic-binding.yaml", Async20Profile)
+    checkValid("empty-binding-and-annotations.yaml", Async20Profile)
   }
 
   test("Amqp 0.9.1 exchange channel binding") {

@@ -1,7 +1,8 @@
-asyncapi: 2.0.0
+asyncapi: '2.0.0'
 info:
   title: Empty and dynamic bindings
-  version: 1.0.0
+  version: '1.0.0'
+
 servers:
   theName:
     url: some.com
@@ -19,9 +20,9 @@ servers:
       sqs: {}
       stomp: {}
       redis: {}
-      someCustom:
-        and: property
+      somethingElseThatIsNotAValidBinding: {}
       x-extension: say server
+
 channels:
   some-channel:
     bindings:
@@ -36,9 +37,9 @@ channels:
       sqs: {}
       stomp: {}
       redis: {}
-      someCustom:
-        and: property
+      anotherAnotherElseThatIsNotAValidBinding: {}
       x-extension: say channel
+
     description: some channel
     publish:
       bindings:
@@ -51,9 +52,9 @@ channels:
         sqs: {}
         stomp: {}
         redis: {}
-        someCustom:
-          and: property
+        anotherElseThatIsNotAValidBinding: {}
         x-extension: say operation
+
       message:
         bindings:
           mqtt5: {}
@@ -65,9 +66,8 @@ channels:
           sqs: {}
           stomp: {}
           redis: {}
-          someCustom:
-            and:
-              the: property
+          anotherAnotherAnotherInvalidBinding: {}
           x-extension: say message
+
         payload:
           type: string
