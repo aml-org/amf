@@ -19,6 +19,10 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
              Oas20Profile)
   }
 
+  test("parameter of type array must have items property") {
+    validate("missing-items-field.json", Some("missing-items-field.report"), Oas20Profile)
+  }
+
   test("invalid fields when security type is basic") {
     validate("security/invalid-fields-basic-type.json", Some("invalid-fields-basic-type.report"), Oas20Profile)
   }

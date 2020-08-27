@@ -603,6 +603,11 @@ object ParserSideValidations extends Validations {
     "'items' field is required when type is array"
   )
 
+  val ItemsFieldRequiredWarning = validation(
+    "items-field-required-warning",
+    "'items' field is required when type is array"
+  )
+
   val InvalidIdentifier = validation(
     "invalid-identifier",
     "'id' must be a string"
@@ -664,6 +669,7 @@ object ParserSideValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> WARNING
     ),
+    ItemsFieldRequiredWarning.id         -> all(WARNING),
     NullAbstractDeclaration.id           -> all(WARNING),
     SchemaDeprecated.id                  -> all(WARNING),
     SchemasDeprecated.id                 -> all(WARNING),
