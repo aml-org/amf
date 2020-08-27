@@ -95,7 +95,8 @@ object Async20Syntax extends SpecSyntax {
     "mqttServerLastWill" -> Set(
       "topic",
       "qos",
-      "retain"
+      "retain",
+      "message"
     ),
     "mqttMessageBinding" -> Set(
       "bindingVersion"

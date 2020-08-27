@@ -89,6 +89,11 @@
                             "@value": true
                           }
                         ],
+                        "http://a.ml/vocabularies/apiBinding#message": [
+                          {
+                            "@value": "Connection failure"
+                          }
+                        ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/web-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map",
@@ -97,33 +102,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/web-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_3",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/apiBinding#qos"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(16,10)-(17,0)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/web-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_1",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/apiBinding#topic"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(15,10)-(16,0)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/web-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/web-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_4",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiBinding#retain"
@@ -144,7 +123,46 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(14,17)-(18,0)]"
+                                    "@value": "[(14,17)-(19,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/web-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiBinding#message"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(18,10)-(19,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/web-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiBinding#qos"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(16,10)-(17,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/web-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server/mqtt-last-will/source-map/lexical/element_3",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiBinding#topic"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(15,10)-(16,0)]"
                                   }
                                 ]
                               }
@@ -184,7 +202,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(19,8)-(20,0)]"
+                                "@value": "[(20,8)-(21,0)]"
                               }
                             ]
                           },
@@ -236,7 +254,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(18,8)-(19,0)]"
+                                "@value": "[(19,8)-(20,0)]"
                               }
                             ]
                           },
@@ -249,7 +267,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(11,6)-(20,0)]"
+                                "@value": "[(11,6)-(21,0)]"
                               }
                             ]
                           },
@@ -262,7 +280,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(14,8)-(18,0)]"
+                                "@value": "[(14,8)-(19,0)]"
                               }
                             ]
                           }
@@ -287,7 +305,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(11,0)-(20,0)]"
+                            "@value": "[(11,0)-(21,0)]"
                           }
                         ]
                       },
@@ -300,7 +318,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(11,0)-(20,0)]"
+                            "@value": "[(11,0)-(21,0)]"
                           }
                         ]
                       }
@@ -351,7 +369,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(10,4)-(20,0)]"
+                        "@value": "[(10,4)-(21,0)]"
                       }
                     ]
                   },
@@ -364,7 +382,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(8,0)-(20,0)]"
+                        "@value": "[(8,0)-(21,0)]"
                       }
                     ]
                   }
@@ -423,7 +441,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(20,12)]"
+                    "@value": "[(1,0)-(21,12)]"
                   }
                 ]
               },
@@ -436,7 +454,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(20,0)-(20,12)]"
+                    "@value": "[(21,0)-(21,12)]"
                   }
                 ]
               },
@@ -449,7 +467,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,0)-(20,0)]"
+                    "@value": "[(6,0)-(21,0)]"
                   }
                 ]
               },
