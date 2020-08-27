@@ -231,9 +231,6 @@ object WebApiRegister {
     platform.registerWrapper(WebSocketsChannelBindingModel) {
       case s: webapi.models.bindings.websockets.WebSocketsChannelBinding => WebSocketsChannelBinding(s)
     }
-    platform.registerWrapper(DynamicBindingModel) {
-      case s: webapi.models.bindings.DynamicBinding => DynamicBinding(s)
-    }
     platform.registerWrapper(EmptyBindingModel) {
       case s: webapi.models.bindings.EmptyBinding => EmptyBinding(s)
     }

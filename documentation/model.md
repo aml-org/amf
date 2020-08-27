@@ -37,7 +37,6 @@ AMF Model Documentation
 * [Documents](#documents)
 * [DomainElement](#domainelement)
 * [DomainExtension](#domainextension)
-* [DynamicBinding](#dynamicbinding)
 * [EmptyBinding](#emptybinding)
 * [Encoding](#encoding)
 * [EndPoint](#endpoint)
@@ -625,15 +624,6 @@ They are parsed as RDF graphs using a default transformation from a set of neste
  | definedBy | [CustomDomainProperty](#customdomainproperty) | Definition of an extension to the domain model defined directly by a user in the RAML/OpenAPI document. This can be achieved by using an annotationType in RAML. In OpenAPI thy don't need to       be declared, they can just be used.       This should be mapped to new RDF properties declared directly in the main document or module.       Contrast this extension mechanism with the creation of a propertyTerm in a vocabulary, a more re-usable and generic way of achieving the same functionality. It can be validated using a SHACL shape | http://a.ml/vocabularies/document#definedBy |
  | extension | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://a.ml/vocabularies/document#extension |
  | element | string | Element being extended | http://a.ml/vocabularies/document#element |
- | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
-
-## DynamicBinding
-
-
- | Name | Value | Documentation | Namespace |
- | ------ | ------ | ------ | ------ |
- | definition | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://a.ml/vocabularies/apiBinding#definition |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## EmptyBinding

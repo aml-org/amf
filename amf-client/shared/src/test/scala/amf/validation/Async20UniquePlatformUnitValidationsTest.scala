@@ -235,6 +235,10 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     validate("invalid-header-names.yaml", Some("invalid-header-names.report"), Async20Profile)
   }
 
+  test("Invalid binding names") {
+    validate("invalid-binding-names.yaml", Some("invalid-binding-names.report"), Async20Profile)
+  }
+
   test("Discriminator property has to be included in required properties") {
     validate("discriminator-in-required-fields.yaml", Some("discriminator-in-required-fields.report"), Async20Profile)
   }
