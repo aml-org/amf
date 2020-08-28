@@ -62,6 +62,7 @@ class MqttServerBindingEmitter(binding: MqttServerBinding, ordering: SpecOrderin
           fs.entry(MqttServerLastWillModel.Topic).foreach(f => result += ValueEmitter("topic", f))
           fs.entry(MqttServerLastWillModel.Qos).foreach(f => result += ValueEmitter("qos", f))
           fs.entry(MqttServerLastWillModel.Retain).foreach(f => result += ValueEmitter("retain", f))
+          fs.entry(MqttServerLastWillModel.Message).foreach(f => result += ValueEmitter("message", f))
 
           traverse(ordering.sorted(result), emitter)
         }
