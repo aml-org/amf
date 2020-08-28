@@ -54,20 +54,15 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     if (binding.is.isNullOrEmpty) {
       binding.set(Amqp091ChannelBindingModel.Is, AmfScalar("routingKey"), Annotations(SynthesizedField()))
     }
-
-    binding.is.value() match {
-      case "queue"      => parseQueue(binding, map)
-      case "routingKey" => parseExchange(binding, map)
-      case _            => // will fail in raw validations
-    }
+    parseQueue(binding, map)
+    parseExchange(binding, map)
 
     parseBindingVersion(binding, WebSocketsChannelBindingModel.BindingVersion, map)
-
+    ctx.closedShape(binding.id, map, "amqpChannelBinding")
     binding
   }
 
   private def parseExchange(binding: Amqp091ChannelBinding, map: YMap)(implicit ctx: AsyncWebApiContext): Unit = {
-    ctx.closedShape(binding.id, map, "amqpIsExchangeChannelBinding")
     map.key(
       "exchange", { entry =>
         val exchange    = Amqp091ChannelExchange(Annotations(entry.value)).adopted(binding.id)
@@ -88,7 +83,6 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
   }
 
   private def parseQueue(binding: Amqp091ChannelBinding, map: YMap)(implicit ctx: AsyncWebApiContext): Unit = {
-    ctx.closedShape(binding.id, map, "amqpIsQueueChannelBinding")
     map.key(
       "queue", { entry =>
         val queue    = Amqp091Queue(Annotations(entry.value)).adopted(binding.id)

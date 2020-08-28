@@ -79,7 +79,7 @@ class Amqp091ChannelBindingEmitter(binding: Amqp091ChannelBinding, ordering: Spe
         val fs     = binding.fields
         fs.entry(Amqp091ChannelBindingModel.Is).foreach { f =>
           if (!f.element.annotations.contains(classOf[SynthesizedField])) result += ValueEmitter("is", f)
-          result ++= emitSpecific(f.element.toString)
+          result ++= emitExchangeAndQueueProperties
         }
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)
@@ -87,10 +87,11 @@ class Amqp091ChannelBindingEmitter(binding: Amqp091ChannelBinding, ordering: Spe
     )
   }
 
-  private def emitSpecific(is: String): Seq[EntryEmitter] = is match {
-    case "routingKey" => Seq(new Amqp091ChannelExchangeEmitter(binding.exchange, ordering))
-    case "queue"      => Seq(new Amqp091ChannelQueueEmitter(binding.queue, ordering))
-    case _            => Nil
+  private def emitExchangeAndQueueProperties: Seq[EntryEmitter] = {
+    val result = ListBuffer[EntryEmitter]()
+    Option(binding.exchange).foreach(exchange => result += new Amqp091ChannelExchangeEmitter(exchange, ordering))
+    Option(binding.queue).foreach(queue => result += new Amqp091ChannelQueueEmitter(queue, ordering))
+    result.toList
   }
 
   override def position(): Position = pos(binding.annotations)

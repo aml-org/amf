@@ -1,6 +1,6 @@
 asyncapi: '2.0.0'
 info:
-  title: Amqp exchange channel binding
+  title: Amqp channel binding
   version: '1.0.0'
 
 channels:
@@ -12,5 +12,11 @@ channels:
           name: some name
           type: topic
           durable: false
+          autoDelete: true
+          vhost: /some-some
+        queue:
+          name: somename
+          durable: true
+          exclusive: false
           autoDelete: true
           vhost: /some-some

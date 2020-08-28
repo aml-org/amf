@@ -25,12 +25,8 @@ class ValidAsyncModelParserTest extends ValidModelTest {
     checkValid("empty-binding-and-annotations.yaml", Async20Profile)
   }
 
-  test("Amqp 0.9.1 exchange channel binding") {
-    checkValid("amqp-exchange-channel-binding.yaml", Async20Profile)
-  }
-
-  test("Amqp 0.9.1 queue channel binding") {
-    checkValid("amqp-queue-channel-binding.yaml", Async20Profile)
+  test("Amqp 0.9.1 channel binding") {
+    checkValid("amqp-channel-binding.yaml", Async20Profile)
   }
 
   test("Amqp 0.9.1 message binding") {
@@ -75,6 +71,10 @@ class ValidAsyncModelParserTest extends ValidModelTest {
 
   test("Rpc server example") {
     checkValid("rpc-server.yaml", Async20Profile)
+  }
+
+  test("Amqp channel binding") {
+    checkValid("amqp-channel-binding.yaml", Async20Profile)
   }
 
   override val basePath: String = "file://amf-client/shared/src/test/resources/validations/async20/"
