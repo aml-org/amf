@@ -219,19 +219,16 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
         ctx.mergeAllOperationContexts()
       }
     )
-
     RamlServersParser(map, api).parse()
-
     val idCounter         = new IdCounter()
     val RequirementParser = RamlSecurityRequirementParser.parse(api.withSecurity, idCounter) _
     map.key("securedBy", (WebApiModel.Security in api using RequirementParser).allowingSingleValue)
-
     map.key(
       "documentation",
       entry => {
-        api.setArray(WebApiModel.Documentations,
-                     UserDocumentationsParser(entry.value.as[Seq[YNode]], ctx.declarations, api.id).parse(),
-                     Annotations(entry))
+        api.set(WebApiModel.Documentations,
+                AmfArray(UserDocumentationsParser(entry.value.as[Seq[YNode]], ctx.declarations, api.id).parse()),
+                Annotations(entry.value))
       }
     )
 
