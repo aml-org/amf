@@ -1,4 +1,0 @@
-package amf.client.validation
-import amf.convert.NativeOpsFromJs
-
-class PayloadValidationTest extends ClientPayloadValidationTest with NativeOpsFromJs
