@@ -73,7 +73,7 @@ case class Raml08PayloadParser(entry: YMapEntry, producer: Option[String] => Pay
 
     entry.value.tagType match {
       case YType.Null =>
-        val shape: AnyShape = AnyShape()
+        val shape: AnyShape = AnyShape(entry)
         val anyShape        = shape.withName("schema").adopted(payload.id)
         anyShape.annotations += SynthesizedField()
         payload.withSchema(anyShape)
