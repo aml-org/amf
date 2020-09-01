@@ -1,5 +1,5 @@
 package amf.validation
-import amf.core.remote.{Hint, OasYamlHint}
+import amf.core.remote.{Hint, OasJsonHint, OasYamlHint}
 import amf.{Oas20Profile, Oas30Profile}
 import org.scalatest.Matchers
 
@@ -104,5 +104,9 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
 
   test("Invalid header names according to RFC-7230") {
     validate("invalid-header-names.yaml", Some("invalid-header-names.report"), Oas30Profile)
+  }
+
+  test("JSON with duplicate keys") {
+    validate("duplicate-keys.json", Some("duplicate-keys.report"), Oas30Profile, overridedHint = Some(OasJsonHint))
   }
 }

@@ -8,8 +8,10 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{
   EmptyFutureDeclarations,
+  JsonParserFactory,
   ParsedReference,
   ParserContext,
   Reference,
@@ -34,9 +36,9 @@ import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
-import amf.validations.ParserSideValidations.{MalformedJsonReference, UnableToParseJsonSchema}
+import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model._
-import org.yaml.parser.{JsonParser, YParser, YamlParser}
+import org.yaml.parser.{YParser, YamlParser}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -118,7 +120,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
   }
 
-  private def parsedFragment(inputFragment: Fragment, eh: ParseErrorHandler) =
+  private def parsedFragment(inputFragment: Fragment, eh: ParserErrorHandler) =
     JsonSchemaParser(inputFragment)(eh).document().node
 
   private def getRoot(inputFragment: Fragment, pointer: Option[String], encoded: YNode): Root = {
@@ -287,10 +289,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 }
 
 object JsonSchemaParser {
-  def apply(fragment: Fragment)(implicit errorHandler: ParseErrorHandler): YParser = {
+  def apply(fragment: Fragment)(implicit errorHandler: ParserErrorHandler): YParser = {
     val location = fragment.location().getOrElse("")
     if (isYaml(location)) YamlParser(getRaw(fragment), location)
-    else JsonParser.withSource(getRaw(fragment), fragment.location().getOrElse(""))
+    else JsonParserFactory.fromCharsWithSource(getRaw(fragment), fragment.location().getOrElse(""))(errorHandler)
   }
 
   private def isYaml(location: String) = location.endsWith(".yaml") || location.endsWith(".yml")

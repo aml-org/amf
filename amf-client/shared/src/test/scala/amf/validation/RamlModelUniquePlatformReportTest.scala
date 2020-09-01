@@ -498,4 +498,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("security-schemes/oauth-2/secured-by.raml", None, Raml10Profile)
   }
 
+  test("Included JSON with duplicate keys") {
+    validate("raml/included-json-with-duplicate-keys/api.raml",
+             Some("raml/included-json-with-duplicate-keys.report"),
+             Raml10Profile)
+  }
 }

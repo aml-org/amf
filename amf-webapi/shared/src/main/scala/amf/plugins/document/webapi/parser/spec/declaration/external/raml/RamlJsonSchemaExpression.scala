@@ -7,20 +7,25 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{
   Annotations,
   InferredLinkReference,
+  JsonParserFactory,
   ParsedReference,
   Reference,
   ReferenceFragmentPartition,
-  SyamlParsedDocument
+  SyamlParsedDocument,
+  YMapOps
 }
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.annotations.{
+  ExternalReferenceUrl,
   JSONSchemaId,
   ParsedJSONSchema,
-  ExternalReferenceUrl,
   SchemaIsJsonSchema
 }
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
+import amf.plugins.document.webapi.parser.spec.declaration.utils.JsonSchemaParsingHelper
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.toJsonSchema
@@ -30,11 +35,6 @@ import amf.validations.ParserSideValidations.{JsonSchemaFragmentNotFound, Unable
 import org.mulesoft.lexer.Position
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
-import org.yaml.parser.JsonParser
-import amf.core.utils.AmfStrings
-import amf.core.parser.YMapOps
-import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
-import amf.plugins.document.webapi.parser.spec.declaration.utils.JsonSchemaParsingHelper
 
 import scala.collection.mutable
 
@@ -142,7 +142,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
       val url               = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
-      val schemaEntry       = JsonParser.withSource(text, valueAST.sourceName)(ctx.eh).document()
+      val schemaEntry       = JsonParserFactory.fromCharsWithSource(text, valueAST.sourceName)(ctx.eh).document()
       val jsonSchemaContext = toSchemaContext(ctx, valueAST)
       jsonSchemaContext.localJSONSchemaContext = Some(schemaEntry.node)
       jsonSchemaContext.setJsonSchemaAST(schemaEntry.node)
@@ -214,11 +214,11 @@ case class RamlJsonSchemaExpression(key: YNode,
 
   private def getParser(text: String, valueAST: YNode, url: Option[String]) = {
     if (url.isDefined)
-      JsonParser.withSource(text, url.get)(ctx.eh)
+      JsonParserFactory.fromCharsWithSource(text, url.get)(ctx.eh)
     else
-      JsonParser.withSource(text,
-                            valueAST.value.sourceName,
-                            Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx.eh)
+      JsonParserFactory.fromCharsWithSource(text,
+                                            valueAST.value.sourceName,
+                                            Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx.eh)
   }
   private def actualParsing(adopt: Shape => Unit,
                             value: YNode,

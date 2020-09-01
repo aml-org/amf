@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.{Async20Profile, Oas30Profile}
-import amf.core.remote.{AsyncYamlHint, Hint}
+import amf.core.remote.{AsyncJsonHint, AsyncYamlHint, Hint, OasJsonHint}
 import org.scalatest.Matchers
 
 class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
@@ -241,5 +241,9 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
 
   test("Discriminator property has to be included in required properties") {
     validate("discriminator-in-required-fields.yaml", Some("discriminator-in-required-fields.report"), Async20Profile)
+  }
+
+  test("JSON with duplicate keys") {
+    validate("duplicate-keys.json", Some("duplicate-keys.report"), Async20Profile, overridedHint = Some(AsyncJsonHint))
   }
 }
