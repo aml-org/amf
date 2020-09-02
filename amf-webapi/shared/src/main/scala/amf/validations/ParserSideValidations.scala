@@ -1,12 +1,12 @@
 package amf.validations
 
+import amf._
 import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
 import amf.core.validation.core.ValidationSpecification
 import amf.core.validation.core.ValidationSpecification.PARSER_SIDE_VALIDATION
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.AmfParser
 import amf.plugins.features.validation.Validations
-import amf._
 
 // noinspection TypeAnnotation
 object ParserSideValidations extends Validations {
@@ -373,6 +373,11 @@ object ParserSideValidations extends Validations {
     "Parameter has invalid binding"
   )
 
+  val OasInvalidParameterSchema = validation(
+    "oas-invalid-parameter-binding",
+    "Schema is required for a parameter in body"
+  )
+
   val OasFormDataNotFileSpecification = validation(
     "oas-file-not-form-data-parameters",
     "Parameters with type file must be in formData"
@@ -667,6 +672,7 @@ object ParserSideValidations extends Validations {
     CrossSecurityWarningSpecification.id -> all(WARNING),
     ReadOnlyPropertyMarkedRequired.id    -> all(WARNING),
     MissingRequiredFieldForGrantType.id  -> all(WARNING),
+    OasInvalidParameterSchema.id         -> all(WARNING), // should be violation
     MissingDiscriminatorProperty.id      -> all(VIOLATION),
     InvalidPayload.id                    -> all(VIOLATION)
   )
