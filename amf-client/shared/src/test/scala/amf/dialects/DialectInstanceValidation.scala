@@ -4,21 +4,44 @@ import amf.ProfileName
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
+import amf.core.validation.AMFValidationReport
 import amf.core.{AMFCompiler, CompilerContextBuilder}
+import amf.io.FileAssertionTest
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.AMFValidatorPlugin
-import org.scalatest.AsyncFunSuite
+import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
+import org.scalatest.{Assertion, AsyncFunSuite}
 
-abstract class DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
+import scala.concurrent.Future
+
+trait ReportComparison extends AsyncFunSuite with FileAssertionTest {
+  def assertReport(report: AMFValidationReport, goldenOption: Option[String] = None): Future[Assertion] = {
+    goldenOption match {
+      case Some(golden) =>
+        for {
+          actual    <- writeTemporaryFile(golden)(ValidationReportJSONLDEmitter.emitJSON(report))
+          assertion <- assertDifferences(actual, golden)
+        } yield {
+          assertion
+        }
+      case None =>
+        Future.successful {
+          assert(report.conforms)
+        }
+    }
+  }
+}
+
+trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
 
   def basePath: String
 
-  protected def validate(dialect: String, instance: String, expectedErrorCount: Int, path: String = basePath) = {
+  protected def validation(dialect: String, instance: String, path: String = basePath): Future[AMFValidationReport] = {
     amf.core.AMF.registerPlugin(plugin = AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-    val dialectContext  = compilerContext(path + dialect)
-    val instanceContext = compilerContext(path + instance)
+    val dialectContext  = compilerContext(s"$path/$dialect")
+    val instanceContext = compilerContext(s"$path/$instance")
 
     for {
       _ <- amf.core.AMF.init()
@@ -38,24 +61,19 @@ abstract class DialectInstanceValidation extends AsyncFunSuite with PlatformSecr
       }
       report <- RuntimeValidator(instance, ProfileName(dialect.asInstanceOf[Dialect].nameAndVersion()))
     } yield {
-      if (expectedErrorCount == 0) {
-        if (!report.conforms)
-          println(report)
-        assert(report.conforms)
-      } else assert(report.results.length == expectedErrorCount)
+      report
     }
   }
 
-  protected def withCustomValidationProfile(dialect: String,
+  protected def validationWithCustomProfile(dialect: String,
                                             instance: String,
                                             profile: ProfileName,
                                             name: String,
-                                            numErrors: Int,
-                                            directory: String = basePath) = {
+                                            directory: String = basePath): Future[AMFValidationReport] = {
     amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-    val dialectContext  = compilerContext(directory + dialect)
-    val instanceContext = compilerContext(directory + instance)
+    val dialectContext  = compilerContext(s"$directory/$dialect")
+    val instanceContext = compilerContext(s"$directory/$instance")
 
     for {
       _ <- amf.core.AMF.init()
@@ -67,7 +85,7 @@ abstract class DialectInstanceValidation extends AsyncFunSuite with PlatformSecr
         ).build()
       }
       profile <- {
-        AMFValidatorPlugin.loadValidationProfile(directory + profile.profile,
+        AMFValidatorPlugin.loadValidationProfile(s"$directory/${profile.profile}",
                                                  errorHandler = dialectContext.parserContext.eh)
       }
       instance <- {
@@ -85,11 +103,7 @@ abstract class DialectInstanceValidation extends AsyncFunSuite with PlatformSecr
         )
       }
     } yield {
-      if (numErrors == 0) {
-        if (!report.conforms)
-          println(report)
-        assert(report.conforms)
-      } else assert(report.results.length == numErrors)
+      report
     }
   }
 
