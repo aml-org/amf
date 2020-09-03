@@ -29,16 +29,16 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Loading and serializing validations") {
-    val expectedFile             = "validation_profile_example_gold.raml"
-    val exampleFile              = "validation_profile_example.raml"
+    val expectedFile             = "validation_profile_example_gold.yaml"
+    val exampleFile              = "validation_profile_example.yaml"
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
   test("prefixes can be loaded") {
-    val expectedFile                      = "validation_profile_prefixes.raml.jsonld" // TODO: delete this when deprecating legacy json-ld emitter
-    val expectedFlattenedFile             = "validation_profile_prefixes.raml.flattened.jsonld"
-    val exampleFile                       = "validation_profile_prefixes.raml"
+    val expectedFile                      = "validation_profile_prefixes.yaml.jsonld" // TODO: delete this when deprecating legacy json-ld emitter
+    val expectedFlattenedFile             = "validation_profile_prefixes.yaml.flattened.jsonld"
+    val exampleFile                       = "validation_profile_prefixes.yaml"
     val expected: Future[String]          = platform.resolve(basePath + expectedFile).map(_.stream.toString)
     val expectedFlattened: Future[String] = platform.resolve(basePath + expectedFlattenedFile).map(_.stream.toString)
     val validation                        = Validation(platform)
@@ -46,32 +46,32 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Prefixes can be parsed") {
-    val expectedFile             = "validation_profile_prefixes.raml"
-    val exampleFile              = "validation_profile_prefixes.raml.jsonld"
+    val expectedFile             = "validation_profile_prefixes.yaml"
+    val exampleFile              = "validation_profile_prefixes.yaml.jsonld"
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
     val validation               = Validation(platform)
     cycle(exampleFile, AmfJsonHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with inplace definition of encodes") {
-    val expectedFile             = "validation_profile_example_gold.raml"
-    val exampleFile              = "validation_profile_example.raml"
+    val expectedFile             = "validation_profile_example_gold.yaml"
+    val exampleFile              = "validation_profile_example.yaml"
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
     val validation               = Validation(platform)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with inplace definition of range") {
-    val expectedFile             = "validation_profile_example_gold.raml"
-    val exampleFile              = "validation_profile_example.raml"
+    val expectedFile             = "validation_profile_example_gold.yaml"
+    val exampleFile              = "validation_profile_example.yaml"
     val validation               = Validation(platform)
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with union type") {
-    val expectedFile             = "validation_profile_example_gold.raml"
-    val exampleFile              = "validation_profile_example.raml"
+    val expectedFile             = "validation_profile_example_gold.yaml"
+    val exampleFile              = "validation_profile_example.yaml"
     val validation               = Validation(platform)
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
     cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)

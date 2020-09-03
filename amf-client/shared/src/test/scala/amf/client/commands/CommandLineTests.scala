@@ -151,8 +151,8 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
       "-mime-in",
       "application/yaml",
       "-ds",
-      "file://amf-client/shared/src/test/resources/vocabularies2/production/k8/dialects/pod.raml",
-      "file://amf-client/shared/src/test/resources/vocabularies2/production/k8/examples/pod.raml"
+      "file://amf-client/shared/src/test/resources/vocabularies2/production/k8/dialects/pod.yaml",
+      "file://amf-client/shared/src/test/resources/vocabularies2/production/k8/examples/pod.yaml"
     )
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)

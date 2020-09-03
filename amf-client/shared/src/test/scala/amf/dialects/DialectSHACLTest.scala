@@ -19,7 +19,7 @@ class DialectSHACLTest extends FunSuiteRdfCycleTests with PlatformSecrets {
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/dialects/"
 
   test("shacl 1 test") {
-    cycleRdf("example1.raml", s"example1.shacl")
+    cycleRdf("example1.yaml", s"example1.shacl")
   }
 
   test("generate validations for unreferenced node mappings") {

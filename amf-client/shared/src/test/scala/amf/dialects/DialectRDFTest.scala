@@ -14,15 +14,15 @@ class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets {
   override def basePath: String = "amf-client/shared/src/test/resources/vocabularies2/dialects/"
 
   test("RDF 1 test") {
-    cycleFullRdf("example1.raml", "example1.raml", VocabularyYamlHint, Aml, basePath)
+    cycleFullRdf("example1.yaml", "example1.yaml", VocabularyYamlHint, Aml, basePath)
   }
 
   test("RDF 2 test") {
-    cycleFullRdf("example2.raml", "example2.raml", VocabularyYamlHint, Aml, basePath)
+    cycleFullRdf("example2.yaml", "example2.yaml", VocabularyYamlHint, Aml, basePath)
   }
 
   multiGoldenTest("RDF 3 test", "example3.%s") { config =>
-    cycleFullRdf("example3.raml",
+    cycleFullRdf("example3.yaml",
                  config.golden,
                  VocabularyYamlHint,
                  target = Amf,
@@ -31,7 +31,7 @@ class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets {
   }
 
   multiGoldenTest("RDF 13 test", "example13.%s") { config =>
-    cycleFullRdf("example13.raml",
+    cycleFullRdf("example13.yaml",
                  config.golden,
                  VocabularyYamlHint,
                  target = Amf,
@@ -40,7 +40,7 @@ class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets {
   }
 
   multiGoldenTest("RDF Production system2 dialect ex1  test", "dialectex1.%s") { config =>
-    cycleFullRdf("dialectex1.raml",
+    cycleFullRdf("dialectex1.yaml",
                  config.golden,
                  VocabularyYamlHint,
                  target = Amf,
@@ -49,7 +49,7 @@ class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets {
   }
 
   multiGoldenTest("RDF Production system2 dialect ex2  test", "dialectex2.%s") { config =>
-    cycleFullRdf("dialectex2.raml",
+    cycleFullRdf("dialectex2.yaml",
                  config.golden,
                  VocabularyYamlHint,
                  target = Amf,
