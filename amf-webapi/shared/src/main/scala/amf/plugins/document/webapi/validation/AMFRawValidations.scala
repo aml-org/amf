@@ -45,7 +45,7 @@ object AMFRawValidations {
     ): AMFValidation = {
 
       def iri(s: String) = Namespace.uri(s).iri()
-      val sameMessage    = !message.isEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
+      val sameMessage    = message.nonEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
 
       new AMFValidation(
         uri = optional(uri).map(Namespace.uri(_).iri()),
@@ -74,7 +74,7 @@ object AMFRawValidations {
         severity: String = Severity.VIOLATION
     ): AMFValidation = {
 
-      val sameMessage = !message.isEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
+      val sameMessage = message.nonEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
 
       new AMFValidation(
         uri = uri.map(_.iri()),
@@ -723,6 +723,22 @@ object AMFRawValidations {
         openApiErrorMessage = "Documentation object 'description' is mandatory"
       ),
       AMFValidation(
+        owlClass = core("CreativeWork"),
+        owlProperty = core("title"),
+        message = "Documentation title MUST be a non-empty string",
+        constraint = sh("minLength"),
+        value = "1",
+        severity = Severity.WARNING // should be violation
+      ),
+      AMFValidation(
+        owlClass = core("CreativeWork"),
+        owlProperty = core("description"),
+        message = "Documentation content MUST be a non-empty string",
+        constraint = sh("minLength"),
+        value = "1",
+        severity = Severity.WARNING // should be violation
+      ),
+      AMFValidation(
         owlClass = doc("DomainProperty"),
         owlProperty = shape("schema"),
         constraint = minCount,
@@ -739,8 +755,7 @@ object AMFRawValidations {
         value = "^authorization_code|password|client_credentials|implicit|(\\w+:(\\/?\\/?)[^\\s]+)$"
       ),
       AMFValidation(
-        message =
-          "requestTokenUri is required when security type is OAuth 1.0",
+        message = "requestTokenUri is required when security type is OAuth 1.0",
         owlClass = security("OAuth1Settings"),
         owlProperty = security("requestTokenUri"),
         constraint = minCount,
@@ -748,8 +763,7 @@ object AMFRawValidations {
         severity = Severity.WARNING
       ),
       AMFValidation(
-        message =
-          "authorizationUri is required when security type is OAuth 1.0",
+        message = "authorizationUri is required when security type is OAuth 1.0",
         owlClass = security("OAuth1Settings"),
         owlProperty = security("authorizationUri"),
         constraint = minCount,
@@ -757,8 +771,7 @@ object AMFRawValidations {
         severity = Severity.WARNING
       ),
       AMFValidation(
-        message =
-          "tokenCredentialsUri is required when security type is OAuth 1.0",
+        message = "tokenCredentialsUri is required when security type is OAuth 1.0",
         owlClass = security("OAuth1Settings"),
         owlProperty = security("tokenCredentialsUri"),
         constraint = minCount,
