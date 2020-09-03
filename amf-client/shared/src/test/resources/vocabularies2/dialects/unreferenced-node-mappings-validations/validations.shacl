@@ -121,6 +121,9 @@
 <http://a.ml/vocabularies/amf/core#syaml-warning> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/core#syaml-warning> <http://www.w3.org/ns/shacl#message> "Syaml warning" .
 <http://a.ml/vocabularies/amf/core#syaml-warning> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#CoreShape> .
+<http://a.ml/vocabularies/amf/core#unhandled-element> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/core#unhandled-element> <http://www.w3.org/ns/shacl#message> "Unhandled domain element for given vendor" .
+<http://a.ml/vocabularies/amf/core#unhandled-element> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#CoreShape> .
 <http://a.ml/vocabularies/amf/core#unresolved-reference> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/core#unresolved-reference> <http://www.w3.org/ns/shacl#message> "Unresolved reference" .
 <http://a.ml/vocabularies/amf/core#unresolved-reference> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#CoreShape> .
@@ -436,6 +439,9 @@
 <http://a.ml/vocabularies/amf/render#render-validation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/render#render-validation> <http://www.w3.org/ns/shacl#message> "Default render validation" .
 <http://a.ml/vocabularies/amf/render#render-validation> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#RenderShape> .
+<http://a.ml/vocabularies/amf/render#unknown-vendor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/render#unknown-vendor> <http://www.w3.org/ns/shacl#message> "Unknown vendor provided" .
+<http://a.ml/vocabularies/amf/render#unknown-vendor> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#RenderShape> .
 <http://a.ml/vocabularies/amf/resolution#examples-with-invalid-mime-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/resolution#examples-with-invalid-mime-type> <http://www.w3.org/ns/shacl#message> "Mime type defined in 'examples' must be present in a 'produces' property" .
 <http://a.ml/vocabularies/amf/resolution#examples-with-invalid-mime-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ResolutionShape> .
