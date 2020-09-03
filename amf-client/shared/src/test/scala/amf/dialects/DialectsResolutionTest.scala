@@ -19,10 +19,10 @@ class DialectsResolutionTest extends DialectResolutionCycleTests {
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/dialects/"
 
   test("resolve include test") {
-    cycle("example9.raml", "example9.resolved.raml", VocabularyYamlHint, Aml)
+    cycle("example9.yaml", "example9.resolved.yaml", VocabularyYamlHint, Aml)
   }
 
   test("resolve 13 test") {
-    cycle("example13.raml", "example13.resolved.raml", VocabularyYamlHint, Aml)
+    cycle("example13.yaml", "example13.resolved.yaml", VocabularyYamlHint, Aml)
   }
 }

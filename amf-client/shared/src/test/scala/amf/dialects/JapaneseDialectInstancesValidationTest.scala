@@ -20,26 +20,26 @@ class JapaneseDialectInstancesValidationTest extends DialectInstanceValidation w
   }
 
   test("validate mixed instance 1") {
-    validate("mixed-dialect-1.raml", "mixed-example-1.raml")
+    validate("mixed-dialect-1.yaml", "mixed-example-1.yaml")
   }
 
   test("validate mixed instance 2") {
-    validate("mixed-dialect-2.raml", "mixed-example-2.raml")
+    validate("mixed-dialect-2.yaml", "mixed-example-2.yaml")
   }
 
   test("valid pattern") {
-    validate("pattern-dialect.raml", "pattern-valid.raml")
+    validate("pattern-dialect.yaml", "pattern-valid.yaml")
   }
 
   test("invalid pattern") {
-    validate("pattern-dialect.raml", "pattern-invalid.raml", golden = Some("pattern-invalid.report.json"))
+    validate("pattern-dialect.yaml", "pattern-invalid.yaml", golden = Some("pattern-invalid.report.json"))
   }
 
   ignore("valid in") {
-    validate("in-dialect.raml", "in-valid.raml")
+    validate("in-dialect.yaml", "in-valid.yaml")
   }
 
   ignore("invalid in") {
-    validate("in-dialect.raml", "in-invalid.raml")
+    validate("in-dialect.yaml", "in-invalid.yaml")
   }
 }

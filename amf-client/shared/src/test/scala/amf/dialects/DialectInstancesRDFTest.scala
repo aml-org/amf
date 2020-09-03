@@ -12,44 +12,44 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
   val productionPath = "amf-client/shared/src/test/resources/vocabularies2/production/"
 
   test("RDF 1 test") {
-    withDialect("dialect1.raml", "example1.raml", "example1.ttl", VocabularyYamlHint, Amf)
+    withDialect("dialect1.yaml", "example1.yaml", "example1.ttl", VocabularyYamlHint, Amf)
   }
 
   test("RDF 2 full test") {
-    withDialectFull("dialect2.raml", "example2.raml", "example2.raml", VocabularyYamlHint, Aml)
+    withDialectFull("dialect2.yaml", "example2.yaml", "example2.yaml", VocabularyYamlHint, Aml)
   }
 
   ignore("RDF 3 full test") {
-    withDialectFull("dialect3.raml", "example3.raml", "example3.raml", VocabularyYamlHint, Aml)
+    withDialectFull("dialect3.yaml", "example3.yaml", "example3.yaml", VocabularyYamlHint, Aml)
   }
 
   test("RDF 4 full test") {
-    withDialectFull("dialect4.raml", "example4.raml", "example4.raml", VocabularyYamlHint, Aml)
+    withDialectFull("dialect4.yaml", "example4.yaml", "example4.yaml", VocabularyYamlHint, Aml)
   }
 
   test("RDF 5 full test") {
-    withDialectFull("dialect5.raml", "example5.raml", "example5.raml", VocabularyYamlHint, Aml)
+    withDialectFull("dialect5.yaml", "example5.yaml", "example5.yaml", VocabularyYamlHint, Aml)
   }
 
   test("RDF 6 full test") {
-    withDialectFull("dialect6.raml", "example6.raml", "example6.raml", VocabularyYamlHint, Aml)
+    withDialectFull("dialect6.yaml", "example6.yaml", "example6.yaml", VocabularyYamlHint, Aml)
   }
 
   test("RDF 26 full test") {
-    withDialectFull("dialect26.raml", "example26.raml", "example26.raml", VocabularyYamlHint, Aml)
+    withDialectFull("dialect26.yaml", "example26.yaml", "example26.yaml", VocabularyYamlHint, Aml)
   }
 
   test("RDF 1 Vocabulary full test") {
-    cycleFullRdf("example1.raml",
-                 "example1.raml",
+    cycleFullRdf("example1.yaml",
+                 "example1.yaml",
                  VocabularyYamlHint,
                  Aml,
                  "amf-client/shared/src/test/resources/vocabularies2/vocabularies/")
   }
 
   test("RDF 1 Dialect full test") {
-    cycleFullRdf("example1.raml",
-                 "example1.raml",
+    cycleFullRdf("example1.yaml",
+                 "example1.yaml",
                  VocabularyYamlHint,
                  Aml,
                  "amf-client/shared/src/test/resources/vocabularies2/dialects/")
@@ -64,18 +64,18 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
   }
 
   test("Container Configuration 0.2 ex1 test") {
-    withDialectFull("dialect.raml",
-                    "ex1.raml",
-                    "ex1.raml",
+    withDialectFull("dialect.yaml",
+                    "ex1.yaml",
+                    "ex1.yaml",
                     VocabularyYamlHint,
                     Aml,
                     "amf-client/shared/src/test/resources/vocabularies2/production/system2/")
   }
 
   test("Container Configuration 0.2 ex2 test") {
-    withDialectFull("dialect.raml",
-                    "ex2.raml",
-                    "ex2.raml",
+    withDialectFull("dialect.yaml",
+                    "ex2.yaml",
+                    "ex2.yaml",
                     VocabularyYamlHint,
                     Aml,
                     "amf-client/shared/src/test/resources/vocabularies2/production/system2/")

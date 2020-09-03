@@ -19,9 +19,6 @@ import org.yaml.model.{YMap, YMapEntry}
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  *
-  */
 class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
@@ -31,7 +28,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Vocabulary") {
-    build("file://amf-client/shared/src/test/resources/vocabularies2/production/raml_doc.raml", VocabularyYamlHint) map {
+    build("file://amf-client/shared/src/test/resources/vocabularies2/production/raml_doc.yaml", VocabularyYamlHint) map {
       _ should not be null
     }
   }
