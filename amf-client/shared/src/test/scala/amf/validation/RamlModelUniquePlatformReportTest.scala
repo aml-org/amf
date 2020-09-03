@@ -503,4 +503,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Some("raml/included-json-with-duplicate-keys.report"),
              Raml10Profile)
   }
+
+  test("Documentation - title and description MUST be a non-empty string") {
+    validate("raml/documentation-non-empty.raml", Some("raml/documentation-non-empty.report"), Raml10Profile)
+  }
 }
