@@ -32,7 +32,7 @@ import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.internal.environment.{Environment => InternalEnvironment}
 import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.Vocabularies
-import amf.plugins.document.webapi.parser.spec.common.emitters.DomainElementEmitter
+import amf.plugins.document.webapi.parser.spec.common.emitters.WebApiDomainElementEmitter
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
@@ -2315,13 +2315,13 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   test("Test domain element emitter with unknown vendor") {
     val eh = DefaultErrorHandler()
-    DomainElementEmitter.emit(InternalArrayNode(), Vendor.PAYLOAD, eh)
+    WebApiDomainElementEmitter.emit(InternalArrayNode(), Vendor.PAYLOAD, eh)
     assert(eh.getErrors.head.message == "Unknown vendor provided")
   }
 
   test("Test domain element emitter with unhandled domain element") {
     val eh = DefaultErrorHandler()
-    DomainElementEmitter.emit(InternalCorrelationId(), Vendor.RAML10, eh)
+    WebApiDomainElementEmitter.emit(InternalCorrelationId(), Vendor.RAML10, eh)
     assert(eh.getErrors.head.message == "Unhandled domain element for given vendor")
   }
 
