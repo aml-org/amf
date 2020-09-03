@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/oas2/missing-items-field.json
+Profile: OAS 2.0
+Conforms? true
+Number of results: 1
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#items-field-required-warning
+  Message: 'items' field is required when schema type is array
+  Level: Warning
+  Target: file://amf-client/shared/src/test/resources/validations/oas2/missing-items-field.json#/web-api/end-points/%2Ftest/get/request/parameter/skip
+  Property: 
+  Position: Some(LexicalInformation([(11,10)-(16,11)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas2/missing-items-field.json

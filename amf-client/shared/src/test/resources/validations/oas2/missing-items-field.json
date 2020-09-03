@@ -1,0 +1,26 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Simple Inventory API"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "skip",
+            "type": "array",
+            "description": "number of records to skip for pagination"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "search results matching criteria"
+          }
+        }
+      }
+    }
+  }
+}

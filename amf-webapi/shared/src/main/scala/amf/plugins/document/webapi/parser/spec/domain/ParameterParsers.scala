@@ -291,7 +291,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  def parse(): OasParameter = {
+  def parse(): OasParameter =
     map.key("$ref") match {
       case Some(ref) => parseParameterRef(ref, parentId)
       case None =>
@@ -309,7 +309,6 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
             OasParameter(parameter, Some(map))
         }
     }
-  }
 
   protected def parseCommonParam(binding: String): Parameter = {
     val parameter = parseFixedFields()
@@ -359,7 +358,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     parameter
   }
 
-  def parseType(container: SchemaContainer, binding: String, typeParsing: () => Unit) = {
+  def parseType(container: SchemaContainer, binding: String, typeParsing: () => Unit): SchemaContainer = {
 
     def setDefaultSchema = (c: SchemaContainer) => c.setSchema(AnyShape(Annotations(Inferred())))
 
@@ -368,11 +367,23 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
         setDefaultSchema(container)
         ctx.eh.violation(MissingParameterType,
                          container.id,
-                         s"'type' is required in a parameter with binding '${binding}'",
+                         s"'type' is required in a parameter with binding '$binding'",
                          map)
-      case Some(_) => typeParsing()
+      case Some(entry) =>
+        checkItemsField(entry, container)
+        typeParsing()
     }
     container
+  }
+
+  private def checkItemsField(entry: YMapEntry, container: SchemaContainer): Unit = {
+    val typeValue = entry.value.asScalar.get.text
+    val items     = map.key("items")
+    if (typeValue == "array" && items.isEmpty)
+      ctx.eh.warning(ItemsFieldRequiredWarning,
+                     container.id,
+                     "'items' field is required when schema type is array",
+                     map)
   }
 
   private def parseFormDataPayload(bindingRange: Option[Range]): Payload = {
