@@ -104,6 +104,11 @@ trait SpecParserOps {
       val node = entry.value
       entry.value.tagType match {
         case YType.Null if opt =>
+          field.`type` match {
+            case ArrayLike(_) if entries =>
+              target.foreach(_.set(field, AmfArray(Nil), Annotations(entry) ++= annotations))
+            case _ =>
+          }
         case _ =>
           val value = field.`type` match {
             case _: Obj if mapped.isDefined => mapped.get(node)

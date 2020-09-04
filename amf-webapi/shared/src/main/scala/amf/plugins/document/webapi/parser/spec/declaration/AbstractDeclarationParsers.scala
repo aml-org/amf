@@ -98,7 +98,10 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
         }
         val dataNode = DataNodeParser(filteredNode, variables, Some(parentUri)).parse()
 
-        declaration.withName(key, annotations).adopted(parent).withDataNode(dataNode)
+        declaration
+          .withName(key, map.key.map(Annotations(_)).getOrElse(annotations))
+          .adopted(parent)
+          .withDataNode(dataNode)
 
         variables.ifNonEmpty(p => declaration.withVariables(p))
 
