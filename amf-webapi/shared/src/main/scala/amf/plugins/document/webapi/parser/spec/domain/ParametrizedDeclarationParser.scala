@@ -24,7 +24,9 @@ case class ParametrizedDeclarationParser(
     node.toOption[YMap].flatMap(_.entries.headOption) match {
       case Some(entry) =>
         entry.value.tagType match {
-          case YType.Null => fromStringNode(entry.key)
+          case YType.Null =>
+            val declaration = fromStringNode(entry.key)
+            declaration.add(Annotations.valueNode(node))
           case _ =>
             val name = entry.key.as[YScalar].text
             val declaration =
@@ -45,9 +47,12 @@ case class ParametrizedDeclarationParser(
               }
             declaration.withVariables(variables)
         }
-      case _ if node.tagType == YType.Str => fromStringNode(node)
+      case _ if node.tagType == YType.Str =>
+        val declaration = fromStringNode(node)
+        declaration.add(Annotations.valueNode(node))
       case _ =>
         val declaration = producer("")
+        declaration.add(Annotations(node))
         ctx.eh.violation(InvalidAbstractDeclarationType, declaration.id, "Invalid model extension.", node)
         declaration
     }
@@ -57,7 +62,6 @@ case class ParametrizedDeclarationParser(
     ctx.link(node) match {
       case Left(value) => // in oas links $ref always are maps
         producer(value)
-          .add(Annotations.valueNode(node))
           .set(ParametrizedDeclarationModel.Target,
                declarations(value, SearchScope.Fragments).link(value).asInstanceOf[AbstractDeclaration])
       case Right(n) =>
@@ -66,7 +70,6 @@ case class ParametrizedDeclarationParser(
         val parametrized = producer(text)
         setName(parametrized, text, n)
         parametrized
-          .add(Annotations.valueNode(node))
           .set(ParametrizedDeclarationModel.Target, target)
     }
   }

@@ -361,20 +361,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  test("Test test") {
-    for {
-      validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "/api_360_ver_14018-api.raml",
-                         platform,
-                         RamlYamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
-        .build()
-      report <- validation.validate(doc, Raml10Profile)
-    } yield {
-      assert(report.conforms)
-    }
-  }
-
   ignore("emilio performance") {
     for {
       validation <- Validation(platform)
