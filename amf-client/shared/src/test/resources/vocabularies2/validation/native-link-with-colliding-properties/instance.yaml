@@ -1,0 +1,12 @@
+#%Test 1.0
+bs:
+  B1:
+    $id: http://test.com/declarations/B1
+    a: 1
+    b: 1
+description: this is node A
+link:
+  $id: http://test.com/declarations/B1
+  a: 2
+  b: 2
+  # Link has same ID but different values for a & b

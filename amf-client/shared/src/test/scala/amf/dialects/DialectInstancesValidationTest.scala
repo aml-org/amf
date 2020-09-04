@@ -219,4 +219,18 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation with Repo
     validate("map-term-key.yaml", "map-term-key-instance.yaml")
   }
 
+  test("Validate native link with colliding properties") {
+    validate("dialect.yaml",
+             "instance.yaml",
+             Some("report.json"),
+             path = s"$basePath/native-link-with-colliding-properties")
+  }
+
+  test("Validate native link with extra properties") {
+    validate("dialect.yaml",
+             "instance.yaml",
+             Some("report.json"),
+             path = s"$basePath/native-link-with-extra-properties")
+  }
+
 }

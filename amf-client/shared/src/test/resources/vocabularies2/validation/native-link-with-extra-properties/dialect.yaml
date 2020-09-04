@@ -1,0 +1,30 @@
+#%Dialect 1.0
+dialect: Test
+version: "1.0"
+
+documents:
+  root:
+    encodes: A
+
+nodeMappings:
+  A:
+    mapping:
+      description:
+        range: string
+      link:
+        range: B
+        isLink: true
+  B:
+    idTemplate: "http://test.com/{myVar}"
+    mapping:
+      myVar:
+        range: string
+        unique: true
+      a:
+        range: integer
+      b:
+        range: integer
+      c:
+        range: integer
+      d:
+        range: integer
