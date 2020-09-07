@@ -7,7 +7,12 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.validation.json.{InvalidJSONValueException, JSONObject, JSONTokenerHack}
+import amf.plugins.document.webapi.validation.json.{
+  InvalidJSONValueException,
+  JSONObject,
+  JSONTokenerHack,
+  ScalarTokenerHack
+}
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.validations.PayloadValidations.{
   ExampleValidationErrorSpecification,
@@ -61,7 +66,7 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
       element: DomainElement,
       validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
 
-    loadJson(
+    loadJsonSchema(
       jsonSchema.toString
         .replace("x-amf-union", "anyOf")) match {
       case schemaNode: JSONObject =>
@@ -105,7 +110,7 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
   protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
     try {
       literalRepresentation(payload) map { payloadText =>
-        loadJson(payloadText)
+        loadJsonSchema(payloadText)
       }
     } catch {
       case _: ExampleUnknownException => None
@@ -113,8 +118,23 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
     }
   }
 
+  override protected def loadJsonSchema(text: String): Object = {
+    withJsonExceptionCatching(() => {
+      new JSONTokenerHack(text).nextValue()
+    })
+  }
+
   override protected def loadJson(text: String): Object = {
-    try new JSONTokenerHack(text).nextValue()
+    withJsonExceptionCatching(() => {
+      shape match {
+        case _: ScalarShape => new ScalarTokenerHack(text).nextValue()
+        case _              => new JSONTokenerHack(text).nextValue()
+      }
+    })
+  }
+
+  private def withJsonExceptionCatching(jsonLoading: () => Object): Object = {
+    try jsonLoading()
     catch {
       case e: InvalidJSONValueException => throw new InvalidJsonValue(e)
       case e: JSONException             => throw new InvalidJsonObject(e)

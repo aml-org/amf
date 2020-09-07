@@ -77,6 +77,8 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
 
   protected def loadJson(text: String): LoadedObj
 
+  protected def loadJsonSchema(text: String): LoadedObj = loadJson(text)
+
   protected def loadSchema(
       jsonSchema: CharSequence,
       element: DomainElement,

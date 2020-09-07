@@ -10,7 +10,7 @@ import org.scalatest.Matchers.a
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.Matchers._
 
-class PayloadValidationTest extends ClientPayloadValidationTest with NativeOpsFromJvm {
+class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOpsFromJvm {
   test("Test unexpected type error") {
     AMF.init().flatMap { _ =>
       amf.Core.registerPlugin(PayloadValidatorPlugin)

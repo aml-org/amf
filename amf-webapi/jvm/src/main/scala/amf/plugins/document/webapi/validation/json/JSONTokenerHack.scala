@@ -26,7 +26,7 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
       case c =>
         val sb      = new StringBuilder()
         var newChar = c
-        while (newChar >= ' ' && ",:]}/\\\"[{;=#".indexOf(newChar) < 0) {
+        while (shouldContinueParsing(newChar)) {
           sb.append(newChar)
           newChar = this.next()
         }
@@ -37,6 +37,8 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
         stringToValue(string)
     }
   }
+
+  protected def shouldContinueParsing(newChar: Char) = newChar >= ' ' && ",:]}/\\\"[{;=#".indexOf(newChar) < 0
 
   private def checkNumber(s: String): Option[Object] =
     try {
@@ -98,4 +100,8 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
   private implicit class CaseInsensitiveRegex(sc: StringContext) {
     def ci: Regex = ("(?i)" + sc.parts.mkString).r
   }
+}
+
+class ScalarTokenerHack(text: String) extends JSONTokenerHack(text) {
+  override protected def shouldContinueParsing(newChar: Char): Boolean = newChar != 0
 }
