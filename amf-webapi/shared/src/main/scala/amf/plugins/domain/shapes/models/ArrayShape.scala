@@ -80,7 +80,11 @@ case class ArrayShape(override val fields: Fields, override val annotations: Ann
     this
   }
 
+  def hasItems = Option(fields.field(Items)).isDefined
+
   def toMatrixShape: MatrixShape = MatrixShape(fields, annotations).withId(id)
+
+  def toMatrixShapeWithoutId: MatrixShape = MatrixShape(fields, annotations)
 
   override def linkCopy(): ArrayShape = ArrayShape().withId(id)
 

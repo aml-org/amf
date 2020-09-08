@@ -28,6 +28,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   _
 }
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
+import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toOas}
 import amf.plugins.domain.shapes.models.ExampleTracking._
 import amf.plugins.domain.shapes.models.{AnyShape, Example, FileShape, NodeShape}
@@ -132,10 +133,9 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
                 parameter.withSchema(schema)
 
               case Right(ref) if isTypeExpression(ref.text) =>
-                RamlTypeExpressionParser(shape => shape.withName("schema").adopted(parameter.id),
-                                         expression = ref.text,
-                                         part = Some(ref))
-                  .parse() match {
+                RamlExpressionParser.parse(shape => shape.withName("schema").adopted(parameter.id),
+                                           expression = ref.text,
+                                           part = ref) match {
                   case Some(schema) => parameter.withSchema(schema)
                   case _ =>
                     ctx.eh.violation(UnresolvedReference,

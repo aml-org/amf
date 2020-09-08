@@ -65,7 +65,12 @@
               {
                 "@id": "http://www.w3.org/2001/XMLSchema#string"
               }
-            ]
+            ],
+            "smaps": {
+              "lexical": {
+                "#2": "[(5,10)-(5,16)]"
+              }
+            }
           },
           {
             "@id": "#3",
@@ -76,11 +81,11 @@
               "raml-shapes:Shape",
               "doc:DomainElement"
             ],
-            "shacl:name": [
-              {
-                "@value": "array_0"
+            "smaps": {
+              "lexical": {
+                "#3": "[(5,19)-(5,24)]"
               }
-            ]
+            }
           }
         ],
         "shacl:name": [
