@@ -514,6 +514,11 @@ object ParserSideValidations extends Validations {
     "Invalid allowedTargets type"
   )
 
+  val InvalidAllowedTargets = validation(
+    "invalid-allowed-targets",
+    "Invalid allowedTargets value"
+  )
+
   val InvalidExtensionsType = validation(
     "invalid-extension-type",
     "Invalid extension type"
@@ -678,7 +683,8 @@ object ParserSideValidations extends Validations {
     CrossSecurityWarningSpecification.id -> all(WARNING),
     ReadOnlyPropertyMarkedRequired.id    -> all(WARNING),
     MissingRequiredFieldForGrantType.id  -> all(WARNING),
-    OasInvalidParameterSchema.id         -> all(WARNING), // should be violation
+    OasInvalidParameterSchema.id         -> all(WARNING), // TODO: should be violation
+    InvalidAllowedTargets.id             -> all(WARNING), // TODO: should be violation
     MissingDiscriminatorProperty.id      -> all(VIOLATION),
     InvalidPayload.id                    -> all(VIOLATION)
   )
