@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Illustrating allowed targets
+mediaType: application/json
+annotationTypes:
+  meta-invalid-target:
+    allowedTargets: Action
+  meta-invalid-targets:
+    allowedTargets: [ Resource, Action ]
+
+/users:
+  (meta-invalid-targets): someValue

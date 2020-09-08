@@ -728,7 +728,7 @@ object AMFRawValidations {
         message = "Documentation title MUST be a non-empty string",
         constraint = sh("minLength"),
         value = "1",
-        severity = Severity.WARNING // should be violation
+        severity = Severity.WARNING // TODO: should be violation
       ),
       AMFValidation(
         owlClass = core("CreativeWork"),
@@ -736,7 +736,7 @@ object AMFRawValidations {
         message = "Documentation content MUST be a non-empty string",
         constraint = sh("minLength"),
         value = "1",
-        severity = Severity.WARNING // should be violation
+        severity = Severity.WARNING // TODO: should be violation
       ),
       AMFValidation(
         owlClass = doc("DomainProperty"),

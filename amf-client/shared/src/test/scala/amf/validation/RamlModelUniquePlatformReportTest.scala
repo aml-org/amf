@@ -507,4 +507,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Documentation - title and description MUST be a non-empty string") {
     validate("raml/documentation-non-empty.raml", Some("raml/documentation-non-empty.report"), Raml10Profile)
   }
+
+  test("Annotation types - check target locations are valid") {
+    validate("raml/invalid-annotation-type.raml", Some("raml/invalid-annotation-type.report"), Raml10Profile)
+  }
 }
