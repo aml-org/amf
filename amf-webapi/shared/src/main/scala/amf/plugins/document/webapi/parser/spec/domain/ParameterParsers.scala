@@ -27,7 +27,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   StringDefaultType,
   _
 }
-import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
+
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toOas}
 import amf.plugins.domain.shapes.models.ExampleTracking._
