@@ -8,7 +8,7 @@ import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.model.domain.Shape
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasTagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.async
 import amf.plugins.domain.webapi.metamodel.ParameterModel
@@ -69,8 +69,7 @@ case class AsyncApiSingleParameterPartEmitter(parameter: Parameter, ordering: Sp
   }
 
   def emitLink(b: PartBuilder): Unit = {
-    val label = OasDefinitions.appendOas3ComponentsPrefix(parameter.linkLabel.value(), "parameters")
-    spec.ref(b, label)
+    OasTagToReferenceEmitter(parameter, parameter.linkLabel.option()).emit(b)
   }
 
   private def emitLocation(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit =

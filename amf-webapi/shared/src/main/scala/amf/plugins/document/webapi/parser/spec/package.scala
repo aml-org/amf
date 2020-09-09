@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser
 import amf.core.parser.ParsedReference
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts._
+import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterFactory
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterContext,
   Oas3SpecEmitterFactory,
@@ -64,7 +65,7 @@ package object spec {
 
     def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
         implicit spec: SpecEmitterContext): String = {
-      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[Async20SpecEmitterFactory])
         appendOas3ComponentsPrefix(url, "parameters")
       else
         appendPrefix(parameterDefinitionsPrefix, url)
