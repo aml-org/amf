@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.async.emitters
 import amf.core.emitter.BaseEmitters.{EmptyMapEmitter, MapEntryEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.model.domain.{AmfElement, Linkable, NamedDomainElement}
+import amf.core.model.domain.{AmfElement, DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.parser.spec.async.emitters.bindings.{
   AsyncApiOperationBindingsEmitter,
   AsyncApiServerBindingsEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.OrphanAnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.{OasTagToReferenceEmitter, OrphanAnnotationsEmitter}
 import amf.plugins.domain.webapi.models.bindings._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YNode
@@ -59,17 +59,8 @@ case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrder
   }
 
   def emitLink(b: PartBuilder): Unit = {
-    val label = OasDefinitions.appendOas3ComponentsPrefix(bindings.asInstanceOf[Linkable].linkLabel.value(),
-                                                          obtainComponentTag())
-    spec.ref(b, label)
-  }
-
-  def obtainComponentTag(): String = bindings match {
-    case _: ServerBindings    => "serverBindings"
-    case _: OperationBindings => "operationBindings"
-    case _: ChannelBindings   => "channelBindings"
-    case _: MessageBindings   => "messageBindings"
-    case _                    => "default"
+    val linkable = bindings.asInstanceOf[DomainElement with Linkable]
+    OasTagToReferenceEmitter(linkable, linkable.linkLabel.option()).emit(b)
   }
 
   def obtainBindings(value: AmfElement): Seq[AmfElement] = {

@@ -12,7 +12,8 @@ import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
-import amf.plugins.domain.webapi.models.{Callback, CorrelationId, Parameter, Payload, Response, TemplatedLink}
+import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
+import amf.plugins.domain.webapi.models.{Callback, CorrelationId, Message, Parameter, Payload, Response, TemplatedLink}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
@@ -46,6 +47,18 @@ case class OasTagToReferenceEmitter(
         spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "links"))
       case c: CorrelationId if c.annotations.contains(classOf[DeclaredElement]) =>
         spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "correlationIds"))
+      case m: Message if m.annotations.contains(classOf[DeclaredElement]) =>
+        spec.ref(b,
+                 OasDefinitions.appendOas3ComponentsPrefix(referenceLabel,
+                                                           if (m.isAbstract.value()) "messageTraits" else "messages"))
+      case c: ServerBindings if c.annotations.contains(classOf[DeclaredElement]) =>
+        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "serverBindings"))
+      case c: OperationBindings if c.annotations.contains(classOf[DeclaredElement]) =>
+        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "operationBindings"))
+      case c: ChannelBindings if c.annotations.contains(classOf[DeclaredElement]) =>
+        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "channelBindings"))
+      case c: MessageBindings if c.annotations.contains(classOf[DeclaredElement]) =>
+        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "messageBindings"))
       case _ => spec.ref(b, referenceLabel)
     }
   }
