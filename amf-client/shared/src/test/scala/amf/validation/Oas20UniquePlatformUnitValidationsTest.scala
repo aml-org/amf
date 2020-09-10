@@ -96,4 +96,8 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("JSON with duplicate keys") {
     validate("duplicate-keys.json", Some("duplicate-keys.report"), Oas20Profile, overridedHint = Some(OasJsonHint))
   }
+
+  test("invalid 'example' field in parameter object") {
+    validate("invalid-example-field.json", Some("invalid-example-field.report"), Oas20Profile)
+  }
 }

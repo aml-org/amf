@@ -608,9 +608,16 @@ object ParserSideValidations extends Validations {
     "'items' field is required when type is array"
   )
 
+  // TODO: Should be removed and used the violation in the next major
   val ItemsFieldRequiredWarning = validation(
     "items-field-required-warning",
     "'items' field is required when type is array"
+  )
+
+  // TODO: Should be removed and used the violation in the next major
+  val invalidExampleFieldWarning = validation(
+    "invalid-example-field-warning",
+    "Property 'example' not supported"
   )
 
   val InvalidIdentifier = validation(
@@ -674,7 +681,7 @@ object ParserSideValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> WARNING
     ),
-    ItemsFieldRequiredWarning.id         -> all(WARNING),
+    ItemsFieldRequiredWarning.id         -> all(WARNING), // TODO: should be violation
     NullAbstractDeclaration.id           -> all(WARNING),
     SchemaDeprecated.id                  -> all(WARNING),
     SchemasDeprecated.id                 -> all(WARNING),
@@ -683,6 +690,7 @@ object ParserSideValidations extends Validations {
     CrossSecurityWarningSpecification.id -> all(WARNING),
     ReadOnlyPropertyMarkedRequired.id    -> all(WARNING),
     MissingRequiredFieldForGrantType.id  -> all(WARNING),
+    invalidExampleFieldWarning.id        -> all(WARNING), // TODO: should be violation
     OasInvalidParameterSchema.id         -> all(WARNING), // TODO: should be violation
     InvalidAllowedTargets.id             -> all(WARNING), // TODO: should be violation
     MissingDiscriminatorProperty.id      -> all(VIOLATION),
