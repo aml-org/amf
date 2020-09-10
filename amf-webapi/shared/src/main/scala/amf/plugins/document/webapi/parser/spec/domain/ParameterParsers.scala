@@ -291,8 +291,8 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  def parse(): OasParameter =
-    map.key("$ref") match {
+  def parse(): OasParameter = {
+    val parameter = map.key("$ref") match {
       case Some(ref) => parseParameterRef(ref, parentId)
       case None =>
         map.key("in") match {
@@ -308,6 +308,23 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
             parameter.adopted(parentId)
             OasParameter(parameter, Some(map))
         }
+    }
+    checkExampleField(parameter)
+    parameter
+  }
+
+  def checkExampleField(p: OasParameter): Unit =
+    map.key("example") match {
+      case Some(_) =>
+        /* TODO: Should remove 'example' from syntax and delete this method and parser-side validation
+                 as it will become a model validation and violation in the next major */
+        ctx.eh.warning(
+          invalidExampleFieldWarning,
+          p.domainElement.id,
+          s"Property 'example' not supported in a parameter node",
+          map
+        )
+      case _ =>
     }
 
   protected def parseCommonParam(binding: String): Parameter = {
@@ -380,7 +397,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     val typeValue = entry.value.asScalar.get.text
     val items     = map.key("items")
     if (typeValue == "array" && items.isEmpty)
-      ctx.eh.warning(ItemsFieldRequiredWarning,
+      ctx.eh.warning(ItemsFieldRequiredWarning, // TODO: Should be violation
                      container.id,
                      "'items' field is required when schema type is array",
                      map)
