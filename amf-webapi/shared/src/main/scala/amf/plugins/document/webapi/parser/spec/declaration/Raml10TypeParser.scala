@@ -595,9 +595,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         case YType.Seq =>
           val entry = ast.asInstanceOf[YMapEntry]
           InheritanceParser(entry, shape, None).parse()
-          shape.set(ScalarShapeModel.DataType,
-                    AmfScalar(XsdTypeDefMapping.xsd(typeDef)),
-                    Annotations(entry) += Inferred())
+          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry))
           shape
         case _ =>
           val fieldAnnotations =
