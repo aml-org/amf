@@ -1,10 +1,11 @@
 package amf.plugins.document.webapi.references
 
 import amf.core.CompilerContext
-import amf.core.annotations.{ReferenceTargets, SourceAST}
+import amf.core.TaggedReferences._
+import amf.core.annotations.SourceAST
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{Range, _}
+import amf.core.parser._
 import amf.core.remote._
 import amf.core.utils._
 import amf.plugins.document.webapi.BaseWebApiPlugin
@@ -16,15 +17,15 @@ import amf.validations.ParserSideValidations._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
-import amf.core.TaggedReferences._
+
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 
 class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends ReferenceHandler {
 
-  private val references = ReferenceCollector()
+  private val references = CompilerReferenceCollector()
 
-  override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
+  override def collect(parsed: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     val doc = parsed.asInstanceOf[SyamlParsedDocument].document
     libraries(doc, ctx)
     links(doc, ctx)

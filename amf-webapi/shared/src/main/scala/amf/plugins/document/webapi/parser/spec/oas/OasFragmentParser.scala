@@ -65,7 +65,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
     UsageParser(map, fragment).parse()
 
-    if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
+    if (references.nonEmpty) fragment.withReferences(references.baseUnitReferences())
     fragment
   }
 

@@ -159,7 +159,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     val declarables = ctx.declarations.declarables()
     if (declarables.nonEmpty) document.withDeclares(declarables)
-    if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
+    if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     ctx.futureDeclarations.resolve()
 
