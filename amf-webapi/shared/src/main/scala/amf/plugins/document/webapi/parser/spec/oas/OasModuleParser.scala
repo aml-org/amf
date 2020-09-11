@@ -35,7 +35,7 @@ case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext) exten
 
       val declarable = ctx.declarations.declarables()
       if (declarable.nonEmpty) module.withDeclares(declarable)
-      if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
+      if (references.nonEmpty) module.withReferences(references.baseUnitReferences())
     }
 
     module

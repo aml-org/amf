@@ -14,7 +14,6 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   AsycnReferencesParser,
   OasLikeCreativeWorkParser,
   OasLikeTagsParser,
-  ReferenceDeclarations,
   ReferencesParser
 }
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -61,7 +60,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
     val declarable = ctx.declarations.declarables()
     if (declarable.nonEmpty) document.withDeclares(declarable)
-    if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
+    if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     document
   }

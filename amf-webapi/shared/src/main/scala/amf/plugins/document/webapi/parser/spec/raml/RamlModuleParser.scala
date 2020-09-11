@@ -34,7 +34,7 @@ case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiCon
 
       val declarables = ctx.declarations.declarables()
       if (declarables.nonEmpty) module.withDeclares(declarables)
-      if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
+      if (references.nonEmpty) module.withReferences(references.baseUnitReferences())
     }
 
     ctx.futureDeclarations.resolve()

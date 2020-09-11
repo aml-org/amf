@@ -63,7 +63,7 @@
           "@id": "#1"
         },
         {
-          "@id": "#3"
+          "@id": "#5"
         }
       ],
       "doc:declares": [
@@ -91,13 +91,18 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#2"
+        "@id": "#4"
       },
       "doc:version": "2.1.2",
+      "doc:references": [
+        {
+          "@id": "#2"
+        }
+      ],
       "doc:root": false
     },
     {
-      "@id": "#3",
+      "@id": "#5",
       "@type": [
         "doc:ExternalFragment",
         "doc:Fragment",
@@ -107,11 +112,6 @@
         "@id": "#6"
       },
       "doc:version": "2.1.2",
-      "doc:references": [
-        {
-          "@id": "#4"
-        }
-      ],
       "doc:root": false
     },
     {
@@ -146,7 +146,7 @@
       ],
       "doc:reference-id": [
         {
-          "@id": "#6"
+          "@id": "#4"
         }
       ],
       "smaps": {
@@ -168,16 +168,7 @@
       }
     },
     {
-      "@id": "#2",
-      "@type": [
-        "doc:ExternalDomainElement",
-        "doc:DomainElement"
-      ],
-      "doc:raw": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}",
-      "core:mediaType": "application/json"
-    },
-    {
-      "@id": "#6",
+      "@id": "#4",
       "@type": [
         "doc:ExternalDomainElement",
         "doc:DomainElement"
@@ -186,17 +177,26 @@
       "core:mediaType": "application/json"
     },
     {
-      "@id": "#4",
+      "@id": "#2",
       "@type": [
         "doc:ExternalFragment",
         "doc:Fragment",
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#5"
+        "@id": "#3"
       },
       "doc:version": "2.1.2",
       "doc:root": false
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "doc:ExternalDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:raw": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}",
+      "core:mediaType": "application/json"
     },
     {
       "@id": "#17",
@@ -308,7 +308,7 @@
       },
       "doc:reference-id": [
         {
-          "@id": "#2"
+          "@id": "#6"
         }
       ],
       "doc:location": "file://amf-client/shared/src/test/resources/validations/json-schema-nested-refs/examples/CreateApplicationRequest.json",
@@ -323,7 +323,7 @@
       }
     },
     {
-      "@id": "#5",
+      "@id": "#3",
       "@type": [
         "doc:ExternalDomainElement",
         "doc:DomainElement"

@@ -8,6 +8,7 @@ import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
 import amf.core.parser.{
+  CompilerReferenceCollector,
   InferredLinkReference,
   LinkReference,
   ParsedDocument,
@@ -25,7 +26,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class JsonRefsReferenceHandler extends ReferenceHandler {
 
-  private val references            = ReferenceCollector()
+  private val references            = CompilerReferenceCollector()
   private var refUrls: Set[RefNode] = Set()
 
   case class RefNode(node: YNode, nodeValue: String) {
@@ -37,7 +38,7 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
     override def hashCode(): Int = nodeValue.hashCode
   }
 
-  override def collect(inputParsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
+  override def collect(inputParsed: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     inputParsed match {
       case parsed: SyamlParsedDocument =>
         links(parsed.document, ctx)
