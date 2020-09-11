@@ -131,6 +131,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
       parseMessageDeclarations(componentsMap, parent + "/messages")
 
+      ctx.closedShape(parent, componentsMap, "components")
       validateNames()
     }
   }

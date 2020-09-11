@@ -15,6 +15,19 @@ object Async20Syntax extends SpecSyntax {
       "externalDocs",
       "defaultContentType"
     ),
+    "components" -> Set(
+      "schemas",
+      "messages",
+      "securitySchemes",
+      "parameters",
+      "correlationIds",
+      "operationTraits",
+      "messageTraits",
+      "serverBindings",
+      "channelBindings",
+      "operationBindings",
+      "messageBindings"
+    ),
     "server" -> Set(
       "url",
       "protocol",
