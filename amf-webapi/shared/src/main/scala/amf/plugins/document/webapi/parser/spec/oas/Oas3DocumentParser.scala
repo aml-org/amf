@@ -147,30 +147,4 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     )
   }
 
-  def validateNames(): Unit = {
-    val declarations = ctx.declarations.declarables()
-    val keyRegex     = """^[a-zA-Z0-9\.\-_]+$""".r
-    declarations.foreach {
-      case elem: NamedDomainElement =>
-        elem.name.option() match {
-          case Some(name) =>
-            if (!keyRegex.pattern.matcher(name).matches())
-              violation(
-                elem,
-                s"Name $name does not match regular expression ${keyRegex.toString()} for component declarations")
-          case None =>
-            violation(elem, "No name is defined for given component declaration")
-        }
-      case _ =>
-    }
-    def violation(elem: NamedDomainElement, msg: String): Unit = {
-      ctx.eh.violation(
-        ParserSideValidations.InvalidFieldNameInComponents,
-        elem.id,
-        msg,
-        elem.annotations
-      )
-    }
-  }
-
 }
