@@ -250,4 +250,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Components must use keys with certain regex") {
     validate("invalid-component-names.yaml", Some("invalid-component-names.report"), Async20Profile)
   }
+
+  test("Closed shape in components object") {
+    validate("components-closed-shape.yaml", Some("components-closed-shape.report"), Async20Profile)
+  }
 }
