@@ -241,10 +241,12 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           .entries
           .foreach(e => {
             val node = ScalarNode(e.key).text()
-            ctx.declarations += OasResponseParser(e.value.as[YMap], { r: Response =>
-              r.set(ResponseModel.Name, node).adopted(parentPath).add(DeclaredElement())
-              r.annotations ++= Annotations(e)
-            }).parse()
+            ctx.declarations += OasResponseParser(
+              e.value.as[YMap], { r: Response =>
+                r.set(ResponseModel.Name, node, Annotations(e.key)).adopted(parentPath).add(DeclaredElement())
+                r.annotations ++= Annotations(e)
+              }
+            ).parse()
           })
       }
     )
