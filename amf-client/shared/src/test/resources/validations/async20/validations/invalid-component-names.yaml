@@ -1,0 +1,134 @@
+asyncapi: 2.0.0
+
+info:
+  title: Signup service example (internal)
+  version: 0.1.0
+
+channels: {}
+
+components:
+  securitySchemes:
+    user#Password:
+      type: userPassword
+      description: userPassword security scheme
+    userPassword:
+      type: userPassword
+      description: userPassword security scheme
+
+  schemas:
+    simple#obj:
+      type: object
+    User_1:
+      type: string
+      properties:
+        country:
+          enum: ["United States of America", "Canada"]
+
+
+  parameters:
+    user#Id:
+      description: id of the user
+      location: "$message.payload#/user/id"
+      schema:
+        type: string
+    param.name:
+      description: other
+      location: "$message.payload#/user/id"
+      schema:
+        type: string
+
+  messages:
+    some#Message:
+      headers:
+        type: object
+        properties:
+          a:
+            type: string
+          b:
+            type: integer
+      payload:
+        type: string
+      schemaFormat: application/schema+json;version=draft-07
+    external-message:
+      headers:
+        type: object
+        properties:
+          a:
+            type: string
+          b:
+            type: integer
+        payload:
+          type: string
+        schemaFormat: application/schema+json;version=draft-07
+
+  correlationIds:
+    some#Id:
+      description: Default Correlation ID
+      location: $message.header#/correlationId
+    external-example_1:
+      description: Default Correlation ID
+      location: $message.header#/correlationId
+
+  messageBindings:
+    s#omeName:
+      mqtt:
+        bindingVersion: 31.07.92
+
+    externalMessageBinding:
+      mqtt:
+        bindingVersion: 31.07.92
+
+  serverBindings:
+    some#ServerBinding:
+      mqtt:
+        clientId: someid
+        cleanSession: true
+        keepAlive: 12
+        bindingVersion: 3.4.3
+    externalServerBinding:
+      mqtt:
+        clientId: someid
+        cleanSession: true
+        keepAlive: 12
+        bindingVersion: 3.4.3
+
+  operationBindings:
+    some#OperationBinding:
+      http:
+        bindingVersion: 31.07.92
+        type: request
+        query:
+          type: object
+          properties:
+            some:
+              type: string
+    externalOperationBinding:
+      http:
+        bindingVersion: 31.07.92
+        type: request
+        query:
+          type: object
+          properties:
+            some:
+              type: string
+
+  channelBindings:
+    some#ChannelBinding:
+      ws:
+        bindingVersion: 1.0.0
+    externalChannelBinding:
+      ws:
+        bindingVersion: 1.0.0
+
+  operationTraits:
+    first#Trait:
+      summary: aSummary
+    other_name-1:
+      summary: aSummary
+
+  messageTraits:
+    message#trait:
+      title: something
+    valid.name-for_regex1:
+      title: something
+

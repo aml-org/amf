@@ -246,4 +246,8 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("JSON with duplicate keys") {
     validate("duplicate-keys.json", Some("duplicate-keys.report"), Async20Profile, overridedHint = Some(AsyncJsonHint))
   }
+
+  test("Components must use keys with certain regex") {
+    validate("invalid-component-names.yaml", Some("invalid-component-names.report"), Async20Profile)
+  }
 }
