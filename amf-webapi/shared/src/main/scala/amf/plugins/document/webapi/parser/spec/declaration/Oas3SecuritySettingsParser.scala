@@ -72,7 +72,7 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
     val flowMap = flowEntry.value.as[YMap]
     val flowKey = ScalarNode(flowEntry.key).string()
 
-    flow.set(OAuth2FlowModel.Flow, flowKey)
+    flow.set(OAuth2FlowModel.Flow, flowKey, Annotations(flowEntry.key))
 
     flow.adopted(parent)
 

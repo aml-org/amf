@@ -70,7 +70,7 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
     map.key("server").foreach { entry =>
       val m      = entry.value.as[YMap]
       val server = new OasLikeServerParser(templatedLink.id, YMapEntryLike(m))(ctx).parse()
-      templatedLink.withServer(server)
+      templatedLink.set(TemplatedLinkModel.Server, server, Annotations(entry))
     }
 
     map.key(

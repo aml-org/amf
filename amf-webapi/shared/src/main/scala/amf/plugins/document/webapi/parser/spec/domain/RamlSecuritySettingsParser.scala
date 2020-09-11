@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, Lazy}
@@ -96,7 +97,7 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
       (OAuth2FlowModel.Scopes in flow.getOrCreate using ScopeParser).allowingSingleValue.apply(entry)
     }
 
-    flow.option.foreach(f => settings.setArray(OAuth2SettingsModel.Flows, Seq(f)))
+    flow.option.foreach(f => settings.setArray(OAuth2SettingsModel.Flows, Seq(f), Annotations() += SynthesizedField()))
 
     dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")
     settings
