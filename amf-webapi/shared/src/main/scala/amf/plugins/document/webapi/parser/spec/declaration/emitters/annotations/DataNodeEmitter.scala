@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations
 
+import amf.core.annotations.SourceAST
 import amf.core.emitter.BaseEmitters.{LinkScalaEmitter, NullEmitter, TextScalarEmitter, pos}
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
@@ -9,7 +10,7 @@ import amf.core.utils.AmfStrings
 import amf.core.vocabulary.Namespace
 import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.{YMapEntry, YNode, YScalar, YType}
 
 import scala.collection.mutable
 
@@ -129,4 +130,30 @@ case class DataNodeEmitter(
 
     override def position(): Position = wrapped.position()
   }
+}
+
+private[annotations] case class DataPropertyEmitter(key: String,
+                                                    value: DataNode,
+                                                    ordering: SpecOrdering,
+                                                    referencesCollector: mutable.Map[String, DomainElement] =
+                                                      mutable.Map(),
+                                                    propertyAnnotations: Annotations)(implicit eh: ErrorHandler)
+    extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    val keyAnnotations = getAstFrom(propertyAnnotations).getOrElse(propertyAnnotations)
+    b.entry(
+      YNode(YScalar.withLocation(key.urlComponentDecoded, YType.Str, keyAnnotations.sourceLocation), YType.Str),
+      // In the current implementation there can only be one value, we are NOT flattening arrays
+      DataNodeEmitter(value, ordering, referencesCollector)(eh).emit(_)
+    )
+  }
+
+  private def getAstFrom(annotations: Annotations) =
+    annotations
+      .find(classOf[SourceAST])
+      .map(_.ast)
+      .collectFirst({ case e: YMapEntry => Annotations(e.key) })
+
+  override def position(): Position = pos(value.annotations)
 }

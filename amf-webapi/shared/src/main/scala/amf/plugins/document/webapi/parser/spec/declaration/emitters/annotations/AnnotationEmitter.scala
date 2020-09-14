@@ -92,30 +92,6 @@ case class RamlFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: S
   override val name: String = shapeExtension.definedBy.name.value()
 }
 
-case class DataPropertyEmitter(key: String,
-                               value: DataNode,
-                               ordering: SpecOrdering,
-                               referencesCollector: mutable.Map[String, DomainElement] = mutable.Map(),
-                               propertyAnnotations: Annotations)(implicit eh: ErrorHandler)
-    extends EntryEmitter {
-
-  override def emit(b: EntryBuilder): Unit = {
-
-    val keyAnnotations = propertyAnnotations
-      .find(classOf[SourceAST])
-      .map(_.ast)
-      .collectFirst({ case e: YMapEntry => Annotations(e.key) })
-      .getOrElse(propertyAnnotations)
-    b.entry(
-      YNode(YScalar.withLocation(key.urlComponentDecoded, YType.Str, keyAnnotations.sourceLocation), YType.Str),
-      // In the current implementation there can only be one value, we are NOT flattening arrays
-      DataNodeEmitter(value, ordering, referencesCollector)(eh).emit(_)
-    )
-  }
-
-  override def position(): Position = pos(value.annotations)
-}
-
 case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
     implicit spec: RamlSpecEmitterContext)
     extends AnnotationTypeEmitter(property, ordering) {
