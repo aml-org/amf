@@ -16,7 +16,6 @@ import scala.collection.mutable
 case class DataNodeEmitter(
     dataNode: DataNode,
     ordering: SpecOrdering,
-    resolvedLinks: Boolean = false,
     referencesCollector: mutable.Map[String, DomainElement] = mutable.Map())(implicit eh: ErrorHandler)
     extends PartEmitter {
   private val xsdString: String  = Namespace.XsdTypes.xsdString.iri()
@@ -75,7 +74,6 @@ case class DataNodeEmitter(
         DataPropertyEmitter(f.value.name.urlComponentDecoded,
                             value.value.asInstanceOf[DataNode],
                             ordering,
-                            resolvedLinks,
                             referencesCollector,
                             value.annotations)
       }
@@ -90,7 +88,7 @@ case class DataNodeEmitter(
   }
 
   private def arrayEmitters(arrayNode: ArrayNode): Seq[PartEmitter] =
-    arrayNode.members.map(DataNodeEmitter(_, ordering, resolvedLinks, referencesCollector))
+    arrayNode.members.map(DataNodeEmitter(_, ordering, referencesCollector))
 
   private def emitArray(arrayNode: ArrayNode, b: PartBuilder): Unit = {
     b.list { b =>
@@ -104,9 +102,7 @@ case class DataNodeEmitter(
 
   private def linkEmitters(link: LinkNode): Seq[PartEmitter] = {
     link.linkedDomainElement.foreach(elem => referencesCollector.update(link.alias.value(), elem))
-    if (resolvedLinks) { Seq(LinkScalaEmitter(link.alias.value(), link.annotations)) } else {
-      Seq(LinkScalaEmitter(link.alias.value(), link.annotations))
-    }
+    Seq(LinkScalaEmitter(link.alias.value(), link.annotations))
   }
 
   private def scalarEmitter(scalar: ScalarNode): PartEmitter = {

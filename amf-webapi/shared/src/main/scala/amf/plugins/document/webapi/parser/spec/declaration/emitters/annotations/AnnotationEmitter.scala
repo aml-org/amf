@@ -95,7 +95,6 @@ case class RamlFacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: S
 case class DataPropertyEmitter(key: String,
                                value: DataNode,
                                ordering: SpecOrdering,
-                               resolvedLinks: Boolean = false,
                                referencesCollector: mutable.Map[String, DomainElement] = mutable.Map(),
                                propertyAnnotations: Annotations)(implicit eh: ErrorHandler)
     extends EntryEmitter {
@@ -110,7 +109,7 @@ case class DataPropertyEmitter(key: String,
     b.entry(
       YNode(YScalar.withLocation(key.urlComponentDecoded, YType.Str, keyAnnotations.sourceLocation), YType.Str),
       // In the current implementation there can only be one value, we are NOT flattening arrays
-      DataNodeEmitter(value, ordering, resolvedLinks, referencesCollector)(eh).emit(_)
+      DataNodeEmitter(value, ordering, referencesCollector)(eh).emit(_)
     )
   }
 

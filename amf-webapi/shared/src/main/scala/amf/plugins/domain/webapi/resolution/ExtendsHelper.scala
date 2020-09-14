@@ -69,7 +69,6 @@ object ExtendsHelper {
             DataNodeEmitter(node,
                             if (trAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
                             else SpecOrdering.Default,
-                            resolvedLinks = true,
                             referencesCollector)(ctx.eh).emit(_)
           )
         }
@@ -159,7 +158,6 @@ object ExtendsHelper {
             DataNodeEmitter(node,
                             if (rtAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
                             else SpecOrdering.Default,
-                            resolvedLinks = true,
                             referencesCollector)(ctx.eh).emit(_)
           )
         }
