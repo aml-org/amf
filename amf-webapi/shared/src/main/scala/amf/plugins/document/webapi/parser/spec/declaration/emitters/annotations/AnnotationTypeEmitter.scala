@@ -4,10 +4,20 @@ import amf.core.emitter.BaseEmitters.{ArrayEmitter, ValueEmitter}
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape}
 import amf.core.parser.{FieldEntry, Value}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
+  Raml10TypeEmitter,
+  RamlRecursiveShapeEmitter,
+  RamlTypeExpressionEmitter
+}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
+import amf.plugins.domain.shapes.models.AnyShape
+import amf.validations.RenderSideValidations.RenderValidation
 
 import scala.collection.mutable.ListBuffer
 
@@ -48,5 +58,51 @@ abstract class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: S
       case other =>
         throw new Exception(s"IllegalTypeDeclarations found: $other") // todo handle
     }
+  }
+}
+
+case class OasAnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
+    implicit spec: OasSpecEmitterContext)
+    extends AnnotationTypeEmitter(property, ordering) {
+
+  private val fs = property.fields
+  override protected val shapeEmitters: Seq[Emitter] = fs
+    .entry(CustomDomainPropertyModel.Schema)
+    .map({ f =>
+      OasSchemaEmitter(f, ordering, Nil)
+    })
+    .toSeq
+}
+
+case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(
+    implicit spec: RamlSpecEmitterContext)
+    extends AnnotationTypeEmitter(property, ordering) {
+
+  private val fs = property.fields
+  override protected val shapeEmitters: Seq[Emitter] = fs
+    .entry(CustomDomainPropertyModel.Schema)
+    .map({ f =>
+      // we merge in the main body
+      Option(f.value.value) match {
+        case Some(shape: AnyShape) =>
+          Raml10TypeEmitter(shape, ordering, Nil, Nil).emitters() match {
+            case es if es.forall(_.isInstanceOf[RamlTypeExpressionEmitter]) => es
+            case es if es.forall(_.isInstanceOf[EntryEmitter])              => es.collect { case e: EntryEmitter => e }
+            case other                                                      => throw new Exception(s"IllegalTypeDeclarations found: $other")
+          }
+        case Some(shape: RecursiveShape) => RamlRecursiveShapeEmitter(shape, ordering, Nil).emitters()
+        case Some(x) =>
+          spec.eh.violation(RenderValidation,
+                            property.id,
+                            None,
+                            "Cannot emit raml type for a shape that is not an AnyShape",
+                            x.position(),
+                            x.location())
+          Nil
+        case _ => Nil // ignore
+      }
+    }) match {
+    case Some(emitters) => emitters
+    case _              => Nil
   }
 }
