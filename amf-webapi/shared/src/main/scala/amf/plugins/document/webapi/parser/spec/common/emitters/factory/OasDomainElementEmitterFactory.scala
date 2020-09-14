@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas3SpecEmitterContext,
   OasSpecEmitterContext
 }
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationEmitter, OasCreativeWorkEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypePartEmitter
 import amf.plugins.document.webapi.parser.spec.domain.{
   ExampleDataNodePartEmitter,

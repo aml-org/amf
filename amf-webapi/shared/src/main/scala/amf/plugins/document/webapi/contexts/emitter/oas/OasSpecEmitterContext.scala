@@ -11,6 +11,12 @@ import amf.core.remote.{Oas20, Oas30, Vendor}
 import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.plugins.document.webapi.contexts.{RefEmitter, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
+  AnnotationTypeEmitter,
+  FacetsInstanceEmitter,
+  OasAnnotationTypeEmitter,
+  OasFacetsInstanceEmitter
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasRecursiveShapeEmitter, OasTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.emitters._

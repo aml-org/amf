@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.OrphanAnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.OrphanAnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.domain.OasResponseEmitter
 import amf.plugins.domain.webapi.models.Response
 import org.yaml.model.YDocument.EntryBuilder

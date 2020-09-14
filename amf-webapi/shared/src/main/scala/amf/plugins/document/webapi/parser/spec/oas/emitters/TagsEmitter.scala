@@ -4,7 +4,8 @@ import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasEntryCreativeWorkEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.OasEntryCreativeWorkEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.TagModel
 import amf.plugins.domain.webapi.models.Tag
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

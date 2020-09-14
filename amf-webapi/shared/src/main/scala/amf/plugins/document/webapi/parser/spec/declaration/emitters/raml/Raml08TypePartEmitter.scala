@@ -5,7 +5,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 
 object Raml08TypePartEmitter {
   def apply(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(

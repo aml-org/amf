@@ -8,7 +8,7 @@ import amf.core.parser.{FieldEntry, Position}
 import amf.core.remote.Vendor
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.{
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
   AnnotationsEmitter,
   DataNodeEmitter,
   OrphanAnnotationsEmitter

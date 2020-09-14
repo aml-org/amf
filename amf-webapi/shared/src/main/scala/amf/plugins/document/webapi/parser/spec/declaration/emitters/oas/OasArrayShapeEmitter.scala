@@ -5,7 +5,8 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.webapi.annotations.CollectionFormatFromItems
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.{FacetsEmitter, JSONSchemaDraft7SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsEmitter
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel}
 import amf.plugins.domain.shapes.models.ArrayShape
 

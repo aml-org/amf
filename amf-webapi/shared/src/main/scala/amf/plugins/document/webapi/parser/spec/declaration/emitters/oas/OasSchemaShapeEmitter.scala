@@ -3,10 +3,10 @@ package amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
 import amf.core.emitter.BaseEmitters.ValueEmitter
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, FacetsEmitter}
 import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.models.SchemaShape
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, FacetsEmitter}
 
 import scala.collection.mutable.ListBuffer
 

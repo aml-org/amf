@@ -8,7 +8,8 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{FieldEntry, Fields, Position, Value}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, ExtendsEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.ExtendsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import org.yaml.model.YDocument
