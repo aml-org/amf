@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   OasLikeTagsParser
 }
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncMessageBindingsParser
-import amf.plugins.document.webapi.parser.spec.domain.{Oas3ExampleOptions, ExampleDataParser}
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, ExamplesDataParser, Oas3ExampleOptions}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
@@ -195,14 +195,8 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
   private def parseNamedValueExamples(map: YMap, parentId: String): Seq[Example] =
     map.key("examples") match {
       case Some(examplesEntry) =>
-        examplesEntry.value
-          .as[YMap]
-          .entries
-          .map(entry => {
-            val example = Example(entry)
-            example.set(ExampleModel.Name, ScalarNode(entry.key).text()).adopted(parentId)
-            ExampleDataParser(entry.value, example, Oas3ExampleOptions).parse()
-          })
+        val seq = examplesEntry.value.as[YSequence]
+        ExamplesDataParser(seq, Oas3ExampleOptions, parentId).parse()
       case None => Nil
     }
 }

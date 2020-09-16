@@ -13,27 +13,22 @@ import org.yaml.model.YDocument
 
 import scala.collection.mutable.ListBuffer
 
-object Draft7ExampleEmitters {
+case class Draft6ExamplesEmitter(examples: Seq[Example], ordering: SpecOrdering)(implicit spec: OasLikeSpecEmitterContext)
+    extends OasLikeExampleEmitters
+    with EntryEmitter {
+  private def entryEmitter: EntryEmitter =
+    EntryPartEmitter("examples",
+                     ExamplesArrayPartEmitter(examples, ordering),
+                     position = examples.headOption.map(h => pos(h.annotations)).getOrElse(Position.ZERO))
 
-  def apply(examples: Seq[Example], ordering: SpecOrdering, references: Seq[BaseUnit])(
-      implicit spec: OasLikeSpecEmitterContext): Draft7ExampleEmitters = {
-    new Draft7ExampleEmitters(examples, ordering, references)
-  }
+  override def emit(b: YDocument.EntryBuilder): Unit = entryEmitter.emit(b)
+
+  override def emitters(): ListBuffer[EntryEmitter] = ListBuffer(entryEmitter)
+
+  override def position(): Position = examples.headOption.map(ex => pos(ex.annotations)).getOrElse(Position.ZERO)
 }
 
-class Draft7ExampleEmitters(examples: Seq[Example], ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasLikeSpecEmitterContext)
-    extends OasLikeExampleEmitters {
-  override def emitters(): ListBuffer[EntryEmitter] = {
-    ListBuffer(
-      EntryPartEmitter("examples",
-                       ExamplesArrayPartEmitter(examples, ordering, references),
-                       position = examples.headOption.map(h => pos(h.annotations)).getOrElse(Position.ZERO))
-    )
-  }
-}
-
-case class ExamplesArrayPartEmitter(examples: Seq[Example], ordering: SpecOrdering, references: Seq[BaseUnit])(
+case class ExamplesArrayPartEmitter(examples: Seq[Example], ordering: SpecOrdering)(
     implicit spec: OasLikeSpecEmitterContext)
     extends PartEmitter {
   override def emit(b: YDocument.PartBuilder): Unit = {

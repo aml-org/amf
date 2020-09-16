@@ -132,9 +132,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
               fs.entry(MessageModel.Bindings)
                 .foreach(f => result += new AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
               fs.entry(MessageModel.Examples)
-                .foreach(f =>
-                  result += NamedMultipleExampleEmitter("examples", f.arrayValues[Example], ordering, Seq())) // TODO: references
-
+                .foreach(f => result += Draft6ExamplesEmitter(f.arrayValues[Example], ordering))
               if (!isTrait) {
                 fs.entry(MessageModel.Extends).foreach(f => emitTraits(f, result))
                 fs.entry(MessageModel.Payloads).foreach(f => emitPayloads(f, result))
