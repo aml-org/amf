@@ -77,7 +77,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
                      entryValue)
 
     ctx.link(entryValue) match {
-      case Left(link) => parseReferenced(declaration, link, entryValue).adopted(parent)
+      case Left(link) => parseReferenced(declaration, link, entryValue, map.annotations).adopted(parent)
       case Right(value) =>
         val variables = AbstractVariables()
         val parentUri =
@@ -101,7 +101,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
         declaration
           .withName(key, map.key.map(Annotations(_)).getOrElse(annotations))
           .adopted(parent)
-          .withDataNode(dataNode)
+          .set(AbstractDeclarationModel.DataNode, dataNode, Annotations(filteredNode))
 
         variables.ifNonEmpty(p => declaration.withVariables(p))
 
@@ -109,12 +109,15 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
     }
   }
 
-  def parseReferenced(declared: AbstractDeclaration, parsedUrl: String, ast: YPart): AbstractDeclaration = {
+  def parseReferenced(declared: AbstractDeclaration,
+                      parsedUrl: String,
+                      ast: YPart,
+                      elementAnn: Annotations): AbstractDeclaration = {
     val d: AbstractDeclaration = declared match {
       case _: Trait        => ctx.declarations.findTraitOrError(ast)(parsedUrl, SearchScope.Fragments)
       case _: ResourceType => ctx.declarations.findResourceTypeOrError(ast)(parsedUrl, SearchScope.Fragments)
     }
-    val copied: AbstractDeclaration = d.link(parsedUrl, Annotations(ast))
+    val copied: AbstractDeclaration = d.link(parsedUrl, elementAnn)
     copied.withId(d.id)
     copied.withName(key, annotations)
   }

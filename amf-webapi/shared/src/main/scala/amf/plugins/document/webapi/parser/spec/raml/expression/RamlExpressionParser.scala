@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.raml.expression
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, Position}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -24,7 +24,7 @@ object RamlExpressionParser {
     builder
       .build()
       .map(adoptShapeTree(_, adopt))
-      .map(addAnnotations(_, getLexical(part), expression))
+      .map(addAnnotations(_, part, expression))
   }
 
   def parse(adopt: Shape => Unit, expression: String)(implicit ctx: WebApiContext): Option[Shape] = {
@@ -59,9 +59,12 @@ object RamlExpressionParser {
     }
   }
 
-  private def addAnnotations(shape: Shape, lexical: LexicalInformation, expression: String): Shape = {
-    shape.annotations.reject(a => a.isInstanceOf[LexicalInformation])
-    shape.annotations += lexical
+  private def addAnnotations(shape: Shape, part: YPart, expression: String): Shape = {
+    shape.annotations.reject(
+      a =>
+        a.isInstanceOf[LexicalInformation] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceAST] || a
+          .isInstanceOf[SourceLocation])
+    shape.annotations ++= Annotations(part)
     shape.annotations += ParsedFromTypeExpression(expression)
     shape
   }
