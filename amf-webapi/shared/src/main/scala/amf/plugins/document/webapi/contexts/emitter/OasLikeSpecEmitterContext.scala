@@ -10,7 +10,7 @@ import amf.core.utils._
 import amf.plugins.document.webapi.contexts.emitter.oas.OasRefEmitter
 import amf.plugins.document.webapi.contexts.{RefEmitter, SpecEmitterContext, SpecEmitterFactory}
 import amf.plugins.document.webapi.parser.OasTypeDefStringValueMatcher
-import amf.plugins.document.webapi.parser.spec.async.emitters.Draft7ExampleEmitters
+import amf.plugins.document.webapi.parser.spec.async.emitters.Draft6ExamplesEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasRecursiveShapeEmitter, OasTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   AnnotationEmitter,
@@ -37,7 +37,7 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
   def exampleEmitter: (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters =
     (isHeader, exampleOption, ordering, extensions, references) =>
       if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion)
-        Draft7ExampleEmitters.apply(exampleOption.toSeq ++ extensions, ordering, references)
+        Draft6ExamplesEmitter(exampleOption.toSeq ++ extensions, ordering)
       else
         OasExampleEmitters.apply(isHeader, exampleOption, ordering, extensions, references)
 

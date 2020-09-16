@@ -8,9 +8,10 @@ import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YNode.MutRef
-import org.yaml.model.{YNode, YScalar, YType}
+import org.yaml.model.{YNode, YScalar, YSequence, YType}
 import org.yaml.render.YamlRender
 import amf.core.parser.YNodeLikeOps
+import amf.core.utils.IdCounter
 
 case class ExampleDataParser(node: YNode, example: Example, options: ExampleOptions)(implicit ctx: WebApiContext) {
   def parse(): Example = {
@@ -52,5 +53,16 @@ case class ExampleDataParser(node: YNode, example: Example, options: ExampleOpti
     }
 
     example
+  }
+}
+
+case class ExamplesDataParser(seq: YSequence, options: ExampleOptions, parentId: String)(implicit ctx: WebApiContext) {
+  def parse(): Seq[Example] = {
+    val counter = new IdCounter()
+    seq.nodes.map { n =>
+      val exa = Example(n).withName(counter.genId("default-example"))
+      exa.adopted(parentId)
+      ExampleDataParser(n, exa, options).parse()
+    }
   }
 }

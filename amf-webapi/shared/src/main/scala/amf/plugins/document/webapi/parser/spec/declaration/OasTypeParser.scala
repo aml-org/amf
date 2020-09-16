@@ -25,6 +25,7 @@ import amf.plugins.document.webapi.parser.spec.common.{
 import amf.plugins.document.webapi.parser.spec.domain.{
   ExampleDataParser,
   ExampleOptions,
+  ExamplesDataParser,
   NodeDataNodeParser,
   RamlExamplesParser
 }
@@ -745,12 +746,8 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       map
         .key("examples")
         .map { entry =>
-          val counter = new IdCounter()
-          val examples = entry.value.as[YSequence].nodes.map { n =>
-            val exa = Example(n).withName(counter.genId("default-example"))
-            exa.adopted(shape.id)
-            ExampleDataParser(n, exa, options).parse()
-          }
+          val sequence = entry.value.as[YSequence]
+          val examples = ExamplesDataParser(sequence, options, shape.id).parse()
           shape.setArrayWithoutId(AnyShapeModel.Examples, examples, Annotations(entry))
         }
   }
