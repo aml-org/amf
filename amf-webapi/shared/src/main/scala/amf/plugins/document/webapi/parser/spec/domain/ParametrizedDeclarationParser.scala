@@ -26,12 +26,12 @@ case class ParametrizedDeclarationParser(
         entry.value.tagType match {
           case YType.Null =>
             val declaration = fromStringNode(entry.key)
-            declaration.add(Annotations.valueNode(node))
+            declaration.add(Annotations(entry))
           case _ =>
             val name = entry.key.as[YScalar].text
             val declaration =
               producer(name)
-                .add(Annotations.valueNode(node))
+                .add(Annotations(entry))
             setName(declaration, name, entry.key)
             declaration.fields.setWithoutId(ParametrizedDeclarationModel.Target, declarations(name, SearchScope.Named))
             val variables = entry.value
@@ -75,5 +75,5 @@ case class ParametrizedDeclarationParser(
   }
 
   def setName(declaration: ParametrizedDeclaration, name: String, key: YNode): Unit =
-    declaration.set(ParametrizedDeclarationModel.Name, AmfScalar(name), Annotations(key))
+    declaration.set(ParametrizedDeclarationModel.Name, AmfScalar(name, Annotations(key)), Annotations(key))
 }
