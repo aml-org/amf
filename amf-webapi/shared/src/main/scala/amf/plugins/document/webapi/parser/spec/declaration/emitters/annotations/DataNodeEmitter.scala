@@ -4,6 +4,7 @@ import amf.core.annotations.SourceAST
 import amf.core.emitter.BaseEmitters.{LinkScalaEmitter, NullEmitter, TextScalarEmitter, pos}
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
+import amf.core.metamodel.Field
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Position}
 import amf.core.utils.AmfStrings
@@ -70,6 +71,9 @@ case class DataNodeEmitter(
   private def objectEmitters(objectNode: ObjectNode): Seq[EntryEmitter] = {
     objectNode
       .propertyFields()
+      .collect {
+        case f: Field if isDataNode(f, objectNode) => f
+      }
       .map { f =>
         val value = objectNode.fields.getValue(f)
         DataPropertyEmitter(f.value.name.urlComponentDecoded,
@@ -80,6 +84,9 @@ case class DataNodeEmitter(
       }
       .toSeq
   }
+
+  private def isDataNode(f: Field, node: DataNode) =
+    node.fields.getValueAsOption(f).exists(v => v.value.isInstanceOf[DataNode])
 
   private def emitObject(objectNode: ObjectNode, b: PartBuilder): Unit = {
     b.obj { b =>
