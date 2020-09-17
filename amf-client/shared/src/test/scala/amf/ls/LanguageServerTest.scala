@@ -119,8 +119,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
           .target
           .asInstanceOf[Trait]
           .asOperation(model)
-        assert(Option(res).isEmpty)
-        succeed
+        assert(res.fields.fields().isEmpty)
       }
   }
 }
