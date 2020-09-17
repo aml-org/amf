@@ -42,5 +42,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/mercury.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/put
   Property: http://a.ml/vocabularies/apiContract#returns
-  Position: Some(LexicalInformation([(66,12)-(69,0)]))
+  Position: Some(LexicalInformation([(66,22)-(69,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/mercury.raml
