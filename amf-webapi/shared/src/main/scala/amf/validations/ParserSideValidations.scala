@@ -68,6 +68,16 @@ object ParserSideValidations extends Validations {
     "'baseUri' not defined and 'baseUriParameters' defined."
   )
 
+  val ImplicitVersionParameterWithoutApiVersion = validation(
+    "implicit-version-parameter-without-api-version",
+    "Base uri has 'version' parameter but the API doesn't define a version"
+  )
+
+  val InvalidVersionBaseUriParameterDefinition = validation(
+    "invalid-version-base-uri-parameter-definition",
+    "'version' baseUriParameter can't be defined if present in baseUri as variable"
+  )
+
   val ParameterNameRequired = validation(
     "parameter-name-required",
     "Parameter name is required"
@@ -681,20 +691,22 @@ object ParserSideValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> WARNING
     ),
-    ItemsFieldRequiredWarning.id         -> all(WARNING), // TODO: should be violation
-    NullAbstractDeclaration.id           -> all(WARNING),
-    SchemaDeprecated.id                  -> all(WARNING),
-    SchemasDeprecated.id                 -> all(WARNING),
-    UnusedBaseUriParameter.id            -> all(WARNING),
-    InvalidShapeFormat.id                -> all(WARNING),
-    CrossSecurityWarningSpecification.id -> all(WARNING),
-    ReadOnlyPropertyMarkedRequired.id    -> all(WARNING),
-    MissingRequiredFieldForGrantType.id  -> all(WARNING),
-    invalidExampleFieldWarning.id        -> all(WARNING), // TODO: should be violation
-    OasInvalidParameterSchema.id         -> all(WARNING), // TODO: should be violation
-    InvalidAllowedTargets.id             -> all(WARNING), // TODO: should be violation
-    MissingDiscriminatorProperty.id      -> all(VIOLATION),
-    InvalidPayload.id                    -> all(VIOLATION)
+    ItemsFieldRequiredWarning.id                 -> all(WARNING), // TODO: should be violation
+    NullAbstractDeclaration.id                   -> all(WARNING),
+    SchemaDeprecated.id                          -> all(WARNING),
+    SchemasDeprecated.id                         -> all(WARNING),
+    UnusedBaseUriParameter.id                    -> all(WARNING),
+    InvalidShapeFormat.id                        -> all(WARNING),
+    CrossSecurityWarningSpecification.id         -> all(WARNING),
+    ReadOnlyPropertyMarkedRequired.id            -> all(WARNING),
+    MissingRequiredFieldForGrantType.id          -> all(WARNING),
+    invalidExampleFieldWarning.id                -> all(WARNING), // TODO: should be violation
+    OasInvalidParameterSchema.id                 -> all(WARNING), // TODO: should be violation
+    InvalidAllowedTargets.id                     -> all(WARNING), // TODO: should be violation
+    MissingDiscriminatorProperty.id              -> all(VIOLATION),
+    InvalidPayload.id                            -> all(VIOLATION),
+    ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation,
+    InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING) // TODO: should be violation,
   )
 
   override val validations: List[ValidationSpecification] = List(

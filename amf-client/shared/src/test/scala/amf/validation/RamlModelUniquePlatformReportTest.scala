@@ -511,4 +511,36 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Annotation types - check target locations are valid") {
     validate("raml/invalid-annotation-type.raml", Some("raml/invalid-annotation-type.report"), Raml10Profile)
   }
+
+  test("RAML10 'version' as baseUriParameter is restricted if API version is Defined") {
+    validate("raml/invalid-baseUriParameter-version.raml",
+             Some("raml/invalid-baseUriParameter-version.report"),
+             Raml10Profile)
+  }
+
+  test("RAML08 'version' as baseUriParameter is restricted if API version is Defined") {
+    validate("08/invalid-baseUriParameter-version.raml",
+             Some("08/invalid-baseUriParameter-version.report"),
+             Raml08Profile)
+  }
+
+  test("RAML10 API must have 'version' if its present as variable in baseUri") {
+    validate("raml/invalid-baseUri-version-variable.raml",
+             Some("raml/invalid-baseUri-version-variable.report"),
+             Raml10Profile)
+  }
+
+  test("RAML08 API must have 'version' if its present as variable in baseUri") {
+    validate("08/invalid-baseUri-version-variable.raml",
+             Some("08/invalid-baseUri-version-variable.report"),
+             Raml08Profile)
+  }
+
+  test("Raml10 version baseUri variable valid definition") {
+    validate("raml/valid-base-uri-version-variable.raml", None, Raml10Profile)
+  }
+
+  test("Raml08 version baseUri variable valid definition") {
+    validate("08/valid-base-uri-version-variable.raml", None, Raml08Profile)
+  }
 }
