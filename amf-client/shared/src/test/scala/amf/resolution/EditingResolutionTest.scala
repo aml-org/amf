@@ -787,6 +787,18 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("binary external fragment with char 'NUL' is emitted as valid json", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath + "binary-fragment/",
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit, config.target, defaultRenderOptions, config.syntax).renderToString
   }
