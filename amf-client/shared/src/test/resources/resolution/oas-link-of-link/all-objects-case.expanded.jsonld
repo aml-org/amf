@@ -134,15 +134,15 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/web-api/end-points/%2FendPoint/get/200/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/web-api/end-points/%2FendPoint/get/200/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/web-api/end-points/%2FendPoint/get/200"
+                                "@value": "http://a.ml/vocabularies/core#name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(22,8)-(25,35)]"
+                                "@value": "[(22,8)-(22,13)]"
                               }
                             ]
                           },
@@ -156,6 +156,19 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(23,10)-(24,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/web-api/end-points/%2FendPoint/get/200/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/web-api/end-points/%2FendPoint/get/200"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(22,8)-(25,35)]"
                               }
                             ]
                           }
