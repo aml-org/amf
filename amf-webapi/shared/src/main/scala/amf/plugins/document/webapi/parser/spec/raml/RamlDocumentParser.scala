@@ -228,7 +228,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       entry => {
         api.set(WebApiModel.Documentations,
                 AmfArray(UserDocumentationsParser(entry.value.as[Seq[YNode]], ctx.declarations, api.id).parse()),
-                Annotations(entry.value))
+                Annotations(entry))
       }
     )
 
