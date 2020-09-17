@@ -14,9 +14,10 @@ import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
 import amf.validations.ParserSideValidations._
-import org.yaml.model.{YMap, YType}
+import org.yaml.model.{YMap, YMapEntry, YType}
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
+
   def parse(): Unit = {
     map.key("baseUri") match {
       case Some(entry) =>
@@ -32,6 +33,8 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 
         map.key("serverDescription".asRamlAnnotation, ServerModel.Description in server)
 
+        val variables = TemplateUri.variables(value)
+        checkForUndefinedVersion(entry, variables)
         parseBaseUriParameters(server, TemplateUri.variables(value))
 
         api.set(WebApiModel.Servers,
@@ -69,24 +72,11 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     val maybeEntry = map.key("baseUriParameters")
     maybeEntry match {
       case Some(entry) =>
-        val parameters = entry.value.tagType match {
-          case YType.Map =>
-            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
-              .parse()
-              .map(_.withBinding("path"))
-          case YType.Null => Nil
-          case _ =>
-            ctx.eh.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
-            Nil
-        }
-        val flatten: Seq[Parameter] = orderedVariables.map(v =>
-          parameters.find(_.name.value().equals(v)) match {
-            case Some(p) => p
-            case _       => buildParamFromVar(v, server.id)
-
-        })
-        val (_, unused) = parameters.partition(flatten.contains(_))
-        val finalParams = flatten ++ unused
+        val parameters = parseExplicitParameters(entry, server)
+        checkIfVersionParameterIsDefined(orderedVariables, parameters, entry)
+        val flatten: Seq[Parameter] = getOrCreateVariableParams(orderedVariables, parameters, server)
+        val (_, unused)             = parameters.partition(flatten.contains(_))
+        val finalParams             = flatten ++ unused
         server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
         unused.foreach { p =>
           ctx.eh.warning(UnusedBaseUriParameter,
@@ -96,13 +86,33 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
                          p.position(),
                          p.location())
         }
-      case None =>
-        if (orderedVariables.nonEmpty)
-          server.set(ServerModel.Variables,
-                     AmfArray(orderedVariables.map(buildParamFromVar(_, server.id)), Annotations()),
-                     Annotations())
+      case None if orderedVariables.nonEmpty =>
+        server.set(ServerModel.Variables, AmfArray(orderedVariables.map(buildParamFromVar(_, server.id))))
+      case _ => // ignore
     }
 
+  }
+
+  private def getOrCreateVariableParams(orderedVariables: Seq[String], parameters: Seq[Parameter], server: Server) = {
+    orderedVariables.map(v =>
+      parameters.find(_.name.value().equals(v)) match {
+        case Some(p) => p
+        case _       => buildParamFromVar(v, server.id)
+
+    })
+  }
+
+  private def parseExplicitParameters(entry: YMapEntry, server: Server) = {
+    entry.value.tagType match {
+      case YType.Map =>
+        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
+          .parse()
+          .map(_.withBinding("path"))
+      case YType.Null => Nil
+      case _ =>
+        ctx.eh.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
+        Nil
+    }
   }
 
   private def buildParamFromVar(v: String, serverId: String) = {
@@ -112,6 +122,30 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     param.annotations += SynthesizedField()
     param
   }
+
+  private def checkForUndefinedVersion(entry: YMapEntry, variables: Seq[String]): Unit = {
+    val webapiHasVersion = map.key("version").isDefined
+    if (variables.contains("version") && !webapiHasVersion) {
+      ctx.eh.warning(ImplicitVersionParameterWithoutApiVersion,
+                     api.id,
+                     "'baseUri' defines 'version' variable without the API defining one",
+                     entry)
+    }
+  }
+
+  private def checkIfVersionParameterIsDefined(orderedVariables: Seq[String],
+                                               parameters: Seq[Parameter],
+                                               entry: YMapEntry): Unit = {
+    val apiHasVersion          = api.version.option().isDefined
+    val versionParameterExists = parameters.exists(_.name.option().exists(name => name.equals("version")))
+    if (orderedVariables.contains("version") && versionParameterExists && apiHasVersion) {
+      ctx.eh.warning(InvalidVersionBaseUriParameterDefinition,
+                     api.id,
+                     "'version' baseUriParameter can't be defined if present in baseUri as variable",
+                     entry)
+    }
+  }
+
 }
 
 case class Oas3ServersParser(map: YMap, elem: DomainElement, field: Field)(implicit override val ctx: OasWebApiContext)
