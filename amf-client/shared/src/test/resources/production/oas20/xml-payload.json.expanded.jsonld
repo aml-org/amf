@@ -286,15 +286,15 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas20/xml-payload.json#/web-api/end-points/%2Ftest/get/200/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas20/xml-payload.json#/web-api/end-points/%2Ftest/get/200/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/oas20/xml-payload.json#/web-api/end-points/%2Ftest/get/200"
+                                "@value": "http://a.ml/vocabularies/core#name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(12,10)-(20,11)]"
+                                "@value": "[(12,10)-(12,15)]"
                               }
                             ]
                           },
@@ -308,6 +308,19 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(13,12)-(13,31)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas20/xml-payload.json#/web-api/end-points/%2Ftest/get/200/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/oas20/xml-payload.json#/web-api/end-points/%2Ftest/get/200"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(12,10)-(20,11)]"
                               }
                             ]
                           }
