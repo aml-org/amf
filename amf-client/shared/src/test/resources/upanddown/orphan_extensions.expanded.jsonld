@@ -170,15 +170,15 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/end-points/%2Flevelzero/get/200/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/end-points/%2Flevelzero/get/200/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/end-points/%2Flevelzero/get/200"
+                                "@value": "http://a.ml/vocabularies/core#name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(24,10)-(26,11)]"
+                                "@value": "[(24,10)-(24,15)]"
                               }
                             ]
                           },
@@ -192,6 +192,19 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(25,12)-(25,41)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/end-points/%2Flevelzero/get/200/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/orphan_extensions.json#/web-api/end-points/%2Flevelzero/get/200"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(24,10)-(26,11)]"
                               }
                             ]
                           }

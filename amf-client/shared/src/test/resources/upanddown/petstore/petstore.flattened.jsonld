@@ -241,10 +241,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_1"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_2"
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_1"
         }
       ]
     },
@@ -303,14 +306,19 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,10)-(22,11)]"
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(14,10)-(14,15)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,12)-(15,41)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(14,10)-(22,11)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/default/array/default/items/array/items",
