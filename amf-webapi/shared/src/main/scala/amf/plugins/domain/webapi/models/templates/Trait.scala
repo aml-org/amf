@@ -42,8 +42,7 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
               keepEditingInfo = false,
               errorHandler = errorHandler
             ))
-          .getOrElse(Operation()) // TODO should we return null or an empty operation?
-      // Yes, we should (an error handler is provided for situations
+          .getOrElse(Operation())
     }
   }
 
