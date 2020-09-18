@@ -1,0 +1,12 @@
+#%K8 Pod 0.1
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-example
+spec:
+  containers:
+  - name: container name
+    image: ubuntu:trusty
+    command: ["echo"]
+    args: ["Hello World"]

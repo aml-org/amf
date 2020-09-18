@@ -1,0 +1,48 @@
+#%Validation Profile 1.0
+profile: Barclays UK
+description: Custom profile that can be used as the base set of validations for all Barclays UK API specs
+extends: RAML
+violation:
+  - amf-parser.empty-endpoints
+  - get-operations-with-response-js
+  - camel-case-types
+info:
+  - amf-parser.empty-responses
+warning:
+  - amf-parser.strict-url-strings
+  - all-names-must-be-camel-case
+disabled:
+  - amf-parser.raml-schemes
+validations:
+  case-insensitive-schema:
+    message: This is not a valid scheme
+    targetClass:
+      - http.WebAPI
+    propertyConstraints:
+      http.host:
+        pattern: ^(h|H)(t|T){2}(p|P)(s|S)?$
+  camel-case-types:
+    message: Type declarations must be camel cased
+    targetClass:
+      - raml-shapes.Shape
+    propertyConstraints:
+      schema-org.name:
+        pattern: ([a-z]+[A-Z]+\\w+)+
+  all-names-must-be-camel-case:
+    message: All declarations
+    targetClass:
+      - raml-doc.DomainEntity
+    propertyConstraints:
+      schema-org.name:
+        pattern: ([a-z]+[A-Z]+\\w+)+
+  get-operations-with-responses-sparql:
+    message: GET operations must have a response
+    targetClass:
+      - hydra.Operation
+    query: ?request a hydra:Operation ;
+  get-operations-with-response-js:
+    message: GET operations must have a response
+    targetClass:
+      - http.Operation
+    functionConstraint:
+      code: function(operations) {}
