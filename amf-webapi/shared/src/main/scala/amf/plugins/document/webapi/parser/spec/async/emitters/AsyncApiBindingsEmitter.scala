@@ -13,7 +13,8 @@ import amf.plugins.document.webapi.parser.spec.async.emitters.bindings.{
   AsyncApiOperationBindingsEmitter,
   AsyncApiServerBindingsEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.{OasTagToReferenceEmitter, OrphanAnnotationsEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.OrphanAnnotationsEmitter
 import amf.plugins.domain.webapi.models.bindings._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YNode

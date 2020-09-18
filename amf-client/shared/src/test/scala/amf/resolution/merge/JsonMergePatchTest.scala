@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, 
 import amf.plugins.document.webapi.parser.spec.async.Subscribe
 import amf.plugins.document.webapi.parser.spec.async.parser.{AsyncMessageParser, AsyncOperationParser}
 import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, YMapEntryLike}
-import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncKeyCriteria, JsonMergePatch}
 import amf.plugins.domain.webapi.metamodel.AbstractModel
 import amf.plugins.domain.webapi.models.{Message, Operation}

@@ -19,7 +19,7 @@ import amf.plugins.document.webapi.contexts.parser.raml.{
 }
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
-import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ResolutionSideValidations.ParseResourceTypeFail
@@ -69,7 +69,6 @@ object ExtendsHelper {
             DataNodeEmitter(node,
                             if (trAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
                             else SpecOrdering.Default,
-                            resolvedLinks = true,
                             referencesCollector)(ctx.eh).emit(_)
           )
         }
@@ -159,7 +158,6 @@ object ExtendsHelper {
             DataNodeEmitter(node,
                             if (rtAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
                             else SpecOrdering.Default,
-                            resolvedLinks = true,
                             referencesCollector)(ctx.eh).emit(_)
           )
         }

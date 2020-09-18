@@ -5,7 +5,7 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.ExampleDataNodePartEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.OasLikeExampleEmitters
 import amf.plugins.domain.shapes.models.Example
