@@ -197,6 +197,11 @@
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml",
+      "http://a.ml/vocabularies/document#references": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-traits.json"
+        }
+      ],
       "@type": [
         "http://a.ml/vocabularies/document#Document",
         "http://a.ml/vocabularies/document#Fragment",
@@ -208,6 +213,28 @@
       },
       "http://a.ml/vocabularies/document#version": "2.1.0",
       "http://a.ml/vocabularies/document#root": true
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-traits.json",
+      "@type": [
+        "http://a.ml/vocabularies/document#ExternalFragment",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-traits.json#/external"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#root": false
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-traits.json#/external",
+      "@type": [
+        "http://a.ml/vocabularies/document#ExternalDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#raw": "{\n  \"firstOperationTrait\": {\n    \"summary\": \"aSummary\"\n  }\n}",
+      "http://a.ml/vocabularies/core#mediaType": "application/json"
     }
   ]
 }

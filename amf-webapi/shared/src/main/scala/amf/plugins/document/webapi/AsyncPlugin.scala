@@ -25,7 +25,7 @@ import org.yaml.model.YDocument
 
 sealed trait AsyncPlugin extends OasLikePlugin {
 
-  override val vendors: Seq[String] = Seq(vendor.name, AsyncApi.name)
+  override val vendors: Seq[String] = Seq(vendor.name, AsyncApi.name, Raml10.name)
 
   override def specContext(options: RenderOptions): AsyncSpecEmitterContext
 

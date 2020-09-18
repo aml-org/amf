@@ -89,7 +89,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
     ctx.setJsonSchemaAST(map)
 
-    val references = ReferencesParser(document, "uses".asOasExtension, map, root.references).parse(root.location)
+    val references = ReferencesParser(document, root.location, "uses".asOasExtension, map, root.references).parse()
     parseDeclarations(root, map)
     val declarationKeys = ctx.getDeclarationKeys
     if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))

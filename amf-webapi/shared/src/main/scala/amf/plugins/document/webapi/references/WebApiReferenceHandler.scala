@@ -81,12 +81,11 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     references += (entry.value.as[YScalar].text, ExtensionReference, entry.value)
   }
 
-  // todo: we should use vendor.name in every place instead of match handwrited strings
   private def links(part: YPart, ctx: ParserContext): Unit = {
     vendor match {
-      case Raml10.name | Raml08.name | Raml.name     => ramlLinks(part, ctx)
-      case Oas20.name | Oas30.name | AsyncApi20.name => oasLinks(part, ctx)
-      case _                                         => // Ignore
+      case Raml10.name | Raml08.name | Raml.name => ramlLinks(part, ctx)
+      case Oas20.name | Oas30.name               => oasLinks(part, ctx)
+      case AsyncApi20.name                       => oasLinks(part, ctx); ramlLinks(part, ctx)
     }
   }
 

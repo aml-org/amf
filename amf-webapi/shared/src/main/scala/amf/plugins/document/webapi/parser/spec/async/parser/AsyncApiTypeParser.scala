@@ -51,21 +51,13 @@ object AsyncSchemaFormats {
     }
 }
 
-object AsyncApiTypeParser {
-  def apply(entry: YMapEntry, adopt: Shape => Unit, version: JSONSchemaVersion)(
-      implicit ctx: OasLikeWebApiContext): AsyncApiTypeParser =
-    new AsyncApiTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
-}
-
-class AsyncApiTypeParser(entryOrNode: YMapEntryLike,
-                         name: String,
-                         map: YMap,
-                         adopt: Shape => Unit,
-                         version: JSONSchemaVersion)(implicit val ctx: OasLikeWebApiContext) {
+case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: JSONSchemaVersion)(
+    implicit val ctx: OasLikeWebApiContext) {
 
   def parse(): Option[Shape] = version match {
     case RAML10SchemaVersion() =>
-      Raml10TypeParser(entryOrNode, name, adopt, isAnnotation = false, AnyDefaultType)(toRaml(ctx)).parse()
-    case _ => new OasTypeParser(entryOrNode, name, map, adopt, version).parse()
+      Raml10TypeParser(YMapEntryLike(entry), entry.key.as[String], adopt, isAnnotation = false, AnyDefaultType)(
+        toRaml(ctx)).parse()
+    case _ => OasTypeParser(entry, adopt, version).parse()
   }
 }
