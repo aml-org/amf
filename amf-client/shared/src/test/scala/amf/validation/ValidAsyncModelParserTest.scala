@@ -77,6 +77,10 @@ class ValidAsyncModelParserTest extends ValidModelTest {
     checkValid("amqp-channel-binding.yaml", Async20Profile)
   }
 
+  test("References to message defined in components") {
+    checkValid("reference-declared-messages.yaml", Async20Profile)
+  }
+
   override val basePath: String = "file://amf-client/shared/src/test/resources/validations/async20/"
   override val hint: Hint       = AsyncYamlHint
 }

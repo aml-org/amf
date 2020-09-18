@@ -35,7 +35,7 @@ object ValidationResolutionPipeline {
   def apply(profile: ProfileName, unit: BaseUnit): BaseUnit = {
     val pipeline = profile match {
       case Oas30Profile   => new Oas30ValidationResolutionPipeline(unit.errorHandler())
-      case Async20Profile => new Async20ValidationResolutionPipeline(unit.errorHandler())
+      case Async20Profile => new Async20EditingPipeline(unit.errorHandler(), urlShortening = false)
       case _              => new ValidationResolutionPipeline(profile, unit.errorHandler())
     }
     pipeline.resolve(unit)

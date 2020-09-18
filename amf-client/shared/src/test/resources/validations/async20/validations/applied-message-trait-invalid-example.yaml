@@ -1,0 +1,23 @@
+asyncapi: 2.0.0
+
+info:
+  title: Signup service example (internal)
+  version: 0.1.0
+
+components:
+  messageTraits:
+    definesExample:
+      examples: [
+        "valid",
+        { "invalid": "example" }
+      ]
+
+channels:
+  /user/signedup:
+    subscribe:
+      message:
+        traits:
+          - $ref: "#/components/messageTraits/definesExample"
+        payload:
+          type: string
+
