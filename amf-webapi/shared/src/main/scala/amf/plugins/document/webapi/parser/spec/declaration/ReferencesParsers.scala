@@ -45,11 +45,10 @@ case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mut
   def solvedReferences(): Seq[BaseUnit] = references.values.toSet.toSeq
 }
 
-case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, references: Seq[ParsedReference])(
-    implicit ctx: WebApiContext) {
-  def parse(location: String): ReferenceDeclarations = {
-    val result: ReferenceDeclarations = parseLibraries(location)
-
+abstract class CommonReferencesParser(references: Seq[ParsedReference])(implicit ctx: WebApiContext) {
+  def parse(): ReferenceDeclarations = {
+    val result = ReferenceDeclarations()
+    parseLibraries(result)
     references.foreach {
       case ParsedReference(f: Fragment, origin: Reference, _)                          => result += (origin.url, f)
       case ParsedReference(d: Document, origin: Reference, _)                          => result += (origin.url, d)
@@ -57,16 +56,20 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
       case ParsedReference(other @ (_: Vocabulary | _: Dialect), origin: Reference, _) => result += (origin.url, other)
       case _                                                                           => // Nothing
     }
-
     result
   }
+
+  protected def parseLibraries(declarations: ReferenceDeclarations): Unit
+}
+
+case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YMap, references: Seq[ParsedReference])(
+    implicit ctx: WebApiContext)
+    extends CommonReferencesParser(references) {
 
   private def target(url: String): Option[BaseUnit] =
     references.find(r => r.origin.url.equals(url)).map(_.unit)
 
-  private def parseLibraries(id: String): ReferenceDeclarations = {
-    val result = ReferenceDeclarations()
-
+  override def parseLibraries(result: ReferenceDeclarations): Unit = {
     map.key(
       key,
       entry =>
@@ -93,13 +96,6 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
             ctx.eh.violation(InvalidModuleType, id, s"Invalid ast type for uses: ${entry.value.tagType}", entry.value)
       }
     )
-
-    result
-  }
-
-  private def library(id: String, e: YMapEntry): String = e.value.tagType match {
-    case YType.Include => e.value.as[YScalar].text
-    case _             => e.value
   }
 
   private def collectAlias(module: BaseUnit,
@@ -113,12 +109,17 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
   }
 }
 
+case class AsycnReferencesParser(references: Seq[ParsedReference])(implicit ctx: WebApiContext)
+    extends CommonReferencesParser(references) {
+  override protected def parseLibraries(declarations: ReferenceDeclarations): Unit = Unit
+}
+
 // Helper method to parse references and annotations before having an actual base unit
 object ReferencesParserAnnotations {
   def apply(key: String, map: YMap, root: Root)(
       implicit ctx: WebApiContext): (ReferenceDeclarations, Option[Aliases]) = {
     val tmp          = Document()
-    val declarations = ReferencesParser(tmp, key, map, root.references).parse(root.location)
+    val declarations = ReferencesParser(tmp, root.location, key, map, root.references).parse()
     (declarations, tmp.annotations.find(classOf[Aliases]))
   }
 }

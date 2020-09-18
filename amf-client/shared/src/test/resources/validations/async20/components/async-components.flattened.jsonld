@@ -883,6 +883,11 @@
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml",
+      "http://a.ml/vocabularies/document#references": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-components.json"
+        }
+      ],
       "http://a.ml/vocabularies/document#declares": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/types/simple-obj"
@@ -950,6 +955,19 @@
       },
       "http://a.ml/vocabularies/document#version": "2.1.0",
       "http://a.ml/vocabularies/document#root": true
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-components.json",
+      "@type": [
+        "http://a.ml/vocabularies/document#ExternalFragment",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-components.json#/external"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#root": false
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/types/simple-obj",
@@ -1287,6 +1305,15 @@
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messages/externalMessage/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-components.json#/external",
+      "@type": [
+        "http://a.ml/vocabularies/document#ExternalDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#raw": "{\n  \"external-schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"a\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"external-correlation-id\": {\n    \"description\": \"external correlation id\",\n    \"location\": \"$message.header#/correlationId\"\n  },\n  \"external-param\": {\n    \"description\": \"external\",\n    \"location\": \"$message.payload#/user/external\",\n    \"schema\": {\n      \"type\": \"string\"\n    }\n  },\n  \"external-message\": {\n    \"name\": \"some external message\",\n    \"title\": \"external message\",\n    \"summary\": \"external message summary\",\n    \"description\": \"A longer description of external message\",\n    \"contentType\": \"application/json\"\n  },\n  \"external-message-binding\": {\n    \"kafka\": {\n      \"key\": \"keyFromExternal\"\n    }\n  },\n  \"external-server-binding\": {\n    \"mqtt\": {\n      \"bindingVersion\": \"versionFromExternal\",\n      \"cleanSession\": true,\n      \"keepAlive\": true\n    }\n  },\n  \"external-operation-binding\": {\n    \"http\": {\n      \"bindingVersion\": \"versionFromExternal\",\n      \"type\": \"request\"\n    }\n  },\n  \"external-channel-binding\": {\n    \"ws\": {\n      \"bindingVersion\": \"versionFromExternal\"\n    }\n  }\n}",
+      "http://a.ml/vocabularies/core#mediaType": "application/json"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/types/simple-obj/source-map",
