@@ -297,7 +297,7 @@ case class NodeDataNodeParser(node: YNode,
                   scalar.text,
                   scalar.sourceName,
                   Position(node.range.lineFrom, node.range.columnFrom))(errorHandler)
-              else JsonParserFactory.fromCharsWithSource(scalar.text, scalar.sourceName)(errorHandler)
+              else JsonParserFactory.fromCharsWithSource(scalar.text, scalar.sourceName)(ctx.eh)
             parser.document().node
           }
       case Some(scalar) if XMLSchema.unapply(scalar.text).isDefined => None

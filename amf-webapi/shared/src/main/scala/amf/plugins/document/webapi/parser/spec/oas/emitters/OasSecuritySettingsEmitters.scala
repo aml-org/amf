@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.oas.emitters
 
+import amf.core.annotations.SingleValueArray
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.DataNode
@@ -98,7 +99,7 @@ case class OasOAuth2SettingsEmitters(settings: OAuth2Settings, ordering: SpecOrd
 
     val internals = ListBuffer[EntryEmitter]()
     fs.entry(OAuth2SettingsModel.AuthorizationGrants)
-      .map(f => internals += ArrayEmitter("authorizationGrants", f, ordering))
+      .map(f => internals += ArrayEmitter("authorizationGrants", f, ordering, force = true))
 
     settings.fields
       .entry(SettingsModel.AdditionalProperties)
