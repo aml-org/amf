@@ -35,9 +35,7 @@ behavior that is not occurring.
 We use [Scalafmt](https://scalameta.org/scalafmt/) to format our code! Please format your code before opening a Pull Request.
 
 ### Tests aren’t optional
-Any bugfix that doesn’t include a test proving the existence of the bug being fixed, may be suspect. 
-Same for new features that can’t prove they actually work.
- 
+Please include tests with any PR submission.
 Writing tests before the implementation is strongly encouraged.
 
 To run tests:
@@ -49,7 +47,7 @@ $ sbt clientJS/testOnly // to run tests only for the JS platform
 
 #### Travis CI
 
-Travis CI will automatically run tests upon creationg of your PR, please make sure all tests pass before someone can review you contribution.
+Travis CI will automatically run tests upon creation of your PR, please make sure all tests pass before someone can review you contribution.
 
 #### Test coverage
 
