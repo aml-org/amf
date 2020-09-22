@@ -34,15 +34,24 @@ behavior that is not occurring.
 
 We use [Scalafmt](https://scalameta.org/scalafmt/) to format our code! Please format your code before opening a Pull Request.
 
-### Tests aren’t optional
-Please include tests with any PR submission.
-Writing tests before the implementation is strongly encouraged.
+### Running and writing tests
+
+**Important**: Please include tests with any code contributions
+
+Writing tests before the implementation is strongly encouraged. 
 
 To run tests:
 ```sh
 $ sbt test
 $ sbt clientJVM/testOnly // to run tests only for the JVM platform
 $ sbt clientJS/testOnly // to run tests only for the JS platform
+```
+
+Code contributions must comply with a minimum of 80% coverage rate. 
+
+To run a coverage report of the whole project:
+```sh
+sbt coverage test coverageReport
 ```
 
 #### Travis CI
