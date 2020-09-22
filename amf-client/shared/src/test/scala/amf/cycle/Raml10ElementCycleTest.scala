@@ -1,5 +1,6 @@
 package amf.cycle
 
+import amf.core.annotations.ExternalFragmentRef
 import amf.core.remote.{RamlYamlHint, Vendor}
 import amf.plugins.document.webapi.annotations.ForceEntry
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
@@ -30,6 +31,20 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
         link
       },
       "type/link-force-entry-emission.yaml",
+      RamlYamlHint
+    )
+  }
+
+  test("type - emission of created link with force entry and external fragment ref") {
+    renderElement(
+      "type/complex-inheritance-unions.raml",
+      (b) => {
+        val original: Option[AnyShape] = CommonExtractors.namedRootInDeclares(b)
+        val link: Option[AnyShape] =
+          original.map(_.link[AnyShape]("someName.raml").add(ForceEntry()).add(ExternalFragmentRef("someName.raml")))
+        link
+      },
+      "type/link-force-entry-fragment-emission.yaml",
       RamlYamlHint
     )
   }
