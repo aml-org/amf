@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
 
 import amf.core.annotations.ExternalFragmentRef
+import amf.core.emitter.BaseEmitters.EntryPartEmitter
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
@@ -38,13 +39,13 @@ case class Raml10TypeEmitter(shape: Shape,
       case _ if Option(shape).isDefined && shape.annotations.contains(classOf[ExternalReferenceUrl]) =>
         Seq(RamlExternalReferenceUrlEmitter(shape))
       case l: Linkable if l.isLink =>
-        if (l.annotations.contains(classOf[ExternalFragmentRef]) ||
-            spec.externalLink(shape, references).exists(_.isInstanceOf[EncodesModel]))
-          Seq(spec.externalReference(shape))
-        else if (forceEntry || l.annotations.contains(classOf[ForceEntry]))
-          Seq(spec.localReferenceEntryEmitter("type", shape))
-        else
-          Seq(spec.localReference(shape))
+        val isForceEntry = forceEntry || l.annotations.contains(classOf[ForceEntry])
+        val refEmitter =
+          if (l.annotations.contains(classOf[ExternalFragmentRef]) ||
+              spec.externalLink(shape, references).exists(_.isInstanceOf[EncodesModel])) spec.externalReference(shape)
+          else spec.localReference(shape)
+        if (isForceEntry) Seq(EntryPartEmitter("type", refEmitter))
+        else Seq(refEmitter)
       case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema, ordering, references))
       case node: NodeShape if node.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
         Seq(RamlJsonShapeEmitter(node, ordering, references))
