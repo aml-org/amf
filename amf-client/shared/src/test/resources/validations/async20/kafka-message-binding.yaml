@@ -9,4 +9,6 @@ channels:
       message:
         bindings:
           kafka:
-            key: somekey
+            key:
+              type: string
+              maxLength: 20

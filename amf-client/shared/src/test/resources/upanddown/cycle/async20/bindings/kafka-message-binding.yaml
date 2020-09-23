@@ -8,4 +8,7 @@ channels:
       message:
         bindings:
           kafka:
-            key: somekey
+            key:
+              type: string
+              enum:
+                - someKey

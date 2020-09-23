@@ -1,5 +1,7 @@
 message:
   bindings:
     kafka:
-      key: baseKey
+      key:
+        type: string
+        enum: ['baseKey']
       bindingVersion: baseVersion

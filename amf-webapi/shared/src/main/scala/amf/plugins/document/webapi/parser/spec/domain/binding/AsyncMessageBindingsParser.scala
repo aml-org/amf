@@ -76,7 +76,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val binding = KafkaMessageBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    map.key("key", KafkaMessageBindingModel.MessageKey in binding)
+    map.key("key", entry => parseSchema(KafkaMessageBindingModel.MessageKey, binding, entry, binding.id + "/key"))
     parseBindingVersion(binding, KafkaMessageBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding.id, map, "kafkaMessageBinding")

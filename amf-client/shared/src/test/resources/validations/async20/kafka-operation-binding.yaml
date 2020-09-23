@@ -8,5 +8,9 @@ channels:
     publish:
       bindings:
         kafka:
-          groupId: 310792
-          clientId: some3333unique09id
+          groupId:
+            type: string
+            pattern: '^[\w]+\.[\w]+\.[\w]+\.[\d]+$'
+          clientId:
+            type: string
+            enum: ['myClientId']
