@@ -149,7 +149,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
-    val references = ReferencesParser(document, "uses", map, root.references).parse(root.location)
+    val references = ReferencesParser(document, root.location, "uses", map, root.references).parse()
     parseDeclarations(root, map)
     val declarationKeys = ctx.getDeclarationKeys
     if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
