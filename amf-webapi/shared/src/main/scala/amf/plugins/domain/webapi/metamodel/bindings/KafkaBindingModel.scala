@@ -2,7 +2,7 @@ package amf.plugins.domain.webapi.metamodel.bindings
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
@@ -10,12 +10,18 @@ import amf.plugins.domain.webapi.models.bindings.kafka.{KafkaMessageBinding, Kaf
 
 object KafkaOperationBindingModel extends OperationBindingModel with BindingVersion {
   val GroupId =
-    Field(Str, ApiBinding + "groupId", ModelDoc(ModelVocabularies.ApiBinding, "groupId", "Id of the consumer group"))
+    Field(ShapeModel,
+          ApiBinding + "groupId",
+          ModelDoc(ModelVocabularies.ApiBinding, "groupId", "Schema that defines the id of the consumer group"))
 
   val ClientId =
-    Field(Str,
-          ApiBinding + "clientId",
-          ModelDoc(ModelVocabularies.ApiBinding, "clientId", "Id of the consumer inside a consumer group"))
+    Field(
+      ShapeModel,
+      ApiBinding + "clientId",
+      ModelDoc(ModelVocabularies.ApiBinding,
+               "clientId",
+               "Schema that defines the id of the consumer inside a consumer group")
+    )
 
   override def modelInstance: AmfObject = KafkaOperationBinding()
 
@@ -34,7 +40,9 @@ object KafkaOperationBindingModel extends OperationBindingModel with BindingVers
 
 object KafkaMessageBindingModel extends OperationBindingModel with BindingVersion {
   val MessageKey =
-    Field(Str, ApiBinding + "messageKey", ModelDoc(ModelVocabularies.ApiBinding, "key", "The message key"))
+    Field(ShapeModel,
+          ApiBinding + "messageKey",
+          ModelDoc(ModelVocabularies.ApiBinding, "key", "Schema that defines the message key"))
 
   override def modelInstance: AmfObject = KafkaMessageBinding()
 
