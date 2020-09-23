@@ -8,7 +8,7 @@ import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHan
 import amf.core.remote.{Hint, Vendor}
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
-import amf.plugins.document.webapi.parser.spec.common.emitters.DomainElementEmitter
+import amf.plugins.document.webapi.parser.spec.common.emitters.WebApiDomainElementEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, Example}
 import amf.plugins.domain.webapi.models.{
   Callback,
@@ -66,7 +66,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest {
 
   private def renderDomainElement(shape: Option[DomainElement]): String = {
     val eh     = DefaultErrorHandler()
-    val node   = shape.map(DomainElementEmitter.emit(_, vendor, eh)).getOrElse(YNode.Empty)
+    val node   = shape.map(WebApiDomainElementEmitter.emit(_, vendor, eh)).getOrElse(YNode.Empty)
     val errors = eh.getErrors
     if (errors.nonEmpty)
       errors.map(_.completeMessage).mkString("\n")

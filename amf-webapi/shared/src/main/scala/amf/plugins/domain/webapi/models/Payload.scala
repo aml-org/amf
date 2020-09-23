@@ -86,7 +86,7 @@ case class Payload(fields: Fields, annotations: Annotations)
       .urlComponentEncoded // todo: / char of media type should be encoded?
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Payload.apply
-  override protected def nameField: Field                                                       = Name
+  override def nameField: Field                                                                 = Name
 }
 
 object Payload {

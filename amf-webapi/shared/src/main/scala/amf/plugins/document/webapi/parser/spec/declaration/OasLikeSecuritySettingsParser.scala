@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.model.domain.AmfScalar
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode}
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
@@ -109,7 +109,7 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
   def parseScopes(flow: OAuth2Flow, map: YMap): Unit = map.key("scopes").foreach { entry =>
     val scopeMap = entry.value.as[YMap]
     val scopes   = scopeMap.entries.filterNot(entry => isOasAnnotation(entry.key)).map(parseScope(_, flow.id))
-    flow.setArray(OAuth2FlowModel.Scopes, scopes, Annotations(entry))
+    flow.set(OAuth2FlowModel.Scopes, AmfArray(scopes, Annotations(entry.value)), Annotations(entry))
   }
 
   def parseScope(scopeEntry: YMapEntry, parentId: String): Scope = {

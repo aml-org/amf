@@ -217,9 +217,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
                 ctx.factory.parameterParser(YMapEntryLike(e), parentPath, Some(typeName), nameGenerator).parse
               case _ =>
                 val parameter =
-                  ctx.factory
-                    .parameterParser(YMapEntryLike(YMap.empty), parentPath, Some(typeName), nameGenerator)
-                    .parse
+                  ctx.factory.parameterParser(YMapEntryLike(e), parentPath, Some(typeName), nameGenerator).parse
                 ctx.eh.violation(InvalidParameterType,
                                  parameter.domainElement.id,
                                  "Map needed to parse a parameter declaration",
@@ -243,10 +241,12 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           .entries
           .foreach(e => {
             val node = ScalarNode(e.key).text()
-            ctx.declarations += OasResponseParser(e.value.as[YMap], { r: Response =>
-              r.set(ResponseModel.Name, node).adopted(parentPath).add(DeclaredElement())
-              r.annotations ++= Annotations(e)
-            }).parse()
+            ctx.declarations += OasResponseParser(
+              e.value.as[YMap], { r: Response =>
+                r.set(ResponseModel.Name, node, Annotations(e.key)).adopted(parentPath).add(DeclaredElement())
+                r.annotations ++= Annotations(e)
+              }
+            ).parse()
           })
       }
     )

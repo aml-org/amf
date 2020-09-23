@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.{FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import org.scalatest.Assertion
 
@@ -42,7 +42,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/production/"
 
   test("Can parse and generated ABOUT dialect") {
-    cycle("ABOUT-dialect.raml", "ABOUT-dialect.raml.raml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
+    cycle("ABOUT-dialect.yaml", "ABOUT-dialect.raml.yaml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
   }
 
   ignore("Can parse the canonical webapi dialect") {
@@ -50,7 +50,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   multiGoldenTest("Can parse ABOUT dialect", "ABOUT-dialect.%s") { config =>
-    cycle("ABOUT-dialect.raml",
+    cycle("ABOUT-dialect.yaml",
           config.golden,
           VocabularyYamlHint,
           target = Amf,
@@ -60,12 +60,12 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   // TODO migrate to multiGoldenTest
   test("Can parse validation dialect") {
-    cycle("validation_dialect.raml", "validation_dialect.json", VocabularyYamlHint, target = Amf)
+    cycle("validation_dialect.yaml", "validation_dialect.json", VocabularyYamlHint, target = Amf)
   }
 
   // TODO migrate to multiGoldenTest
   test("Can parse and generate the Instagram dialect") {
-    cycle("dialect.raml", "dialect.json", VocabularyYamlHint, target = Amf, basePath + "Instagram/")
+    cycle("dialect.yaml", "dialect.json", VocabularyYamlHint, target = Amf, basePath + "Instagram/")
   }
 
   // TODO migrate to multiGoldenTest
@@ -74,17 +74,17 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   test("Can parse validation dialect instance") {
-    withDialect("validation_dialect.raml",
-                "validation_instance1.raml",
-                "validation_instance1.raml.raml",
+    withDialect("validation_dialect.yaml",
+                "validation_instance1.yaml",
+                "validation_instance1.raml.yaml",
                 VocabularyYamlHint,
                 Aml)
   }
 
   multiGoldenTest("Can parse validation dialect cfg1 instance", "example1_instance.%s") { config =>
     withDialect(
-      "example1.raml",
-      "example1_instance.raml",
+      "example1.yaml",
+      "example1_instance.yaml",
       config.golden,
       VocabularyYamlHint,
       target = Amf,
@@ -95,8 +95,8 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   multiGoldenTest("Can parse validation dialect cfg2 instance", "example2_instance.%s") { config =>
     withDialect(
-      "example2.raml",
-      "example2_instance.raml",
+      "example2.yaml",
+      "example2_instance.yaml",
       config.golden,
       VocabularyYamlHint,
       target = Amf,
@@ -107,8 +107,8 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   multiGoldenTest("Can parse validation dialect cfg3 instance", "example3_instance.%s") { config =>
     withDialect(
-      "example3.raml",
-      "example3_instance.raml",
+      "example3.yaml",
+      "example3_instance.yaml",
       config.golden,
       VocabularyYamlHint,
       target = Amf,
@@ -118,13 +118,13 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   test("Can parse and generate ABOUT dialect instance") {
-    withDialect("ABOUT-dialect.raml", "ABOUT.yaml", "ABOUT.yaml.raml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
+    withDialect("ABOUT-dialect.yaml", "ABOUT.yaml", "ABOUT.yaml.yaml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
   }
 
   test("Can parse and generate ABOUT-github dialect instance") {
-    withDialect("ABOUT-GitHub-dialect.raml",
+    withDialect("ABOUT-GitHub-dialect.yaml",
                 "example.yaml",
-                "example.yaml.raml",
+                "example.yaml.yaml",
                 VocabularyYamlHint,
                 Aml,
                 basePath + "ABOUT/github/")
@@ -144,8 +144,8 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   // TODO migrate to multiGoldenTest
   test("Can parse and generate Instance dialect instance 1") {
-    withDialect("dialect.raml",
-                "instance1.raml",
+    withDialect("dialect.yaml",
+                "instance1.yaml",
                 "instance1.json",
                 VocabularyYamlHint,
                 target = Amf,
@@ -153,8 +153,8 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   test("Can parse and generate Instance dialect instance 2") {
-    withDialect("dialect.raml",
-                "instance2.raml",
+    withDialect("dialect.yaml",
+                "instance2.yaml",
                 "instance2.json",
                 VocabularyYamlHint,
                 target = Amf,

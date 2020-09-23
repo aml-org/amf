@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/async20/validations/components-closed-shape.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+  Message: Property 'invalid-key' not supported in a ASYNC 2.0 components node
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/components-closed-shape.yaml#/declarations
+  Property: 
+  Position: Some(LexicalInformation([(22,2)-(23,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/components-closed-shape.yaml

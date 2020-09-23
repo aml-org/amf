@@ -31,14 +31,14 @@
         ],
         "http://a.ml/vocabularies/apiContract#examples": [
           {
-            "@id": "target/message/example/juancito",
+            "@id": "target/message/example/default-example_1",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Example",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/core#name": [
               {
-                "@value": "juancito"
+                "@value": "default-example_1"
               }
             ],
             "http://a.ml/vocabularies/document#strict": [
@@ -48,7 +48,7 @@
             ],
             "http://a.ml/vocabularies/document#structuredValue": [
               {
-                "@id": "target/message/example/juancito/object_1",
+                "@id": "patch/message/example/default-example_1/object_1",
                 "@type": [
                   "http://a.ml/vocabularies/data#Object",
                   "http://a.ml/vocabularies/data#Node",
@@ -56,117 +56,7 @@
                 ],
                 "http://a.ml/vocabularies/data#user": [
                   {
-                    "@id": "target/message/example/juancito/object_1/scalar_2",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Scalar",
-                      "http://a.ml/vocabularies/data#Node",
-                      "http://a.ml/vocabularies/document#DomainElement"
-                    ],
-                    "http://a.ml/vocabularies/data#value": [
-                      {
-                        "@value": "Juancito"
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#datatype": [
-                      {
-                        "@id": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/core#name": [
-                      {
-                        "@value": "user"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/data#signup": [
-                  {
-                    "@id": "target/message/example/juancito/object_1/scalar_3",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Scalar",
-                      "http://a.ml/vocabularies/data#Node",
-                      "http://a.ml/vocabularies/document#DomainElement"
-                    ],
-                    "http://a.ml/vocabularies/data#value": [
-                      {
-                        "@value": "Menganito"
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#datatype": [
-                      {
-                        "@id": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/core#name": [
-                      {
-                        "@value": "signup"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/core#name": [
-                  {
-                    "@value": "object_1"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document#raw": [
-              {
-                "@value": "user: Juancito\nsignup: Menganito"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "target/message/example/juancito#/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#tracked-element": [
-                  {
-                    "@id": "target/message/example/juancito#/source-map/tracked-element/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "target/message/example/juancito"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "target/message"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "@id": "target/message/example/pepito",
-            "@type": [
-              "http://a.ml/vocabularies/apiContract#Example",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/core#name": [
-              {
-                "@value": "pepito"
-              }
-            ],
-            "http://a.ml/vocabularies/document#strict": [
-              {
-                "@value": true
-              }
-            ],
-            "http://a.ml/vocabularies/document#structuredValue": [
-              {
-                "@id": "patch/message/example/pepito/object_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Object",
-                  "http://a.ml/vocabularies/data#Node",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://a.ml/vocabularies/data#user": [
-                  {
-                    "@id": "patch/message/example/pepito/object_1/scalar_2",
+                    "@id": "patch/message/example/default-example_1/object_1/scalar_2",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -191,7 +81,7 @@
                 ],
                 "http://a.ml/vocabularies/data#signup": [
                   {
-                    "@id": "patch/message/example/pepito/object_1/scalar_3",
+                    "@id": "patch/message/example/default-example_1/object_1/scalar_3",
                     "@type": [
                       "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
@@ -228,21 +118,21 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "target/message/example/pepito#/source-map",
+                "@id": "target/message/example/default-example_1#/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#tracked-element": [
                   {
-                    "@id": "target/message/example/pepito#/source-map/tracked-element/element_0",
+                    "@id": "target/message/example/default-example_1#/source-map/tracked-element/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "target/message/example/pepito"
+                        "@value": "target/message/example/default-example_1"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "patch/message"
+                        "@value": "target/message"
                       }
                     ]
                   }
@@ -255,7 +145,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.1.1"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

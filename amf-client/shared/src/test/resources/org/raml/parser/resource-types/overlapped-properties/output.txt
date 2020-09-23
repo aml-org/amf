@@ -14,7 +14,6 @@ resourceTypes:
     description: Get all users, optionally filtered
   post:
     queryParameters:
-      index:
-        type: string
+      index: {}
     description: Create a new user
   description: The collection of users

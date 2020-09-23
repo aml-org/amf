@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.{Async20Profile, Oas30Profile}
-import amf.core.remote.{AsyncYamlHint, Hint}
+import amf.core.remote.{AsyncJsonHint, AsyncYamlHint, Hint, OasJsonHint}
 import org.scalatest.Matchers
 
 class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
@@ -233,5 +233,25 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
 
   test("Valid header binding names according to RFC-7230") {
     validate("invalid-header-names.yaml", Some("invalid-header-names.report"), Async20Profile)
+  }
+
+  test("Invalid binding names") {
+    validate("invalid-binding-names.yaml", Some("invalid-binding-names.report"), Async20Profile)
+  }
+
+  test("Discriminator property has to be included in required properties") {
+    validate("discriminator-in-required-fields.yaml", Some("discriminator-in-required-fields.report"), Async20Profile)
+  }
+
+  test("JSON with duplicate keys") {
+    validate("duplicate-keys.json", Some("duplicate-keys.report"), Async20Profile, overridedHint = Some(AsyncJsonHint))
+  }
+
+  test("Components must use keys with certain regex") {
+    validate("invalid-component-names.yaml", Some("invalid-component-names.report"), Async20Profile)
+  }
+
+  test("Closed shape in components object") {
+    validate("components-closed-shape.yaml", Some("components-closed-shape.report"), Async20Profile)
   }
 }

@@ -8,8 +8,8 @@ import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
-import amf.core.parser.errorhandler.AmfParserErrorHandler
-import amf.core.parser.{ParserContext, SyamlParsedDocument}
+import amf.core.parser.errorhandler.{AmfParserErrorHandler, JsonErrorHandler}
+import amf.core.parser.{JsonParserFactory, ParserContext, SyamlParsedDocument}
 import amf.core.validation._
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.PayloadPlugin
@@ -76,6 +76,8 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
   protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj]
 
   protected def loadJson(text: String): LoadedObj
+
+  protected def loadJsonSchema(text: String): LoadedObj = loadJson(text)
 
   protected def loadSchema(
       jsonSchema: CharSequence,
@@ -213,7 +215,7 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
     val defaultCtx = new PayloadContext("", Nil, ParserContext(eh = errorHandler), options = options)
 
     val parser = mediaType match {
-      case "application/json" => JsonParser(payload)(errorHandler)
+      case "application/json" => JsonParserFactory.fromChars(payload)(errorHandler)
       case _                  => YamlParser(payload)(errorHandler)
     }
     val node = parser.document().node

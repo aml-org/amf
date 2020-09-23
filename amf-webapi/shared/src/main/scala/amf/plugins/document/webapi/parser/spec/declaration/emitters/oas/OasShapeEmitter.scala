@@ -12,6 +12,11 @@ import amf.core.parser.{Annotations, FieldEntry, Value}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
+  AnnotationsEmitter,
+  DataNodeEmitter,
+  FacetsEmitter
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{EnumValuesEmitter, XMLSerializerEmitter, oas}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.CreativeWork

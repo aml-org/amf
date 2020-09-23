@@ -1,19 +1,15 @@
 #%RAML 1.0
 title: New API
 types:
-  Person:
-    type: string
-  Another:
-    type: string
+  Person: {}
+  Another: {}
 /list:
   get:
     body:
       application/json:
-        items:
-          type: string
+        items: {}
     responses:
       "200":
         body:
           application/json:
-            items:
-              type: string
+            items: {}

@@ -1,6 +1,8 @@
 package amf.cycle
 
+import amf.core.model.domain.DomainElement
 import amf.core.remote.{RamlYamlHint, Vendor}
+import amf.plugins.document.webapi.annotations.ForceEntry
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 class Raml08ElementCycleTest extends DomainElementCycleTest {
@@ -16,6 +18,20 @@ class Raml08ElementCycleTest extends DomainElementCycleTest {
       "schema-position/api.raml",
       CommonExtractors.declaresIndex(0),
       "schema-position/type-emission.yaml",
+      RamlYamlHint,
+      directory = basePath + "cycle/raml08/"
+    )
+  }
+
+  test("type - emission of created link with force entry") {
+    renderElement(
+      "schema-position/api.raml",
+      (b) => {
+        val original: Option[AnyShape] = CommonExtractors.declaresIndex(0)(b).map(_.asInstanceOf[AnyShape])
+        val link                       = original.map(_.link[AnyShape]("someName").add(ForceEntry()))
+        link
+      },
+      "schema-position/link-force-entry-emission.yaml",
       RamlYamlHint,
       directory = basePath + "cycle/raml08/"
     )

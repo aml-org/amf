@@ -183,5 +183,20 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
     }
   }
 
+  test("Test control characters in the middle of a number") {
+    AMF.init().flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+
+      val test = new ScalarShape().withDataType(DataTypes.Integer)
+
+      val report = test
+        .payloadValidator("application/json")
+        .asOption
+        .get
+        .syncValidate("application/json", "123\n1234")
+      report.conforms shouldBe false
+    }
+  }
+
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 }

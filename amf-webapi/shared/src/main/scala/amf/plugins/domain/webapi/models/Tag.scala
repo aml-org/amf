@@ -28,8 +28,8 @@ case class Tag(fields: Fields, annotations: Annotations) extends NamedDomainElem
   override def meta: TagModel.type = TagModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String        = "/tag/" + name.option().getOrElse("default-type").urlComponentEncoded
-  override protected def nameField: Field = Name
+  override def componentId: String = "/tag/" + name.option().getOrElse("default-type").urlComponentEncoded
+  override def nameField: Field    = Name
 }
 
 object Tag {

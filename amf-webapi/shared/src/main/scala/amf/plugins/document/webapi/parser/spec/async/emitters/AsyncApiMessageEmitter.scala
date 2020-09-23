@@ -7,7 +7,7 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.declaration.emitters
+import amf.plugins.document.webapi.parser.spec.declaration.{OasTagToReferenceEmitter, emitters}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.async
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.async.AsyncSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NamedMultipleExampleEmitter
@@ -132,9 +132,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
               fs.entry(MessageModel.Bindings)
                 .foreach(f => result += new AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
               fs.entry(MessageModel.Examples)
-                .foreach(f =>
-                  result += NamedMultipleExampleEmitter("examples", f.arrayValues[Example], ordering, Seq())) // TODO: references
-
+                .foreach(f => result += Draft6ExamplesEmitter(f.arrayValues[Example], ordering))
               if (!isTrait) {
                 fs.entry(MessageModel.Extends).foreach(f => emitTraits(f, result))
                 fs.entry(MessageModel.Payloads).foreach(f => emitPayloads(f, result))
@@ -147,10 +145,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
   }
 
   def emitLink(b: PartBuilder): Unit = {
-    val label =
-      OasDefinitions.appendOas3ComponentsPrefix(message.linkLabel.value(),
-                                                if (isTrait) "messageTraits" else "messages")
-    spec.ref(b, label)
+    OasTagToReferenceEmitter(message, message.linkLabel.option()).emit(b)
   }
 
   def emitTraits(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit = {

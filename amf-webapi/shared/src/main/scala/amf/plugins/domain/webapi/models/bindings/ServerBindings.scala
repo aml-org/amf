@@ -15,7 +15,7 @@ case class ServerBindings(fields: Fields, annotations: Annotations) extends Name
 
   override def meta: Obj = ServerBindingsModel
 
-  override protected def nameField: Field = Name
+  override def nameField: Field = Name
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String =

@@ -14,7 +14,7 @@ import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with FileAssertionTest with PlatformSecrets {
+trait DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with ReportComparison with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -39,7 +39,7 @@ trait DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with F
   protected def validate(dialect: String, goldenReport: Option[String]): Future[Assertion] = {
     amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-    val report = for {
+    for {
       _ <- Validation(platform)
       dialect <- {
         new AMFCompiler(
@@ -49,21 +49,15 @@ trait DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with F
           Some(AMLPlugin.ID)
         ).build()
       }
-      r <- {
+      report <- {
         RuntimeValidator(
           dialect,
           ProfileName(dialect.asInstanceOf[Dialect].nameAndVersion())
         )
       }
-    } yield r
-
-    report.flatMap { re =>
-      goldenReport match {
-        case Some(r) =>
-          writeTemporaryFile(path + r)(ValidationReportJSONLDEmitter.emitJSON(re))
-            .flatMap(assertDifferences(_, path + r))
-        case None => re.conforms should be(true)
-      }
+      assertion <- assertReport(report, goldenReport.map(g => s"$path/$g"))
+    } yield {
+      assertion
     }
   }
 }

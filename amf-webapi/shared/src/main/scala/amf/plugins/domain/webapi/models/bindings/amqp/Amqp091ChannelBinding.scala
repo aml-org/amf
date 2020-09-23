@@ -54,11 +54,11 @@ class Amqp091ChannelExchange(override val fields: Fields, override val annotatio
     with NamedDomainElement {
   override def meta: Obj = ChannelExchange
 
-  override protected def nameField: Field = ChannelExchange.Name
-  def `type`: StrField                    = fields.field(ChannelExchange.Type)
-  def durable: BoolField                  = fields.field(ChannelExchange.Durable)
-  def autoDelete: BoolField               = fields.field(ChannelExchange.AutoDelete)
-  def vHost: StrField                     = fields.field(ChannelExchange.VHost)
+  override def nameField: Field = ChannelExchange.Name
+  def `type`: StrField          = fields.field(ChannelExchange.Type)
+  def durable: BoolField        = fields.field(ChannelExchange.Durable)
+  def autoDelete: BoolField     = fields.field(ChannelExchange.AutoDelete)
+  def vHost: StrField           = fields.field(ChannelExchange.VHost)
 
   def withType(`type`: String): this.type            = set(ChannelExchange.Type, `type`)
   def withDurable(durable: Boolean): this.type       = set(ChannelExchange.Durable, durable)
@@ -83,7 +83,7 @@ class Amqp091Queue(override val fields: Fields, override val annotations: Annota
     with NamedDomainElement {
   override def meta: Obj = QueueModel
 
-  override protected def nameField: Field = QueueModel.Name
+  override def nameField: Field = QueueModel.Name
 
   def durable: BoolField    = fields.field(QueueModel.Durable)
   def exclusive: BoolField  = fields.field(QueueModel.Exclusive)

@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.{AmfArray, Annotation, DataNode}
-import amf.core.parser.errorhandler.WarningOnlyHandler
+import amf.core.parser.errorhandler.{JsonErrorHandler, WarningOnlyHandler}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.ParsedJSONExample
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -16,7 +16,11 @@ import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ExemplifiedDomainElement, ScalarShape}
 import amf.plugins.features.validation.CoreValidations
-import amf.validations.ParserSideValidations.{ExamplesMustBeAMap, ExclusivePropertiesSpecification, InvalidFragmentType}
+import amf.validations.ParserSideValidations.{
+  ExamplesMustBeAMap,
+  ExclusivePropertiesSpecification,
+  InvalidFragmentType
+}
 import org.mulesoft.lexer.Position
 import org.yaml.model._
 import org.yaml.parser.JsonParser
@@ -144,8 +148,10 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
   }
 }
 
-case class RamlSingleExampleParser(key: String, map: YMap, producer: Option[String] => Example, options: ExampleOptions)(
-    implicit ctx: WebApiContext) {
+case class RamlSingleExampleParser(key: String,
+                                   map: YMap,
+                                   producer: Option[String] => Example,
+                                   options: ExampleOptions)(implicit ctx: WebApiContext) {
   def parse(): Option[Example] = {
     val newProducer = () => producer(None)
     map.key(key).flatMap { entry =>
@@ -287,10 +293,11 @@ case class NodeDataNodeParser(node: YNode,
           .map { scalar =>
             val parser =
               if (!fromExternal)
-                JsonParser.withSource(scalar.text,
-                                      scalar.sourceName,
-                                      Position(node.range.lineFrom, node.range.columnFrom))(errorHandler)
-              else JsonParser.withSource(scalar.text, scalar.sourceName)
+                JsonParserFactory.fromCharsWithSource(
+                  scalar.text,
+                  scalar.sourceName,
+                  Position(node.range.lineFrom, node.range.columnFrom))(errorHandler)
+              else JsonParserFactory.fromCharsWithSource(scalar.text, scalar.sourceName)(ctx.eh)
             parser.document().node
           }
       case Some(scalar) if XMLSchema.unapply(scalar.text).isDefined => None

@@ -23,14 +23,12 @@ annotationTypes:
         additionalProperties: true
         properties:
           field1:
-            type: string
             required: false
           field2:
             type: number
             required: true
         required: true
       property2:
-        type: string
         required: false
 /resource:
   get:

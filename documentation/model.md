@@ -37,7 +37,6 @@ AMF Model Documentation
 * [Documents](#documents)
 * [DomainElement](#domainelement)
 * [DomainExtension](#domainextension)
-* [DynamicBinding](#dynamicbinding)
 * [EmptyBinding](#emptybinding)
 * [Encoding](#encoding)
 * [EndPoint](#endpoint)
@@ -627,15 +626,6 @@ They are parsed as RDF graphs using a default transformation from a set of neste
  | element | string | Element being extended | http://a.ml/vocabularies/document#element |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
-## DynamicBinding
-
-
- | Name | Value | Documentation | Namespace |
- | ------ | ------ | ------ | ------ |
- | definition | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://a.ml/vocabularies/apiBinding#definition |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
- | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
-
 ## EmptyBinding
 
 
@@ -1062,6 +1052,7 @@ It main purpose is to expose the declared references so they can be re-used
  | topic | string | The topic where the Last Will and Testament message will be sent | http://a.ml/vocabularies/apiBinding#topic |
  | qos | int | Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received | http://a.ml/vocabularies/apiBinding#qos |
  | retain | boolean | Whether the broker should retain the Last Will and Testament message or not | http://a.ml/vocabularies/apiBinding#retain |
+ | message | string | Message used to notify other clients about an ungracefully disconnected client. | http://a.ml/vocabularies/apiBinding#message |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## NamedExampleFragment

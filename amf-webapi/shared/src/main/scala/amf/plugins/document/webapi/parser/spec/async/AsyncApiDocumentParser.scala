@@ -69,7 +69,9 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     map.key(
       "externalDocs",
       entry => {
-        api.setArray(WebApiModel.Documentations, Seq(OasLikeCreativeWorkParser(entry.value, api.id).parse()))
+        api.set(WebApiModel.Documentations,
+                AmfArray(Seq(OasLikeCreativeWorkParser(entry.value, api.id).parse()), Annotations(entry.value)),
+                Annotations(entry))
       }
     )
     map.key(
@@ -128,6 +130,9 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       parseMessageTraits(componentsMap, parent + "/messageTraits")
 
       parseMessageDeclarations(componentsMap, parent + "/messages")
+
+      ctx.closedShape(parent, componentsMap, "components")
+      validateNames()
     }
   }
 

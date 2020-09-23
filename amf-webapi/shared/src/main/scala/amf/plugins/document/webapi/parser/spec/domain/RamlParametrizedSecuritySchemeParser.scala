@@ -34,7 +34,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
             else declaration
 
           val settings =
-            RamlSecuritySettingsParser(schemeEntry.value.as[YMap], effectiveDeclaration.`type`.value(), scheme).parse()
+            RamlSecuritySettingsParser(schemeEntry.value, effectiveDeclaration.`type`.value(), scheme).parse()
 
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>

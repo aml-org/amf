@@ -4,6 +4,7 @@ import java.util.regex.Pattern
 
 import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement, Shape}
 import amf.core.parser.Annotations
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
@@ -239,6 +240,17 @@ object CustomShaclFunctions {
         }
       }
     }),
+    "discriminatorInRequiredProperties" -> ((element, violation) => {
+      for {
+        discriminator <- element.fields.?[AmfScalar](NodeShapeModel.Discriminator)
+      } yield {
+        element match {
+          case shape: NodeShape if !isRequiredPropertyInShape(shape, discriminator.value.toString) =>
+            violation(Some(shape.discriminator.annotations(), NodeShapeModel.Discriminator))
+          case  _ => // ignore
+        }
+      }
+    }),
     "mandatoryHeaderBindingNamePattern" -> ((element, violation) => {
       for {
         header <- element.fields.?[Shape](HttpMessageBindingModel.Headers)
@@ -256,6 +268,13 @@ object CustomShaclFunctions {
       }
     }),
   )
+
+  private def isRequiredPropertyInShape(shape: NodeShape, name: String) = shape.properties.filter(isRequiredProperty).exists {
+    p => p.name.option() match {
+        case Some(propertyName) => propertyName == name
+        case _ => false
+      }
+    }
 
   private def validateObjectAndHasProperties(element: AmfElement) = {
     element match {
@@ -282,4 +301,6 @@ object CustomShaclFunctions {
 
   // Obtained from the BNF in: https://tools.ietf.org/html/rfc7230#section-3.2
   private def isInvalidHttpHeaderName(name: String): Boolean = !name.matches("^[!#$%&'*\\+\\-\\.^\\_\\`\\|\\~0-9a-zA-Z]+$")
+
+  private def isRequiredProperty(shape: PropertyShape) = shape.minCount.option().contains(1)
 }

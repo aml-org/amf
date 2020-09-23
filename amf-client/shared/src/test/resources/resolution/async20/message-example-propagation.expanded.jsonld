@@ -327,7 +327,7 @@
                                 ],
                                 "core:name": [
                                   {
-                                    "@value": "john"
+                                    "@value": "default-example_1"
                                   }
                                 ],
                                 "doc:strict": [
@@ -339,35 +339,56 @@
                                   {
                                     "@id": "#16",
                                     "@type": [
-                                      "data:Scalar",
+                                      "data:Object",
                                       "data:Node",
                                       "doc:DomainElement"
                                     ],
-                                    "data:value": [
+                                    "data:name": [
                                       {
-                                        "@value": "Johnny"
-                                      }
-                                    ],
-                                    "shacl:datatype": [
-                                      {
-                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                        "@id": "#17",
+                                        "@type": [
+                                          "data:Scalar",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:value": [
+                                          {
+                                            "@value": "Johnny"
+                                          }
+                                        ],
+                                        "shacl:datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "name"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "#17": "[(18,18)-(18,24)]"
+                                          }
+                                        }
                                       }
                                     ],
                                     "core:name": [
                                       {
-                                        "@value": "scalar_1"
+                                        "@value": "object_1"
                                       }
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#16": "[(18,16)-(18,22)]"
+                                        "data:name": "[(18,12)-(19,0)]",
+                                        "#16": "[(18,12)-(19,0)]"
                                       }
                                     }
                                   }
                                 ],
                                 "doc:raw": [
                                   {
-                                    "@value": "Johnny"
+                                    "@value": "name: Johnny"
                                   }
                                 ],
                                 "smaps": {
@@ -375,9 +396,9 @@
                                     "doc:strict": "true"
                                   },
                                   "lexical": {
-                                    "doc:raw": "[(18,16)-(18,22)]",
-                                    "#15": "[(18,10)-(19,0)]",
-                                    "doc:structuredValue": "[(18,16)-(18,22)]"
+                                    "doc:raw": "[(18,12)-(19,0)]",
+                                    "#15": "[(18,12)-(19,0)]",
+                                    "doc:structuredValue": "[(18,12)-(19,0)]"
                                   },
                                   "tracked-element": {
                                     "#15": "amf://id#4"
@@ -385,14 +406,14 @@
                                 }
                               },
                               {
-                                "@id": "#17",
+                                "@id": "#18",
                                 "@type": [
                                   "apiContract:Example",
                                   "doc:DomainElement"
                                 ],
                                 "core:name": [
                                   {
-                                    "@value": "good"
+                                    "@value": "default-example_2"
                                   }
                                 ],
                                 "doc:strict": [
@@ -402,37 +423,58 @@
                                 ],
                                 "doc:structuredValue": [
                                   {
-                                    "@id": "#18",
+                                    "@id": "#19",
                                     "@type": [
-                                      "data:Scalar",
+                                      "data:Object",
                                       "data:Node",
                                       "doc:DomainElement"
                                     ],
-                                    "data:value": [
+                                    "data:name": [
                                       {
-                                        "@value": "Goode"
-                                      }
-                                    ],
-                                    "shacl:datatype": [
-                                      {
-                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                        "@id": "#20",
+                                        "@type": [
+                                          "data:Scalar",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:value": [
+                                          {
+                                            "@value": "Goode"
+                                          }
+                                        ],
+                                        "shacl:datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "name"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "#20": "[(19,18)-(19,23)]"
+                                          }
+                                        }
                                       }
                                     ],
                                     "core:name": [
                                       {
-                                        "@value": "scalar_1"
+                                        "@value": "object_1"
                                       }
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#18": "[(19,16)-(19,21)]"
+                                        "data:name": "[(19,12)-(20,0)]",
+                                        "#19": "[(19,12)-(20,0)]"
                                       }
                                     }
                                   }
                                 ],
                                 "doc:raw": [
                                   {
-                                    "@value": "Goode"
+                                    "@value": "name: Goode"
                                   }
                                 ],
                                 "smaps": {
@@ -440,12 +482,12 @@
                                     "doc:strict": "true"
                                   },
                                   "lexical": {
-                                    "doc:raw": "[(19,16)-(19,21)]",
-                                    "#17": "[(19,10)-(19,21)]",
-                                    "doc:structuredValue": "[(19,16)-(19,21)]"
+                                    "doc:raw": "[(19,12)-(20,0)]",
+                                    "#18": "[(19,12)-(20,0)]",
+                                    "doc:structuredValue": "[(19,12)-(20,0)]"
                                   },
                                   "tracked-element": {
-                                    "#17": "amf://id#4"
+                                    "#18": "amf://id#4"
                                   }
                                 }
                               }
@@ -469,22 +511,22 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "#4": "[(9,0)-(19,21)]"
+                        "#4": "[(9,0)-(20,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "apiContract:expects": "[(8,14)-(19,21)]",
-                    "#3": "[(7,4)-(19,21)]"
+                    "apiContract:expects": "[(8,6)-(20,0)]",
+                    "#3": "[(7,4)-(20,0)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#2": "[(6,2)-(19,21)]"
+                "#2": "[(6,2)-(20,0)]"
               }
             }
           }
@@ -494,9 +536,9 @@
             "#1": "ASYNC 2.0"
           },
           "lexical": {
-            "apiContract:endpoint": "[(5,0)-(19,21)]",
+            "apiContract:endpoint": "[(5,0)-(20,0)]",
             "core:name": "[(3,2)-(4,0)]",
-            "#1": "[(1,0)-(19,21)]",
+            "#1": "[(1,0)-(20,0)]",
             "core:version": "[(4,2)-(5,0)]"
           }
         }
@@ -504,7 +546,7 @@
     ],
     "doc:version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.1.1"
       }
     ],
     "doc:root": [

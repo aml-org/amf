@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   OasLikeTagsParser
 }
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncMessageBindingsParser
-import amf.plugins.document.webapi.parser.spec.domain.{Oas3ExampleOptions, ExampleDataParser}
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, ExamplesDataParser, Oas3ExampleOptions}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
@@ -48,16 +48,16 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
       case Left(fullRef) =>
         handleRef(fullRef)
       case Right(_) =>
-        val message = buildMessage(map)
+        val message = buildMessage(entryLike.annotations)
         nameAndAdopt(message, entryLike.key)
         populator.populate(map, message)
     }
   }
 
-  private def buildMessage(map: YMap): Message = messageType match {
-    case Some(Publish)   => Request(Annotations(map))
-    case Some(Subscribe) => Response(Annotations(map))
-    case None            => Message(Annotations(map))
+  private def buildMessage(annotations: Annotations): Message = messageType match {
+    case Some(Publish)   => Request(annotations)
+    case Some(Subscribe) => Response(annotations)
+    case None            => Message(annotations)
   }
 
   def nameAndAdopt(m: Message, key: Option[YNode]): Message = {
@@ -91,7 +91,7 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
   }
 
   private def generateLink(label: String, effectiveTarget: Message, entryLike: YMapEntryLike): Message = {
-    val message = buildMessage(entryLike.asMap)
+    val message = buildMessage(entryLike.annotations)
     val hash    = s"${message.id}$label".hashCode
     message
       .withId(s"${message.id}/link-$hash")
@@ -195,14 +195,8 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
   private def parseNamedValueExamples(map: YMap, parentId: String): Seq[Example] =
     map.key("examples") match {
       case Some(examplesEntry) =>
-        examplesEntry.value
-          .as[YMap]
-          .entries
-          .map(entry => {
-            val example = Example(entry)
-            example.set(ExampleModel.Name, ScalarNode(entry.key).text()).adopted(parentId)
-            ExampleDataParser(entry.value, example, Oas3ExampleOptions).parse()
-          })
+        val seq = examplesEntry.value.as[YSequence]
+        ExamplesDataParser(seq, Oas3ExampleOptions, parentId).parse()
       case None => Nil
     }
 }

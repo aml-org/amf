@@ -1,0 +1,16 @@
+#%RAML 1.0
+---
+title: Something API
+/songs:
+  get:
+  /{songId}:
+    /file-content:
+      description: The file to be reproduced by the client
+      get:
+        description: Get the file content
+        responses:
+          200:
+            body:
+              application/octet-stream:
+                type: string
+                example: !include binary_resource.binary

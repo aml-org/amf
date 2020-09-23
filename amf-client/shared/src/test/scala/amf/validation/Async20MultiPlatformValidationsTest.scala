@@ -16,4 +16,14 @@ class Async20MultiPlatformValidationsTest extends MultiPlatformReportGenTest wit
   test("invalid examples defined in variables of server") {
     validate("invalid-server-variable-examples.yaml", Some("invalid-server-variable-examples.report"), Async20Profile)
   }
+
+  test("Validate message payload examples") {
+    validate("message-payload-invalid-example.yaml", Some("invalid-message-examples.report"), Async20Profile)
+  }
+
+  test("Validate example defined in message trait") {
+    validate("applied-message-trait-invalid-example.yaml",
+             Some("invalid-example-applied-trait.report"),
+             Async20Profile)
+  }
 }

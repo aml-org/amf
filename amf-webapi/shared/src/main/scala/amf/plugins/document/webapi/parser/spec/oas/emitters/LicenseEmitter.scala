@@ -4,7 +4,7 @@ import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.LicenseModel
 import amf.plugins.domain.webapi.models.License
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

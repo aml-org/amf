@@ -15,7 +15,7 @@
       ],
       "http://a.ml/vocabularies/apiContract#examples": [
         {
-          "@id": "target/message/example/juancito"
+          "@id": "target/message/example/default-example_1"
         }
       ]
     },
@@ -27,51 +27,51 @@
       ]
     },
     {
-      "@id": "target/message/example/juancito",
+      "@id": "target/message/example/default-example_1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Example",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/core#name": "juancito",
+      "http://a.ml/vocabularies/core#name": "default-example_1",
       "http://a.ml/vocabularies/document#strict": true,
       "http://a.ml/vocabularies/document#structuredValue": {
-        "@id": "patch/message/example/juancito/object_1"
+        "@id": "patch/message/example/default-example_1/object_1"
       },
       "http://a.ml/vocabularies/document#raw": "user: Pepito\nsignup: Fulanito",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "target/message/example/juancito#/source-map"
+          "@id": "target/message/example/default-example_1#/source-map"
         }
       ]
     },
     {
-      "@id": "patch/message/example/juancito/object_1",
+      "@id": "patch/message/example/default-example_1/object_1",
       "@type": [
         "http://a.ml/vocabularies/data#Object",
         "http://a.ml/vocabularies/data#Node",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/data#user": {
-        "@id": "patch/message/example/juancito/object_1/scalar_2"
+        "@id": "patch/message/example/default-example_1/object_1/scalar_2"
       },
       "http://a.ml/vocabularies/data#signup": {
-        "@id": "patch/message/example/juancito/object_1/scalar_3"
+        "@id": "patch/message/example/default-example_1/object_1/scalar_3"
       },
       "http://a.ml/vocabularies/core#name": "object_1"
     },
     {
-      "@id": "target/message/example/juancito#/source-map",
+      "@id": "target/message/example/default-example_1#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#tracked-element": [
         {
-          "@id": "target/message/example/juancito#/source-map/tracked-element/element_0"
+          "@id": "target/message/example/default-example_1#/source-map/tracked-element/element_0"
         }
       ]
     },
     {
-      "@id": "patch/message/example/juancito/object_1/scalar_2",
+      "@id": "patch/message/example/default-example_1/object_1/scalar_2",
       "@type": [
         "http://a.ml/vocabularies/data#Scalar",
         "http://a.ml/vocabularies/data#Node",
@@ -86,7 +86,7 @@
       "http://a.ml/vocabularies/core#name": "user"
     },
     {
-      "@id": "patch/message/example/juancito/object_1/scalar_3",
+      "@id": "patch/message/example/default-example_1/object_1/scalar_3",
       "@type": [
         "http://a.ml/vocabularies/data#Scalar",
         "http://a.ml/vocabularies/data#Node",
@@ -101,8 +101,8 @@
       "http://a.ml/vocabularies/core#name": "signup"
     },
     {
-      "@id": "target/message/example/juancito#/source-map/tracked-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "target/message/example/juancito",
+      "@id": "target/message/example/default-example_1#/source-map/tracked-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "target/message/example/default-example_1",
       "http://a.ml/vocabularies/document-source-maps#value": "target/message"
     },
     {
@@ -116,7 +116,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "testId/message"
       },
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.1.1",
       "http://a.ml/vocabularies/document#root": false
     }
   ]

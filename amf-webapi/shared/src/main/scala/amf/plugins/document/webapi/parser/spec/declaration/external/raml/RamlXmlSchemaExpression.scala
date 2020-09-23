@@ -12,6 +12,7 @@ import amf.validations.ParserSideValidations.InvalidXmlSchemaType
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
 import amf.core.parser.YMapOps
 import amf.core.parser.YNodeLikeOps
+import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 
 case class RamlXmlSchemaExpression(key: YNode,
                                    override val value: YNode,
@@ -85,6 +86,7 @@ case class RamlXmlSchemaExpression(key: YNode,
       case Some(r) => parsed.withReference(r)
       case _       => parsed.annotations += LexicalInformation(Range(value.range))
     }
+    origin.oriUrl.foreach(url => parsed.annotations += (ExternalReferenceUrl(url)))
     parsed.set(SchemaShapeModel.Location, maybeLocation.getOrElse(ctx.loc))
     maybeFragmentLabel.foreach { parsed.annotations += ExternalFragmentRef(_) }
     parsed

@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, Lazy}
@@ -15,9 +16,11 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainElement with WithSettings)(
+case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: DomainElement with WithSettings)(
     implicit val ctx: RamlWebApiContext)
     extends SpecParserOps {
+
+  protected val map: YMap = node.as[YMap]
   def parse(): Settings = {
     val result = `type` match {
       case "OAuth 1.0"   => oauth1()
@@ -28,7 +31,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
 
     AnnotationParser(result, map, List(VocabularyMappings.securitySettings))(ctx).parse()
 
-    result.add(Annotations(map))
+    result.add(Annotations(node))
   }
 
   val apiKeyConst: String = "apiKey".asOasExtension
@@ -94,7 +97,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
       (OAuth2FlowModel.Scopes in flow.getOrCreate using ScopeParser).allowingSingleValue.apply(entry)
     }
 
-    flow.option.foreach(f => settings.setArray(OAuth2SettingsModel.Flows, Seq(f)))
+    flow.option.foreach(f => settings.setArray(OAuth2SettingsModel.Flows, Seq(f), Annotations() += SynthesizedField()))
 
     dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")
     settings
@@ -118,13 +121,13 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
 
 object RamlSecuritySettingsParser {
   def parse(scheme: SecurityScheme)(node: YNode)(implicit ctx: RamlWebApiContext): Settings = {
-    ctx.factory.securitySettingsParser(node.as[YMap], scheme.`type`.value(), scheme).parse()
+    ctx.factory.securitySettingsParser(node, scheme.`type`.value(), scheme).parse()
   }
 }
 
-class Raml10SecuritySettingsParser(map: YMap, `type`: String, scheme: DomainElement with WithSettings)(
+class Raml10SecuritySettingsParser(node: YNode, `type`: String, scheme: DomainElement with WithSettings)(
     implicit override val ctx: RamlWebApiContext)
-    extends RamlSecuritySettingsParser(map, `type`, scheme) {
+    extends RamlSecuritySettingsParser(node, `type`, scheme) {
 
   override protected def oauth2(): OAuth2Settings = {
     val settings = super.oauth2()

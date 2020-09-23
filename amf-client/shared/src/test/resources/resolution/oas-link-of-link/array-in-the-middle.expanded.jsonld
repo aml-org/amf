@@ -134,15 +134,15 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200"
+                                "@value": "http://a.ml/vocabularies/core#name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(21,8)-(24,35)]"
+                                "@value": "[(21,8)-(21,13)]"
                               }
                             ]
                           },
@@ -156,6 +156,19 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(22,10)-(23,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(21,8)-(24,35)]"
                               }
                             ]
                           }
@@ -308,7 +321,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.1.1"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

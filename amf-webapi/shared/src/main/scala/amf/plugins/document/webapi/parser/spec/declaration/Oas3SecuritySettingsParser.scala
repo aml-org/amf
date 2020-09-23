@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.parser.{ScalarNode, YMapOps}
+import amf.core.model.domain.AmfArray
+import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, OAuth2FlowValidations}
@@ -61,17 +62,19 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
     settings
   }
 
-  private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit =
-    entry.value.as[YMap].entries.foreach(parseFlow(settings, _))
+  private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit = {
+    val flows = entry.value.as[YMap].entries.map(parseFlow(settings.id, _))
+    settings.set(OAuth2SettingsModel.Flows, AmfArray(flows, Annotations(entry.value)), Annotations(entry))
+  }
 
-  private def parseFlow(settings: OAuth2Settings, flowEntry: YMapEntry) = {
+  private def parseFlow(parent: String, flowEntry: YMapEntry) = {
     val flow    = OAuth2Flow(flowEntry)
     val flowMap = flowEntry.value.as[YMap]
     val flowKey = ScalarNode(flowEntry.key).string()
 
-    flow.set(OAuth2FlowModel.Flow, flowKey)
+    flow.set(OAuth2FlowModel.Flow, flowKey, Annotations(flowEntry.key))
 
-    flow.adopted(settings.id)
+    flow.adopted(parent)
 
     flowMap.key("authorizationUrl", OAuth2FlowModel.AuthorizationUri in flow)
     flowMap.key("tokenUrl", OAuth2FlowModel.AccessTokenUri in flow)
@@ -82,8 +85,7 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
     OAuth2FlowValidations.validateFlowFields(flow, ctx.eh)
 
     ctx.closedShape(flow.id, flowMap, flow.flow.value())
-
-    settings.add(OAuth2SettingsModel.Flows, flow)
+    flow
   }
 
   override def vendorSpecificSettingsProducers(): SettingsProducers = Oas3SettingsProducers

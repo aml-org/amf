@@ -1,0 +1,21 @@
+{
+  "SimpleParameter": {
+    "description": "external",
+    "location": "$message.payload#/user/external",
+    "schema": {
+      "type": "string"
+    }
+  },
+  "SimpleChannelBinding": {
+    "ws": {
+      "bindingVersion": "versionFromExternal"
+    }
+  },
+  "SimpleMessage": {
+    "name": "some external message",
+    "title": "external message",
+    "summary": "external message summary",
+    "description": "A longer description of external message",
+    "contentType": "application/json"
+  }
+}

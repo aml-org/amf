@@ -9,6 +9,11 @@ import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote._
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
+  AnnotationEmitter,
+  AnnotationTypeEmitter,
+  FacetsInstanceEmitter
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.UnionShape

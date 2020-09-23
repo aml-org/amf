@@ -19,9 +19,9 @@
           "#1": "ASYNC 2.0"
         },
         "lexical": {
-          "apiContract:endpoint": "[(5,0)-(19,21)]",
+          "apiContract:endpoint": "[(5,0)-(20,0)]",
           "core:name": "[(3,2)-(4,0)]",
-          "#1": "[(1,0)-(19,21)]",
+          "#1": "[(1,0)-(20,0)]",
           "core:version": "[(4,2)-(5,0)]"
         }
       }
@@ -40,7 +40,7 @@
       ],
       "smaps": {
         "lexical": {
-          "#2": "[(6,2)-(19,21)]"
+          "#2": "[(6,2)-(20,0)]"
         }
       }
     },
@@ -58,8 +58,8 @@
       ],
       "smaps": {
         "lexical": {
-          "apiContract:expects": "[(8,14)-(19,21)]",
-          "#3": "[(7,4)-(19,21)]"
+          "apiContract:expects": "[(8,6)-(20,0)]",
+          "#3": "[(7,4)-(20,0)]"
         }
       }
     },
@@ -77,7 +77,7 @@
       ],
       "smaps": {
         "lexical": {
-          "#4": "[(9,0)-(19,21)]"
+          "#4": "[(9,0)-(20,0)]"
         }
       }
     },
@@ -123,7 +123,7 @@
           "@id": "#15"
         },
         {
-          "@id": "#17"
+          "@id": "#18"
         }
       ],
       "smaps": {
@@ -217,20 +217,20 @@
         "apiContract:Example",
         "doc:DomainElement"
       ],
-      "core:name": "john",
+      "core:name": "default-example_1",
       "doc:strict": true,
       "doc:structuredValue": {
         "@id": "#16"
       },
-      "doc:raw": "Johnny",
+      "doc:raw": "name: Johnny",
       "smaps": {
         "synthesized-field": {
           "doc:strict": "true"
         },
         "lexical": {
-          "doc:raw": "[(18,16)-(18,22)]",
-          "#15": "[(18,10)-(19,0)]",
-          "doc:structuredValue": "[(18,16)-(18,22)]"
+          "doc:raw": "[(18,12)-(19,0)]",
+          "#15": "[(18,12)-(19,0)]",
+          "doc:structuredValue": "[(18,12)-(19,0)]"
         },
         "tracked-element": {
           "#15": "amf://id#4"
@@ -238,28 +238,28 @@
       }
     },
     {
-      "@id": "#17",
+      "@id": "#18",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
       ],
-      "core:name": "good",
+      "core:name": "default-example_2",
       "doc:strict": true,
       "doc:structuredValue": {
-        "@id": "#18"
+        "@id": "#19"
       },
-      "doc:raw": "Goode",
+      "doc:raw": "name: Goode",
       "smaps": {
         "synthesized-field": {
           "doc:strict": "true"
         },
         "lexical": {
-          "doc:raw": "[(19,16)-(19,21)]",
-          "#17": "[(19,10)-(19,21)]",
-          "doc:structuredValue": "[(19,16)-(19,21)]"
+          "doc:raw": "[(19,12)-(20,0)]",
+          "#18": "[(19,12)-(20,0)]",
+          "doc:structuredValue": "[(19,12)-(20,0)]"
         },
         "tracked-element": {
-          "#17": "amf://id#4"
+          "#18": "amf://id#4"
         }
       }
     },
@@ -327,40 +327,36 @@
     {
       "@id": "#16",
       "@type": [
-        "data:Scalar",
+        "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
-      "data:value": "Johnny",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "scalar_1",
+      "data:name": {
+        "@id": "#17"
+      },
+      "core:name": "object_1",
       "smaps": {
         "lexical": {
-          "#16": "[(18,16)-(18,22)]"
+          "data:name": "[(18,12)-(19,0)]",
+          "#16": "[(18,12)-(19,0)]"
         }
       }
     },
     {
-      "@id": "#18",
+      "@id": "#19",
       "@type": [
-        "data:Scalar",
+        "data:Object",
         "data:Node",
         "doc:DomainElement"
       ],
-      "data:value": "Goode",
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "core:name": "scalar_1",
+      "data:name": {
+        "@id": "#20"
+      },
+      "core:name": "object_1",
       "smaps": {
         "lexical": {
-          "#18": "[(19,16)-(19,21)]"
+          "data:name": "[(19,12)-(20,0)]",
+          "#19": "[(19,12)-(20,0)]"
         }
       }
     },
@@ -405,6 +401,46 @@
       }
     },
     {
+      "@id": "#17",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "Johnny",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "name",
+      "smaps": {
+        "lexical": {
+          "#17": "[(18,18)-(18,24)]"
+        }
+      }
+    },
+    {
+      "@id": "#20",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "Goode",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "core:name": "name",
+      "smaps": {
+        "lexical": {
+          "#20": "[(19,18)-(19,23)]"
+        }
+      }
+    },
+    {
       "@id": "",
       "@type": [
         "doc:Document",
@@ -415,7 +451,7 @@
       "doc:encodes": {
         "@id": "#1"
       },
-      "doc:version": "2.1.0",
+      "doc:version": "2.1.1",
       "doc:root": true
     }
   ],
