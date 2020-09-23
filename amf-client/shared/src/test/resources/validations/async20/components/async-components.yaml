@@ -72,7 +72,8 @@ components:
       mqtt:
         bindingVersion: 31.07.92
       kafka:
-        key: somekey
+        key:
+          type: string
     externalMessageBinding:
       $ref: 'external-components.json#/external-message-binding'
 

@@ -75,7 +75,9 @@ class KafkaMessageEmitter(binding: KafkaMessageBinding, ordering: SpecOrdering)(
         val fs     = binding.fields
 
         fs.entry(KafkaMessageBindingModel.MessageKey)
-          .foreach(f => result += ValueEmitter("key", f)) // TODO: should emit also enums ??
+          .foreach(
+            f => result += async.AsyncSchemaEmitter("key", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)
       }

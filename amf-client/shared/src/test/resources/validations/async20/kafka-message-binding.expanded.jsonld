@@ -83,7 +83,93 @@
                             ],
                             "http://a.ml/vocabularies/apiBinding#messageKey": [
                               {
-                                "@value": "somekey"
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/kafka-message/key/scalar/schema",
+                                "@type": [
+                                  "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://www.w3.org/ns/shacl#datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#maxLength": [
+                                  {
+                                    "@value": 20
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "schema"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/kafka-message/key/scalar/schema/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/kafka-message/key/scalar/schema/source-map/type-property-lexical-info/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/kafka-message/key/scalar/schema"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(13,14)-(13,18)]"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/kafka-message/key/scalar/schema/source-map/lexical/element_2",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(13,14)-(14,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/kafka-message/key/scalar/schema/source-map/lexical/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#maxLength"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(14,14)-(15,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/kafka-message/key/scalar/schema/source-map/lexical/element_1",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/kafka-message/key/scalar/schema"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(12,12)-(15,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ],
                             "http://a.ml/vocabularies/apiBinding#bindingVersion": [
@@ -127,7 +213,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(12,12)-(12,24)]"
+                                        "@value": "[(12,12)-(15,0)]"
                                       }
                                     ]
                                   },
@@ -153,7 +239,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(11,10)-(12,24)]"
+                                        "@value": "[(11,10)-(15,0)]"
                                       }
                                     ]
                                   }
@@ -178,7 +264,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(11,0)-(12,24)]"
+                                    "@value": "[(11,0)-(15,0)]"
                                   }
                                 ]
                               },
@@ -191,7 +277,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(11,0)-(12,24)]"
+                                    "@value": "[(11,0)-(15,0)]"
                                   }
                                 ]
                               }
@@ -216,7 +302,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(10,0)-(12,24)]"
+                                "@value": "[(10,0)-(15,0)]"
                               }
                             ]
                           },
@@ -229,7 +315,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(10,8)-(12,24)]"
+                                "@value": "[(10,8)-(15,0)]"
                               }
                             ]
                           }
@@ -254,7 +340,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(8,4)-(12,24)]"
+                            "@value": "[(8,4)-(15,0)]"
                           }
                         ]
                       },
@@ -267,7 +353,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(9,6)-(12,24)]"
+                            "@value": "[(9,6)-(15,0)]"
                           }
                         ]
                       }
@@ -292,7 +378,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(7,2)-(12,24)]"
+                        "@value": "[(7,2)-(15,0)]"
                       }
                     ]
                   }
@@ -358,7 +444,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,0)-(12,24)]"
+                    "@value": "[(6,0)-(15,0)]"
                   }
                 ]
               },
@@ -371,7 +457,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(12,24)]"
+                    "@value": "[(1,0)-(15,0)]"
                   }
                 ]
               }

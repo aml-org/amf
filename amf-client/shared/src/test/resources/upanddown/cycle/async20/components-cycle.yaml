@@ -8,7 +8,11 @@ components:
       mqtt:
         bindingVersion: 31.07.92
       kafka:
-        key: somekey
+        key:
+          type: string
+          enum:
+            - first key
+            - second key
   serverBindings:
     someServerBinding:
       mqtt:

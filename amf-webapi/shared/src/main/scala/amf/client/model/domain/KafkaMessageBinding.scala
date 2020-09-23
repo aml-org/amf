@@ -14,9 +14,9 @@ case class KafkaMessageBinding(override private[amf] val _internal: InternalKafk
   @JSExportTopLevel("model.domain.KafkaMessageBinding")
   def this() = this(InternalKafkaMessageBinding())
 
-  def messageKey: StrField = _internal.messageKey
+  def messageKey: Shape = _internal.messageKey
 
-  def withKey(key: String): this.type = {
+  def withKey(key: Shape): this.type = {
     _internal.withKey(key)
     this
   }

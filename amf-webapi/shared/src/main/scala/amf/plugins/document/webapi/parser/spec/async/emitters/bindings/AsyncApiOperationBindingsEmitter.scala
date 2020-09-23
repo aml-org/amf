@@ -76,8 +76,14 @@ class KafkaOperationBindingEmitter(binding: KafkaOperationBinding, ordering: Spe
         val fs     = binding.fields
         val result = ListBuffer[EntryEmitter]()
 
-        fs.entry(KafkaOperationBindingModel.GroupId).foreach(f => result += ValueEmitter("groupId", f))
-        fs.entry(KafkaOperationBindingModel.ClientId).foreach(f => result += ValueEmitter("clientId", f))
+        fs.entry(KafkaOperationBindingModel.GroupId)
+          .foreach(
+            f => result += async.AsyncSchemaEmitter("groupId", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
+        fs.entry(KafkaOperationBindingModel.ClientId)
+          .foreach(
+            f => result += async.AsyncSchemaEmitter("clientId", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)

@@ -43,9 +43,52 @@
         "http://a.ml/vocabularies/apiBinding#MessageBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/apiBinding#messageKey": "traitKey",
+      "http://a.ml/vocabularies/apiBinding#messageKey": {
+        "@id": "target/message/message-bindings/kafka-message/scalar/schema"
+      },
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "latest",
       "http://a.ml/vocabularies/apiBinding#type": "kafka"
+    },
+    {
+      "@id": "target/message/message-bindings/kafka-message/scalar/schema",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#name": "schema",
+      "http://www.w3.org/ns/shacl#in": {
+        "@id": "target/message/message-bindings/kafka-message/scalar/schema/list"
+      }
+    },
+    {
+      "@id": "target/message/message-bindings/kafka-message/scalar/schema/list",
+      "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+      "http://www.w3.org/2000/01/rdf-schema#_1": {
+        "@id": "null/enum/scalar_1"
+      }
+    },
+    {
+      "@id": "null/enum/scalar_1",
+      "@type": [
+        "http://a.ml/vocabularies/data#Scalar",
+        "http://a.ml/vocabularies/data#Node",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#value": "traitKey",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "scalar_1"
     },
     {
       "@id": "testId",
