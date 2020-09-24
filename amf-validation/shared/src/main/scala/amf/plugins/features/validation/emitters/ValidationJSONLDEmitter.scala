@@ -187,7 +187,7 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
         val uri = base + "_neg"
         b.obj { e =>
           e.entry("@id", uri)
-          e.entry((Namespace.Shacl + "zerOrMorePath").iri(), genValue(_, p))
+          e.entry((Namespace.Shacl + "zeroOrMorePath").iri(), genValue(_, p))
         }
 
       case PredicatePath(p, false, false) =>
