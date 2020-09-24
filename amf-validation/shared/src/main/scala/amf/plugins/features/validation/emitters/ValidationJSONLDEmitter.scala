@@ -170,23 +170,18 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
 
   /**
    * Emits the triples
-   * @param base
    * @param parsedPath
    * @return
    */
-  def emitPath(b: PartBuilder, base: String, parsedPath: PropertyPath): Unit = {
+  def emitPath(b: PartBuilder, parsedPath: PropertyPath): Unit = {
     parsedPath match {
       case PredicatePath(p, true, false) =>
-        val uri = base + "_inv"
         b.obj { e =>
-          e.entry("@id", uri)
           e.entry((Namespace.Shacl + "inversePath").iri(), genValue(_, p))
         }
 
       case PredicatePath(p, false, true) =>
-        val uri = base + "_neg"
         b.obj { e =>
-          e.entry("@id", uri)
           e.entry((Namespace.Shacl + "zeroOrMorePath").iri(), genValue(_, p))
         }
 
@@ -194,18 +189,16 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
         link(b, p)
 
       case SequencePath(elements)        =>
-        val uri = base + "_seq"
         b.obj { e =>
           e.entry("@list", { l =>
             l.list( p => {
               elements.zipWithIndex.foreach { case (e, i) =>
-                emitPath(p, s"${uri}$i", e)
+                emitPath(p, e)
               }
             })
           })
         }
       case AlternatePath(elements)        =>
-        val uri = base + "_alt"
         b.obj { e =>
           e.entry(
             (Namespace.Shacl + "alternativePath").iri(), { e =>
@@ -213,7 +206,7 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
                 e.entry("@list", { l =>
                   l.list( p => {
                     elements.zipWithIndex.foreach { case (e, i) =>
-                      emitPath(p, s"${uri}$i", e)
+                      emitPath(p, e)
                     }
                   })
                 })
@@ -233,7 +226,7 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
    */
   protected def assertPropertyPath(b: EntryBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
     val parsedPath = constraint.path.get
-    b.entry((Namespace.Shacl + "path").iri(), emitPath(_, constraintId + "_path", parsedPath))
+    b.entry((Namespace.Shacl + "path").iri(), emitPath(_, parsedPath))
   }
 
   private def emitConstraint(b: PartBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
