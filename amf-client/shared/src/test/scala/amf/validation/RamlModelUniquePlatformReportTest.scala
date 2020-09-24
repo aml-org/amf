@@ -543,4 +543,10 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Raml08 version baseUri variable valid definition") {
     validate("08/valid-base-uri-version-variable.raml", None, Raml08Profile)
   }
+
+  test("Invalid json example as violation") {
+    validate("raml/included-example-invalid-json/api.raml",
+             Some("included-example-invalid-json.report"),
+             Raml08Profile)
+  }
 }

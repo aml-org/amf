@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Some title
+/note:
+  
+  get:
+    description: Get a list of notes for that user
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include ./json-example.raml
