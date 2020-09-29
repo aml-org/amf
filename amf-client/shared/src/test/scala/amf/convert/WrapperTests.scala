@@ -231,6 +231,50 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
+  test("Convert resolved RAML to OAS 2.0 with compacted emission (default)") {
+    for {
+      _          <- AMF.init().asFuture
+      unit       <- new RamlParser().parseFileAsync(banking).asFuture
+      resolved   <- Future.successful(AMF.resolveRaml10(unit))
+      output     <- new Oas20Renderer().generateString(resolved).asFuture
+    } yield {
+      output should include("#/definitions")
+    }
+  }
+
+  test("Convert resolved RAML to OAS 2.0 without compacted emission") {
+    for {
+      _          <- AMF.init().asFuture
+      unit       <- new RamlParser().parseFileAsync(banking).asFuture
+      resolved   <- Future.successful(AMF.resolveRaml10(unit))
+      output     <- new Oas20Renderer().generateString(resolved, RenderOptions().withoutCompactedEmission).asFuture
+    } yield {
+      output should not include("#/definitions")
+    }
+  }
+
+  test("Convert resolved RAML to OAS 3.0 with compacted emission (default)") {
+    for {
+      _          <- AMF.init().asFuture
+      unit       <- new RamlParser().parseFileAsync(banking).asFuture
+      resolved   <- Future.successful(AMF.resolveRaml10(unit))
+      output     <- new Oas30Renderer().generateString(resolved).asFuture
+    } yield {
+      output should include("#/components/schemas")
+    }
+  }
+
+  test("Convert resolved RAML to OAS 3.0 without compacted emission") {
+    for {
+      _          <- AMF.init().asFuture
+      unit       <- new RamlParser().parseFileAsync(banking).asFuture
+      resolved   <- Future.successful(AMF.resolveRaml10(unit))
+      output     <- new Oas30Renderer().generateString(resolved, RenderOptions().withoutCompactedEmission).asFuture
+    } yield {
+      output should not include("#/components/schemas")
+    }
+  }
+
   test("Render / parse test OAS 3.0") {
     for {
       _      <- AMF.init().asFuture
