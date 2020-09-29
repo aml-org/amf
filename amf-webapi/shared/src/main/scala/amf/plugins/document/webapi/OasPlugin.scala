@@ -161,7 +161,7 @@ object Oas20Plugin extends OasPlugin {
 
 object Oas30Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions): OasSpecEmitterContext =
+  override def specContext(options: RenderOptions): Oas3SpecEmitterContext =
     new Oas3SpecEmitterContext(options.errorHandler, compactEmission=options.isWithCompactedEmission)
 
   override protected def vendor: Vendor = Oas30
