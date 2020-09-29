@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{SynthesizedField, VirtualObject}
 import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.{IdCounter, _}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
@@ -24,14 +24,16 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Operation)(
+abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
     implicit val ctx: OasLikeWebApiContext)
     extends SpecParserOps {
 
-  def parse(): Operation = {
+  protected def methodNode: AmfScalar = ScalarNode(entry.key).string()
 
-    val operation: Operation = producer(ScalarNode(entry.key).string().value.toString).add(Annotations(entry))
-    operation.set(Method, ScalarNode(entry.key).string()) // add lexical info
+  def parse(): Operation = {
+    val operation: Operation = Operation(Annotations(entry))
+    operation.set(Method, methodNode) // add lexical info
+    adopt(operation)
 
     val map = entry.value.as[YMap]
 
@@ -62,9 +64,9 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
   }
 }
 
-abstract class OasOperationParser(entry: YMapEntry, producer: String => Operation)(
+abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
     override implicit val ctx: OasWebApiContext)
-    extends OasLikeOperationParser(entry, producer) {
+    extends OasLikeOperationParser(entry, adopt) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
@@ -145,9 +147,9 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
   }
 }
 
-case class Oas20OperationParser(entry: YMapEntry, producer: String => Operation)(
+case class Oas20OperationParser(entry: YMapEntry, adopt: Operation => Operation)(
     override implicit val ctx: OasWebApiContext)
-    extends OasOperationParser(entry, producer) {
+    extends OasOperationParser(entry, adopt) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
@@ -163,9 +165,9 @@ case class Oas20OperationParser(entry: YMapEntry, producer: String => Operation)
   }
 }
 
-case class Oas30OperationParser(entry: YMapEntry, producer: String => Operation)(
+case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)(
     override implicit val ctx: OasWebApiContext)
-    extends OasOperationParser(entry, producer) {
+    extends OasOperationParser(entry, adopt) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
