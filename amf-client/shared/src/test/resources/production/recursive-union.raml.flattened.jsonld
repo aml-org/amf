@@ -93,7 +93,7 @@
     {
       "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(32,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(33,13)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/source-map/lexical/element_0",
@@ -236,7 +236,7 @@
       "http://a.ml/vocabularies/shapes#items": {
         "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/AnotherType/recursive"
       },
-      "http://www.w3.org/ns/shacl#name": "array_0",
+      "http://www.w3.org/ns/shacl#name": "SomeUnion",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/any/SomeType_0/source-map"
@@ -255,7 +255,7 @@
       "http://a.ml/vocabularies/shapes#items": {
         "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/OneMoreType/recursive"
       },
-      "http://www.w3.org/ns/shacl#name": "array_1",
+      "http://www.w3.org/ns/shacl#name": "SomeUnion",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/any/SomeType_1/source-map"
@@ -488,7 +488,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.1.2",
       "http://a.ml/vocabularies/document#root": true
     }
   ]

@@ -15,6 +15,19 @@ object Async20Syntax extends SpecSyntax {
       "externalDocs",
       "defaultContentType"
     ),
+    "components" -> Set(
+      "schemas",
+      "messages",
+      "securitySchemes",
+      "parameters",
+      "correlationIds",
+      "operationTraits",
+      "messageTraits",
+      "serverBindings",
+      "channelBindings",
+      "operationBindings",
+      "messageBindings"
+    ),
     "server" -> Set(
       "url",
       "protocol",
@@ -36,6 +49,12 @@ object Async20Syntax extends SpecSyntax {
       "headers",
       "bindingVersion"
     ),
+    "amqpChannelBinding" -> Set(
+      "is",
+      "queue",
+      "bindingVersion",
+      "exchange"
+    ),
     "amqpQueueChannelBinding" -> Set(
       "name",
       "durable",
@@ -43,22 +62,12 @@ object Async20Syntax extends SpecSyntax {
       "autoDelete",
       "vhost"
     ),
-    "amqpIsQueueChannelBinding" -> Set(
-      "is",
-      "queue",
-      "bindingVersion"
-    ),
     "amqpExchangeChannelBinding" -> Set(
       "name",
       "type",
       "durable",
       "autoDelete",
       "vhost"
-    ),
-    "amqpIsExchangeChannelBinding" -> Set(
-      "is",
-      "exchange",
-      "bindingVersion"
     ),
     "httpOperationBinding" -> Set(
       "type",
@@ -99,7 +108,8 @@ object Async20Syntax extends SpecSyntax {
     "mqttServerLastWill" -> Set(
       "topic",
       "qos",
-      "retain"
+      "retain",
+      "message"
     ),
     "mqttMessageBinding" -> Set(
       "bindingVersion"
@@ -250,6 +260,21 @@ object Async20Syntax extends SpecSyntax {
       "bearerFormat",
       "flows",
       "openIdConnectUrl"
+    ),
+    "bindings" -> Set(
+      "http",
+      "ws",
+      "kafka",
+      "amqp",
+      "amqp1",
+      "mqtt",
+      "mqtt5",
+      "nats",
+      "jms",
+      "sns",
+      "sqs",
+      "stomp",
+      "redis"
     )
   )
 }

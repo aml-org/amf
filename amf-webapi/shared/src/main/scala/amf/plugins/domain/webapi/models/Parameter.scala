@@ -103,7 +103,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Parameter.apply
-  override protected def nameField: Field                                                       = Name
+  override def nameField: Field                                                                 = Name
 }
 
 object Parameter {

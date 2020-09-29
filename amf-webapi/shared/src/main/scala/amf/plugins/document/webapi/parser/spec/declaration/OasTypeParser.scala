@@ -25,6 +25,7 @@ import amf.plugins.document.webapi.parser.spec.common.{
 import amf.plugins.document.webapi.parser.spec.domain.{
   ExampleDataParser,
   ExampleOptions,
+  ExamplesDataParser,
   NodeDataNodeParser,
   RamlExamplesParser
 }
@@ -34,6 +35,8 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
+import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.validation.DialectValidations.InvalidUnionType
 import amf.validations.ParserSideValidations._
@@ -743,12 +746,8 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       map
         .key("examples")
         .map { entry =>
-          val counter = new IdCounter()
-          val examples = entry.value.as[YSequence].nodes.map { n =>
-            val exa = Example(n).withName(counter.genId("default-example"))
-            exa.adopted(shape.id)
-            ExampleDataParser(n, exa, options).parse()
-          }
+          val sequence = entry.value.as[YSequence]
+          val examples = ExamplesDataParser(sequence, options, shape.id).parse()
           shape.setArrayWithoutId(AnyShapeModel.Examples, examples, Annotations(entry))
         }
   }
@@ -911,8 +910,14 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
     }
 
     private def parseMappings(mappingEntry: YMapEntry): Unit = {
-      val map      = mappingEntry.value.as[YMap]
-      val mappings = map.entries.map(entry => IriTemplateMapping(entry.key.as[String], entry.value.as[String]))
+      val map = mappingEntry.value.as[YMap]
+      val mappings = map.entries.map(entry => {
+        val mapping  = IriTemplateMapping(Annotations(entry))
+        val element  = ScalarNode(entry.key).string()
+        val variable = ScalarNode(entry.value).string()
+        mapping.set(TemplateVariable, element, Annotations(entry.key))
+        mapping.set(LinkExpression, variable, Annotations(entry.value))
+      })
       shape.setArray(NodeShapeModel.DiscriminatorMapping, mappings, Annotations(mappingEntry))
     }
   }

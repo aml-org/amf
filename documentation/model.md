@@ -37,7 +37,6 @@ AMF Model Documentation
 * [Documents](#documents)
 * [DomainElement](#domainelement)
 * [DomainExtension](#domainextension)
-* [DynamicBinding](#dynamicbinding)
 * [EmptyBinding](#emptybinding)
 * [Encoding](#encoding)
 * [EndPoint](#endpoint)
@@ -627,15 +626,6 @@ They are parsed as RDF graphs using a default transformation from a set of neste
  | element | string | Element being extended | http://a.ml/vocabularies/document#element |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
-## DynamicBinding
-
-
- | Name | Value | Documentation | Namespace |
- | ------ | ------ | ------ | ------ |
- | definition | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://a.ml/vocabularies/apiBinding#definition |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
- | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
-
 ## EmptyBinding
 
 
@@ -880,7 +870,7 @@ Settings for an HTTP security scheme
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | messageKey | string | The message key | http://a.ml/vocabularies/apiBinding#messageKey |
+ | messageKey | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiBinding#messageKey |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
  | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
@@ -890,8 +880,8 @@ Settings for an HTTP security scheme
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | groupId | string | Id of the consumer group | http://a.ml/vocabularies/apiBinding#groupId |
- | clientId | string | Id of the consumer inside a consumer group | http://a.ml/vocabularies/apiBinding#clientId |
+ | groupId | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiBinding#groupId |
+ | clientId | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiBinding#clientId |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
  | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
@@ -1062,6 +1052,7 @@ It main purpose is to expose the declared references so they can be re-used
  | topic | string | The topic where the Last Will and Testament message will be sent | http://a.ml/vocabularies/apiBinding#topic |
  | qos | int | Defines how hard the broker/client will try to ensure that the Last Will and Testament message is received | http://a.ml/vocabularies/apiBinding#qos |
  | retain | boolean | Whether the broker should retain the Last Will and Testament message or not | http://a.ml/vocabularies/apiBinding#retain |
+ | message | string | Message used to notify other clients about an ungracefully disconnected client. | http://a.ml/vocabularies/apiBinding#message |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## NamedExampleFragment

@@ -1,0 +1,26 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "testing API"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "parameters": [
+          {
+            "name": "test-parameter",
+            "in": "header",
+            "type": "string",
+            "example": "2018-08-04T12:23:34Z"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "test"
+          }
+        }
+      }
+    }
+  }
+}

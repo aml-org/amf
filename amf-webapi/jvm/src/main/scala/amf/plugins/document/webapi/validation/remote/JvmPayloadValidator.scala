@@ -7,7 +7,12 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.validation.json.{InvalidJSONValueException, JSONObject, JSONTokenerHack}
+import amf.plugins.document.webapi.validation.json.{
+  InvalidJSONValueException,
+  JSONObject,
+  JSONTokenerHack,
+  ScalarTokenerHack
+}
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.validations.PayloadValidations.{
   ExampleValidationErrorSpecification,
@@ -28,6 +33,8 @@ import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
 import org.json.JSONException
+
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
 class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, val env: Environment)
     extends PlatformPayloadValidator(shape, env) {
@@ -61,7 +68,7 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
       element: DomainElement,
       validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
 
-    loadJson(
+    loadJsonSchema(
       jsonSchema.toString
         .replace("x-amf-union", "anyOf")) match {
       case schemaNode: JSONObject =>
@@ -88,7 +95,7 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
 
         try {
           // does not use schemaBuilder.build() as this causes formats of schema version to override custom format validators
-          val loader = new SchemaLoader(schemaBuilder);
+          val loader = new SchemaLoader(schemaBuilder)
           Right(Some(loader.load().build()))
         } catch {
           case e: SchemaException =>
@@ -105,7 +112,7 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
   protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
     try {
       literalRepresentation(payload) map { payloadText =>
-        loadJson(payloadText)
+        loadJsonSchema(payloadText)
       }
     } catch {
       case _: ExampleUnknownException => None
@@ -113,8 +120,23 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
     }
   }
 
+  override protected def loadJsonSchema(text: String): Object = {
+    withJsonExceptionCatching(() => {
+      new JSONTokenerHack(text).nextValue()
+    })
+  }
+
   override protected def loadJson(text: String): Object = {
-    try new JSONTokenerHack(text).nextValue()
+    withJsonExceptionCatching(() => {
+      shape match {
+        case _: ScalarShape => new ScalarTokenerHack(text).nextValue()
+        case _              => new JSONTokenerHack(text).nextValue()
+      }
+    })
+  }
+
+  private def withJsonExceptionCatching(jsonLoading: () => Object): Object = {
+    try jsonLoading()
     catch {
       case e: InvalidJSONValueException => throw new InvalidJsonValue(e)
       case e: JSONException             => throw new InvalidJsonObject(e)
@@ -125,7 +147,7 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
     JvmReportValidationProcessor(profileName, shape)
 }
 
-case class JvmReportValidationProcessor(override val profileName: ProfileName, val shape: Shape)
+case class JvmReportValidationProcessor(override val profileName: ProfileName, shape: Shape)
     extends ReportValidationProcessor {
 
   override def processException(r: Throwable, element: Option[DomainElement]): Return = {
@@ -179,25 +201,31 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName, v
 
   private def iterateValidations(validationException: ValidationException,
                                  element: Option[DomainElement]): Seq[AMFValidationResult] = {
-    var resultsAcc = Seq[AMFValidationResult]()
-    val results    = validationException.getCausingExceptions.iterator()
-    while (results.hasNext) {
-      val result = results.next()
-      resultsAcc = resultsAcc ++ iterateValidations(result, element)
+
+    var exceptionsStack: List[ValidationException] = List(validationException)
+
+    var accumulator = Seq[AMFValidationResult]()
+
+    while (exceptionsStack.nonEmpty) {
+      val exception = exceptionsStack.head
+      exceptionsStack = exceptionsStack.tail
+
+      if (exception.getCausingExceptions.isEmpty) {
+        accumulator = AMFValidationResult(
+          message = makeValidationMessage(exception),
+          level = SeverityLevels.VIOLATION,
+          targetNode = element.map(_.id).getOrElse(""),
+          targetProperty = element.map(_.id),
+          validationId = ExampleValidationErrorSpecification.id,
+          position = element.flatMap(_.position()),
+          location = element.flatMap(_.location()),
+          source = validationException
+        ) +: accumulator
+      } else {
+        exceptionsStack = exception.getCausingExceptions.toList ::: exceptionsStack
+      }
     }
-    if (resultsAcc.isEmpty) {
-      resultsAcc = resultsAcc :+ AMFValidationResult(
-        message = makeValidationMessage(validationException),
-        level = SeverityLevels.VIOLATION,
-        targetNode = element.map(_.id).getOrElse(""),
-        targetProperty = element.map(_.id),
-        validationId = ExampleValidationErrorSpecification.id,
-        position = element.flatMap(_.position()),
-        location = element.flatMap(_.location()),
-        source = validationException
-      )
-    }
-    resultsAcc
+    accumulator
   }
 
   private def makeValidationMessage(validationException: ValidationException): String = {

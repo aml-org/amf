@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml",
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml",
     "@type": [
       "http://a.ml/vocabularies/meta#Dialect",
       "http://a.ml/vocabularies/document#Document",
@@ -20,7 +20,7 @@
     ],
     "http://a.ml/vocabularies/meta#externals": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml/externals/schema-org",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/externals/schema-org",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -38,7 +38,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml/externals/anypoint",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/externals/anypoint",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -58,14 +58,14 @@
     ],
     "http://a.ml/vocabularies/meta#documents": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml/documents",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/documents",
         "@type": [
           "http://a.ml/vocabularies/meta#DocumentsModel",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://a.ml/vocabularies/meta#rootDocument": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/documents/root",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/documents/root",
             "@type": [
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -77,21 +77,21 @@
             ],
             "http://a.ml/vocabularies/meta#encodedNode": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject"
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/documents/root/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/documents/root/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/documents/root/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/documents/root/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/documents/root"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/documents/root"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -101,7 +101,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/documents/root/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/documents/root/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/meta#encodedNode"
@@ -120,16 +120,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml/documents#/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/documents#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml/documents#/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/documents#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml/documents"
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/documents"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -139,7 +139,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml/documents#/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/documents#/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/meta#rootDocument"
@@ -158,12 +158,12 @@
     ],
     "http://a.ml/vocabularies/document#location": [
       {
-        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml"
+        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml"
       }
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.1.2"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -173,13 +173,13 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/source-map",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/source-map/lexical/element_3",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/source-map/lexical/element_3",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "http://a.ml/vocabularies/core#version"
@@ -192,7 +192,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/source-map/lexical/element_1",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/source-map/lexical/element_1",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "http://a.ml/vocabularies/core#name"
@@ -205,7 +205,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/source-map/lexical/element_0",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/source-map/lexical/element_0",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "http://a.ml/vocabularies/meta#documents"
@@ -218,10 +218,10 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/source-map/lexical/element_2",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/source-map/lexical/element_2",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml"
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -235,7 +235,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -253,7 +253,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/typeOfAsset",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/typeOfAsset",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -275,16 +275,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/typeOfAsset/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/typeOfAsset/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/typeOfAsset/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/typeOfAsset/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/typeOfAsset"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/typeOfAsset"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -294,7 +294,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/typeOfAsset/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/typeOfAsset/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -311,7 +311,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/owner",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/owner",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -338,13 +338,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/owner/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/owner/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/owner/source-map/lexical/element_2",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/owner/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -357,7 +357,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/owner/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/owner/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -370,10 +370,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/owner/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/owner/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/owner"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/owner"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -387,7 +387,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/metadata",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/metadata",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -409,16 +409,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/metadata/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/metadata/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/metadata/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/metadata/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/metadata"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/metadata"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -428,7 +428,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/metadata/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/metadata/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -445,7 +445,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/date",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/date",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -472,13 +472,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/date/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/date/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/date/source-map/lexical/element_2",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/date/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -491,7 +491,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/date/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/date/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://www.w3.org/ns/shacl#minCount"
@@ -504,10 +504,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/date/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/date/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/property/date"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/date"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -523,13 +523,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/source-map/lexical/element_2",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"
@@ -542,7 +542,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#property"
@@ -555,15 +555,15 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.raml#/declarations/AssetObject"
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(13,0)-(30,0)]"
+                    "@value": "[(12,2)-(30,0)]"
                   }
                 ]
               }

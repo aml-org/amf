@@ -552,6 +552,10 @@ class RamlParserErrorTest extends ParserErrorTest {
   test("Test invalid string format in jsonschema number") {
     validate(
       "error/invalid-number-format/api.raml",
+      duplicateWarning => {
+        duplicateWarning.level should be("Warning")
+        duplicateWarning.message should endWith("Duplicate key : 'type'")
+      },
       formatWarning => {
         formatWarning.level should be("Warning")
         formatWarning.message should endWith(

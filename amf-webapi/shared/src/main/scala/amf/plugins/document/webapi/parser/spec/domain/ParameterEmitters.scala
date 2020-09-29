@@ -25,7 +25,7 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{
 }
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
-import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasSchemaEmitter, OasTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{Raml08TypePartEmitter, Raml10TypeEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter

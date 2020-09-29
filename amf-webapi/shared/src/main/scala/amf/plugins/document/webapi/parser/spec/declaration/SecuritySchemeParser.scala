@@ -17,10 +17,10 @@ abstract class SecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
     }
   }
 
-  def getName: String = {
+  def getName: (String, Option[YNode]) = {
     part match {
-      case entry: YMapEntry => entry.key.as[YScalar].text
-      case _: YMap          => "securityDefinitions"
+      case entry: YMapEntry => (entry.key.as[YScalar].text, Some(entry.key))
+      case _: YMap          => ("securityDefinitions", None)
     }
   }
 }

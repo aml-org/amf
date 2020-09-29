@@ -739,6 +739,7 @@ object RamlWebApiDeclarations {
                                                   futureDeclarations = d.futureDeclarations)
     declarations.libs = d.libs
     declarations.frags = d.frags
+    declarations.fragments = d.fragments
     declarations.shapes = d.shapes
     declarations.anns = d.anns
     declarations.resourceTypes = d.resourceTypes

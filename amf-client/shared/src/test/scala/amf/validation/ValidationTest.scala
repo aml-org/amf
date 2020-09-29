@@ -7,7 +7,7 @@ import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.SeverityLevels
+import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.features.validation.CoreValidations

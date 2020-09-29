@@ -3,8 +3,9 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
+import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{Position, FieldEntry}
+import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas3SpecEmitterFactory,
@@ -13,7 +14,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import amf.plugins.domain.shapes.models.Example
@@ -219,20 +220,17 @@ case class NamedExampleEmitter(example: Example, ordering: SpecOrdering)(implici
   override def position(): Position = pos(example.annotations)
 }
 
-case class RamlExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
-    extends PartEmitter {
-  override def emit(b: PartBuilder): Unit = emitters match {
-    case Left(p)                          => p.emit(b)
-    case Right(values) if values.nonEmpty => b.obj(traverse(ordering.sorted(values), _))
-    case _                                => NullEmitter(example.annotations).emit(b)
+object RamlExampleValuesEmitter {
+
+  def apply(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext): RamlExampleValuesEmitter = {
+    if (isExpanded(example)) new ExpandedRamlExampleValuesEmitter(example, ordering)
+    else new ConcreteRamlExampleValuesEmitter(example, ordering)
   }
 
-  val entries: Seq[Emitter] = {
-    val results = ListBuffer[Emitter]()
-
+  private def isExpanded(example: Example): Boolean = {
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
-    val explicitFielMeta =
+    val explicitMetaFields =
       List(ExampleModel.Strict,
            ExampleModel.Description,
            ExampleModel.DisplayName,
@@ -243,41 +241,64 @@ case class RamlExampleValuesEmitter(example: Example, ordering: SpecOrdering)(im
             case None        => false
           }
         }
-    val isExpanded = fs.fieldsMeta().exists(explicitFielMeta.contains(_)) || example.raw
+    fs.fieldsMeta().exists(explicitMetaFields.contains(_)) || example.raw
       .option()
       .exists(_.contains("value"))
+  }
+}
 
-    if (isExpanded) {
-      fs.entry(ExampleModel.DisplayName).foreach(f => results += RamlScalarEmitter("displayName", f))
+class ConcreteRamlExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends RamlExampleValuesEmitter(example, ordering) {
+  override val entries: Seq[Emitter] =
+    ExampleDataNodePartEmitter(example, ordering)(spec).partEmitter.map(e => Seq(e)).getOrElse(Seq())
+}
 
-      fs.entry(ExampleModel.Description).foreach(f => results += RamlScalarEmitter("description", f))
+class ExpandedRamlExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends RamlExampleValuesEmitter(example, ordering) {
+  override val entries: Seq[Emitter] = {
+    val results = ListBuffer[Emitter]()
+    val fs      = example.fields
 
-      if (fs.entry(ExampleModel.Strict)
-            .isDefined && !fs.entry(ExampleModel.Strict).get.value.annotations.contains(classOf[SynthesizedField])) {
-        fs.entry(ExampleModel.Strict).foreach(f => results += RamlScalarEmitter("strict", f))
-      }
-
-      fs.entry(ExampleModel.StructuredValue)
-        .fold({
-          example.raw.option().foreach { s =>
-            results += StringToAstEmitter(s)
-          }
-        })(f => {
-          results += EntryPartEmitter("value",
-                                      DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
-                                      position = pos(f.value.annotations))
-        })
-
-      results ++= AnnotationsEmitter(example, ordering).emitters
-
-    } else {
-      ExampleDataNodePartEmitter(example, ordering)(spec).partEmitter.foreach(results += _)
+    fs.entry(ExampleModel.DisplayName).foreach(f => results += RamlScalarEmitter("displayName", f))
+    fs.entry(ExampleModel.Description).foreach(f => results += RamlScalarEmitter("description", f))
+    if (isStrict(fs) && !isNotSynthetic(fs, ExampleModel.Strict)) {
+      fs.entry(ExampleModel.Strict).foreach(f => results += RamlScalarEmitter("strict", f))
     }
 
+    fs.entry(ExampleModel.StructuredValue)
+      .fold({
+        example.raw.option().foreach { s =>
+          results += StringToAstEmitter(s)
+        }
+      })(f => {
+        results += EntryPartEmitter("value",
+                                    DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
+                                    position = pos(f.value.annotations))
+      })
+
+    results ++= AnnotationsEmitter(example, ordering).emitters
     results
   }
 
-  private val emitters: Either[PartEmitter, Seq[EntryEmitter]] = entries match {
+  private def isNotSynthetic(fs: Fields, field: Field) =
+    fs.entry(field).get.value.annotations.contains(classOf[SynthesizedField])
+
+  private def isStrict(fs: Fields) = {
+    fs.entry(ExampleModel.Strict).isDefined
+  }
+}
+
+abstract class RamlExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends PartEmitter {
+  override def emit(b: PartBuilder): Unit = emitters match {
+    case Left(p)                          => p.emit(b)
+    case Right(values) if values.nonEmpty => b.obj(traverse(ordering.sorted(values), _))
+    case _                                => NullEmitter(example.annotations).emit(b)
+  }
+
+  protected def entries: Seq[Emitter]
+
+  private def emitters: Either[PartEmitter, Seq[EntryEmitter]] = entries match {
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
     case other =>

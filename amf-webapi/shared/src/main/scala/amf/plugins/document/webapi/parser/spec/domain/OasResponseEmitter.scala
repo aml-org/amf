@@ -7,7 +7,6 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
 import amf.plugins.document.webapi.annotations.{DefaultPayload, EndPointBodyParameter}
-import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Payload, Response, TemplatedLink}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -19,6 +18,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
   InlinedOas3SpecEmitterFactory,
   OasSpecEmitterContext
 }
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
 

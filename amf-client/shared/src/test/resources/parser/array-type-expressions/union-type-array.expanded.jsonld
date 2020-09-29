@@ -75,7 +75,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.1.2"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -105,7 +105,7 @@
             ],
             "http://a.ml/vocabularies/shapes#anyOf": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1651258140",
+                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1651202402",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -125,21 +125,21 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1651258140/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1651202402/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1651258140/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1651202402/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1651258140"
+                            "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1651202402"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(6,11)-(6,33)]"
+                            "@value": "[(6,11)-(6,17)]"
                           }
                         ]
                       }
@@ -148,7 +148,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link-835153791",
+                "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link--765284063",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -168,21 +168,21 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link-835153791/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link--765284063/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link-835153791/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link--765284063/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link-835153791"
+                            "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link--765284063"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(6,11)-(6,33)]"
+                            "@value": "[(6,20)-(6,33)]"
                           }
                         ]
                       }
@@ -202,21 +202,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myArray/items/union/items/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myArray/items/union/items"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(6,4)-(7,0)]"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#type-expression": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myArray/items/union/items/source-map/type-expression/element_0",
@@ -228,6 +213,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "Person | AnotherPerson"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myArray/items/union/items/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myArray/items/union/items"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(6,4)-(7,0)]"
                       }
                     ]
                   }
@@ -367,7 +367,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#anyOf": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1053452960",
+                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-856880834",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -387,21 +387,21 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1053452960/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-856880834/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1053452960/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-856880834/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-1053452960"
+                                "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/Person/link-856880834"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(9,10)-(9,36)]"
+                                "@value": "[(9,11)-(9,17)]"
                               }
                             ]
                           }
@@ -410,7 +410,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link-237348611",
+                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link--1559605631",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -430,23 +430,46 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link-237348611/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link--1559605631/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link-237348611/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link--1559605631/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link-237348611"
+                                "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/AnotherPerson/link--1559605631"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(9,10)-(9,36)]"
+                                "@value": "[(9,20)-(9,33)]"
                               }
                             ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myTypeExpression/array/default-array/items/union/default-union/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myTypeExpression/array/default-array/items/union/default-union/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myTypeExpression/array/default-array/items/union/default-union"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(9,10)-(9,34)]"
                           }
                         ]
                       }
@@ -461,21 +484,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myTypeExpression/array/default-array/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myTypeExpression/array/default-array"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(9,4)-(10,0)]"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#type-expression": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myTypeExpression/array/default-array/source-map/type-expression/element_0",
@@ -487,6 +495,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "(Person | AnotherPerson)[]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myTypeExpression/array/default-array/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/parser/array-type-expressions/union-type-array.raml#/declarations/types/array/myTypeExpression/array/default-array"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,4)-(10,0)]"
                       }
                     ]
                   }

@@ -50,10 +50,12 @@ class MqttServerLastWill(override val fields: Fields, override val annotations: 
   def topic: StrField   = fields.field(Topic)
   def qos: IntField     = fields.field(Qos)
   def retain: BoolField = fields.field(Retain)
+  def message: StrField = fields.field(Message)
 
-  def withTopic(topic: String): this.type    = set(Topic, topic)
-  def withQos(qos: Int): this.type           = set(Qos, qos)
-  def withRetain(retain: Boolean): this.type = set(Retain, retain)
+  def withTopic(topic: String): this.type     = set(Topic, topic)
+  def withQos(qos: Int): this.type            = set(Qos, qos)
+  def withRetain(retain: Boolean): this.type  = set(Retain, retain)
+  def withMessage(message: String): this.type = set(Message, message)
 
   override def componentId: String = "/mqtt-last-will"
 }

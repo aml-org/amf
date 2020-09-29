@@ -24,8 +24,6 @@ case class IriTemplateMapping(fields: Fields, annotations: Annotations) extends 
 }
 
 object IriTemplateMapping {
-  def apply(): IriTemplateMapping = apply(Annotations())
-  def apply(variable: String, linkExpression: String): IriTemplateMapping =
-    this().withTemplateVariable(variable).withLinkExpression(linkExpression)
+  def apply(): IriTemplateMapping     = apply(Annotations())
   def apply(annotations: Annotations) = new IriTemplateMapping(Fields(), annotations)
 }

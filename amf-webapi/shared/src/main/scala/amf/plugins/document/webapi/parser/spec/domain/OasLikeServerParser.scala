@@ -3,7 +3,7 @@ import amf.core.annotations.SynthesizedField
 import org.yaml.model.{YMap, YMapEntry}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.DataType
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps, YMapEntryLike}
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.utils.IdCounter
@@ -14,13 +14,16 @@ import amf.plugins.domain.webapi.models.{Parameter, Server}
 /**
   * Single server OAS-like parser
   * @param parent parent node for server
-  * @param map map representing server
+  * @param entryLike map representing server | entry representing the server and its name
   * @param ctx parsing context
   */
-class OasLikeServerParser(parent: String, map: YMap)(implicit val ctx: OasLikeWebApiContext) extends SpecParserOps {
+class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val ctx: OasLikeWebApiContext)
+    extends SpecParserOps {
+
+  protected val map            = entryLike.asMap
+  protected val server: Server = build()
 
   def parse(): Server = {
-    val server = Server(map)
     map.key("url", ServerModel.Url in server)
     server.adopted(parent)
 
@@ -32,6 +35,15 @@ class OasLikeServerParser(parent: String, map: YMap)(implicit val ctx: OasLikeWe
     AnnotationParser(server, map).parse()
     ctx.closedShape(server.id, map, "server")
     server
+  }
+
+  private def build(): Server = {
+    val s = Server(entryLike.annotations)
+    entryLike.key.foreach { k =>
+      val name = ScalarNode(k)
+      s.set(ServerModel.Name, name.string())
+    }
+    s
   }
 }
 

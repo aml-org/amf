@@ -54,6 +54,7 @@ case class MqttServerLastWill(override private[amf] val _internal: InternalMqttS
   def topic: StrField   = _internal.topic
   def qos: IntField     = _internal.qos
   def retain: BoolField = _internal.retain
+  def message: StrField = _internal.message
 
   def withTopic(topic: String): this.type = {
     _internal.withTopic(topic)
@@ -65,6 +66,10 @@ case class MqttServerLastWill(override private[amf] val _internal: InternalMqttS
   }
   def withRetain(retain: Boolean): this.type = {
     _internal.withRetain(retain)
+    this
+  }
+  def withMessage(message: String): this.type = {
+    _internal.withMessage(message)
     this
   }
 }

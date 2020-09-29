@@ -7,7 +7,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
-import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
+import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher, TypeName}
 import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
 import amf.plugins.domain.shapes.models._
@@ -82,11 +82,8 @@ case class RamlTypeDetector(parent: String,
         case JSONSchema(_) => Some(JSONSchemaType)
 
         case RamlTypeDefMatcher.TypeExpression(text) =>
-          RamlTypeExpressionParser(shape => shape.withId("/"),
-                                   Some(node.as[YScalar]),
-                                   checking = true,
-                                   expression = text)
-            .parse()
+          RamlExpressionParser
+            .check(shape => shape.withId("/"), text)
             .flatMap(s => ShapeClassTypeDefMatcher(s, node, recursive))
             .map {
               case TypeDef.UnionType | TypeDef.ArrayType if !recursive => TypeExpressionType

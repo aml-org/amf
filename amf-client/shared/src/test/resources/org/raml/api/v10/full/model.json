@@ -251,7 +251,6 @@ annotationTypes:
             default: href
             required: false
           property:
-            type: string
             required: true
           names:
             type: array
@@ -276,8 +275,7 @@ annotationTypes:
   description: top description
   get:
     description: get something
-    protocols:
-      - HTTPS
+    protocols: HTTPS
     queryParameters:
       one:
         displayName: The One
@@ -296,8 +294,7 @@ annotationTypes:
         type: string
         required: false
     headers:
-      header-one:
-        type: string
+      header-one: {}
       header-two:
         displayName: The Second
     displayName: uno
@@ -318,8 +315,7 @@ annotationTypes:
     responses:
       "200":
         headers:
-          header-one:
-            type: string
+          header-one: {}
           header-two:
             displayName: The Second
         body:

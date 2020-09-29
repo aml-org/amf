@@ -81,4 +81,6 @@ object UnresolvedShape {
             extensionParser: Option[Option[String] => ShapeExtensionParser]): UnresolvedShape =
     UnresolvedShape(Fields(), annotations, reference, extensionParser)
 
+  def apply(reference: String, annotations: Annotations): UnresolvedShape =
+    UnresolvedShape(Fields(), annotations, reference, None)
 }

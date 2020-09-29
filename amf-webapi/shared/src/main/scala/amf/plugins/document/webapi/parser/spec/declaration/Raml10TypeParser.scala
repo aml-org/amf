@@ -22,7 +22,8 @@ import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{
   RamlXmlSchemaExpression
 }
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
+import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
+import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -182,11 +183,6 @@ case class Raml08TypeParser(entryOrNode: YMapEntryLike,
     result.annotations.reject(isLexical)
     result.add(Annotations(ast))
   }
-
-  private def isLexical =
-    (a: Annotation) =>
-      a.isInstanceOf[SourceAST] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceLocation] || a
-        .isInstanceOf[LexicalInformation]
 
   private def parseSchemaOrTypeDeclarationAndExamples = {
     // has schema or its simple raml type declaration
@@ -576,9 +572,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
   private def parseTypeExpression(): Shape = {
     node.value match {
       case expression: YScalar =>
-        val shape = RamlTypeExpressionParser(adopt, Some(ast), expression.text)
-          .parse()
-          .get
+        val shape = RamlExpressionParser.parse(adopt, expression.text, ast).get
         if (name != "schema" && name != "type") adopt(shape.withName(name, nameAnnotations))
         shape
       case _: YMap => parseObjectType()
@@ -604,7 +598,12 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
           shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry))
           shape
         case _ =>
-          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node.value)))
+          val fieldAnnotations =
+            if (node.isNull) Annotations() += Inferred()
+            else Annotations()
+          shape.set(ScalarShapeModel.DataType,
+                    AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node.value)),
+                    fieldAnnotations)
       }
     }
   }
@@ -706,6 +705,8 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               } else {
                 unresolve.unresolved(text, node)
               }
+              shape.annotations.reject(isLexical)
+              shape.annotations ++= unresolve.annotations
               shape.withLinkTarget(unresolve).withLinkLabel(text)
           }
       }
@@ -1154,8 +1155,8 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
             val isTypeExpression = isPlainArrayTypeExpression(typeEntry)
             if (isTypeExpression) {
               val typeExpression = typeEntry.value.toString.replaceFirst("\\[\\]", "")
-              RamlTypeExpressionParser(items => items.adopted(shape.id), expression = typeExpression)
-                .parse()
+              RamlExpressionParser
+                .parse(items => items.adopted(shape.id), expression = typeExpression, part = typeEntry.value.value)
                 .foreach { value =>
                   shape.withItems(value)
                 }
@@ -1310,7 +1311,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               val id = if (isMultipleInheritance) shape.id + i else shape.id
               node.as[YScalar].text match {
                 case RamlTypeDefMatcher.TypeExpression(s) =>
-                  RamlTypeExpressionParser(adopt, Some(node), s).parse().get.adopted(id)
+                  RamlExpressionParser.parse(adopt, s, node).get.adopted(id)
                 case s if wellKnownType(s) =>
                   parseWellKnownTypeRef(s).withName(s, Annotations(entry.key)).adopted(id)
                 case s =>
@@ -1706,5 +1707,10 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
       typeOrSchema(map).foreach(entry => InheritanceParser(entry, shape, Some(map)).parse())
     }
   }
+
+  def isLexical: Annotation => Boolean =
+    (a: Annotation) =>
+      a.isInstanceOf[SourceAST] || a.isInstanceOf[SourceNode] || a.isInstanceOf[SourceLocation] || a
+        .isInstanceOf[LexicalInformation]
 
 }

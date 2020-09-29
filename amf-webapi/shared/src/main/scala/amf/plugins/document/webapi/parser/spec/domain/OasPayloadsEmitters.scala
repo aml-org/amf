@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
   InlinedOas3SpecEmitterFactory,
   OasSpecEmitterContext
 }
-import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
 import amf.plugins.domain.webapi.metamodel.PayloadModel

@@ -18,15 +18,15 @@ case class KafkaOperationBinding(override private[amf] val _internal: InternalKa
     this
   }
 
-  def groupId: StrField  = _internal.groupId
-  def clientId: StrField = _internal.clientId
+  def groupId: Shape  = _internal.groupId
+  def clientId: Shape = _internal.clientId
 
-  def withGroupId(groupId: String): this.type = {
+  def withGroupId(groupId: Shape): this.type = {
     _internal.withGroupId(groupId)
     this
   }
 
-  def withClientId(clientId: String): this.type = {
+  def withClientId(clientId: Shape): this.type = {
     _internal.withClientId(clientId)
     this
   }

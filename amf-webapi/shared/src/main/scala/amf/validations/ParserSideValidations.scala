@@ -1,12 +1,12 @@
 package amf.validations
 
+import amf._
 import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
 import amf.core.validation.core.ValidationSpecification
 import amf.core.validation.core.ValidationSpecification.PARSER_SIDE_VALIDATION
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.AmfParser
 import amf.plugins.features.validation.Validations
-import amf._
 
 // noinspection TypeAnnotation
 object ParserSideValidations extends Validations {
@@ -66,6 +66,16 @@ object ParserSideValidations extends Validations {
   val ParametersWithoutBaseUri = validation(
     "parameters-without-base-uri",
     "'baseUri' not defined and 'baseUriParameters' defined."
+  )
+
+  val ImplicitVersionParameterWithoutApiVersion = validation(
+    "implicit-version-parameter-without-api-version",
+    "Base uri has 'version' parameter but the API doesn't define a version"
+  )
+
+  val InvalidVersionBaseUriParameterDefinition = validation(
+    "invalid-version-base-uri-parameter-definition",
+    "'version' baseUriParameter can't be defined if present in baseUri as variable"
   )
 
   val ParameterNameRequired = validation(
@@ -373,6 +383,11 @@ object ParserSideValidations extends Validations {
     "Parameter has invalid binding"
   )
 
+  val OasInvalidParameterSchema = validation(
+    "oas-invalid-parameter-binding",
+    "Schema is required for a parameter in body"
+  )
+
   val OasFormDataNotFileSpecification = validation(
     "oas-file-not-form-data-parameters",
     "Parameters with type file must be in formData"
@@ -509,6 +524,11 @@ object ParserSideValidations extends Validations {
     "Invalid allowedTargets type"
   )
 
+  val InvalidAllowedTargets = validation(
+    "invalid-allowed-targets",
+    "Invalid allowedTargets value"
+  )
+
   val InvalidExtensionsType = validation(
     "invalid-extension-type",
     "Invalid extension type"
@@ -598,6 +618,18 @@ object ParserSideValidations extends Validations {
     "'items' field is required when type is array"
   )
 
+  // TODO: Should be removed and used the violation in the next major
+  val ItemsFieldRequiredWarning = validation(
+    "items-field-required-warning",
+    "'items' field is required when type is array"
+  )
+
+  // TODO: Should be removed and used the violation in the next major
+  val invalidExampleFieldWarning = validation(
+    "invalid-example-field-warning",
+    "Property 'example' not supported"
+  )
+
   val InvalidIdentifier = validation(
     "invalid-identifier",
     "'id' must be a string"
@@ -659,16 +691,22 @@ object ParserSideValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> WARNING
     ),
-    NullAbstractDeclaration.id           -> all(WARNING),
-    SchemaDeprecated.id                  -> all(WARNING),
-    SchemasDeprecated.id                 -> all(WARNING),
-    UnusedBaseUriParameter.id            -> all(WARNING),
-    InvalidShapeFormat.id                -> all(WARNING),
-    CrossSecurityWarningSpecification.id -> all(WARNING),
-    ReadOnlyPropertyMarkedRequired.id    -> all(WARNING),
-    MissingRequiredFieldForGrantType.id  -> all(WARNING),
-    MissingDiscriminatorProperty.id      -> all(VIOLATION),
-    InvalidPayload.id                    -> all(VIOLATION)
+    ItemsFieldRequiredWarning.id                 -> all(WARNING), // TODO: should be violation
+    NullAbstractDeclaration.id                   -> all(WARNING),
+    SchemaDeprecated.id                          -> all(WARNING),
+    SchemasDeprecated.id                         -> all(WARNING),
+    UnusedBaseUriParameter.id                    -> all(WARNING),
+    InvalidShapeFormat.id                        -> all(WARNING),
+    CrossSecurityWarningSpecification.id         -> all(WARNING),
+    ReadOnlyPropertyMarkedRequired.id            -> all(WARNING),
+    MissingRequiredFieldForGrantType.id          -> all(WARNING),
+    invalidExampleFieldWarning.id                -> all(WARNING), // TODO: should be violation
+    OasInvalidParameterSchema.id                 -> all(WARNING), // TODO: should be violation
+    InvalidAllowedTargets.id                     -> all(WARNING), // TODO: should be violation
+    MissingDiscriminatorProperty.id              -> all(VIOLATION),
+    InvalidPayload.id                            -> all(VIOLATION),
+    ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation,
+    InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING) // TODO: should be violation,
   )
 
   override val validations: List[ValidationSpecification] = List(

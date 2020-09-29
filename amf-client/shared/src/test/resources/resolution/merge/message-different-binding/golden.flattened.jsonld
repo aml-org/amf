@@ -46,7 +46,9 @@
         "http://a.ml/vocabularies/apiBinding#MessageBinding",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/apiBinding#messageKey": "baseKey",
+      "http://a.ml/vocabularies/apiBinding#messageKey": {
+        "@id": "target/message/message-bindings/kafka-message/key/scalar/schema"
+      },
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "baseVersion",
       "http://a.ml/vocabularies/apiBinding#type": "kafka"
     },
@@ -63,6 +65,22 @@
       "http://a.ml/vocabularies/apiBinding#type": "amqp"
     },
     {
+      "@id": "target/message/message-bindings/kafka-message/key/scalar/schema",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#name": "schema"
+    },
+    {
       "@id": "testId",
       "@type": [
         "http://a.ml/vocabularies/document#Document",
@@ -73,7 +91,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "testId/message"
       },
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.1.2",
       "http://a.ml/vocabularies/document#root": false
     }
   ]

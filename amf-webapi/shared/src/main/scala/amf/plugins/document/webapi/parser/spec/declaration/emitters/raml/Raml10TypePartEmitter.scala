@@ -5,7 +5,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 
 case class Raml10TypePartEmitter(shape: Shape,
                                  ordering: SpecOrdering,

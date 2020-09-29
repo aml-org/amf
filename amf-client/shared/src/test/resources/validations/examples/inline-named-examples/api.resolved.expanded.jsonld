@@ -1131,7 +1131,7 @@
     ],
     "doc:version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.1.2"
       }
     ],
     "doc:root": [
@@ -1173,7 +1173,7 @@
         ],
         "doc:version": [
           {
-            "@value": "2.1.0"
+            "@value": "2.1.2"
           }
         ],
         "doc:root": [
@@ -1183,7 +1183,7 @@
         ],
         "smaps": {
           "lexical": {
-            "#1": "[(2,0)-(9,0)]"
+            "#1": "[(1,0)-(9,0)]"
           }
         }
       },
@@ -1247,7 +1247,12 @@
                           {
                             "@id": "http://a.ml/vocabularies/shapes#number"
                           }
-                        ]
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#7": "[(5,10)-(5,16)]"
+                          }
+                        }
                       },
                       {
                         "@id": "#8",
@@ -1256,7 +1261,12 @@
                           "shacl:Shape",
                           "raml-shapes:Shape",
                           "doc:DomainElement"
-                        ]
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#8": "[(5,19)-(5,22)]"
+                          }
+                        }
                       }
                     ],
                     "shacl:name": [
@@ -1585,7 +1595,7 @@
         ],
         "doc:version": [
           {
-            "@value": "2.1.0"
+            "@value": "2.1.2"
           }
         ],
         "doc:root": [
@@ -1595,7 +1605,7 @@
         ],
         "smaps": {
           "lexical": {
-            "#3": "[(2,0)-(20,0)]"
+            "#3": "[(1,0)-(20,0)]"
           }
         }
       },
@@ -1632,7 +1642,7 @@
         ],
         "doc:version": [
           {
-            "@value": "2.1.0"
+            "@value": "2.1.2"
           }
         ],
         "doc:root": [
@@ -1642,7 +1652,7 @@
         ],
         "smaps": {
           "lexical": {
-            "#18": "[(2,0)-(15,3)]"
+            "#18": "[(1,0)-(15,3)]"
           }
         }
       }
@@ -1700,7 +1710,12 @@
                       {
                         "@id": "http://a.ml/vocabularies/shapes#number"
                       }
-                    ]
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#7": "[(5,10)-(5,16)]"
+                      }
+                    }
                   },
                   {
                     "@id": "#8",
@@ -1709,7 +1724,12 @@
                       "shacl:Shape",
                       "raml-shapes:Shape",
                       "doc:DomainElement"
-                    ]
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#8": "[(5,19)-(5,22)]"
+                      }
+                    }
                   }
                 ],
                 "shacl:name": [

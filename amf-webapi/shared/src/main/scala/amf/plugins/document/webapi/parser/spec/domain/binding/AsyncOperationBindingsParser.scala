@@ -85,8 +85,10 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     val binding = KafkaOperationBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    map.key("groupId", KafkaOperationBindingModel.GroupId in binding)
-    map.key("clientId", KafkaOperationBindingModel.ClientId in binding)
+    map.key("groupId",
+            entry => parseSchema(KafkaOperationBindingModel.GroupId, binding, entry, binding.id + "/group-id"))
+    map.key("clientId",
+            entry => parseSchema(KafkaOperationBindingModel.ClientId, binding, entry, binding.id + "/client-id"))
     parseBindingVersion(binding, KafkaOperationBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding.id, map, "kafkaOperationBinding")

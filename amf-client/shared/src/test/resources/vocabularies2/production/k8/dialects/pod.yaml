@@ -1,0 +1,172 @@
+#%Dialect 1.0
+
+dialect: K8 Pod
+version: 0.1
+
+uses:
+  k8-meta: ../vocabulary/meta.yaml
+  k8-core: ../vocabulary/core.yaml
+  k8-common: ../vocabulary/common.yaml
+
+documents:
+  root:
+    encodes: PodNode
+
+nodeMappings:
+
+  PodNode:
+    classTerm: k8-core.Pod
+    mapping:
+      apiVersion:
+        propertyTerm: k8-meta.apiVersion
+        mandatory: true
+        range: string
+      kind:
+        propertyTerm: k8-meta.kind
+        range: string
+        mandatory: true
+        enum:
+          - Pod
+      metadata:
+        propertyTerm: k8-meta.metadata
+        range: MetadataNode
+      spec:
+        propertyTerm: k8-meta.spec
+        range: PodSpecNode
+      status:
+        propertyTerm: k8-meta.status
+        range: PodStatusNode
+
+  MetadataNode:
+    classTerm: k8-meta.ObjectMeta
+    mapping:
+      name:
+        propertyTerm: k8-meta.name
+        range: string
+      namespace:
+        propertyTerm: k8-meta.namespace
+        range: string
+      uid:
+        propertyTerm: k8-meta.uid
+        range: string
+      clusterName:
+        propertyTerm: k8-meta.clusterName
+        range: string
+      resourceVersion:
+        propertyTerm: k8-meta.resourceVersion
+        range: string
+
+  PodSpecNode:
+    classTerm: k8-meta.ObjectSpec
+    mapping:
+      #affinity:
+      #  propertyTerm: k8-core.affinity
+      #  range: affinity
+      hostname:
+        propertyTerm: k8-core.hostname
+        range: string
+      nodeName:
+        propertyTerm: k8-core.nodeName
+        range: string
+      priority:
+        propertyTerm: k8-core.priority
+        range: integer
+      restartPolicy:
+        propertyTerm: k8-core.restartPolicy
+        range: string
+        enum:
+          - Always
+          - OnFailure
+          - Never
+      schedulerName:
+        propertyTerm: k8-core.schedulerName
+        range: string
+      volumes:
+        propertyTerm: k8-core.volumes
+        mapKey: volumeType
+        range:
+          - AWSElasticBlockStoreVolumeSourceNode
+          - AzureDiskVolumeSource
+      containers:
+        propertyTerm: k8-core.containers
+        mandatory: true
+        allowMultiple: true
+        range: ContainerNode
+
+  PodStatusNode:
+    classTerm: k8-meta.ObjectStatus
+    mapping:
+      startTime:
+        propertyTerm: k8-common.startTime
+        range: string
+      hostIP:
+        propertyTerm: k8-core.hostIp
+        range: string
+      message:
+        propertyTerm: k8-common.message
+        range: string
+      reason:
+        propertyTerm: k8-common.reason
+        range: string
+
+
+  ContainerNode:
+    classTerm: k8-core.Container
+    mapping:
+      name:
+        propertyTerm: k8-core.containerName
+        mandatory: true
+        range: string
+      command:
+        propertyTerm: k8-core.command
+        range: string
+        allowMultiple: true
+      args:
+        propertyTerm: k8-core.argument
+        range: string
+        allowMultiple: true
+      env:
+        propertyTerm: k8-core.environment
+        range: string
+        allowMultiple: true
+      image:
+        propertyTerm: k8-core.image
+        range: string
+      imagePullPolicy:
+        propertyTerm: k8-core.imagePullPolicy
+        range: string
+
+  AWSElasticBlockStoreVolumeSourceNode:
+    classTerm: k8-core.AWSElasticBlockStoreVolumeSource
+    mapping:
+      volumeType:
+        propertyTerm: k8-core.volumeType
+        range: string
+        mandatory: true
+        enum:
+          - awsElasticBlockStore
+      volumeID:
+        propertyTerm: k8-core.volumeID
+        range: string
+        mandatory: true
+      readOnly:
+        propertyTerm: k8-core.readOnly
+        range: boolean
+
+  AzureDiskVolumeSource:
+    classTerm: k8-core.AzureDiskVolumeSource
+    mapping:
+      volumeType:
+        propertyTerm: k8-core.volumeType
+        range: string
+        mandatory: true
+        enum:
+          - azureDisk
+      diskName:
+        propertyTerm: k8-core.diskName
+        range: string
+        mandatory: true
+      diskURI:
+        propertyTerm: k8-core.diskUri
+        range: string
+        mandatory: true

@@ -164,7 +164,7 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = SecurityScheme.apply
-  override protected def nameField: Field                                                       = Name
+  override def nameField: Field                                                                 = Name
 }
 
 object SecurityScheme {

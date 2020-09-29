@@ -27,7 +27,8 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   StringDefaultType,
   _
 }
-import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
+
+import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toOas}
 import amf.plugins.domain.shapes.models.ExampleTracking._
 import amf.plugins.domain.shapes.models.{AnyShape, Example, FileShape, NodeShape}
@@ -132,9 +133,9 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
                 parameter.withSchema(schema)
 
               case Right(ref) if isTypeExpression(ref.text) =>
-                RamlTypeExpressionParser(shape => shape.withName("schema").adopted(parameter.id),
-                                         expression = ref.text)
-                  .parse() match {
+                RamlExpressionParser.parse(shape => shape.withName("schema").adopted(parameter.id),
+                                           expression = ref.text,
+                                           part = ref) match {
                   case Some(schema) => parameter.withSchema(schema)
                   case _ =>
                     ctx.eh.violation(UnresolvedReference,
@@ -291,7 +292,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
   }
 
   def parse(): OasParameter = {
-    map.key("$ref") match {
+    val parameter = map.key("$ref") match {
       case Some(ref) => parseParameterRef(ref, parentId)
       case None =>
         map.key("in") match {
@@ -302,13 +303,29 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
             /**
               * Binding is required, i'm not setting any default value so It will be some model validation.
               * */
-            val parameter = Parameter(map)
+            val parameter = Parameter(entryOrNode.annotations)
             setName(parameter)
             parameter.adopted(parentId)
             OasParameter(parameter, Some(map))
         }
     }
+    checkExampleField(parameter)
+    parameter
   }
+
+  def checkExampleField(p: OasParameter): Unit =
+    map.key("example") match {
+      case Some(_) =>
+        /* TODO: Should remove 'example' from syntax and delete this method and parser-side validation
+                 as it will become a model validation and violation in the next major */
+        ctx.eh.warning(
+          invalidExampleFieldWarning,
+          p.domainElement.id,
+          s"Property 'example' not supported in a parameter node",
+          map
+        )
+      case _ =>
+    }
 
   protected def parseCommonParam(binding: String): Parameter = {
     val parameter = parseFixedFields()
@@ -358,7 +375,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     parameter
   }
 
-  def parseType(container: SchemaContainer, binding: String, typeParsing: () => Unit) = {
+  def parseType(container: SchemaContainer, binding: String, typeParsing: () => Unit): SchemaContainer = {
 
     def setDefaultSchema = (c: SchemaContainer) => c.setSchema(AnyShape(Annotations(Inferred())))
 
@@ -367,11 +384,23 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
         setDefaultSchema(container)
         ctx.eh.violation(MissingParameterType,
                          container.id,
-                         s"'type' is required in a parameter with binding '${binding}'",
+                         s"'type' is required in a parameter with binding '$binding'",
                          map)
-      case Some(_) => typeParsing()
+      case Some(entry) =>
+        checkItemsField(entry, container)
+        typeParsing()
     }
     container
+  }
+
+  private def checkItemsField(entry: YMapEntry, container: SchemaContainer): Unit = {
+    val typeValue = entry.value.asScalar.get.text
+    val items     = map.key("items")
+    if (typeValue == "array" && items.isEmpty)
+      ctx.eh.warning(ItemsFieldRequiredWarning, // TODO: Should be violation
+                     container.id,
+                     "'items' field is required when schema type is array",
+                     map)
   }
 
   private def parseFormDataPayload(bindingRange: Option[Range]): Payload = {
@@ -429,10 +458,10 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     // Force to re-adopt with the new mediatype if exists
     if (payload.mediaType.nonEmpty) validateEntryName(payload)
 
-    map.key(
-      "schema",
-      entry => {
-        OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape].adopted(payload.id))(toOas(ctx)) // i don't need to set param need in here. Its necesary only for form data, because of the properties
+    map.key("schema") match {
+      case Some(entry) =>
+        // i don't need to set param need in here. Its necessary only for form data, because of the properties
+        OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape].adopted(payload.id))(toOas(ctx))
           .parse()
           .map { schema =>
             checkNotFileInBody(schema)
@@ -442,9 +471,9 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
             }
             schema
           }
-      }
-    )
-
+      case None =>
+        ctx.eh.warning(OasInvalidParameterSchema, "", s"Schema is required for a parameter in body", map)
+    }
     payload
   }
 
@@ -591,7 +620,7 @@ class Oas3ParameterParser(entryOrNode: YMapEntryLike,
       "content",
       entry => {
         val payloads = OasContentsParser(entry, payloadProducer)(toOas(ctx)).parse()
-        if (payloads.nonEmpty) param.set(ResponseModel.Payloads, AmfArray(payloads), Annotations(entry))
+        param.set(ResponseModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
       }
     )
   }

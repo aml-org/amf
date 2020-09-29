@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.plugins.document.webapi.annotations.CollectionFormatFromItems
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.FacetsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsEmitter
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel, TupleShapeModel}
 import amf.plugins.domain.shapes.models.TupleShape
 

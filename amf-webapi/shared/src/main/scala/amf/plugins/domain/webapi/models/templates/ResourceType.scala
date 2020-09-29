@@ -38,7 +38,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
                                      ExtendsHelper.findUnitLocationOfElement(id, unit),
                                      keepEditingInfo = false,
                                      errorHandler = errorHandler))
-          .orNull
+          .getOrElse(EndPoint())
     }
   }
 

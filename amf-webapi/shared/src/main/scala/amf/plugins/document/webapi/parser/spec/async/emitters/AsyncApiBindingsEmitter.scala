@@ -2,10 +2,9 @@ package amf.plugins.document.webapi.parser.spec.async.emitters
 import amf.core.emitter.BaseEmitters.{EmptyMapEmitter, MapEntryEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.model.domain.{AmfElement, DataNode, DomainElement, Linkable, NamedDomainElement}
+import amf.core.model.domain.{AmfElement, DomainElement, Linkable, NamedDomainElement}
+import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.async.emitters.bindings.{
@@ -14,17 +13,11 @@ import amf.plugins.document.webapi.parser.spec.async.emitters.bindings.{
   AsyncApiOperationBindingsEmitter,
   AsyncApiServerBindingsEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  AnnotationsEmitter,
-  DataNodeEmitter,
-  OrphanAnnotationsEmitter
-}
-import amf.plugins.domain.webapi.metamodel.bindings.DynamicBindingModel
+import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.OrphanAnnotationsEmitter
 import amf.plugins.domain.webapi.models.bindings._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YDocument, YNode}
-
-import scala.collection.mutable.ListBuffer
+import org.yaml.model.YNode
 
 /**
   * @param bindings is an object which contain individual bindings. (ej. ServerBindings, OperationBindings, etc)
@@ -67,17 +60,8 @@ case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrder
   }
 
   def emitLink(b: PartBuilder): Unit = {
-    val label = OasDefinitions.appendOas3ComponentsPrefix(bindings.asInstanceOf[Linkable].linkLabel.value(),
-                                                          obtainComponentTag())
-    spec.ref(b, label)
-  }
-
-  def obtainComponentTag(): String = bindings match {
-    case _: ServerBindings    => "serverBindings"
-    case _: OperationBindings => "operationBindings"
-    case _: ChannelBindings   => "channelBindings"
-    case _: MessageBindings   => "messageBindings"
-    case _                    => "default"
+    val linkable = bindings.asInstanceOf[DomainElement with Linkable]
+    OasTagToReferenceEmitter(linkable, linkable.linkLabel.option()).emit(b)
   }
 
   def obtainBindings(value: AmfElement): Seq[AmfElement] = {
@@ -95,7 +79,6 @@ case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrder
   def emitterForElement(element: AmfElement): Option[EntryEmitter] = {
     element match {
       case binding: EmptyBinding     => Some(new EmptyBindingEmitter(binding, ordering))
-      case binding: DynamicBinding   => Some(new DynamicBindingEmitter(binding, ordering))
       case binding: ChannelBinding   => Some(new AsyncApiChannelBindingsEmitter(binding, ordering))
       case binding: ServerBinding    => Some(new AsyncApiServerBindingsEmitter(binding, ordering))
       case binding: OperationBinding => Some(new AsyncApiOperationBindingsEmitter(binding, ordering))
@@ -130,24 +113,6 @@ case class AsyncApiNamedBindingsEmitter(
     }
     name.getOrElse("default")
   }
-}
-
-class DynamicBindingEmitter(binding: DynamicBinding, ordering: SpecOrdering)(implicit val spec: SpecEmitterContext)
-    extends EntryEmitter {
-  def emit(b: EntryBuilder): Unit = {
-    val bindingType = binding.`type`.value()
-    val fs          = binding.fields
-    val result      = ListBuffer[EntryEmitter]()
-
-    fs.entry(DynamicBindingModel.Definition)
-      .foreach(f => result ++= DataNodeEmitter(f.element.asInstanceOf[DataNode], ordering)(spec.eh).emitters())
-    b.entry(
-      YNode(bindingType),
-      _.obj(traverse(ordering.sorted(result), _))
-    )
-  }
-
-  override def position(): Position = pos(binding.annotations)
 }
 
 class EmptyBindingEmitter(binding: EmptyBinding, ordering: SpecOrdering) extends EntryEmitter {

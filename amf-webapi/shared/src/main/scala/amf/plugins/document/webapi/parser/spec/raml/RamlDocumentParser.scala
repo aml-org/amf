@@ -149,7 +149,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
-    val references = ReferencesParser(document, "uses", map, root.references).parse(root.location)
+    val references = ReferencesParser(document, root.location, "uses", map, root.references).parse()
     parseDeclarations(root, map)
     val declarationKeys = ctx.getDeclarationKeys
     if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
@@ -183,12 +183,12 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       entry => {
         ctx.globalMediatype = true
         val annotations = Annotations(entry)
-        val value = entry.value.tagType match {
+        val value: AmfArray = entry.value.tagType match {
           case YType.Seq =>
             ArrayNode(entry.value).text()
           case _ =>
             annotations += SingleValueArray()
-            AmfArray(Seq(RamlScalarNode(entry.value).text()))
+            AmfArray(Seq(RamlScalarNode(entry.value).text()), Annotations(entry.value))
         }
 
         api.set(WebApiModel.ContentType, value, annotations)
@@ -219,19 +219,16 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
         ctx.mergeAllOperationContexts()
       }
     )
-
     RamlServersParser(map, api).parse()
-
     val idCounter         = new IdCounter()
     val RequirementParser = RamlSecurityRequirementParser.parse(api.withSecurity, idCounter) _
     map.key("securedBy", (WebApiModel.Security in api using RequirementParser).allowingSingleValue)
-
     map.key(
       "documentation",
       entry => {
-        api.setArray(WebApiModel.Documentations,
-                     UserDocumentationsParser(entry.value.as[Seq[YNode]], ctx.declarations, api.id).parse(),
-                     Annotations(entry))
+        api.set(WebApiModel.Documentations,
+                AmfArray(UserDocumentationsParser(entry.value.as[Seq[YNode]], ctx.declarations, api.id).parse()),
+                Annotations(entry))
       }
     )
 
@@ -569,6 +566,46 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
   }
 
   case class AnnotationTypesParser(ast: YPart, annotationName: String, map: YMap, adopt: CustomDomainProperty => Unit) {
+
+    def checkValidTarget(entry: YMapEntry, nodeId: String): Unit = {
+      val targets = entry.value.value match {
+        case value: YScalar =>
+          Seq(value.text)
+        case values: YSequence =>
+          values.nodes.map(node => node.asScalar.get.text)
+      }
+
+      val validTargets: Set[String] = Set(
+        "API",
+        "DocumentationItem",
+        "Resource",
+        "Method",
+        "Response",
+        "RequestBody",
+        "ResponseBody",
+        "TypeDeclaration",
+        "Example",
+        "ResourceType",
+        "Trait",
+        "SecurityScheme",
+        "SecuritySchemeSettings",
+        "AnnotationType",
+        "Library",
+        "Overlay",
+        "Extension"
+      )
+
+      targets.foreach(target => {
+        if (!validTargets.contains(target))
+          ctx.eh.warning(
+            InvalidAllowedTargets,
+            nodeId,
+            s"$target is not a valid target",
+            entry.value
+          )
+      })
+    }
+
     def parse(): CustomDomainProperty = {
 
       val custom = CustomDomainProperty(ast)
@@ -600,6 +637,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
               val annotations = Annotations(entry)
               val targets: AmfArray = entry.value.tagType match {
                 case YType.Seq =>
+                  checkValidTarget(entry, custom.id)
                   ArrayNode(entry.value).string()
                 case YType.Map =>
                   ctx.eh.violation(
@@ -610,6 +648,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                   )
                   AmfArray(Seq())
                 case _ =>
+                  checkValidTarget(entry, custom.id)
                   annotations += SingleValueArray()
                   AmfArray(Seq(ScalarNode(entry.value).string()))
               }

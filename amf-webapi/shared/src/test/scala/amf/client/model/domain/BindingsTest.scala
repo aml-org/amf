@@ -95,15 +95,6 @@ class BindingsTest extends FunSuite with Matchers {
     channelBindings.bindings.asInternal shouldBe clientChannelBindings.asInternal
   }
 
-  test("test DynamicBinding") {
-    val node = new ScalarNode()
-    val binding = new DynamicBinding()
-      .withType(s)
-      .withDefinition(node)
-    binding.`type`.value() shouldBe s
-    binding.definition shouldBe node
-  }
-
   test("test EmptyBinding") {
     val binding = new EmptyBinding()
       .withType(s)
@@ -131,17 +122,17 @@ class BindingsTest extends FunSuite with Matchers {
   test("test KafkaMessageBinding") {
     val binding = new KafkaMessageBinding()
       .withBindingVersion(s)
-      .withKey(s)
-    binding.messageKey.value() shouldBe s
+      .withKey(shape)
+    binding.messageKey._internal shouldBe shape._internal
   }
 
   test("test KafkaOperationBinding") {
     val binding = new KafkaOperationBinding()
       .withBindingVersion(s)
-      .withClientId(s)
-      .withGroupId(s)
-    binding.clientId.value() shouldBe s
-    binding.groupId.value() shouldBe s
+      .withClientId(shape)
+      .withGroupId(shape)
+    binding.clientId._internal shouldBe shape._internal
+    binding.groupId._internal shouldBe shape._internal
   }
 
   test("test MessageBindings") {

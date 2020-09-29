@@ -7,5 +7,11 @@ channels:
     publish:
       bindings:
         kafka:
-          groupId: "310792"
-          clientId: some3333unique09id
+          groupId:
+            type: string
+            enum:
+              - myGroupId
+          clientId:
+            type: string
+            enum:
+              - myClientId

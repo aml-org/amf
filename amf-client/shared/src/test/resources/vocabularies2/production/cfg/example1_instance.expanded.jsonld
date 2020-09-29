@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml",
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -10,24 +10,24 @@
     ],
     "http://a.ml/vocabularies/meta#definedBy": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1.raml"
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1.yaml"
       }
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes",
         "@type": [
           "http://a.ml/vocabularies/cfg#Configuration",
-          "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1.raml#/declarations/ConfigurationNode",
+          "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1.yaml#/declarations/ConfigurationNode",
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://a.ml/vocabularies/cfg#configuredAsset": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-binary",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-binary",
             "@type": [
               "http://a.ml/vocabularies/cfg#VDPAsset",
-              "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1.raml#/declarations/VDPAssetNode",
+              "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1.yaml#/declarations/VDPAssetNode",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -63,13 +63,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-binary/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-binary/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-binary/source-map/lexical/element_6",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-binary/source-map/lexical/element_6",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#gavGroup"
@@ -82,7 +82,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-binary/source-map/lexical/element_4",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-binary/source-map/lexical/element_4",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#version"
@@ -95,7 +95,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-binary/source-map/lexical/element_2",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-binary/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#gavArtifact"
@@ -108,7 +108,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-binary/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-binary/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#packaging"
@@ -121,7 +121,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-binary/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-binary/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#classifier"
@@ -134,10 +134,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-binary/source-map/lexical/element_3",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-binary/source-map/lexical/element_3",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-binary"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-binary"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -147,7 +147,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-binary/source-map/lexical/element_5",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-binary/source-map/lexical/element_5",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#fileName"
@@ -164,10 +164,10 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key",
             "@type": [
               "http://a.ml/vocabularies/cfg#CSMAsset",
-              "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1.raml#/declarations/CSMAssetNode",
+              "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1.yaml#/declarations/CSMAssetNode",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -208,13 +208,13 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key/source-map/lexical/element_7",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key/source-map/lexical/element_7",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#packaging"
@@ -227,7 +227,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key/source-map/lexical/element_5",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key/source-map/lexical/element_5",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#type"
@@ -240,7 +240,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key/source-map/lexical/element_3",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key/source-map/lexical/element_3",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#version"
@@ -253,7 +253,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#secretGroup"
@@ -266,7 +266,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#secretType"
@@ -279,7 +279,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key/source-map/lexical/element_2",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#fileName"
@@ -292,10 +292,10 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key/source-map/lexical/element_4",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key/source-map/lexical/element_4",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -305,7 +305,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/assets/vdp-key/source-map/lexical/element_6",
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/assets/vdp-key/source-map/lexical/element_6",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/cfg#secretId"
@@ -324,16 +324,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes"
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -343,7 +343,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/encodes/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/encodes/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/cfg#configuredAsset"
@@ -362,7 +362,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.1.2"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -372,16 +372,16 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/source-map",
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml#/source-map/lexical/element_0",
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml#/source-map/lexical/element_0",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.raml"
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example1_instance.yaml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [

@@ -135,7 +135,11 @@ abstract class WebApiContext(val loc: String,
     else if (str.startsWith("/")) str
     else if (str.contains(":")) str
     else if (str.startsWith("#")) base.split("#").head + str
+    else if (shouldSkipDot(base, str)) basePath(base) + str.substring(2)
     else platform.normalizePath(basePath(base).urlDecoded + str)
+
+  def shouldSkipDot(base: String, path: String): Boolean =
+    (basePath(base) == "file://" || basePath(base) == "file:///") && path.startsWith("./")
 
   def basePath(path: String): String = {
     val withoutHash = if (path.contains("#")) path.split("#").head else path

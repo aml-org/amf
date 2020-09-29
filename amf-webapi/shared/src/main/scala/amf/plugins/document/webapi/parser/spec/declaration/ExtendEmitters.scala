@@ -7,6 +7,7 @@ import amf.core.model.domain.AmfElement
 import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
 import amf.core.parser.{FieldEntry, Position}
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.SingleValueArrayEmitter
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

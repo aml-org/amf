@@ -34,7 +34,7 @@
       "doc:encodes": {
         "@id": "#5"
       },
-      "doc:version": "2.1.0",
+      "doc:version": "2.1.2",
       "doc:root": true
     },
     {
@@ -84,7 +84,12 @@
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
-      ]
+      ],
+      "smaps": {
+        "lexical": {
+          "#2": "[(5,10)-(5,16)]"
+        }
+      }
     },
     {
       "@id": "#3",
@@ -95,7 +100,11 @@
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "shacl:name": "array_0"
+      "smaps": {
+        "lexical": {
+          "#3": "[(5,19)-(5,24)]"
+        }
+      }
     }
   ],
   "@context": {

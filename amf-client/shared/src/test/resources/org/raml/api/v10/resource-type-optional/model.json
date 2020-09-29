@@ -16,8 +16,7 @@ resourceTypes:
         application/json:
           type: <<resourcePathName>>
 types:
-  implemented-post:
-    type: string
+  implemented-post: {}
 /unimplemented-post:
   get:
     queryParameters:
@@ -32,5 +31,4 @@ types:
         default: Default value
   post:
     body:
-      application/json:
-        type: string
+      application/json: {}

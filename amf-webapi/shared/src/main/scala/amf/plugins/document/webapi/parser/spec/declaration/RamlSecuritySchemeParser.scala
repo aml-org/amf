@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.annotations.LexicalInformation
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
@@ -12,7 +12,7 @@ import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.validations.ParserSideValidations._
-import org.yaml.model.{YMap, YPart, YScalar, YType}
+import org.yaml.model.{YMap, YNode, YPart, YScalar, YType}
 
 import scala.collection.mutable
 
@@ -20,11 +20,11 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
     implicit ctx: RamlWebApiContext)
     extends SecuritySchemeParser(part, adopt) {
   override def parse(): SecurityScheme = {
-    val node = getNode
-    val key  = getName
+    val node           = getNode
+    val (key, partKey) = getName
 
     ctx.link(node) match {
-      case Left(link) => parseReferenced(key, link, Annotations(node), adopt)
+      case Left(link) => parseReferenced(key, partKey, link, Annotations(part), adopt)
       case Right(value) =>
         val scheme = adopt(SecurityScheme(part))
 
@@ -76,6 +76,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
   }
 
   def parseReferenced(name: String,
+                      partKey: Option[YNode],
                       parsedUrl: String,
                       annotations: Annotations,
                       adopt: SecurityScheme => SecurityScheme): SecurityScheme = {
@@ -85,7 +86,8 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
 
     val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
     adopt(copied)
-    copied.withName(name)
+    val keyAnn = partKey.map(k => Annotations(k)).getOrElse(Annotations())
+    copied.set(SecuritySchemeModel.Name, AmfScalar(name, keyAnn), keyAnn)
   }
 }
 

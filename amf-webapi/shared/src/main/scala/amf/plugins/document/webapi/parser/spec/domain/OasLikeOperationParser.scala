@@ -115,7 +115,7 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
               val node = ScalarNode(entry.key).text()
               responses += OasResponseParser(
                 entry.value.as[YMap], { r =>
-                  r.set(ResponseModel.Name, node)
+                  r.set(ResponseModel.Name, node, Annotations(entry.key))
                     .adopted(operation.id)
                     .withStatusCode(r.name.value())
                   r.annotations ++= Annotations(entry)

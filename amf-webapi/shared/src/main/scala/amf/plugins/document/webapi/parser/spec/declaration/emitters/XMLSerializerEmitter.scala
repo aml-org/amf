@@ -5,7 +5,7 @@ import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel
 import org.yaml.model.YDocument.EntryBuilder
 

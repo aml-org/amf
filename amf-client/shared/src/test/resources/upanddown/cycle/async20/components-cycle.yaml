@@ -8,7 +8,11 @@ components:
       mqtt:
         bindingVersion: 31.07.92
       kafka:
-        key: somekey
+        key:
+          type: string
+          enum:
+            - first key
+            - second key
   serverBindings:
     someServerBinding:
       mqtt:
@@ -31,6 +35,8 @@ components:
     someChannelBinding:
       ws:
         bindingVersion: 1.0.0
+    externalChannelBinding:
+      $ref: external-definitions.json#/SimpleChannelBinding
   messages:
     someMessage:
       headers:
@@ -46,6 +52,8 @@ components:
       name: lightMeasured
       title: Light measured
       summary: Inform about environmental lighting conditions of a particular streetlight.
+    externalMessage:
+      $ref: external-definitions.json#/SimpleMessage
   schemas:
     someSchema:
       type: object
@@ -60,6 +68,8 @@ components:
       location: $message.payload#/user/id
       schema:
         type: string
+    externalParameter:
+      $ref: external-definitions.json#/SimpleParameter
   correlationIds:
     someId:
       description: Default Correlation ID

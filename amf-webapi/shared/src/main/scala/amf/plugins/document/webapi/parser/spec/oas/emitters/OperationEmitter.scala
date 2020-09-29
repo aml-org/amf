@@ -15,6 +15,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
 }
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
   Raml10TypePartEmitter,
   RamlNamedTypeEmitter,

@@ -15,7 +15,7 @@ case class MessageBindings(fields: Fields, annotations: Annotations) extends Nam
 
   override def meta: Obj = MessageBindingsModel
 
-  override protected def nameField: Field = Name
+  override def nameField: Field = Name
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String =
