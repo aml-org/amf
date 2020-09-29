@@ -13,9 +13,7 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterFactory,
-  InlinedOas2SpecEmitterFactory,
   Oas3SpecEmitterFactory,
-  InlinedOas3SpecEmitterFactory,
   OasSpecEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
@@ -68,7 +66,7 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
           .map(f => result += RamlParametersEmitter("headers", f, ordering, references)(spec))
 
         // OAS 3.0.0
-        if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory]) {
+        if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
           response.fields.fields().find(_.field == ResponseModel.Payloads) foreach { f: FieldEntry =>
             val payloads: Seq[Payload] = f.arrayValues
             val annotations            = f.value.annotations
@@ -84,7 +82,7 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
         }
 
         // OAS 2.0
-        if (spec.factory.isInstanceOf[Oas2SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas2SpecEmitterFactory]) {
+        if (spec.factory.isInstanceOf[Oas2SpecEmitterFactory]) {
           val payloads = OasPayloads(response.payloads)
 
           payloads.default.foreach(payload => {

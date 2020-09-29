@@ -8,11 +8,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.FieldEntry
 import amf.core.utils._
 import amf.plugins.document.webapi.annotations.FormBodyParameter
-import amf.plugins.document.webapi.contexts.emitter.oas.{
-  Oas3SpecEmitterFactory,
-  InlinedOas3SpecEmitterFactory,
-  OasSpecEmitterContext
-}
+import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
@@ -73,7 +69,7 @@ case class OasOperationPartEmitter(operation: Operation,
       fs.entry(OperationModel.Security)
         .map(f => result += OasWithExtensionsSecurityRequirementsEmitter("security", f, ordering))
 
-      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory]) {
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
         operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
           val callbacks: Seq[Callback] = f.arrayValues
           val annotations              = f.value.annotations
@@ -93,7 +89,7 @@ case class OasOperationPartEmitter(operation: Operation,
 
     val result = mutable.ListBuffer[EntryEmitter]()
 
-    if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory]) {
+    if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
 
       // OAS 3.0.0
       val parameters = request.queryParameters ++ request.uriParameters ++ request.headers ++ request.cookieParameters

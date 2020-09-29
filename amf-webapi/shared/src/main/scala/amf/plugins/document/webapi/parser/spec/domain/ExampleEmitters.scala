@@ -7,10 +7,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.emitter.oas.{
-  Oas3SpecEmitterFactory,
-  InlinedOas3SpecEmitterFactory
-}
+import amf.plugins.document.webapi.contexts.emitter.oas.Oas3SpecEmitterFactory
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -34,7 +31,7 @@ case class OasResponseExamplesEmitter(key: String, examples: Seq[Example], order
 
   override def emit(b: EntryBuilder): Unit =
     if (examples.nonEmpty) {
-      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory]) {
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
         b.entry(key, _.obj(traverse(ordering.sorted(examples.map(Oas3ExampleValuesEmitter(_, ordering)(spec))), _)))
       } else {
         b.entry(key, _.obj(traverse(ordering.sorted(examples.map(OasResponseExampleEmitter(_, ordering)(spec))), _)))
@@ -111,7 +108,7 @@ case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(i
   }
 
   protected def keyName(example: Example) = {
-    if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[InlinedOas3SpecEmitterFactory]) {
+    if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
       example.name.value()
     } else {
       example.mediaType.value()

@@ -15,8 +15,6 @@ import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas3SpecEmitterContext,
-  InlinedOas3SpecEmitterContext,
-  InlinedOas3SpecEmitterFactory,
   Oas3SpecEmitterFactory,
   OasSpecEmitterContext
 }
@@ -75,7 +73,7 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
       fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("displayName".asOasExtension, f))
       fs.entry(EndPointModel.Description).map { f =>
         val descriptionKey =
-          if (spec.isInstanceOf[Oas3SpecEmitterContext] || spec.isInstanceOf[InlinedOas3SpecEmitterContext]) "description" else "description".asOasExtension
+          if (spec.isInstanceOf[Oas3SpecEmitterContext]) "description" else "description".asOasExtension
         result += ValueEmitter(descriptionKey, f)
       }
       fs.entry(DomainElementModel.Extends)
@@ -85,15 +83,6 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
         Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads)
 
       spec match {
-        case _: InlinedOas3SpecEmitterContext =>
-          fs.entry(EndPointModel.Summary).map(f => result += ValueEmitter("summary", f))
-
-          fs.entry(EndPointModel.Servers).map { f =>
-            result ++= spec.factory
-              .asInstanceOf[InlinedOas3SpecEmitterFactory]
-              .serversEmitter(endpoint, f, ordering, references)
-              .emitters()
-          }
         case _: Oas3SpecEmitterContext =>
           fs.entry(EndPointModel.Summary).map(f => result += ValueEmitter("summary", f))
 
@@ -103,6 +92,7 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
               .serversEmitter(endpoint, f, ordering, references)
               .emitters()
           }
+
         case _ => //
       }
 
