@@ -14,10 +14,11 @@ import amf.plugins.domain.webapi.models.Callback
   */
 object CallbackModel extends DomainElementModel with KeyField with NameFieldSchema {
 
-  val Expression = Field(
-    Str,
-    ApiContract + "expression",
-    ModelDoc(ModelVocabularies.ApiContract, "expression", "structural location of the information to fulfill the callback"))
+  val Expression = Field(Str,
+                         ApiContract + "expression",
+                         ModelDoc(ModelVocabularies.ApiContract,
+                                  "expression",
+                                  "Structural location of the information to fulfill the callback"))
 
   val Endpoint = Field(EndPointModel,
                        ApiContract + "endpoint",

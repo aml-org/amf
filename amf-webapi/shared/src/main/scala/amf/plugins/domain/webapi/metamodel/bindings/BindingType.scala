@@ -9,7 +9,7 @@ trait BindingType {
 
   val Type = Field(Str,
                    ApiBinding + "type",
-                   ModelDoc(ModelVocabularies.ApiBinding, "type", "binding for a corresponding known type"))
+                   ModelDoc(ModelVocabularies.ApiBinding, "type", "Binding for a corresponding known type"))
 
 }
 
