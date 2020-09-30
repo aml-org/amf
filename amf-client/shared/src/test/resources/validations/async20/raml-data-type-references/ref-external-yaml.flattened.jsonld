@@ -1,0 +1,211 @@
+{
+  "@graph": [
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "API",
+      "core:version": "1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#4"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#3": "ASYNC 2.0"
+        },
+        "lexical": {
+          "apiContract:endpoint": "[(5,0)-(12,0)]",
+          "core:name": "[(3,2)-(4,0)]",
+          "#3": "[(1,0)-(12,0)]",
+          "core:version": "[(4,2)-(5,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "users/signup",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#5"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#4": "[(6,2)-(12,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "subscribe",
+      "apiContract:returns": [
+        {
+          "@id": "#6"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(8,6)-(12,0)]",
+          "#5": "[(7,4)-(12,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#7"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#6": "[(9,0)-(12,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "apiContract:schemaMediaType": "application/vnd.rai.raml;version=1.0",
+      "raml-shapes:schema": {
+        "@id": "#8"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(10,8)-(12,0)]",
+          "apiContract:schemaMediaType": "[(9,8)-(10,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "raml-shapes:UnionShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:anyOf": [
+        {
+          "@id": "#9"
+        },
+        {
+          "@id": "#10"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#8": "[(3,4)-(4,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#9",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [],
+      "smaps": {
+        "lexical": {
+          "#9": "[(3,10)-(3,16)]"
+        }
+      }
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#10": "[(3,19)-(3,25)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:references": [
+        {
+          "@id": "#1"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#3"
+      },
+      "doc:version": "2.1.2",
+      "doc:root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "doc:ExternalFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#2"
+      },
+      "doc:version": "2.1.2",
+      "doc:root": false
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "doc:ExternalDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:raw": "nestedContent:\n  User:\n    type: object | string\n",
+      "core:mediaType": "application/yaml"
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

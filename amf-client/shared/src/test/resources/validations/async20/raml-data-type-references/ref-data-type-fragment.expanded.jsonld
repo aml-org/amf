@@ -1,0 +1,240 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#5",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "API"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "1.0"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#6",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "users/signup"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#7",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "subscribe"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#8",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#9",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "apiContract:schemaMediaType": [
+                          {
+                            "@value": "application/vnd.rai.raml;version=1.0"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#2/link-2120113933",
+                            "@type": [
+                              "raml-shapes:UnionShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#2"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "amf_inline_type_1"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "apiContract:schemaMediaType": "[(9,8)-(10,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#8": "[(9,0)-(12,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:returns": "[(8,6)-(12,0)]",
+                    "#7": "[(7,4)-(12,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#6": "[(6,2)-(12,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#5": "ASYNC 2.0"
+          },
+          "lexical": {
+            "apiContract:endpoint": "[(5,0)-(12,0)]",
+            "core:name": "[(3,2)-(4,0)]",
+            "#5": "[(1,0)-(12,0)]",
+            "core:version": "[(4,2)-(5,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.1.2"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:references": [
+      {
+        "@id": "#1",
+        "@type": [
+          "raml-shapes:DataTypeFragment",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#2",
+            "@type": [
+              "raml-shapes:UnionShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "raml-shapes:anyOf": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:property": [],
+                "smaps": {
+                  "lexical": {
+                    "#3": "[(3,6)-(3,12)]"
+                  }
+                }
+              },
+              {
+                "@id": "#4",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#4": "[(3,15)-(3,21)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#2": "[(3,0)-(4,0)]"
+              }
+            }
+          }
+        ],
+        "doc:version": [
+          {
+            "@value": "2.1.2"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "#1": "[(1,0)-(4,0)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

@@ -186,7 +186,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val updated = compilerContext.forReference(reference.unit.id, withNormalizedUri = false)
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, r.refs.map(_.node), allowRecursiveRefs = true)
+          r.resolve(updated, r.refs.map(_.node), allowRecursiveRefs = true, plugin)
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), updated)
