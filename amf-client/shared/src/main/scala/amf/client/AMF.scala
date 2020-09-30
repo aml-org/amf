@@ -13,7 +13,7 @@ import amf.client.validate.ValidationReport
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.{Vocabularies, WebApi}
-import amf.plugins.features.AMFValidation
+import amf.plugins.features.AMFCustomValidation
 import amf.plugins.{document, features}
 import amf.{AMFStyle, Core, MessageStyle, ProfileName}
 
@@ -28,7 +28,7 @@ object AMF extends PlatformSecrets {
   def init(executionEnvironment: BaseExecutionEnvironment): ClientFuture[Unit] = {
     WebApi.register(executionEnvironment)
     Vocabularies.register()
-    AMFValidation.register()
+    AMFCustomValidation.register()
     amf.Core.registerPlugin(PayloadValidatorPlugin)
     amf.Core.init(executionEnvironment)
   }
@@ -158,5 +158,6 @@ object DocumentPluginsWrapper {
 
 @JSExportAll
 object FeaturesPluginsWrapper {
-  val AMFValidation: features.AMFValidation.type = features.AMFValidation
+  val AMFValidation: features.AMFValidation.type             = features.AMFValidation
+  val AMFCustomValidation: features.AMFCustomValidation.type = features.AMFCustomValidation
 }
