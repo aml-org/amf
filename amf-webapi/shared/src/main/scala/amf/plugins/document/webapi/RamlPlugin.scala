@@ -1,13 +1,21 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.core.Root
+import amf.client.plugins.AMFDocumentPlugin
+import amf.core.{CompilerContext, Root}
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document._
 import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParserContext, RefContainer}
+import amf.core.parser.{
+  EmptyFutureDeclarations,
+  LibraryReference,
+  LinkReference,
+  ParserContext,
+  RefContainer,
+  ReferenceKind
+}
 import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
@@ -32,6 +40,7 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   Raml10ResolutionPipeline
 }
 import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.features.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 
@@ -51,6 +60,36 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
     val clean = context(cleanNested, root, options)
     clean.globalSpace = wrapped.globalSpace
     clean
+  }
+
+  override def verifyValidFragment(refVendor: Option[Vendor], refs: Seq[RefContainer], ctx: CompilerContext): Unit =
+    refVendor match {
+      case Some(v) if v.isRaml =>
+        refs.foreach(
+          r =>
+            if (r.fragment.isDefined)
+              ctx.violation(InvalidFragmentRef, "Cannot use reference with # in a RAML fragment", r.node))
+      case _ => // Nothing to do
+    }
+
+  override def verifyReferenceKind(unit: BaseUnit,
+                                   definedKind: ReferenceKind,
+                                   allKinds: Seq[ReferenceKind],
+                                   nodes: Seq[YNode],
+                                   ctx: ParserContext): Unit = {
+    unit match {
+      case _: Module => // if is a library, kind should be LibraryReference
+        if (allKinds.contains(LibraryReference) && allKinds.contains(LinkReference))
+          nodes.foreach(
+            ctx.eh
+              .violation(ExpectedModule, unit.id, "The !include tag must be avoided when referencing a library", _))
+        else if (!LibraryReference.eq(definedKind))
+          nodes.foreach(ctx.eh.violation(ExpectedModule, unit.id, "Libraries must be applied by using 'uses'", _))
+      case _ =>
+        // if is not a library, kind should not be LibraryReference
+        if (LibraryReference.eq(definedKind))
+          nodes.foreach(ctx.eh.violation(InvalidInclude, unit.id, "Fragments must be imported by using '!include'", _))
+    }
   }
 
   override def specContext(options: RenderOptions): RamlSpecEmitterContext

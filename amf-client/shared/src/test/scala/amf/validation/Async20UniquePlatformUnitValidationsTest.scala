@@ -5,7 +5,8 @@ import amf.core.remote.{AsyncJsonHint, AsyncYamlHint, Hint, OasJsonHint}
 import org.scalatest.Matchers
 
 class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
-  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/async20/validations/"
+  val asyncPath: String            = "file://amf-client/shared/src/test/resources/validations/async20/"
+  override val basePath: String    = asyncPath + "validations/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/async20/"
   override val hint: Hint          = AsyncYamlHint
 
@@ -254,4 +255,23 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Closed shape in components object") {
     validate("components-closed-shape.yaml", Some("components-closed-shape.report"), Async20Profile)
   }
+
+  test("Using $ref within inlined raml content") {
+    validate(
+      "invalid-inlined-ref.yaml",
+      Some("invalid-inlined-ref.report"),
+      Async20Profile,
+      directory = asyncPath + "raml-data-type-references/"
+    )
+  }
+
+  test("Invalid relative pointer to raml library content") {
+    validate(
+      "invalid-relative-pointer-to-lib.yaml",
+      Some("invalid-relative-pointer-to-lib.report"),
+      Async20Profile,
+      directory = asyncPath + "raml-data-type-references/"
+    )
+  }
+
 }

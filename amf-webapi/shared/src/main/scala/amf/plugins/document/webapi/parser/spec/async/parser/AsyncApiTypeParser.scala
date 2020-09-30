@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.async.parser
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.Shape
+import amf.core.parser.{Annotations, Declarations, SearchScope}
 import amf.plugins.document.webapi.contexts.{SpecEmitterContext, WebApiContext}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
@@ -17,7 +18,9 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 }
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model.{YMap, YMapEntry, YNode}
-import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
+import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations, toOas, toRaml}
+import amf.plugins.features.validation.CoreValidations
+import amf.validations.ParserSideValidations.InvalidFragmentType
 
 object AsyncSchemaFormats {
   val async20Schema = List("application/vnd.aai.asyncapi;version=2.0.0",
@@ -55,9 +58,58 @@ case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: J
     implicit val ctx: OasLikeWebApiContext) {
 
   def parse(): Option[Shape] = version match {
-    case RAML10SchemaVersion() =>
-      Raml10TypeParser(YMapEntryLike(entry), entry.key.as[String], adopt, isAnnotation = false, AnyDefaultType)(
-        toRaml(ctx)).parse()
-    case _ => OasTypeParser(entry, adopt, version).parse()
+    case RAML10SchemaVersion() => CustomRamlReferenceParser(entry.value, adopt).parse()
+    case _                     => OasTypeParser(entry, adopt, version).parse()
+  }
+}
+
+case class CustomRamlReferenceParser(node: YNode, adopt: Shape => Unit)(implicit val ctx: OasLikeWebApiContext) {
+
+  def parse(): Option[Shape] =
+    ctx.link(node) match {
+      case Left(refValue) => handleRef(refValue)
+      case Right(node)    => parseRamlType(node)
+    }
+
+  private def parseRamlType(node: YNode): Option[Shape] =
+    Raml10TypeParser(node, "schema", adopt, AnyDefaultType)(toRaml(ctx)).parse()
+
+  private def handleRef(refValue: String): Option[Shape] = {
+    val link = dataTypeFragmentRef(refValue)
+      .orElse(typeDefinedInLibraryRef(refValue))
+      .orElse(externalFragmentRef(refValue))
+
+    if (link.isEmpty)
+      ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $refValue", node)
+    link
+  }
+
+  private def dataTypeFragmentRef(refValue: String): Option[Shape] = {
+    val result = ctx.declarations.findType(refValue, SearchScope.Fragments)
+    result.foreach(linkAndAdopt(_, refValue))
+    result
+  }
+
+  private def typeDefinedInLibraryRef(refValue: String): Option[Shape] = {
+    val values = refValue.split("#/types/").toList
+    values match {
+      case Seq(libUrl, typeName) =>
+        val library = ctx.declarations.libraries.get(libUrl).collect { case d: WebApiDeclarations => d }
+        val shape   = library.flatMap(_.shapes.get(typeName))
+        shape.map(linkAndAdopt(_, refValue))
+      case _ => None
+    }
+  }
+
+  private def externalFragmentRef(refValue: String): Option[Shape] = {
+    ctx.obtainRemoteYNode(refValue).flatMap { node =>
+      parseRamlType(node)
+    }
+  }
+
+  private def linkAndAdopt(s: Shape, label: String): Shape = {
+    val link = s.link(label, Annotations(node)).asInstanceOf[Shape]
+    adopt(link)
+    link
   }
 }

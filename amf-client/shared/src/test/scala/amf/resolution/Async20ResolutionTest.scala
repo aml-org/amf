@@ -81,6 +81,40 @@ class Async20ResolutionTest extends FunSuiteCycleTests {
       )
   }
 
+  multiGoldenTest("Referencing raml content with $ref - data type fragment", "ref-data-type-fragment.%s") { config =>
+    cycle(
+      "ref-data-type-fragment.yaml",
+      config.golden,
+      AsyncYamlHint,
+      target = AMF,
+      directory = validationsPath + "raml-data-type-references/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Referencing raml content with $ref - type defined in library", "ref-type-in-library.%s") { config =>
+    cycle(
+      "ref-type-in-library.yaml",
+      config.golden,
+      AsyncYamlHint,
+      target = AMF,
+      directory = validationsPath + "raml-data-type-references/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Referencing raml content with $ref - type defined in external yaml", "ref-external-yaml.%s") {
+    config =>
+      cycle(
+        "ref-external-yaml.yaml",
+        config.golden,
+        AsyncYamlHint,
+        target = AMF,
+        directory = validationsPath + "raml-data-type-references/",
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     Async20Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
 
