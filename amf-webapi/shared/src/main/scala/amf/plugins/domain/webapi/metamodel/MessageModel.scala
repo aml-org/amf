@@ -30,7 +30,7 @@ trait MessageModel
     Core + "correlationId",
     ModelDoc(ModelVocabularies.Core,
              "correlationId",
-             "an identifier that can be used for message tracing and correlation")
+             "An identifier that can be used for message tracing and correlation")
   )
 
   val DisplayName = Field(Str,

@@ -73,17 +73,17 @@ object OperationModel
   val Security = Field(
     Array(SecurityRequirementModel),
     Namespace.Security + "security",
-    ModelDoc(ModelVocabularies.Security, "security", "security schemes applied to an element in the API spec")
+    ModelDoc(ModelVocabularies.Security, "security", "Security schemes applied to an element in the API spec")
   )
 
   val Callbacks = Field(Array(CallbackModel),
                         ApiContract + "callback",
-                        ModelDoc(ModelVocabularies.ApiContract, "callback", "associated callbacks"))
+                        ModelDoc(ModelVocabularies.ApiContract, "callback", "Associated callbacks"))
 
   val Servers =
     Field(Array(ServerModel),
           ApiContract + "server",
-          ModelDoc(ModelVocabularies.ApiContract, "server", "server information"))
+          ModelDoc(ModelVocabularies.ApiContract, "server", "Server information"))
 
   val Bindings = Field(
     OperationBindingsModel,

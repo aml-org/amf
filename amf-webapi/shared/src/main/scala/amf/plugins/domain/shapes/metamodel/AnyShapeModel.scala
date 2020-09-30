@@ -13,7 +13,7 @@ trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel with Exam
   val XMLSerialization = Field(
     XMLSerializerModel,
     Shapes + "xmlSerialization",
-    ModelDoc(ModelVocabularies.Shapes, "XML serialization", "information about how to serialize"))
+    ModelDoc(ModelVocabularies.Shapes, "XML serialization", "Information about how to serialize"))
 
   val Comment =
     Field(Str,
