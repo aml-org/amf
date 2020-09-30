@@ -1,3 +1,0 @@
-package amf.dialects
-
-class JvmDialectDefinitionValidationTest extends DialectDefinitionValidationTest
