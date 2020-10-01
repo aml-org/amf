@@ -115,6 +115,18 @@ class Async20ResolutionTest extends FunSuiteCycleTests {
       )
   }
 
+  multiGoldenTest("Verify isolated raml context in external data type fragment using ref",
+                  "ref-data-type-fragment-invalid.%s") { config =>
+    cycle(
+      "ref-data-type-fragment-invalid.yaml",
+      config.golden,
+      AsyncYamlHint,
+      target = AMF,
+      directory = validationsPath + "raml-data-type-references/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     Async20Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
 

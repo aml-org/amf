@@ -274,4 +274,39 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     )
   }
 
+  test("Verify isolated raml context in inlined raml content") {
+    validate(
+      "invalid-ref-to-async-type.yaml",
+      Some("invalid-ref-to-async-type.report"),
+      Async20Profile
+    )
+  }
+
+  test("Verify isolated raml context for raml content in external yaml") {
+    validate(
+      "ref-invalid-external-yaml.yaml",
+      Some("ref-invalid-external-yaml.report"),
+      Async20Profile,
+      directory = asyncPath + "raml-data-type-references/"
+    )
+  }
+
+  test("Invalid reference to type defined in raml api") {
+    validate(
+      "invalid-ref-to-raml-api.yaml",
+      Some("invalid-ref-to-raml-api.report"),
+      Async20Profile,
+      directory = asyncPath + "raml-data-type-references/"
+    )
+  }
+
+  test("Reference to invalid library type") {
+    validate(
+      "ref-type-in-library-invalid.yaml",
+      Some("ref-type-in-library-invalid.report"),
+      Async20Profile,
+      directory = asyncPath + "raml-data-type-references/"
+    )
+  }
+
 }
