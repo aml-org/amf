@@ -889,5 +889,51 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  test("OAS 3.0 API with type definitions referencing each other default") {
+    cycle(
+      "type-definitions-with-refs.json",
+      "type-definitions-with-refs-with-compact.json",
+      OasJsonHint,
+      Oas30,
+      directory = cyclePath + "oas3/",
+      transformWith = Some(Oas30)
+    )
+  }
+
+  test("OAS 2.0 API with type definitions referencing each other default emission") {
+    cycle(
+      "type-definitions-with-refs.json",
+      "type-definitions-with-refs-with-compact.json",
+      OasJsonHint,
+      Oas20,
+      directory = cyclePath + "cycle/oas20/json/",
+      transformWith = Some(Oas20)
+    )
+  }
+
+  test("OAS 3.0 API with type definitions referencing each other without compact emission") {
+    cycle(
+      "type-definitions-with-refs.json",
+      "type-definitions-with-refs-no-compact.json",
+      OasJsonHint,
+      Oas30,
+      directory = cyclePath + "oas3/",
+      renderOptions = Some(RenderOptions().withoutCompactedEmission),
+      transformWith = Some(Oas30)
+    )
+  }
+
+  test("OAS 2.0 API with type definitions referencing each other without compact emission") {
+    cycle(
+      "type-definitions-with-refs.json",
+      "type-definitions-with-refs-no-compact.json",
+      OasJsonHint,
+      Oas20,
+      directory = cyclePath + "cycle/oas20/json/",
+      renderOptions = Some(RenderOptions().withoutCompactedEmission),
+      transformWith = Some(Oas20)
+    )
+  }
+
   override val basePath: String = ""
 }
