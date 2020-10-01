@@ -1,0 +1,39 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Swagger Petstore",
+    "version": "1.0.0"
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "Pet": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Pets": {
+        "items": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "type": "array"
+      }
+    }
+  }
+}
