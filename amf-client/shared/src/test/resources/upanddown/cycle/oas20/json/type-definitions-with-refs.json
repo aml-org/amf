@@ -1,0 +1,52 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Sample API"
+  },
+  "paths": {
+    "/endpoint": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ErrorModel"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ErrorModel": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer"
+        }
+      }
+    },
+    "ExtendedErrorModel": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ErrorModel"
+        },
+        {
+          "type": "object",
+          "required": [
+            "rootCause"
+          ],
+          "properties": {
+            "rootCause": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
