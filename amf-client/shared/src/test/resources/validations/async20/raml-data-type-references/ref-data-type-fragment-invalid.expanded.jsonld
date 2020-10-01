@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#3",
+        "@id": "#4",
         "@type": [
           "apiContract:WebAPI",
           "doc:RootDomainElement",
@@ -27,7 +27,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#4",
+            "@id": "#5",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -39,7 +39,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#5",
+                "@id": "#6",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -51,7 +51,7 @@
                 ],
                 "apiContract:returns": [
                   {
-                    "@id": "#6",
+                    "@id": "#7",
                     "@type": [
                       "apiContract:Response",
                       "apiContract:Message",
@@ -59,7 +59,7 @@
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#7",
+                        "@id": "#8",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -71,103 +71,63 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#8",
+                            "@id": "#2/link-3575610",
                             "@type": [
-                              "raml-shapes:UnionShape",
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
                               "raml-shapes:Shape",
                               "doc:DomainElement"
                             ],
-                            "raml-shapes:anyOf": [
+                            "doc:link-target": [
                               {
-                                "@id": "#9",
-                                "@type": [
-                                  "shacl:NodeShape",
-                                  "raml-shapes:AnyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ],
-                                "shacl:closed": [
-                                  {
-                                    "@value": false
-                                  }
-                                ],
-                                "shacl:property": [],
-                                "smaps": {
-                                  "lexical": {
-                                    "#9": "[(3,10)-(3,16)]"
-                                  }
-                                }
-                              },
-                              {
-                                "@id": "#10",
-                                "@type": [
-                                  "raml-shapes:ScalarShape",
-                                  "raml-shapes:AnyShape",
-                                  "shacl:Shape",
-                                  "raml-shapes:Shape",
-                                  "doc:DomainElement"
-                                ],
-                                "shacl:datatype": [
-                                  {
-                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                                  }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "#10": "[(3,19)-(3,25)]"
-                                  }
-                                }
+                                "@id": "#2"
                               }
                             ],
-                            "smaps": {
-                              "lexical": {
-                                "#8": "[(3,4)-(5,0)]"
+                            "doc:link-label": [
+                              {
+                                "@value": "type"
                               }
-                            }
+                            ]
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "raml-shapes:schema": "[(10,8)-(12,0)]",
-                            "apiContract:schemaMediaType": "[(9,8)-(10,0)]"
+                            "apiContract:schemaMediaType": "[(15,8)-(16,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#6": "[(9,0)-(12,0)]"
+                        "#7": "[(15,0)-(18,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "apiContract:returns": "[(8,6)-(12,0)]",
-                    "#5": "[(7,4)-(12,0)]"
+                    "apiContract:returns": "[(14,6)-(18,0)]",
+                    "#6": "[(13,4)-(18,0)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#4": "[(6,2)-(12,0)]"
+                "#5": "[(12,2)-(18,0)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#3": "ASYNC 2.0"
+            "#4": "ASYNC 2.0"
           },
           "lexical": {
-            "apiContract:endpoint": "[(5,0)-(12,0)]",
+            "apiContract:endpoint": "[(11,0)-(18,0)]",
             "core:name": "[(3,2)-(4,0)]",
-            "#3": "[(1,0)-(12,0)]",
-            "core:version": "[(4,2)-(5,0)]"
+            "#4": "[(1,0)-(18,0)]",
+            "core:version": "[(4,2)-(6,0)]"
           }
         }
       }
@@ -186,7 +146,7 @@
       {
         "@id": "#1",
         "@type": [
-          "doc:ExternalFragment",
+          "raml-shapes:DataTypeFragment",
           "doc:Fragment",
           "doc:Unit"
         ],
@@ -194,19 +154,24 @@
           {
             "@id": "#2",
             "@type": [
-              "doc:ExternalDomainElement",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
               "doc:DomainElement"
             ],
-            "doc:raw": [
+            "shacl:name": [
               {
-                "@value": "nestedContent:\n  User:\n    type: object | string\n\n  InvalidUser: OtherType\n"
+                "@value": "type"
               }
             ],
-            "core:mediaType": [
-              {
-                "@value": "application/yaml"
+            "smaps": {
+              "source-vendor": {
+                "#2": "RAML 1.0"
+              },
+              "lexical": {
+                "#2": "[(3,0)-(4,0)]"
               }
-            ]
+            }
           }
         ],
         "doc:version": [
@@ -218,7 +183,47 @@
           {
             "@value": false
           }
-        ]
+        ],
+        "smaps": {
+          "lexical": {
+            "#1": "[(1,0)-(4,0)]"
+          }
+        }
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#3",
+        "@type": [
+          "raml-shapes:ScalarShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "User"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#3": ""
+          },
+          "lexical": {
+            "shacl:name": "[(8,4)-(8,8)]",
+            "#3": "[(8,4)-(11,0)]",
+            "shacl:datatype": "[(9,6)-(11,0)]"
+          },
+          "type-property-lexical-info": {
+            "#3": "[(9,6)-(9,10)]"
+          }
+        }
       }
     ],
     "@context": {
