@@ -15,8 +15,9 @@ import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.features.validation.model.ValidationDialectText
-import amf.plugins.features.validation.{AMFValidatorPlugin, CoreValidations}
+import amf.plugins.features.validation.custom.model.ValidationDialectText
+import amf.plugins.features.validation.custom.AMFValidatorPlugin
+import amf.plugins.features.validation.CoreValidations
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.validation.DialectValidations
 import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}

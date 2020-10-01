@@ -18,15 +18,15 @@ import amf.validations.ParserSideValidations
 import org.yaml.model._
 
 object AsyncOperationParser {
-  def apply(entry: YMapEntry, producer: String => Operation, isTrait: Boolean = false)(
+  def apply(entry: YMapEntry, adopt: Operation => Operation, isTrait: Boolean = false)(
       implicit ctx: AsyncWebApiContext): AsyncOperationParser =
-    if (isTrait) new AsyncOperationTraitParser(entry, producer)
-    else new AsyncConcreteOperationParser(entry, producer)
+    if (isTrait) new AsyncOperationTraitParser(entry, adopt)
+    else new AsyncConcreteOperationParser(entry, adopt)
 }
 
-abstract class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)(
+abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
     override implicit val ctx: AsyncWebApiContext)
-    extends OasLikeOperationParser(entry, producer) {
+    extends OasLikeOperationParser(entry, adopt) {
 
   override def parse(): Operation = {
     val operation = super.parse()
@@ -63,9 +63,9 @@ abstract class AsyncOperationParser(entry: YMapEntry, producer: String => Operat
   protected def parseTraits(map: YMap, operation: Operation)
 }
 
-private class AsyncConcreteOperationParser(entry: YMapEntry, producer: String => Operation)(
+private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
     implicit ctx: AsyncWebApiContext)
-    extends AsyncOperationParser(entry, producer) {
+    extends AsyncOperationParser(entry, adopt) {
 
   override protected def parseMessages(map: YMap, operation: Operation): Unit = map.key(
     "message",
@@ -81,7 +81,7 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, producer: String =>
       "traits",
       traitEntry => {
         val traits = traitEntry.value.as[YSequence].nodes.map { node =>
-          AsyncOperationRefParser(node).parse()
+          AsyncOperationRefParser(node, adopt).parse()
 
         }
         operation.setArray(OperationModel.Extends, traits, Annotations(traitEntry))
@@ -89,13 +89,14 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, producer: String =>
     )
 }
 
-private class AsyncOperationTraitParser(entry: YMapEntry, producer: String => Operation)(
+private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Operation)(
     override implicit val ctx: AsyncWebApiContext)
-    extends AsyncOperationParser(entry, producer) {
+    extends AsyncOperationParser(entry, adopt) {
 
   override def parse(): Operation = {
     val operation = super.parse()
-    val map       = entry.value.as[YMap]
+    operation.set(OperationModel.Name, methodNode, Annotations(entry.key))
+    val map = entry.value.as[YMap]
     operation.withAbstract(true)
     ctx.closedShape(operation.id, map, "operationTrait")
     operation
@@ -106,7 +107,7 @@ private class AsyncOperationTraitParser(entry: YMapEntry, producer: String => Op
   override protected def parseTraits(map: YMap, operation: Operation): Unit = Unit
 }
 
-case class AsyncOperationRefParser(node: YNode)(implicit val ctx: AsyncWebApiContext) {
+case class AsyncOperationRefParser(node: YNode, adopt: Operation => Operation)(implicit val ctx: AsyncWebApiContext) {
 
   def parse(): Operation = {
     ctx.link(node) match {
@@ -142,7 +143,7 @@ case class AsyncOperationRefParser(node: YNode)(implicit val ctx: AsyncWebApiCon
   private def remote(url: String, node: YNode): Operation = {
     ctx.obtainRemoteYNode(url) match {
       case Some(correlationIdNode) =>
-        AsyncOperationParser(YMapEntry(url, correlationIdNode), name => Operation().withName(name), isTrait = true)
+        AsyncOperationParser(YMapEntry(url, correlationIdNode), adopt, isTrait = true)
           .parse()
       case None => linkError(url, node)
     }

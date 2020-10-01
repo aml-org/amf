@@ -18,7 +18,7 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
   val Servers =
     Field(Array(ServerModel),
           ApiContract + "server",
-          ModelDoc(ModelVocabularies.ApiContract, "server", "server information"))
+          ModelDoc(ModelVocabularies.ApiContract, "server", "Server information"))
 
   val Accepts = Field(Array(Str),
                       ApiContract + "accepts",
