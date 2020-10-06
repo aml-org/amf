@@ -5,6 +5,7 @@ import amf.core.metamodel.Field
 import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.webapi.models.security.OAuth2Flow
 import amf.validations.ParserSideValidations.MissingOAuthFlowField
+import org.yaml.model.YPart
 
 object OAuth2FlowValidations {
   case class ParticularFlow(name: String, requiredFields: List[FlowField])
@@ -27,7 +28,7 @@ object OAuth2FlowValidations {
     ParticularFlow("accessCode", List(authorizationUrl, tokenUrl, scopes))
   ).map(x => (x.name, x)).toMap
 
-  def validateFlowFields(flow: OAuth2Flow, errorHandler: ErrorHandler): Unit = {
+  def validateFlowFields(flow: OAuth2Flow, errorHandler: ErrorHandler, ast: YPart): Unit = {
     val flowName            = flow.flow.value()
     val requiredFlowsOption = requiredFieldsPerFlow.get(flowName)
     if (requiredFlowsOption.nonEmpty) {
@@ -36,7 +37,7 @@ object OAuth2FlowValidations {
       missingFields.foreach { flowField =>
         {
           val message = s"Missing ${flowField.name} for $flowName flow"
-          errorHandler.violation(MissingOAuthFlowField, flow.id, message)
+          errorHandler.violation(MissingOAuthFlowField, flow.id, message, ast)
         }
       }
     }
