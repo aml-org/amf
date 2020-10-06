@@ -81,7 +81,7 @@ class Async2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit c
 
   private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit = {
     val flows = entry.value.as[YMap].entries.map(parseFlow(settings, _))
-    flows.foreach(OAuth2FlowValidations.validateFlowFields(_, ctx.eh))
+    flows.foreach(OAuth2FlowValidations.validateFlowFields(_, ctx.eh, entry))
     settings.setArray(OAuth2SettingsModel.Flows, flows)
   }
 
