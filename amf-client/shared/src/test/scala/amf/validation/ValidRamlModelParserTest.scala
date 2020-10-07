@@ -259,5 +259,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("security-schema-scope.raml")
   }
 
+  test("Referencing external example with @type key") {
+    checkValid("external-example/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
