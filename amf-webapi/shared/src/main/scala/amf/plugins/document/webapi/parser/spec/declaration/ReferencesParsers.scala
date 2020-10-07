@@ -26,9 +26,11 @@ case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideE
     val library = ctx.declarations.getOrCreateLibrary(alias)
     unit match {
       case _: Vocabulary | _: Dialect => ctx.declarations.others += (alias -> unit)
-      case d: DeclaresModel           => d.declares.foreach(library += _)
-      case fragment: Fragment         => ctx.declarations += (alias -> fragment)
-      case _                          => // ignore
+      case d: Module =>
+        val library = ctx.declarations.getOrCreateLibrary(alias)
+        d.declares.foreach(library += _)
+      case fragment: Fragment => ctx.declarations += (alias -> fragment)
+      case _                  => // ignore
     }
   }
 }
