@@ -71,7 +71,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         fragment.add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
         if (aliases.isDefined) fragment.annotations += aliases.get
         fragment.encodes.add(SourceVendor(Raml10))
-        if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
+        if (references.nonEmpty) fragment.withReferences(references.baseUnitReferences())
         Some(fragment)
       case _ =>
         None

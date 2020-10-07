@@ -102,44 +102,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#2",
-            "@type": [
-              "doc:ExternalDomainElement",
-              "doc:DomainElement"
-            ],
-            "doc:raw": [
-              {
-                "@value": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
-              }
-            ],
-            "core:mediaType": [
-              {
-                "@value": "application/json"
-              }
-            ]
-          }
-        ],
-        "doc:version": [
-          {
-            "@value": "2.1.2"
-          }
-        ],
-        "doc:root": [
-          {
-            "@value": false
-          }
-        ]
-      },
-      {
-        "@id": "#3",
-        "@type": [
-          "doc:ExternalFragment",
-          "doc:Fragment",
-          "doc:Unit"
-        ],
-        "doc:encodes": [
-          {
-            "@id": "#6",
+            "@id": "#4",
             "@type": [
               "doc:ExternalDomainElement",
               "doc:DomainElement"
@@ -163,7 +126,7 @@
         ],
         "doc:references": [
           {
-            "@id": "#4",
+            "@id": "#2",
             "@type": [
               "doc:ExternalFragment",
               "doc:Fragment",
@@ -171,7 +134,7 @@
             ],
             "doc:encodes": [
               {
-                "@id": "#5",
+                "@id": "#3",
                 "@type": [
                   "doc:ExternalDomainElement",
                   "doc:DomainElement"
@@ -198,6 +161,43 @@
                 "@value": false
               }
             ]
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ]
+      },
+      {
+        "@id": "#5",
+        "@type": [
+          "doc:ExternalFragment",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#6",
+            "@type": [
+              "doc:ExternalDomainElement",
+              "doc:DomainElement"
+            ],
+            "doc:raw": [
+              {
+                "@value": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
+              }
+            ],
+            "core:mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ]
+          }
+        ],
+        "doc:version": [
+          {
+            "@value": "2.1.2"
           }
         ],
         "doc:root": [
@@ -1069,7 +1069,7 @@
             ],
             "doc:reference-id": [
               {
-                "@id": "#2"
+                "@id": "#6"
               }
             ],
             "doc:location": [
@@ -1090,7 +1090,7 @@
         ],
         "doc:reference-id": [
           {
-            "@id": "#6"
+            "@id": "#4"
           }
         ],
         "smaps": {

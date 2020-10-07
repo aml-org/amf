@@ -325,10 +325,10 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#7"
+          "@id": "#3"
         },
         {
-          "@id": "#9"
+          "@id": "#5"
         }
       ],
       "shacl:name": "Employee",
@@ -354,7 +354,7 @@
           "#11": "RAML 1.0"
         },
         "resolved-link-target": {
-          "#11": "amf://id#6"
+          "#11": "amf://id#2"
         }
       }
     },
@@ -386,7 +386,7 @@
       }
     },
     {
-      "@id": "#7",
+      "@id": "#3",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -399,18 +399,18 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#8"
+        "@id": "#4"
       },
       "shacl:minCount": 1,
       "shacl:name": "id",
       "smaps": {
         "lexical": {
-          "#7": "[(4,2)-(5,0)]"
+          "#3": "[(4,2)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#5",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -423,13 +423,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#10"
+        "@id": "#6"
       },
       "shacl:minCount": 1,
       "shacl:name": "name",
       "smaps": {
         "lexical": {
-          "#9": "[(5,2)-(5,14)]"
+          "#5": "[(5,2)-(5,14)]"
         }
       }
     },
@@ -487,7 +487,7 @@
       }
     },
     {
-      "@id": "#8",
+      "@id": "#4",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -503,12 +503,12 @@
       "shacl:name": "id",
       "smaps": {
         "lexical": {
-          "#8": "[(4,2)-(5,0)]"
+          "#4": "[(4,2)-(5,0)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#6",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -524,7 +524,7 @@
       "shacl:name": "name",
       "smaps": {
         "lexical": {
-          "#10": "[(5,2)-(5,14)]"
+          "#6": "[(5,2)-(5,14)]"
         }
       }
     },
@@ -721,10 +721,10 @@
           "@id": "#1"
         },
         {
-          "@id": "#3"
+          "@id": "#7"
         },
         {
-          "@id": "#5"
+          "@id": "#9"
         }
       ],
       "doc:declares": [
@@ -747,7 +747,7 @@
     {
       "@id": "#1",
       "@type": [
-        "doc:ExternalFragment",
+        "raml-shapes:DataTypeFragment",
         "doc:Fragment",
         "doc:Unit"
       ],
@@ -758,76 +758,48 @@
       "doc:root": false,
       "smaps": {
         "lexical": {
-          "#1": "[(1,0)-(4,14)]"
+          "#1": "[(1,0)-(5,14)]"
         }
       }
     },
     {
-      "@id": "#3",
+      "@id": "#7",
       "@type": [
         "doc:ExternalFragment",
         "doc:Fragment",
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#4"
+        "@id": "#8"
       },
       "doc:version": "2.1.2",
       "doc:root": false,
       "smaps": {
         "lexical": {
-          "#3": "[(1,0)-(8,13)]"
+          "#7": "[(1,0)-(8,13)]"
         }
       }
     },
     {
-      "@id": "#5",
+      "@id": "#9",
       "@type": [
-        "raml-shapes:DataTypeFragment",
+        "doc:ExternalFragment",
         "doc:Fragment",
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#6"
+        "@id": "#10"
       },
       "doc:version": "2.1.2",
       "doc:root": false,
       "smaps": {
         "lexical": {
-          "#5": "[(1,0)-(5,14)]"
+          "#9": "[(1,0)-(4,14)]"
         }
       }
     },
     {
       "@id": "#2",
-      "@type": [
-        "doc:ExternalDomainElement",
-        "doc:DomainElement"
-      ],
-      "doc:raw": "#%RAML 1.0 NamedExample\nemployee:\n  id: 1\n  name: \"Jhon\"",
-      "core:mediaType": "application/raml+yaml",
-      "smaps": {
-        "source-vendor": {
-          "#2": "RAML 1.0"
-        }
-      }
-    },
-    {
-      "@id": "#4",
-      "@type": [
-        "doc:ExternalDomainElement",
-        "doc:DomainElement"
-      ],
-      "doc:raw": "#%RAML 1.0 NamedExample\nemployees:\n  -\n    id: 1\n    name: Jhon\n  -\n    id: 2\n    name: Sam",
-      "core:mediaType": "application/raml+yaml",
-      "smaps": {
-        "source-vendor": {
-          "#4": "RAML 1.0"
-        }
-      }
-    },
-    {
-      "@id": "#6",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -838,22 +810,50 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#7"
+          "@id": "#3"
         },
         {
-          "@id": "#9"
+          "@id": "#5"
         }
       ],
       "shacl:name": "type",
       "smaps": {
         "source-vendor": {
-          "#6": "RAML 1.0"
+          "#2": "RAML 1.0"
         },
         "lexical": {
-          "#6": "[(2,0)-(5,14)]"
+          "#2": "[(2,0)-(5,14)]"
         },
         "type-property-lexical-info": {
-          "#6": "[(2,0)-(2,4)]"
+          "#2": "[(2,0)-(2,4)]"
+        }
+      }
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "doc:ExternalDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:raw": "#%RAML 1.0 NamedExample\nemployees:\n  -\n    id: 1\n    name: Jhon\n  -\n    id: 2\n    name: Sam",
+      "core:mediaType": "application/raml+yaml",
+      "smaps": {
+        "source-vendor": {
+          "#8": "RAML 1.0"
+        }
+      }
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "doc:ExternalDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:raw": "#%RAML 1.0 NamedExample\nemployee:\n  id: 1\n  name: \"Jhon\"",
+      "core:mediaType": "application/raml+yaml",
+      "smaps": {
+        "source-vendor": {
+          "#10": "RAML 1.0"
         }
       }
     }

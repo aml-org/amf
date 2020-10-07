@@ -101,7 +101,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
     val declarable = ctx.declarations.declarables()
     if (declarable.nonEmpty) document.withDeclares(declarable)
-    if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
+    if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     ctx.futureDeclarations.resolve()
     document
