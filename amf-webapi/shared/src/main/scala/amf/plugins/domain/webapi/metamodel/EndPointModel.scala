@@ -28,7 +28,7 @@ object EndPointModel extends DomainElementModel with KeyField with NameFieldSche
   val Operations = Field(
     Array(OperationModel),
     ApiContract + "supportedOperation",
-    ModelDoc(ModelVocabularies.ApiContract, "supported operation", "Operations supported by an endpoint")
+    ModelDoc(ModelVocabularies.ApiContract, "supportedOperation", "Operations supported by an endpoint")
   )
 
   val Parameters = Field(

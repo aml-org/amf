@@ -20,7 +20,7 @@ object RequestModel extends DomainElementModel with ParametersFieldModel with Me
   val CookieParameters =
     Field(Array(ParameterModel),
           ApiContract + "cookieParameter",
-          ModelDoc(ModelVocabularies.ApiContract, "cookie parameter", ""))
+          ModelDoc(ModelVocabularies.ApiContract, "cookieParameter", ""))
 
   override val `type`: List[ValueType] = ApiContract + "Request" :: MessageModel.`type`
 

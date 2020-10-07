@@ -14,10 +14,10 @@ import amf.plugins.domain.webapi.models.Encoding
 object EncodingModel extends DomainElementModel with KeyField {
 
   val PropertyName =
-    Field(Str, ApiContract + "propertyName", ModelDoc(ModelVocabularies.ApiContract, "property name", ""))
+    Field(Str, ApiContract + "propertyName", ModelDoc(ModelVocabularies.ApiContract, "propertyName", ""))
 
   val ContentType =
-    Field(Str, ApiContract + "contentType", ModelDoc(ModelVocabularies.ApiContract, "content type", ""))
+    Field(Str, ApiContract + "contentType", ModelDoc(ModelVocabularies.ApiContract, "contentType", ""))
 
   val Headers =
     Field(Array(ParameterModel), ApiContract + "header", ModelDoc(ModelVocabularies.ApiContract, "header", ""))
@@ -33,7 +33,7 @@ object EncodingModel extends DomainElementModel with KeyField {
   val Explode = Field(Bool, ApiContract + "explode", ModelDoc(ModelVocabularies.ApiContract, "explode", ""))
 
   val AllowReserved =
-    Field(Bool, ApiContract + "allowReserved", ModelDoc(ModelVocabularies.ApiContract, "allow reserved", ""))
+    Field(Bool, ApiContract + "allowReserved", ModelDoc(ModelVocabularies.ApiContract, "allowReserved", ""))
 
   override val `type`: List[ValueType] = ApiContract + "Encoding" :: DomainElementModel.`type`
 

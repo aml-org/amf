@@ -7,13 +7,14 @@ import amf.core.vocabulary.Namespace.ApiContract
 import amf.core.vocabulary.ValueType
 
 object ParametrizedResourceTypeModel extends ParametrizedDeclarationModel {
-  override val `type`: List[ValueType] = ApiContract + "ParametrizedResourceType" :: ParametrizedDeclarationModel.`type`
+  override val `type`
+    : List[ValueType] = ApiContract + "ParametrizedResourceType" :: ParametrizedDeclarationModel.`type`
 
   override def modelInstance = ParametrizedResourceType()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiContract,
-    "Parametrized Resource Type",
+    "ParametrizedResourceType",
     "RAML resource type that can accept parameters"
   )
 }

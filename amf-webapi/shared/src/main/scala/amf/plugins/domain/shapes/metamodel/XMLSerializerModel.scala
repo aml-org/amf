@@ -13,17 +13,17 @@ import amf.core.vocabulary.ValueType
 object XMLSerializerModel extends DomainElementModel {
 
   val Attribute =
-    Field(Bool, Shapes + "xmlAttribute", ModelDoc(ModelVocabularies.Shapes, "xml attribute", "XML attribute mapping"))
+    Field(Bool, Shapes + "xmlAttribute", ModelDoc(ModelVocabularies.Shapes, "xmlAttribute", "XML attribute mapping"))
 
   val Wrapped =
-    Field(Bool, Shapes + "xmlWrapped", ModelDoc(ModelVocabularies.Shapes, "xml wrapped", "XML wrapped mapping flag"))
+    Field(Bool, Shapes + "xmlWrapped", ModelDoc(ModelVocabularies.Shapes, "xmlWrapped", "XML wrapped mapping flag"))
 
-  val Name = Field(Str, Shapes + "xmlName", ModelDoc(ModelVocabularies.Shapes, "xml name", "XML name mapping"))
+  val Name = Field(Str, Shapes + "xmlName", ModelDoc(ModelVocabularies.Shapes, "xmlName", "XML name mapping"))
 
   val Namespace =
-    Field(Str, Shapes + "xmlNamespace", ModelDoc(ModelVocabularies.Shapes, "xml namespace", "XML namespace mapping"))
+    Field(Str, Shapes + "xmlNamespace", ModelDoc(ModelVocabularies.Shapes, "xmlNamespace", "XML namespace mapping"))
 
-  val Prefix = Field(Str, Shapes + "xmlPrefix", ModelDoc(ModelVocabularies.Shapes, "xml prefix", "XML prefix mapping"))
+  val Prefix = Field(Str, Shapes + "xmlPrefix", ModelDoc(ModelVocabularies.Shapes, "xmlPrefix", "XML prefix mapping"))
 
   override val fields: List[Field] = List(Attribute, Wrapped, Name, Namespace, Prefix) ++ DomainElementModel.fields
 
@@ -33,7 +33,7 @@ object XMLSerializerModel extends DomainElementModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "XML Serializer",
+    "XMLSerializer",
     "Information about how to encode into XML a particular data shape"
   )
 }

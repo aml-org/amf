@@ -24,26 +24,26 @@ class DataArrangementShape extends AnyShapeModel {
 
   val MinItems = Field(Int,
                        Shacl + "minCount",
-                       ModelDoc(ExternalModelVocabularies.Shacl, "min count", "Minimum items count constraint"))
+                       ModelDoc(ExternalModelVocabularies.Shacl, "minCount", "Minimum items count constraint"))
 
   val MaxItems = Field(Int,
                        Shacl + "maxCount",
-                       ModelDoc(ExternalModelVocabularies.Shacl, "max count", "Maximum items count constraint"))
+                       ModelDoc(ExternalModelVocabularies.Shacl, "maxCount", "Maximum items count constraint"))
 
   val UniqueItems =
-    Field(Bool, Shapes + "uniqueItems", ModelDoc(ModelVocabularies.Shapes, "uinque items", "Unique items constraint"))
+    Field(Bool, Shapes + "uniqueItems", ModelDoc(ModelVocabularies.Shapes, "uniqueItems", "Unique items constraint"))
 
   val CollectionFormat = Field(
     Str,
     Shapes + "collectionFormat",
-    ModelDoc(ModelVocabularies.Shapes, "collection format", "Input collection format information"))
+    ModelDoc(ModelVocabularies.Shapes, "collectionFormat", "Input collection format information"))
 
   val specificFields               = List(Items, Contains, MinItems, MaxItems, UniqueItems, CollectionFormat)
   override val fields: List[Field] = specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Data Arrangement Shape",
+    "DataArrangementShape",
     "Base shape class for any data shape that contains a nested collection of data shapes"
   )
 }
@@ -56,7 +56,7 @@ object ArrayShapeModel extends DataArrangementShape with DomainElementModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Array Shape",
+    "ArrayShape",
     "Shape that contains a nested collection of data shapes"
   )
 }
@@ -67,7 +67,7 @@ object MatrixShapeModel extends DataArrangementShape with DomainElementModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Matrix Shape",
+    "MatrixShape",
     "Data shape containing nested multi-dimensional collection shapes"
   )
 }
@@ -76,13 +76,13 @@ object TupleShapeModel extends DataArrangementShape with DomainElementModel {
   val ClosedItems = Field(
     Bool,
     Shapes + "closedItems",
-    ModelDoc(ModelVocabularies.Shapes, "closed items", "Constraint limiting additional shapes in the collection"))
+    ModelDoc(ModelVocabularies.Shapes, "closedItems", "Constraint limiting additional shapes in the collection"))
 
   val AdditionalItemsSchema = Field(
     ShapeModel,
     Shapes + "additionalItemsSchema",
     ModelDoc(ModelVocabularies.Shapes,
-             "additional items schema",
+             "additionalItemsSchema",
              "Controls whether it’s valid to have additional items in the array beyond what is defined")
   )
 
@@ -101,7 +101,7 @@ object TupleShapeModel extends DataArrangementShape with DomainElementModel {
                                           CollectionFormat) ++ AnyShapeModel.fields ++ DomainElementModel.fields
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Tuple Shape",
+    "TupleShape",
     "Data shape containing a multi-valued collection of shapes"
   )
 }

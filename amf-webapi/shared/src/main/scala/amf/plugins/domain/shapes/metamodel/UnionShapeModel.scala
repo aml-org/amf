@@ -10,7 +10,7 @@ object UnionShapeModel extends AnyShapeModel {
 
   val AnyOf = Field(Array(ShapeModel),
                     Namespace.Shapes + "anyOf",
-                    ModelDoc(ModelVocabularies.Shapes, "any of", "Data shapes in the union"))
+                    ModelDoc(ModelVocabularies.Shapes, "anyOf", "Data shapes in the union"))
 
   val specificFields = List(AnyOf)
 
@@ -23,7 +23,7 @@ object UnionShapeModel extends AnyShapeModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Union Shape",
+    "UnionShape",
     "Shape representing the union of many alternative data shapes"
   )
 }

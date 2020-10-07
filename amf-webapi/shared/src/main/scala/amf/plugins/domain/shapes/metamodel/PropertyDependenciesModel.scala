@@ -15,12 +15,12 @@ object PropertyDependenciesModel extends DomainElementModel {
   val PropertySource = Field(
     Iri,
     Shapes + "propertySource",
-    ModelDoc(ModelVocabularies.Shapes, "property source", "Source property shape in the dependency"))
+    ModelDoc(ModelVocabularies.Shapes, "propertySource", "Source property shape in the dependency"))
 
   val PropertyTarget = Field(
     Array(Iri),
     Shapes + "propertyTarget",
-    ModelDoc(ModelVocabularies.Shapes, "property target", "Target property shape in the dependency"))
+    ModelDoc(ModelVocabularies.Shapes, "propertyTarget", "Target property shape in the dependency"))
 
   override def fields: List[Field] = List(PropertySource, PropertyTarget) ++ DomainElementModel.fields
 
@@ -30,7 +30,7 @@ object PropertyDependenciesModel extends DomainElementModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Property Dependencies",
+    "PropertyDependencies",
     "Dependency between sets of property shapes"
   )
 }

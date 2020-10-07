@@ -17,12 +17,12 @@ object NodeShapeModel extends AnyShapeModel {
   val MinProperties = Field(
     Int,
     Shapes + "minProperties",
-    ModelDoc(ModelVocabularies.Shapes, "min properties", "Minimum number of properties in the input node constraint"))
+    ModelDoc(ModelVocabularies.Shapes, "minProperties", "Minimum number of properties in the input node constraint"))
 
   val MaxProperties = Field(
     Int,
     Shapes + "maxProperties",
-    ModelDoc(ModelVocabularies.Shapes, "max properties", "Maximum number of properties in the input node constraint"))
+    ModelDoc(ModelVocabularies.Shapes, "maxProperties", "Maximum number of properties in the input node constraint"))
 
   val Closed = Field(
     Bool,
@@ -32,7 +32,7 @@ object NodeShapeModel extends AnyShapeModel {
   val AdditionalPropertiesSchema = Field(
     ShapeModel,
     Shacl + "additionalPropertiesSchema",
-    ModelDoc(ExternalModelVocabularies.Shacl, "additional properties schema", "Additional properties schema"))
+    ModelDoc(ExternalModelVocabularies.Shacl, "additionalPropertiesSchema", "Additional properties schema"))
 
   val Discriminator =
     Field(Str, Shapes + "discriminator", ModelDoc(ModelVocabularies.Shapes, "discriminator", "Discriminator property"))
@@ -40,14 +40,14 @@ object NodeShapeModel extends AnyShapeModel {
   val DiscriminatorValue = Field(
     Str,
     Shapes + "discriminatorValue",
-    ModelDoc(ModelVocabularies.Shapes, "discriminator value", "Values for the discriminator property"))
+    ModelDoc(ModelVocabularies.Shapes, "discriminatorValue", "Values for the discriminator property"))
 
   val DiscriminatorMapping = Field(
     Array(IriTemplateMappingModel),
     Shapes + "discriminatorMapping",
     ModelDoc(ModelVocabularies.Shapes,
-             "discriminator mapping",
-             "Mappping of acceptable values for the ndoe discriminator")
+             "discriminatorMapping",
+             "Mappping of acceptable values for the node discriminator")
   )
 
   val Properties = Field(Array(PropertyShapeModel),
@@ -56,7 +56,7 @@ object NodeShapeModel extends AnyShapeModel {
 
   val PropertyNames = Field(ShapeModel,
                             Shacl + "propertyNames",
-                            ModelDoc(ExternalModelVocabularies.Shacl, "property names", "Property names schema"))
+                            ModelDoc(ExternalModelVocabularies.Shacl, "propertyNames", "Property names schema"))
 
   val Dependencies = Field(Array(PropertyDependenciesModel),
                            Shapes + "dependencies",
@@ -84,7 +84,7 @@ object NodeShapeModel extends AnyShapeModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Node Shape",
+    "NodeShape",
     "Shape that validates a record of fields, like a JS object"
   )
 }

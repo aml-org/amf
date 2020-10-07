@@ -8,9 +8,8 @@ import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.models.SchemaShape
 
 trait SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
-  val MediaType = Field(Str,
-                        Core + "mediaType",
-                        ModelDoc(ModelVocabularies.Core, "media type", "Media type associated to a shape"))
+  val MediaType =
+    Field(Str, Core + "mediaType", ModelDoc(ModelVocabularies.Core, "mediaType", "Media type associated to a shape"))
 
   val specificFields = List(MediaType)
   override val fields: List[Field] = specificFields ++
@@ -23,7 +22,7 @@ trait SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Schema Shape",
+    "SchemaShape",
     "Raw schema that cannot be parsed using AMF shapes model"
   )
 }

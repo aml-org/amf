@@ -12,15 +12,15 @@ trait CommonShapeFields {
 
   val MinLength = Field(Int,
                         Shacl + "minLength",
-                        ModelDoc(ExternalModelVocabularies.Shacl, "min. length", "Minimum lenght constraint"))
+                        ModelDoc(ExternalModelVocabularies.Shacl, "minLength", "Minimum lenght constraint"))
 
   val MaxLength = Field(Int,
                         Shacl + "maxLength",
-                        ModelDoc(ExternalModelVocabularies.Shacl, "max. length", "Maximum length constraint"))
+                        ModelDoc(ExternalModelVocabularies.Shacl, "maxLength", "Maximum length constraint"))
 
   val Minimum = Field(Double,
                       Shacl + "minInclusive",
-                      ModelDoc(ExternalModelVocabularies.Shacl, "min. inclusive", "Minimum inclusive constraint"))
+                      ModelDoc(ExternalModelVocabularies.Shacl, "minInclusive", "Minimum inclusive constraint"))
 
   val Maximum = Field(Double,
                       Shacl + "maxInclusive",
