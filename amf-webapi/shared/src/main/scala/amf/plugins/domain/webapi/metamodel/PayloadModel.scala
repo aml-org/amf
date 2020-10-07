@@ -24,7 +24,7 @@ object PayloadModel
 
   val MediaType = Field(Str,
                         Core + "mediaType",
-                        ModelDoc(ModelVocabularies.Core, "media type", "Media types supported in the payload"))
+                        ModelDoc(ModelVocabularies.Core, "mediaType", "Media types supported in the payload"))
 
   val SchemaMediaType = Field(
     Str,

@@ -17,7 +17,7 @@ object NilShapeModel extends AnyShapeModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Nil Shape",
+    "NilShape",
     "Data shape representing the null/nil value in the input schema"
   )
 }

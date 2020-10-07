@@ -14,7 +14,7 @@ object ResourceTypeModel extends AbstractDeclarationModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiContract,
-    "Resource Type",
+    "ResourceType",
     "Type of document base unit encoding a RAML resource type"
   )
 }

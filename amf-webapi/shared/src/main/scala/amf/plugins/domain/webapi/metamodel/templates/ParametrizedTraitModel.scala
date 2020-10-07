@@ -13,7 +13,7 @@ object ParametrizedTraitModel extends ParametrizedDeclarationModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiContract,
-    "Parametrized Trait",
+    "ParametrizedTrait",
     "RAML trait with declared parameters"
   )
 }

@@ -25,7 +25,7 @@ object SecurityRequirementModel extends DomainElementModel with NameFieldSchema 
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "Security Requirement",
+    "SecurityRequirement",
     "Flow for an OAuth2 security scheme setting"
   )
   override val key: Field = Name

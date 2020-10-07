@@ -27,7 +27,7 @@ object ScalarShapeModel extends AnyShapeModel with CommonShapeFields {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Scalar Shape",
+    "ScalarShape",
     "Data shape describing a scalar value in the input data model, reified as an scalar node in the mapped graph"
   )
 }

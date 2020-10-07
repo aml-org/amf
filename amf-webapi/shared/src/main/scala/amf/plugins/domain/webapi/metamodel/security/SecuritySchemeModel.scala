@@ -17,15 +17,12 @@ object SecuritySchemeModel
     with DisplayNameField
     with ParametersFieldModel {
 
-  val Name = Field(Str,
-                   Core + "name",
-                   ModelDoc(ModelVocabularies.Core,
-                            "name",
-                            "Name for the security scheme",
-                            Seq((Namespace.Core + "name").iri())))
+  val Name = Field(
+    Str,
+    Core + "name",
+    ModelDoc(ModelVocabularies.Core, "name", "Name for the security scheme", Seq((Namespace.Core + "name").iri())))
 
   val Type = Field(Str, Security + "type", ModelDoc(ModelVocabularies.Security, "type", "Type of security scheme"))
-
 
   val Responses = Field(
     Array(ResponseModel),
@@ -47,7 +44,7 @@ object SecuritySchemeModel
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "Security Scheme",
+    "SecurityScheme",
     "Authentication and access control mechanism defined in an API"
   )
 }

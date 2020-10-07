@@ -25,10 +25,12 @@ object ParameterModel
   val ParameterName = Field(
     Str,
     ApiContract + "paramName",
-    ModelDoc(ModelVocabularies.ApiContract, "param name", "Name of a parameter", Seq((Namespace.Core + "name").iri())))
+    ModelDoc(ModelVocabularies.ApiContract, "paramName", "Name of a parameter", Seq((Namespace.Core + "name").iri())))
 
   val Required =
-    Field(Bool, ApiContract + "required", ModelDoc(ModelVocabularies.ApiContract, "required", "Marks the parameter as required"))
+    Field(Bool,
+          ApiContract + "required",
+          ModelDoc(ModelVocabularies.ApiContract, "required", "Marks the parameter as required"))
 
   val Deprecated = Field(Bool,
                          Document + "deprecated",
@@ -37,7 +39,7 @@ object ParameterModel
   val AllowEmptyValue = Field(
     Bool,
     ApiContract + "allowEmptyValue",
-    ModelDoc(ModelVocabularies.ApiContract, "allow empty value", "Parameter can be passed without value"))
+    ModelDoc(ModelVocabularies.ApiContract, "allowEmptyValue", "Parameter can be passed without value"))
 
   val Style = Field(Str,
                     ApiContract + "style",
@@ -45,7 +47,8 @@ object ParameterModel
 
   val Explode = Field(Bool, ApiContract + "explode", ModelDoc(ModelVocabularies.ApiContract, "explode", ""))
 
-  val AllowReserved = Field(Bool, ApiContract + "allowReserved", ModelDoc(ModelVocabularies.ApiContract, "allow reserved", ""))
+  val AllowReserved =
+    Field(Bool, ApiContract + "allowReserved", ModelDoc(ModelVocabularies.ApiContract, "allowReserved", ""))
 
   val Binding = Field(
     Str,
@@ -59,7 +62,8 @@ object ParameterModel
                      Shapes + "schema",
                      ModelDoc(ModelVocabularies.Shapes, "schema", "Schema the parameter value must validate"))
 
-  val Payloads = Field(Array(PayloadModel), ApiContract + "payload", ModelDoc(ModelVocabularies.ApiContract, "payload", ""))
+  val Payloads =
+    Field(Array(PayloadModel), ApiContract + "payload", ModelDoc(ModelVocabularies.ApiContract, "payload", ""))
 
   override val key: Field = Name
 

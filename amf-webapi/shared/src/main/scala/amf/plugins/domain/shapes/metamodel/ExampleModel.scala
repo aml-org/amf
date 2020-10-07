@@ -23,7 +23,7 @@ trait ExampleModel
     Str,
     Core + "displayName",
     ModelDoc(ModelVocabularies.Core,
-             "display name",
+             "displayName",
              "Human readable name for the term",
              Seq((Namespace.Core + "name").iri()))
   )
@@ -31,7 +31,7 @@ trait ExampleModel
     Str,
     ApiContract + "guiSummary",
     ModelDoc(ModelVocabularies.ApiContract,
-             "gui summary",
+             "guiSummary",
              "Human readable description of the example",
              Seq((Namespace.ApiContract + "description").iri()))
   )
@@ -40,11 +40,11 @@ trait ExampleModel
   val ExternalValue = Field(
     Str,
     Document + "externalValue",
-    ModelDoc(ModelVocabularies.AmlDoc, "external value", "Raw text containing an unparsable example"))
+    ModelDoc(ModelVocabularies.AmlDoc, "externalValue", "Raw text containing an unparsable example"))
   val StructuredValue = Field(
     DataNodeModel,
     Document + "structuredValue",
-    ModelDoc(ModelVocabularies.AmlDoc, "structured value", "Data structure containing the value of the example"))
+    ModelDoc(ModelVocabularies.AmlDoc, "structuredValue", "Data structure containing the value of the example"))
   val Strict = Field(Bool,
                      Document + "strict",
                      ModelDoc(ModelVocabularies.AmlDoc,
@@ -52,7 +52,7 @@ trait ExampleModel
                               "Indicates if this example should be validated against an associated schema"))
   val MediaType = Field(Str,
                         Core + "mediaType",
-                        ModelDoc(ModelVocabularies.Core, "media type", "Media type associated to the example"))
+                        ModelDoc(ModelVocabularies.Core, "mediaType", "Media type associated to the example"))
 
   override val key: Field = Name
 

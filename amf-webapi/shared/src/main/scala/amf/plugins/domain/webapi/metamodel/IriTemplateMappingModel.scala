@@ -20,7 +20,7 @@ object IriTemplateMappingModel extends DomainElementModel {
   val LinkExpression =
     Field(Str,
           ApiContract + "linkExpression",
-          ModelDoc(ModelVocabularies.ApiContract, "link expression", "OAS 3 link expression"))
+          ModelDoc(ModelVocabularies.ApiContract, "linkExpression", "OAS 3 link expression"))
 
   override val `type`: List[ValueType] = ApiContract + "IriTemplateMapping" :: DomainElementModel.`type`
 
@@ -30,7 +30,7 @@ object IriTemplateMappingModel extends DomainElementModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiContract,
-    "Iri Template",
+    "IriTemplate",
     ""
   )
 }
