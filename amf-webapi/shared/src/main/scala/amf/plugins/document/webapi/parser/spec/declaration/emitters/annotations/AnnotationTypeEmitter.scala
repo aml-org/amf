@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations
 
-import amf.core.emitter.BaseEmitters.{ArrayEmitter, ValueEmitter}
+import amf.core.emitter.BaseEmitters.{ValueEmitter}
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain.extensions.CustomDomainProperty
@@ -46,7 +46,7 @@ abstract class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: S
           val finalArray      = AmfArray(scalars, f.array.annotations)
           val finalFieldEntry = FieldEntry(f.field, Value(finalArray, f.value.annotations))
 
-          result += ArrayEmitter("allowedTargets", finalFieldEntry, ordering)
+          result += spec.arrayEmitter("allowedTargets", finalFieldEntry, ordering)
         }
 
         result ++= shapeEmitters.map(_.asInstanceOf[EntryEmitter])

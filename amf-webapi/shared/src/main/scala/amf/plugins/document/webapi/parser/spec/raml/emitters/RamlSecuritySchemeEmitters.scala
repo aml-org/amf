@@ -203,7 +203,7 @@ case class RamlOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering
     fs.entry(OAuth1SettingsModel.RequestTokenUri).map(f => results += RamlScalarEmitter("requestTokenUri", f))
     fs.entry(OAuth1SettingsModel.AuthorizationUri).map(f => results += RamlScalarEmitter("authorizationUri", f))
     fs.entry(OAuth1SettingsModel.TokenCredentialsUri).map(f => results += RamlScalarEmitter("tokenCredentialsUri", f))
-    fs.entry(OAuth1SettingsModel.Signatures).map(f => results += ArrayEmitter("signatures", f, ordering))
+    fs.entry(OAuth1SettingsModel.Signatures).map(f => results += spec.arrayEmitter("signatures", f, ordering))
     results
   }
 }
@@ -217,7 +217,7 @@ case class RamlOAuth2SettingsEmitters(o2: OAuth2Settings, ordering: SpecOrdering
     o2.flows.headOption.foreach(flowEmitters(_, results))
 
     fs.entry(OAuth2SettingsModel.AuthorizationGrants)
-      .map(f => results += ArrayEmitter("authorizationGrants", f, ordering))
+      .map(f => results += spec.arrayEmitter("authorizationGrants", f, ordering))
 
     results
   }

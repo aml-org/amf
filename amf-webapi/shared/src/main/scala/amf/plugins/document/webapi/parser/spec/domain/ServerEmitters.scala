@@ -151,10 +151,10 @@ case class Oas2ServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering
                                   uri.path,
                                   position = pos(f.value.annotations, classOf[BasePathLexicalInformation]))
       if (uri.protocol.nonEmpty && !api.fields.exists(WebApiModel.Schemes))
-        result += ArrayEmitter("schemes",
-                               FieldEntry(WebApiModel.Schemes,
-                                          Value(AmfArray(Seq(AmfScalar(uri.protocol))), f.value.annotations)),
-                               ordering)
+        result += spec.arrayEmitter("schemes",
+                                    FieldEntry(WebApiModel.Schemes,
+                                               Value(AmfArray(Seq(AmfScalar(uri.protocol))), f.value.annotations)),
+                                    ordering)
     }
 
     fs.entry(ServerModel.Description).map(f => result += RamlScalarEmitter("serverDescription".asOasExtension, f))
