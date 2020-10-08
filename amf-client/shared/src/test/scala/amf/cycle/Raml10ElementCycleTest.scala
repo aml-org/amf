@@ -59,6 +59,15 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
     )
   }
 
+  test("type - reference to external fragment and declared type with entry") {
+    renderElement(
+      "type/refs-with-entry.raml",
+      CommonExtractors.namedRootInDeclares,
+      "type/refs-with-entry-emission.yaml",
+      RamlYamlHint
+    )
+  }
+
   test("type - ref to external json schemas") {
     renderElement(
       "type/external-json-schema-refs.raml",

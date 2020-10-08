@@ -667,48 +667,35 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
           InheritanceParser(ast.asInstanceOf[YMapEntry], shape, None).parse()
           shape
         case _ if node.toOption[YScalar].isDefined =>
-          val refTuple = ctx.link(node) match {
-            case Left(key) =>
-              val referenced = ctx.declarations.findType(
-                key,
-                SearchScope.Fragments,
-                Some((s: String) => ctx.eh.violation(InvalidFragmentType, shape.id, s, node)))
-              (key, referenced.map(createLink(_, key, shape.id).add(ExternalFragmentRef(key))))
-            case _ =>
-              val text       = node.as[YScalar].text
-              val referenced = ctx.declarations.findType(text, SearchScope.Named)
-              (text, referenced.map(createLink(_, text, shape.id)))
-          }
-
-          refTuple match {
-            case (_, Some(s)) => s
-            case (text: String, _)
-                if RamlTypeDefMatcher.matchType(TypeName(text), default = UndefinedType) == ObjectType =>
-              shape.annotations += ExplicitField()
-              shape
-            case (text: String, _) =>
-              val unresolve = UnresolvedShape(Fields(),
-                                              Annotations(node),
-                                              text,
-                                              None,
-                                              Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
-                                              shouldLink = false).withName(text, nameAnnotations)
-              unresolve.withContext(ctx)
-              adopt(unresolve)
-              if (!text.validReferencePath && ctx.declarations.libraries.keys.exists(_ == text.split("\\.").head)) {
-                ctx.eh.violation(
-                  ChainedReferenceSpecification,
-                  shape.id,
-                  s"Chained reference '$text",
-                  node
-                )
-              } else {
-                unresolve.unresolved(text, node)
+          val text = node.as[YScalar].text
+          parseReference(node, shape.id, createLink(_, text, shape.id))
+            .getOrElse {
+              if (RamlTypeDefMatcher.matchType(TypeName(text), default = UndefinedType) == ObjectType)
+                shape.add(ExplicitField())
+              else {
+                val unresolve = UnresolvedShape(Fields(),
+                                                Annotations(node),
+                                                text,
+                                                None,
+                                                Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
+                                                shouldLink = false).withName(text, nameAnnotations)
+                unresolve.withContext(ctx)
+                adopt(unresolve)
+                if (!text.validReferencePath && ctx.declarations.libraries.keys.exists(_ == text.split("\\.").head)) {
+                  ctx.eh.violation(
+                    ChainedReferenceSpecification,
+                    shape.id,
+                    s"Chained reference '$text",
+                    node
+                  )
+                } else {
+                  unresolve.unresolved(text, node)
+                }
+                shape.annotations.reject(isLexical)
+                shape.annotations ++= unresolve.annotations
+                shape.withLinkTarget(unresolve).withLinkLabel(text)
               }
-              shape.annotations.reject(isLexical)
-              shape.annotations ++= unresolve.annotations
-              shape.withLinkTarget(unresolve).withLinkLabel(text)
-          }
+            }
       }
     }
   }
@@ -718,7 +705,22 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
       .link(label, Annotations(node))
       .asInstanceOf[Shape]
       .withName(name, nameAnnotations) // we setup the local reference in the name
-      .withId(linkId) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+      .withId(linkId)
+  }
+
+  private def parseReference(node: YNode, parendId: String, createLink: AnyShape => Shape): Option[Shape] = {
+    ctx.link(node) match {
+      case Left(key) =>
+        val referenced = ctx.declarations.findType(
+          key,
+          SearchScope.Fragments,
+          Some((s: String) => ctx.eh.violation(InvalidFragmentType, parendId, s, node)))
+        referenced.map(createLink(_).add(ExternalFragmentRef(key)))
+      case _ =>
+        val text       = node.as[YScalar].text
+        val referenced = ctx.declarations.findType(text, SearchScope.Named)
+        referenced.map(createLink(_))
+    }
   }
 
   private def isFileType: Boolean = {
@@ -1351,23 +1353,23 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
         case _ if !wellKnownType(entry.value.as[YScalar].text) =>
           val text = entry.value.as[YScalar].text
-          ctx.declarations.findType(text, SearchScope.All) match {
-            case Some(ancestor) =>
-              checkSchemaInheritance(shape, Seq(ancestor), Range(entry.range))
-              // set without ID!, we keep the ID of the referred element
-              shape.fields.setWithoutId(
-                ShapeModel.Inherits,
-                AmfArray(
-                  Seq(
-                    ancestor
-                      .link(text, Annotations(entry.value))
-                      .asInstanceOf[AnyShape]
-                      .withName(ancestor.name.option().getOrElse("schema"), Annotations(entry.key))
-                      .add(AutoGeneratedName())),
-                  Annotations(entry.value)
-                ),
-                Annotations(entry)
-              )
+          val result = parseReference(
+            entry.value,
+            shape.id,
+            target => {
+              checkSchemaInheritance(shape, Seq(target), Range(entry.range))
+              target
+                .link(text, Annotations(entry.value))
+                .asInstanceOf[AnyShape]
+                .withName(target.name.option().getOrElse("schema"), Annotations(entry.key))
+                .add(AutoGeneratedName())
+            }
+          )
+          result match {
+            case Some(link) =>
+              shape.fields.setWithoutId(ShapeModel.Inherits,
+                                        AmfArray(Seq(link), Annotations(entry.value)),
+                                        Annotations(entry))
             case _ =>
               val baseClass = text match {
                 case JSONSchema(_) =>

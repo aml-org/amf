@@ -33,10 +33,10 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
   private def emitShape(value: Shape, b: PartBuilder): Unit = value match {
     case u: UnionShape if !u.isLink =>
       RamlInlinedUnionShapeEmitter(u, ordering, references).partEmitters().emitAll(b)
-    case d: Shape with ShapeHelpers if d.annotations.contains(classOf[DeclaredElement]) || d.isLink =>
+    case d: Shape with ShapeHelpers if d.annotations.contains(classOf[DeclaredElement]) =>
       emitDeclared(d, b)
     case s: AnyShape =>
-      b.obj(r => traverse(Raml10TypeEmitter(s, ordering, references = references).entries(), r))
+      Raml10TypePartEmitter(s, ordering, None, references = references).emit(b)
     case other =>
       spec.eh.violation(ResolutionValidation,
                         other.id,
