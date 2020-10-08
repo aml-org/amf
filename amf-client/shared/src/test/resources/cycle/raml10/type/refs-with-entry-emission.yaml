@@ -1,0 +1,8 @@
+type: object
+properties:
+  ref-to-fragment-entry:
+    type: !include data-type.raml
+  ref-to-declared-entry:
+    type: other-type
+  ref-to-fragment: !include data-type.raml
+  ref-to-declared: other-type
