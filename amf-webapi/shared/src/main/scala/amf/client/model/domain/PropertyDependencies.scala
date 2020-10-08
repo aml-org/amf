@@ -18,6 +18,7 @@ case class PropertyDependencies(override private[amf] val _internal: InternalPro
 
   def source: StrField             = _internal.propertySource
   def target: ClientList[StrField] = _internal.propertyTarget.asClient
+  def appliedShape: Shape          = _internal.propertyAppliedShape
 
   def withPropertySource(propertySource: String): this.type = {
     _internal.withPropertySource(propertySource)
@@ -26,6 +27,11 @@ case class PropertyDependencies(override private[amf] val _internal: InternalPro
 
   def withPropertyTarget(propertyTarget: ClientList[String]): this.type = {
     _internal.withPropertyTarget(propertyTarget.asInternal)
+    this
+  }
+
+  def withPropertyAppliedShape(appliedShape: Shape): this.type = {
+    _internal.withPropertyAppliedShape(appliedShape)
     this
   }
 }

@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import amf.core.metamodel.Obj
 import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.PropertyDependenciesModel
 import amf.plugins.domain.shapes.metamodel.PropertyDependenciesModel._
@@ -15,9 +15,11 @@ case class PropertyDependencies(fields: Fields, annotations: Annotations) extend
 
   def propertySource: StrField      = fields.field(PropertySource)
   def propertyTarget: Seq[StrField] = fields.field(PropertyTarget)
+  def propertyAppliedShape: Shape   = fields.field(PropertyAppliedShape)
 
   def withPropertySource(propertySource: String): this.type      = set(PropertySource, propertySource)
   def withPropertyTarget(propertyTarget: Seq[String]): this.type = set(PropertyTarget, propertyTarget)
+  def withPropertyAppliedShape(shape: Shape): this.type          = set(PropertyAppliedShape, shape)
 
   override def meta: Obj = PropertyDependenciesModel
 

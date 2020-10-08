@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel._
@@ -16,8 +16,14 @@ case class ScalarShape(override val fields: Fields, override val annotations: An
     with CommonShapeFields {
 
   def dataType: StrField = fields.field(DataType)
+  def encoding: String   = fields.field(Encoding)
+  def mediaType: String  = fields.field(MediaType)
+  def schema: Shape      = fields.field(Schema)
 
-  def withDataType(dataType: String): this.type = set(DataType, dataType)
+  def withDataType(dataType: String): this.type   = set(DataType, dataType)
+  def withEncoding(encoding: String): this.type   = set(Encoding, encoding)
+  def withMediaType(mediaType: String): this.type = set(MediaType, mediaType)
+  def withSchema(schema: Shape): this.type        = set(Schema, schema)
 
   override def linkCopy(): ScalarShape = ScalarShape().withId(id)
 

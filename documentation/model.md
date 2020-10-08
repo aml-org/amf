@@ -286,6 +286,9 @@ Shape that contains a nested collection of data shapes
  | maxCount | int | Maximum items count constraint | http://www.w3.org/ns/shacl#maxCount |
  | uniqueItems | boolean | Unique items constraint | http://a.ml/vocabularies/shapes#uniqueItems |
  | collectionFormat | string | Input collection format information | http://a.ml/vocabularies/shapes#collectionFormat |
+ | unevaluatedItems | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/shapes#unevaluatedItems |
+ | qualifiedMinCount | int | Minimum number of value nodes constraint | http://www.w3.org/ns/shacl#qualifiedMinCount |
+ | qualifiedMaxCount | int | Maximum number of value nodes constraint | http://a.ml/vocabularies/shapes#qualifiedMaxCount |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -925,6 +928,9 @@ Data shape containing nested multi-dimensional collection shapes
  | maxCount | int | Maximum items count constraint | http://www.w3.org/ns/shacl#maxCount |
  | uniqueItems | boolean | Unique items constraint | http://a.ml/vocabularies/shapes#uniqueItems |
  | collectionFormat | string | Input collection format information | http://a.ml/vocabularies/shapes#collectionFormat |
+ | unevaluatedItems | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/shapes#unevaluatedItems |
+ | qualifiedMinCount | int | Minimum number of value nodes constraint | http://www.w3.org/ns/shacl#qualifiedMinCount |
+ | qualifiedMaxCount | int | Maximum number of value nodes constraint | http://a.ml/vocabularies/shapes#qualifiedMaxCount |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1132,6 +1138,7 @@ Shape that validates a record of fields, like a JS object
  | property | [[PropertyShape](#propertyshape)] | Constraint over a property in a data shape. | http://www.w3.org/ns/shacl#property |
  | propertyNames | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://www.w3.org/ns/shacl#propertyNames |
  | dependencies | [[PropertyDependencies](#propertydependencies)] | Dependency between sets of property shapes | http://a.ml/vocabularies/shapes#dependencies |
+ | unevaluatedProperties | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/shapes#unevaluatedProperties |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1402,6 +1409,7 @@ Dependency between sets of property shapes
  | ------ | ------ | ------ | ------ |
  | propertySource | url | Source property shape in the dependency | http://a.ml/vocabularies/shapes#propertySource |
  | propertyTarget | [url] | Target property shape in the dependency | http://a.ml/vocabularies/shapes#propertyTarget |
+ | propertyAppliedShape | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/shapes#propertyAppliedShape |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## PropertyMapping
@@ -1597,6 +1605,9 @@ Data shape describing a scalar value in the input data model, reified as an scal
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | datatype | url | Scalar range constraining this scalar shape | http://www.w3.org/ns/shacl#datatype |
+ | encoding | string | Describes the contents' value encoding | http://a.ml/vocabularies/shapes#encoding |
+ | mediaType | string | Describes the content's value mediatype | http://a.ml/vocabularies/shapes#mediaType |
+ | contentSchema | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/shapes#contentSchema |
  | pattern | string | Pattern constraint | http://www.w3.org/ns/shacl#pattern |
  | minLength | int | Minimum lenght constraint | http://www.w3.org/ns/shacl#minLength |
  | maxLength | int | Maximum length constraint | http://www.w3.org/ns/shacl#maxLength |

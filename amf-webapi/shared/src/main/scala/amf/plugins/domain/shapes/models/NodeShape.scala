@@ -26,8 +26,10 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   def dependencies: Seq[PropertyDependencies]       = fields.field(Dependencies)
   def additionalPropertiesSchema: Shape             = fields.field(AdditionalPropertiesSchema)
   def propertyNames: Shape                          = fields.field(PropertyNames)
+  def unevaluatedProperties: Shape                  = fields.field(UnevaluatedProperties)
 
   def withMinProperties(min: Int): this.type                                 = set(MinProperties, min)
+  def withUnevaluatedProperties(shape: Shape): this.type                     = set(UnevaluatedProperties, shape)
   def withMaxProperties(max: Int): this.type                                 = set(MaxProperties, max)
   def withClosed(closed: Boolean): this.type                                 = set(Closed, closed)
   def withDiscriminator(discriminator: String): this.type                    = set(Discriminator, discriminator)

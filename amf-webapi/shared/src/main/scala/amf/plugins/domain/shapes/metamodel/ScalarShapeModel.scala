@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.metamodel
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Iri
+import amf.core.metamodel.Type.{Iri, Str}
 import amf.core.metamodel.domain._
 import amf.core.vocabulary.Namespace.{Shacl, Shapes}
 import amf.core.vocabulary.ValueType
@@ -17,7 +17,25 @@ object ScalarShapeModel extends AnyShapeModel with CommonShapeFields {
     Shacl + "datatype",
     ModelDoc(ExternalModelVocabularies.Shacl, "datatype", "Scalar range constraining this scalar shape"))
 
-  val specificFields = List(DataType)
+  val Encoding = Field(
+    Str,
+    Shapes + "encoding",
+    ModelDoc(ModelVocabularies.Shapes, "encoding", "Describes the contents' value encoding")
+  )
+
+  val MediaType = Field(
+    Str,
+    Shapes + "mediaType",
+    ModelDoc(ModelVocabularies.Shapes, "mediaType", "Describes the content's value mediatype")
+  )
+
+  val Schema = Field(
+    ShapeModel,
+    Shapes + "contentSchema",
+    ModelDoc(ModelVocabularies.Shapes, "contentSchema", "Describes the content's value structure")
+  )
+
+  val specificFields = List(DataType, Encoding, MediaType, Schema)
   override val fields
     : List[Field] = specificFields ++ commonOASFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
