@@ -547,6 +547,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
               copied.id = null // we reset the ID so it can be adopted, there's an extra rule where the id is not set
               // because the way they are inserted in the mode later in the parsing
               adopt(copied.withName(key))
+              ctx.link(ast.value).left.foreach(_ => copied.add(ExternalFragmentRef(scalar.text)))
               copied
             case _ =>
               Raml10TypeParser(YMapEntryLike(ast.value),

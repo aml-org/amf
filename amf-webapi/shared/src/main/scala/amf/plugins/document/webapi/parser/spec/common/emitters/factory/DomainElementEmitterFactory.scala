@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.common.emitters.factory
 
 import amf.core.emitter.PartEmitter
 import amf.core.errorhandling.ErrorHandler
+import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.remote.Vendor
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
@@ -39,6 +40,7 @@ trait DomainElementEmitterFactory {
     case l: License                    => licenseEmitter(l)
     case o: Organization               => organizationEmitter(o)
     case t: Tag                        => tagEmitter(t)
+    case c: CustomDomainProperty       => customDomainPropertyEmitter(c)
     case _                             => None
   }
 
@@ -68,6 +70,7 @@ trait DomainElementEmitterFactory {
   def licenseEmitter(l: License): Option[PartEmitter]                                       = None
   def organizationEmitter(o: Organization): Option[PartEmitter]                             = None
   def tagEmitter(t: Tag): Option[PartEmitter]                                               = None
+  def customDomainPropertyEmitter(t: CustomDomainProperty): Option[PartEmitter]             = None
 }
 
 object DomainElementEmitterFactory {

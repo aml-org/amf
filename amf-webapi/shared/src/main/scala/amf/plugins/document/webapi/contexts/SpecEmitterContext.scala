@@ -124,6 +124,17 @@ trait TagToReferenceEmitter extends PartEmitter {
   val referenceLabel: String = label.getOrElse(link.id)
 }
 
+object ReferenceEmitterHelper {
+
+  def emitLinkOr(l: DomainElement with Linkable, b: PartBuilder, refs: Seq[BaseUnit] = Nil)(fallback: => Unit)(
+      implicit spec: SpecEmitterContext): Unit = {
+    if (l.isLink)
+      spec.factory.tagToReferenceEmitter(l, refs).emit(b)
+    else
+      fallback
+  }
+}
+
 trait BaseSpecEmitter {
   implicit val spec: SpecEmitterContext
 }

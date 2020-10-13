@@ -5,6 +5,7 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DataNode
 import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -103,7 +104,11 @@ abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
                                          ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
 
-  override def emit(b: PartBuilder): Unit = b.obj(traverse(ordering.sorted(emitters()), _))
+  override def emit(b: PartBuilder): Unit = {
+    emitLinkOr(securityScheme, b, references) {
+      b.obj(traverse(ordering.sorted(emitters()), _))
+    }
+  }
 
   override def position(): Position = pos(securityScheme.annotations)
 
