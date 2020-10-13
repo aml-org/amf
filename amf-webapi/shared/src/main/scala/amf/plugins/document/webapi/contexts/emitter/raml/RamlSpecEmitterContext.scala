@@ -110,7 +110,7 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
 
   def rootLevelEmitters: (BaseUnit with DeclaresModel, SpecOrdering) => RamlRootLevelEmitters
 
-  override def tagToReferenceEmitter: (DomainElement, Option[String], Seq[BaseUnit]) => TagToReferenceEmitter =
+  override def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter =
     RamlTagToReferenceEmitter.apply
 
   override def parametrizedSecurityEmitter
@@ -317,7 +317,7 @@ class XRaml10SpecEmitterContext(eh: ErrorHandler,
                                 options: ShapeRenderOptions = ShapeRenderOptions())
     extends Raml10SpecEmitterContext(eh, refEmitter, options) {
   override def localReference(reference: Linkable): PartEmitter =
-    oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
+    oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   val oasFactory: OasSpecEmitterFactory = new Oas2SpecEmitterFactory(
     new Oas2SpecEmitterContext(eh, refEmitter, options))

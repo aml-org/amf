@@ -61,7 +61,7 @@ case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrder
 
   def emitLink(b: PartBuilder): Unit = {
     val linkable = bindings.asInstanceOf[DomainElement with Linkable]
-    OasTagToReferenceEmitter(linkable, linkable.linkLabel.option()).emit(b)
+    OasTagToReferenceEmitter(linkable).emit(b)
   }
 
   def obtainBindings(value: AmfElement): Seq[AmfElement] = {

@@ -227,9 +227,8 @@ case class OasCallbackEmitter(callbacks: Seq[Callback], ordering: SpecOrdering, 
 
   override def emit(p: PartBuilder): Unit = {
     if (callbacks.headOption.exists(_.isLink))
-      callbacks.head.linkTarget.foreach { l =>
-        OasTagToReferenceEmitter(l, callbacks.head.linkLabel.option()).emit(p)
-      } else
+      OasTagToReferenceEmitter(callbacks.head).emit(p)
+    else
       p.obj(
         traverse(callbacks.map { callback =>
           OasDocumentEmitter.endpointEmitterWithPath(callback.endpoint,

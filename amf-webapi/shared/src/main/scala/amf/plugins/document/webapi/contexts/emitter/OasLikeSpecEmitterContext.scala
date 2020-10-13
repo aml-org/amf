@@ -53,7 +53,7 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
   def schemasDeclarationsPath: String
 
   override def localReference(reference: Linkable): PartEmitter =
-    factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
+    factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   override def arrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, valuesTag: YType): EntryEmitter =
     ArrayEmitter(key, f, ordering, forceMultiple = true, valuesTag)

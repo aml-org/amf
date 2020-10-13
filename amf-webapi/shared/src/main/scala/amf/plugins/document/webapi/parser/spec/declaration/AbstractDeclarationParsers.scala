@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.DeclaredElement
+import amf.core.annotations.{DeclaredElement, ExternalFragmentRef}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.domain.AmfScalar
@@ -118,6 +118,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
       case _: ResourceType => ctx.declarations.findResourceTypeOrError(ast)(parsedUrl, SearchScope.Fragments)
     }
     val copied: AbstractDeclaration = d.link(parsedUrl, elementAnn)
+    copied.add(ExternalFragmentRef(parsedUrl))
     copied.withId(d.id)
     copied.withName(key, annotations)
   }

@@ -54,7 +54,7 @@ case class AsyncApiCorrelationIdContentEmitter(idObj: CorrelationId, ordering: S
     )
   }
 
-  private def emitLink(b: PartBuilder): Unit = OasTagToReferenceEmitter(idObj, idObj.linkLabel.option()).emit(b)
+  private def emitLink(b: PartBuilder): Unit = OasTagToReferenceEmitter(idObj).emit(b)
 
   override def position(): Position = pos(idObj.annotations)
 }

@@ -31,9 +31,7 @@ case class RamlNamedTypeEmitter(shape: AnyShape,
   }
 
   private def emitLink(b: PartBuilder): Unit = {
-    shape.linkTarget.foreach { l =>
-      spec.factory.tagToReferenceEmitter(l, shape.linkLabel.option(), references).emit(b)
-    }
+    spec.factory.tagToReferenceEmitter(shape, references).emit(b)
   }
 
   private def emitInline(b: PartBuilder): Unit = shape match {

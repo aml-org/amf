@@ -74,9 +74,7 @@ abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
   }
 
   private def emitLink(b: PartBuilder): Unit = {
-    securityScheme.linkTarget.foreach { l =>
-      RamlTagToReferenceEmitter(l, securityScheme.linkLabel.option(), references).emit(b)
-    }
+    RamlTagToReferenceEmitter(securityScheme, references).emit(b)
   }
 
   private def emitInline(b: PartBuilder): Unit =
