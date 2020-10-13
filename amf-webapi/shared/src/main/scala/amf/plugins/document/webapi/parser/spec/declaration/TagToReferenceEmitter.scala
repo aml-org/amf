@@ -89,13 +89,16 @@ case class RamlTagToReferenceEmitter(link: DomainElement, references: Seq[BaseUn
     with TagToReferenceEmitter {
 
   override def emit(b: PartBuilder): Unit = {
-    val referencesFragment = linkReferencesFragment
-
-    if (referencesFragment || link.annotations.contains(classOf[ExternalFragmentRef]))
+    if (containsRefAnnotation)
+      link.annotations.find(classOf[ExternalFragmentRef]).foreach { a =>
+        spec.ref(b, a.fragment) // emits with !include
+      } else if (linkReferencesFragment)
       spec.ref(b, referenceLabel) // emits with !include
     else
       raw(b, referenceLabel)
   }
+
+  private def containsRefAnnotation = link.annotations.contains(classOf[ExternalFragmentRef])
 
   private def linkReferencesFragment: Boolean = {
     link match {

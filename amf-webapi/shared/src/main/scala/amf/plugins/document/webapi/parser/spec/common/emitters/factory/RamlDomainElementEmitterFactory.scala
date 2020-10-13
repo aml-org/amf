@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.common.emitters.factory
 import amf.core.emitter.{PartEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.Shape
+import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.plugins.document.webapi.contexts.emitter.raml.{
   Raml08SpecEmitterContext,
@@ -13,7 +14,11 @@ import amf.plugins.document.webapi.parser.spec.common.emitters.EntryToPartEmitte
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationPartEmitter, RamlCreativeWorkEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{Raml08TypePartEmitter, Raml10TypePartEmitter}
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.emitters.{Raml08SecuritySchemeEmitter, Raml10SecuritySchemeEmitter}
+import amf.plugins.document.webapi.parser.spec.raml.emitters.{
+  NamedPropertyTypeEmitter,
+  Raml08SecuritySchemeEmitter,
+  Raml10SecuritySchemeEmitter
+}
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
@@ -40,6 +45,9 @@ case class Raml10EmitterFactory()(implicit val ctx: Raml10SpecEmitterContext) ex
     Some(EntryToPartEmitterAdapter(Raml10PayloadEmitter(p, SpecOrdering.Lexical, Nil)))
 
   override def endpointEmitter(e: EndPoint): Option[PartEmitter] = Some(Raml10EndPointEmitter(e, SpecOrdering.Lexical))
+
+  override def customDomainPropertyEmitter(c: CustomDomainProperty): Option[PartEmitter] =
+    Some(new NamedPropertyTypeEmitter(c, Nil, SpecOrdering.Lexical))
 }
 
 object Raml10EmitterFactory {
