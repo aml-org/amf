@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/validations/mercury.raml
 Profile: mercury
 Conforms? false
-Number of results: 5
+Number of results: 4
 
 Level: Violation
 
@@ -27,14 +27,6 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/mercury.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/put
   Property: http://a.ml/vocabularies/apiContract#returns
   Position: Some(LexicalInformation([(66,22)-(69,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/mercury.raml
-
-- Source: http://a.ml/vocabularies/data#upper-camelcase-datatype
-  Message: Data type definitions should be UpperCamelCase
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/mercury.raml
-  Property: 
-  Position: Some(LexicalInformation([(0,0)-(0,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/mercury.raml
 
 - Source: http://a.ml/vocabularies/data#upper-camelcase-datatype
