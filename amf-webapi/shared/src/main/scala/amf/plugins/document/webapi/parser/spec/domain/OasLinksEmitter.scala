@@ -44,9 +44,7 @@ case class OasLinkPartEmitter(link: TemplatedLink, ordering: SpecOrdering, refer
 
   override def emit(p: PartBuilder): Unit = {
     if (link.isLink) {
-      link.linkTarget.foreach { l =>
-        OasTagToReferenceEmitter(l, link.linkLabel.option()).emit(p)
-      }
+      OasTagToReferenceEmitter(link).emit(p)
     } else {
       p.obj(traverse(ordering.sorted(emitters), _))
     }

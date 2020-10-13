@@ -94,7 +94,7 @@ abstract class SpecEmitterContext(val eh: ErrorHandler, refEmitter: RefEmitter, 
 }
 
 trait SpecEmitterFactory {
-  def tagToReferenceEmitter: (DomainElement, Option[String], Seq[BaseUnit]) => TagToReferenceEmitter
+  def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter
 
   def customFacetsEmitter: (FieldEntry, SpecOrdering, Seq[BaseUnit]) => CustomFacetsEmitter
 
@@ -114,11 +114,14 @@ trait SpecEmitterFactory {
 }
 
 trait TagToReferenceEmitter extends PartEmitter {
-  val target: DomainElement
+  val link: DomainElement
 
-  val label: Option[String]
+  val label: Option[String] = link match {
+    case l: Linkable => l.linkLabel.option()
+    case _           => None
+  }
 
-  val referenceLabel: String = label.getOrElse(target.id)
+  val referenceLabel: String = label.getOrElse(link.id)
 }
 
 trait BaseSpecEmitter {

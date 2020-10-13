@@ -129,9 +129,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
     }
 
     private def emitLink(b: PartBuilder): Unit = {
-      annotation.linkTarget.foreach { l =>
-        spec.factory.tagToReferenceEmitter(l, annotation.linkLabel.option(), references).emit(b)
-      }
+      spec.factory.tagToReferenceEmitter(annotation, references).emit(b)
     }
 
     private def emitInline(b: PartBuilder): Unit = {

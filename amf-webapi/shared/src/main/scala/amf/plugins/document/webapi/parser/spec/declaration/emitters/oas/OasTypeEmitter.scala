@@ -38,7 +38,7 @@ case class OasTypeEmitter(shape: Shape,
     }
 
     shape match {
-      case l: Linkable if l.isLink => Seq(OasTagToReferenceEmitter(shape, l.linkLabel.option()))
+      case l: Linkable if l.isLink => Seq(OasTagToReferenceEmitter(l))
       case _ if shape.annotations.contains(classOf[ExternalJsonSchemaShape]) =>
         Seq(ExternalJsonSchemaShapeEmitter(shape))
       case schema: SchemaShape =>

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.DeclaredElement
+import amf.core.annotations.{DeclaredElement, ExternalFragmentRef}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.PartEmitter
 import amf.core.model.document.{BaseUnit, Fragment, Module}
@@ -22,8 +22,7 @@ import org.yaml.model.YType
   *
   */
 case class OasTagToReferenceEmitter(
-    target: DomainElement,
-    label: Option[String]
+    link: DomainElement
 )(implicit override val spec: OasLikeSpecEmitterContext)
     extends OasSpecEmitter
     with TagToReferenceEmitter {
@@ -64,7 +63,7 @@ case class OasTagToReferenceEmitter(
   }
 
   /** Follow links until first declaration or last element in chain */
-  private def follow(): DomainElement = follow(target)
+  private def follow(): DomainElement = follow(link)
 
   @scala.annotation.tailrec
   private def follow(element: DomainElement, seenLinks: Seq[String] = Seq()): DomainElement = {
@@ -81,24 +80,37 @@ case class OasTagToReferenceEmitter(
     }
   }
 
-  override def position(): Position = pos(target.annotations)
+  override def position(): Position = pos(link.annotations)
 }
 
-case class RamlTagToReferenceEmitter(target: DomainElement, label: Option[String], references: Seq[BaseUnit])(
+case class RamlTagToReferenceEmitter(link: DomainElement, references: Seq[BaseUnit])(
     implicit val spec: RamlSpecEmitterContext)
     extends PartEmitter
     with TagToReferenceEmitter {
+
   override def emit(b: PartBuilder): Unit = {
-    references.find {
-      case m: Module   => m.declares.contains(target)
-      case f: Fragment => f.encodes == target
-    } match {
-      case Some(_: Fragment) => spec.ref(b, referenceLabel) // emits with !include
-      case _                 => raw(b, referenceLabel)
+    val referencesFragment = linkReferencesFragment
+
+    if (referencesFragment || link.annotations.contains(classOf[ExternalFragmentRef]))
+      spec.ref(b, referenceLabel) // emits with !include
+    else
+      raw(b, referenceLabel)
+  }
+
+  private def linkReferencesFragment: Boolean = {
+    link match {
+      case l: Linkable =>
+        l.linkTarget.exists { target =>
+          references.exists {
+            case f: Fragment => f.encodes == target
+            case _           => false
+          }
+        }
+      case _ => false
     }
   }
 
-  override def position(): Position = pos(target.annotations)
+  override def position(): Position = pos(link.annotations)
 }
 
 class RamlLocalReferenceEntryEmitter(override val key: String, reference: Linkable)

@@ -10,6 +10,7 @@ traits:
         body:
           application/json:
             type: <<typeName>>
+  externalTrait: !include external-trait.raml
 
 resourceTypes:
   some-rt:
@@ -23,3 +24,4 @@ resourceTypes:
         201:
           headers:
             Location:
+  externalResourceType: !include external-rt.raml

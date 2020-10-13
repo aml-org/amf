@@ -227,8 +227,7 @@ abstract class RamlParameterEmitter(parameter: Parameter, ordering: SpecOrdering
     b.complexEntry(
       emitParameterKey(fs, _),
       b => {
-        parameter.linkTarget.foreach(l =>
-          spec.factory.tagToReferenceEmitter(l, parameter.linkLabel.option(), references).emit(b))
+        spec.factory.tagToReferenceEmitter(parameter, references).emit(b)
       }
     )
   }
@@ -489,8 +488,7 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
     b.complexEntry(
       emitParameterKey(fs, _),
       b => {
-        parameter.linkTarget.foreach(l =>
-          spec.factory.tagToReferenceEmitter(l, parameter.linkLabel.option(), references).emit(b))
+        spec.factory.tagToReferenceEmitter(parameter, references).emit(b)
       }
     )
   }

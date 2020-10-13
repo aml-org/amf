@@ -48,7 +48,7 @@ abstract class AsyncSpecEmitterFactory(override implicit val spec: AsyncSpecEmit
 case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
     extends AsyncSpecEmitterFactory()(spec) {
   //TODO ASYNC complete this
-  override def tagToReferenceEmitter: (DomainElement, Option[String], Seq[BaseUnit]) => TagToReferenceEmitter = ???
+  override def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter = ???
 
   override def customFacetsEmitter: (FieldEntry, SpecOrdering, Seq[BaseUnit]) => CustomFacetsEmitter = ???
 
@@ -73,7 +73,7 @@ abstract class AsyncSpecEmitterContext(eh: ErrorHandler,
   def schemasDeclarationsPath: String
 
   override def localReference(reference: Linkable): PartEmitter =
-    factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
+    factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   override val factory: AsyncSpecEmitterFactory
 

@@ -64,8 +64,7 @@ case class AbstractDeclarationPartEmitter(declaration: AbstractDeclaration,
 
   override def emit(b: PartBuilder): Unit = {
     if (declaration.isLink)
-      declaration.linkTarget.foreach(l =>
-        spec.factory.tagToReferenceEmitter(l, declaration.linkLabel.option(), references).emit(b))
+      spec.factory.tagToReferenceEmitter(declaration, references).emit(b)
     else {
       var emitters =
         Option(declaration.dataNode).map(DataNodeEmitter(_, ordering)(spec.eh).emitters()).getOrElse(Nil)

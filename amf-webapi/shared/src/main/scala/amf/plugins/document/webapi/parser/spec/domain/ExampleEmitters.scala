@@ -130,8 +130,7 @@ abstract class MultipleExampleEmitter(key: String,
         key,
         b => {
           if (examples.head.isLink)
-            examples.head.linkTarget.foreach(l =>
-              spec.factory.tagToReferenceEmitter(l, examples.head.linkLabel.option(), references).emit(b))
+            spec.factory.tagToReferenceEmitter(examples.head, references).emit(b)
           else {
             emit(b)
           }
