@@ -305,13 +305,13 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
       fs.entry(WebApiModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
-      fs.entry(WebApiModel.ContentType).map(f => result += ArrayEmitter("mediaType", f, ordering))
+      fs.entry(WebApiModel.ContentType).map(f => result += spec.arrayEmitter("mediaType", f, ordering))
 
       fs.entry(WebApiModel.Version).map(f => result += RamlScalarEmitter("version", f))
 
       fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("termsOfService".asRamlAnnotation, f))
 
-      fs.entry(WebApiModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
+      fs.entry(WebApiModel.Schemes).map(f => result += spec.arrayEmitter("protocols", f, ordering))
 
       fs.entry(WebApiModel.Provider)
         .map(

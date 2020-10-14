@@ -136,9 +136,9 @@ abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrde
                                                 f.value.value.asInstanceOf[CreativeWork],
                                                 ordering))
 
-    fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
+    fs.entry(OperationModel.Schemes).map(f => result += spec.arrayEmitter("protocols", f, ordering))
 
-    fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes".asRamlAnnotation, f, ordering))
+    fs.entry(OperationModel.Accepts).map(f => result += spec.arrayEmitter("consumes".asRamlAnnotation, f, ordering))
 
     fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces".asRamlAnnotation, f, ordering))
 

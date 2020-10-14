@@ -35,6 +35,9 @@ abstract class SpecEmitterContext(val eh: ErrorHandler, refEmitter: RefEmitter, 
 
   def getRefEmitter: RefEmitter = refEmitter
 
+  def arrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, valuesTag: YType = YType.Str): EntryEmitter =
+    ArrayEmitter(key, f, ordering, forceMultiple = false, valuesTag)
+
   def oasTypePropertyEmitter(typeName: String, shape: Shape): MapEntryEmitter = {
     shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
       case Some(lexicalInfo) =>

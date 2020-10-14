@@ -99,7 +99,7 @@ case class OasOAuth2SettingsEmitters(settings: OAuth2Settings, ordering: SpecOrd
 
     val internals = ListBuffer[EntryEmitter]()
     fs.entry(OAuth2SettingsModel.AuthorizationGrants)
-      .map(f => internals += ArrayEmitter("authorizationGrants", f, ordering, force = true))
+      .map(f => internals += spec.arrayEmitter("authorizationGrants", f, ordering))
 
     settings.fields
       .entry(SettingsModel.AdditionalProperties)
