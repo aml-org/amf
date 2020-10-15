@@ -26,7 +26,8 @@ class AmfEditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean =
     new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
     new MediaTypeResolutionStage(profileName, keepEditingInfo = true),
     new ResponseExamplesResolutionStage(),
-    new PayloadAndParameterResolutionStage(profileName)
+    new PayloadAndParameterResolutionStage(profileName),
+    new AnnotationRemovalStage()
   ) ++ url
 
   override val steps: Seq[ResolutionStage] = baseSteps

@@ -28,7 +28,8 @@ class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPip
     new ResponseExamplesResolutionStage(),
     new PayloadAndParameterResolutionStage(profileName),
     new CleanReferencesStage(),
-    new DeclarationsRemovalStage()
+    new DeclarationsRemovalStage(),
+    new AnnotationRemovalStage()
   )
 
   override val steps: Seq[ResolutionStage] = baseSteps

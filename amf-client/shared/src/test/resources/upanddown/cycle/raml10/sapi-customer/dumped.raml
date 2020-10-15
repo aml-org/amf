@@ -17,67 +17,10 @@ types:
       "200":
         body:
           application/json:
-            example:
-              -
-                id: "1"
-                name: Michelle Ruiz
-                email: mruiz0@qq.com
-                phone: 1-(951)768-8479
-                billingAddress:
-                  line:
-                    - Eastlawn 42
-                  city: Riverside
-                  state: California
-                  postalCode: alberto gomez
-                  country: USA
-                shippingAddress:
-                  line:
-                    - South
-                    - "07"
-                  city: Houston
-                  state: Texas
-                  postalCode: "77045"
-                  country: USA
-              -
-                id: "2"
-                name: Jeremy Adams
-                email: jadams1@instagram.com
-                phone: 1-(216)797-9178
-                billingAddress:
-                  line:
-                    - Eastwood 442
-                  city: Cleveland
-                  state: Ohio
-                  postalCode: "44191"
-                  country: USA
-                shippingAddress:
-                  line:
-                    - Menomonie 5
-                  city: South Bend
-                  state: Indiana
-                  postalCode: "46614"
-                  country: USA
+            example: !include examples/customer_collection_example.raml
             items: objectName
   post:
     body:
       application/json:
         type: objectName
-        example:
-          name: Michelle Ruiz
-          email: mruiz0@qq.com
-          phone: 1-(951)768-8479
-          billingAddress:
-            line:
-              - Eastlawn 42
-            city: Riverside
-            state: California
-            postalCode: "92513"
-            country: USA
-          shippingAddress:
-            line:
-              - South
-              - "07"
-            city: Houston
-            state: Texas
-            postalCode: "77045"
-            country: USA
+        example: !include examples/customer_post_request_example.raml
