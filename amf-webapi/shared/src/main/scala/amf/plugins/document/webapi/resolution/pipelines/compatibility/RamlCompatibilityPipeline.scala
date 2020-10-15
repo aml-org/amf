@@ -4,7 +4,10 @@ import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.raml._
-import amf.plugins.domain.webapi.resolution.stages.RamlCompatiblePayloadAndParameterResolutionStage
+import amf.plugins.domain.webapi.resolution.stages.{
+  AnnotationRemovalStage,
+  RamlCompatiblePayloadAndParameterResolutionStage
+}
 import amf.{ProfileName, RamlProfile}
 
 class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
@@ -28,7 +31,8 @@ class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends Resolutio
     new ResolveLinksWithNonDeclaredTargets(),
     new RamlCompatiblePayloadAndParameterResolutionStage(profileName),
     new SanitizeCustomTypeNames(),
-    new RecursionDetection()
+    new RecursionDetection(),
+    new AnnotationRemovalStage()
   )
 
   override def profileName: ProfileName = RamlProfile

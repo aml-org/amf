@@ -50,7 +50,7 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
           Seq(spec.localReference(shape))
       case s: Shape if s.inherits.exists(_.annotations.contains(classOf[ParsedJSONSchema])) => inheritsEmitters()
       case _ if Option(shape).isDefined && shape.annotations.contains(classOf[ExternalReferenceUrl]) =>
-        Seq(RamlExternalReferenceUrlEmitter(shape))
+        Seq(RamlExternalReferenceUrlEmitter(shape)())
       case shape: AnyShape if shape.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
         Seq(RamlJsonShapeEmitter(shape, ordering, Nil, typeKey = "schema"))
       case scalar: ScalarShape =>

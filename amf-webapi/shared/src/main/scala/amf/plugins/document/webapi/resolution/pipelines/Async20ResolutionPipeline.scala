@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.core.errorhandling.ErrorHandler
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.{
   CleanReferencesStage,
   DeclarationsRemovalStage,
@@ -16,12 +17,9 @@ import amf.plugins.domain.webapi.resolution.stages.async.{
 }
 import amf.{Async20Profile, ProfileName}
 
-class Async20ResolutionPipeline(override val eh: ErrorHandler) extends AmfResolutionPipeline(eh) {
+class Async20ResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
   override def profileName: ProfileName = Async20Profile
-  override def references               = new WebApiReferenceResolutionStage()
-
-  override protected def parameterNormalizationStage: ParametersNormalizationStage =
-    new OpenApiParametersNormalizationStage()
+  def references                        = new WebApiReferenceResolutionStage()
 
   override val steps: Seq[ResolutionStage] = Seq(
     references,
@@ -33,6 +31,7 @@ class Async20ResolutionPipeline(override val eh: ErrorHandler) extends AmfResolu
     new ServerVariableExampleResolutionStage(),
     new PathDescriptionNormalizationStage(profileName),
     new CleanReferencesStage(),
-    new DeclarationsRemovalStage()
+    new DeclarationsRemovalStage(),
+    new AnnotationRemovalStage()
   )
 }

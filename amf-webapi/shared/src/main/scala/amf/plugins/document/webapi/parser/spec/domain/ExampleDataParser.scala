@@ -12,6 +12,7 @@ import org.yaml.model.{YNode, YScalar, YSequence, YType}
 import org.yaml.render.YamlRender
 import amf.core.parser.YNodeLikeOps
 import amf.core.utils.IdCounter
+import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 
 case class ExampleDataParser(node: YNode, example: Example, options: ExampleOptions)(implicit ctx: WebApiContext) {
   def parse(): Example = {
@@ -21,9 +22,11 @@ case class ExampleDataParser(node: YNode, example: Example, options: ExampleOpti
 
     val (targetNode, mutTarget) = node match {
       case mut: MutRef =>
+        val refUrl = mut.origValue.asInstanceOf[YScalar].text
         ctx.declarations.fragments
-          .get(mut.origValue.asInstanceOf[YScalar].text)
+          .get(refUrl)
           .foreach { e =>
+            example.add(ExternalReferenceUrl(refUrl))
             example.withReference(e.encoded.id)
             example.set(ExternalSourceElementModel.Location, e.location.getOrElse(ctx.loc))
           }

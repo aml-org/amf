@@ -37,7 +37,7 @@ case class Raml10TypeEmitter(shape: Shape,
 //            .isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].fromTypeExpression =>
 //        Seq(RamlTypeExpressionEmitter(shape.asInstanceOf[AnyShape]))
       case _ if Option(shape).isDefined && shape.annotations.contains(classOf[ExternalReferenceUrl]) =>
-        Seq(RamlExternalReferenceUrlEmitter(shape))
+        Seq(RamlExternalReferenceUrlEmitter(shape)())
       case l: Linkable if l.isLink =>
         val isForceEntry = forceEntry || l.annotations.contains(classOf[ForceEntry])
         val refEmitter =
