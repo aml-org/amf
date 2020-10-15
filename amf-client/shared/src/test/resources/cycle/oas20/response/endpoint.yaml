@@ -1,4 +1,11 @@
 get:
+  parameters:
+    -
+      $ref: external-param.json#/pathParam
+    -
+      $ref: external-param.json#/bodyParam
+    -
+      $ref: "#/parameters/pathParam"
   summary: Updates a pet in the store with form data
   description: ""
   responses:

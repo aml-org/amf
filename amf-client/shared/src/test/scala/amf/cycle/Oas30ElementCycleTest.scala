@@ -20,7 +20,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
   test("parameter - cookie parameter") {
     renderElement(
       "parameter/parameter-definitions.json",
-      CommonExtractors.declaresIndex(3),
+      CommonExtractors.declaresIndex(2),
       "parameter/cookie-param.yaml",
       OasJsonHint
     )
@@ -29,7 +29,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
   test("parameter - explicit header") {
     renderElement(
       "parameter/parameter-definitions.json",
-      CommonExtractors.declaresIndex(4),
+      CommonExtractors.declaresIndex(5),
       "parameter/explicit-header.yaml",
       OasJsonHint
     )
@@ -48,7 +48,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
   test("parameter - header parameter") {
     renderElement(
       "parameter/parameter-definitions.json",
-      CommonExtractors.declaresIndex(0),
+      CommonExtractors.declaresIndex(3),
       "parameter/header-param.yaml",
       OasJsonHint
     )
@@ -57,7 +57,7 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
   test("parameter - path parameter") {
     renderElement(
       "parameter/parameter-definitions.json",
-      CommonExtractors.declaresIndex(2),
+      CommonExtractors.declaresIndex(4),
       "parameter/path-param.yaml",
       OasJsonHint
     )
@@ -68,6 +68,15 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(1),
       "parameter/query-param.yaml",
+      OasJsonHint
+    )
+  }
+
+  test("parameter - external ref") {
+    renderElement(
+      "parameter/parameter-definitions.json",
+      CommonExtractors.declaresIndex(0),
+      "parameter/external-ref.yaml",
       OasJsonHint
     )
   }
@@ -149,6 +158,15 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-encoding-emission.yaml",
       OasJsonHint,
       directory = upanddownPath
+    )
+  }
+
+  test("response external reference") {
+    renderElement(
+      "response/reference-external-response.json",
+      CommonExtractors.firstResponse,
+      "response/external-response-link-emission.yaml",
+      OasJsonHint
     )
   }
 

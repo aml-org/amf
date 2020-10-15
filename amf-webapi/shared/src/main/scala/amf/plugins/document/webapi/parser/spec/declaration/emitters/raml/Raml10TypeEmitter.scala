@@ -9,6 +9,7 @@ import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ForceEntry, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.domain.shapes.models._
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode

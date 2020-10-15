@@ -1,0 +1,20 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Sample API"
+  },
+  "paths": {
+    "/path": {
+      "get": {
+        "summary": "Updates a pet in the store with form data",
+        "description": "",
+        "responses": {
+          "200": {
+            "$ref": "external-response.json"
+          }
+        }
+      }
+    }
+  }
+}
