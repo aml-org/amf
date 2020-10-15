@@ -90,6 +90,15 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
     )
   }
 
+  test("response - external reference") {
+    renderElement(
+      "response/reference-external-response.json",
+      CommonExtractors.firstResponse,
+      "response/external-response-link-emission.yaml",
+      OasJsonHint
+    )
+  }
+
   test("documentation - creative works") {
     renderElement(
       "apiWithExternalDocs.json",
@@ -148,15 +157,6 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
   }
 
   test("endpoint") {
-    renderElement(
-      "response/response.json",
-      CommonExtractors.firstEndpoint,
-      "response/endpoint.yaml",
-      OasJsonHint
-    )
-  }
-
-  test("payload") {
     renderElement(
       "response/response.json",
       CommonExtractors.firstEndpoint,

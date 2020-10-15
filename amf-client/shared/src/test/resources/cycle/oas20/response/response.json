@@ -4,6 +4,15 @@
     "version": "1.0.0",
     "title": "Swagger Sample API"
   },
+  "parameters": {
+    "pathParam": {
+      "name": "username",
+      "in": "path",
+      "description": "username to fetch",
+      "required": true,
+      "type": "string"
+    }
+  },
   "definitions": {
     "someType": {
       "type": "string"
@@ -12,6 +21,11 @@
   "paths": {
     "/path": {
       "get": {
+        "parameters": [
+          { "$ref": "#/parameters/pathParam"},
+          { "$ref": "external-param.json#/pathParam"},
+          { "$ref": "external-param.json#/bodyParam"}
+        ],
         "summary": "Updates a pet in the store with form data",
         "description": "",
         "responses": {

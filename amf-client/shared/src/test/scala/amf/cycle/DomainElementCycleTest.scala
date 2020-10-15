@@ -2,7 +2,7 @@ package amf.cycle
 
 import amf.client.parse.{DefaultErrorHandler, DefaultParserErrorHandler}
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.parser.SyamlParsedDocument
 import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote.{Hint, Vendor}
@@ -86,6 +86,12 @@ object CommonExtractors {
     case _ => None
   }
 
+  def declaredWithName(name: String)(b: BaseUnit): Option[DomainElement] = b match {
+    case e: DeclaresModel =>
+      e.declares.collectFirst { case e: NamedDomainElement if e.name.is(name) => e }
+    case _ => None
+  }
+
   val webapi: BaseUnit => Option[WebApi] = {
     case e: EncodesModel =>
       Some(e.encodes.asInstanceOf[WebApi])
@@ -108,11 +114,5 @@ object CommonExtractors {
   val firstCallback: BaseUnit => Option[Callback] = firstOperation.andThen(_.flatMap(o => o.callbacks.headOption))
 
   val firstServer: BaseUnit => Option[Server] = webapi.andThen(_.flatMap(_.servers.headOption))
-
-  val namedRootInDeclares: BaseUnit => Option[AnyShape] = {
-    case e: DeclaresModel =>
-      e.declares.collectFirst { case s: AnyShape if s.name.is("root") => s }
-    case _ => None
-  }
 
 }

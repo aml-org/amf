@@ -9,6 +9,7 @@ import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.{
   BodyParameter,
+  ExternalReferenceUrl,
   FormBodyParameter,
   Inferred,
   ParameterNameForPayload,
@@ -27,7 +28,6 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   StringDefaultType,
   _
 }
-
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toOas}
 import amf.plugins.domain.shapes.models.ExampleTracking._
@@ -532,6 +532,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
                 } yield {
                   param.set(ParameterModel.Name, name).adopted(parentId)
                 }
+                oasParameter.domainElement.add(ExternalReferenceUrl(refUrl))
                 oasParameter
               case _ =>
                 val parameter: Parameter = ErrorParameter(refUrl, ref).link(refUrl, Annotations(ref))

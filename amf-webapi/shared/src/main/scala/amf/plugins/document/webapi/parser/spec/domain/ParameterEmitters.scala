@@ -22,6 +22,7 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasSchemaEmitter, OasTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{Raml08TypePartEmitter, Raml10TypeEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
@@ -352,9 +353,8 @@ case class ParameterEmitter(parameter: Parameter,
     )
   }
 
-  override def emit(b: PartBuilder): Unit = {
-    sourceOr(
-      parameter.annotations,
+  override def emit(b: PartBuilder): Unit =
+    handleInlinedRefOr(b, parameter) {
       if (parameter.isLink) emitLink(b)
       else {
         val result = mutable.ListBuffer[EntryEmitter]()
@@ -397,8 +397,7 @@ case class ParameterEmitter(parameter: Parameter,
         if (spec.vendor == Vendor.OAS30) result ++= oas3Emitters(fs)
         b.obj(traverse(ordering.sorted(result), _))
       }
-    )
-  }
+    }
 
   def oas3Emitters(fs: Fields): Seq[EntryEmitter] = {
     val result = mutable.ListBuffer[EntryEmitter]()
@@ -515,19 +514,22 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
     implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  override def emit(b: PartBuilder): Unit = {
-    if (payload.isLink) {
-      spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(payload.linkLabel.value()))
-    } else {
-      payload.schema match {
-        case file: FileShape => fileShape(file, b)
-        case ns: NodeShape if payload.annotations.find(classOf[FormBodyParameter]).isDefined =>
-          if (ns.properties.nonEmpty)
-            ns.properties.foreach { formDataParameter(_, b) } else emptyFormData(payload, b)
-        case _ => defaultPayload(b)
+  override def emit(b: PartBuilder): Unit =
+    handleInlinedRefOr(b, payload) {
+      if (payload.isLink) {
+        spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(payload.linkLabel.value()))
+      } else {
+        payload.schema match {
+          case file: FileShape => fileShape(file, b)
+          case ns: NodeShape if payload.annotations.find(classOf[FormBodyParameter]).isDefined =>
+            if (ns.properties.nonEmpty)
+              ns.properties.foreach {
+                formDataParameter(_, b)
+              } else emptyFormData(payload, b)
+          case _ => defaultPayload(b)
+        }
       }
     }
-  }
 
   private def emitPayloadName(result: mutable.ListBuffer[EntryEmitter]) = {
     payload.fields

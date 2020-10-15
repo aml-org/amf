@@ -1,0 +1,15 @@
+{
+  "description": "A simple string response",
+  "schema": {
+    "type": "string"
+  },
+  "headers": {
+    "X-Rate-Limit-Limit": {
+      "description": "The number of allowed requests in the current period",
+      "type": "integer"
+    }
+  },
+  "examples": {
+    "application/json": "some example"
+  }
+}
