@@ -1,7 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
+import amf.core.annotations.ExternalFragmentRef
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.Annotations
+import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorCallback
@@ -34,7 +36,9 @@ case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String,
           .getOrElse {
             ctx.navigateToRemoteYNode(fullRef) match {
               case Some(navigation) =>
-                Oas30CallbackParser(navigation.remoteNode.as[YMap], adopt, name, rootEntry)(navigation.context).parse()
+                Oas30CallbackParser(navigation.remoteNode.as[YMap], adopt, name, rootEntry)(navigation.context)
+                  .parse()
+                  .map(_.add(ExternalReferenceUrl(fullRef)))
               case None =>
                 ctx.eh.violation(CoreValidations.UnresolvedReference,
                                  "",

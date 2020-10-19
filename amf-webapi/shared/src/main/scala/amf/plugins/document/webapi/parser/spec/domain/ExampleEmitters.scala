@@ -65,14 +65,15 @@ case class Oas3ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(im
 
 case class Oas3ExampleValuesPartEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
-  override def emit(p: PartBuilder): Unit = {
-    if (example.isLink) {
-      val refUrl = OasDefinitions.appendOas3ComponentsPrefix(example.linkLabel.value(), "examples")
-      p.obj(_.entry("$ref", refUrl))
-    } else {
-      p.obj(traverse(ordering.sorted(emitters), _))
+  override def emit(p: PartBuilder): Unit =
+    handleInlinedRefOr(p, example) {
+      if (example.isLink) {
+        val refUrl = OasDefinitions.appendOas3ComponentsPrefix(example.linkLabel.value(), "examples")
+        p.obj(_.entry("$ref", refUrl))
+      } else {
+        p.obj(traverse(ordering.sorted(emitters), _))
+      }
     }
-  }
 
   val emitters: Seq[EntryEmitter] = {
     val results = ListBuffer[EntryEmitter]()

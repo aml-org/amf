@@ -109,16 +109,7 @@
         }
       },
       "extLink": {
-        "operationRef": "#/paths/test",
-        "parameters": {
-          "paramA": "$request.path.id"
-        },
-        "requestBody": "$request.body",
-        "description": "another link",
-        "server": {
-          "url": "http://test.com/serverb",
-          "description": "b description"
-        }
+        "$ref": "definitions.json#/SimpleLink"
       }
     },
     "schemas": {
@@ -176,8 +167,7 @@
         "value": "some example"
       },
       "extExample": {
-        "value": "some example",
-        "description": "this example is found in external file"
+        "$ref": "definitions.json#/SimpleExample"
       }
     },
     "parameters": {
@@ -201,25 +191,7 @@
     },
     "callbacks": {
       "extCallback": {
-        "http://notificationServer2.com?transactionId={$request.body#/id}&email={$request.body}": {
-          "post": {
-            "requestBody": {
-              "description": "Callback payload 2",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "number"
-                  }
-                }
-              }
-            },
-            "responses": {
-              "200": {
-                "description": "webhook 2 successfully processed and no retries will be performed"
-              }
-            }
-          }
-        }
+        "$ref": "definitions.json#/SimpleCallback"
       },
       "myWebhook": {
         "http://notificationServer.com?transactionId={$request.body#/id}&email={$request.body}": {
@@ -261,15 +233,7 @@
         }
       },
       "extRequest": {
-        "description": "description of external request",
-        "required": true,
-        "content": {
-          "application/xml": {
-            "schema": {
-              "type": "integer"
-            }
-          }
-        }
+        "$ref": "simpleRequest.json"
       }
     },
     "headers": {
@@ -280,16 +244,12 @@
         }
       },
       "extHeader": {
-        "description": "Some header defined in external file",
-        "schema": {
-          "type": "string"
-        }
+        "$ref": "definitions.json#/SimpleHeader"
       }
     },
     "securitySchemes": {
       "extSecurityScheme": {
-        "type": "http",
-        "scheme": "string"
+        "$ref": "definitions.json#/SimpleScheme"
       },
       "openIdConnectType": {
         "type": "openIdConnect",

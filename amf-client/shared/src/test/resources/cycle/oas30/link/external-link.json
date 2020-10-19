@@ -1,0 +1,12 @@
+{
+  "operationId": "test",
+  "parameters": {
+    "paramA": "$request.path.id"
+  },
+  "requestBody": "$request.body",
+  "description": "a link",
+  "server": {
+    "url": "http://test.com/servera",
+    "description": "a description"
+  }
+}

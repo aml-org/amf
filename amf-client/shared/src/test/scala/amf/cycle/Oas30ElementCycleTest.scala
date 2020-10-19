@@ -101,6 +101,15 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
     )
   }
 
+  test("example - external reference") {
+    renderElement(
+      "example/reference-external-example.json",
+      CommonExtractors.firstExample,
+      "example/external-example-emission.yaml",
+      OasJsonHint
+    )
+  }
+
   test("link - full templated link") {
     renderElement(
       "basic-links.json",
@@ -111,6 +120,15 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
     )
   }
 
+  test("link - external reference") {
+    renderElement(
+      "link/external-reference-link.json",
+      CommonExtractors.firstTemplatedLink,
+      "link/external-link-emission.yaml",
+      OasJsonHint
+    )
+  }
+
   test("callback - full callback") {
     renderElement(
       "basic-callbacks.json",
@@ -118,6 +136,15 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-callbacks-single-emission.yaml",
       OasJsonHint,
       directory = upanddownPath
+    )
+  }
+
+  test("callback - external callback reference") {
+    renderElement(
+      "callback/callback-external-reference.json",
+      CommonExtractors.firstCallback,
+      "callback/external-reference-emission.yaml",
+      OasJsonHint
     )
   }
 
@@ -148,6 +175,15 @@ class Oas30ElementCycleTest extends DomainElementCycleTest {
       "basic-security-scheme-emission.yaml",
       OasJsonHint,
       directory = upanddownPath
+    )
+  }
+
+  test("security scheme external reference") {
+    renderElement(
+      "security-scheme/reference-external-scheme.json",
+      CommonExtractors.declaresIndex(0),
+      "security-scheme/external-reference-emission.yaml",
+      OasJsonHint
     )
   }
 

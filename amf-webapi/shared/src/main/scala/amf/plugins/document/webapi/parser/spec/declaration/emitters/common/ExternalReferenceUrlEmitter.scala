@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YNode}
 
-// emit !include ref for elements that have been referenced and where inlined during parsing
+// emit ref for elements that have been referenced and where inlined during parsing
 abstract class ExternalReferenceUrlEmitter(element: DomainElement, fallback: => Unit = Unit) extends PartEmitter {
 
   def emitRef(b: PartBuilder, url: String): Unit
