@@ -26,6 +26,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
   AnnotationsEmitter,
   OrphanAnnotationsEmitter
 }
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{
   InfoEmitter,
@@ -291,15 +292,16 @@ case class Oas3RequestBodyPartEmitter(request: Request, ordering: SpecOrdering, 
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  override def emit(b: PartBuilder): Unit = {
-    if (request.isLink) {
-      val refUrl = OasDefinitions.appendOas3ComponentsPrefix(request.linkLabel.value(), "requestBodies")
-      b.obj(_.entry("$ref", refUrl))
-    } else {
-      val result = emitters
-      b.obj(traverse(ordering.sorted(result), _))
+  override def emit(b: PartBuilder): Unit =
+    handleInlinedRefOr(b, request) {
+      if (request.isLink) {
+        val refUrl = OasDefinitions.appendOas3ComponentsPrefix(request.linkLabel.value(), "requestBodies")
+        b.obj(_.entry("$ref", refUrl))
+      } else {
+        val result = emitters
+        b.obj(traverse(ordering.sorted(result), _))
+      }
     }
-  }
 
   val emitters: ListBuffer[EntryEmitter] = {
     val fs     = request.fields

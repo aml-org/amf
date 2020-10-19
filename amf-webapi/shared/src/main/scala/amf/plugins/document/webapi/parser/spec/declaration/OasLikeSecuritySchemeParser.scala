@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.annotations.LexicalInformation
 import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorSecurityScheme
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
@@ -107,7 +108,8 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
       })
       .getOrElse {
         ctx.obtainRemoteYNode(parsedUrl) match {
-          case Some(schemeNode) => ctx.factory.securitySchemeParser(schemeNode, adopt).parse()
+          case Some(schemeNode) =>
+            ctx.factory.securitySchemeParser(schemeNode, adopt).parse().add(ExternalReferenceUrl(parsedUrl))
           case None =>
             ctx.eh.violation(CoreValidations.UnresolvedReference,
                              "",

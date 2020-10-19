@@ -12,6 +12,7 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, Ram
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{Raml10TypePartEmitter, RamlNamedTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.oas.OasDocumentEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.StringArrayTagsEmitter
@@ -225,20 +226,23 @@ case class OasCallbackEmitter(callbacks: Seq[Callback], ordering: SpecOrdering, 
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  override def emit(p: PartBuilder): Unit = {
-    if (callbacks.headOption.exists(_.isLink))
-      OasTagToReferenceEmitter(callbacks.head).emit(p)
-    else
-      p.obj(
-        traverse(callbacks.map { callback =>
-          OasDocumentEmitter.endpointEmitterWithPath(callback.endpoint,
-                                                     callback.expression.value(),
-                                                     ordering,
-                                                     references,
-                                                     spec)
-        }, _)
-      )
-  }
+  override def emit(p: PartBuilder): Unit =
+    callbacks.headOption foreach { firstCallback =>
+      handleInlinedRefOr(p, firstCallback) {
+        if (firstCallback.isLink)
+          OasTagToReferenceEmitter(callbacks.head).emit(p)
+        else
+          p.obj(
+            traverse(callbacks.map { callback =>
+              OasDocumentEmitter.endpointEmitterWithPath(callback.endpoint,
+                                                         callback.expression.value(),
+                                                         ordering,
+                                                         references,
+                                                         spec)
+            }, _)
+          )
+      }
+    }
 
   override def position(): Position = pos(callbacks.headOption.map(_.annotations).getOrElse(Annotations()))
 
