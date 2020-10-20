@@ -614,8 +614,8 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
     ast match {
       case entry: YMapEntry if entry.value.value.isInstanceOf[YMap] =>
         AnyTypeShapeParser(shape, entry.value.value.asInstanceOf[YMap]).parse()
-//      case map: YMap => AnyTypeShapeParser(shape, map).parse()
-      case _ => shape
+      case _ if node.tagType == YType.Map => AnyTypeShapeParser(shape, node.as[YMap]).parse()
+      case _                              => shape
     }
   }
 

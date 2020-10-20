@@ -101,18 +101,35 @@
     {
       "@id": "#2",
       "@type": [
+        "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
         "shacl:Shape",
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "shacl:name": "type",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "User",
       "smaps": {
-        "source-vendor": {
-          "#2": "RAML 1.0"
+        "resolved-link-target": {
+          "#2": "amf://id#2"
+        },
+        "declared-element": {
+          "#2": ""
         },
         "lexical": {
-          "#2": "[(3,0)-(4,0)]"
+          "shacl:name": "[(8,4)-(8,8)]",
+          "#2": "[(8,4)-(11,0)]",
+          "shacl:datatype": "[(9,6)-(11,0)]"
+        },
+        "type-property-lexical-info": {
+          "#2": "[(9,6)-(9,10)]"
+        },
+        "resolved-link": {
+          "#2": "amf://id#3"
         }
       }
     },
@@ -125,7 +142,7 @@
       ],
       "doc:declares": [
         {
-          "@id": "#3"
+          "@id": "#2"
         }
       ],
       "@type": [
@@ -155,35 +172,6 @@
       "smaps": {
         "lexical": {
           "#1": "[(1,0)-(4,0)]"
-        }
-      }
-    },
-    {
-      "@id": "#3",
-      "@type": [
-        "raml-shapes:ScalarShape",
-        "raml-shapes:AnyShape",
-        "shacl:Shape",
-        "raml-shapes:Shape",
-        "doc:DomainElement"
-      ],
-      "shacl:datatype": [
-        {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "shacl:name": "User",
-      "smaps": {
-        "declared-element": {
-          "#3": ""
-        },
-        "lexical": {
-          "shacl:name": "[(8,4)-(8,8)]",
-          "#3": "[(8,4)-(11,0)]",
-          "shacl:datatype": "[(9,6)-(11,0)]"
-        },
-        "type-property-lexical-info": {
-          "#3": "[(9,6)-(9,10)]"
         }
       }
     }
