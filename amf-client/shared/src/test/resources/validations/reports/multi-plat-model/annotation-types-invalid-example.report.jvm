@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/annotation-types-invalid-example.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: expected type: Number, found: String
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/annotation-types-invalid-example.raml#/web-api/apigateway-integration/scalar_1
+  Property: file://amf-client/shared/src/test/resources/validations/annotation-types-invalid-example.raml#/web-api/apigateway-integration/scalar_1
+  Position: Some(LexicalInformation([(9,26)-(9,28)]))
+  Location: file://amf-client/shared/src/test/resources/validations/annotation-types-invalid-example.raml
