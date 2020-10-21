@@ -1,0 +1,16 @@
+#%RAML 1.0
+
+title: The parent schema has 1x $ref to a child schema. The example filename is the same as the parent schema.
+
+types:
+  petSchema: !include pet-a.json
+
+/pets-reports:
+  /pets:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: petSchema
+              example: !include examples/pet-a.json

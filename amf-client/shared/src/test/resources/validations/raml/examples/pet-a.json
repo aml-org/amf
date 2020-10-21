@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "pet-a.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "genus": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "exercisePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "period": {
+          "type": "object",
+          "$ref": "period.json"
+        }
+      }
+    }
+  },
+  "required": [
+    "id"
+  ],
+  "additionalProperties": false
+}
