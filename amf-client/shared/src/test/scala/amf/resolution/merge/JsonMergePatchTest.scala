@@ -157,8 +157,7 @@ trait JsonMergePatchTest
       document
         .as[YMap]
         .key("subscribe")
-        .map(entry =>
-          AsyncOperationParser(entry, method => Operation().withId(id).withMethod(method))(getBogusParserCtx).parse())
+        .map(entry => AsyncOperationParser(entry, (o: Operation) => o.withId(id))(getBogusParserCtx).parse())
         .get
     }
   }

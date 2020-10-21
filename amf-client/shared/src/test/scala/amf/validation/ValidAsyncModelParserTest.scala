@@ -81,6 +81,30 @@ class ValidAsyncModelParserTest extends ValidModelTest {
     checkValid("reference-declared-messages.yaml", Async20Profile)
   }
 
+  test("Reference to external raml data type fragment with includes at root of payload") {
+    checkValid("raml-data-type-references/include-data-type-at-root-of-payload.yaml", Async20Profile)
+  }
+
+  test("Reference to external raml data type fragment with includes inlined in payload") {
+    checkValid("raml-data-type-references/include-data-type-inlined-in-payload.yaml", Async20Profile)
+  }
+
+  test("Referencing raml content with $ref - data type fragment") {
+    checkValid("raml-data-type-references/ref-data-type-fragment.yaml", Async20Profile)
+  }
+
+  test("Referencing raml content with $ref - type defined in library") {
+    checkValid("raml-data-type-references/ref-type-in-library.yaml", Async20Profile)
+  }
+
+  test("Referencing raml content with $ref - type defined in external yaml") {
+    checkValid("raml-data-type-references/ref-external-yaml.yaml", Async20Profile)
+  }
+
+  test("Referencing raml content with $ref - type defined in external json") {
+    checkValid("raml-data-type-references/ref-external-json.yaml", Async20Profile)
+  }
+
   override val basePath: String = "file://amf-client/shared/src/test/resources/validations/async20/"
   override val hint: Hint       = AsyncYamlHint
 }

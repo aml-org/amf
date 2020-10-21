@@ -34,8 +34,8 @@ import scala.util.matching.Regex
 abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterContext)
     extends OasLikeSpecEmitterFactory
     with OasCompactEmitterFactory {
-  override def tagToReferenceEmitter: (DomainElement, Option[String], Seq[BaseUnit]) => TagToReferenceEmitter =
-    (domainElement, label, _) => OasTagToReferenceEmitter(domainElement, label)
+  override def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter =
+    (link, _) => OasTagToReferenceEmitter(link)
 
   override def customFacetsEmitter: (FieldEntry, SpecOrdering, Seq[BaseUnit]) => CustomFacetsEmitter =
     OasCustomFacetsEmitter.apply
@@ -146,7 +146,7 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler,
   def schemasDeclarationsPath: String
 
   override def localReference(reference: Linkable): PartEmitter =
-    factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
+    factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   override val factory: OasSpecEmitterFactory
 

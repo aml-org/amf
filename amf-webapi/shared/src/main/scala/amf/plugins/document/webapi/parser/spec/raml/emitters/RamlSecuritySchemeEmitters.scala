@@ -5,6 +5,7 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DataNode
 import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -74,9 +75,7 @@ abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
   }
 
   private def emitLink(b: PartBuilder): Unit = {
-    securityScheme.linkTarget.foreach { l =>
-      RamlTagToReferenceEmitter(l, securityScheme.linkLabel.option(), references).emit(b)
-    }
+    RamlTagToReferenceEmitter(securityScheme, references).emit(b)
   }
 
   private def emitInline(b: PartBuilder): Unit =
@@ -105,7 +104,11 @@ abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
                                          ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
 
-  override def emit(b: PartBuilder): Unit = b.obj(traverse(ordering.sorted(emitters()), _))
+  override def emit(b: PartBuilder): Unit = {
+    emitLinkOr(securityScheme, b, references) {
+      b.obj(traverse(ordering.sorted(emitters()), _))
+    }
+  }
 
   override def position(): Position = pos(securityScheme.annotations)
 
@@ -203,7 +206,7 @@ case class RamlOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering
     fs.entry(OAuth1SettingsModel.RequestTokenUri).map(f => results += RamlScalarEmitter("requestTokenUri", f))
     fs.entry(OAuth1SettingsModel.AuthorizationUri).map(f => results += RamlScalarEmitter("authorizationUri", f))
     fs.entry(OAuth1SettingsModel.TokenCredentialsUri).map(f => results += RamlScalarEmitter("tokenCredentialsUri", f))
-    fs.entry(OAuth1SettingsModel.Signatures).map(f => results += ArrayEmitter("signatures", f, ordering))
+    fs.entry(OAuth1SettingsModel.Signatures).map(f => results += spec.arrayEmitter("signatures", f, ordering))
     results
   }
 }
@@ -217,7 +220,7 @@ case class RamlOAuth2SettingsEmitters(o2: OAuth2Settings, ordering: SpecOrdering
     o2.flows.headOption.foreach(flowEmitters(_, results))
 
     fs.entry(OAuth2SettingsModel.AuthorizationGrants)
-      .map(f => results += ArrayEmitter("authorizationGrants", f, ordering))
+      .map(f => results += spec.arrayEmitter("authorizationGrants", f, ordering))
 
     results
   }

@@ -1,5 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.declaration
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
@@ -86,6 +86,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
 
     val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
     adopt(copied)
+    copied.add(ExternalFragmentRef(parsedUrl))
     val keyAnn = partKey.map(k => Annotations(k)).getOrElse(Annotations())
     copied.set(SecuritySchemeModel.Name, AmfScalar(name, keyAnn), keyAnn)
   }

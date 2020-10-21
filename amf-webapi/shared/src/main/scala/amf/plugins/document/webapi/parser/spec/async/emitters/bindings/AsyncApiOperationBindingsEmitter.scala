@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.async.emitters.bindings
 
-import amf.core.emitter.BaseEmitters.{ArrayEmitter, ValueEmitter, pos, traverse}
+import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.Shape
 import amf.core.parser.Position
@@ -76,8 +76,14 @@ class KafkaOperationBindingEmitter(binding: KafkaOperationBinding, ordering: Spe
         val fs     = binding.fields
         val result = ListBuffer[EntryEmitter]()
 
-        fs.entry(KafkaOperationBindingModel.GroupId).foreach(f => result += ValueEmitter("groupId", f))
-        fs.entry(KafkaOperationBindingModel.ClientId).foreach(f => result += ValueEmitter("clientId", f))
+        fs.entry(KafkaOperationBindingModel.GroupId)
+          .foreach(
+            f => result += async.AsyncSchemaEmitter("groupId", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
+        fs.entry(KafkaOperationBindingModel.ClientId)
+          .foreach(
+            f => result += async.AsyncSchemaEmitter("clientId", f.element.asInstanceOf[Shape], ordering, Seq())
+          )
         emitBindingVersion(fs, result)
 
         traverse(ordering.sorted(result), emitter)
@@ -122,11 +128,11 @@ class Amqp091OperationBindingEmitter(binding: Amqp091OperationBinding, ordering:
 
         fs.entry(Amqp091OperationBindingModel.Expiration).foreach(f => result += ValueEmitter("expiration", f))
         fs.entry(Amqp091OperationBindingModel.UserId).foreach(f => result += ValueEmitter("userId", f))
-        fs.entry(Amqp091OperationBindingModel.CC).foreach(f => result += ArrayEmitter("cc", f, ordering))
+        fs.entry(Amqp091OperationBindingModel.CC).foreach(f => result += spec.arrayEmitter("cc", f, ordering))
         fs.entry(Amqp091OperationBindingModel.Priority).foreach(f => result += ValueEmitter("priority", f))
         fs.entry(Amqp091OperationBindingModel.DeliveryMode).foreach(f => result += ValueEmitter("deliveryMode", f))
         fs.entry(Amqp091OperationBindingModel.Mandatory).foreach(f => result += ValueEmitter("mandatory", f))
-        fs.entry(Amqp091OperationBindingModel.BCC).foreach(f => result += ArrayEmitter("bcc", f, ordering))
+        fs.entry(Amqp091OperationBindingModel.BCC).foreach(f => result += spec.arrayEmitter("bcc", f, ordering))
         fs.entry(Amqp091OperationBindingModel.ReplyTo).foreach(f => result += ValueEmitter("replyTo", f))
         fs.entry(Amqp091OperationBindingModel.Timestamp).foreach(f => result += ValueEmitter("timestamp", f))
         fs.entry(Amqp091OperationBindingModel.Ack).foreach(f => result += ValueEmitter("ack", f))

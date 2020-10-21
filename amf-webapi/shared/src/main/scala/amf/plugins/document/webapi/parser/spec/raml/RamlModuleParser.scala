@@ -25,7 +25,7 @@ case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiCon
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
       ctx.closedShape(module.id, rootMap, "module")
 
-      val references = ReferencesParser(module, "uses", rootMap, root.references).parse(root.location)
+      val references = ReferencesParser(module, root.location, "uses", rootMap, root.references).parse()
 
       parseDeclarations(root, rootMap)
       val declarationKeys = ctx.getDeclarationKeys
@@ -34,7 +34,7 @@ case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiCon
 
       val declarables = ctx.declarations.declarables()
       if (declarables.nonEmpty) module.withDeclares(declarables)
-      if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
+      if (references.nonEmpty) module.withReferences(references.baseUnitReferences())
     }
 
     ctx.futureDeclarations.resolve()

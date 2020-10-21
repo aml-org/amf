@@ -208,13 +208,13 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
         .map(f => result ++= spec.factory.serversEmitter(api, f, ordering, references).emitters())
 
       fs.entry(WebApiModel.Accepts)
-        .map(f => result += ArrayEmitter("consumes", f, ordering, force = true))
+        .map(f => result += spec.arrayEmitter("consumes", f, ordering))
 
       fs.entry(WebApiModel.ContentType)
-        .map(f => result += ArrayEmitter("produces", f, ordering, force = true))
+        .map(f => result += spec.arrayEmitter("produces", f, ordering))
 
       fs.entry(WebApiModel.Schemes)
-        .map(f => result += ArrayEmitter("schemes", f, ordering))
+        .map(f => result += spec.arrayEmitter("schemes", f, ordering))
 
       fs.entry(WebApiModel.Tags)
         .map(f => result += TagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))

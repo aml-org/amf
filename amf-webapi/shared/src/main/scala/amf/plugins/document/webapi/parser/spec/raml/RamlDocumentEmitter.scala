@@ -13,6 +13,7 @@ import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.remote._
 import amf.core.utils.TSort.tsort
 import amf.core.utils.{AmfStrings, IdCounter}
+import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
@@ -21,7 +22,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{LicenseEmitter, OrganizationEmitter, TagsEmitter}
 import amf.plugins.document.webapi.parser.spec.oas.{OasDeclaredParametersEmitter, OasDeclaredResponsesEmitter}
-import amf.plugins.document.webapi.parser.spec.raml.emitters.RamlSecuritySchemesEmitters
+import amf.plugins.document.webapi.parser.spec.raml.emitters.{NamedPropertyTypeEmitter, RamlSecuritySchemesEmitters}
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
@@ -106,46 +107,6 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       })
     }
     override def position(): Position = properties.headOption.map(p => pos(p.annotations)).getOrElse(ZERO)
-  }
-
-  case class NamedPropertyTypeEmitter(annotation: CustomDomainProperty,
-                                      references: Seq[BaseUnit],
-                                      ordering: SpecOrdering)
-      extends EntryEmitter {
-
-    override def emit(b: EntryBuilder): Unit = {
-      val name = annotation.name.option() match {
-        case Some(n) => n
-        case _ =>
-          spec.eh.violation(ResolutionValidation,
-                            annotation.id,
-                            None,
-                            s"Annotation type without name $annotation",
-                            annotation.position(),
-                            annotation.location())
-          "default-name"
-      }
-      b.entry(name, if (annotation.isLink) emitLink _ else emitInline _)
-    }
-
-    private def emitLink(b: PartBuilder): Unit = {
-      annotation.linkTarget.foreach { l =>
-        spec.factory.tagToReferenceEmitter(l, annotation.linkLabel.option(), references).emit(b)
-      }
-    }
-
-    private def emitInline(b: PartBuilder): Unit = {
-      spec.factory.annotationTypeEmitter(annotation, ordering).emitters() match {
-        case Left(emitters) =>
-          b.obj { e =>
-            traverse(ordering.sorted(emitters), e)
-          }
-        case Right(part) =>
-          part.emit(b)
-      }
-    }
-
-    override def position(): Position = pos(annotation.annotations)
   }
 
   override def declarationsEmitter(): Seq[EntryEmitter] = {
@@ -305,13 +266,13 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
       fs.entry(WebApiModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
-      fs.entry(WebApiModel.ContentType).map(f => result += ArrayEmitter("mediaType", f, ordering))
+      fs.entry(WebApiModel.ContentType).map(f => result += spec.arrayEmitter("mediaType", f, ordering))
 
       fs.entry(WebApiModel.Version).map(f => result += RamlScalarEmitter("version", f))
 
       fs.entry(WebApiModel.TermsOfService).map(f => result += ValueEmitter("termsOfService".asRamlAnnotation, f))
 
-      fs.entry(WebApiModel.Schemes).map(f => result += ArrayEmitter("protocols", f, ordering))
+      fs.entry(WebApiModel.Schemes).map(f => result += spec.arrayEmitter("protocols", f, ordering))
 
       fs.entry(WebApiModel.Provider)
         .map(

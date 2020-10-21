@@ -8,7 +8,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys}
@@ -149,7 +149,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
-    val references = ReferencesParser(document, "uses", map, root.references).parse(root.location)
+    val references = ReferencesParser(document, root.location, "uses", map, root.references).parse()
     parseDeclarations(root, map)
     val declarationKeys = ctx.getDeclarationKeys
     if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
@@ -159,7 +159,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     val declarables = ctx.declarations.declarables()
     if (declarables.nonEmpty) document.withDeclares(declarables)
-    if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
+    if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     ctx.futureDeclarations.resolve()
 
@@ -547,9 +547,14 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
               copied.id = null // we reset the ID so it can be adopted, there's an extra rule where the id is not set
               // because the way they are inserted in the mode later in the parsing
               adopt(copied.withName(key))
+              ctx.link(ast.value).left.foreach(_ => copied.add(ExternalFragmentRef(scalar.text)))
               copied
             case _ =>
-              Raml10TypeParser(ast, shape => shape.adopted(domainProp.id), TypeInfo(isAnnotation = true))
+              Raml10TypeParser(YMapEntryLike(ast.value),
+                               ast.key.as[YScalar].text,
+                               shape => shape.adopted(domainProp.id),
+                               isAnnotation = true,
+                               StringDefaultType)
                 .parse() match {
                 case Some(schema) =>
                   tracking(schema, domainProp.id)
@@ -614,21 +619,27 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
 
       // We parse the node as if it were a data shape, this will also check the closed node condition including the
       // annotation type facets
-      val maybeAnnotationType: Option[YMapEntry] = ast match {
-        case me: YMapEntry => Some(me)
-        case m: YMap       => Some(YMapEntry(YNode("annotationType"), YNode(m)))
-        case _             => None
+      // Only the value (map or scalar) is the shape. The key is the annotation name, and is not part of the type
+      val (maybeAnnotationType, name): (Option[YNode], Option[String]) = ast match {
+        case me: YMapEntry => (Some(me.value), me.key.asScalar.map(_.text))
+        case n: YNode      => (Some(n), None)
+        case m: YMap       => (Some(YNode(m)), None)
+        case _             => (None, None)
       }
 
       maybeAnnotationType match {
         case Some(annotationType) =>
-          Raml10TypeParser(annotationType,
+          Raml10TypeParser(YMapEntryLike(annotationType),
+                           name.getOrElse("schema"),
                            shape => shape.withName("schema").adopted(custom.id),
-                           TypeInfo(isAnnotation = true))
+                           isAnnotation = true,
+                           StringDefaultType)
             .parse()
             .foreach({ shape =>
               tracking(shape, custom.id)
-              custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(ast))
+              custom.set(CustomDomainPropertyModel.Schema,
+                         shape,
+                         maybeAnnotationType.map(Annotations(_)).getOrElse(Annotations()))
             })
 
           map.key(

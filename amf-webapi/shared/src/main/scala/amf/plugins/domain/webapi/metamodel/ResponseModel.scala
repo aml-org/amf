@@ -16,7 +16,7 @@ object ResponseModel extends DomainElementModel with KeyField with OptionalField
   val StatusCode = Field(
     Str,
     ApiContract + "statusCode",
-    ModelDoc(ModelVocabularies.ApiContract, "status code", "HTTP status code returned by a response"))
+    ModelDoc(ModelVocabularies.ApiContract, "statusCode", "HTTP status code returned by a response"))
 
   val Links = Field(
     Array(TemplatedLinkModel),

@@ -144,9 +144,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
     )
   }
 
-  def emitLink(b: PartBuilder): Unit = {
-    OasTagToReferenceEmitter(message, message.linkLabel.option()).emit(b)
-  }
+  def emitLink(b: PartBuilder): Unit = OasTagToReferenceEmitter(message).emit(b)
 
   def emitTraits(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit = {
     result += AsyncTraitMessagesEmitter(f.arrayValues[Message], ordering)

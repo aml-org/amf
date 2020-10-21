@@ -159,7 +159,7 @@ case class OasNamedPropertyTypeEmitter(annotationType: CustomDomainProperty, ord
         .get,
       b => {
         if (annotationType.isLink)
-          OasTagToReferenceEmitter(annotationType, annotationType.linkLabel.option()).emit(b)
+          OasTagToReferenceEmitter(annotationType).emit(b)
         else
           spec.factory.annotationTypeEmitter(annotationType, ordering).emitters() match {
             case Left(emitters) =>

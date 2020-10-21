@@ -163,10 +163,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_1"
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_2"
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_1"
         }
       ]
     },
@@ -186,9 +189,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(10,59)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,25)-(4,3)]"
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(1,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_0",
@@ -196,7 +199,17 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,4)-(3,25)]"
     },
     {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,25)-(4,3)]"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml",
+      "http://a.ml/vocabularies/document#references": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-traits.json"
+        }
+      ],
       "@type": [
         "http://a.ml/vocabularies/document#Document",
         "http://a.ml/vocabularies/document#Fragment",
@@ -206,8 +219,30 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "2.1.1",
+      "http://a.ml/vocabularies/document#version": "2.1.2",
       "http://a.ml/vocabularies/document#root": true
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-traits.json",
+      "@type": [
+        "http://a.ml/vocabularies/document#ExternalFragment",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-traits.json#/external"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.2",
+      "http://a.ml/vocabularies/document#root": false
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-traits.json#/external",
+      "@type": [
+        "http://a.ml/vocabularies/document#ExternalDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#raw": "{\n  \"firstOperationTrait\": {\n    \"summary\": \"aSummary\"\n  }\n}",
+      "http://a.ml/vocabularies/core#mediaType": "application/json"
     }
   ]
 }

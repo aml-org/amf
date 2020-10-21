@@ -10,21 +10,21 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml#/declarations/securitySchemes/some/settings/oauth2/authorizationCode
   Property: 
-  Position: None
-  Location: 
+  Position: Some(LexicalInformation([(10,6)-(20,37)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml
 
 - Source: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
   Message: Missing tokenUrl for clientCredentials flow
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml#/declarations/securitySchemes/some/settings/oauth2/clientCredentials
   Property: 
-  Position: None
-  Location: 
+  Position: Some(LexicalInformation([(10,6)-(20,37)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml
 
 - Source: http://a.ml/vocabularies/amf/parser#missing-oauth-flow-field
   Message: Missing tokenUrl for password flow
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml#/declarations/securitySchemes/some/settings/oauth2/password
   Property: 
-  Position: None
-  Location: 
+  Position: Some(LexicalInformation([(10,6)-(20,37)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/required-oauth2-tokenUrl.yaml

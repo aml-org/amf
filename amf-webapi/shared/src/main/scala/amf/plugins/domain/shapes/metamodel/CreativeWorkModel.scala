@@ -28,7 +28,7 @@ object CreativeWorkModel extends DomainElementModel with LinkableElementModel wi
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Core,
-    "Creative Work",
+    "CreativeWork",
     "The most generic kind of creative work, including books, movies, photographs, software programs, etc."
   )
 }

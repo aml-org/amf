@@ -1970,6 +1970,10 @@ declare module 'amf-client-js' {
   namespace render {
     export class RenderOptions {
 
+      withCompactedEmission: RenderOptions
+      withoutCompactedEmission: RenderOptions
+      isWithCompactedEmission: boolean
+
       withSourceMaps: RenderOptions
       withoutSourceMaps: RenderOptions
       isWithSourceMaps: boolean

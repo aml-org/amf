@@ -25,7 +25,7 @@ case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext) exten
     module.set(BaseUnitModel.Location, root.location)
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>
-      val references = ReferencesParser(module, "uses".asOasExtension, rootMap, root.references).parse(root.location)
+      val references = ReferencesParser(module, root.location, "uses".asOasExtension, rootMap, root.references).parse()
 
       Oas2DocumentParser(root).parseDeclarations(root, rootMap)
       val declarationKeys = ctx.getDeclarationKeys
@@ -35,7 +35,7 @@ case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext) exten
 
       val declarable = ctx.declarations.declarables()
       if (declarable.nonEmpty) module.withDeclares(declarable)
-      if (references.references.nonEmpty) module.withReferences(references.solvedReferences())
+      if (references.nonEmpty) module.withReferences(references.baseUnitReferences())
     }
 
     module

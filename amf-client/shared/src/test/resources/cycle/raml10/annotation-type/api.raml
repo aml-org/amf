@@ -1,0 +1,15 @@
+#%RAML 1.0
+
+title: test with references
+version: "0.1"
+uses:
+  someLib: lib.raml
+
+annotationTypes:
+  annotA:
+    displayName: some name
+    type: nil | string
+
+  annotB: !include external-annotation-type.raml
+
+  annotC: someLib.annotationInLib

@@ -118,7 +118,7 @@
       ],
       "doc:reference-id": [
         {
-          "@id": "#4"
+          "@id": "#2"
         }
       ],
       "smaps": {
@@ -155,7 +155,7 @@
       },
       "doc:reference-id": [
         {
-          "@id": "#2"
+          "@id": "#4"
         }
       ],
       "doc:location": "file://amf-client/shared/src/test/resources/resolution/recursive-tuple/example.json",
@@ -698,7 +698,7 @@
       "doc:encodes": {
         "@id": "#5"
       },
-      "doc:version": "2.1.1",
+      "doc:version": "2.1.2",
       "doc:root": true
     },
     {
@@ -711,7 +711,7 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "2.1.1",
+      "doc:version": "2.1.2",
       "doc:root": false
     },
     {
@@ -724,7 +724,7 @@
       "doc:encodes": {
         "@id": "#4"
       },
-      "doc:version": "2.1.1",
+      "doc:version": "2.1.2",
       "doc:root": false
     },
     {
@@ -733,7 +733,7 @@
         "doc:ExternalDomainElement",
         "doc:DomainElement"
       ],
-      "doc:raw": "[{\n  \"name\": \"Astro\",\n  \"pet\": {\n    \"name\": \"Netwon\",\n    \"age\": 55,\n    \"owners\": [\"Astro\", \"Boy\"]\n  }\n}]",
+      "doc:raw": "{\n  \"type\": \"array\",\n  \"items\": [{\n    \"$ref\": \"#/definitions/Person\"\n  },{\n    \"$ref\": \"#/definitions/Animal\"\n  }],\n  \"definitions\": {\n    \"Person\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"pet\": {\n          \"$ref\": \"#/definitions/Animal\"\n        }\n      }\n    },\n    \"Animal\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"age\": {\n          \"type\": \"integer\"\n        },\n        \"owners\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/definitions/Person\"\n          }\n        }\n      }\n    }\n  }\n}",
       "core:mediaType": "application/json"
     },
     {
@@ -742,7 +742,7 @@
         "doc:ExternalDomainElement",
         "doc:DomainElement"
       ],
-      "doc:raw": "{\n  \"type\": \"array\",\n  \"items\": [{\n    \"$ref\": \"#/definitions/Person\"\n  },{\n    \"$ref\": \"#/definitions/Animal\"\n  }],\n  \"definitions\": {\n    \"Person\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"pet\": {\n          \"$ref\": \"#/definitions/Animal\"\n        }\n      }\n    },\n    \"Animal\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"age\": {\n          \"type\": \"integer\"\n        },\n        \"owners\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/definitions/Person\"\n          }\n        }\n      }\n    }\n  }\n}",
+      "doc:raw": "[{\n  \"name\": \"Astro\",\n  \"pet\": {\n    \"name\": \"Netwon\",\n    \"age\": 55,\n    \"owners\": [\"Astro\", \"Boy\"]\n  }\n}]",
       "core:mediaType": "application/json"
     }
   ],

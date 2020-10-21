@@ -34,11 +34,11 @@ behavior that is not occurring.
 
 We use [Scalafmt](https://scalameta.org/scalafmt/) to format our code! Please format your code before opening a Pull Request.
 
-### Tests aren’t optional
-Any bugfix that doesn’t include a test proving the existence of the bug being fixed, may be suspect. 
-Same for new features that can’t prove they actually work.
- 
-Writing tests before the implementation is strongly encouraged.
+### Running and writing tests
+
+**Important**: Please include tests with any code contributions
+
+Writing tests before the implementation is strongly encouraged. 
 
 To run tests:
 ```sh
@@ -47,10 +47,16 @@ $ sbt clientJVM/testOnly // to run tests only for the JVM platform
 $ sbt clientJS/testOnly // to run tests only for the JS platform
 ```
 
+Code contributions must comply with a minimum of 80% coverage rate. 
+
+To run a coverage report of the whole project:
+```sh
+sbt coverage test coverageReport
+```
+
 #### Travis CI
 
-A Travis CI script is available for you to run Travis. To be able to do this you must have a Travis account and 
-setup Travis for your fork in your account.
+Travis CI will automatically run tests upon creation of your PR, please make sure all tests pass before someone can review you contribution.
 
 #### Test coverage
 

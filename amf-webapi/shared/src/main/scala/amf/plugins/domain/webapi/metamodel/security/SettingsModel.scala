@@ -20,7 +20,7 @@ trait SettingsModel extends DomainElementModel
 object SettingsModel extends SettingsModel {
   val AdditionalProperties = Field(DataNodeModel,
                                    Security + "additionalProperties",
-                                   ModelDoc(ModelVocabularies.Security, "additional properties", ""))
+                                   ModelDoc(ModelVocabularies.Security, "additionalProperties", ""))
 
   override val `type`: List[ValueType] = List(Security + "Settings") ++ DomainElementModel.`type`
 
@@ -38,13 +38,13 @@ object SettingsModel extends SettingsModel {
 object OAuth1SettingsModel extends SettingsModel {
 
   val RequestTokenUri =
-    Field(Str, Security + "requestTokenUri", ModelDoc(ModelVocabularies.Security, "request token URI", ""))
+    Field(Str, Security + "requestTokenUri", ModelDoc(ModelVocabularies.Security, "requestTokenURI", ""))
 
   val AuthorizationUri =
-    Field(Str, Security + "authorizationUri", ModelDoc(ModelVocabularies.Security, "authorization URI", ""))
+    Field(Str, Security + "authorizationUri", ModelDoc(ModelVocabularies.Security, "authorizationURI", ""))
 
   val TokenCredentialsUri =
-    Field(Str, Security + "tokenCredentialsUri", ModelDoc(ModelVocabularies.Security, "token credentials URI", ""))
+    Field(Str, Security + "tokenCredentialsUri", ModelDoc(ModelVocabularies.Security, "tokenCredentialsURI", ""))
 
   val Signatures = Field(Array(Str), Security + "signature", ModelDoc(ModelVocabularies.Security, "signature", ""))
 
@@ -57,7 +57,7 @@ object OAuth1SettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "OAuth1 Settings",
+    "OAuth1Settings",
     "Settings for an OAuth1 security scheme"
   )
 }
@@ -65,7 +65,7 @@ object OAuth1SettingsModel extends SettingsModel {
 object OAuth2SettingsModel extends SettingsModel {
 
   val AuthorizationGrants =
-    Field(Array(Str), Security + "authorizationGrant", ModelDoc(ModelVocabularies.Security, "authorization grant", ""))
+    Field(Array(Str), Security + "authorizationGrant", ModelDoc(ModelVocabularies.Security, "authorizationGrant", ""))
 
   val Flows = Field(Array(OAuth2FlowModel), Security + "flows", ModelDoc(ModelVocabularies.Security, "flows", ""))
 
@@ -78,7 +78,7 @@ object OAuth2SettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "OAuth2 Settings",
+    "OAuth2Settings",
     "Settings for an OAuth2 security scheme"
   )
 }
@@ -97,7 +97,7 @@ object ApiKeySettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "API Key Settings",
+    "APIKeySettings",
     "Settings for an API Key security scheme"
   )
 }
@@ -116,7 +116,7 @@ object HttpApiKeySettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "Http API Key Settings",
+    "HttpAPIKeySettings",
     "Settings for an Http API Key security scheme"
   )
 }
@@ -125,7 +125,7 @@ object HttpSettingsModel extends SettingsModel {
 
   val Scheme = Field(Str, Security + "scheme", ModelDoc(ModelVocabularies.Security, "scheme", ""))
 
-  val BearerFormat = Field(Str, Security + "bearerFormat", ModelDoc(ModelVocabularies.Security, "bearer format", ""))
+  val BearerFormat = Field(Str, Security + "bearerFormat", ModelDoc(ModelVocabularies.Security, "bearerFormat", ""))
 
   override val `type`: List[ValueType] = List(Security + "HttpSettings") ++ SettingsModel.`type`
 
@@ -135,14 +135,14 @@ object HttpSettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "HTTP Settings",
+    "HttpSettings",
     "Settings for an HTTP security scheme"
   )
 }
 
 object OpenIdConnectSettingsModel extends SettingsModel {
 
-  val Url = Field(Str, Security + "openIdConnectUrl", ModelDoc(ModelVocabularies.Security, "OpenID connect URL", ""))
+  val Url = Field(Str, Security + "openIdConnectUrl", ModelDoc(ModelVocabularies.Security, "openIdConnectUrl", ""))
 
   val Scopes = Field(Array(ScopeModel), Security + "scope", ModelDoc(ModelVocabularies.Security, "scope", ""))
 
@@ -154,7 +154,7 @@ object OpenIdConnectSettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "OpenID Settings",
+    "OpenIDSettings",
     "Settings for an OpenID security scheme"
   )
 }

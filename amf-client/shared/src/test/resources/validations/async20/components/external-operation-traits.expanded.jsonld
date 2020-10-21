@@ -89,15 +89,15 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait"
+                                "@value": "http://a.ml/vocabularies/core#name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(2,25)-(4,3)]"
+                                "@value": "[(1,0)-(1,0)]"
                               }
                             ]
                           },
@@ -111,6 +111,19 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(3,4)-(3,25)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/components/external-operation-traits.yaml#/web-api/end-points/someChannel/publish/external-traits.json%23%2FfirstOperationTrait"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(2,25)-(4,3)]"
                               }
                             ]
                           }
@@ -276,12 +289,51 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.1"
+        "@value": "2.1.2"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#references": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-traits.json",
+        "@type": [
+          "http://a.ml/vocabularies/document#ExternalFragment",
+          "http://a.ml/vocabularies/document#Fragment",
+          "http://a.ml/vocabularies/document#Unit"
+        ],
+        "http://a.ml/vocabularies/document#encodes": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/external-traits.json#/external",
+            "@type": [
+              "http://a.ml/vocabularies/document#ExternalDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document#raw": [
+              {
+                "@value": "{\n  \"firstOperationTrait\": {\n    \"summary\": \"aSummary\"\n  }\n}"
+              }
+            ],
+            "http://a.ml/vocabularies/core#mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#version": [
+          {
+            "@value": "2.1.2"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
+          }
+        ]
       }
     ]
   }

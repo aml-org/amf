@@ -57,7 +57,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       fragment
     }
 
-    val references = ReferencesParser(fragment, "uses".asOasExtension, map, root.references).parse(root.location)
+    val references = ReferencesParser(fragment, root.location, "uses".asOasExtension, map, root.references).parse()
 
     fragment
       .withLocation(root.location)
@@ -65,7 +65,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
     UsageParser(map, fragment).parse()
 
-    if (references.references.nonEmpty) fragment.withReferences(references.solvedReferences())
+    if (references.nonEmpty) fragment.withReferences(references.baseUnitReferences())
     fragment
   }
 

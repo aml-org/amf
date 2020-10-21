@@ -2,8 +2,11 @@ package amf.plugins.document.webapi
 
 import amf.core.emitter.RenderOptions
 import amf.core.model.document._
+import amf.core.parser.DefaultReferenceCollector
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+
+import scala.collection.mutable
 
 trait OasLikePlugin extends BaseWebApiPlugin {
 
@@ -13,19 +16,14 @@ trait OasLikePlugin extends BaseWebApiPlugin {
   // right positions of the AST.
   // We will try to promote these external fragments to data type fragments instead of just inlining them.
   def promoteFragments(unit: BaseUnit, ctx: OasLikeWebApiContext): BaseUnit = {
-    var oldReferences = unit.references.foldLeft(Map[String, BaseUnit]()) {
-      case (acc: Map[String, BaseUnit], e: BaseUnit) =>
-        acc + (e.location().getOrElse(e.id) -> e)
-    }
+    val collector = DefaultReferenceCollector[BaseUnit]()
+    unit.references.foreach(baseUnit => collector += (baseUnit.location().getOrElse(baseUnit.id), baseUnit))
     ctx.declarations.promotedFragments.foreach { promoted =>
       val key = promoted.location().getOrElse(promoted.id)
-      oldReferences = oldReferences + (key -> promoted)
+      collector += (key, promoted)
     }
-
-    if (oldReferences.values.nonEmpty)
-      unit.withReferences(oldReferences.values.toSeq)
-    else
-      unit
+    if (collector.nonEmpty) unit.withReferences(collector.references())
+    else unit
   }
 
 }

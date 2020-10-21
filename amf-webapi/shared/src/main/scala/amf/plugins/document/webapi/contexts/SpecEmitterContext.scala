@@ -35,6 +35,9 @@ abstract class SpecEmitterContext(val eh: ErrorHandler, refEmitter: RefEmitter, 
 
   def getRefEmitter: RefEmitter = refEmitter
 
+  def arrayEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, valuesTag: YType = YType.Str): EntryEmitter =
+    ArrayEmitter(key, f, ordering, forceMultiple = false, valuesTag)
+
   def oasTypePropertyEmitter(typeName: String, shape: Shape): MapEntryEmitter = {
     shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
       case Some(lexicalInfo) =>
@@ -91,7 +94,7 @@ abstract class SpecEmitterContext(val eh: ErrorHandler, refEmitter: RefEmitter, 
 }
 
 trait SpecEmitterFactory {
-  def tagToReferenceEmitter: (DomainElement, Option[String], Seq[BaseUnit]) => TagToReferenceEmitter
+  def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter
 
   def customFacetsEmitter: (FieldEntry, SpecOrdering, Seq[BaseUnit]) => CustomFacetsEmitter
 
@@ -111,11 +114,25 @@ trait SpecEmitterFactory {
 }
 
 trait TagToReferenceEmitter extends PartEmitter {
-  val target: DomainElement
+  val link: DomainElement
 
-  val label: Option[String]
+  val label: Option[String] = link match {
+    case l: Linkable => l.linkLabel.option()
+    case _           => None
+  }
 
-  val referenceLabel: String = label.getOrElse(target.id)
+  val referenceLabel: String = label.getOrElse(link.id)
+}
+
+object ReferenceEmitterHelper {
+
+  def emitLinkOr(l: DomainElement with Linkable, b: PartBuilder, refs: Seq[BaseUnit] = Nil)(fallback: => Unit)(
+      implicit spec: SpecEmitterContext): Unit = {
+    if (l.isLink)
+      spec.factory.tagToReferenceEmitter(l, refs).emit(b)
+    else
+      fallback
+  }
 }
 
 trait BaseSpecEmitter {

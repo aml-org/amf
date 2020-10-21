@@ -154,7 +154,7 @@ abstract class OasEndpointParser(entry: YMapEntry, producer: String => EndPoint,
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, endpoint.withOperation)
+          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o.adopted(endpoint.id))
           operations += operationParser.parse()
         }
         endpoint.set(EndPointModel.Operations, AmfArray(operations))
@@ -228,7 +228,7 @@ case class AsyncEndpointParser(entry: YMapEntry, producer: String => EndPoint, c
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, endpoint.withOperation)
+          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o.adopted(endpoint.id))
           operations += operationParser.parse()
         }
         endpoint.set(EndPointModel.Operations, AmfArray(operations))

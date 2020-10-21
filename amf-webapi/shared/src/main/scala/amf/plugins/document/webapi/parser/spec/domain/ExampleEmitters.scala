@@ -7,6 +7,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.utils._
+import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.webapi.contexts.emitter.oas.Oas3SpecEmitterFactory
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
@@ -129,13 +130,7 @@ abstract class MultipleExampleEmitter(key: String,
       b.entry(
         key,
         b => {
-          if (examples.head.isLink)
-            examples.head.linkTarget.foreach(l =>
-              spec.factory.tagToReferenceEmitter(l, examples.head.linkLabel.option(), references).emit(b))
-          else {
-            emit(b)
-          }
-
+          emitLinkOr(examples.head, b, references) { emit(b) }
         }
       )
     }

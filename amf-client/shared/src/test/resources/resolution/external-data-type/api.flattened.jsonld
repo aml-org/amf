@@ -273,14 +273,19 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
-      "sourcemaps:auto-generated-name": [
+      "sourcemaps:external-fragment-ref": [
         {
-          "@id": "./type.raml#/type/link--1501856539/source-map/auto-generated-name/element_0"
+          "@id": "./type.raml#/type/link--1501856539/source-map/external-fragment-ref/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
           "@id": "./type.raml#/type/link--1501856539/source-map/lexical/element_0"
+        }
+      ],
+      "sourcemaps:auto-generated-name": [
+        {
+          "@id": "./type.raml#/type/link--1501856539/source-map/auto-generated-name/element_0"
         }
       ]
     },
@@ -300,14 +305,19 @@
       "sourcemaps:value": "[(7,8)-(8,0)]"
     },
     {
-      "@id": "./type.raml#/type/link--1501856539/source-map/auto-generated-name/element_0",
+      "@id": "./type.raml#/type/link--1501856539/source-map/external-fragment-ref/element_0",
       "sourcemaps:element": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/link--1501856539",
-      "sourcemaps:value": ""
+      "sourcemaps:value": "type.raml"
     },
     {
       "@id": "./type.raml#/type/link--1501856539/source-map/lexical/element_0",
       "sourcemaps:element": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/link--1501856539",
       "sourcemaps:value": "[(7,14)-(7,32)]"
+    },
+    {
+      "@id": "./type.raml#/type/link--1501856539/source-map/auto-generated-name/element_0",
+      "sourcemaps:element": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/link--1501856539",
+      "sourcemaps:value": ""
     },
     {
       "@id": "",
@@ -325,7 +335,7 @@
       "doc:encodes": {
         "@id": "#/web-api"
       },
-      "doc:version": "2.1.1",
+      "doc:version": "2.1.2",
       "doc:root": true
     },
     {
@@ -338,7 +348,7 @@
       "doc:encodes": {
         "@id": "./type.raml#/type"
       },
-      "doc:version": "2.1.1",
+      "doc:version": "2.1.2",
       "doc:root": false,
       "sourcemaps:sources": [
         {

@@ -48,15 +48,16 @@ sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTes
                          golden: Option[String] = None,
                          profile: ProfileName = defaultProfile,
                          profileFile: Option[String] = None,
-                         overridedHint: Option[Hint] = None): Future[Assertion] = {
+                         overridedHint: Option[Hint] = None,
+                         directory: String = basePath): Future[Assertion] = {
     val eh        = DefaultParserErrorHandler.withRun()
     val finalHint = overridedHint.getOrElse(hint)
     for {
       validation <- Validation(platform)
       _ <- if (profileFile.isDefined)
-        validation.loadValidationProfile(basePath + profileFile.get, DefaultParserErrorHandler.withRun())
+        validation.loadValidationProfile(directory + profileFile.get, DefaultParserErrorHandler.withRun())
       else Future.unit
-      model  <- AMFCompiler(basePath + api, platform, finalHint, eh = eh).build()
+      model  <- AMFCompiler(directory + api, platform, finalHint, eh = eh).build()
       report <- validation.validate(model, profile)
       r      <- handleReport(report, golden.map(processGolden))
     } yield {

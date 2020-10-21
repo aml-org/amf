@@ -2,14 +2,20 @@ package amf.plugins.document.webapi.parser.spec.async
 import amf.core.Root
 import amf.core.annotations.{DeclaredElement, SourceVendor}
 import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.document.Document
+import amf.core.model.document.{Document, Fragment, Module}
+import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
+import amf.core.parser.{Annotations, ParsedReference, Reference, ScalarNode, SyamlParsedDocument, YMapOps}
 import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.async.parser._
 import amf.plugins.document.webapi.parser.spec.common._
-import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  AsycnReferencesParser,
+  OasLikeCreativeWorkParser,
+  OasLikeTagsParser,
+  ReferencesParser
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.domain.binding.{
   AsyncChannelBindingsParser,
@@ -42,6 +48,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
+    val references = AsycnReferencesParser(root.references).parse()
     parseDeclarations(map)
     val declarationKeys = ctx.getDeclarationKeys
     if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
@@ -53,6 +60,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
     val declarable = ctx.declarations.declarables()
     if (declarable.nonEmpty) document.withDeclares(declarable)
+    if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     document
   }
@@ -155,8 +163,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       entry => {
         ctx.addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         entry.value.as[YMap].entries.foreach { entry =>
-          val produceOperation = (name: String) => Operation().withName(name).withMethod(name).adopted(parent)
-          val operation        = AsyncOperationParser(entry, produceOperation, isTrait = true).parse()
+          val adopt     = (o: Operation) => o.adopted(parent)
+          val operation = AsyncOperationParser(entry, adopt, isTrait = true).parse()
           operation.add(DeclaredElement())
           ctx.declarations += operation
         }

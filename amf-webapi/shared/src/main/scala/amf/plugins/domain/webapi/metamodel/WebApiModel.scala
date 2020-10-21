@@ -18,7 +18,7 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
   val Servers =
     Field(Array(ServerModel),
           ApiContract + "server",
-          ModelDoc(ModelVocabularies.ApiContract, "server", "server information"))
+          ModelDoc(ModelVocabularies.ApiContract, "server", "Server information"))
 
   val Accepts = Field(Array(Str),
                       ApiContract + "accepts",
@@ -27,7 +27,7 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
   val ContentType = Field(
     Array(Str),
     ApiContract + "contentType",
-    ModelDoc(ModelVocabularies.ApiContract, "content type", "Media types returned by a API response"))
+    ModelDoc(ModelVocabularies.ApiContract, "contentType", "Media types returned by a API response"))
 
   val Identifier = Field(
     Str,
@@ -48,7 +48,7 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
   val TermsOfService = Field(
     Str,
     Core + "termsOfService",
-    ModelDoc(ModelVocabularies.Core, "terms of service", "Terms and conditions when using the API"))
+    ModelDoc(ModelVocabularies.Core, "termsOfService", "Terms and conditions when using the API"))
 
   val Provider = Field(
     OrganizationModel,
@@ -98,7 +98,7 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiContract,
-    "Web API",
+    "WebAPI",
     "Top level element describing a HTTP API"
   )
 }

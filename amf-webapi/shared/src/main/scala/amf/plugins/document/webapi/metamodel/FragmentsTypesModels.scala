@@ -20,7 +20,7 @@ object FragmentsTypesModels {
 
     override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.ApiContract,
-      "Documentation Item Fragment",
+      "DocumentationItemFragment",
       "Fragment encoding a RAML documentation item"
     )
   }
@@ -35,7 +35,7 @@ object FragmentsTypesModels {
 
     override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Shapes,
-      "Data Type Fragment",
+      "DataTypeFragment",
       "Fragment encoding a RAML data type"
     )
   }
@@ -50,7 +50,7 @@ object FragmentsTypesModels {
 
     override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.ApiContract,
-      "Named Example Fragment",
+      "NamedExampleFragment",
       "Fragment encoding a RAML named example"
     )
   }
@@ -65,7 +65,7 @@ object FragmentsTypesModels {
 
     override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.ApiContract,
-      "Resource Type Fragment",
+      "ResourceTypeFragment",
       "Fragment encoding a RAML resource type"
     )
   }
@@ -80,7 +80,7 @@ object FragmentsTypesModels {
 
     override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.ApiContract,
-      "Trait Fragment",
+      "TraitFragment",
       "Fragment encoding a RAML trait"
     )
   }
@@ -89,13 +89,14 @@ object FragmentsTypesModels {
 
     override val fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(ApiContract + "AnnotationTypeDeclarationFragment") ++ FragmentModel.`type`
+    override val `type`
+      : List[ValueType] = List(ApiContract + "AnnotationTypeDeclarationFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = AnnotationTypeDeclarationFragment()
 
     override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.ApiContract,
-      "Annotation Type Fragment",
+      "AnnotationTypeFragment",
       "Fragment encoding a RAML annotation type"
     )
   }
@@ -109,7 +110,7 @@ object FragmentsTypesModels {
 
     override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Security,
-      "Security Scheme Fragment",
+      "SecuritySchemeFragment",
       "Fragment encoding a RAML security scheme"
     )
   }

@@ -30,10 +30,9 @@ object OperationModel
                      ApiContract + "method",
                      ModelDoc(ModelVocabularies.ApiContract, "method", "HTTP method required to invoke the operation"))
 
-  val OperationId = Field(
-    Str,
-    ApiContract + "operationId",
-    ModelDoc(ModelVocabularies.ApiContract, "operation ID", "Identifier of the target operation"))
+  val OperationId = Field(Str,
+                          ApiContract + "operationId",
+                          ModelDoc(ModelVocabularies.ApiContract, "operationId", "Identifier of the target operation"))
 
   val Deprecated = Field(Bool,
                          Core + "deprecated",
@@ -43,7 +42,7 @@ object OperationModel
     Str,
     ApiContract + "guiSummary",
     ModelDoc(ModelVocabularies.ApiContract,
-             "gui summary",
+             "guiSummary",
              "Human readable description of the operation",
              Seq((Namespace.Core + "description").iri()))
   )
@@ -59,7 +58,7 @@ object OperationModel
 
   val ContentType = Field(Array(Str),
                           Core + "mediaType",
-                          ModelDoc(ModelVocabularies.Core, "media type", "Media types returned by a API response"))
+                          ModelDoc(ModelVocabularies.Core, "mediaType", "Media types returned by a API response"))
 
   val Request = Field(
     Array(RequestModel),
@@ -73,17 +72,17 @@ object OperationModel
   val Security = Field(
     Array(SecurityRequirementModel),
     Namespace.Security + "security",
-    ModelDoc(ModelVocabularies.Security, "security", "security schemes applied to an element in the API spec")
+    ModelDoc(ModelVocabularies.Security, "security", "Security schemes applied to an element in the API spec")
   )
 
   val Callbacks = Field(Array(CallbackModel),
                         ApiContract + "callback",
-                        ModelDoc(ModelVocabularies.ApiContract, "callback", "associated callbacks"))
+                        ModelDoc(ModelVocabularies.ApiContract, "callback", "Associated callbacks"))
 
   val Servers =
     Field(Array(ServerModel),
           ApiContract + "server",
-          ModelDoc(ModelVocabularies.ApiContract, "server", "server information"))
+          ModelDoc(ModelVocabularies.ApiContract, "server", "Server information"))
 
   val Bindings = Field(
     OperationBindingsModel,

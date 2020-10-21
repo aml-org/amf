@@ -1,0 +1,15 @@
+asyncapi: 2.0.0
+info:
+  title: API
+  version: "1.0"
+
+components:
+  schemas:
+    Person:
+      type: string
+channels:
+  users/signup:
+    subscribe:
+      message:
+        schemaFormat: application/vnd.rai.raml;version=1.0
+        payload: !include external-data-type.raml

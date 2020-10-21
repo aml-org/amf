@@ -32,7 +32,7 @@ validations:
     targetClass: doc.Unit
     propertyConstraints:
       doc.declares/shacl.name:
-        pattern: /^[A-Z]+([A-Z]?[a-z0-9]?)*$/
+        pattern: ^[A-Z]+([A-Z]?[a-z0-9]?)*$
 
   at-least-one-2xx-or-3xx-response:
     message: Methods must have at least one 2xx or 3xx response

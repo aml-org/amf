@@ -6,6 +6,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.Position
+import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, ShapeHelpers}
@@ -27,13 +28,7 @@ case class RamlNamedTypeEmitter(shape: AnyShape,
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val name = shape.name.option().getOrElse("schema") // this used to throw an exception, but with the resolution optimizacion, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
-    b.entry(name, if (shape.isLink) emitLink _ else emitInline _)
-  }
-
-  private def emitLink(b: PartBuilder): Unit = {
-    shape.linkTarget.foreach { l =>
-      spec.factory.tagToReferenceEmitter(l, shape.linkLabel.option(), references).emit(b)
-    }
+    b.entry(name, b => emitLinkOr(shape, b, references)(emitInline(b)))
   }
 
   private def emitInline(b: PartBuilder): Unit = shape match {

@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models.bindings.kafka
 import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.bindings.KafkaOperationBindingModel
 import amf.plugins.domain.webapi.metamodel.bindings.KafkaOperationBindingModel._
@@ -13,8 +13,8 @@ class KafkaOperationBinding(override val fields: Fields, override val annotation
     with BindingVersion
     with Key {
 
-  def groupId: StrField  = fields.field(GroupId)
-  def clientId: StrField = fields.field(ClientId)
+  def groupId: Shape  = fields.field(GroupId)
+  def clientId: Shape = fields.field(ClientId)
 
   override def meta: Obj = KafkaOperationBindingModel
 
@@ -24,8 +24,8 @@ class KafkaOperationBinding(override val fields: Fields, override val annotation
 
   override protected def bindingVersionField: Field = BindingVersion
 
-  def withGroupId(groupId: String): this.type    = set(GroupId, groupId)
-  def withClientId(clientId: String): this.type  = set(ClientId, clientId)
+  def withGroupId(groupId: Shape): this.type     = set(GroupId, groupId)
+  def withClientId(clientId: Shape): this.type   = set(ClientId, clientId)
   override def linkCopy(): KafkaOperationBinding = KafkaOperationBinding().withId(id)
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */

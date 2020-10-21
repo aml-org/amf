@@ -5,7 +5,8 @@ import amf.core.remote.{AsyncJsonHint, AsyncYamlHint, Hint, OasJsonHint}
 import org.scalatest.Matchers
 
 class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
-  override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/async20/validations/"
+  val asyncPath: String            = "file://amf-client/shared/src/test/resources/validations/async20/"
+  override val basePath: String    = asyncPath + "validations/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/async20/"
   override val hint: Hint          = AsyncYamlHint
 
@@ -254,4 +255,58 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   test("Closed shape in components object") {
     validate("components-closed-shape.yaml", Some("components-closed-shape.report"), Async20Profile)
   }
+
+  test("Using $ref within inlined raml content") {
+    validate(
+      "invalid-inlined-ref.yaml",
+      Some("invalid-inlined-ref.report"),
+      Async20Profile,
+      directory = asyncPath + "raml-data-type-references/"
+    )
+  }
+
+  test("Invalid relative pointer to raml library content") {
+    validate(
+      "invalid-relative-pointer-to-lib.yaml",
+      Some("invalid-relative-pointer-to-lib.report"),
+      Async20Profile,
+      directory = asyncPath + "raml-data-type-references/"
+    )
+  }
+
+  test("Verify isolated raml context in inlined raml content") {
+    validate(
+      "invalid-ref-to-async-type.yaml",
+      Some("invalid-ref-to-async-type.report"),
+      Async20Profile
+    )
+  }
+
+  test("Verify isolated raml context for raml content in external yaml") {
+    validate(
+      "ref-invalid-external-yaml.yaml",
+      Some("ref-invalid-external-yaml.report"),
+      Async20Profile,
+      directory = asyncPath + "raml-data-type-references/"
+    )
+  }
+
+  test("Invalid reference to type defined in raml api") {
+    validate(
+      "invalid-ref-to-raml-api.yaml",
+      Some("invalid-ref-to-raml-api.report"),
+      Async20Profile,
+      directory = asyncPath + "raml-data-type-references/"
+    )
+  }
+
+  test("Reference to invalid library type") {
+    validate(
+      "ref-type-in-library-invalid.yaml",
+      Some("ref-type-in-library-invalid.report"),
+      Async20Profile,
+      directory = asyncPath + "raml-data-type-references/"
+    )
+  }
+
 }

@@ -1,0 +1,187 @@
+{
+  "@graph": [
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "API",
+      "core:version": "1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#5"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#4": "ASYNC 2.0"
+        },
+        "lexical": {
+          "apiContract:endpoint": "[(11,0)-(18,0)]",
+          "core:name": "[(3,2)-(4,0)]",
+          "#4": "[(1,0)-(18,0)]",
+          "core:version": "[(4,2)-(6,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "users/signup",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#6"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#5": "[(12,2)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "subscribe",
+      "apiContract:returns": [
+        {
+          "@id": "#7"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(14,6)-(18,0)]",
+          "#6": "[(13,4)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#8"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#7": "[(15,0)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "apiContract:schemaMediaType": "application/vnd.rai.raml;version=1.0",
+      "raml-shapes:schema": {
+        "@id": "#2"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(16,8)-(18,0)]",
+          "apiContract:schemaMediaType": "[(15,8)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "User",
+      "smaps": {
+        "resolved-link-target": {
+          "#2": "amf://id#2"
+        },
+        "declared-element": {
+          "#2": ""
+        },
+        "lexical": {
+          "shacl:name": "[(8,4)-(8,8)]",
+          "#2": "[(8,4)-(11,0)]",
+          "shacl:datatype": "[(9,6)-(11,0)]"
+        },
+        "type-property-lexical-info": {
+          "#2": "[(9,6)-(9,10)]"
+        },
+        "resolved-link": {
+          "#2": "amf://id#3"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:references": [
+        {
+          "@id": "#1"
+        }
+      ],
+      "doc:declares": [
+        {
+          "@id": "#2"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#4"
+      },
+      "doc:version": "2.1.2",
+      "doc:root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "raml-shapes:DataTypeFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#2"
+      },
+      "doc:version": "2.1.2",
+      "doc:root": false,
+      "smaps": {
+        "lexical": {
+          "#1": "[(1,0)-(4,0)]"
+        }
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

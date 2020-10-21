@@ -6,6 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -63,10 +64,7 @@ case class AbstractDeclarationPartEmitter(declaration: AbstractDeclaration,
     extends PartEmitter {
 
   override def emit(b: PartBuilder): Unit = {
-    if (declaration.isLink)
-      declaration.linkTarget.foreach(l =>
-        spec.factory.tagToReferenceEmitter(l, declaration.linkLabel.option(), references).emit(b))
-    else {
+    emitLinkOr(declaration, b, references) {
       var emitters =
         Option(declaration.dataNode).map(DataNodeEmitter(_, ordering)(spec.eh).emitters()).getOrElse(Nil)
       declaration.description.option().foreach { description =>

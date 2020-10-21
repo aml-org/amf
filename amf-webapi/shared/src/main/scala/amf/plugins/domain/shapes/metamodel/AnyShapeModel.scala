@@ -13,7 +13,7 @@ trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel with Exam
   val XMLSerialization = Field(
     XMLSerializerModel,
     Shapes + "xmlSerialization",
-    ModelDoc(ModelVocabularies.Shapes, "XML serialization", "information about how to serialize"))
+    ModelDoc(ModelVocabularies.Shapes, "XmlSerialization", "Information about how to serialize"))
 
   val Comment =
     Field(Str,
@@ -32,7 +32,7 @@ object AnyShapeModel extends AnyShapeModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
-    "Any Shape",
+    "AnyShape",
     "Base class for all shapes stored in the graph model",
     superClasses = Seq((Shapes + "Shape").iri())
   )

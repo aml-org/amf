@@ -3,7 +3,7 @@ package amf.core.rdf
 import amf.core.AMF
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
-import amf.plugins.features.validation.AMFValidatorPlugin
+import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext

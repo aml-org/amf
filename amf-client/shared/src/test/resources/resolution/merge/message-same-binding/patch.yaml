@@ -1,4 +1,6 @@
 message:
   bindings:
     kafka:
-      key: traitKey
+      key:
+        type: string
+        enum: ['traitKey']

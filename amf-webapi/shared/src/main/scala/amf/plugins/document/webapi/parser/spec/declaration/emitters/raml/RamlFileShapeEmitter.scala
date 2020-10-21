@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.{ArrayEmitter, MapEntryEmitter, ValueEmitter}
+import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ValueEmitter}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
@@ -21,7 +21,7 @@ case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, refer
 
     emitOASFields(fs, result)
 
-    fs.entry(FileShapeModel.FileTypes).map(f => result += ArrayEmitter("fileTypes", f, ordering))
+    fs.entry(FileShapeModel.FileTypes).map(f => result += spec.arrayEmitter("fileTypes", f, ordering))
 
     fs.entry(ScalarShapeModel.Pattern).map { f =>
       result += ValueEmitter("pattern".asRamlAnnotation, processRamlPattern(f))

@@ -70,7 +70,7 @@ case class AsyncApiSingleParameterPartEmitter(parameter: Parameter, ordering: Sp
   }
 
   def emitLink(b: PartBuilder): Unit = {
-    OasTagToReferenceEmitter(parameter, parameter.linkLabel.option()).emit(b)
+    OasTagToReferenceEmitter(parameter).emit(b)
   }
 
   private def emitLocation(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit =

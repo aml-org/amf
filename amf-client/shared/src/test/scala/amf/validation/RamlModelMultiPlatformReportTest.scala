@@ -50,6 +50,10 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
              Raml10Profile)
   }
 
+  test("Annotation type with invalid example") {
+    validate("annotation-types-invalid-example.raml", Some("annotation-types-invalid-example.report"), Raml10Profile)
+  }
+
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/multi-plat-model/"
   override val hint: Hint  = RamlYamlHint

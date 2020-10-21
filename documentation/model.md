@@ -153,7 +153,7 @@ It can be extended by any domain element adding bindings for the variables in th
  | exchange | [Amqp091ChannelExchange](#amqp091channelexchange) |  | http://a.ml/vocabularies/apiBinding#exchange |
  | queue | [Amqp091Queue](#amqp091queue) |  | http://a.ml/vocabularies/apiBinding#queue |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## Amqp091ChannelExchange
@@ -176,7 +176,7 @@ It can be extended by any domain element adding bindings for the variables in th
  | contentEncoding | string | MIME encoding for the message content | http://a.ml/vocabularies/apiBinding#contentEncoding |
  | messageType | string | Application-specific message type | http://a.ml/vocabularies/apiBinding#messageType |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## Amqp091OperationBinding
@@ -195,7 +195,7 @@ It can be extended by any domain element adding bindings for the variables in th
  | timestamp | boolean | Whether the message should include a timestamp or not | http://a.ml/vocabularies/apiBinding#timestamp |
  | ack | boolean | Whether the consumer should ack the message or not | http://a.ml/vocabularies/apiBinding#ack |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## Amqp091Queue
@@ -333,7 +333,7 @@ Model defining the information for a HTTP callback/ webhook
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
- | expression | string | structural location of the information to fulfill the callback | http://a.ml/vocabularies/apiContract#expression |
+ | expression | string | Structural location of the information to fulfill the callback | http://a.ml/vocabularies/apiContract#expression |
  | endpoint | [EndPoint](#endpoint) | EndPoint in the API holding a number of executable operations | http://a.ml/vocabularies/apiContract#endpoint |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
@@ -342,7 +342,7 @@ Model defining the information for a HTTP callback/ webhook
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## ChannelBindings
@@ -631,7 +631,7 @@ They are parsed as RDF graphs using a default transformation from a set of neste
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
 
 ## Encoding
 
@@ -831,7 +831,7 @@ Settings for an Http API Key security scheme
  | ------ | ------ | ------ | ------ |
  | headers | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiBinding#headers |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## HttpOperationBinding
@@ -843,7 +843,7 @@ Settings for an Http API Key security scheme
  | method | string | Operation binding method | http://a.ml/vocabularies/apiBinding#method |
  | query | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiBinding#query |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## HttpSettings
@@ -870,9 +870,9 @@ Settings for an HTTP security scheme
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | messageKey | string | The message key | http://a.ml/vocabularies/apiBinding#messageKey |
+ | messageKey | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiBinding#messageKey |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## KafkaOperationBinding
@@ -880,10 +880,10 @@ Settings for an HTTP security scheme
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | groupId | string | Id of the consumer group | http://a.ml/vocabularies/apiBinding#groupId |
- | clientId | string | Id of the consumer inside a consumer group | http://a.ml/vocabularies/apiBinding#clientId |
+ | groupId | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiBinding#groupId |
+ | clientId | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiBinding#clientId |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## License
@@ -983,7 +983,7 @@ Data shape containing nested multi-dimensional collection shapes
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## MessageBindings
@@ -1017,7 +1017,7 @@ It main purpose is to expose the declared references so they can be re-used
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## MqttOperationBinding
@@ -1028,7 +1028,7 @@ It main purpose is to expose the declared references so they can be re-used
  | qos | int | Defines how hard the broker/client will try to ensure that a message is received | http://a.ml/vocabularies/apiBinding#qos |
  | retain | boolean | Whether the broker should retain the message or not | http://a.ml/vocabularies/apiBinding#retain |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## MqttServerBinding
@@ -1041,7 +1041,7 @@ It main purpose is to expose the declared references so they can be re-used
  | lastWill | [MqttServerLastWill](#mqttserverlastwill) |  | http://a.ml/vocabularies/apiBinding#lastWill |
  | keepAlive | int | Interval in seconds of the longest period of time the broker and the client can endure without sending a message | http://a.ml/vocabularies/apiBinding#keepAlive |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## MqttServerLastWill
@@ -1264,7 +1264,7 @@ Action that can be executed using a particular HTTP invocation
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## OperationBindings
@@ -1740,7 +1740,7 @@ Information about the network accessible locations where the API is available
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## ServerBindings
@@ -2020,7 +2020,7 @@ Top level element describing a HTTP API
  | query | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiBinding#query |
  | headers | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiBinding#headers |
  | bindingVersion | string | The version of this binding | http://a.ml/vocabularies/apiBinding#bindingVersion |
- | type | string | binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
+ | type | string | Binding for a corresponding known type | http://a.ml/vocabularies/apiBinding#type |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## XMLSerializer

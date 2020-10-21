@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.TypeDef.{IntType, StrType}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import amf.plugins.features.validation.AMFValidatorPlugin
+import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._

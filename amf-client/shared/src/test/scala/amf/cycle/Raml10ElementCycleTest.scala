@@ -4,6 +4,7 @@ import amf.core.annotations.ExternalFragmentRef
 import amf.core.remote.{RamlYamlHint, Vendor}
 import amf.plugins.document.webapi.annotations.ForceEntry
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.plugins.domain.webapi.models.security.SecurityScheme
 
 class Raml10ElementCycleTest extends DomainElementCycleTest {
 
@@ -59,6 +60,15 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
     )
   }
 
+  test("type - reference to external fragment and declared type with entry") {
+    renderElement(
+      "type/refs-with-entry.raml",
+      CommonExtractors.namedRootInDeclares,
+      "type/refs-with-entry-emission.yaml",
+      RamlYamlHint
+    )
+  }
+
   test("type - ref to external json schemas") {
     renderElement(
       "type/external-json-schema-refs.raml",
@@ -80,7 +90,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
   test("trait") {
     renderElement(
       "abstract/rt-and-trait-definition.raml",
-      CommonExtractors.declaresIndex(1),
+      CommonExtractors.declaresIndex(2),
       "abstract/trait-emission.yaml",
       RamlYamlHint
     )
@@ -95,6 +105,24 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
     )
   }
 
+  test("resource type link") {
+    renderElement(
+      "abstract/rt-and-trait-definition.raml",
+      CommonExtractors.declaresIndex(1),
+      "abstract/rt-link-emission.yaml",
+      RamlYamlHint
+    )
+  }
+
+  test("trait link") {
+    renderElement(
+      "abstract/rt-and-trait-definition.raml",
+      CommonExtractors.declaresIndex(3),
+      "abstract/trait-link-emission.yaml",
+      RamlYamlHint
+    )
+  }
+
   test("security scheme") {
     renderElement(
       "raml10AuthorizationGrant.raml",
@@ -102,6 +130,27 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "raml10-scheme-emission.yaml",
       RamlYamlHint,
       directory = validationsPath + "security-schemes/"
+    )
+  }
+
+  test("security scheme link") {
+    renderElement(
+      "security-scheme/api.raml",
+      CommonExtractors.declaresIndex(0),
+      "security-scheme/security-scheme-link-emission.yaml",
+      RamlYamlHint
+    )
+  }
+
+  test("security scheme created link with ExternalFragmentRef") {
+    renderElement(
+      "security-scheme/api.raml",
+      (b) => {
+        val original = CommonExtractors.declaresIndex(1)(b).map(_.asInstanceOf[SecurityScheme])
+        original.map(_.link[SecurityScheme]("someName.raml").add(ExternalFragmentRef("someName.raml")))
+      },
+      "security-scheme/security-scheme-created-link-emission.yaml",
+      RamlYamlHint
     )
   }
 
@@ -158,6 +207,33 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
       "security-schemes/oauth-2/requirement-emission.yaml",
       RamlYamlHint,
       validationsPath
+    )
+  }
+
+  test("annotation type") {
+    renderElement(
+      "annotation-type/api.raml",
+      CommonExtractors.declaresIndex(0),
+      "annotation-type/annotation-type-emission.yaml",
+      RamlYamlHint
+    )
+  }
+
+  test("annotation type link") {
+    renderElement(
+      "annotation-type/api.raml",
+      CommonExtractors.declaresIndex(1),
+      "annotation-type/annotation-type-link-emission.yaml",
+      RamlYamlHint
+    )
+  }
+
+  test("annotation type library link") {
+    renderElement(
+      "annotation-type/api.raml",
+      CommonExtractors.declaresIndex(2),
+      "annotation-type/annotation-type-lib-link-emission.yaml",
+      RamlYamlHint
     )
   }
 

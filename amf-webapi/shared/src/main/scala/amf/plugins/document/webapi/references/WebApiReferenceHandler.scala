@@ -1,10 +1,11 @@
 package amf.plugins.document.webapi.references
 
 import amf.core.CompilerContext
-import amf.core.annotations.{ReferenceTargets, SourceAST}
+import amf.core.TaggedReferences._
+import amf.core.annotations.SourceAST
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{Range, _}
+import amf.core.parser._
 import amf.core.remote._
 import amf.core.utils._
 import amf.plugins.document.webapi.BaseWebApiPlugin
@@ -16,15 +17,15 @@ import amf.validations.ParserSideValidations._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
-import amf.core.TaggedReferences._
+
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 
 class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends ReferenceHandler {
 
-  private val references = ReferenceCollector()
+  private val references = CompilerReferenceCollector()
 
-  override def collect(parsed: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
+  override def collect(parsed: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     val doc = parsed.asInstanceOf[SyamlParsedDocument].document
     libraries(doc, ctx)
     links(doc, ctx)
@@ -81,12 +82,11 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     references += (entry.value.as[YScalar].text, ExtensionReference, entry.value)
   }
 
-  // todo: we should use vendor.name in every place instead of match handwrited strings
   private def links(part: YPart, ctx: ParserContext): Unit = {
     vendor match {
-      case Raml10.name | Raml08.name | Raml.name     => ramlLinks(part, ctx)
-      case Oas20.name | Oas30.name | AsyncApi20.name => oasLinks(part, ctx)
-      case _                                         => // Ignore
+      case Raml10.name | Raml08.name | Raml.name => ramlLinks(part, ctx)
+      case Oas20.name | Oas30.name               => oasLinks(part, ctx)
+      case AsyncApi20.name                       => oasLinks(part, ctx); ramlLinks(part, ctx)
     }
   }
 
@@ -187,7 +187,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val updated = compilerContext.forReference(reference.unit.id, withNormalizedUri = false)
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, r.refs.map(_.node), allowRecursiveRefs = true)
+          r.resolve(updated, r.refs.map(_.node), allowRecursiveRefs = true, plugin)
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), updated)

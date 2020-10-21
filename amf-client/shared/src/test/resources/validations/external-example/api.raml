@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: some title
+version: 1.0.0
+
+description: description
+
+
+/endpoint:
+  post:
+    description: some description
+    responses:
+      '200':
+        description: Success
+        body:
+          application/json:
+            type: array
+            examples:
+              one: !include example.json
