@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.Raml08Profile
+import amf.{Raml08Profile, Raml10Profile}
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class ValidRamlModelParserTest extends ValidModelTest {
@@ -261,6 +261,10 @@ class ValidRamlModelParserTest extends ValidModelTest {
 
   test("Referencing external example with @type key") {
     checkValid("external-example/api.raml")
+  }
+
+  test("example has same filename as a type filename") {
+    checkValid("/raml/examples/same-filename-example.raml")
   }
 
   override val hint: Hint = RamlYamlHint
