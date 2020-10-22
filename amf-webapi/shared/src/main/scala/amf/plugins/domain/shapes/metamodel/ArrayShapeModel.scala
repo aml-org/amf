@@ -18,10 +18,6 @@ class DataArrangementShape extends AnyShapeModel {
                     Shapes + "items",
                     ModelDoc(ModelVocabularies.Shapes, "items", "Shapes inside the data arrangement"))
 
-  val Contains = Field(ShapeModel,
-                       Shapes + "contains",
-                       ModelDoc(ModelVocabularies.Shapes, "contains", "One of the shapes in the data arrangement"))
-
   val MinItems = Field(Int,
                        Shacl + "minCount",
                        ModelDoc(ExternalModelVocabularies.Shacl, "minCount", "Minimum items count constraint"))
@@ -33,12 +29,40 @@ class DataArrangementShape extends AnyShapeModel {
   val UniqueItems =
     Field(Bool, Shapes + "uniqueItems", ModelDoc(ModelVocabularies.Shapes, "uniqueItems", "Unique items constraint"))
 
+  // TODO: Should be sh:qualifiedValue. Not changing it for backwards compatibility
+  val Contains = Field(ShapeModel,
+                       Shapes + "contains",
+                       ModelDoc(ModelVocabularies.Shapes, "contains", "One of the shapes in the data arrangement"))
+
+  val MinContains =
+    Field(Int,
+          Shacl + "qualifiedMinCount",
+          ModelDoc(ExternalModelVocabularies.Shacl, "qualifiedMinCount", "Minimum number of value nodes constraint"))
+
+  val MaxContains =
+    Field(Int,
+          Shapes + "qualifiedMaxCount",
+          ModelDoc(ExternalModelVocabularies.Shacl, "qualifiedMaxCount", "Maximum number of value nodes constraint"))
+
   val CollectionFormat = Field(
     Str,
     Shapes + "collectionFormat",
     ModelDoc(ModelVocabularies.Shapes, "collectionFormat", "Input collection format information"))
 
-  val specificFields               = List(Items, Contains, MinItems, MaxItems, UniqueItems, CollectionFormat)
+  val UnevaluatedItems = Field(
+    ShapeModel,
+    Shapes + "unevaluatedItems",
+    ModelDoc(ModelVocabularies.Shapes, "unevaluatedItems", "Items that may not be evaluated in schema validation"))
+
+  val specificFields = List(Items,
+                            Contains,
+                            MinItems,
+                            MaxItems,
+                            UniqueItems,
+                            CollectionFormat,
+                            UnevaluatedItems,
+                            MinContains,
+                            MaxContains)
   override val fields: List[Field] = specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val doc: ModelDoc = ModelDoc(

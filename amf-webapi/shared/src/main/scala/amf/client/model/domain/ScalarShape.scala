@@ -22,6 +22,9 @@ case class ScalarShape(override private[amf] val _internal: InternalScalarShape)
   def exclusiveMaximum: BoolField = _internal.exclusiveMaximum
   def format: StrField            = _internal.format
   def multipleOf: DoubleField     = _internal.multipleOf
+  def encoding: String            = _internal.encoding
+  def mediaType: String           = _internal.mediaType
+  def schema: Shape               = _internal.schema
 
   def withDataType(dataType: String): this.type = {
     _internal.withDataType(dataType)
@@ -61,6 +64,18 @@ case class ScalarShape(override private[amf] val _internal: InternalScalarShape)
   }
   def withMultipleOf(multiple: Double): this.type = {
     _internal.withMultipleOf(multiple)
+    this
+  }
+  def withEncoding(encoding: String): this.type = {
+    _internal.withEncoding(encoding)
+    this
+  }
+  def withMediaType(mediaType: String): this.type = {
+    _internal.withMediaType(mediaType)
+    this
+  }
+  def withSchema(schema: Shape): this.type = {
+    _internal.withSchema(schema)
     this
   }
 

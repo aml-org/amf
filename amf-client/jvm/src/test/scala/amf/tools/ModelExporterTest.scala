@@ -11,7 +11,7 @@ class ModelExporterTest extends AsyncFunSuite with FileAssertionTest {
     val modelExportText = ModelExporter.exportText()
     for {
       tmpFile   <- writeTemporaryFile(golden)(modelExportText)
-      assertion <- assertLinesDifferences(tmpFile, golden)
+      assertion <- assertDifferences(tmpFile, golden)
     } yield {
       assertion
     }

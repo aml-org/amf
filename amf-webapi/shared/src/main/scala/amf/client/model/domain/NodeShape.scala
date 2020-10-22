@@ -22,6 +22,7 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def additionalPropertiesSchema: Shape                    = _internal.additionalPropertiesSchema
   def dependencies: ClientList[PropertyDependencies]       = _internal.dependencies.asClient
   def propertyNames: Shape                                 = _internal.propertyNames
+  def unevaluatedProperties: Shape                         = _internal.unevaluatedProperties
 
   def withMinProperties(min: Int): this.type = {
     _internal.withMinProperties(min)
@@ -61,6 +62,10 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   }
   def withPropertyNames(propertyNames: Shape): this.type = {
     _internal.withPropertyNames(propertyNames)
+    this
+  }
+  def withUnevaluatedProperties(shape: Shape): this.type = {
+    _internal.withUnevaluatedProperties(shape)
     this
   }
 
