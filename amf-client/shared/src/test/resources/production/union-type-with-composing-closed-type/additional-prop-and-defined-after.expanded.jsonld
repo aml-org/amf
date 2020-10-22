@@ -118,20 +118,27 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:supportedOperation": "true"
+              },
               "lexical": {
+                "apiContract:path": "[(23,0)-(23,7)]",
                 "#17": "[(23,0)-(27,24)]"
               }
             }
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#16": "RAML 1.0"
+          "synthesized-field": {
+            "apiContract:endpoint": "true"
           },
           "lexical": {
             "core:version": "[(3,0)-(5,0)]",
             "#16": "[(2,0)-(27,24)]",
             "core:name": "[(2,0)-(3,0)]"
+          },
+          "source-vendor": {
+            "#16": "RAML 1.0"
           }
         }
       }
@@ -217,7 +224,12 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true",
+                "shacl:path": "true"
+              },
               "lexical": {
+                "raml-shapes:range": "[(10,14)-(13,0)]",
                 "#2": "[(10,6)-(13,0)]"
               }
             }
@@ -318,7 +330,12 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true",
+                "shacl:path": "true"
+              },
               "lexical": {
+                "raml-shapes:range": "[(16,12)-(19,0)]",
                 "#6": "[(16,6)-(19,0)]"
               }
             }
@@ -330,21 +347,24 @@
           }
         ],
         "smaps": {
-          "resolved-link-target": {
-            "#5": "amf://id#5"
+          "synthesized-field": {
+            "shacl:closed": "true"
           },
-          "declared-element": {
-            "#5": ""
+          "resolved-link": {
+            "#5": "amf://id#8"
+          },
+          "type-property-lexical-info": {
+            "#5": "[(14,4)-(14,8)]"
           },
           "lexical": {
             "shacl:name": "[(13,2)-(13,11)]",
             "#5": "[(13,2)-(19,0)]"
           },
-          "type-property-lexical-info": {
-            "#5": "[(14,4)-(14,8)]"
+          "declared-element": {
+            "#5": ""
           },
-          "resolved-link": {
-            "#5": "amf://id#8"
+          "resolved-link-target": {
+            "#5": "amf://id#5"
           }
         }
       },
@@ -428,11 +448,16 @@
                   }
                 ],
                 "smaps": {
-                  "inheritance-provenance": {
-                    "#11": "amf://id#1"
+                  "synthesized-field": {
+                    "shacl:minCount": "true",
+                    "shacl:path": "true"
                   },
                   "lexical": {
+                    "raml-shapes:range": "[(10,14)-(13,0)]",
                     "#11": "[(10,6)-(13,0)]"
+                  },
+                  "inheritance-provenance": {
+                    "#11": "amf://id#1"
                   }
                 }
               }
@@ -443,20 +468,23 @@
               }
             ],
             "smaps": {
-              "resolved-link-target": {
-                "#10": "amf://id#9"
+              "synthesized-field": {
+                "shacl:closed": "true"
               },
-              "declared-element": {
-                "#10": ""
-              },
-              "lexical": {
-                "#10": "[(19,2)-(23,0)]"
+              "resolved-link": {
+                "#10": "amf://id#12"
               },
               "type-property-lexical-info": {
                 "#10": "[(20,4)-(20,8)]"
               },
-              "resolved-link": {
-                "#10": "amf://id#12"
+              "lexical": {
+                "#10": "[(19,2)-(23,0)]"
+              },
+              "declared-element": {
+                "#10": ""
+              },
+              "resolved-link-target": {
+                "#10": "amf://id#9"
               }
             }
           },
@@ -530,11 +558,16 @@
                   }
                 ],
                 "smaps": {
-                  "inheritance-provenance": {
-                    "#14": "amf://id#5"
+                  "synthesized-field": {
+                    "shacl:minCount": "true",
+                    "shacl:path": "true"
                   },
                   "lexical": {
+                    "raml-shapes:range": "[(16,12)-(19,0)]",
                     "#14": "[(16,6)-(19,0)]"
+                  },
+                  "inheritance-provenance": {
+                    "#14": "amf://id#5"
                   }
                 }
               }
@@ -545,20 +578,23 @@
               }
             ],
             "smaps": {
-              "resolved-link-target": {
-                "#13": "amf://id#9"
+              "synthesized-field": {
+                "shacl:closed": "true"
               },
-              "declared-element": {
-                "#13": ""
-              },
-              "lexical": {
-                "#13": "[(19,2)-(23,0)]"
+              "resolved-link": {
+                "#13": "amf://id#12"
               },
               "type-property-lexical-info": {
                 "#13": "[(20,4)-(20,8)]"
               },
-              "resolved-link": {
-                "#13": "amf://id#12"
+              "lexical": {
+                "#13": "[(19,2)-(23,0)]"
+              },
+              "declared-element": {
+                "#13": ""
+              },
+              "resolved-link-target": {
+                "#13": "amf://id#9"
               }
             }
           }

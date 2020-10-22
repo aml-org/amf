@@ -59,7 +59,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/my.api.com%2Fv1"
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -178,9 +178,24 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
+                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/parameter-binding-in-body-lexical-info/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/synthesized-field/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://www.w3.org/ns/shacl#closed"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "true"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/type-property-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1"
@@ -188,7 +203,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(18,10)-(19,0)]"
+                                        "@value": "[(20,12)-(20,16)]"
                                       }
                                     ]
                                   }
@@ -221,9 +236,9 @@
                                     ]
                                   }
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1/source-map/parameter-binding-in-body-lexical-info/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/bodyParam1/bodyParam1"
@@ -231,7 +246,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(20,12)-(20,16)]"
+                                        "@value": "[(18,10)-(19,0)]"
                                       }
                                     ]
                                   }
@@ -361,17 +376,17 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/type-property-lexical-info/element_0",
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/synthesized-field/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2"
+                                                "@value": "http://www.w3.org/ns/shacl#closed"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(23,10)-(23,14)]"
+                                                "@value": "true"
                                               }
                                             ]
                                           }
@@ -400,6 +415,21 @@
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "[(21,10)-(22,0)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2/source-map/type-property-lexical-info/element_0",
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/multiple-form-data/api.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/formData/formData/property/bodyParam2/bodyParam2"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(23,10)-(23,14)]"
                                               }
                                             ]
                                           }
@@ -625,7 +655,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(13,6)-(23,22)]"
+                    "@value": "[(13,0)-(23,22)]"
                   }
                 ]
               },

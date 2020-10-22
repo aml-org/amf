@@ -8,6 +8,7 @@ import amf.core.remote.RamlYamlHint
 import amf.core.traversal.iterator.AmfElementStrategy
 import org.scalatest.{Assertion, AsyncFlatSpec, Matchers}
 
+import scala.annotation.tailrec
 import scala.concurrent.{ExecutionContext, Future}
 
 class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with CompilerTestBuilder {
@@ -21,7 +22,7 @@ class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with 
   private val aUnionA      = LexicalInformation(Range((8, 10), (8, 16)))
   private val aUnionB      = LexicalInformation(Range((8, 19), (8, 21)))
   private val aUnion2A     = LexicalInformation(Range((9, 11), (9, 17)))
-  private val aUnion2B     = LexicalInformation(Range((9, 24), (9, 26)))
+  private val aUnion2B     = LexicalInformation(Range((9, 26), (9, 28)))
   private val tripleUnionA = LexicalInformation(Range((10, 16), (10, 21)))
   private val tripleUnionB = LexicalInformation(Range((10, 24), (10, 29)))
   private val tripleUnionC = LexicalInformation(Range((10, 32), (10, 34)))
@@ -44,15 +45,13 @@ class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with 
     test(aUnion2B)
   }
 
-  // todo: Should work when APIMF-2323 is solved
-  ignore should "annotate range for union with three elements" in {
+  it should "annotate range for union with three elements" in {
     test(tripleUnionA)
     test(tripleUnionB)
     test(tripleUnionC)
   }
 
-  // todo: Should work when APIMF-2323 is solved
-  ignore should "annotate ranges in an array of unions" in {
+  it should "annotate ranges in an array of unions" in {
     test(unionArrayA)
     test(unionArrayB)
   }

@@ -44,6 +44,7 @@
       ],
       "smaps": {
         "lexical": {
+          "apiContract:supportedOperation": "[(24,0)-(28,0)]",
           "#8": "[(23,2)-(28,0)]"
         }
       }
@@ -62,6 +63,7 @@
       ],
       "smaps": {
         "lexical": {
+          "apiContract:supportedOperation": "[(29,0)-(31,49)]",
           "#11": "[(28,2)-(31,49)]"
         }
       }
@@ -133,6 +135,7 @@
           "apiContract:headerSchema": "[(10,6)-(15,0)]",
           "core:displayName": "[(19,6)-(20,0)]",
           "#10": "[(9,4)-(22,0)]",
+          "core:name": "[(9,4)-(9,15)]",
           "core:title": "[(20,6)-(22,0)]"
         },
         "resolved-link": {
@@ -169,6 +172,7 @@
           "apiContract:headerSchema": "[(10,6)-(15,0)]",
           "core:displayName": "[(19,6)-(20,0)]",
           "#13": "[(9,4)-(22,0)]",
+          "core:name": "[(9,4)-(9,15)]",
           "core:title": "[(20,6)-(22,0)]"
         },
         "resolved-link": {
@@ -191,6 +195,7 @@
         "lexical": {
           "raml-shapes:schema": "[(15,6)-(17,0)]",
           "core:mediaType": "[(18,6)-(19,0)]",
+          "#5": "[(10,0)-(22,0)]",
           "apiContract:schemaMediaType": "[(17,6)-(18,0)]"
         }
       }
@@ -212,11 +217,14 @@
       ],
       "shacl:name": "schema",
       "smaps": {
-        "type-property-lexical-info": {
-          "#2": "[(11,8)-(11,12)]"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "#2": "[(10,6)-(15,0)]"
+        },
+        "type-property-lexical-info": {
+          "#2": "[(11,8)-(11,12)]"
         }
       }
     },
@@ -264,6 +272,9 @@
       "shacl:minCount": 0,
       "shacl:name": "a",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#3": "[(13,10)-(15,0)]"
         }
@@ -338,6 +349,7 @@
           "apiContract:headerSchema": "[(10,6)-(15,0)]",
           "core:displayName": "[(19,6)-(20,0)]",
           "#1": "[(9,4)-(22,0)]",
+          "core:name": "[(9,4)-(9,15)]",
           "core:title": "[(20,6)-(22,0)]"
         }
       }

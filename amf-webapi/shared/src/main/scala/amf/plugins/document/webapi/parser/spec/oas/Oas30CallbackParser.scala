@@ -7,7 +7,7 @@ import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorCallback
-import amf.plugins.domain.webapi.metamodel.CallbackModel
+import amf.plugins.domain.webapi.metamodel.{CallbackModel, EndPointModel}
 import amf.plugins.domain.webapi.models.{Callback, EndPoint}
 import amf.plugins.features.validation.CoreValidations
 import org.yaml.model.{YMap, YMapEntry, YScalar}
@@ -55,10 +55,16 @@ case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String,
         callbackEntries.map { entry =>
           val expression = entry.key.as[YScalar].text
           val callback   = Callback().add(Annotations(entry))
-          callback.fields.setWithoutId(CallbackModel.Expression, AmfScalar(expression, Annotations(entry.key)))
+          callback.fields.setWithoutId(CallbackModel.Expression,
+                                       AmfScalar(expression, Annotations(entry.key)),
+                                       Annotations.inferred())
           adopt(callback)
-          val collected = ctx.factory.endPointParser(entry, callback.withEndpoint, List()).parse()
-          collected.foreach(_.withPath(s"/$expression")) // rename path to avoid endpoint validations
+          val collected = ctx.factory.endPointParser(entry, callback.id, List()).parse()
+          collected.foreach(e => {
+            e.set(EndPointModel.Path, AmfScalar(s"/$expression", Annotations(entry.key)), Annotations.inferred())
+            callback.set(CallbackModel.Endpoint, e, Annotations.inferred())
+          }) // rename path to avoid endpoint validations
+
           callback
         }.toList
 

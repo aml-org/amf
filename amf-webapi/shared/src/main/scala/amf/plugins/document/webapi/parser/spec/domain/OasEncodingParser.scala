@@ -14,7 +14,7 @@ case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit c
   private def newEncoding(entry: YMapEntry): Encoding = {
     val keyNode  = ScalarNode(entry.key)
     val encoding = producer(keyNode.text().toString).add(Annotations(entry))
-    encoding.set(EncodingModel.PropertyName, keyNode.string())
+    encoding.set(EncodingModel.PropertyName, keyNode.string(), Annotations(entry.key))
   }
 
   def parse(): Seq[Encoding] = {

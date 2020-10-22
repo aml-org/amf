@@ -28,7 +28,7 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
     key.foreach(
       k =>
         correlationId
-          .set(CorrelationIdModel.Name, ScalarNode(k).string()))
+          .set(CorrelationIdModel.Name, ScalarNode(k).string(), Annotations(k)))
     correlationId.adopted(parentId).add(entryLike.annotations)
   }
 
@@ -36,7 +36,7 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "correlationIds")
     ctx.declarations
       .findCorrelationId(label, SearchScope.Named)
-      .map(correlationId => nameAndAdopt(correlationId.link(label), entryLike.key))
+      .map(correlationId => nameAndAdopt(correlationId.link(label, extractRefAnnotation(entryLike)), entryLike.key))
       .getOrElse(remote(fullRef, map))
   }
 

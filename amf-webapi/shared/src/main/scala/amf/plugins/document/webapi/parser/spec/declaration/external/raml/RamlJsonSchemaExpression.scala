@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration.external.raml
 
 import amf.core.Root
-import amf.core.annotations.{ExternalFragmentRef, VirtualObject}
+import amf.core.annotations.ExternalFragmentRef
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.unsafe.PlatformSecrets
 import amf.core.model.domain.{AmfArray, Shape}
@@ -73,10 +73,10 @@ case class RamlJsonSchemaExpression(key: YNode,
       }
     )
     parseExamples(wrapper, value.as[YMap])
-    wrapperName(key).foreach(_ => wrapper.withName(_, Annotations(key)))
+    wrapperName(key).foreach(t => wrapper.withName(t, Annotations(key)))
     val typeEntryAnnotations =
       map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
-    wrapper.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations(VirtualObject())), typeEntryAnnotations)
+    wrapper.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations.virtual()), typeEntryAnnotations)
     wrapper
   }
 

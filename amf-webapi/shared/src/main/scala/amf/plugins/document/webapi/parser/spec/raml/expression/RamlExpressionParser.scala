@@ -1,11 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.raml.expression
 
 import amf.core.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{AmfArray, Shape}
 import amf.core.parser.{Annotations, Position}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
-import amf.plugins.domain.shapes.metamodel.UnionShapeModel
+import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models._
 import org.yaml.model._
 
@@ -43,10 +43,16 @@ object RamlExpressionParser {
           case (shape, index) if !shape.isLink => adoptShapeTree(shape, ParentAdopt(union.id + s"/$index"))
           case (shape, _) if shape.isLink      => adoptShapeTree(shape, DontAdopt())
         }
-        union.setArrayWithoutId(UnionShapeModel.AnyOf, anyOf)
+        union.fields.getValueAsOption(UnionShapeModel.AnyOf).foreach { value =>
+          union.setWithoutId(UnionShapeModel.AnyOf, AmfArray(anyOf, value.value.annotations), value.annotations)
+        }
+        union
       case array: ArrayShape if array.hasItems =>
         val items = adoptShapeTree(array.items, ParentAdopt(array.id))
-        array.withItems(items)
+        array.fields.getValueAsOption(ArrayShapeModel.Items).foreach { value =>
+          array.setWithoutId(ArrayShapeModel.Items, items, value.annotations)
+        }
+        array
       case _ => shape
     }
   }

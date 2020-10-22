@@ -6,14 +6,14 @@ baseUri: falsedomain.com/apis
 /customers:
   /{customer_id}:
     uriParameters:
-      customer_id:
-        type: string
+      customer_id: {}
     get:
       description: Returns Customer data
       responses:
         "200":
           body:
             application/json:
+              type: any
     delete:
       description: Removes a Customer from the system
     /accounts:
@@ -23,6 +23,7 @@ baseUri: falsedomain.com/apis
           "200":
             body:
               application/json:
+                type: any
     /cards:
       /debit:
         get:
@@ -31,6 +32,7 @@ baseUri: falsedomain.com/apis
             "200":
               body:
                 application/json:
+                  type: any
         post:
           description: Requests the creation of a new DebitCard
           body:

@@ -19,11 +19,13 @@ types:
       name:
         type: string
         required: true
-  Address: {}
+  Address:
+    type: string
   Email:
     additionalProperties: true
     properties:
       base:
+        type: string
         required: true
       domain:
         type: string

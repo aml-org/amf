@@ -97,7 +97,7 @@ case class RamlSecuritySettingsParser(node: YNode, `type`: String, scheme: Domai
       (OAuth2FlowModel.Scopes in flow.getOrCreate using ScopeParser).allowingSingleValue.apply(entry)
     }
 
-    flow.option.foreach(f => settings.setArray(OAuth2SettingsModel.Flows, Seq(f), Annotations() += SynthesizedField()))
+    flow.option.foreach(f => settings.setArray(OAuth2SettingsModel.Flows, Seq(f), Annotations.synthesized()))
 
     dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")
     settings

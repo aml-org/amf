@@ -22,7 +22,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
   private def adopt(request: Request) = {
     request
       .add(Annotations(definitionEntry))
-      .set(RequestModel.Name, ScalarNode(definitionEntry.key).string())
+      .set(RequestModel.Name, ScalarNode(definitionEntry.key).string(), Annotations(definitionEntry.key))
       .adopted(parentId)
   }
 
@@ -47,7 +47,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
                              s"Request body must have a 'content' field defined",
                              map)
         }
-        request.set(ResponseModel.Payloads, AmfArray(payloads))
+        request.set(ResponseModel.Payloads, AmfArray(payloads, Annotations.inferred()), Annotations.inferred())
 
         AnnotationParser(request, map).parse()
         ctx.closedShape(request.id, map, "request")

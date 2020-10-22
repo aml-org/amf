@@ -62,7 +62,7 @@ case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payloa
 
     OasExamplesParser(map, payload).parse()
     payload.examples.foreach { ex =>
-      payload.mediaType.option().foreach(ex.withMediaType)
+      payload.mediaType.option().foreach(ex.withMediaType(_, Annotations.synthesized()))
       ex.annotations += TrackedElement(payload.id)
     }
 

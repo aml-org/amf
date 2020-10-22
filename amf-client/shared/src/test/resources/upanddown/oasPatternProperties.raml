@@ -12,12 +12,9 @@ version: "1.1"
           (amf-additionalProperties):
             type: string
           properties:
-            builtin:
+            builtin?:
               type: number
-              required: false
-            /^S_/:
+            ^S_?:
               type: string
-              required: false
-            /^I_/:
+            ^I_?:
               type: integer
-              required: false
