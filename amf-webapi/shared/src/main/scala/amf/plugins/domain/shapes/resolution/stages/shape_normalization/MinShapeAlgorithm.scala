@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
 import amf.core.AMFCompilerRunCount
-import amf.core.annotations.{InheritanceProvenance, LexicalInformation}
+import amf.core.annotations.{Inferred, InheritanceProvenance, LexicalInformation}
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -11,7 +11,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, Value}
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
-import amf.plugins.document.webapi.annotations.{Inferred, ParsedJSONSchema}
+import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._

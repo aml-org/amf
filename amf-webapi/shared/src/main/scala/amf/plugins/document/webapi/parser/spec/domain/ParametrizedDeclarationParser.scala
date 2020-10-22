@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.metamodel.domain.templates.ParametrizedDeclarationModel
-import amf.core.model.domain.AmfScalar
+import amf.core.metamodel.domain.templates.{ParametrizedDeclarationModel, VariableValueModel}
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
+import amf.plugins.domain.webapi.models.ExtensibleWebApiDomainElement
 import amf.validations.ParserSideValidations.InvalidAbstractDeclarationType
 import org.yaml.model._
 
@@ -33,7 +34,9 @@ case class ParametrizedDeclarationParser(
               producer(name)
                 .add(Annotations(entry))
             setName(declaration, name, entry.key)
-            declaration.fields.setWithoutId(ParametrizedDeclarationModel.Target, declarations(name, SearchScope.Named))
+            declaration.fields.setWithoutId(ParametrizedDeclarationModel.Target,
+                                            declarations(name, SearchScope.Named),
+                                            Annotations.inferred())
             val variables = entry.value
               .as[YMap]
               .entries
@@ -42,10 +45,12 @@ case class ParametrizedDeclarationParser(
                 case (variableEntry, index) =>
                   val node = DataNodeParser(variableEntry.value, parent = Some(s"${declaration.id}_$index")).parse()
                   VariableValue(variableEntry)
-                    .withName(variableEntry.key.as[YScalar].text)
-                    .withValue(node)
+                    .withName(variableEntry.key)
+                    .set(VariableValueModel.Value, node, Annotations(variableEntry.value))
               }
-            declaration.withVariables(variables)
+            declaration.set(ParametrizedDeclarationModel.Variables,
+                            AmfArray(variables, Annotations(entry.value)),
+                            Annotations.inferred())
         }
       case _ if node.tagType == YType.Str =>
         val declaration = fromStringNode(node)
@@ -63,14 +68,17 @@ case class ParametrizedDeclarationParser(
       case Left(value) => // in oas links $ref always are maps
         producer(value)
           .set(ParametrizedDeclarationModel.Target,
-               declarations(value, SearchScope.Fragments).link(value).asInstanceOf[AbstractDeclaration])
+               declarations(value, SearchScope.Fragments)
+                 .link(value, Annotations(node))
+                 .asInstanceOf[AbstractDeclaration])
       case Right(n) =>
-        val text         = n.as[YScalar].text
-        val target       = declarations(text, SearchScope.All).link(text).asInstanceOf[AbstractDeclaration]
+        val text = n.as[YScalar].text
+        val target: AbstractDeclaration =
+          declarations(text, SearchScope.All).link(text, Annotations(n)).asInstanceOf[AbstractDeclaration]
         val parametrized = producer(text)
         setName(parametrized, text, n)
         parametrized
-          .set(ParametrizedDeclarationModel.Target, target)
+          .set(ParametrizedDeclarationModel.Target, target, Annotations.inferred())
     }
   }
 

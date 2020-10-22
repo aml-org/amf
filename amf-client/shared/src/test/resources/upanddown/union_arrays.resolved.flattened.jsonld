@@ -85,12 +85,15 @@
       ],
       "shacl:name": "PropertyArray",
       "smaps": {
-        "declared-element": {
-          "#4": ""
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "shacl:name": "[(5,2)-(5,15)]",
           "#4": "[(5,2)-(10,0)]"
+        },
+        "declared-element": {
+          "#4": ""
         }
       }
     },
@@ -111,12 +114,15 @@
       ],
       "shacl:name": "PropertyNoArray",
       "smaps": {
-        "declared-element": {
-          "#10": ""
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "shacl:name": "[(10,2)-(10,17)]",
           "#10": "[(10,2)-(13,39)]"
+        },
+        "declared-element": {
+          "#10": ""
         }
       }
     },
@@ -139,7 +145,12 @@
       "shacl:minCount": 1,
       "shacl:name": "complex",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
+        },
         "lexical": {
+          "raml-shapes:range": "[(7,14)-(10,0)]",
           "#5": "[(7,6)-(10,0)]"
         }
       }
@@ -163,7 +174,12 @@
       "shacl:minCount": 1,
       "shacl:name": "complex",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
+        },
         "lexical": {
+          "raml-shapes:range": "[(12,14)-(13,39)]",
           "#11": "[(12,6)-(13,39)]"
         }
       }

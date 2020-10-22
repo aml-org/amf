@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#unknown-security-scheme
   Message: Security scheme '<<missingParameterInValue>>' not found in declarations.
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml#/declarations/traits/t1/applied/default-requirement_1/%3C%3CmissingParameterInValue%3E%3E
+  Target: file://amf-client/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml#/declarations/traits/trait/t1/applied/t1/default-requirement_1/%3C%3CmissingParameterInValue%3E%3E
   Property: 
   Position: Some(LexicalInformation([(6,15)-(6,42)]))
   Location: file://amf-client/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/core#resolution-validation
   Message: Cannot find variable 'missingParameterInValue'.
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml#/declarations/traits/t1
+  Target: file://amf-client/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml#/declarations/traits/trait/t1
   Property: 
   Position: Some(LexicalInformation([(11,6)-(12,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/traits/invalid/trait-missing-parameter-in-value.raml

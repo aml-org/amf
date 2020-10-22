@@ -44,7 +44,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
             RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(request.getOrCreate.id))(
               spec.toRaml(ctx))
               .parse()
-              .map(_.withBinding("query"))
+              .map(_.synthesizedBinding("query"))
           parameters = parameters.add(Parameters(query = queryParameters))
         }
       )
@@ -58,7 +58,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
             RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(request.getOrCreate.id))(
               spec.toRaml(ctx))
               .parse()
-              .map(_.withBinding("header"))
+              .map(_.synthesizedBinding("header"))
           parameters = parameters.add(Parameters(header = headers))
         }
       )
@@ -71,7 +71,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
           val parameter =
             Raml08ParameterParser(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id))(spec.toRaml(ctx))
               .parse()
-              .withBinding("path")
+              .synthesizedBinding("path")
           parameters = parameters.add(Parameters(baseUri08 = Seq(parameter)))
         }
       }

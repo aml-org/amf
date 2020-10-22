@@ -416,11 +416,14 @@
       ],
       "shacl:name": "schema",
       "smaps": {
-        "type-property-lexical-info": {
-          "#22": "[(11,4)-(11,10)]"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "#22": "[(10,15)-(28,3)]"
+        },
+        "type-property-lexical-info": {
+          "#22": "[(11,4)-(11,10)]"
         }
       }
     },
@@ -444,11 +447,14 @@
       ],
       "shacl:name": "schema",
       "smaps": {
-        "type-property-lexical-info": {
-          "#32": "[(11,4)-(11,10)]"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "#32": "[(10,15)-(28,3)]"
+        },
+        "type-property-lexical-info": {
+          "#32": "[(11,4)-(11,10)]"
         }
       }
     },
@@ -470,14 +476,17 @@
       },
       "core:name": "object_1",
       "smaps": {
-        "parsed-json-example": {
-          "#9": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
+        "synthesized-field": {
+          "core:name": "true"
         },
         "lexical": {
           "data:operator": "[(11,2)-(11,31)]",
           "data:additionalApplicants": "[(2,2)-(9,3)]",
           "#9": "[(1,0)-(12,1)]",
           "data:merchant": "[(10,2)-(10,30)]"
+        },
+        "parsed-json-example": {
+          "#9": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
         }
       }
     },
@@ -592,6 +601,9 @@
       },
       "core:name": "additionalApplicants",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:expenses": "[(6,4)-(8,5)]",
           "#10": "[(2,26)-(9,3)]",
@@ -614,6 +626,10 @@
       ],
       "core:name": "merchant",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#15": "[(10,14)-(10,30)]"
         }
@@ -634,6 +650,10 @@
       ],
       "core:name": "operator",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#16": "[(11,14)-(11,31)]"
         }
@@ -735,6 +755,9 @@
       },
       "core:name": "addresses",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:randomKey": "[(4,6)-(4,28)]",
           "#11": "[(3,17)-(5,5)]"
@@ -753,6 +776,9 @@
       },
       "core:name": "expenses",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:otherRandomKey": "[(7,6)-(7,31)]",
           "#13": "[(6,16)-(8,5)]"
@@ -773,17 +799,20 @@
       "doc:recursive": true,
       "shacl:name": "item0",
       "smaps": {
-        "resolved-link-target": {
-          "#25": "amf://id#25"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#25": "[(8,4)-(8,10)]"
+        "resolved-link": {
+          "#25": "amf://id#26"
         },
         "lexical": {
           "#25": "[(7,17)-(9,3)]"
         },
-        "resolved-link": {
-          "#25": "amf://id#26"
+        "type-property-lexical-info": {
+          "#25": "[(8,4)-(8,10)]"
+        },
+        "resolved-link-target": {
+          "#25": "amf://id#25"
         }
       }
     },
@@ -801,17 +830,20 @@
       "doc:recursive": true,
       "shacl:name": "item0",
       "smaps": {
-        "resolved-link-target": {
-          "#29": "amf://id#29"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#29": "[(5,4)-(5,10)]"
+        "resolved-link": {
+          "#29": "amf://id#30"
         },
         "lexical": {
           "#29": "[(4,20)-(6,3)]"
         },
-        "resolved-link": {
-          "#29": "amf://id#30"
+        "type-property-lexical-info": {
+          "#29": "[(5,4)-(5,10)]"
+        },
+        "resolved-link-target": {
+          "#29": "amf://id#29"
         }
       }
     },
@@ -830,6 +862,10 @@
       ],
       "core:name": "randomKey",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#12": "[(4,19)-(4,28)]"
         }
@@ -850,6 +886,10 @@
       ],
       "core:name": "otherRandomKey",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#14": "[(7,24)-(7,31)]"
         }

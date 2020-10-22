@@ -4,18 +4,23 @@ mediaType:
   - application/json
   - application/xml
 types:
-  Person: {}
-  Another: {}
+  Person:
+    type: string
+  Another:
+    type: string
 /list:
   get:
     responses:
       "200":
         body:
           application/json:
-            items: {}
+            items:
+              type: string
           application/xml:
-            items: {}
+            items:
+              type: string
 /send:
   post:
     body:
-      application/json: {}
+      application/json:
+        type: string

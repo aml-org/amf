@@ -117,20 +117,27 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:supportedOperation": "true"
+              },
               "lexical": {
+                "apiContract:path": "[(23,0)-(23,7)]",
                 "#14": "[(23,0)-(27,24)]"
               }
             }
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#13": "RAML 1.0"
+          "synthesized-field": {
+            "apiContract:endpoint": "true"
           },
           "lexical": {
             "core:version": "[(3,0)-(5,0)]",
             "#13": "[(2,0)-(27,24)]",
             "core:name": "[(2,0)-(3,0)]"
+          },
+          "source-vendor": {
+            "#13": "RAML 1.0"
           }
         }
       }
@@ -226,7 +233,12 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "shacl:minCount": "true",
+                    "shacl:path": "true"
+                  },
                   "lexical": {
+                    "raml-shapes:range": "[(14,14)-(17,0)]",
                     "#3": "[(14,6)-(17,0)]"
                   }
                 }
@@ -326,7 +338,12 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "shacl:minCount": "true",
+                    "shacl:path": "true"
+                  },
                   "lexical": {
+                    "raml-shapes:range": "[(20,12)-(23,0)]",
                     "#8": "[(20,6)-(23,0)]"
                   }
                 }
@@ -338,20 +355,23 @@
               }
             ],
             "smaps": {
-              "resolved-link-target": {
-                "#7": "amf://id#11"
+              "synthesized-field": {
+                "shacl:closed": "true"
               },
-              "declared-element": {
-                "#7": ""
-              },
-              "lexical": {
-                "#7": "[(17,2)-(23,0)]"
+              "resolved-link": {
+                "#7": "amf://id#10"
               },
               "type-property-lexical-info": {
                 "#7": "[(18,4)-(18,8)]"
               },
-              "resolved-link": {
-                "#7": "amf://id#10"
+              "lexical": {
+                "#7": "[(17,2)-(23,0)]"
+              },
+              "declared-element": {
+                "#7": ""
+              },
+              "resolved-link-target": {
+                "#7": "amf://id#11"
               }
             }
           }
@@ -441,7 +461,12 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true",
+                "shacl:path": "true"
+              },
               "lexical": {
+                "raml-shapes:range": "[(14,14)-(17,0)]",
                 "#3": "[(14,6)-(17,0)]"
               }
             }
@@ -542,7 +567,12 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true",
+                "shacl:path": "true"
+              },
               "lexical": {
+                "raml-shapes:range": "[(20,12)-(23,0)]",
                 "#8": "[(20,6)-(23,0)]"
               }
             }
@@ -554,21 +584,24 @@
           }
         ],
         "smaps": {
-          "resolved-link-target": {
-            "#11": "amf://id#11"
+          "synthesized-field": {
+            "shacl:closed": "true"
           },
-          "declared-element": {
-            "#11": ""
+          "resolved-link": {
+            "#11": "amf://id#10"
+          },
+          "type-property-lexical-info": {
+            "#11": "[(18,4)-(18,8)]"
           },
           "lexical": {
             "shacl:name": "[(17,2)-(17,11)]",
             "#11": "[(17,2)-(23,0)]"
           },
-          "type-property-lexical-info": {
-            "#11": "[(18,4)-(18,8)]"
+          "declared-element": {
+            "#11": ""
           },
-          "resolved-link": {
-            "#11": "amf://id#10"
+          "resolved-link-target": {
+            "#11": "amf://id#11"
           }
         }
       }

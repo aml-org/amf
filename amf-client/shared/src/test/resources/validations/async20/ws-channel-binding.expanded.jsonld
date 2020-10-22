@@ -205,17 +205,17 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
-                            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/web-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/type-property-lexical-info/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/web-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/web-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema"
+                                    "@value": "http://www.w3.org/ns/shacl#closed"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(12,10)-(12,14)]"
+                                    "@value": "true"
                                   }
                                 ]
                               }
@@ -244,6 +244,21 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(13,10)-(16,0)]"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/web-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/type-property-lexical-info/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/web-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(12,10)-(12,14)]"
                                   }
                                 ]
                               }
@@ -400,17 +415,17 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
-                            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/web-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/type-property-lexical-info/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/web-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/web-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema"
+                                    "@value": "http://www.w3.org/ns/shacl#closed"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(17,10)-(17,14)]"
+                                    "@value": "true"
                                   }
                                 ]
                               }
@@ -439,6 +454,21 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(18,10)-(21,0)]"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/web-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/type-property-lexical-info/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/web-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(17,10)-(17,14)]"
                                   }
                                 ]
                               }

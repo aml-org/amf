@@ -14,12 +14,15 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#5": "RAML 0.8"
+        "synthesized-field": {
+          "apiContract:endpoint": "true"
         },
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
           "#5": "[(2,0)-(11,45)]"
+        },
+        "source-vendor": {
+          "#5": "RAML 0.8"
         }
       }
     },
@@ -36,7 +39,11 @@
         }
       ],
       "smaps": {
+        "synthesized-field": {
+          "apiContract:supportedOperation": "true"
+        },
         "lexical": {
+          "apiContract:path": "[(4,0)-(4,6)]",
           "#6": "[(4,0)-(11,45)]"
         }
       }
@@ -195,14 +202,17 @@
       ],
       "shacl:name": "Person",
       "smaps": {
-        "resolved-link-target": {
-          "#21": "amf://id#21"
+        "synthesized-field": {
+          "shacl:closed": "true"
+        },
+        "resolved-link": {
+          "#21": "amf://id#33"
         },
         "lexical": {
           "#21": "[(9,4)-(18,5)]"
         },
-        "resolved-link": {
-          "#21": "amf://id#33"
+        "resolved-link-target": {
+          "#21": "amf://id#21"
         }
       }
     },
@@ -230,14 +240,17 @@
       "doc:recursive": true,
       "shacl:name": "Animal",
       "smaps": {
-        "resolved-link-target": {
-          "#25": "amf://id#25"
+        "synthesized-field": {
+          "shacl:closed": "true"
+        },
+        "resolved-link": {
+          "#25": "amf://id#34"
         },
         "lexical": {
           "#25": "[(19,4)-(34,5)]"
         },
-        "resolved-link": {
-          "#25": "amf://id#34"
+        "resolved-link-target": {
+          "#25": "amf://id#25"
         }
       }
     },
@@ -399,6 +412,9 @@
       },
       "core:name": "object_2",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:pet": "[(3,2)-(7,3)]",
           "#13": "[(1,1)-(8,1)]",
@@ -518,6 +534,10 @@
       ],
       "core:name": "name",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#14": "[(2,10)-(2,17)]"
         }
@@ -541,6 +561,9 @@
       },
       "core:name": "pet",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:owners": "[(6,4)-(6,30)]",
           "data:name": "[(4,4)-(4,20)]",
@@ -591,6 +614,10 @@
       ],
       "core:name": "name",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#16": "[(4,12)-(4,20)]"
         }
@@ -611,6 +638,10 @@
       ],
       "core:name": "age",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#17": "[(5,11)-(5,13)]"
         }
@@ -654,6 +685,10 @@
       ],
       "core:name": "scalar_8",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#19": "[(6,15)-(6,22)]"
         }
@@ -674,6 +709,10 @@
       ],
       "core:name": "scalar_9",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#20": "[(6,24)-(6,29)]"
         }
