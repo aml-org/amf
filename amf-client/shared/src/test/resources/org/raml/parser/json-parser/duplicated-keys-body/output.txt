@@ -6,10 +6,10 @@ title: Test
       "200":
         body:
           application/json:
-            type: object
             example:
               name: Pepe
               age: 20
+            type: object
             additionalProperties: true
             properties:
               name:

@@ -148,7 +148,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
   }
 
   private def setDefaultBindingVersionValue(binding: BindingVersion, field: Field) = {
-    binding.set(field, AmfScalar("latest"), Annotations(SynthesizedField()))
+    binding.set(field, AmfScalar("latest"), Annotations.synthesized())
   }
 
   private def bindingVersionIsEmpty(binding: BindingVersion) = {
@@ -157,7 +157,10 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
 
   protected def parseSchema(field: Field, binding: DomainElement, entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): Unit = {
-    OasTypeParser(YMapEntryLike(entry.value), "schema", shape => shape.withName("schema"), JSONSchemaDraft7SchemaVersion)
+    OasTypeParser(YMapEntryLike(entry.value),
+                  "schema",
+                  shape => shape.withName("schema"),
+                  JSONSchemaDraft7SchemaVersion)
       .parse()
       .foreach { shape =>
         binding.set(field, shape, Annotations(entry))

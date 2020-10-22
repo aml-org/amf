@@ -157,15 +157,15 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/declarations/types/scalar/A/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/declarations/types/scalar/A/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/declarations/types/scalar/A"
+                        "@value": "http://www.w3.org/ns/shacl#datatype"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(3,2)-(4,0)]"
+                        "@value": "[(3,5)-(3,11)]"
                       }
                     ]
                   },
@@ -179,6 +179,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(3,2)-(3,3)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/declarations/types/scalar/A/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/declarations/types/scalar/A"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,2)-(4,0)]"
                       }
                     ]
                   }

@@ -53,6 +53,8 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Trait.apply
+
+  override protected def declarationComponent: String = "trait"
 }
 
 object Trait {

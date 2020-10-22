@@ -15,12 +15,13 @@ case class ScalarShape(override val fields: Fields, override val annotations: An
     extends AnyShape(fields, annotations)
     with CommonShapeFields {
 
-  def dataType: StrField = fields.field(DataType)
-  def encoding: StrField   = fields.field(Encoding)
-  def mediaType: StrField  = fields.field(MediaType)
-  def schema: Shape      = fields.field(Schema)
+  def dataType: StrField  = fields.field(DataType)
+  def encoding: StrField  = fields.field(Encoding)
+  def mediaType: StrField = fields.field(MediaType)
+  def schema: Shape       = fields.field(Schema)
 
-  def withDataType(dataType: String): this.type   = set(DataType, dataType)
+  def withDataType(dataType: String, annotations: Annotations = Annotations()): this.type =
+    set(DataType, dataType, annotations)
   def withEncoding(encoding: String): this.type   = set(Encoding, encoding)
   def withMediaType(mediaType: String): this.type = set(MediaType, mediaType)
   def withSchema(schema: Shape): this.type        = set(Schema, schema)

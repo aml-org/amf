@@ -146,6 +146,10 @@
                                       }
                                     ],
                                     "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true",
+                                        "shacl:datatype": "true"
+                                      },
                                       "lexical": {
                                         "#14": "[(38,27)-(38,55)]"
                                       }
@@ -198,7 +202,6 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(33,12)-(40,13)]",
-                        "core:name": "[(31,10)-(31,15)]",
                         "#10": "[(31,10)-(41,11)]",
                         "core:description": "[(32,12)-(32,40)]"
                       }
@@ -225,7 +228,7 @@
             "#7": "OAS 3.0"
           },
           "lexical": {
-            "apiContract:endpoint": "[(27,11)-(45,3)]",
+            "apiContract:endpoint": "[(27,2)-(45,3)]",
             "core:name": "[(4,4)-(4,30)]",
             "#7": "[(1,0)-(47,1)]",
             "core:version": "[(5,4)-(5,20)]"
@@ -341,6 +344,10 @@
                       }
                     ],
                     "smaps": {
+                      "synthesized-field": {
+                        "core:name": "true",
+                        "shacl:datatype": "true"
+                      },
                       "lexical": {
                         "#4": "[(15,21)-(15,48)]"
                       }
@@ -413,6 +420,10 @@
                       }
                     ],
                     "smaps": {
+                      "synthesized-field": {
+                        "core:name": "true",
+                        "shacl:datatype": "true"
+                      },
                       "lexical": {
                         "#6": "[(21,21)-(21,60)]"
                       }
@@ -425,9 +436,13 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "doc:strict": "true"
+                  },
                   "lexical": {
                     "doc:raw": "[(21,21)-(21,60)]",
                     "core:description": "[(20,12)-(20,55)]",
+                    "core:name": "[(18,10)-(18,13)]",
                     "#5": "[(18,10)-(22,11)]",
                     "apiContract:guiSummary": "[(19,12)-(19,39)]",
                     "doc:structuredValue": "[(21,21)-(21,60)]"
@@ -453,8 +468,9 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#1": ""
+          "synthesized-field": {
+            "apiContract:explode": "true",
+            "apiContract:required": "true"
           },
           "lexical": {
             "raml-shapes:schema": "[(13,8)-(16,9)]",
@@ -462,6 +478,9 @@
             "#1": "[(9,6)-(24,7)]",
             "apiContract:paramName": "[(10,8)-(10,23)]",
             "apiContract:binding": "[(11,8)-(11,22)]"
+          },
+          "declared-element": {
+            "#1": ""
           }
         }
       }

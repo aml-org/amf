@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.core.annotations.VirtualObject
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
@@ -20,7 +19,7 @@ import scala.collection.mutable.ListBuffer
 case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
   def parse(): Option[Request] = {
     val request = new Lazy[Request](() => {
-      val req = Request(map).add(VirtualObject())
+      val req = Request(map).add(Annotations.virtual())
       adopt(req)
       req
     })
@@ -45,6 +44,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
                                  (p: Parameter) => p.adopted(request.getOrCreate.id),
                                  binding = "query")(spec.toRaml(ctx))
               .parse()
+              .map(_.synthesizedBinding("query"))
           parameters = parameters.add(Parameters(query = queryParameters))
         }
       )
@@ -59,6 +59,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
                                  (p: Parameter) => p.adopted(request.getOrCreate.id),
                                  binding = "header")(spec.toRaml(ctx))
               .parse()
+              .map(_.synthesizedBinding("header")) // conflicts with binding above?
           parameters = parameters.add(Parameters(header = headers))
         }
       )
@@ -72,6 +73,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
             Raml08ParameterParser(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), binding = "path")(
               spec.toRaml(ctx))
               .parse()
+              .synthesizedBinding("path")
           parameters = parameters.add(Parameters(baseUri08 = Seq(parameter)))
         }
       }

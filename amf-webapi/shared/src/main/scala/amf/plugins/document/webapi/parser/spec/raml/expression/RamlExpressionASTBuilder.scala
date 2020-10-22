@@ -1,15 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.raml.expression
 
-import amf.core.annotations.DeclaredElement
+import amf.core.annotations.{DeclaredElement, VirtualNode}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.DataType
-import amf.core.model.domain.{Annotation, Shape}
+import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.parser.Annotations
 import amf.plugins.document.webapi.parser.spec.raml.expression.Token._
-import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, UnionShapeModel}
+import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models._
 import amf.validations.ParserSideValidations.InvalidTypeExpression
-import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 
 import scala.collection.mutable
 
@@ -62,7 +61,7 @@ private[expression] class RamlExpressionASTBuilder(
     optionalShape match {
       case Some(shape) =>
         val nextAnyOf = calculateAnyOf(previousShape, shape)
-        union.setArrayWithoutId(UnionShapeModel.AnyOf, nextAnyOf)
+        union.setWithoutId(UnionShapeModel.AnyOf, AmfArray(nextAnyOf), Annotations(SingleExpression()))
         setShapeAnnotation(union, previousShape, shape)
       case None => union
     }
@@ -94,9 +93,9 @@ private[expression] class RamlExpressionASTBuilder(
     val finalShape = previousShape match {
       case _: ArrayShape =>
         ArrayShape()
-          .setWithoutId(ArrayShapeModel.Items, previousShape, Annotations())
+          .setWithoutId(ArrayShapeModel.Items, previousShape, Annotations(SingleExpression()))
           .toMatrixShapeWithoutId
-      case _ => ArrayShape().setWithoutId(ArrayShapeModel.Items, previousShape, Annotations())
+      case _ => ArrayShape().setWithoutId(ArrayShapeModel.Items, previousShape, Annotations(SingleExpression()))
     }
     setShapeAnnotation(finalShape, token, maybeEndToken)
   }
@@ -117,7 +116,11 @@ private[expression] class RamlExpressionASTBuilder(
       case "object" => Some(NodeShape())
       case "array"  => Some(ArrayShape())
       case "string" | "integer" | "number" | "boolean" | "datetime" | "datetime-only" | "time-only" | "date-only" =>
-        Some(ScalarShape().withDataType(DataType(token.value)))
+        Some(
+          ScalarShape(Annotations(SingleExpression())).set(
+            ScalarShapeModel.DataType,
+            AmfScalar(DataType(token.value), Annotations(SingleExpression())),
+            Annotations.inferred()))
       case _ => None
     }
     shape.foreach(x => x.annotations ++= annotations)
@@ -147,4 +150,7 @@ private[expression] class RamlExpressionASTBuilder(
     shape.linkTarget.exists(_.annotations.contains(classOf[DeclaredElement]))
 }
 
-case class GroupedTypeExpression() extends Annotation
+trait ExpressionMember extends VirtualNode
+
+case class GroupedTypeExpression() extends ExpressionMember
+case class SingleExpression()      extends ExpressionMember

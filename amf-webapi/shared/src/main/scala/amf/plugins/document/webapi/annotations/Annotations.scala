@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.annotations
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{LexicalInformation, VirtualNode}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain._
 import amf.core.parser.Range
@@ -144,8 +144,6 @@ case class OperationTraitEntry(range: Range) extends Annotation
 
 // save original text link?
 case class ReferencedElement(parsedUrl: String, referenced: DomainElement) extends Annotation
-
-case class Inferred() extends Annotation
 
 case class CollectionFormatFromItems() extends Annotation
 

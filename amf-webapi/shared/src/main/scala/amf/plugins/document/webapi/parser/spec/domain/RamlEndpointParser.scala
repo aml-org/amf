@@ -19,6 +19,7 @@ import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
+import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ResourceType}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import amf.validations.ParserSideValidations.{
   DuplicatedEndpointPath,
@@ -69,7 +70,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     parent.map(p => endpoint.add(ParentEndPoint(p)))
 
     checkBalancedParams(path, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
-    endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
+    endpoint.set(Path, AmfScalar(path, Annotations(entry.key)), Annotations(entry.key))
 
     if (!TemplateUri.isValid(path))
       ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
@@ -106,10 +107,14 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       "type",
       entry => {
         endpoint.annotations += EndPointResourceTypeEntry(Range(entry.range))
-        ParametrizedDeclarationParser(entry.value,
-                                      endpoint.withResourceType,
-                                      ctx.declarations.findResourceTypeOrError(entry.value))
+        val declaration = ParametrizedDeclarationParser(
+          entry.value,
+          (name: String) => ParametrizedResourceType().withName(name).adopted(endpoint.id),
+          ctx.declarations.findResourceTypeOrError(entry.value))
           .parse()
+        endpoint.set(EndPointModel.Extends,
+                     AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(entry.value)),
+                     Annotations(entry))
       }
     )
 
@@ -138,17 +143,17 @@ abstract class RamlEndpointParser(entry: YMapEntry,
                                       ctx.options)
           }
           operationContext.nodeRefIds ++= ctx.nodeRefIds
-          val operation = RamlOperationParser(entry, endpoint.withOperation, parseOptionalOperations)(operationContext)
+          val operation = RamlOperationParser(entry, endpoint.id, parseOptionalOperations)(operationContext)
             .parse()
           operations += operation
           ctx.operationContexts.put(operation.id.stripSuffix("%3F"), operationContext)
         })
-        endpoint.set(EndPointModel.Operations, AmfArray(operations))
+        endpoint.set(EndPointModel.Operations, AmfArray(operations, Annotations.virtual()), Annotations.inferred())
       }
     )
 
     val idCounter         = new IdCounter()
-    val RequirementParser = RamlSecurityRequirementParser.parse(endpoint.withSecurity, idCounter) _
+    val RequirementParser = RamlSecurityRequirementParser.parse(endpoint.id, idCounter) _
     map.key("securedBy", (EndPointModel.Security in endpoint using RequirementParser).allowingSingleValue)
 
     var parameters               = Parameters()
@@ -169,6 +174,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
             val param = ctx.factory
               .parameterParser(entry, (p: Parameter) => p.adopted(endpoint.id), false, "path")
               .parse()
+              .synthesizedBinding("path")
             param.fields ? [Shape] ParameterModel.Schema foreach (schema => validateSlashsInSchema(schema, entry))
             param
           })
@@ -200,7 +206,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       "payloads".asRamlAnnotation,
       entry => {
         endpoint.set(EndPointModel.Payloads,
-                     AmfArray(Seq(Raml10PayloadParser(entry, endpoint.withPayload).parse()), Annotations(entry.value)),
+                     AmfArray(Seq(Raml10PayloadParser(entry, endpoint.id).parse()), Annotations(entry.value)),
                      Annotations(entry))
       }
     )
@@ -265,7 +271,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
     if (operationsDefineParam) None
     else {
-      val pathParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
+      val pathParam = endpoint.withParameter(variable).synthesizedBinding("path").withRequired(true)
       pathParam.withScalarSchema(variable).withDataType(DataType.String)
       pathParam.annotations += SynthesizedField()
       Some(pathParam)

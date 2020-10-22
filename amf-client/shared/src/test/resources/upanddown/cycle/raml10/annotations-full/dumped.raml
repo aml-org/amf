@@ -18,6 +18,7 @@ baseUri: myfalsehost.com/apis
         "200":
           body:
             application/json:
+              type: any
     delete:
       description: Removes a Customer from the system
     /accounts:
@@ -27,6 +28,7 @@ baseUri: myfalsehost.com/apis
           "200":
             body:
               application/json:
+                type: any
     /cards:
       /debit:
         get:
@@ -35,6 +37,7 @@ baseUri: myfalsehost.com/apis
             "200":
               body:
                 application/json:
+                  type: any
         post:
           description: Requests the creation of a new DebitCard
           body:

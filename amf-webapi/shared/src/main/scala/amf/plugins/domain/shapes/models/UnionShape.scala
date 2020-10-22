@@ -12,7 +12,8 @@ case class UnionShape(override val fields: Fields, override val annotations: Ann
 
   def anyOf: Seq[Shape] = fields.field(AnyOf)
 
-  def withAnyOf(elements: Seq[Shape]): this.type = this.setArray(AnyOf, elements)
+  def withAnyOf(elements: Seq[Shape], annotations: Annotations = Annotations()): this.type =
+    this.setArray(AnyOf, elements, annotations)
 
   override def linkCopy(): AnyShape = UnionShape().withId(id)
 
