@@ -54,17 +54,16 @@ class DataNodeParser private (node: YNode,
   }
 
   protected def parseObject(value: YMap): DataNode = {
-    val node = DataObjectNode(Annotations(value)).withName(idCounter.genId("object"))
+    val node = DataObjectNode(Annotations(value)).synthesizeName(idCounter.genId("object"))
     parent.foreach(p => node.adopted(p))
     value.entries.map { ast =>
-      val key = ast.key.as[YScalar].text
-      parameters.parseVariables(key)
+      parameters.parseVariables(ast.key)
       val value               = ast.value
       val propertyAnnotations = Annotations(ast)
 
       val propertyNode =
         new DataNodeParser(value, refsCounter, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addProperty(key, propertyNode, propertyAnnotations)
+      node.addProperty(ast.key.as[YScalar].text, propertyNode, propertyAnnotations)
     }
     node
   }
@@ -74,22 +73,23 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
                             parent: Option[String] = None,
                             idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
 
-  protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
+  protected def parseScalar(node: YNode, dataType: String): DataNode = {
     val finalDataType = Some(DataType(dataType))
-    val node = ScalarNode(ast.text, finalDataType, Annotations(ast))
-      .withName(idCounter.genId("scalar"))
-    parent.foreach(p => node.adopted(p))
-    parameters.parseVariables(ast)
-    node
+    val scalarNode    = amf.core.parser.ScalarNode(node)
+    val dataNode = ScalarNode(scalarNode, finalDataType, Annotations(node))
+      .synthesizeName(idCounter.genId("scalar"))
+    parent.foreach(p => dataNode.adopted(p))
+    parameters.parseVariables(scalarNode.text().toString)
+    dataNode
   }
 
   def parse(node: YNode): DataNode = {
     node.tag.tagType match {
-      case YType.Str       => parseScalar(node.as[YScalar], "string") // Date/time types are evaluated with patterns
-      case YType.Int       => parseScalar(node.as[YScalar], "integer")
-      case YType.Float     => parseScalar(node.as[YScalar], "double")
-      case YType.Bool      => parseScalar(node.as[YScalar], "boolean")
-      case YType.Null      => parseScalar(node.toOption[YScalar].getOrElse(YScalar("null")), "nil")
+      case YType.Str       => parseScalar(node, "string") // Date/time types are evaluated with patterns
+      case YType.Int       => parseScalar(node, "integer")
+      case YType.Float     => parseScalar(node, "double")
+      case YType.Bool      => parseScalar(node, "boolean")
+      case YType.Null      => parseScalar(node, "nil")
       case YType.Timestamp =>
         // TODO add time-only type in syaml and amf
         SimpleDateTime.parse(node.toString()).toOption match {
@@ -97,22 +97,22 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
             try {
               sdt.toDate // This is to validate the parsed timestamp
               if (sdt.timeOfDay.isEmpty)
-                parseScalar(node.as[YScalar], "date")
+                parseScalar(node, "date")
               else if (sdt.zoneOffset.isEmpty)
-                parseScalar(node.as[YScalar], "dateTimeOnly")
+                parseScalar(node, "dateTimeOnly")
               else
-                parseScalar(node.as[YScalar], "dateTime")
+                parseScalar(node, "dateTime")
             } catch {
-              case _: Exception => parseScalar(node.as[YScalar], "string")
+              case _: Exception => parseScalar(node, "string")
             }
-          case None => parseScalar(node.as[YScalar], "string")
+          case None => parseScalar(node, "string")
         }
 
       // Included external fragment
       case _ if node.tagType == YType.Include => parseInclusion(node)
 
       case other =>
-        val parsed = parseScalar(YScalar(other.toString()), "string")
+        val parsed = parseScalar(YNode(other.toString()), "string")
         ctx.eh.violation(SyamlError, parsed.id, None, s"Cannot parse scalar node from AST structure '$other'", node)
         parsed
     }

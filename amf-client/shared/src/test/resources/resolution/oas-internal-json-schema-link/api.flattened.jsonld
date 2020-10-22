@@ -123,17 +123,20 @@
       "shacl:name": "default",
       "core:description": "The response schema",
       "smaps": {
-        "resolved-link-target": {
-          "#8": "amf://id#8"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "auto-generated-name": {
-          "#8": ""
+        "resolved-link": {
+          "#8": "amf://id#8"
         },
         "lexical": {
           "core:description": "[(3,4)-(4,0)]",
           "#8": "[(2,2)-(11,0)]"
         },
-        "resolved-link": {
+        "auto-generated-name": {
+          "#8": ""
+        },
+        "resolved-link-target": {
           "#8": "amf://id#8"
         }
       }
@@ -234,6 +237,10 @@
       ],
       "core:name": "scalar_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#12": "[(9,17)-(9,22)]"
         }

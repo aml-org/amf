@@ -88,9 +88,9 @@ case class RamlExamplesParser(map: YMap,
       .key(multipleExamplesKey)
       .orElse(map.key(singleExampleKey)) match {
       case Some(e) =>
-        exemplified.set(ExamplesField.Examples, AmfArray(examples), Annotations(e))
+        exemplified.set(ExamplesField.Examples, AmfArray(examples, Annotations(e.value)), Annotations(e))
       case _ if examples.nonEmpty =>
-        exemplified.set(ExamplesField.Examples, AmfArray(examples))
+        exemplified.set(ExamplesField.Examples, AmfArray(examples), Annotations.inferred())
       case _ => // ignore
     }
   }

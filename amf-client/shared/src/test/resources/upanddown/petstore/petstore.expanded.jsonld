@@ -199,17 +199,17 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/default/array/default/items/array/items/source-map/external-fragment-ref/element_0",
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/default/array/default/items/array/items/source-map/synthesized-field/element_0",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/default/array/default/items/array/items"
+                                            "@value": "http://a.ml/vocabularies/document#link-target"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "Pet.json"
+                                            "@value": "true"
                                           }
                                         ]
                                       }
@@ -225,6 +225,21 @@
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
                                             "@value": "[(18,14)-(20,15)]"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/default/array/default/items/array/items/source-map/external-fragment-ref/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/default/array/default/items/array/items"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "Pet.json"
                                           }
                                         ]
                                       }
@@ -925,6 +940,34 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/items/items/property/destination/any/destination/enum/scalar_1/source-map/synthesized-field/element_1",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/items/items/property/destination/any/destination/enum/scalar_1/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/core#name"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/items/items/property/destination/any/destination/enum/scalar_1/source-map/lexical/element_0",
@@ -973,6 +1016,34 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/items/items/property/destination/any/destination/enum/scalar_2/source-map/synthesized-field/element_1",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/items/items/property/destination/any/destination/enum/scalar_2/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/core#name"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/items/items/property/destination/any/destination/enum/scalar_2/source-map/lexical/element_0",
@@ -1020,6 +1091,34 @@
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/items/items/property/destination/any/destination/enum/scalar_3/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/items/items/property/destination/any/destination/enum/scalar_3/source-map/synthesized-field/element_1",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/items/items/property/destination/any/destination/enum/scalar_3/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/core#name"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {

@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.parser.spec.async.parser.AsyncParametersParse
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncChannelBindingsParser
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
-import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
+import amf.plugins.domain.webapi.models.{EndPoint, ExtensibleWebApiDomainElement, Operation, Parameter}
 import amf.validations.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, InvalidEndpointType}
 import org.yaml.model._
 
@@ -101,7 +101,7 @@ abstract class OasEndpointParser(entry: YMapEntry, producer: String => EndPoint,
       val uriParameters =
         RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id))(spec.toRaml(ctx))
           .parse()
-          .map(_.withBinding("path"))
+          .map(_.synthesizedBinding("path"))
       parameters = parameters.add(Parameters(path = uriParameters))
     }
     parameters match {

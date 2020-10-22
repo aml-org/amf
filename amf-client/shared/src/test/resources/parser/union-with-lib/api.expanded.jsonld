@@ -90,6 +90,21 @@
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/api.raml#/source-map/lexical/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://a.ml/vocabularies/document#encodes"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(6,27)]"
+              }
+            ]
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#aliases-array": [
           {
             "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/api.raml#/source-map/aliases-array/element_0",
@@ -157,15 +172,15 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/declarations/types/scalar/A/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/declarations/types/scalar/A/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/declarations/types/scalar/A"
+                        "@value": "http://www.w3.org/ns/shacl#datatype"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(3,2)-(4,0)]"
+                        "@value": "[(3,5)-(3,11)]"
                       }
                     ]
                   },
@@ -179,6 +194,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(3,2)-(3,3)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/declarations/types/scalar/A/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/declarations/types/scalar/A"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,2)-(4,0)]"
                       }
                     ]
                   }
@@ -362,17 +390,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/source-map/source-vendor/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml"
+                    "@value": "http://a.ml/vocabularies/document#declares"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "RAML 1.0"
+                    "@value": "true"
                   }
                 ]
               }
@@ -388,6 +416,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(1,0)-(4,20)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml#/source-map/source-vendor/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/parser/union-with-lib/lib.raml"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "RAML 1.0"
                   }
                 ]
               }

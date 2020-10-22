@@ -1,7 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{AmfArray, DomainElement}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -15,9 +16,8 @@ import org.yaml.model._
 case class AnnotationParser(element: DomainElement, map: YMap, target: List[String] = Nil)(
     implicit val ctx: WebApiContext) {
   def parse(): Unit = {
-    val extensions    = parseExtensions(element.id, map, target)
-    val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
-    if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
+    val extensions: Seq[DomainExtension] = parseExtensions(element.id, map, target)
+    setExtensions(extensions)
   }
 
   def parseOrphanNode(orphanNodeName: String): Unit = {
@@ -27,10 +27,18 @@ case class AnnotationParser(element: DomainElement, map: YMap, target: List[Stri
         extensions.foreach { extension =>
           Option(extension.extension).foreach(_.annotations += OrphanOasExtension(orphanNodeName))
         }
-        val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
-        if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
+        setExtensions(extensions)
       case _ => // ignore
     }
+  }
+
+  private def setExtensions(extensions: Seq[DomainExtension]): Unit = {
+    val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
+    if (extensions.nonEmpty)
+      element.set(DomainElementModel.CustomDomainProperties,
+                  AmfArray(oldExtensions ++ extensions, Annotations.inferred()),
+                  Annotations.inferred())
+
   }
 }
 
@@ -48,19 +56,20 @@ private case class ExtensionParser(annotation: String, parent: String, entry: YM
   def parse(): DomainExtension = {
     val id              = s"$parent/extension/$annotation"
     val propertyId      = s"$parent/$annotation"
-    val domainExtension = DomainExtension().withId(id)
+    val domainExtension = DomainExtension(Annotations(entry)).withId(id)
     val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId)).parse()
     // TODO
     // throw a parser-side warning validation error if no annotation can be found
     val customDomainProperty = ctx.declarations
       .findAnnotation(annotation, SearchScope.All)
-      .getOrElse(CustomDomainProperty(Annotations(entry)).withId(propertyId).withName(annotation))
+      .getOrElse(
+        CustomDomainProperty(Annotations(entry)).withId(propertyId).withName(annotation, Annotations(entry.key)))
     validateAllowedTargets(customDomainProperty)
     domainExtension.adopted(parent)
     domainExtension
-      .withExtension(dataNode)
-      .withName(annotation)
-    domainExtension.fields.setWithoutId(DomainExtensionModel.DefinedBy, customDomainProperty)
+      .set(DomainExtensionModel.Extension, dataNode, Annotations.inferred())
+      .withName(annotation, Annotations(entry.key))
+    domainExtension.fields.setWithoutId(DomainExtensionModel.DefinedBy, customDomainProperty, Annotations.inferred())
     domainExtension
   }
 

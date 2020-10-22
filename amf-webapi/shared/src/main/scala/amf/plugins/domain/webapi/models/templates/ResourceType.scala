@@ -61,6 +61,8 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ResourceType.apply
+
+  override protected def declarationComponent: String = "resourceType"
 }
 
 object ResourceType {

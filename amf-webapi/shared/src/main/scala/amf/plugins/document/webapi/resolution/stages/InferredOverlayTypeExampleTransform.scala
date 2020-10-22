@@ -1,12 +1,11 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{Inferred, LexicalInformation}
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{FieldEntry, ParserContext, Value}
-import amf.plugins.document.webapi.annotations.Inferred
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser

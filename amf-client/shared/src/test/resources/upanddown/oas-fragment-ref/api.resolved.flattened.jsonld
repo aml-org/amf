@@ -325,9 +325,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/auto-generated-name/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -335,9 +340,9 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/lexical/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/auto-generated-name/element_0"
         }
       ]
     },
@@ -384,9 +389,14 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/auto-generated-name/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/type-property-lexical-info/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,2)-(2,8)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/lexical/element_0",
@@ -394,9 +404,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(8,1)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/type-property-lexical-info/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/source-map/auto-generated-name/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,2)-(2,8)]"
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/property/a1/scalar/a1/source-map",

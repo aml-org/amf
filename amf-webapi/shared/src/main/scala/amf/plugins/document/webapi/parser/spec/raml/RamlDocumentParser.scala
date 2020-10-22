@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.Root
 import amf.core.annotations._
 import amf.core.metamodel.Field
-import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.document._
@@ -157,11 +157,15 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
 
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
-    document.withEncodes(api)
+    document.set(DocumentModel.Encodes, api, Annotations(map))
 
     val declarables = ctx.declarations.declarables()
-    if (declarables.nonEmpty) document.withDeclares(declarables)
-    if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
+    if (declarables.nonEmpty)
+      document.setWithoutId(DocumentModel.Declares, AmfArray(declarables), Annotations(SynthesizedField()))
+    if (references.nonEmpty)
+      document.setWithoutId(DocumentModel.References,
+                            AmfArray((references.baseUnitReferences()),
+                            Annotations(SynthesizedField()))
 
     ctx.futureDeclarations.resolve()
 
@@ -217,20 +221,23 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       entries => {
         val endpoints = mutable.ListBuffer[EndPoint]()
         entries.foreach(entry => ctx.factory.endPointParser(entry, api.withEndPoint, None, endpoints, false).parse())
-        api.set(WebApiModel.EndPoints, AmfArray(endpoints))
+        api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(SynthesizedField()))
         ctx.mergeAllOperationContexts()
       }
     )
     RamlServersParser(map, api).parse()
     val idCounter         = new IdCounter()
-    val RequirementParser = RamlSecurityRequirementParser.parse(api.withSecurity, idCounter) _
+    val RequirementParser = RamlSecurityRequirementParser.parse(api.id, idCounter) _
     map.key("securedBy", (WebApiModel.Security in api using RequirementParser).allowingSingleValue)
     map.key(
       "documentation",
       entry => {
-        api.set(WebApiModel.Documentations,
-                AmfArray(UserDocumentationsParser(entry.value.as[Seq[YNode]], ctx.declarations, api.id).parse()),
-                Annotations(entry))
+        api.set(
+          WebApiModel.Documentations,
+          AmfArray(UserDocumentationsParser(entry.value.as[Seq[YNode]], ctx.declarations, api.id).parse(),
+                   Annotations(entry.value)),
+          Annotations(entry)
+        )
       }
     )
 
@@ -560,7 +567,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                 .parse() match {
                 case Some(schema) =>
                   tracking(schema, domainProp.id)
-                  domainProp.withSchema(schema)
+                  domainProp.set(CustomDomainPropertyModel.Schema, schema, Annotations.inferred())
                 case _ =>
                   ctx.eh.violation(DeclarationNotFound,
                                    domainProp.id,
@@ -639,9 +646,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
             .parse()
             .foreach({ shape =>
               tracking(shape, custom.id)
-              custom.set(CustomDomainPropertyModel.Schema,
-                         shape,
-                         maybeAnnotationType.map(Annotations(_)).getOrElse(Annotations()))
+              custom.set(CustomDomainPropertyModel.Schema, shape, Annotations(annotationType))
             })
 
           map.key(
@@ -675,7 +680,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                 case nodeType => AmfScalar(nodeType.toString, nodeType.annotations)
               })
 
-              custom.set(CustomDomainPropertyModel.Domain, AmfArray(targetUris), annotations)
+              custom.set(CustomDomainPropertyModel.Domain, AmfArray(targetUris, targets.annotations), annotations)
             }
           )
 

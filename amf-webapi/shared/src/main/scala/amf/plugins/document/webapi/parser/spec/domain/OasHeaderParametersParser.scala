@@ -132,7 +132,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
 
     OasExamplesParser(map, parameter).parse()
 
-    parameter.withBinding("header")
+    parameter.synthesizedBinding("header")
     Oas3ParameterParser.parseStyleField(map, parameter)
     Oas3ParameterParser.parseExplodeField(map, parameter)
 

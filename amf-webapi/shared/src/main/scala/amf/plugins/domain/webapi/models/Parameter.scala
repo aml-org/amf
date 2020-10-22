@@ -1,7 +1,8 @@
 package amf.plugins.domain.webapi.models
 
+import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.{Field, Obj}
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
+import amf.core.model.domain.{AmfScalar, DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
@@ -40,8 +41,10 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def withExplode(explode: Boolean): this.type                 = set(Explode, explode)
   def withAllowReserved(allowReserved: Boolean): this.type     = set(AllowReserved, allowReserved)
   def withBinding(binding: String): this.type                  = set(Binding, binding)
-  def withSchema(schema: Shape): this.type                     = set(Schema, schema)
-  def withPayloads(payloads: Seq[Payload]): this.type          = setArray(Payloads, payloads)
+  def synthesizedBinding(binding: String): this.type =
+    set(Binding, AmfScalar(binding), Annotations(SynthesizedField()))
+  def withSchema(schema: Shape): this.type            = set(Schema, schema)
+  def withPayloads(payloads: Seq[Payload]): this.type = setArray(Payloads, payloads)
 
   override def setSchema(shape: Shape): Shape = {
     set(ParameterModel.Schema, shape)
