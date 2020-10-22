@@ -6,18 +6,15 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.AmfStrings
+import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaAstIndex, OasWebApiContext}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft3SchemaVersion,
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaUnspecifiedVersion,
-  JSONSchemaVersion
-}
+import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaUnspecifiedVersion, JSONSchemaVersion}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
+import amf.plugins.document.webapi.parser.spec.jsonschema.AstFinder
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validation.DialectValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
 import amf.validations.ParserSideValidations.InvalidJsonSchemaVersion
@@ -76,7 +73,9 @@ abstract class WebApiContext(val loc: String,
       implicit ctx: OasWebApiContext): Option[OasParameter] = {
     val referenceUrl = getReferenceUrl(fileUrl)
     obtainFragment(fileUrl) flatMap { fragment =>
-      JsonSchemaPlugin.parseParameterFragment(fragment, referenceUrl, parentId)
+      new AstFinder().findAst(fragment, referenceUrl).map { node =>
+        ctx.factory.parameterParser(YMapEntryLike(node), parentId, None, new IdCounter()).parse
+      }
     }
   }
 

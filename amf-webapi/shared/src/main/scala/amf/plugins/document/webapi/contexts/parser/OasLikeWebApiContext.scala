@@ -9,12 +9,8 @@ import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.contexts.{SpecVersionFactory, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.{OasLikeWebApiDeclarations, toOas}
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeSecuritySettingsParser
-import amf.plugins.document.webapi.parser.spec.domain.{
-  OasLikeEndpointParser,
-  OasLikeOperationParser,
-  OasLikeServerVariableParser,
-  ParsingHelpers
-}
+import amf.plugins.document.webapi.parser.spec.domain.{OasLikeEndpointParser, OasLikeOperationParser, OasLikeServerVariableParser, ParsingHelpers}
+import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaFragmentParser
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Server, WebApi}
@@ -104,7 +100,7 @@ abstract class OasLikeWebApiContext(loc: String,
   def parseRemoteJSONPath(ref: String): Option[AnyShape] = {
     jsonSchemaRefGuide.withFragmentAndInFileReference(ref) { (fragment, referenceUrl) =>
       val newCtx = makeCopyWithJsonPointerContext().moveToReference(fragment.location().get)
-      JsonSchemaPlugin.parseFragment(fragment, referenceUrl)(newCtx)
+      new JsonSchemaFragmentParser().parse(fragment, referenceUrl)(newCtx)
     }
   }
 
