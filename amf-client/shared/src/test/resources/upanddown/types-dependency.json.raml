@@ -17,27 +17,21 @@ protocols:
     body:
       type: object
       properties:
-        name:
+        name?:
           type: string
-          required: false
-        lastName:
+        lastName?:
           type: string
-          required: false
-        address:
+        address?:
           type: object
           properties:
-            city:
+            city?:
               type: string
-              required: false
-            street:
+            street?:
               type: string
-              required: false
-            number:
+            number?:
               type: integer
-              required: false
-            postal:
+            postal?:
               type: integer
-              required: false
           (amf-dependencies):
             city:
               - postal
@@ -47,25 +41,19 @@ protocols:
               - city
             number:
               - street
-          required: false
       application/raml:
         type: object
         properties:
-          credit_card:
+          credit_card?:
             type: integer
-            required: false
-          city:
+          city?:
             type: string
-            required: false
-          street:
+          street?:
             type: string
-            required: false
-          number:
+          number?:
             type: integer
-            required: false
-          postal:
+          postal?:
             type: integer
-            required: false
         (amf-dependencies):
           credit_card:
             - city

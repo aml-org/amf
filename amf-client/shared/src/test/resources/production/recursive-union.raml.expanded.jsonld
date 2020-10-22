@@ -196,9 +196,24 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/end-points/%2Ftest/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#supportedOperation"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/end-points/%2Ftest/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/end-points/%2Ftest/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/end-points/%2Ftest"
@@ -207,6 +222,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(18,0)-(24,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/end-points/%2Ftest/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(18,0)-(18,5)]"
                       }
                     ]
                   }
@@ -221,17 +249,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api"
+                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "RAML 1.0"
+                    "@value": "true"
                   }
                 ]
               }
@@ -260,6 +288,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(2,0)-(4,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api/source-map/source-vendor/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "RAML 1.0"
                   }
                 ]
               }
@@ -328,9 +371,24 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/AnotherType/recursive/source-map/declared-element/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/AnotherType/recursive/source-map/synthesized-field/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/document#recursive"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/AnotherType/recursive/source-map/type-property-lexical-info/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/AnotherType/recursive"
@@ -338,7 +396,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": ""
+                            "@value": "[(6,4)-(6,8)]"
                           }
                         ]
                       }
@@ -358,9 +416,9 @@
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                    "http://a.ml/vocabularies/document-source-maps#declared-element": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/AnotherType/recursive/source-map/type-property-lexical-info/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/AnotherType/recursive/source-map/declared-element/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/AnotherType/recursive"
@@ -368,7 +426,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(6,4)-(6,8)]"
+                            "@value": ""
                           }
                         ]
                       }
@@ -475,9 +533,24 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/OneMoreType/recursive/source-map/declared-element/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/OneMoreType/recursive/source-map/synthesized-field/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/document#recursive"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/OneMoreType/recursive/source-map/type-property-lexical-info/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/OneMoreType/recursive"
@@ -485,7 +558,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": ""
+                            "@value": "[(6,4)-(6,8)]"
                           }
                         ]
                       }
@@ -505,9 +578,9 @@
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                    "http://a.ml/vocabularies/document-source-maps#declared-element": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/OneMoreType/recursive/source-map/type-property-lexical-info/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/OneMoreType/recursive/source-map/declared-element/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/production/recursive-union.raml#/declarations/types/array/SomeUnion/items/OneMoreType/recursive"
@@ -515,7 +588,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(6,4)-(6,8)]"
+                            "@value": ""
                           }
                         ]
                       }

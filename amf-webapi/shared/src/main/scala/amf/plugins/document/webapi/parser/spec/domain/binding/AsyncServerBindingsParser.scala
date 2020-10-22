@@ -31,7 +31,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "serverBindings")
     ctx.declarations
       .findServerBindings(label, SearchScope.Named)
-      .map(serverBindings => nameAndAdopt(serverBindings.link(label), entryLike.key))
+      .map(serverBindings => nameAndAdopt(serverBindings.link(label, extractRefAnnotation(entryLike)), entryLike.key))
       .getOrElse(remote(fullRef, entryLike, parent))
   }
 

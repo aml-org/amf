@@ -1,12 +1,11 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{Inferred, LexicalInformation}
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{FieldEntry, ParserContext, Value}
-import amf.plugins.document.webapi.annotations.Inferred
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
@@ -22,7 +21,7 @@ class InferredOverlayTypeExampleTransform(implicit val errorHandler: ErrorHandle
 
   override def transform(main: DomainElement, overlay: DomainElement): DomainElement =
     (main, overlay, overlay.meta) match {
-      case (_: Shape, overlayScalar: ScalarShape, ScalarShapeModel) if hasInferredType(overlayScalar) =>
+      case (_: Shape, overlayScalar: ScalarShape, ScalarShapeModel) if hasSynthesizedType(overlayScalar) =>
         transformExamplesOf(overlayScalar)
       case _ => overlay
     }
@@ -46,12 +45,10 @@ class InferredOverlayTypeExampleTransform(implicit val errorHandler: ErrorHandle
     example
   }
 
-  private def hasInferredType(scalar: ScalarShape) = scalar.fields.entry(ScalarShapeModel.DataType) match {
-    case Some(FieldEntry(_, value)) => isInferred(value)
+  private def hasSynthesizedType(scalar: ScalarShape) = scalar.fields.entry(ScalarShapeModel.DataType) match {
+    case Some(FieldEntry(_, value)) => value.isSynthesized
     case None                       => false
   }
-
-  private def isInferred(value: Value) = value.annotations.contains(classOf[Inferred])
 
   class ParserErrorHandlerAdapter(val parserRun: Int, errorHandler: ErrorHandler) extends ParserErrorHandler {
     override def reportConstraint(id: String,

@@ -22,7 +22,7 @@ sealed trait YMapEntryLike {
 
 private case class RealYMapEntryLike(e: YMapEntry)(implicit errorHandler: IllegalTypeHandler) extends YMapEntryLike {
   override def key: Option[YNode]       = Some(e.key)
-  override def keyText: Option[String]   = e.key.asScalar.map(_.text)
+  override def keyText: Option[String]  = e.key.asScalar.map(_.text)
   override def value: YNode             = e.value
   override def asMap: YMap              = e.value.as[YMap]
   override def asSequence: YSequence    = e.value.as[YSequence]
@@ -48,5 +48,5 @@ private case class TextKeyYMapEntryLike(artificialKey: String, n: YNode)(implici
   override def asMap: YMap              = n.as[YMap]
   override def asSequence: YSequence    = n.as[YSequence]
   override def ast: YPart               = n
-  override def annotations: Annotations = Annotations(n.value)
+  override def annotations: Annotations = Annotations(n.value) // should be inferred?
 }

@@ -24,14 +24,17 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#1": "RAML 1.0"
+        "synthesized-field": {
+          "apiContract:endpoint": "true"
         },
         "lexical": {
           "core:version": "[(3,0)-(5,0)]",
           "core:name": "[(2,0)-(3,0)]",
           "#1": "[(2,0)-(24,0)]",
           "apiContract:server": "[(5,0)-(7,0)]"
+        },
+        "source-vendor": {
+          "#1": "RAML 1.0"
         }
       }
     },
@@ -60,6 +63,7 @@
       "apiContract:path": "/customers",
       "smaps": {
         "lexical": {
+          "apiContract:path": "[(7,0)-(7,10)]",
           "#2": "[(7,0)-(24,0)]"
         }
       }
@@ -77,11 +81,15 @@
         }
       ],
       "smaps": {
-        "parent-end-point": {
-          "#3": "file://amf-client/shared/src/test/resources/resolution/raml-query-and-header-params/api.raml#/web-api/end-points/%2Fcustomers"
+        "synthesized-field": {
+          "apiContract:supportedOperation": "true"
         },
         "lexical": {
+          "apiContract:path": "[(8,2)-(8,11)]",
           "#3": "[(8,2)-(24,0)]"
+        },
+        "parent-end-point": {
+          "#3": "file://amf-client/shared/src/test/resources/resolution/raml-query-and-header-params/api.raml#/web-api/end-points/%2Fcustomers"
         }
       }
     },
@@ -174,6 +182,9 @@
         "@id": "#7"
       },
       "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true"
+        },
         "lexical": {
           "raml-shapes:schema": "[(11,8)-(14,0)]",
           "#6": "[(11,8)-(14,0)]",
@@ -195,6 +206,9 @@
         "@id": "#9"
       },
       "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true"
+        },
         "lexical": {
           "raml-shapes:schema": "[(15,8)-(18,0)]",
           "#8": "[(15,8)-(18,0)]",

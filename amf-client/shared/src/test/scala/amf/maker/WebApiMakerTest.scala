@@ -603,6 +603,11 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withStatusCode("default")
 
     default
+      .withPayload(Some("application/xml"))
+      .withScalarSchema("schema")
+      .withDataType("http://www.w3.org/2001/XMLSchema#string")
+
+    default
       .withPayload()
       .withObjectSchema("default")
       .withClosed(false)
@@ -610,10 +615,6 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withPath("http://a.ml/vocabularies/data#invented")
       .withMinCount(0)
       .withScalarSchema("invented")
-      .withDataType("http://www.w3.org/2001/XMLSchema#string")
-    default
-      .withPayload(Some("application/xml"))
-      .withScalarSchema("schema")
       .withDataType("http://www.w3.org/2001/XMLSchema#string")
 
     operation

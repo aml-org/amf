@@ -55,7 +55,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         }
 
         fs.entry(PayloadModel.Schema).map { f =>
-          if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
+          if (!f.value.annotations.contains(classOf[SynthesizedField])) {
             result += oas.OasSchemaEmitter(f, ordering, references)
           }
         }

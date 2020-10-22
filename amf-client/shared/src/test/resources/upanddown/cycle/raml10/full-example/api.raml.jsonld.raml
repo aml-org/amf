@@ -28,27 +28,22 @@ documentation:
 baseUriParameters:
   uriParameter1?:
     description: testUriDisplay
-    type: string
   uriParameter2?:
     description: testUriDisplay2
-    type: string
 /levelzero:
   displayName: Name
 /levelzero/{two}/level-one/{three}:
   displayName: One display name
   description: and this description!
   uriParameters:
-    two?:
-      type: string
+    two?: {}
     three:
       description: endpoint uri parameter
-      type: string
   get:
     displayName: Some title
     queryParameters:
       param1:
         description: Some descr
-        type: string
       param2?:
         type: string
     headers:
@@ -72,5 +67,6 @@ baseUriParameters:
           application/yaml:
             type: string
           application/x-www-form-urlencoded; charset=UTF-8:
+            type: any
       "404":
         description: Not found!

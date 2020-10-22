@@ -148,7 +148,7 @@
                                         ],
                                         "sourcemaps:value": [
                                           {
-                                            "@value": "[(28,21)-(28,50)]"
+                                            "@value": "[(1,0)-(1,0)]"
                                           }
                                         ]
                                       },
@@ -436,7 +436,7 @@
                                         ],
                                         "sourcemaps:value": [
                                           {
-                                            "@value": "[(34,21)-(34,50)]"
+                                            "@value": "[(1,0)-(1,0)]"
                                           }
                                         ]
                                       },
@@ -617,9 +617,24 @@
                 "@type": [
                   "sourcemaps:SourceMap"
                 ],
+                "sourcemaps:synthesized-field": [
+                  {
+                    "@id": "#/web-api/end-points/%2Fcontacts/source-map/synthesized-field/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "apiContract:supportedOperation"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "sourcemaps:lexical": [
                   {
-                    "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0",
+                    "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_1",
                     "sourcemaps:element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts"
@@ -628,6 +643,19 @@
                     "sourcemaps:value": [
                       {
                         "@value": "[(21,0)-(34,50)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "apiContract:path"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(21,0)-(21,9)]"
                       }
                     ]
                   }
@@ -642,17 +670,17 @@
             "@type": [
               "sourcemaps:SourceMap"
             ],
-            "sourcemaps:source-vendor": [
+            "sourcemaps:synthesized-field": [
               {
-                "@id": "#/web-api/source-map/source-vendor/element_0",
+                "@id": "#/web-api/source-map/synthesized-field/element_0",
                 "sourcemaps:element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api"
+                    "@value": "apiContract:endpoint"
                   }
                 ],
                 "sourcemaps:value": [
                   {
-                    "@value": "RAML 0.8"
+                    "@value": "true"
                   }
                 ]
               }
@@ -681,6 +709,21 @@
                 "sourcemaps:value": [
                   {
                     "@value": "[(2,0)-(3,0)]"
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:source-vendor": [
+              {
+                "@id": "#/web-api/source-map/source-vendor/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "RAML 0.8"
                   }
                 ]
               }

@@ -50,12 +50,10 @@ case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
     OasServerVariableParser(entry, parent)(ctx)
 
-  override def operationParser(entry: YMapEntry, adopt: Operation => Operation): OasLikeOperationParser =
-    Oas20OperationParser(entry, adopt)(ctx)
-  override def endPointParser(entry: YMapEntry,
-                              producer: String => EndPoint,
-                              collector: List[EndPoint]): OasLikeEndpointParser =
-    Oas20EndpointParser(entry, producer, collector)(ctx)
+  override def operationParser(entry: YMapEntry, parentId: String): OasLikeOperationParser =
+    Oas20OperationParser(entry, parentId)(ctx)
+  override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
+    Oas20EndpointParser(entry, parentId, collector)(ctx)
 }
 
 case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) extends OasSpecVersionFactory {
@@ -83,11 +81,9 @@ case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
     OasServerVariableParser(entry, parent)(ctx)
 
-  override def operationParser(entry: YMapEntry, adopt: Operation => Operation): OasLikeOperationParser =
-    Oas30OperationParser(entry, adopt)(ctx)
+  override def operationParser(entry: YMapEntry, parentId: String): OasLikeOperationParser =
+    Oas30OperationParser(entry, parentId)(ctx)
 
-  override def endPointParser(entry: YMapEntry,
-                              producer: String => EndPoint,
-                              collector: List[EndPoint]): OasLikeEndpointParser =
-    Oas30EndpointParser(entry, producer, collector)(ctx)
+  override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
+    Oas30EndpointParser(entry, parentId, collector)(ctx)
 }

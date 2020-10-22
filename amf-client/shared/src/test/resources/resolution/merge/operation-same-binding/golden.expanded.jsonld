@@ -21,14 +21,14 @@
         ],
         "http://a.ml/vocabularies/apiBinding#binding": [
           {
-            "@id": "target/operation-bindings",
+            "@id": "target/subscribe/operation-bindings",
             "@type": [
               "http://a.ml/vocabularies/apiBinding#OperationBindings",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/apiBinding#bindings": [
               {
-                "@id": "target/operation-bindings/http-operation",
+                "@id": "target/subscribe/operation-bindings/http-operation",
                 "@type": [
                   "http://a.ml/vocabularies/apiBinding#HttpOperationBinding",
                   "http://a.ml/vocabularies/apiBinding#OperationBinding",
@@ -41,7 +41,7 @@
                 ],
                 "http://a.ml/vocabularies/apiBinding#query": [
                   {
-                    "@id": "target/operation-bindings/http-operation#/schema",
+                    "@id": "target/subscribe/operation-bindings/http-operation#/schema",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -56,7 +56,7 @@
                     ],
                     "http://www.w3.org/ns/shacl#property": [
                       {
-                        "@id": "target/operation-bindings/http-operation#/schema/property/some",
+                        "@id": "target/subscribe/operation-bindings/http-operation#/schema/property/some",
                         "@type": [
                           "http://www.w3.org/ns/shacl#PropertyShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -70,7 +70,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#range": [
                           {
-                            "@id": "target/operation-bindings/http-operation#/schema/property/some/scalar/some",
+                            "@id": "target/subscribe/operation-bindings/http-operation#/schema/property/some/scalar/some",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",

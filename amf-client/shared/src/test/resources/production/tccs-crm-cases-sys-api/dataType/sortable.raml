@@ -1,0 +1,16 @@
+#%RAML 1.0 Trait
+description: The parameters for sorting records in the results
+usage: Apply this to GET operations that return collections
+
+queryParameters:
+  sort:
+    description: |
+      The sorting order of the results, in the format 
+      `<field name>[:<sorting direction>],...`
+      Where 
+      * `<field name>` possible values: `<<fieldsList>>`
+      * `<sorting direction>` possible values: `desc, asc`
+      When the sorting direction is omitted, the server decides the order.
+    type: string
+    required: false
+    example: field1:asc,field2,field3:desc

@@ -41,6 +41,7 @@
       ],
       "smaps": {
         "lexical": {
+          "apiContract:supportedOperation": "[(9,0)-(18,0)]",
           "#11": "[(8,2)-(18,0)]"
         }
       }
@@ -93,7 +94,8 @@
       },
       "smaps": {
         "lexical": {
-          "raml-shapes:schema": "[(11,8)-(18,0)]"
+          "raml-shapes:schema": "[(11,8)-(18,0)]",
+          "#14": "[(11,0)-(18,0)]"
         }
       }
     },
@@ -114,11 +116,14 @@
       ],
       "shacl:name": "schema",
       "smaps": {
-        "type-property-lexical-info": {
-          "#15": "[(12,10)-(12,14)]"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "#15": "[(11,8)-(18,0)]"
+        },
+        "type-property-lexical-info": {
+          "#15": "[(12,10)-(12,14)]"
         }
       }
     },
@@ -141,6 +146,9 @@
       "shacl:minCount": 0,
       "shacl:name": "email",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#16": "[(14,12)-(18,0)]"
         }
@@ -234,11 +242,11 @@
         "@id": "#4"
       },
       "smaps": {
-        "declared-element": {
-          "#3": ""
+        "synthesized-field": {
+          "apiContract:isAbstract": "true"
         },
-        "resolved-link": {
-          "#3": "amf://id#3"
+        "resolved-link-target": {
+          "#3": "amf://id#9"
         },
         "lexical": {
           "apiContract:headerSchema": "[(14,2)-(20,0)]",
@@ -249,8 +257,11 @@
           "core:displayName": "[(5,2)-(6,0)]",
           "core:summary": "[(7,2)-(8,0)]"
         },
-        "resolved-link-target": {
-          "#3": "amf://id#9"
+        "resolved-link": {
+          "#3": "amf://id#3"
+        },
+        "declared-element": {
+          "#3": ""
         }
       }
     },
@@ -279,6 +290,7 @@
       "smaps": {
         "lexical": {
           "apiContract:schemaMediaType": "[(10,2)-(11,0)]",
+          "#8": "[(5,0)-(20,0)]",
           "core:mediaType": "[(9,2)-(10,0)]"
         }
       }
@@ -316,11 +328,14 @@
       ],
       "shacl:name": "schema",
       "smaps": {
-        "type-property-lexical-info": {
-          "#4": "[(15,4)-(15,8)]"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "#4": "[(14,2)-(20,0)]"
+        },
+        "type-property-lexical-info": {
+          "#4": "[(15,4)-(15,8)]"
         }
       }
     },
@@ -343,6 +358,9 @@
       "shacl:minCount": 0,
       "shacl:name": "applicationInstanceId",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#5": "[(17,6)-(20,0)]"
         }
