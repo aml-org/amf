@@ -63,12 +63,15 @@
       "doc:usage": "Library usage",
       "doc:root": false,
       "smaps": {
-        "source-vendor": {
-          "#1": "RAML 1.0"
+        "synthesized-field": {
+          "doc:declares": "true"
         },
         "lexical": {
           "doc:usage": "[(2,0)-(3,0)]",
           "#1": "[(1,0)-(6,21)]"
+        },
+        "source-vendor": {
+          "#1": "RAML 1.0"
         }
       }
     },
@@ -89,18 +92,21 @@
       ],
       "shacl:name": "ApiType",
       "smaps": {
-        "inherited-shapes": {
-          "#6": "amf://id#8"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#6": "[(7,4)-(7,8)]"
+        "declared-element": {
+          "#6": ""
         },
         "lexical": {
           "shacl:name": "[(6,2)-(6,9)]",
           "#6": "[(6,2)-(7,21)]"
         },
-        "declared-element": {
-          "#6": ""
+        "type-property-lexical-info": {
+          "#6": "[(7,4)-(7,8)]"
+        },
+        "inherited-shapes": {
+          "#6": "amf://id#8"
         }
       }
     },
@@ -121,18 +127,21 @@
       ],
       "shacl:name": "LibType",
       "smaps": {
-        "resolved-link-target": {
-          "#2": "amf://id#2"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#2": ""
+        "resolved-link": {
+          "#2": "amf://id#5"
         },
         "lexical": {
           "shacl:name": "[(4,2)-(4,9)]",
           "#2": "[(4,2)-(6,21)]"
         },
-        "resolved-link": {
-          "#2": "amf://id#5"
+        "declared-element": {
+          "#2": ""
+        },
+        "resolved-link-target": {
+          "#2": "amf://id#2"
         }
       }
     },
@@ -155,11 +164,16 @@
       "shacl:minCount": 1,
       "shacl:name": "libProp",
       "smaps": {
-        "inheritance-provenance": {
-          "#7": "amf://id#2"
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
         },
         "lexical": {
+          "raml-shapes:range": "[(6,15)-(6,21)]",
           "#7": "[(6,6)-(6,21)]"
+        },
+        "inheritance-provenance": {
+          "#7": "amf://id#2"
         }
       }
     },
@@ -182,7 +196,12 @@
       "shacl:minCount": 1,
       "shacl:name": "libProp",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
+        },
         "lexical": {
+          "raml-shapes:range": "[(6,15)-(6,21)]",
           "#3": "[(6,6)-(6,21)]"
         }
       }
@@ -204,6 +223,7 @@
       "shacl:name": "libProp",
       "smaps": {
         "lexical": {
+          "shacl:datatype": "[(6,15)-(6,21)]",
           "#4": "[(6,6)-(6,21)]"
         }
       }

@@ -15,12 +15,15 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#10": "RAML 1.0"
+        "synthesized-field": {
+          "apiContract:endpoint": "true"
         },
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
           "#10": "[(2,0)-(13,30)]"
+        },
+        "source-vendor": {
+          "#10": "RAML 1.0"
         }
       }
     },
@@ -37,7 +40,11 @@
         }
       ],
       "smaps": {
+        "synthesized-field": {
+          "apiContract:supportedOperation": "true"
+        },
         "lexical": {
+          "apiContract:path": "[(7,0)-(7,9)]",
           "#11": "[(7,0)-(13,30)]"
         }
       }
@@ -115,23 +122,26 @@
       ],
       "shacl:name": "AnotherUser",
       "smaps": {
-        "inherited-shapes": {
-          "#4": "amf://id#8"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#4": "amf://id#4"
-        },
-        "type-property-lexical-info": {
-          "#4": "[(13,4)-(13,8)]"
-        },
-        "lexical": {
-          "#4": "[(12,2)-(16,20)]"
+        "resolved-link-target": {
+          "#4": "amf://id#7"
         },
         "declared-element": {
           "#4": ""
         },
-        "resolved-link-target": {
-          "#4": "amf://id#7"
+        "lexical": {
+          "#4": "[(12,2)-(16,20)]"
+        },
+        "type-property-lexical-info": {
+          "#4": "[(13,4)-(13,8)]"
+        },
+        "resolved-link": {
+          "#4": "amf://id#4"
+        },
+        "inherited-shapes": {
+          "#4": "amf://id#8"
         }
       }
     },
@@ -154,7 +164,12 @@
       "shacl:minCount": 1,
       "shacl:name": "identifier",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
+        },
         "lexical": {
+          "raml-shapes:range": "[(15,17)-(16,20)]",
           "#5": "[(15,6)-(16,20)]"
         }
       }
@@ -231,11 +246,14 @@
       "doc:version": "2.3.0",
       "doc:root": false,
       "smaps": {
-        "source-vendor": {
-          "#1": "RAML 1.0"
+        "synthesized-field": {
+          "doc:declares": "true"
         },
         "lexical": {
           "#1": "[(1,0)-(16,20)]"
+        },
+        "source-vendor": {
+          "#1": "RAML 1.0"
         }
       }
     },
@@ -288,23 +306,26 @@
       ],
       "shacl:name": "User",
       "smaps": {
-        "inherited-shapes": {
-          "#7": "amf://id#8"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#7": "amf://id#4"
-        },
-        "type-property-lexical-info": {
-          "#7": "[(13,4)-(13,8)]"
-        },
-        "lexical": {
-          "#7": "[(12,2)-(16,20)]"
+        "resolved-link-target": {
+          "#7": "amf://id#7"
         },
         "declared-element": {
           "#7": ""
         },
-        "resolved-link-target": {
-          "#7": "amf://id#7"
+        "lexical": {
+          "#7": "[(12,2)-(16,20)]"
+        },
+        "type-property-lexical-info": {
+          "#7": "[(13,4)-(13,8)]"
+        },
+        "resolved-link": {
+          "#7": "amf://id#4"
+        },
+        "inherited-shapes": {
+          "#7": "amf://id#8"
         }
       }
     },
@@ -325,18 +346,21 @@
       ],
       "shacl:name": "Identifier",
       "smaps": {
-        "inherited-shapes": {
-          "#9": "amf://id#8"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#9": "[(13,4)-(13,8)]"
+        "declared-element": {
+          "#9": ""
         },
         "lexical": {
           "shacl:name": "[(12,2)-(12,12)]",
           "#9": "[(12,2)-(16,20)]"
         },
-        "declared-element": {
-          "#9": ""
+        "type-property-lexical-info": {
+          "#9": "[(13,4)-(13,8)]"
+        },
+        "inherited-shapes": {
+          "#9": "amf://id#8"
         }
       }
     }

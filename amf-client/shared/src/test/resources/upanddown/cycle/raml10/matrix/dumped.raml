@@ -10,9 +10,9 @@ types:
     properties:
       rows:
         description: The output rows of the report. Each row is a list of cells; one for each dimension in the request, followed by one for each metric in the request. The dimension cells contain strings, and the metric cells contain numbers.
-        type: array
         items:
           type: array
           items:
             type: string
+        type: array
         required: false

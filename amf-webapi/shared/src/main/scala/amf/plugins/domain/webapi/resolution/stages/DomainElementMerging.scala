@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.core.annotations.{DeclaredElement, DefaultNode, ExplicitField}
+import amf.core.annotations.{DeclaredElement, DefaultNode, ExplicitField, Inferred}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
@@ -12,7 +12,7 @@ import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{FieldEntry, Value}
 import amf.core.utils.TemplateUri
-import amf.plugins.document.webapi.annotations.{EmptyPayload, Inferred}
+import amf.plugins.document.webapi.annotations.EmptyPayload
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking

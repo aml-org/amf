@@ -1,5 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.annotations.{ExplicitField, Inferred, NilUnion, SynthesizedField}
+import amf.core.metamodel.Field
 import amf.core.annotations.VirtualObject
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain._

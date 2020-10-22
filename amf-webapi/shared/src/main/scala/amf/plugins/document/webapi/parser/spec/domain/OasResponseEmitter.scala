@@ -87,18 +87,18 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
           if (spec.factory.isInstanceOf[Oas2SpecEmitterFactory]) {
             val payloads = OasPayloads(response.payloads)
 
-            payloads.default.foreach(payload => {
-              payload.fields
-                .entry(PayloadModel.MediaType)
-                .map(f => result += ValueEmitter("mediaType".asOasExtension, f))
-              payload.fields
-                .entry(PayloadModel.Schema)
-                .map { f =>
-                  if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
-                    result += oas.OasSchemaEmitter(f, ordering, references)
-                  }
+          payloads.default.foreach(payload => {
+            payload.fields
+              .entry(PayloadModel.MediaType)
+              .map(f => result += ValueEmitter("mediaType".asOasExtension, f))
+            payload.fields
+              .entry(PayloadModel.Schema)
+              .map { f =>
+                if (!f.value.annotations.contains(classOf[SynthesizedField])) {
+                  result += oas.OasSchemaEmitter(f, ordering, references)
                 }
-            })
+              }
+          })
 
             if (payloads.other.nonEmpty)
               result += OasPayloadsEmitter("responsePayloads".asOasExtension, payloads.other, ordering, references)

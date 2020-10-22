@@ -109,7 +109,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
       case YType.Map =>
         RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
           .parse()
-          .map(_.withBinding("path"))
+          .map(_.synthesizedBinding("path"))
       case YType.Null => Nil
       case _ =>
         ctx.eh.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
@@ -118,7 +118,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   }
 
   private def buildParamFromVar(v: String, serverId: String) = {
-    val param = Parameter().withName(v).withBinding("path").withRequired(true)
+    val param = Parameter().withName(v).synthesizedBinding("path").withRequired(true)
     param.adopted(serverId)
     param.withScalarSchema(v).withDataType(DataType.String)
     param.annotations += SynthesizedField()
@@ -189,7 +189,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
           val uriParameters =
             RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))(toRaml(ctx))
               .parse()
-              .map(_.withBinding("path"))
+              .map(_.synthesizedBinding("path"))
 
           server.set(ServerModel.Variables, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
         }

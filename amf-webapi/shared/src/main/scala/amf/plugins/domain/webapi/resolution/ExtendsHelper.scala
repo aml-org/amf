@@ -84,7 +84,7 @@ object ExtendsHelper {
         }
         ctxForTrait.contextType = RamlWebApiContextType.TRAIT
         val operation = ctxForTrait.factory
-          .operationParser(entry, _ => Operation().withId(extensionId + "/applied"), true)
+          .operationParser(entry, extensionId + "/applied", true)
           .parse()
         operation
       }

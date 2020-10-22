@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.annotations.OperationTraitEntry
@@ -21,21 +21,29 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, parseOptional: Boolean = false)(
+case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
     extends SpecParserOps {
 
-  def parse(): Operation = {
+  private def build(): Operation = {
     val method: String = entry.key.as[YScalar].text
-
-    val operation = producer(method).add(Annotations(entry))
-    operation.set(Method, ScalarNode(entry.key).string())
+    val methodNode     = ScalarNode(entry.key).string()
+    val operation      = Operation(Annotations(entry))
 
     if (parseOptional && method.endsWith("?")) {
       operation.set(OperationModel.Optional, value = true)
-      operation.set(OperationModel.Method, method.stripSuffix("?"))
+      operation.set(OperationModel.Method,
+                    AmfScalar(method.stripSuffix("?"), methodNode.annotations),
+                    Annotations.inferred())
+    } else {
+      operation.set(Method, methodNode, Annotations.inferred())
     }
 
+    operation.adopted(parentId)
+  }
+
+  def parse(): Operation = {
+    val operation = build()
     entry.value.tagType match {
       // Regular operation
       case YType.Map => parseMap(entry.value.as[YMap], operation)
@@ -44,7 +52,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
       case _ =>
         ctx.eh.violation(InvalidOperationType,
                          operation.id,
-                         s"Invalid node ${entry.value} for method $method",
+                         s"Invalid node ${entry.value} for method ${operation.method.value()}",
                          entry.value)
         operation
     }
@@ -144,7 +152,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
     )
 
     val idCounter         = new IdCounter()
-    val RequirementParser = RamlSecurityRequirementParser.parse(operation.withSecurity, idCounter) _
+    val RequirementParser = RamlSecurityRequirementParser.parse(operation.id, idCounter) _
     map.key("securedBy", (OperationModel.Security in operation using RequirementParser).allowingSingleValue)
 
     map.key("description", (OperationModel.Description in operation).allowingAnnotations)
