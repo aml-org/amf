@@ -7,7 +7,6 @@ import amf.core.parser.{Annotations, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.{AmfStrings, IdCounter}
-import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaAstIndex, OasWebApiContext}
 import amf.plugins.document.webapi.parser.spec._
@@ -73,7 +72,7 @@ abstract class WebApiContext(val loc: String,
       implicit ctx: OasWebApiContext): Option[OasParameter] = {
     val referenceUrl = getReferenceUrl(fileUrl)
     obtainFragment(fileUrl) flatMap { fragment =>
-      new AstFinder().findAst(fragment, referenceUrl).map { node =>
+      AstFinder.findAst(fragment, referenceUrl).map { node =>
         ctx.factory.parameterParser(YMapEntryLike(node), parentId, None, new IdCounter()).parse
       }
     }
@@ -152,12 +151,13 @@ abstract class WebApiContext(val loc: String,
       if (s.startsWith("/")) s.stripPrefix("/") else s
     }
   }
-  def findLocalJSONPath(path: String): Option[(String, Either[YNode, YMapEntry])] =
+
+  def findJsonPathIn(index: JsonSchemaAstIndex, path: String) = index.getNodeAndEntry(normalizeJsonPath(path)).map { (path, _) }
+
+  def findLocalJSONPath(path: String): Option[(String, Either[YNode, YMapEntry])] = {
     // todo: past uri?
-    jsonSchemaIndex match {
-      case Some(jsi) => jsi.getNodeAndEntry(normalizeJsonPath(path)).map { (path, _) }
-      case _         => None
-    }
+    jsonSchemaIndex.flatMap(index => findJsonPathIn(index, path))
+  }
 
   def link(node: YNode): Either[String, YNode]
   protected def ignore(shape: String, property: String): Boolean

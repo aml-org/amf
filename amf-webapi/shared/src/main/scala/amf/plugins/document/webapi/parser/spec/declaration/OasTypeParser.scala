@@ -78,18 +78,18 @@ object OasTypeParser {
       true
     )
 
+  def apply(node: YMapEntryLike, name: String, adopt: Shape => Unit, version: JSONSchemaVersion)(
+      implicit ctx: OasLikeWebApiContext): OasTypeParser =
+    new OasTypeParser(node, name, node.asMap, adopt, version)
+
+  def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
+    new OasTypeParser(YMapEntryLike(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx.eh))
+
   private def getSchemaVersion(ctx: OasLikeWebApiContext) = {
     if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion("schema")(ctx.eh)
     else if (ctx.vendor == Vendor.ASYNC20) JSONSchemaDraft7SchemaVersion
     else OAS20SchemaVersion("schema")(ctx.eh)
   }
-
-  def apply(node: YNode, name: String, adopt: Shape => Unit, version: JSONSchemaVersion)(
-      implicit ctx: OasLikeWebApiContext): OasTypeParser =
-    new OasTypeParser(YMapEntryLike(node), name, node.as[YMap], adopt, version)
-
-  def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
-    new OasTypeParser(YMapEntryLike(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx.eh))
 }
 
 case class OasTypeParser(entryOrNode: YMapEntryLike,
@@ -664,7 +664,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
             .zipWithIndex
             .map {
               case (elem, index) =>
-                OasTypeParser(elem, s"member$index", item => item.adopted(shape.id + "/items/" + index), version)
+                OasTypeParser(YMapEntryLike(elem), s"member$index", item => item.adopted(shape.id + "/items/" + index), version)
                   .parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
@@ -928,7 +928,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
         .flatMap(n => {
           n.toOption[YMap]
             .flatMap(declarationsRef)
-            .orElse(OasTypeParser(n, "", adopt, version).parse())
+            .orElse(OasTypeParser(YMapEntryLike(n), "", adopt, version).parse())
         })
 
     private def declarationsRef(entries: YMap): Option[Shape] = {

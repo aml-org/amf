@@ -96,7 +96,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       )
 
       val shapeOption =
-        OasTypeParser(filterMap,
+        OasTypeParser(YMapEntryLike(filterMap),
                       "type",
                       (shape: Shape) => shape.withId(root.location + "#/shape"),
                       OAS20SchemaVersion(position = "schema")(ctx.eh))

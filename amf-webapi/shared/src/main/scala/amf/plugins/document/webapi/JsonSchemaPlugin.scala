@@ -8,28 +8,16 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.errorhandler.ParserErrorHandler
-import amf.core.parser.{EmptyFutureDeclarations, JsonParserFactory, ParsedReference, ParserContext, Reference, ReferenceHandler, SchemaReference, SimpleReferenceHandler, SyamlParsedDocument}
+import amf.core.parser.{ParserContext, ReferenceHandler, SimpleReferenceHandler}
 import amf.core.remote.{JsonSchema, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.annotations.JSONSchemaRoot
-import amf.plugins.document.webapi.contexts._
-import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaWebApiContext, OasWebApiContext}
-import amf.plugins.document.webapi.contexts.parser.raml.Raml08WebApiContext
-import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.{JsonSchemaEmitter, YMapEntryLike}
-import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
-import amf.plugins.document.webapi.parser.spec.domain.OasParameter
-import amf.plugins.document.webapi.parser.spec.jsonschema.{AstFinder, JsonSchemaFragmentParser, JsonSchemaParser}
+import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaParser
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
-import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
-import amf.validations.ParserSideValidations.UnableToParseJsonSchema
+import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model._
-import org.yaml.parser.{YParser, YamlParser}
 
 import scala.concurrent.{ExecutionContext, Future}
 

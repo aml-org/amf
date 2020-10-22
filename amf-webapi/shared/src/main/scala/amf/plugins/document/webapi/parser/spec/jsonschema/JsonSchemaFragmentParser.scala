@@ -5,21 +5,16 @@ import amf.core.client.ParsingOptions
 import amf.core.model.document.{EncodesModel, Fragment}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.domain.shapes.models.AnyShape
-import org.yaml.model.YNode
 
 class JsonSchemaFragmentParser {
   def parse(inputFragment: Fragment, pointer: Option[String])(
     implicit ctx: OasLikeWebApiContext): Option[AnyShape] = {
 
-    val encoded: YNode = new AstFinder().getYNode(inputFragment, ctx)
-    val doc: Root      = new AstFinder().getRoot(inputFragment, pointer, encoded)
+    val doc: Root = AstFinder.createRootFrom(inputFragment, pointer, ctx.eh)
+    val parsingResult = new JsonSchemaParser().parse(doc, ctx, new ParsingOptions())
 
-    new JsonSchemaParser().parse(doc, ctx, new ParsingOptions()).flatMap { parsed =>
-      parsed match {
-        case encoded: EncodesModel if encoded.encodes.isInstanceOf[AnyShape] =>
-          Some(encoded.encodes.asInstanceOf[AnyShape])
-        case _ => None
-      }
+    parsingResult.collect {
+      case encoded: EncodesModel if encoded.encodes.isInstanceOf[AnyShape] => encoded.encodes.asInstanceOf[AnyShape]
     }
   }
 }

@@ -2,114 +2,135 @@ package amf.plugins.document.webapi.parser.spec.jsonschema
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
-import amf.core.parser.{EmptyFutureDeclarations, JsonParserFactory, ParsedReference, ParserContext, Reference, SchemaReference, SyamlParsedDocument}
+import amf.core.model.document.{BaseUnit, ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.parser.{EmptyFutureDeclarations, JsonParserFactory, ParsedReference, ParserContext, Reference, SchemaReference, SyamlParsedDocument}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.Raml08WebApiContext
+import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.toOasDeclarations
 import amf.validations.ParserSideValidations.UnableToParseJsonSchema
-import org.yaml.model.{YDocument, YMap, YMapEntry, YNode}
+import org.yaml.model.{YDocument, YMap, YNode}
 import org.yaml.parser.{YParser, YamlParser}
 
-class AstFinder {
+object AstFinder {
+
+  def findSchemaAst(doc: Root, context: ParserContext, options: ParsingOptions): Option[YNode] = {
+    findAst(doc, JsonSchemaUrlFragmentAdapter$, context, options)
+  }
 
   def findAst(inputFragment: Fragment, pointer: Option[String])(implicit ctx: WebApiContext): Option[YNode] = {
-    val encoded: YNode = getYNode(inputFragment, ctx)
-    val doc: Root      = getRoot(inputFragment, pointer, encoded)
+    val doc = createRootFrom(inputFragment, pointer, ctx.eh)
+    findAst(doc, DefaultUrlFragmentAdapter$, ctx, ctx.options)
+  }
 
+  def createRootFrom(inputFragment: Fragment, pointer: Option[String], errorHandler: ParserErrorHandler): Root = {
+    val encoded: YNode = getYNodeFrom(inputFragment, errorHandler)
+    createRoot(inputFragment, pointer, encoded)
+  }
+
+  private def findAst(doc: Root,
+                      toolkit: UrlFragmentAdapter,
+                      context: ParserContext,
+                      options: ParsingOptions): Option[YNode] = {
     doc.parsed match {
       case parsedDoc: SyamlParsedDocument =>
-        val shapeId: String      = if (doc.location.contains("#")) doc.location else doc.location + "#/"
-        val parts: Array[String] = doc.location.split("#")
-        val url: String          = parts.head
-        val hashFragment: Option[String] =
-          parts.tail.headOption.map(t => if (t.startsWith("/")) t.stripPrefix("/") else t)
-
-        val jsonSchemaContext = getJsonSchemaContext(doc, ctx, url, ctx.options)
-        val rootAst = getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext) match {
-          case Right(value) => value.value
-          case Left(value)  => value
-        }
-        Some(rootAst)
+        val shapeId: String                  = if (doc.location.contains("#")) doc.location else doc.location + "#/"
+        val JsonReference(url, hashFragment) = JsonReference.buildReference(doc.location, toolkit)
+        val jsonSchemaContext                = makeJsonSchemaContext(doc, context, url, options)
+        val rootAst                          = getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
+        Some(rootAst.value)
 
       case _ => None
     }
   }
 
-  def getYNode(inputFragment: Fragment, ctx: WebApiContext): YNode = {
+  def deriveShapeIdFrom(doc: Root): String = if (doc.location.contains("#")) doc.location else doc.location + "#/"
+
+  def getYNodeFrom(inputFragment: Fragment, errorHandler: ParserErrorHandler): YNode = {
     inputFragment match {
-      case fragment: ExternalFragment                        => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, ctx.eh))
-      case fragment: RecursiveUnit if fragment.raw.isDefined => parsedFragment(inputFragment, ctx.eh)
+      case fragment: ExternalFragment                        => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, errorHandler))
+      case fragment: RecursiveUnit if fragment.raw.isDefined => parsedFragment(inputFragment, errorHandler)
       case _ =>
-        ctx.eh.violation(UnableToParseJsonSchema,
-          inputFragment,
-          None,
-          "Cannot parse JSON Schema from unit with missing syntax information")
+        errorHandler.violation(UnableToParseJsonSchema,
+                               inputFragment,
+                               None,
+                               "Cannot parse JSON Schema from unit with missing syntax information")
         YNode(YMap(IndexedSeq(), ""))
     }
   }
 
-  def parsedFragment(inputFragment: Fragment, eh: ParserErrorHandler) = JsonYamlParser(inputFragment)(eh).document().node
+  private def parsedFragment(inputFragment: Fragment, eh: ParserErrorHandler) =
+    JsonYamlParser(inputFragment)(eh).document().node
 
   def getRootAst(parsedDoc: SyamlParsedDocument,
-                         shapeId: String,
-                         hashFragment: Option[String],
-                         url: String,
-                         jsonSchemaContext: JsonSchemaWebApiContext): Either[YNode, YMapEntry] = {
+                 shapeId: String,
+                 hashFragment: Option[String],
+                 url: String,
+                 ctx: WebApiContext): YMapEntryLike = {
     val documentRoot = parsedDoc.document.node
-    val rootAst = findRootNode(documentRoot, jsonSchemaContext, hashFragment).getOrElse {
+    ctx.setJsonSchemaAST(documentRoot)
+    val rootAst = findRootNode(documentRoot, ctx, hashFragment).getOrElse {
       // hashFragment is always defined when return is None
-      jsonSchemaContext.eh.violation(UnableToParseJsonSchema,
-        shapeId,
-        s"Cannot find path ${hashFragment.getOrElse("")} in JSON schema $url",
-        documentRoot)
-      Left(documentRoot)
+      ctx.eh.violation(UnableToParseJsonSchema,
+                       shapeId,
+                       s"Cannot find path ${hashFragment.getOrElse("")} in JSON schema $url",
+                       documentRoot)
+      YMapEntryLike(documentRoot)
     }
-
-    jsonSchemaContext.setJsonSchemaAST(documentRoot)
     rootAst
   }
 
-  def getRoot(inputFragment: Fragment, pointer: Option[String], encoded: YNode): Root = {
+  private def createRoot(inputFragment: Fragment, pointer: Option[String], encoded: YNode): Root = {
     Root(
       SyamlParsedDocument(YDocument(encoded)),
-      inputFragment.location().getOrElse(inputFragment.id) + (if (pointer.isDefined) s"#${pointer.get}" else ""),
+      buildJsonReference(inputFragment, pointer),
       "application/json",
-      inputFragment.references.map(ref => ParsedReference(ref, Reference(ref.location().getOrElse(""), Nil), None)),
+      toParsedReferences(inputFragment.references),
       SchemaReference,
       inputFragment.raw.getOrElse("")
     )
   }
 
-  def findRootNode(ast: YNode, ctx: JsonSchemaWebApiContext, path: Option[String]): Option[Either[YNode, YMapEntry]] =
-    if (path.isDefined) {
-      ctx.setJsonSchemaAST(ast)
-      val res = ctx.findLocalJSONPath(path.get)
-      ctx.localJSONSchemaContext = None
-      res.map(_._2)
-    } else Some(Left(ast))
+  private def buildJsonReference(inputFragment: Fragment, pointer: Option[String]) = {
+    inputFragment.location().getOrElse(inputFragment.id) + (if (pointer.isDefined) s"#${pointer.get}" else "")
+  }
 
-  def getJsonSchemaContext(document: Root,
-                                   parentContext: ParserContext,
-                                   url: String,
-                                   options: ParsingOptions): JsonSchemaWebApiContext = {
+  private def toParsedReferences(references: Seq[BaseUnit]) = {
+    references.map(ref => ParsedReference(ref, Reference(ref.location().getOrElse(""), Nil), None))
+  }
+
+  private def findRootNode(ast: YNode, ctx: WebApiContext, maybePath: Option[String]): Option[YMapEntryLike] = {
+    maybePath.map { path =>
+        val res = ctx.findLocalJSONPath(path)
+        res.map(_._2).map {
+          case Left(value)  => YMapEntryLike(value)
+          case Right(value) => YMapEntryLike(value)
+        }
+      }
+      .getOrElse(Some(YMapEntryLike(ast)))
+  }
+
+  def makeJsonSchemaContext(document: Root,
+                            parentContext: ParserContext,
+                            url: String,
+                            options: ParsingOptions): JsonSchemaWebApiContext = {
 
     val cleanNested = ParserContext(url, document.references, EmptyFutureDeclarations(), parentContext.eh)
     cleanNested.globalSpace = parentContext.globalSpace
 
     // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
-    val inheritedDeclarations =
-      if (parentContext.isInstanceOf[Raml08WebApiContext])
-        Some(parentContext.asInstanceOf[WebApiContext].declarations)
-      else None
+    val inheritedDeclarations = getInheritedDeclarations(parentContext)
 
-    new JsonSchemaWebApiContext(url,
-      document.references,
-      cleanNested,
-      inheritedDeclarations.map(d => toOasDeclarations(d)),
-      options)
+    new JsonSchemaWebApiContext(url, document.references, cleanNested, inheritedDeclarations, options)
+  }
+
+  private def getInheritedDeclarations(parserContext: ParserContext) = {
+    parserContext match {
+      case ramlContext: Raml08WebApiContext => Some(toOasDeclarations(ramlContext.declarations))
+      case _                                => None
+    }
   }
 }
 
