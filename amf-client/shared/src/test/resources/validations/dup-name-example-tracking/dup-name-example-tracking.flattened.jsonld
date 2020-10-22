@@ -24,9 +24,11 @@
         }
       ],
       "smaps": {
-        "single-value-array": {
-          "apiContract:contentType": "",
-          "apiContract:accepts": ""
+        "synthesized-field": {
+          "apiContract:endpoint": "true"
+        },
+        "source-vendor": {
+          "#19": "RAML 1.0"
         },
         "lexical": {
           "apiContract:contentType": "[(4,0)-(6,0)]",
@@ -34,8 +36,9 @@
           "#19": "[(2,0)-(31,13)]",
           "apiContract:accepts": "[(4,0)-(6,0)]"
         },
-        "source-vendor": {
-          "#19": "RAML 1.0"
+        "single-value-array": {
+          "apiContract:contentType": "",
+          "apiContract:accepts": ""
         }
       }
     },
@@ -52,7 +55,11 @@
         }
       ],
       "smaps": {
+        "synthesized-field": {
+          "apiContract:supportedOperation": "true"
+        },
         "lexical": {
+          "apiContract:path": "[(11,0)-(11,4)]",
           "#20": "[(11,0)-(22,0)]"
         }
       }
@@ -70,7 +77,11 @@
         }
       ],
       "smaps": {
+        "synthesized-field": {
+          "apiContract:supportedOperation": "true"
+        },
         "lexical": {
+          "apiContract:path": "[(22,0)-(22,4)]",
           "#23": "[(22,0)-(31,13)]"
         }
       }
@@ -213,18 +224,21 @@
         }
       ],
       "smaps": {
-        "resolved-link-target": {
-          "#3": "amf://id#3"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#3": ""
+        "resolved-link": {
+          "#3": "amf://id#18"
         },
         "lexical": {
           "shacl:name": "[(7,2)-(7,10)]",
           "#3": "[(7,2)-(11,0)]"
         },
-        "resolved-link": {
-          "#3": "amf://id#18"
+        "declared-element": {
+          "#3": ""
+        },
+        "resolved-link-target": {
+          "#3": "amf://id#3"
         }
       }
     },
@@ -247,7 +261,12 @@
       "shacl:minCount": 1,
       "shacl:name": "ok",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
+        },
         "lexical": {
+          "raml-shapes:range": "[(9,10)-(9,17)]",
           "#4": "[(9,6)-(11,0)]"
         }
       }
@@ -274,7 +293,7 @@
           "doc:strict": "true"
         },
         "lexical": {
-          "doc:structuredValue": "[(17,24)-(17,50)]",
+          "doc:structuredValue": "[(1,0)-(1,0)]",
           "#6": "[(17,10)-(18,0)]",
           "core:name": "[(17,10)-(18,0)]"
         },
@@ -363,6 +382,7 @@
       "shacl:name": "ok",
       "smaps": {
         "lexical": {
+          "shacl:datatype": "[(9,10)-(9,17)]",
           "#5": "[(9,6)-(11,0)]"
         }
       }
@@ -379,12 +399,15 @@
       },
       "core:name": "object_1",
       "smaps": {
-        "parsed-json-example": {
-          "#7": "{\n  \"ok\" : true\n}"
+        "synthesized-field": {
+          "core:name": "true"
         },
         "lexical": {
           "data:ok": "[(2,2)-(2,13)]",
           "#7": "[(1,0)-(3,1)]"
+        },
+        "parsed-json-example": {
+          "#7": "{\n  \"ok\" : true\n}"
         }
       }
     },
@@ -400,12 +423,15 @@
       },
       "core:name": "object_1",
       "smaps": {
-        "parsed-json-example": {
-          "#12": "{\n  \"ok\" : true\n}\n"
+        "synthesized-field": {
+          "core:name": "true"
         },
         "lexical": {
           "data:ok": "[(20,25)-(20,36)]",
           "#12": "[(19,23)-(21,24)]"
+        },
+        "parsed-json-example": {
+          "#12": "{\n  \"ok\" : true\n}\n"
         }
       }
     },
@@ -421,12 +447,15 @@
       },
       "core:name": "object_1",
       "smaps": {
-        "parsed-json-example": {
-          "#15": "{\n  \"ok\" : true\n}"
+        "synthesized-field": {
+          "core:name": "true"
         },
         "lexical": {
           "data:ok": "[(30,25)-(30,36)]",
           "#15": "[(29,23)-(31,24)]"
+        },
+        "parsed-json-example": {
+          "#15": "{\n  \"ok\" : true\n}"
         }
       }
     },
@@ -445,6 +474,10 @@
       ],
       "core:name": "ok",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#8": "[(2,9)-(2,13)]"
         }
@@ -465,6 +498,10 @@
       ],
       "core:name": "ok",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#13": "[(20,32)-(20,36)]"
         }
@@ -485,6 +522,10 @@
       ],
       "core:name": "ok",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#16": "[(30,32)-(30,36)]"
         }

@@ -211,9 +211,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/declared-element/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -227,9 +232,9 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/lexical/element_1"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/declared-element/element_0"
         }
       ]
     },
@@ -238,9 +243,14 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/declared-element/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/synthesized-field/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -254,9 +264,9 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/lexical/element_1"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/declared-element/element_0"
         }
       ]
     },
@@ -313,9 +323,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(6,8)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/declared-element/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/type-property-lexical-info/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
+      "http://a.ml/vocabularies/document-source-maps#value": "[(10,4)-(10,8)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/lexical/element_2",
@@ -333,14 +348,19 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(12,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/type-property-lexical-info/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/source-map/declared-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,4)-(10,8)]"
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/declared-element/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/type-property-lexical-info/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
+      "http://a.ml/vocabularies/document-source-maps#value": "[(13,4)-(13,8)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/lexical/element_2",
@@ -358,9 +378,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(15,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/type-property-lexical-info/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member/source-map/declared-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Member",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,4)-(13,8)]"
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-inherits-reference/api.raml#/declarations/types/Person/link--543762263/source-map/lexical/element_0",

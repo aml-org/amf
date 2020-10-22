@@ -77,23 +77,26 @@
       ],
       "shacl:name": "User",
       "smaps": {
-        "inherited-shapes": {
-          "#3": "amf://id#7"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#3": "amf://id#3"
-        },
-        "type-property-lexical-info": {
-          "#3": "[(11,4)-(11,8)]"
-        },
-        "lexical": {
-          "#3": "[(10,2)-(14,20)]"
+        "resolved-link-target": {
+          "#3": "amf://id#6"
         },
         "declared-element": {
           "#3": ""
         },
-        "resolved-link-target": {
-          "#3": "amf://id#6"
+        "lexical": {
+          "#3": "[(10,2)-(14,20)]"
+        },
+        "type-property-lexical-info": {
+          "#3": "[(11,4)-(11,8)]"
+        },
+        "resolved-link": {
+          "#3": "amf://id#3"
+        },
+        "inherited-shapes": {
+          "#3": "amf://id#7"
         }
       }
     },
@@ -114,18 +117,21 @@
       ],
       "shacl:name": "Identifier",
       "smaps": {
-        "inherited-shapes": {
-          "#6": "amf://id#7"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#6": "[(11,4)-(11,8)]"
+        "declared-element": {
+          "#6": ""
         },
         "lexical": {
           "shacl:name": "[(10,2)-(10,12)]",
           "#6": "[(10,2)-(14,20)]"
         },
-        "declared-element": {
-          "#6": ""
+        "type-property-lexical-info": {
+          "#6": "[(11,4)-(11,8)]"
+        },
+        "inherited-shapes": {
+          "#6": "amf://id#7"
         }
       }
     },
@@ -148,7 +154,12 @@
       "shacl:minCount": 1,
       "shacl:name": "identifier",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
+        },
         "lexical": {
+          "raml-shapes:range": "[(13,17)-(14,20)]",
           "#4": "[(13,6)-(14,20)]"
         }
       }

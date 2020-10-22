@@ -41,6 +41,7 @@
       ],
       "smaps": {
         "lexical": {
+          "apiContract:supportedOperation": "[(7,0)-(15,0)]",
           "#/async-api/end-points/aChannel": "[(6,2)-(15,0)]"
         }
       }
@@ -94,7 +95,8 @@
       "core:mediaType": "baseContentType",
       "smaps": {
         "lexical": {
-          "core:mediaType": "[(11,8)-(12,0)]"
+          "core:mediaType": "[(11,8)-(12,0)]",
+          "#/async-api/end-points/aChannel/publish/request/baseContentType": "[(9,0)-(15,0)]"
         }
       }
     },

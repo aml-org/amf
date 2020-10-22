@@ -304,9 +304,9 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/source-map/declared-element/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -318,6 +318,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/source-map/declared-element/element_0"
         }
       ]
     },
@@ -392,16 +397,27 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map/synthesized-field/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map/lexical/element_1"
+        },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/source-map/lexical/element_2",
@@ -417,6 +433,11 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(7,20)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/scalar/name/source-map",
@@ -438,9 +459,24 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map/lexical/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map/synthesized-field/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#path",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,6)-(7,20)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,11)-(7,20)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/libraries-3-alias/lib/lib-declaration.raml#/declarations/types/Person/property/name/scalar/name/source-map/type-property-lexical-info/element_0",

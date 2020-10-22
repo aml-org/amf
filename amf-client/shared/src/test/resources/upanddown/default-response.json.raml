@@ -3,39 +3,31 @@ types:
   Profile:
     type: object
     properties:
-      first_name:
+      first_name?:
         description: First name of the Uber user.
         type: string
-        required: false
-      last_name:
+      last_name?:
         description: Last name of the Uber user.
         type: string
-        required: false
-      email:
+      email?:
         description: Email address of the Uber user
         type: string
-        required: false
-      picture:
+      picture?:
         description: Image URL of the Uber user.
         type: string
-        required: false
-      promo_code:
+      promo_code?:
         description: Promo code of the Uber user.
         type: string
-        required: false
   Error:
     type: object
     properties:
-      code:
+      code?:
         type: number
         format: int32
-        required: false
-      message:
+      message?:
         type: string
-        required: false
-      fields:
+      fields?:
         type: string
-        required: false
 title: Uber API
 baseUri: api.uber.com/v1
 description: Move your app forward with the Uber API

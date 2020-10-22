@@ -2,7 +2,7 @@ package amf.plugins.domain.webapi.models.security
 
 import amf.core.metamodel.Field
 import amf.core.model.StrField
-import amf.core.model.domain.NamedDomainElement
+import amf.core.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel

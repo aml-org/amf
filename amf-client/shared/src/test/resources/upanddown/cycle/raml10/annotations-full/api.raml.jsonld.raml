@@ -8,13 +8,13 @@ baseUri: myfalsehost.com/apis
     uriParameters:
       customer_id:
         (AnnotationInParameter): hello
-        type: string
     get:
       description: Returns Customer data
       responses:
         "200":
           body:
             application/json:
+              type: any
       (AnnotationInGet): hello
     delete:
       description: Removes a Customer from the system
@@ -25,6 +25,7 @@ baseUri: myfalsehost.com/apis
           "200":
             body:
               application/json:
+                type: any
     /cards:
       /debit:
         get:
@@ -33,6 +34,7 @@ baseUri: myfalsehost.com/apis
             "200":
               body:
                 application/json:
+                  type: any
         post:
           description: Requests the creation of a new DebitCard
           body:

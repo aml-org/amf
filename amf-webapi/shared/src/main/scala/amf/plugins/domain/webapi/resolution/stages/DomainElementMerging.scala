@@ -1,10 +1,10 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.core.annotations.{DeclaredElement, DefaultNode, ExplicitField}
+import amf.core.annotations.{DeclaredElement, DefaultNode, ExplicitField, Inferred}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel, ShapeModel}
+import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.DataType
 import amf.core.model.domain.DataNodeOps.adoptTree
@@ -12,9 +12,8 @@ import amf.core.model.domain._
 import amf.core.parser.{FieldEntry, Value}
 import amf.core.utils.EqInstances._
 import amf.core.utils.EqSyntax._
-import amf.plugins.domain.webapi.utils.AnnotationSyntax._
 import amf.core.utils.TemplateUri
-import amf.plugins.document.webapi.annotations.{EmptyPayload, Inferred, ParsedJSONSchema}
+import amf.plugins.document.webapi.annotations.EmptyPayload
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
@@ -22,10 +21,10 @@ import amf.plugins.domain.shapes.models.{AnyShape, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.MessageModel.Examples
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.utils.AnnotationSyntax._
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations.UnusedBaseUriParameter
 import amf.validations.ResolutionSideValidations.UnequalMediaTypeDefinitionsInExtendsPayloads
-import org.yaml.model.YNode
 
 import scala.collection.mutable
 

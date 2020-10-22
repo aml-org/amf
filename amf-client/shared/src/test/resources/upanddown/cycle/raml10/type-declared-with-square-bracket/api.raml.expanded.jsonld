@@ -56,15 +56,15 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi"
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(5,0)-(16,0)]"
+                        "@value": "[(5,0)-(5,4)]"
                       }
                     ]
                   },
@@ -78,6 +78,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(6,2)-(7,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,0)-(16,0)]"
                       }
                     ]
                   }
@@ -239,17 +252,17 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/get/200/text%2Fplain/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/get/200/text%2Fplain/schema/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/get/200/text%2Fplain/schema"
+                                        "@value": "http://www.w3.org/ns/shacl#closed"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(14,14)-(14,18)]"
+                                        "@value": "true"
                                       }
                                     ]
                                   }
@@ -278,6 +291,21 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(14,14)-(15,0)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/get/200/text%2Fplain/schema/source-map/type-property-lexical-info/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/get/200/text%2Fplain/schema"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(14,14)-(14,18)]"
                                       }
                                     ]
                                   }
@@ -419,6 +447,49 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#supportedOperation"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(7,2)-(16,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(7,2)-(7,25)]"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/source-map/parent-end-point/element_0",
@@ -433,21 +504,6 @@
                       }
                     ]
                   }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(7,2)-(16,0)]"
-                      }
-                    ]
-                  }
                 ]
               }
             ]
@@ -459,17 +515,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api"
+                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "RAML 1.0"
+                    "@value": "true"
                   }
                 ]
               }
@@ -524,6 +580,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(2,0)-(33,25)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/source-map/source-vendor/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "RAML 1.0"
                   }
                 ]
               }
@@ -660,17 +731,32 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/success/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/success/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/success"
+                        "@value": "http://www.w3.org/ns/shacl#path"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(19,6)-(22,0)]"
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/success/source-map/lexical/element_2",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(19,14)-(22,0)]"
                       }
                     ]
                   },
@@ -684,6 +770,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(21,8)-(22,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/success/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/success"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(19,6)-(22,0)]"
                       }
                     ]
                   }
@@ -726,7 +825,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#customShapePropertyDefinitions": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -740,7 +839,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F/scalar/readOnly%3F",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/scalar/readOnly%3F",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -760,16 +859,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F/scalar/readOnly%3F/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/scalar/readOnly%3F/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F/scalar/readOnly%3F/source-map/type-property-lexical-info/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/scalar/readOnly%3F/source-map/type-property-lexical-info/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F/scalar/readOnly%3F"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/scalar/readOnly%3F"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -781,10 +880,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F/scalar/readOnly%3F/source-map/lexical/element_1",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/scalar/readOnly%3F/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F/scalar/readOnly%3F"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/scalar/readOnly%3F"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -794,7 +893,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F/scalar/readOnly%3F/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/scalar/readOnly%3F/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -823,21 +922,62 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/source-map/synthesized-field/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F"
+                                "@value": "http://www.w3.org/ns/shacl#path"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/source-map/synthesized-field/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://www.w3.org/ns/shacl#minCount"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(26,10)-(28,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/shapes#range"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(26,20)-(28,0)]"
                               }
                             ]
                           }
@@ -869,6 +1009,32 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/source-map/lexical/element_2",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(23,8)-(24,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/shapes#customShapePropertyDefinitions"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(25,8)-(28,0)]"
+                          }
+                        ]
+                      },
+                      {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
@@ -878,19 +1044,6 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(22,6)-(28,0)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://www.w3.org/ns/shacl#datatype"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(23,8)-(24,0)]"
                           }
                         ]
                       }
@@ -915,17 +1068,32 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message"
+                        "@value": "http://www.w3.org/ns/shacl#path"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(22,6)-(28,0)]"
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/source-map/lexical/element_2",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(22,14)-(28,0)]"
                       }
                     ]
                   },
@@ -939,6 +1107,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(24,8)-(25,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(22,6)-(28,0)]"
                       }
                     ]
                   }
@@ -981,7 +1162,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#customShapePropertyDefinitions": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly",
                     "@type": [
                       "http://www.w3.org/ns/shacl#PropertyShape",
                       "http://www.w3.org/ns/shacl#Shape",
@@ -995,7 +1176,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#range": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F/scalar/readOnly%3F",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/scalar/readOnly%3F",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
                           "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1015,16 +1196,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F/scalar/readOnly%3F/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/scalar/readOnly%3F/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F/scalar/readOnly%3F/source-map/type-property-lexical-info/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/scalar/readOnly%3F/source-map/type-property-lexical-info/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F/scalar/readOnly%3F"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/scalar/readOnly%3F"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1036,10 +1217,10 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F/scalar/readOnly%3F/source-map/lexical/element_1",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/scalar/readOnly%3F/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F/scalar/readOnly%3F"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/scalar/readOnly%3F"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1049,7 +1230,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F/scalar/readOnly%3F/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/scalar/readOnly%3F/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -1078,21 +1259,62 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/source-map/synthesized-field/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F"
+                                "@value": "http://www.w3.org/ns/shacl#path"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/source-map/synthesized-field/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://www.w3.org/ns/shacl#minCount"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(32,10)-(33,25)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/shapes#range"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(32,20)-(33,25)]"
                               }
                             ]
                           }
@@ -1124,6 +1346,32 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/source-map/lexical/element_2",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(29,8)-(30,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/shapes#customShapePropertyDefinitions"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(31,8)-(33,25)]"
+                          }
+                        ]
+                      },
+                      {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
@@ -1133,19 +1381,6 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(28,6)-(33,25)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://www.w3.org/ns/shacl#datatype"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(29,8)-(30,0)]"
                           }
                         ]
                       }
@@ -1170,17 +1405,32 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/source-map/synthesized-field/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning"
+                        "@value": "http://www.w3.org/ns/shacl#path"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(28,6)-(33,25)]"
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/source-map/lexical/element_2",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(28,14)-(33,25)]"
                       }
                     ]
                   },
@@ -1194,6 +1444,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(30,8)-(31,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(28,6)-(33,25)]"
                       }
                     ]
                   }
@@ -1213,17 +1476,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/source-map/declared-element/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D"
+                    "@value": "http://www.w3.org/ns/shacl#closed"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "true"
                   }
                 ]
               }
@@ -1265,6 +1528,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(17,2)-(33,25)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }

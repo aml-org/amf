@@ -106,6 +106,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/amqp-operation-binding.yaml#/async-api/end-points/some-channel/source-map/lexical/element_1"
+        },
+        {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/amqp-operation-binding.yaml#/async-api/end-points/some-channel/source-map/lexical/element_0"
         }
       ]
@@ -198,9 +201,14 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/amqp-operation-binding.yaml#/async-api/end-points/some-channel/source-map/lexical/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/amqp-operation-binding.yaml#/async-api/end-points/some-channel/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/amqp-operation-binding.yaml#/async-api/end-points/some-channel",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(24,19)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/amqp-operation-binding.yaml#/async-api/end-points/some-channel/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#supportedOperation",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,0)-(24,19)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/amqp-operation-binding.yaml#/async-api/end-points/some-channel/publish/operation-bindings/amqp091-operation",
