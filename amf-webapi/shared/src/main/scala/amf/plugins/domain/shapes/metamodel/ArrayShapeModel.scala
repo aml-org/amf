@@ -41,7 +41,7 @@ class DataArrangementShape extends AnyShapeModel {
 
   val MaxContains =
     Field(Int,
-          Shapes + "qualifiedMaxCount",
+          Shacl + "qualifiedMaxCount",
           ModelDoc(ExternalModelVocabularies.Shacl, "qualifiedMaxCount", "Maximum number of value nodes constraint"))
 
   val CollectionFormat = Field(
