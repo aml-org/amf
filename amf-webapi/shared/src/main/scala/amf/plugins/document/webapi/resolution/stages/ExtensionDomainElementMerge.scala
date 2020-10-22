@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.SynthesizedField
+import amf.core.annotations.{Inferred, SynthesizedField, VirtualNode}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel.Sources
@@ -10,7 +10,7 @@ import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, FieldEntry, Value}
-import amf.plugins.document.webapi.annotations.{ExtensionProvenance, Inferred}
+import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
@@ -104,7 +104,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       case amfObject: AmfObject => (amfObject.id, amfObject.annotations)
       case array: AmfArray =>
         val ann =
-          if (value.annotations.nonEmpty) value.annotations
+          if (value.annotations.nonEmpty && !value.annotations.contains(classOf[VirtualNode])) value.annotations
           else array.values.headOption.map(_.annotations).getOrElse(Annotations())
         (field.value.toString, ann)
       case _ => (field.value.toString, entry.element.annotations)

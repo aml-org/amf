@@ -28,11 +28,12 @@ traits:
   descr:
     description: Some requests require authentication.
 /top:
+  is:
+    - descr
   type:
     searchableCollection:
       queryParamName: title
   securedBy: oauth_2_0
-  is: descr
   get:
     is: secured
     protocols: HTTPS

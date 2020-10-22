@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models.security
 
-import amf.core.annotations.SourceAST
+import amf.core.annotations.{Inferred, SourceAST}
 import amf.core.metamodel.{Field, Obj}
 import amf.core.model.{StrField, domain}
 import amf.core.model.domain._
@@ -53,7 +53,7 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
         }
         // TODO had to reject sourceAST because it is used by CustomShaclValidator (IDKW)
         set(Type,
-            AmfScalar(normalized, `type`.annotations().reject(_.isInstanceOf[SourceAST])),
+            AmfScalar(normalized, `type`.annotations().reject(_.isInstanceOf[SourceAST]) += Inferred()),
             fields.getValue(Type).annotations)
       case _ => // ignore
     }

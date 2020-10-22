@@ -176,6 +176,34 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/userId/source-map/synthesized-field/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#required"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/userId/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#binding"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/userId/source-map/lexical/element_1",
@@ -241,9 +269,24 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#supportedOperation"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
@@ -252,6 +295,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(4,0)-(24,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(4,0)-(4,15)]"
                       }
                     ]
                   }
@@ -416,7 +472,33 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/userId/source-map/synthesized-field/element_2",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#required"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/userId/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#binding"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/userId/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/userId"
@@ -583,6 +665,34 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/userName/source-map/synthesized-field/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#required"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/userName/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#binding"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/userName/source-map/lexical/element_1",
@@ -648,6 +758,49 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#supportedOperation"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(10,2)-(16,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(10,2)-(10,18)]"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/parent-end-point/element_0",
@@ -659,21 +812,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(10,2)-(16,0)]"
                       }
                     ]
                   }
@@ -836,6 +974,34 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userName/source-map/synthesized-field/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#required"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userName/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#binding"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userName/source-map/lexical/element_1",
@@ -992,7 +1158,33 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userId/source-map/synthesized-field/element_2",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#required"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userId/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#binding"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userId/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userId"
@@ -1092,10 +1284,23 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userLastName/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userLastName/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userLastName"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userLastName/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#binding"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1142,6 +1347,49 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#supportedOperation"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(16,2)-(22,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(16,2)-(16,26)]"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/parent-end-point/element_0",
@@ -1153,21 +1401,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(16,2)-(22,0)]"
                       }
                     ]
                   }
@@ -1332,7 +1565,33 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/userId/source-map/synthesized-field/element_2",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#required"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/userId/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#binding"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/userId/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/userId"
@@ -1410,6 +1669,49 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#supportedOperation"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(22,2)-(24,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(22,2)-(22,13)]"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#parent-end-point": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/parent-end-point/element_0",
@@ -1421,21 +1723,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(22,2)-(24,0)]"
                       }
                     ]
                   }
@@ -1497,9 +1784,24 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#supportedOperation"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll"
@@ -1508,6 +1810,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(24,0)-(25,6)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(24,0)-(24,7)]"
                       }
                     ]
                   }
@@ -1522,17 +1837,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api"
+                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "RAML 1.0"
+                    "@value": "true"
                   }
                 ]
               }
@@ -1561,6 +1876,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(3,0)-(4,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/source-map/source-vendor/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "RAML 1.0"
                   }
                 ]
               }

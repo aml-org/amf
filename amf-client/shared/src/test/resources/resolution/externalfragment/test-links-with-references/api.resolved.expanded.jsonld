@@ -205,19 +205,26 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:supportedOperation": "true"
+              },
               "lexical": {
+                "apiContract:path": "[(6,0)-(6,9)]",
                 "#15": "[(6,0)-(18,23)]"
               }
             }
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#14": "RAML 1.0"
+          "synthesized-field": {
+            "apiContract:endpoint": "true"
           },
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
             "#14": "[(2,0)-(18,23)]"
+          },
+          "source-vendor": {
+            "#14": "RAML 1.0"
           }
         }
       }
@@ -511,11 +518,14 @@
                   }
                 ],
                 "smaps": {
-                  "type-property-lexical-info": {
-                    "#9": "[(12,6)-(12,12)]"
+                  "synthesized-field": {
+                    "shacl:closed": "true"
                   },
                   "lexical": {
                     "#9": "[(11,4)-(21,5)]"
+                  },
+                  "type-property-lexical-info": {
+                    "#9": "[(12,6)-(12,12)]"
                   }
                 }
               }
@@ -549,21 +559,24 @@
           }
         ],
         "smaps": {
-          "resolved-link-target": {
-            "#3": "amf://id#3"
+          "synthesized-field": {
+            "shacl:closed": "true"
           },
-          "declared-element": {
-            "#3": ""
+          "resolved-link": {
+            "#3": "amf://id#13"
+          },
+          "type-property-lexical-info": {
+            "#3": "[(3,2)-(3,8)]"
           },
           "lexical": {
             "shacl:name": "[(4,2)-(4,7)]",
             "#3": "[(4,2)-(28,1)]"
           },
-          "type-property-lexical-info": {
-            "#3": "[(3,2)-(3,8)]"
+          "declared-element": {
+            "#3": ""
           },
-          "resolved-link": {
-            "#3": "amf://id#13"
+          "resolved-link-target": {
+            "#3": "amf://id#3"
           },
           "parsed-json-schema": {
             "#3": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"details\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"message\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\n        \"message\"\n      ]\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\",\n    \"details\"\n  ]\n}"

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
+import amf.core.annotations.{ExplicitField, Inferred, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -423,8 +423,11 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
 
       map
         .key("type")
-        .fold(shape
-          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations()))(entry =>
+        .fold(
+          shape
+            .set(ScalarShapeModel.DataType,
+                 AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)),
+                 Annotations(Inferred())))(entry =>
           shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations(entry)))
 
       shape
@@ -763,7 +766,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       map.key("minProperties", NodeShapeModel.MinProperties in shape)
       map.key("maxProperties", NodeShapeModel.MaxProperties in shape)
 
-      shape.set(NodeShapeModel.Closed, value = false)
+      shape.set(NodeShapeModel.Closed, AmfScalar(value = false), Annotations(SynthesizedField()))
 
       map.key("additionalProperties").foreach { entry =>
         entry.value.tagType match {

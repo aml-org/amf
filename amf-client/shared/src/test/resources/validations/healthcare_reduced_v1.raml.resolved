@@ -208,9 +208,24 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#supportedOperation"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments"
@@ -219,6 +234,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(38,0)-(51,30)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(38,0)-(38,13)]"
                       }
                     ]
                   }
@@ -233,17 +261,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api"
+                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "RAML 1.0"
+                    "@value": "true"
                   }
                 ]
               }
@@ -285,6 +313,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(2,0)-(51,30)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/source-map/source-vendor/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "RAML 1.0"
                   }
                 ]
               }
@@ -399,7 +442,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/BackboneElement/property/modifierExtension/scalar/modifierExtension%3F/source-map/lexical/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/BackboneElement/property/modifierExtension/scalar/modifierExtension%3F/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/BackboneElement/property/modifierExtension/scalar/modifierExtension%3F"
@@ -408,6 +451,19 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(21,6)-(23,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/BackboneElement/property/modifierExtension/scalar/modifierExtension%3F/source-map/lexical/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(21,26)-(21,32)]"
                                       }
                                     ]
                                   }
@@ -432,9 +488,37 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/BackboneElement/property/modifierExtension/source-map/synthesized-field/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#path"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/BackboneElement/property/modifierExtension/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#minCount"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/BackboneElement/property/modifierExtension/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/BackboneElement/property/modifierExtension/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/BackboneElement/property/modifierExtension"
@@ -443,6 +527,19 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(21,6)-(23,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/BackboneElement/property/modifierExtension/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/shapes#range"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(21,26)-(21,32)]"
                                   }
                                 ]
                               }
@@ -587,9 +684,37 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension/property/valueIdentifier/source-map/synthesized-field/element_1",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#path"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension/property/valueIdentifier/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension/property/valueIdentifier/source-map/lexical/element_0",
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension/property/valueIdentifier/source-map/lexical/element_1",
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
                                             "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension/property/valueIdentifier"
@@ -598,6 +723,19 @@
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
                                             "@value": "[(34,6)-(38,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension/property/valueIdentifier/source-map/lexical/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/shapes#range"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(34,23)-(38,0)]"
                                           }
                                         ]
                                       }
@@ -617,17 +755,17 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension/source-map/declared-element/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension"
+                                        "@value": "http://www.w3.org/ns/shacl#closed"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": ""
+                                        "@value": "true"
                                       }
                                     ]
                                   }
@@ -659,6 +797,21 @@
                                       }
                                     ]
                                   }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension/source-map/declared-element/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Extension"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": ""
+                                      }
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -680,9 +833,37 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Element/property/extension/source-map/synthesized-field/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#path"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Element/property/extension/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#minCount"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Element/property/extension/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Element/property/extension/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Element/property/extension"
@@ -691,6 +872,19 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(29,6)-(32,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Element/property/extension/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/shapes#range"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(29,17)-(32,0)]"
                                   }
                                 ]
                               }
@@ -800,9 +994,37 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/status/source-map/synthesized-field/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#path"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/status/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#minCount"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/status/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/status/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/status"
@@ -811,6 +1033,19 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(15,12)-(18,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/status/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/shapes#range"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(15,19)-(18,0)]"
                                   }
                                 ]
                               }
@@ -926,9 +1161,37 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/actor/source-map/synthesized-field/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#path"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/actor/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#minCount"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/actor/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/actor/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/actor"
@@ -937,6 +1200,19 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(13,12)-(15,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/property/actor/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/shapes#range"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(13,19)-(15,0)]"
                                   }
                                 ]
                               }
@@ -956,17 +1232,17 @@
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/source-map/type-property-lexical-info/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/source-map/synthesized-field/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items"
+                                "@value": "http://www.w3.org/ns/shacl#closed"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(11,10)-(11,14)]"
+                                "@value": "true"
                               }
                             ]
                           }
@@ -982,6 +1258,21 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(10,8)-(18,0)]"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items/source-map/type-property-lexical-info/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/array/participant/items/items"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(11,10)-(11,14)]"
                               }
                             ]
                           }
@@ -1051,9 +1342,37 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/source-map/synthesized-field/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant"
@@ -1062,6 +1381,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(8,6)-(18,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/property/participant/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(8,18)-(18,0)]"
                       }
                     ]
                   }
@@ -1141,6 +1473,34 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
+                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/scalar_4/source-map/synthesized-field/element_1",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "true"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/scalar_4/source-map/synthesized-field/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/core#name"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "true"
+                                      }
+                                    ]
+                                  }
+                                ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/scalar_4/source-map/lexical/element_0",
@@ -1197,6 +1557,34 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/object_5/scalar_6/source-map/synthesized-field/element_1",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/object_5/scalar_6/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/core#name"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/object_5/scalar_6/source-map/lexical/element_0",
@@ -1245,6 +1633,34 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/object_5/scalar_7/source-map/synthesized-field/element_1",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/object_5/scalar_7/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/core#name"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/object_5/scalar_7/source-map/lexical/element_0",
@@ -1274,6 +1690,21 @@
                                 "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/object_5/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/object_5/source-map/synthesized-field/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/core#name"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "true"
+                                      }
+                                    ]
+                                  }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
@@ -1330,6 +1761,21 @@
                             "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/array_2/object_3/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/core#name"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
@@ -1435,6 +1881,34 @@
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
+                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/scalar_8/source-map/synthesized-field/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://www.w3.org/ns/shacl#datatype"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/scalar_8/source-map/synthesized-field/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/core#name"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/scalar_8/source-map/lexical/element_0",
@@ -1464,6 +1938,21 @@
                     "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/web-api/end-points/%2Fappointments/get/200/application%2Fjson/schema/example/default-example/object_1/source-map/synthesized-field/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/core#name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
@@ -1617,17 +2106,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/source-map/declared-element/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment"
+                    "@value": "http://www.w3.org/ns/shacl#closed"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "true"
                   }
                 ]
               }
@@ -1656,6 +2145,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(6,2)-(6,13)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/validations/healthcare_reduced_v1.raml#/declarations/types/Appointment"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }

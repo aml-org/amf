@@ -60,21 +60,24 @@
       "doc:recursive": true,
       "shacl:name": "Something.DataContracts.Push.PushOption",
       "smaps": {
-        "resolved-link-target": {
-          "#1": "amf://id#1"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#1": ""
+        "resolved-link": {
+          "#1": "amf://id#8"
+        },
+        "type-property-lexical-info": {
+          "#1": "[(8,4)-(8,8)]"
         },
         "lexical": {
           "shacl:name": "[(7,2)-(7,41)]",
           "#1": "[(7,2)-(14,0)]"
         },
-        "type-property-lexical-info": {
-          "#1": "[(8,4)-(8,8)]"
+        "declared-element": {
+          "#1": ""
         },
-        "resolved-link": {
-          "#1": "amf://id#8"
+        "resolved-link-target": {
+          "#1": "amf://id#1"
         }
       }
     },
@@ -95,21 +98,24 @@
       ],
       "shacl:name": "Something.DataContracts.Push.PushOptionChoice",
       "smaps": {
-        "resolved-link-target": {
-          "#4": "amf://id#4"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#4": ""
+        "resolved-link": {
+          "#4": "amf://id#9"
+        },
+        "type-property-lexical-info": {
+          "#4": "[(15,4)-(15,8)]"
         },
         "lexical": {
           "shacl:name": "[(14,2)-(14,47)]",
           "#4": "[(14,2)-(20,71)]"
         },
-        "type-property-lexical-info": {
-          "#4": "[(15,4)-(15,8)]"
+        "declared-element": {
+          "#4": ""
         },
-        "resolved-link": {
-          "#4": "amf://id#9"
+        "resolved-link-target": {
+          "#4": "amf://id#4"
         }
       }
     },
@@ -199,11 +205,14 @@
       "shacl:property": [],
       "shacl:name": "properties",
       "smaps": {
-        "type-property-lexical-info": {
-          "#6": "[(18,8)-(18,12)]"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "#6": "[(17,6)-(20,71)]"
+        },
+        "type-property-lexical-info": {
+          "#6": "[(18,8)-(18,12)]"
         }
       }
     },

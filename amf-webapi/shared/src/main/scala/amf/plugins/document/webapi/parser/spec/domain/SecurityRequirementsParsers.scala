@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.VirtualObject
-import amf.core.model.domain.AmfScalar
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, SearchScope}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
@@ -10,7 +10,8 @@ import amf.plugins.domain.webapi.metamodel.security.{
   OAuth2FlowModel,
   OpenIdConnectSettingsModel,
   ParametrizedSecuritySchemeModel,
-  ScopeModel
+  ScopeModel,
+  SecurityRequirementModel
 }
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
@@ -128,17 +129,18 @@ case class OasLikeSecurityRequirementParser(node: YNode,
 }
 
 object RamlSecurityRequirementParser {
-  def parse(producer: String => SecurityRequirement, idCounter: IdCounter)(node: YNode)(
+  def parse(parentId: String, idCounter: IdCounter)(node: YNode)(
       implicit ctx: RamlWebApiContext): SecurityRequirement = {
-    RamlSecurityRequirementParser(node, producer, idCounter).parse()
+    RamlSecurityRequirementParser(node, parentId, idCounter).parse()
   }
 }
-case class RamlSecurityRequirementParser(node: YNode, producer: String => SecurityRequirement, idCounter: IdCounter)(
+case class RamlSecurityRequirementParser(node: YNode, parentId: String, idCounter: IdCounter)(
     implicit val ctx: RamlWebApiContext) {
   def parse(): SecurityRequirement = {
-    val requirement = producer(idCounter.genId("default-requirement")).add(Annotations(node))
-    RamlParametrizedSecuritySchemeParser(node, requirement.withScheme).parse()
-    requirement
+    val requirement = SecurityRequirement(node).synthesizeName(idCounter.genId("default-requirement"))
+    requirement.adopted(parentId)
+    val scheme: ParametrizedSecurityScheme = RamlParametrizedSecuritySchemeParser(node, requirement.id).parse()
+    requirement.set(SecurityRequirementModel.Schemes, AmfArray(Seq(scheme), Annotations(node)), Annotations.inferred())
   }
 
 }

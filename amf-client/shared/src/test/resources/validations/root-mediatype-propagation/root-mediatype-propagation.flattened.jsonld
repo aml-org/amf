@@ -22,14 +22,17 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#11": "RAML 1.0"
+        "synthesized-field": {
+          "apiContract:endpoint": "true"
         },
         "lexical": {
           "apiContract:contentType": "[(4,0)-(6,0)]",
           "core:name": "[(2,0)-(4,0)]",
           "#11": "[(2,0)-(17,22)]",
           "apiContract:accepts": "[(4,0)-(6,0)]"
+        },
+        "source-vendor": {
+          "#11": "RAML 1.0"
         }
       }
     },
@@ -46,7 +49,11 @@
         }
       ],
       "smaps": {
+        "synthesized-field": {
+          "apiContract:supportedOperation": "true"
+        },
         "lexical": {
+          "apiContract:path": "[(13,0)-(13,6)]",
           "#12": "[(13,0)-(17,22)]"
         }
       }
@@ -263,6 +270,10 @@
       ],
       "core:name": "scalar_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#3": "[(10,11)-(10,19)]"
         }
@@ -283,6 +294,10 @@
       ],
       "core:name": "scalar_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#5": "[(11,11)-(11,23)]"
         }
@@ -303,6 +318,10 @@
       ],
       "core:name": "scalar_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#7": "[(17,15)-(17,22)]"
         }

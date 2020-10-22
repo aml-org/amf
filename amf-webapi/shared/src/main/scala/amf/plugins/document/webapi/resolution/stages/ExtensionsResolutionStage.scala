@@ -17,7 +17,7 @@ import amf.core.model.domain._
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.annotations.{ExtensionProvenance, Inferred}
+import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations

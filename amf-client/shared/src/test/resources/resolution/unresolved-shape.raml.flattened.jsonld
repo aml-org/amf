@@ -52,11 +52,14 @@
       ],
       "shacl:name": "A",
       "smaps": {
-        "inherited-shapes": {
-          "#1": "amf://id#5"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "#1": "[(4,10)-(4,13)]"
+        },
+        "inherited-shapes": {
+          "#1": "amf://id#5"
         }
       }
     },
@@ -79,7 +82,12 @@
       "shacl:minCount": 1,
       "shacl:name": "ok",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
+        },
         "lexical": {
+          "raml-shapes:range": "[(6,10)-(6,18)]",
           "#2": "[(6,6)-(6,18)]"
         }
       }
