@@ -288,7 +288,7 @@ Shape that contains a nested collection of data shapes
  | collectionFormat | string | Input collection format information | http://a.ml/vocabularies/shapes#collectionFormat |
  | unevaluatedItems | [Shape](#shape) | Items that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedItems |
  | qualifiedMinCount | int | Minimum number of value nodes constraint | http://www.w3.org/ns/shacl#qualifiedMinCount |
- | qualifiedMaxCount | int | Maximum number of value nodes constraint | http://a.ml/vocabularies/shapes#qualifiedMaxCount |
+ | qualifiedMaxCount | int | Maximum number of value nodes constraint | http://www.w3.org/ns/shacl#qualifiedMaxCount |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -930,7 +930,7 @@ Data shape containing nested multi-dimensional collection shapes
  | collectionFormat | string | Input collection format information | http://a.ml/vocabularies/shapes#collectionFormat |
  | unevaluatedItems | [Shape](#shape) | Items that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedItems |
  | qualifiedMinCount | int | Minimum number of value nodes constraint | http://www.w3.org/ns/shacl#qualifiedMinCount |
- | qualifiedMaxCount | int | Maximum number of value nodes constraint | http://a.ml/vocabularies/shapes#qualifiedMaxCount |
+ | qualifiedMaxCount | int | Maximum number of value nodes constraint | http://www.w3.org/ns/shacl#qualifiedMaxCount |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
