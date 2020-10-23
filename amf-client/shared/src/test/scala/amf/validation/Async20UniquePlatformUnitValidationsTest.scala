@@ -309,4 +309,12 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     )
   }
 
+  test("Closed shape in keys of message examples") {
+    validate(
+      "invalid-keys-message-examples.yaml",
+      Some("invalid-keys-message-examples.report"),
+      Async20Profile
+    )
+  }
+
 }

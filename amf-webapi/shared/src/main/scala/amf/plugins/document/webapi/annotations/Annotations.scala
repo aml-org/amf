@@ -163,3 +163,5 @@ object DeclarationKey {
   def apply(entry: YMapEntry, isAbstract: Boolean = false): DeclarationKey =
     new DeclarationKey(entry, isAbstract = isAbstract)
 }
+
+case class ExampleIndex(index: Int) extends Annotation

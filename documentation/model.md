@@ -979,6 +979,7 @@ Data shape containing nested multi-dimensional collection shapes
  | examples | [[Example](#example)] | Examples for a particular domain element | http://a.ml/vocabularies/apiContract#examples |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | isAbstract | boolean | Defines a model as abstract | http://a.ml/vocabularies/apiContract#isAbstract |
+ | headerExamples | [[Example](#example)] | Examples for a header definition | http://a.ml/vocabularies/apiContract#headerExamples |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1533,6 +1534,7 @@ Request information for an operation
  | examples | [[Example](#example)] | Examples for a particular domain element | http://a.ml/vocabularies/apiContract#examples |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | isAbstract | boolean | Defines a model as abstract | http://a.ml/vocabularies/apiContract#isAbstract |
+ | headerExamples | [[Example](#example)] | Examples for a header definition | http://a.ml/vocabularies/apiContract#headerExamples |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1584,6 +1586,7 @@ Response information for an operation
  | examples | [[Example](#example)] | Examples for a particular domain element | http://a.ml/vocabularies/apiContract#examples |
  | documentation | [CreativeWork](#creativework) | Documentation for a particular part of the model | http://a.ml/vocabularies/core#documentation |
  | isAbstract | boolean | Defines a model as abstract | http://a.ml/vocabularies/apiContract#isAbstract |
+ | headerExamples | [[Example](#example)] | Examples for a header definition | http://a.ml/vocabularies/apiContract#headerExamples |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |

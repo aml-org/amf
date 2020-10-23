@@ -17,18 +17,19 @@ class Message(override private[amf] val _internal: InternalMessage)
   @JSExportTopLevel("model.domain.Message")
   def this() = this(InternalMessage())
 
-  override def name: StrField       = _internal.name
-  def description: StrField         = _internal.description
-  def isAbstract: BoolField         = _internal.isAbstract
-  def documentation: CreativeWork   = _internal.documentation
-  def tags: ClientList[Tag]         = _internal.tags.asClient
-  def examples: ClientList[Example] = _internal.examples.asClient
-  def payloads: ClientList[Payload] = _internal.payloads.asClient
-  def correlationId: CorrelationId  = _internal.correlationId
-  def displayName: StrField         = _internal.displayName
-  def title: StrField               = _internal.title
-  def summary: StrField             = _internal.summary
-  def bindings: MessageBindings     = _internal.bindings
+  override def name: StrField             = _internal.name
+  def description: StrField               = _internal.description
+  def isAbstract: BoolField               = _internal.isAbstract
+  def documentation: CreativeWork         = _internal.documentation
+  def tags: ClientList[Tag]               = _internal.tags.asClient
+  def examples: ClientList[Example]       = _internal.examples.asClient
+  def headerExamples: ClientList[Example] = _internal.headerExamples.asClient
+  def payloads: ClientList[Payload]       = _internal.payloads.asClient
+  def correlationId: CorrelationId        = _internal.correlationId
+  def displayName: StrField               = _internal.displayName
+  def title: StrField                     = _internal.title
+  def summary: StrField                   = _internal.summary
+  def bindings: MessageBindings           = _internal.bindings
 
   /** Set name property of this Response. */
   override def withName(name: String): this.type = {
@@ -54,6 +55,10 @@ class Message(override private[amf] val _internal: InternalMessage)
   }
   def withExamples(examples: ClientList[Example]): this.type = {
     _internal.withExamples(examples.asInternal)
+    this
+  }
+  def withHeaderExamples(examples: ClientList[Example]): this.type = {
+    _internal.withHeaderExamples(examples.asInternal)
     this
   }
   def withPayloads(payloads: ClientList[Payload]): this.type = {

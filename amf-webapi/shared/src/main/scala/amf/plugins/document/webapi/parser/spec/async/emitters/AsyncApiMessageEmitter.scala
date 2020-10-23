@@ -5,13 +5,14 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position}
+import amf.plugins.document.webapi.annotations.ExampleIndex
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration.{OasTagToReferenceEmitter, emitters}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.async
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.async.AsyncSchemaEmitter
-import amf.plugins.document.webapi.parser.spec.domain.NamedMultipleExampleEmitter
-import amf.plugins.document.webapi.parser.spec.oas.emitters.TagsEmitter
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataNodePartEmitter, NamedMultipleExampleEmitter}
+import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasLikeExampleEmitters, TagsEmitter}
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel.{MessageModel, PayloadModel}
@@ -131,8 +132,12 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
                 .map(f => result += new AsyncApiCreativeWorksEmitter(f.element.asInstanceOf[CreativeWork], ordering))
               fs.entry(MessageModel.Bindings)
                 .foreach(f => result += new AsyncApiBindingsEmitter(f.value.value, ordering, bindingOrphanAnnotations))
-              fs.entry(MessageModel.Examples)
-                .foreach(f => result += Draft6ExamplesEmitter(f.arrayValues[Example], ordering))
+
+              val headerExamples  = fs.entry(MessageModel.HeaderExamples).map(_.arrayValues[Example]).getOrElse(Nil)
+              val payloadExamples = fs.entry(MessageModel.Examples).map(_.arrayValues[Example]).getOrElse(Nil)
+              if (payloadExamples.nonEmpty || headerExamples.nonEmpty)
+                result += MessageExamplesEmitter(headerExamples, payloadExamples, ordering)
+
               if (!isTrait) {
                 fs.entry(MessageModel.Extends).foreach(f => emitTraits(f, result))
                 fs.entry(MessageModel.Payloads).foreach(f => emitPayloads(f, result))
@@ -171,4 +176,76 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
   }
 
   override def position(): Position = pos(message.annotations)
+}
+
+case class MessageExamplesEmitter(headerExamples: Seq[Example], payloadExamples: Seq[Example], ordering: SpecOrdering)(
+    implicit val spec: OasLikeSpecEmitterContext)
+    extends EntryEmitter {
+
+  override def emit(b: YDocument.EntryBuilder): Unit = {
+    b.entry(
+      "examples",
+      b => {
+        b.list { listBuilder =>
+          val pairs = findExamplePairs(headerExamples, payloadExamples, maxIndex = headerExamples.size + payloadExamples.size)
+          val pairEmitters = pairs.map { MessageExamplePairEmitter(_, ordering) }
+          traverse(ordering.sorted(pairEmitters), listBuilder)
+        }
+      }
+    )
+  }
+
+  private def findExamplePairs(headerExamples: Seq[Example],
+                               payloadExamples: Seq[Example],
+                               pairIndex: Int = 0,
+                               maxIndex: Int,
+  ): Seq[MessageExamplePair] = {
+    if ((headerExamples.isEmpty && payloadExamples.isEmpty) || pairIndex >= maxIndex) Nil
+    else {
+      val (headerExample, updatedHeaderExamples)   = findAndRemoveExampleOfIndex(headerExamples, pairIndex)
+      val (payloadExample, updatedPayloadExamples) = findAndRemoveExampleOfIndex(payloadExamples, pairIndex)
+      MessageExamplePair(headerExample, payloadExample) +: findExamplePairs(updatedHeaderExamples,
+                                                          updatedPayloadExamples,
+                                                          pairIndex + 1,
+                                                          maxIndex)
+    }
+  }
+
+  private def findAndRemoveExampleOfIndex(examples: Seq[Example], pairIndex: Int): (Option[Example], Seq[Example]) = {
+    val example = examples.find(_.annotations.find { a =>
+      a match {
+        case ExampleIndex(i) => i == pairIndex
+        case _               => false
+      }
+    }.isDefined)
+    example match {
+      case Some(e) => (Some(e), examples.filterNot(_ == e))
+      case None    => (None, examples)
+    }
+  }
+
+  override def position(): Position =
+    (headerExamples ++: payloadExamples).headOption.map(ex => pos(ex.annotations)).getOrElse(Position.ZERO)
+}
+
+case class MessageExamplePair(headerExample: Option[Example], payloadExample: Option[Example])
+
+case class MessageExamplePairEmitter(pair: MessageExamplePair,
+                                     ordering: SpecOrdering)(implicit val spec: OasLikeSpecEmitterContext)
+    extends PartEmitter {
+
+  override def emit(b: YDocument.PartBuilder): Unit = {
+    b.obj { entryBuilder =>
+      val emitters: List[EntryEmitter] = List("headers" -> pair.headerExample, "payload" -> pair.payloadExample).flatMap {
+        case (key, example) =>
+          example.map { ex =>
+            EntryPartEmitter(key, ExampleDataNodePartEmitter(ex, ordering)(spec), position = pos(ex.annotations))
+          }
+      }
+      traverse(ordering.sorted(emitters), entryBuilder)
+    }
+  }
+
+  override def position(): Position =
+    pair.headerExample.orElse(pair.payloadExample).map(ex => pos(ex.annotations)).getOrElse(Position.ZERO)
 }
