@@ -1,8 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
 import amf.core.annotations.{SynthesizedField, TrackedElement, VirtualObject}
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar, Annotation}
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
+import amf.core.utils.IdCounter
+import amf.plugins.document.webapi.annotations.ExampleIndex
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorMessage
@@ -137,13 +139,13 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
         message.set(MessageModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
       }
     )
-    val examples = parseNamedValueExamples(map, message.id)
-    if (examples.nonEmpty) {
-      examples.foreach { ex =>
-        ex.annotations += TrackedElement(message.id)
-      }
-      message.set(MessageModel.Examples, AmfArray(examples))
+
+    val examples: MessageExamples = parseExamplesFacet(map, message.id)
+    examples.all.foreach { ex =>
+      ex.annotations += TrackedElement(message.id)
     }
+    if (examples.payload.nonEmpty) message.set(MessageModel.Examples, AmfArray(examples.payload))
+    if (examples.headers.nonEmpty) message.set(MessageModel.HeaderExamples, AmfArray(examples.headers))
 
     map.key(
       "headers",
@@ -192,13 +194,38 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
     }
   }
 
-  private def parseNamedValueExamples(map: YMap, parentId: String): Seq[Example] =
-    map.key("examples") match {
-      case Some(examplesEntry) =>
-        val seq = examplesEntry.value.as[YSequence]
-        ExamplesDataParser(seq, Oas3ExampleOptions, parentId).parse()
-      case None => Nil
-    }
+  case class MessageExamples(headers: Seq[Example], payload: Seq[Example]) {
+    def all: Seq[Example] = headers ++: payload
+  }
+
+  private def parseExamplesFacet(map: YMap, parentId: String): MessageExamples =
+    map
+      .key("examples")
+      .map { examplesEntry =>
+        val seq     = examplesEntry.value.as[YSequence]
+        val counter = new IdCounter()
+        val examplePairs = seq.nodes.zipWithIndex.map {
+          case (node, index) =>
+            val map = node.as[YMap]
+            ctx.closedShape(parentId, map, "message examples")
+            val List(headerExample, payloadExample) = List("headers", "payload").map { key =>
+              map.key(key).map { n =>
+                parseExample(n, counter.genId("default-example"), parentId).add(ExampleIndex(index))
+              }
+            }
+            (headerExample, payloadExample)
+        }
+        val (headers, examples) = examplePairs.unzip
+        MessageExamples(headers.flatten, examples.flatten)
+      }
+      .getOrElse(MessageExamples(Nil, Nil))
+
+  private def parseExample(n: YMapEntry, name: String, parentId: String): Example = {
+    val node = n.value
+    val exa  = Example(node).withName(name)
+    exa.adopted(parentId)
+    ExampleDataParser(node, exa, Oas3ExampleOptions).parse()
+  }
 }
 
 case class AsyncMessageTraitPopulator()(implicit ctx: AsyncWebApiContext) extends AsyncMessagePopulator() {

@@ -7,6 +7,7 @@ import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, Mode
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
 import amf.plugins.domain.webapi.metamodel.bindings.MessageBindingsModel
 import amf.plugins.domain.webapi.models.Message
@@ -48,6 +49,11 @@ trait MessageModel
                        ApiBinding + "binding",
                        ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this request/response"))
 
+  val HeaderExamples = Field(
+    Array(ExampleModel),
+    ApiContract + "headerExamples",
+    ModelDoc(ModelVocabularies.ApiContract, "headerExamples", "Examples for a header definition"))
+
 }
 
 object MessageModel extends MessageModel {
@@ -64,7 +70,8 @@ object MessageModel extends MessageModel {
          Tags,
          Examples,
          Documentation,
-         IsAbstract) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+         IsAbstract,
+         HeaderExamples) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = ApiContract + "Message" :: DomainElementModel.`type`
 

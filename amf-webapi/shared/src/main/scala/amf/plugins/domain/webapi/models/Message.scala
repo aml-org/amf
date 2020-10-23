@@ -9,6 +9,7 @@ import amf.plugins.domain.webapi.metamodel.MessageModel
 import amf.plugins.domain.webapi.metamodel.MessageModel._
 import amf.plugins.domain.webapi.models.bindings.{MessageBinding, MessageBindings}
 import amf.core.utils.AmfStrings
+import amf.plugins.domain.shapes.metamodel.common.ExamplesField.Examples
 
 class Message(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
@@ -25,6 +26,7 @@ class Message(override val fields: Fields, override val annotations: Annotations
   def title: StrField              = fields.field(Title)
   def summary: StrField            = fields.field(Summary)
   def bindings: MessageBindings    = fields.field(Bindings)
+  def headerExamples: Seq[Example] = fields.field(HeaderExamples)
   def headers: Seq[Parameter]      = fields.field(Headers)
 
   def withDescription(description: String): this.type            = set(Description, description)
@@ -38,6 +40,7 @@ class Message(override val fields: Fields, override val annotations: Annotations
   def withSummary(summary: String): this.type                    = set(Summary, summary)
   def withBindings(bindings: MessageBindings): this.type         = set(Bindings, bindings)
   def withHeaders(headers: Seq[Parameter]): this.type            = setArray(Headers, headers)
+  def withHeaderExamples(examples: Seq[Example]): this.type      = setArray(HeaderExamples, examples)
 
   def withPayload(mediaType: Option[String] = None): Payload = {
     val result = Payload()

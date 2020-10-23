@@ -195,6 +195,10 @@ object Async20Syntax extends SpecSyntax {
       "examples",
       "traits"
     ),
+    "message examples" -> Set(
+      "headers",
+      "payload"
+    ),
     "correlationId" -> Set(
       "description",
       "location"

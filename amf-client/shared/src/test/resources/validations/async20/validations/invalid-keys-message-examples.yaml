@@ -15,12 +15,20 @@ channels:
           type: object
           properties:
             a:
-              type: number
+              type: string
+            b:
+              type: integer
         payload:
           type: string
         examples:
-          - payload:
-              key: value
-            headers:
-              a: invalid value
+          - headers:
+              a: some text
+              b: 5
+            payload: payload
+            other: this key is invalid
+          - payload: payload
+          - headers:
+              a: some text
+              b: 5
+            other-invalid: 3
 

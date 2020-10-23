@@ -7,10 +7,11 @@ info:
 components:
   messageTraits:
     definesExample:
-      examples: [
-        "valid",
-        { "invalid": "example" }
-      ]
+      examples:
+        - payload:
+            key: value
+          headers:
+            a: invalid value
 
 channels:
   /user/signedup:
@@ -20,4 +21,9 @@ channels:
           - $ref: "#/components/messageTraits/definesExample"
         payload:
           type: string
+        headers:
+          type: object
+          properties:
+            a:
+              type: number
 

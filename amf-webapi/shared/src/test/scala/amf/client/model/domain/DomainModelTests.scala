@@ -451,6 +451,7 @@ class DomainModelTests extends FunSuite with Matchers {
       .withDocumentation(creativeWork)
       .withTags(tags.asClient)
       .withExamples(examples.asClient)
+      .withHeaderExamples(examples.asClient)
       .withPayloads(payloads.asClient)
       .withCorrelationId(correlationId)
       .withDisplayName(s)
@@ -463,6 +464,7 @@ class DomainModelTests extends FunSuite with Matchers {
     message.documentation shouldBe creativeWork
     message.tags.asInternal shouldBe tags
     message.examples.asInternal shouldBe examples
+    message.headerExamples.asInternal shouldBe examples
     message.payloads.asInternal shouldBe payloads
     message.correlationId shouldBe correlationId
     message.displayName.value() shouldBe s

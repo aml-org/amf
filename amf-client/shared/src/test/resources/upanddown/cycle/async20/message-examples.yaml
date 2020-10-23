@@ -18,5 +18,18 @@ channels:
               type: string
         examples:
           -
-            user: Pepito
-            signup: Fulanito
+            payload:
+              user: Pepito
+              signup: Fulanito
+          -
+            headers:
+              a: some header
+              b: other header
+          -
+            payload:
+              user: Other
+            headers:
+              a: other header
+          -
+            payload:
+              signup: Fulanito

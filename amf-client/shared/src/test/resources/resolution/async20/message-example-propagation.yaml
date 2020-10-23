@@ -6,6 +6,11 @@ channels:
   aChannel:
     publish:
       message:
+        headers:
+          type: object
+          properties:
+            a:
+              type: string
         payload:
           type: object
           properties:
@@ -15,5 +20,11 @@ channels:
             - name: Pipi
             - name: Romagnoli
         examples:
-          - name: Johnny
-          - name: Goode
+          - payload:
+              name: Johnny
+            headers:
+              a: first header
+          - payload:
+              name: Goode
+          - headers:
+              a: second header
