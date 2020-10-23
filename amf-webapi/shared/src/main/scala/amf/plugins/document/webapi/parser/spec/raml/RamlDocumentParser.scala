@@ -162,7 +162,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       document.setWithoutId(DocumentModel.Declares, AmfArray(declarables), Annotations(SynthesizedField()))
     if (references.nonEmpty)
       document.setWithoutId(DocumentModel.References,
-                            AmfArray((references.baseUnitReferences()),
+                            AmfArray(references.baseUnitReferences()),
                             Annotations(SynthesizedField()))
 
     ctx.futureDeclarations.resolve()

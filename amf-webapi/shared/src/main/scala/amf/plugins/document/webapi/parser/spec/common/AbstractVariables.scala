@@ -8,14 +8,14 @@ import org.yaml.model.YNode
 import scala.collection.mutable
 
 case class AbstractVariables() {
-  private val variables: mutable.Set[(String, Annotations)] = mutable.Set()
+  private val variables: mutable.Map[String, Annotations] = mutable.Map()
 
   def parseVariables(node: YNode): this.type = parseVariables(ScalarNode(node))
 
   def parseVariables(scalarNode: ScalarNode): this.type = {
     VariableRegex
       .findAllMatchIn(scalarNode.text().toString)
-      .foreach(m => variables.add((m.group(1), scalarNode.string().annotations)))
+      .foreach(m => variables.update(m.group(1), scalarNode.string().annotations))
     this
   }
 

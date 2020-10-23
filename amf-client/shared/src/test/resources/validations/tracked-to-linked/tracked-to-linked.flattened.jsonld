@@ -349,7 +349,7 @@
           "shacl:closed": "true"
         },
         "resolved-link-target": {
-          "#11": "amf://id#6"
+          "#11": "amf://id#2"
         },
         "source-vendor": {
           "#11": "RAML 1.0"
@@ -420,7 +420,7 @@
         },
         "lexical": {
           "raml-shapes:range": "[(4,6)-(4,13)]",
-          "#7": "[(4,2)-(5,0)]"
+          "#3": "[(4,2)-(5,0)]"
         }
       }
     },
@@ -449,7 +449,7 @@
         },
         "lexical": {
           "raml-shapes:range": "[(5,8)-(5,14)]",
-          "#9": "[(5,2)-(5,14)]"
+          "#5": "[(5,2)-(5,14)]"
         }
       }
     },
@@ -524,7 +524,7 @@
       "smaps": {
         "lexical": {
           "shacl:datatype": "[(4,6)-(4,13)]",
-          "#8": "[(4,2)-(5,0)]"
+          "#4": "[(4,2)-(5,0)]"
         }
       }
     },
@@ -546,7 +546,7 @@
       "smaps": {
         "lexical": {
           "shacl:datatype": "[(5,8)-(5,14)]",
-          "#10": "[(5,2)-(5,14)]"
+          "#6": "[(5,2)-(5,14)]"
         }
       }
     },
@@ -873,14 +873,17 @@
       ],
       "shacl:name": "type",
       "smaps": {
-        "source-vendor": {
-          "#2": "RAML 1.0"
+        "synthesized-field": {
+          "shacl:closed": "true"
+        },
+        "type-property-lexical-info": {
+          "#2": "[(2,0)-(2,4)]"
         },
         "lexical": {
           "#2": "[(2,0)-(5,14)]"
         },
-        "type-property-lexical-info": {
-          "#2": "[(2,0)-(2,4)]"
+        "source-vendor": {
+          "#2": "RAML 1.0"
         }
       }
     },
@@ -907,17 +910,8 @@
       "doc:raw": "#%RAML 1.0 NamedExample\nemployee:\n  id: 1\n  name: \"Jhon\"",
       "core:mediaType": "application/raml+yaml",
       "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "type-property-lexical-info": {
-          "#6": "[(2,0)-(2,4)]"
-        },
-        "lexical": {
-          "#6": "[(2,0)-(5,14)]"
-        },
         "source-vendor": {
-          "#6": "RAML 1.0"
+          "#10": "RAML 1.0"
         }
       }
     }
