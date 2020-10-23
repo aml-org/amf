@@ -16,13 +16,9 @@ import org.yaml.parser.{YParser, YamlParser}
 
 object AstFinder {
 
-  def findSchemaAst(doc: Root, context: ParserContext, options: ParsingOptions): Option[YNode] = {
-    findAst(doc, JsonSchemaUrlFragmentAdapter$, context, options)
-  }
-
   def findAst(inputFragment: Fragment, pointer: Option[String])(implicit ctx: WebApiContext): Option[YNode] = {
     val doc = createRootFrom(inputFragment, pointer, ctx.eh)
-    findAst(doc, DefaultUrlFragmentAdapter$, ctx, ctx.options)
+    findAst(doc, DefaultUrlFragmentAdapter, ctx, ctx.options)
   }
 
   def createRootFrom(inputFragment: Fragment, pointer: Option[String], errorHandler: ParserErrorHandler): Root = {
