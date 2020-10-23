@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, OasTypeParser}
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 
@@ -25,7 +25,7 @@ class JsonSchemaParser {
     }
   }
 
-  def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
+  def parse(document: Root, parentContext: ParserContext, options: ParsingOptions, optionalVersion: Option[JSONSchemaVersion] = None): Option[DataTypeFragment] = {
 
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
@@ -33,7 +33,7 @@ class JsonSchemaParser {
         val JsonReference(url, hashFragment) = JsonReference.buildReference(document.location, JsonSchemaUrlFragmentAdapter)
         val jsonSchemaContext = AstFinder.makeJsonSchemaContext(document, parentContext, url, options)
         val rootAst = AstFinder.getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
-        val version = jsonSchemaContext.computeJsonSchemaVersion(rootAst.value)
+        val version = optionalVersion.getOrElse(jsonSchemaContext.computeJsonSchemaVersion(rootAst.value))
         val parsed =
           OasTypeParser(rootAst, rootAst.key.map(_.as[String]).getOrElse("schema"), shape => shape.withId(shapeId), version = version)(jsonSchemaContext)
             .parse() match {

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/main",
+  "definitions": {
+    "main": {
+      "type": "object",
+      "properties": {
+        "otherName": {
+          "type": "string"
+        }
+      },
+      "if": {
+        "type": "object",
+        "properties": {
+          "someOtherThing": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

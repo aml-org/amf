@@ -89,7 +89,7 @@ abstract class OasShapeEmitter(shape: Shape,
         result += oas.OasEntryShapeEmitter("if", shape.ifShape, ordering, references, pointer, schemaPath)
       if (Option(shape.thenShape).isDefined)
         result += oas.OasEntryShapeEmitter("then", shape.thenShape, ordering, references, pointer, schemaPath)
-      if (Option(shape.ifShape).isDefined)
+      if (Option(shape.elseShape).isDefined)
         result += oas.OasEntryShapeEmitter("else", shape.elseShape, ordering, references, pointer, schemaPath)
     }
 
