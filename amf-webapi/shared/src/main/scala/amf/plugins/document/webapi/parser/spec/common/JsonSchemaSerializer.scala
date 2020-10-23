@@ -11,13 +11,10 @@ import amf.core.remote.JsonSchema
 import amf.core.services.RuntimeSerializer
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
-import amf.plugins.document.webapi.contexts.emitter.oas.{
-  InlinedJsonSchemaEmitterContext,
-  AliasDefinitions,
-  JsonSchemaEmitterContext
-}
+import amf.plugins.document.webapi.contexts.emitter.jsonschema.{InlinedJsonSchemaEmitterContext, JsonSchemaEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.AliasDefinitions
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.oas.OasDeclarationsEmitter
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument
@@ -68,7 +65,7 @@ trait JsonSchemaSerializer extends PlatformSecrets {
   }
 }
 
-case class JsonSchemaEntry(version: JSONSchemaVersion) extends EntryEmitter {
+case class JsonSchemaEntry(version: SchemaVersion) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val draftVersionNumber = if (version == JSONSchemaDraft7SchemaVersion) 7 else 4
     b.entry("$schema", s"http://json-schema.org/draft-0${draftVersionNumber}/schema#")
@@ -84,7 +81,7 @@ case class JsonSchemaEmitter(root: Shape,
                              options: ShapeRenderOptions) {
 
   def emitDocument(): YDocument = {
-    val schemaVersion: JSONSchemaVersion = JSONSchemaVersion.fromClientOptions(options.schemaVersion)
+    val schemaVersion: SchemaVersion = SchemaVersion.fromClientOptions(options.schemaVersion)
     val context =
       if (options.isWithCompactedEmission)
         new JsonSchemaEmitterContext(options.errorHandler, options, schemaVersion = schemaVersion)

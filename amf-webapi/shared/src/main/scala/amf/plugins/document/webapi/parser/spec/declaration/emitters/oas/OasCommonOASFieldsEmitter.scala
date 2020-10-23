@@ -6,7 +6,7 @@ import amf.core.metamodel.Field
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, FieldEntry, Fields, Value}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.NumberTypeToYTypeConverter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.RamlFormatTranslator

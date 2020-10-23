@@ -20,7 +20,7 @@ class OasRefParser(map: YMap,
                    nameAnnotations: Annotations,
                    ast: YPart,
                    adopt: Shape => Unit,
-                   version: JSONSchemaVersion)(implicit val ctx: OasLikeWebApiContext) {
+                   version: SchemaVersion)(implicit val ctx: OasLikeWebApiContext) {
 
   private val REF_KEY = "$ref"
 

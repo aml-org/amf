@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaAstIndex, OasWebApiContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaUnspecifiedVersion, JSONSchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaUnspecifiedVersion, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.parser.spec.jsonschema.AstFinder
 import amf.plugins.domain.shapes.models.AnyShape
@@ -102,7 +102,7 @@ abstract class WebApiContext(val loc: String,
     }
   }
 
-  def computeJsonSchemaVersion(rootAst: YNode): JSONSchemaVersion = {
+  def computeJsonSchemaVersion(rootAst: YNode): SchemaVersion = {
     rootAst.value match {
       case map: YMap =>
         map.map.get("$schema") match {

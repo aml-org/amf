@@ -17,7 +17,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
   AnnotationEmitter,
   OasAnnotationEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasExampleEmitters, OasLikeExampleEmitters}
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YType
@@ -49,7 +49,7 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
                                          refEmitter: RefEmitter = OasRefEmitter,
                                          options: ShapeRenderOptions = ShapeRenderOptions())
     extends SpecEmitterContext(eh, refEmitter, options) {
-  def schemaVersion: JSONSchemaVersion
+  def schemaVersion: SchemaVersion
   def schemasDeclarationsPath: String
 
   override def localReference(reference: Linkable): PartEmitter =

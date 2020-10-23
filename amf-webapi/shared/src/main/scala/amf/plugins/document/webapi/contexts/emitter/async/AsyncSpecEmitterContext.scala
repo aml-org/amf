@@ -83,7 +83,7 @@ abstract class AsyncSpecEmitterContext(eh: ErrorHandler,
 class Async20SpecEmitterContext(eh: ErrorHandler,
                                 refEmitter: RefEmitter = AsyncRefEmitter,
                                 options: ShapeRenderOptions = ShapeRenderOptions(),
-                                val schemaVersion: JSONSchemaVersion = JSONSchemaDraft7SchemaVersion)
+                                val schemaVersion: SchemaVersion = JSONSchemaDraft7SchemaVersion)
     extends AsyncSpecEmitterContext(eh, refEmitter, options) {
   override val factory: AsyncSpecEmitterFactory = Async20SpecEmitterFactory(this)
   override val vendor: Vendor                   = AsyncApi20

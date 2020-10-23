@@ -54,7 +54,7 @@ import scala.util.Try
  */
 object OasTypeParser {
 
-  def apply(entry: YMapEntry, adopt: Shape => Unit, version: JSONSchemaVersion)(
+  def apply(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(
       implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
 
@@ -78,7 +78,7 @@ object OasTypeParser {
       true
     )
 
-  def apply(node: YMapEntryLike, name: String, adopt: Shape => Unit, version: JSONSchemaVersion)(
+  def apply(node: YMapEntryLike, name: String, adopt: Shape => Unit, version: SchemaVersion)(
       implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(node, name, node.asMap, adopt, version)
 
@@ -96,7 +96,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
                          name: String,
                          map: YMap,
                          adopt: Shape => Unit,
-                         version: JSONSchemaVersion,
+                         version: SchemaVersion,
                          isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext)
     extends OasSpecParser {
 
@@ -167,7 +167,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
     map.key("type").isDefined && map.key("type").get.value.asOption[YSequence].isDefined
   }
 
-  private def detect(version: JSONSchemaVersion): TypeDef = {
+  private def detect(version: SchemaVersion): TypeDef = {
     val defaultType = version match {
       case oasSchema: OASSchemaVersion if oasSchema.position == "parameter" => UndefinedType
       case _                                                                => AnyType
