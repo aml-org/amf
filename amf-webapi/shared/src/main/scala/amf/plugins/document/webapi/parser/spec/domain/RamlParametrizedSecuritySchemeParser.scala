@@ -19,7 +19,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, parentId: String)(i
   private val scheme: ParametrizedSecurityScheme = ParametrizedSecurityScheme(node)
 
   def parse(): ParametrizedSecurityScheme = node.tagType match {
-    case YType.Null => scheme.synthesizeName("null").add(NullSecurity()).adopted(parentId)
+    case YType.Null => scheme.withSynthesizeName("null").add(NullSecurity()).adopted(parentId)
     case YType.Map =>
       val schemeEntry = node.as[YMap].entries.head
       val name        = ScalarNode(schemeEntry.key)
@@ -56,7 +56,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, parentId: String)(i
         "'securedBy' property doesn't accept !include tag, only references to security schemes.",
         node
       )
-      scheme.synthesizeName("invalid").adopted(parentId)
+      scheme.withSynthesizeName("invalid").adopted(parentId)
     case _ =>
       val name: ScalarNode = ScalarNode(node)
       val textName         = name.text().toString
