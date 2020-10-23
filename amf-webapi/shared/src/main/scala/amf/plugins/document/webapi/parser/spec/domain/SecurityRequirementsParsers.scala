@@ -137,7 +137,7 @@ object RamlSecurityRequirementParser {
 case class RamlSecurityRequirementParser(node: YNode, parentId: String, idCounter: IdCounter)(
     implicit val ctx: RamlWebApiContext) {
   def parse(): SecurityRequirement = {
-    val requirement = SecurityRequirement(node).synthesizeName(idCounter.genId("default-requirement"))
+    val requirement = SecurityRequirement(node).withSynthesizeName(idCounter.genId("default-requirement"))
     requirement.adopted(parentId)
     val scheme: ParametrizedSecurityScheme = RamlParametrizedSecuritySchemeParser(node, requirement.id).parse()
     requirement.set(SecurityRequirementModel.Schemes, AmfArray(Seq(scheme), Annotations(node)), Annotations.inferred())

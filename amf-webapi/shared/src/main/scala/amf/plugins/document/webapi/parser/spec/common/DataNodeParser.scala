@@ -54,7 +54,7 @@ class DataNodeParser private (node: YNode,
   }
 
   protected def parseObject(value: YMap): DataNode = {
-    val node = DataObjectNode(Annotations(value)).synthesizeName(idCounter.genId("object"))
+    val node = DataObjectNode(Annotations(value)).withSynthesizeName(idCounter.genId("object"))
     parent.foreach(p => node.adopted(p))
     value.entries.map { ast =>
       parameters.parseVariables(ast.key)
@@ -77,7 +77,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
     val finalDataType = Some(DataType(dataType))
     val scalarNode    = amf.core.parser.ScalarNode(node)
     val dataNode = ScalarNode(scalarNode, finalDataType, Annotations(node))
-      .synthesizeName(idCounter.genId("scalar"))
+      .withSynthesizeName(idCounter.genId("scalar"))
     parent.foreach(p => dataNode.adopted(p))
     parameters.parseVariables(scalarNode.text().toString)
     dataNode
