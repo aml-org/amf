@@ -18,7 +18,7 @@ object AstFinder {
 
   def findAst(inputFragment: Fragment, pointer: Option[String])(implicit ctx: WebApiContext): Option[YNode] = {
     val doc = createRootFrom(inputFragment, pointer, ctx.eh)
-    findAst(doc, DefaultUrlFragmentAdapter, ctx, ctx.options)
+    findAst(doc, ctx, ctx.options)
   }
 
   def createRootFrom(inputFragment: Fragment, pointer: Option[String], errorHandler: ParserErrorHandler): Root = {
@@ -27,13 +27,12 @@ object AstFinder {
   }
 
   private def findAst(doc: Root,
-                      toolkit: UrlFragmentAdapter,
                       context: ParserContext,
                       options: ParsingOptions): Option[YNode] = {
     doc.parsed match {
       case parsedDoc: SyamlParsedDocument =>
         val shapeId: String                  = if (doc.location.contains("#")) doc.location else doc.location + "#/"
-        val JsonReference(url, hashFragment) = JsonReference.buildReference(doc.location, toolkit)
+        val JsonReference(url, hashFragment) = JsonReference.buildReference(doc.location)
         val jsonSchemaContext                = makeJsonSchemaContext(doc, context, url, options)
         val rootAst                          = getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
         Some(rootAst.value)

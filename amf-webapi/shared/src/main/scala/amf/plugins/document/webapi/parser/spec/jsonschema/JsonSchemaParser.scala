@@ -30,7 +30,7 @@ class JsonSchemaParser {
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
         val shapeId: String      = AstFinder.deriveShapeIdFrom(document)
-        val JsonReference(url, hashFragment) = JsonReference.buildReference(document.location, JsonSchemaUrlFragmentAdapter)
+        val JsonReference(url, hashFragment) = JsonReference.buildReference(document.location)
         val jsonSchemaContext = AstFinder.makeJsonSchemaContext(document, parentContext, url, options)
         val rootAst = AstFinder.getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
         val version = optionalVersion.getOrElse(jsonSchemaContext.computeJsonSchemaVersion(rootAst.value))
