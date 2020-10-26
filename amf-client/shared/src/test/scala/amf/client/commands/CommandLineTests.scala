@@ -18,7 +18,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
 
     override def print(e: Throwable): Unit = acc += e.toString
 
-    override def toString(): String = acc
+    override def toString: String = acc
   }
 
   class TestProc extends Proc {
@@ -26,7 +26,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
 
     override def exit(statusCode: Int): Unit = exitCode = Some(statusCode)
 
-    def successful = exitCode.isEmpty
+    def successful: Boolean = exitCode.isEmpty
   }
 
   test("Parse command") {
@@ -94,6 +94,36 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
                      "-p",
                      Raml.name,
                      "file://amf-client/shared/src/test/resources/validations/data/error1.raml")
+    val cfg = CmdLineParser.parse(args)
+    assert(cfg.isDefined)
+    assert(cfg.get.mode.get == ParserConfig.VALIDATE)
+    val stdout = new TestWriter()
+    val stderr = new TestWriter()
+    val proc   = new TestProc()
+
+    ValidateCommand(platform).run(
+      cfg.get.copy(
+        stdout = stdout,
+        stderr = stderr,
+        proc = proc
+      )) map { _ =>
+      assert(stderr.acc == "")
+      assert(stdout.acc != "")
+      assert(!proc.successful)
+    }
+  }
+
+  test("invalid reference validation command") {
+    val args = Array(
+      "validate",
+      "-in",
+      Raml10.name,
+      "-mime-in",
+      "application/yaml",
+      "-p",
+      Raml.name,
+      "file://amf-client/shared/src/test/resources/validations/data/references/invalid-included-rtype-broken-key.raml"
+    )
     val cfg = CmdLineParser.parse(args)
     assert(cfg.isDefined)
     assert(cfg.get.mode.get == ParserConfig.VALIDATE)
