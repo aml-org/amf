@@ -2,8 +2,9 @@ package amf.plugins.document.webapi.contexts.emitter.jsonschema
 
 import amf.core.emitter.ShapeRenderOptions
 import amf.core.errorhandling.ErrorHandler
+import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.emitter.oas.{InlinedJsonSchemaEmitterFactory, Oas2SpecEmitterContext, OasSpecEmitterFactory}
-import amf.plugins.document.webapi.parser.spec.declaration.{SchemaVersion, OAS20SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaVersion, OAS20SchemaVersion, OAS30SchemaVersion, SchemaVersion}
 import amf.plugins.document.webapi.parser.{JsonSchemaTypeDefMatcher, OasTypeDefStringValueMatcher}
 
 import scala.util.matching.Regex
@@ -16,7 +17,17 @@ class JsonSchemaEmitterContext(override val eh: ErrorHandler,
 
   override val anyOfKey: String                = "anyOf"
   override val nameRegex: Regex                = """^[a-zA-Z0-9\.\-_]+$""".r
-  override def schemasDeclarationsPath: String = "/definitions/"
+
+
+  override val vendor: Vendor = Vendor.JSONSCHEMA
+
+  //  override def schemasDeclarationsPath: String = "/definitions/"
+  override def schemasDeclarationsPath: String = schemaVersion match {
+    case jsonVersion : JSONSchemaVersion =>
+      if(jsonVersion < JSONSchemaDraft201909SchemaVersion) "/definitions/"
+      else "/$defs/"
+    case _ => "/definitions/"
+  }
 }
 
 object JsonSchemaEmitterContext {

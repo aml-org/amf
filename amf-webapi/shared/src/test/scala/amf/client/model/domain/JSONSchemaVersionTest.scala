@@ -1,6 +1,6 @@
 package amf.client.model.domain
 
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaDraft6SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaUnspecifiedVersion}
+import amf.plugins.document.webapi.parser.spec.declaration._
 import org.scalatest.{FunSuite, Matchers}
 
 class JSONSchemaVersionTest extends FunSuite with Matchers{
@@ -11,7 +11,8 @@ class JSONSchemaVersionTest extends FunSuite with Matchers{
       JSONSchemaDraft3SchemaVersion,
       JSONSchemaDraft4SchemaVersion,
       JSONSchemaDraft6SchemaVersion,
-      JSONSchemaDraft7SchemaVersion
+      JSONSchemaDraft7SchemaVersion,
+      JSONSchemaDraft201909SchemaVersion
     )
     versions shouldBe sorted
   }
@@ -19,6 +20,7 @@ class JSONSchemaVersionTest extends FunSuite with Matchers{
   test("JsonSchemaVersion comparison is correct by unordered list") {
     val versions = Seq(
       JSONSchemaDraft3SchemaVersion,
+      JSONSchemaDraft201909SchemaVersion,
       JSONSchemaDraft7SchemaVersion,
       JSONSchemaDraft4SchemaVersion,
       JSONSchemaDraft6SchemaVersion,
