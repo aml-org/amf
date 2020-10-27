@@ -1,11 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{ExplicitField, SynthesizedField}
+import amf.core.annotations.{ExplicitField, SynthesizedField, VirtualElement}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
@@ -74,8 +74,8 @@ case class Raml08PayloadParser(entry: YMapEntry, parentId: String, parseOptional
       case YType.Null =>
         val shape: AnyShape = AnyShape(entry)
         val anyShape        = shape.withName("schema").adopted(payload.id)
-        anyShape.annotations += SynthesizedField()
-        payload.withSchema(anyShape)
+        anyShape.annotations += VirtualElement()
+        payload.set(PayloadModel.Schema, anyShape, Annotations(SynthesizedField()))
 
       case YType.Map =>
         if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(mediaType)) {

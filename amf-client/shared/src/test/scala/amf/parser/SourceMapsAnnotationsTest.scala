@@ -27,6 +27,10 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     runTest("raml10.raml", RamlYamlHint)
   }
 
+  test("Test raml 0.0 annotations") {
+    runTest("raml08.raml", RamlYamlHint)
+  }
+
   private def build(file: String, hint: Hint): Future[BaseUnit] = {
     Validation(platform).flatMap { _ =>
       RuntimeCompiler(s"file://$directory$file", None, None, Context(platform), Cache())
@@ -59,7 +63,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     o.fields
       .fields()
       .flatMap { fe =>
-        checkInField(fe, o.meta.`type`.head.iri()) ++ checkElement(fe.value.value)
+        checkInField(fe, o.meta.`type`.head.iri()) ++ (if (fe.isSynthesized) Nil else checkElement(fe.value.value))
       }
       .toSeq
   }
