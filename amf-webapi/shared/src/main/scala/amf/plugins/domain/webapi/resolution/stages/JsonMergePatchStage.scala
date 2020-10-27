@@ -3,8 +3,9 @@ package amf.plugins.domain.webapi.resolution.stages
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfElement
+import amf.core.parser.FieldEntry
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncKeyCriteria, JsonMergePatch}
+import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncKeyCriteria, CustomMerge, JsonMergePatch}
 import amf.plugins.domain.webapi.metamodel.{AbstractModel, MessageModel, OperationModel}
 import amf.plugins.domain.webapi.models.{Message, Operation, WebApi}
 
@@ -12,7 +13,8 @@ class JsonMergePatchStage(override implicit val errorHandler: ErrorHandler) exte
 
   private lazy val merger = JsonMergePatch(_ => false,
                                            AsyncKeyCriteria(),
-                                           Seq(OperationModel.Name, MessageModel.Name, AbstractModel.IsAbstract))
+                                           Seq(OperationModel.Name, MessageModel.Name, AbstractModel.IsAbstract),
+                                           Seq(CustomMessageExamplesMerge))
 
   override def resolve[T <: BaseUnit](model: T): T = model match {
     case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
@@ -48,4 +50,26 @@ class JsonMergePatchStage(override implicit val errorHandler: ErrorHandler) exte
     case t: Operation => t
   }
   private def getMessageTraits(extended: Message): Seq[Message] = extended.extend.collect { case t: Message => t }
+}
+
+object CustomMessageExamplesMerge extends CustomMerge {
+  override def apply(target: AmfElement, patch: AmfElement): Unit = (target, patch) match {
+    case (target: Message, patch: Message) =>
+      if (definesExamples(patch)) {
+        exampleFields.foreach(target.fields.removeField)
+        exampleFields.foreach { exampleField =>
+          patch.fields
+            .getValueAsOption(exampleField)
+            .foreach { value =>
+              target.set(exampleField, value.value)
+            }
+        }
+      }
+    case _ =>
+  }
+  val exampleFields = Seq(MessageModel.HeaderExamples, MessageModel.Examples)
+
+  private def definesExamples(patch: Message) = {
+    patch.fields.fields().map(_.field).toList.intersect(exampleFields).nonEmpty
+  }
 }

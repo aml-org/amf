@@ -19,6 +19,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
 import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncKeyCriteria, JsonMergePatch}
 import amf.plugins.domain.webapi.metamodel.AbstractModel
 import amf.plugins.domain.webapi.models.{Message, Operation}
+import amf.plugins.domain.webapi.resolution.stages.CustomMessageExamplesMerge
 import org.mulesoft.common.io.Fs
 import org.scalatest.{Assertion, Matchers}
 import org.yaml.model.{YDocument, YMap, YNode}
@@ -129,7 +130,8 @@ trait JsonMergePatchTest
 
     def build(targetFile: String, patchFile: String): Document
 
-    def getMerger: JsonMergePatch = JsonMergePatch(_ => false, AsyncKeyCriteria(), Seq(AbstractModel.IsAbstract))
+    def getMerger: JsonMergePatch =
+      JsonMergePatch(_ => false, AsyncKeyCriteria(), Seq(AbstractModel.IsAbstract), Seq(CustomMessageExamplesMerge))
 
     def getBogusParserCtx: AsyncWebApiContext =
       new Async20WebApiContext("loc", Seq(), ParserContext(eh = DefaultParserErrorHandler()))
