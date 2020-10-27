@@ -99,11 +99,14 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
         )
 
         // OAS 3.0.0
+        var payloadAnn: Option[Annotations] = None
         if (ctx.syntax == Oas3Syntax) {
-          map.key(
-            "content",
-            entry => payloads ++= OasContentsParser(entry, res.withPayload).parse()
-          )
+          map
+            .key("content")
+            .map(entry => {
+              payloadAnn = Some(Annotations(entry))
+              payloads ++= OasContentsParser(entry, res.withPayload).parse()
+            })
 
           map.key(
             "links",
@@ -117,20 +120,13 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
           )
         }
 
-        if (payloads.nonEmpty)
-          res.set(ResponseModel.Payloads, AmfArray(payloads))
+        if (payloads.nonEmpty || payloadAnn.isDefined)
+          res.set(ResponseModel.Payloads, AmfArray(payloads), payloadAnn.getOrElse(Annotations.empty))
 
         AnnotationParser(res, map).parse()
 
         res
     }
-//    if (!response.annotations.contains(classOf[DeclaredElement])) {
-//      if (response.name.is("default")) {
-//        response.set(ResponseModel.StatusCode, "200")
-//      } else {
-//        response.set(ResponseModel.StatusCode, node)
-//      }
-//    }
   }
 
   private def defaultPayload(entries: YMap, parentId: String): Option[Payload] = {
