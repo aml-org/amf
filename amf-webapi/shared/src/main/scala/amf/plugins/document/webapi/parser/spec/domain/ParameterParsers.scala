@@ -73,13 +73,8 @@ object RamlParameterParser {
 case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
-  override def parse(): Parameter = {
 
-    val name = ScalarNode(entry.key)
-    val parameter = Parameter(entry)
-      .withName(name)
-      .set(ParameterModel.ParameterName, name.text(), Annotations.inferred()) // TODO parameter id is using a name that is not final.
-    adopted(parameter)
+  override def parse(): Parameter = {
 
     val p = entry.value.to[YMap] match {
       case Right(map) =>
@@ -119,7 +114,7 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
                   .get
                   .link(ref.text, Annotations(entry))
                   .asInstanceOf[Parameter]
-                  .set(ParameterModel.Name, name.text())
+                  .set(ParameterModel.Name, nameNode.text())
               case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
                 val shape: Shape = ctx.declarations
                   .findType(ref.text,
@@ -154,12 +149,12 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
     }
 
     if (p.fields.entry(ParameterModel.Required).isEmpty) {
-      val stringName = name.text().toString
+      val stringName = nameNode.text().toString
       val required   = !stringName.endsWith("?")
       val paramName  = if (required) stringName else stringName.stripSuffix("?")
       p.set(ParameterModel.Required, AmfScalar(required), Annotations(SynthesizedField()))
-      p.set(ParameterModel.Name, AmfScalar(paramName, name.text().annotations), Annotations.inferred())
-        .set(ParameterModel.ParameterName, AmfScalar(paramName, name.text().annotations), Annotations.inferred())
+      p.set(ParameterModel.Name, AmfScalar(paramName, nameNode.text().annotations), Annotations.inferred())
+        .set(ParameterModel.ParameterName, AmfScalar(paramName, nameNode.text().annotations), Annotations.inferred())
     }
 
     p
@@ -170,10 +165,6 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
     implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
   def parse(): Parameter = {
-
-    val name      = ScalarNode(entry.key)
-    val parameter = Parameter(entry).set(ParameterModel.Name, name.text()).withParameterName(name.text().toString)
-    adopted(parameter)
 
     entry.value.tagType match {
       case YType.Null =>
@@ -187,11 +178,11 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
       case _ =>
         // Named Parameter Parse
         Raml08TypeParser(entry,
-                         (s: Shape) => s.withName(name.text().toString).adopted(parameter.id),
+                         (s: Shape) => s.withName(nameNode.text().toString).adopted(parameter.id),
                          isAnnotation = false,
                          StringDefaultType)
           .parse()
-          .foreach(s => parameter.withSchema(tracking(s, parameter.id)))
+          .foreach(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
     }
 
     entry.value.toOption[YMap] match {
@@ -201,13 +192,16 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
       case _ =>
     }
 
-    if (parameter.fields.entry(ParameterModel.Required).isEmpty) parameter.set(ParameterModel.Required, value = false)
+    if (parameter.fields.entry(ParameterModel.Required).isEmpty)
+      parameter.set(ParameterModel.Required, AmfScalar(false), Annotations(SynthesizedField()))
 
-    val stringName = name.text().toString
+    val stringName = nameNode.text().toString
     if (parseOptional && stringName.endsWith("?")) {
       parameter.set(ParameterModel.Optional, value = true)
       val n = stringName.stripSuffix("?")
-      parameter.set(ParameterModel.Name, AmfScalar(n, name.text().annotations)).set(ParameterModel.ParameterName, n)
+      parameter
+        .set(ParameterModel.Name, AmfScalar(n, nameNode.text().annotations))
+        .set(ParameterModel.ParameterName, n)
     }
 
     parameter
@@ -217,6 +211,16 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
 abstract class RamlParameterParser(entry: YMapEntry, adopted: Parameter => Unit)(implicit val ctx: RamlWebApiContext)
     extends RamlTypeSyntax
     with SpecParserOps {
+
+  protected val nameNode = ScalarNode(entry.key)
+  protected val parameter: Parameter = {
+    val parameter = Parameter(entry)
+      .withName(nameNode)
+      .set(ParameterModel.ParameterName, nameNode.text(), Annotations.inferred()) // TODO parameter id is using a name that is not final.
+    adopted(parameter)
+    parameter
+  }
+
   def parse(): Parameter
 }
 

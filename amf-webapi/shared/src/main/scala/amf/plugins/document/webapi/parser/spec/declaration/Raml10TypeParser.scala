@@ -289,9 +289,12 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
       case FileType =>
         Some(FileShape(ast).withName(name, Annotations()))
       case _: ScalarType =>
-        Some(ScalarShape(ast)
-          .withName(name, Annotations())
-          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
+        Some(
+          ScalarShape(ast)
+            .withName(name, Annotations())
+            .set(ScalarShapeModel.DataType,
+                 AmfScalar(XsdTypeDefMapping.xsd(defaultType), Annotations.inferred()),
+                 Annotations.inferred()))
       case AnyType =>
         Some(AnyShape(ast).withName(name, Annotations()).add(Inferred()))
       case _ =>
@@ -372,7 +375,9 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
               None
           }
         }
-        .getOrElse(ScalarShape(map).withDataType(DataType.String).withName(name, Annotations()))
+        .getOrElse(ScalarShape(map)
+          .set(ScalarShapeModel.DataType, AmfScalar(DataType.String), Annotations(SynthesizedField()))
+          .withName(name, Annotations()))
 
       map.key("type", e => { shape.annotations += TypePropertyLexicalInfo(Range(e.key.range)) })
 
