@@ -54,7 +54,7 @@ import scala.util.Try
  */
 object OasTypeParser {
 
-  def apply(entry: YMapEntry, adopt: Shape => Unit, version: JSONSchemaVersion)(
+  def apply(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(
       implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
 
@@ -78,25 +78,25 @@ object OasTypeParser {
       true
     )
 
+  def apply(node: YMapEntryLike, name: String, adopt: Shape => Unit, version: SchemaVersion)(
+      implicit ctx: OasLikeWebApiContext): OasTypeParser =
+    new OasTypeParser(node, name, node.asMap, adopt, version)
+
+  def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
+    new OasTypeParser(YMapEntryLike(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx.eh))
+
   private def getSchemaVersion(ctx: OasLikeWebApiContext) = {
     if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion("schema")(ctx.eh)
     else if (ctx.vendor == Vendor.ASYNC20) JSONSchemaDraft7SchemaVersion
     else OAS20SchemaVersion("schema")(ctx.eh)
   }
-
-  def apply(node: YNode, name: String, adopt: Shape => Unit, version: JSONSchemaVersion)(
-      implicit ctx: OasLikeWebApiContext): OasTypeParser =
-    new OasTypeParser(YMapEntryLike(node), name, node.as[YMap], adopt, version)
-
-  def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
-    new OasTypeParser(YMapEntryLike(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx.eh))
 }
 
 case class OasTypeParser(entryOrNode: YMapEntryLike,
                          name: String,
                          map: YMap,
                          adopt: Shape => Unit,
-                         version: JSONSchemaVersion,
+                         version: SchemaVersion,
                          isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext)
     extends OasSpecParser {
 
@@ -167,7 +167,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
     map.key("type").isDefined && map.key("type").get.value.asOption[YSequence].isDefined
   }
 
-  private def detect(version: JSONSchemaVersion): TypeDef = {
+  private def detect(version: SchemaVersion): TypeDef = {
     val defaultType = version match {
       case oasSchema: OASSchemaVersion if oasSchema.position == "parameter" => UndefinedType
       case _                                                                => AnyType
@@ -664,7 +664,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
             .zipWithIndex
             .map {
               case (elem, index) =>
-                OasTypeParser(elem, s"member$index", item => item.adopted(shape.id + "/items/" + index), version)
+                OasTypeParser(YMapEntryLike(elem), s"member$index", item => item.adopted(shape.id + "/items/" + index), version)
                   .parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
@@ -928,7 +928,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
         .flatMap(n => {
           n.toOption[YMap]
             .flatMap(declarationsRef)
-            .orElse(OasTypeParser(n, "", adopt, version).parse())
+            .orElse(OasTypeParser(YMapEntryLike(n), "", adopt, version).parse())
         })
 
     private def declarationsRef(entries: YMap): Option[Shape] = {

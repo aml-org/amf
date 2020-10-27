@@ -5,7 +5,7 @@ import amf.core.model.domain.RecursiveShape
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 
 case class OasRecursiveShapeEmitter(recursive: RecursiveShape,

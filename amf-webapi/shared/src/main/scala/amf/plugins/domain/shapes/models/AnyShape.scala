@@ -109,10 +109,12 @@ class AnyShape(val fields: Fields, val annotations: Annotations = Annotations())
   override def meta: AnyShapeModel = AnyShapeModel
 
   def toJsonSchema(exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
+    // TODO: THIS SHOULD NOT BE CALLED FROM DOMAIN MODEL!
     toJsonSchema(this, exec)
 
   def buildJsonSchema(options: ShapeRenderOptions = ShapeRenderOptions(),
                       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
+    // TODO: THIS SHOULD NOT BE CALLED FROM DOMAIN MODEL!
     generateJsonSchema(this, options, exec)
 
   /** Delegates generation of a new RAML Data Type or returns cached

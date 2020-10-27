@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.contexts.parser.oas
 
 import org.yaml.model._
 import amf.core.parser._
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
