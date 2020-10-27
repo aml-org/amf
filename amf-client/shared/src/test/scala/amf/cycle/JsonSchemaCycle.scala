@@ -15,10 +15,11 @@ import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.parser.JsonParser
 import org.yaml.render.JsonRender
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssertionTest {
 
+  override implicit val executionContext = ExecutionContext.Implicits.global
   private val basePath = "amf-client/shared/src/test/resources/cycle/jsonschema/"
   private val JSON = "application/json"
 

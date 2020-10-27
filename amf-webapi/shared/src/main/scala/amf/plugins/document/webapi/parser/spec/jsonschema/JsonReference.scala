@@ -13,4 +13,11 @@ object JsonReference {
     else fragment
 }
 
-case class JsonReference(url: String, fragment: Option[String])
+case class JsonReference(url: String, fragment: Option[String]) {
+  override def toString: String = {
+    val pointer = fragment.map(addHash).getOrElse("")
+    url + pointer
+  }
+
+  private def addHash(pointer: String) = "#" + pointer
+}

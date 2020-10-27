@@ -4,6 +4,7 @@ import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.parser.ParsedReference
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.parser.spec.jsonschema.AstFinder
+import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaRootCreator.getYNodeFrom
 import org.yaml.model.YNode
 
 case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReference])(
@@ -18,7 +19,7 @@ case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReferenc
 
   def getRootYNode(ref: String): Option[YNode] = {
     withFragmentAndInFileReference(ref) { (fragment, _) =>
-      Some(AstFinder.getYNodeFrom(fragment, context.eh))
+      Some(getYNodeFrom(fragment, context.eh))
     }
   }
 

@@ -45,7 +45,6 @@ case class JsonMergePatch(isNull: AmfElement => Boolean, keyCriteria: KeyCriteri
     patch.fields
       .fields()
       .filter(entry => !ignoredFields.contains(entry.field))
-
       .foreach {
         case FieldEntry(field, fieldValue) =>
           val element = fieldValue.value

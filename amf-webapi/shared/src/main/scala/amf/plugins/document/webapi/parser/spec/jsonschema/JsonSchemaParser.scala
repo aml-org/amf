@@ -2,22 +2,25 @@ package amf.plugins.document.webapi.parser.spec.jsonschema
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.model.document.{BaseUnit, EncodesModel, Fragment}
-import amf.core.parser.{ParserContext, SyamlParsedDocument}
+import amf.core.model.document.{EncodesModel, Fragment}
+import amf.core.parser.{EmptyFutureDeclarations, ParserContext, SyamlParsedDocument}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.JsonSchemaWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.Raml08WebApiContext
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, OasTypeParser}
+import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaRootCreator.createRootFrom
+import amf.plugins.document.webapi.parser.spec.toOasDeclarations
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 
-class JsonSchemaParser {
+class JsonSchemaParser{
 
   def parse(inputFragment: Fragment, pointer: Option[String])(
     implicit ctx: OasLikeWebApiContext): Option[AnyShape] = {
 
-    val doc: Root = AstFinder.createRootFrom(inputFragment, pointer, ctx.eh)
+    val doc: Root = createRootFrom(inputFragment, pointer, ctx.eh)
     val parsingResult = parse(doc, ctx, new ParsingOptions())
 
     parsingResult.collect {
@@ -29,10 +32,10 @@ class JsonSchemaParser {
 
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
-        val shapeId: String      = AstFinder.deriveShapeIdFrom(document)
+        val shapeId: String      = deriveShapeIdFrom(document)
         val JsonReference(url, hashFragment) = JsonReference.buildReference(document.location)
-        val jsonSchemaContext = AstFinder.makeJsonSchemaContext(document, parentContext, url, options)
-        val rootAst = AstFinder.getRootAst(parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
+        val jsonSchemaContext = makeJsonSchemaContext(document, parentContext, url, options)
+        val rootAst = AstFinder.getPointedAstOrNode(parsedDoc.document.node, shapeId, hashFragment, url, jsonSchemaContext)
         val version = optionalVersion.getOrElse(jsonSchemaContext.computeJsonSchemaVersion(rootAst.value))
         val parsed =
           OasTypeParser(rootAst, rootAst.key.map(_.as[String]).getOrElse("schema"), shape => shape.withId(shapeId), version = version)(jsonSchemaContext)
@@ -47,6 +50,29 @@ class JsonSchemaParser {
       case _ => None
     }
   }
+
+  private def makeJsonSchemaContext(document: Root,
+                            parentContext: ParserContext,
+                            url: String,
+                            options: ParsingOptions): JsonSchemaWebApiContext = {
+
+    val cleanNested = ParserContext(url, document.references, EmptyFutureDeclarations(), parentContext.eh)
+    cleanNested.globalSpace = parentContext.globalSpace
+
+    // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
+    val inheritedDeclarations = getInheritedDeclarations(parentContext)
+
+    new JsonSchemaWebApiContext(url, document.references, cleanNested, inheritedDeclarations, options)
+  }
+
+  private def getInheritedDeclarations(parserContext: ParserContext) = {
+    parserContext match {
+      case ramlContext: Raml08WebApiContext => Some(toOasDeclarations(ramlContext.declarations))
+      case _                                => None
+    }
+  }
+
+  private def deriveShapeIdFrom(doc: Root): String = if (doc.location.contains("#")) doc.location else doc.location + "#/"
 
   private def throwUnparsableJsonSchemaError(document: Root, shapeId: String, jsonSchemaContext: JsonSchemaWebApiContext, rootAst: YMapEntryLike): Unit = {
     jsonSchemaContext.eh.violation(UnableToParseJsonSchema,
