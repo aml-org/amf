@@ -50,8 +50,7 @@ trait CommandHelper {
       Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
       config.inputFormat,
       Context(platform),
-      cache = Cache(),
-      errorHandler = UnhandledParserErrorHandler
+      cache = Cache()
     )
     val vendor = effectiveVendor(config.inputFormat)
     if (config.resolve)
@@ -69,8 +68,7 @@ trait CommandHelper {
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
         config.inputFormat,
         Context(platform),
-        cache = Cache(),
-        errorHandler = UnhandledParserErrorHandler
+        cache = Cache()
       )
       parsed map { parsed =>
         RuntimeResolver.resolve(vendor, parsed, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)

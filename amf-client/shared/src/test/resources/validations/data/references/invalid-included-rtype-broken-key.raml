@@ -1,0 +1,48 @@
+#%RAML 1.0
+
+title: invalid, included resourceType, broken rtype key
+
+types:
+  petsSchema: |
+    {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "id": "petsSchema",
+      "type": "object",
+      "properties": {
+        "pets": {
+          "id": "petsList",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "genus": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "genus",
+              "quantity"
+            ]
+          }
+        },
+        "totalRecords": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pets",
+        "totalRecords"
+      ]
+    }
+
+resourceTypes:
+  collection: !include collection.raml
+
+/pets:
+  type:
+    collection:
+      rtypeCollection: petsSchemaBrokenKey
+      exampleCollection: !include valid-pets.json
