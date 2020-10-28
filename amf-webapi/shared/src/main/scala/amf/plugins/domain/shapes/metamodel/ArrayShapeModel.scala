@@ -50,9 +50,14 @@ class DataArrangementShape extends AnyShapeModel {
     ModelDoc(ModelVocabularies.Shapes, "collectionFormat", "Input collection format information"))
 
   val UnevaluatedItems = Field(
-    ShapeModel,
+    Bool,
     Shapes + "unevaluatedItems",
-    ModelDoc(ModelVocabularies.Shapes, "unevaluatedItems", "Items that may not be evaluated in schema validation"))
+    ModelDoc(ModelVocabularies.Shapes, "unevaluatedItems", "Accepts that items may not be evaluated in schema validation"))
+
+  val UnevaluatedItemsShape = Field(
+    ShapeModel,
+    Shapes + "unevaluatedItemsShape",
+    ModelDoc(ModelVocabularies.Shapes, "unevaluatedItemsShape", "Items that may not be evaluated in schema validation"))
 
   val specificFields = List(Items,
                             Contains,
@@ -61,6 +66,7 @@ class DataArrangementShape extends AnyShapeModel {
                             UniqueItems,
                             CollectionFormat,
                             UnevaluatedItems,
+                            UnevaluatedItemsShape,
                             MinContains,
                             MaxContains)
   override val fields: List[Field] = specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields

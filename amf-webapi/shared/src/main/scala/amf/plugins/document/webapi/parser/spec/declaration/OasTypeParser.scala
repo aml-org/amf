@@ -18,6 +18,7 @@ import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
+import amf.plugins.document.webapi.parser.spec.jsonschema.parser.UnevaluatedParser
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -695,6 +696,10 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
         }
       }
 
+      if (version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
+        new UnevaluatedParser(version, UnevaluatedParser.unevaluatedItemsInfo).parse(map, shape)
+      }
+
       finalShape match {
         case Some(parsed: AnyShape) => parsed.withId(shape.id)
         case None                   => shape.withItems(AnyShape())
@@ -767,6 +772,10 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
                              "Invalid part type for additional properties node. Should be a boolean or a map",
                              entry)
         }
+      }
+
+      if (version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
+        new UnevaluatedParser(version, UnevaluatedParser.unevaluatedPropertiesInfo).parse(map, shape)
       }
 
       if (isOas3) {

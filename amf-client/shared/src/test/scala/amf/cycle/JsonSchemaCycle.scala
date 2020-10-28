@@ -42,6 +42,22 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     cycle("draft-2019-09/duration-uuid-format.json", "draft-2019-09/jsonld/duration-uuid-format.json", JSONSchemaDraft201909SchemaVersion, JsonLdEmitter, JSON)
   }
 
+  test("Draft 2019-09 unevaluatedProperties") {
+    cycle("draft-2019-09/unevaluatedProps-schema.json", "draft-2019-09/unevaluatedProps-schema.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
+  test("Draft 2019-09 unevaluatedProperties boolean") {
+    cycle("draft-2019-09/unevaluatedProps-boolean.json", "draft-2019-09/unevaluatedProps-boolean.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
+  test("Draft 2019-09 unevaluatedItems boolean") {
+    cycle("draft-2019-09/unevaluatedItems-boolean.json", "draft-2019-09/unevaluatedItems-boolean.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
+  test("Draft 2019-09 unevaluatedItems schema") {
+    cycle("draft-2019-09/unevaluatedItems-schema.json", "draft-2019-09/unevaluatedItems-schema.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
   private def cycle(path: String, golden: String, from: JSONSchemaVersion, emitter: SchemaEmitter, mediatype: String = JSON): Future[Assertion] = {
     val finalPath = basePath + path
     val finalGolden = basePath + golden
