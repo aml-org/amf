@@ -31,7 +31,7 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
 
     emitFormatRanges(fs, result)
 
-    if (spec.schemaVersion != JSONSchemaDraft7SchemaVersion) {
+    if (spec.schemaVersion isSmallerThanOrDifferentThan JSONSchemaDraft7SchemaVersion) {
       fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("exclusiveMinimum", f))
       fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("exclusiveMaximum", f))
     }
@@ -73,7 +73,7 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
   }
 
   private def emitMinAndMax(fs: Fields, result: ListBuffer[EntryEmitter]): Unit = {
-    if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion) {
+    if (spec.schemaVersion isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion) {
       fs.entry(ScalarShapeModel.Minimum)
         .foreach(emitMin(_, result, fs.entry(ScalarShapeModel.ExclusiveMinimum).exists(_.scalar.toBool)))
       fs.entry(ScalarShapeModel.Maximum)
