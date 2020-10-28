@@ -6,6 +6,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.utils.AmfStrings
+import amf.core.parser.FieldEntry
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{Draft2019DependenciesEmitter, Draft4DependenciesEmitter, TypeEmitterFactory}
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, OAS30SchemaVersion}
@@ -36,7 +37,7 @@ case class OasNodeShapeEmitter(node: NodeShape,
     fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
 
     fs.entry(NodeShapeModel.Closed)
-      .filter(f => f.value.annotations.contains(classOf[ExplicitField]) || f.scalar.toBool) match {
+      .filter(f => isExplicit(f) || f.scalar.toBool) match {
       case Some(f) => result += ValueEmitter("additionalProperties", f.negated)
       case _ =>
         fs.entry(NodeShapeModel.AdditionalPropertiesSchema)
@@ -80,9 +81,13 @@ case class OasNodeShapeEmitter(node: NodeShape,
 
     fs.entry(NodeShapeModel.Inherits).map(f => result += OasShapeInheritsEmitter(f, ordering, references))
 
-    if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion && Option(node.propertyNames).isDefined)
+    if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion) && Option(node.propertyNames).isDefined)
       result += OasEntryShapeEmitter("propertyNames", node.propertyNames, ordering, references, pointer, schemaPath)
 
     result
+  }
+
+  private def isExplicit(f: FieldEntry) = {
+    f.value.annotations.contains(classOf[ExplicitField])
   }
 }

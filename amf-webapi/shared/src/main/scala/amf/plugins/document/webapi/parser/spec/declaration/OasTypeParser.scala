@@ -369,7 +369,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
           setValue("minimum", map, ScalarShapeModel.Minimum, shape)
           setValue("maximum", map, ScalarShapeModel.Maximum, shape)
           map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
-          if (version == JSONSchemaDraft7SchemaVersion) {
+          if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion) {
             parseNumericExclusive(map, shape)
           } else {
             map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
@@ -608,7 +608,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       map.key("maxItems", ArrayShapeModel.MaxItems in shape)
       map.key("uniqueItems", ArrayShapeModel.UniqueItems in shape)
 
-      if (version == JSONSchemaDraft7SchemaVersion)
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         InnerShapeParser("contains", ArrayShapeModel.Contains, map, shape).parse()
       shape
     }
@@ -626,7 +626,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
         entry.value.tagType match {
           case YType.Bool =>
             (TupleShapeModel.ClosedItems in shape).negated(entry)
-            if (version == JSONSchemaDraft7SchemaVersion)
+            if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
               additionalItemViolation(entry, "Invalid part type for additional items node. Expected a map")
           case YType.Map =>
             OasTypeParser(entry, s => s.adopted(shape.id), version).parse().foreach { s =>
@@ -635,7 +635,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
           case _ =>
             additionalItemViolation(
               entry,
-              if (version == JSONSchemaDraft7SchemaVersion)
+              if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
                 "Invalid part type for additional items node. Expected a map"
               else
                 "Invalid part type for additional items node. Should be a boolean or a map"
@@ -715,7 +715,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
 
       map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
 
-      if (version == JSONSchemaDraft7SchemaVersion)
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         map.key("$comment", AnyShapeModel.Comment in shape)
 
       shape
@@ -723,7 +723,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
 
     private def parseExample(): Unit = {
 
-      if (version == JSONSchemaDraft7SchemaVersion || version == JSONSchemaDraft6SchemaVersion)
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft6SchemaVersion)
         parseExamplesArray()
       else
         RamlExamplesParser(map, "example", "examples".asOasExtension, shape, options)
@@ -787,7 +787,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
           case _ => // Empty properties node.
         }
       })
-      if (version == JSONSchemaDraft7SchemaVersion)
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         InnerShapeParser("propertyNames", NodeShapeModel.PropertyNames, map, shape).parse()
 
       val patternPropEntry = map.key("patternProperties")
@@ -1068,12 +1068,12 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
 
       map.key("readOnly", ShapeModel.ReadOnly in shape)
 
-      if (version.isInstanceOf[OAS30SchemaVersion] || version == JSONSchemaDraft7SchemaVersion) {
+      if (version.isInstanceOf[OAS30SchemaVersion] || version.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion)) {
         map.key("writeOnly", ShapeModel.WriteOnly in shape)
         map.key("deprecated", ShapeModel.Deprecated in shape)
       }
 
-      if (version == JSONSchemaDraft7SchemaVersion) parseDraft7Fields()
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion) parseDraft7Fields()
       // normal annotations
       AnnotationParser(shape, map).parse()
 
