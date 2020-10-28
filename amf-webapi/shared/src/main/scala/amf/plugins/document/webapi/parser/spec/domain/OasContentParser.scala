@@ -30,17 +30,20 @@ case class OasContentsParser(entry: YMapEntry, producer: Option[String] => Paylo
 case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payload)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 
-  private def buildPayload(): Payload = {
+  private def buildPayloadWithMediaType(): Payload = {
     val mediaTypeNode         = ScalarNode(entry.key)
-    val mediaTypeText: String = mediaTypeNode.text().toString
+    val mediaTypeText: String = getMediaType(mediaTypeNode)
 
     val payload = producer(Some(mediaTypeText)).add(Annotations(entry))
-    payload.set(PayloadModel.MediaType, mediaTypeNode.string())
+    payload.set(PayloadModel.MediaType, mediaTypeNode.string(), Annotations(entry.key))
   }
+
+  private def getMediaType(mediaTypeNode: ScalarNode) =
+    mediaTypeNode.text().toString
 
   def parse(): Payload = {
     val map     = entry.value.as[YMap]
-    val payload = buildPayload()
+    val payload = buildPayloadWithMediaType()
 
     ctx.closedShape(payload.id, map, "content")
 
