@@ -11,22 +11,21 @@ import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.remote.Vendor
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred, JSONSchemaId}
+import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser, YMapEntryLike}
-import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
-import amf.plugins.document.webapi.parser.spec.jsonschema.parser.{Draft7StringContentParser, UnevaluatedParser}
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
+import amf.plugins.document.webapi.parser.spec.jsonschema.parser.{ContentParser, UnevaluatedParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.validation.DialectValidations.InvalidUnionType
@@ -419,7 +418,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
           shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations(entry)))
 
       if (isStringScalar(shape) && version.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion)) {
-        Draft7StringContentParser(map).parse(shape)
+        ContentParser(s => s.adopted(shape.id), version).parse(shape, map)
       }
 
       shape

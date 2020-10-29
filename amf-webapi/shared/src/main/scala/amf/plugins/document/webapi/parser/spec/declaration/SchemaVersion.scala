@@ -62,6 +62,7 @@ object OAS30SchemaVersion {
 abstract class JSONSchemaVersion(override val name: String, val url: String) extends SchemaVersion(name) with Ordered[JSONSchemaVersion] {
   override def compare(that: JSONSchemaVersion): Int = {
     if (name.length < that.name.length) -1
+    else if (name.length > that.name.length) 1
     else name.compareTo(that.name)
   }
 }
