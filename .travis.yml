@@ -1,5 +1,6 @@
+# Travis figures out scala version from sbt config
 language: scala
-scala:
-  - 2.12.11
+jdk: openjdk8
+dist: xenial
 sbt_args: -mem 4096 -Dfile.encoding=UTF-8
 script: sbt ++$TRAVIS_SCALA_VERSION clean test
