@@ -2,8 +2,10 @@ package amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
 
 import amf.core.emitter.BaseEmitters.{MapEntryEmitter, RawValueEmitter, pos}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.Draft7StringContentEmitter
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.TypeDef.UndefinedType
 import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
@@ -37,6 +39,8 @@ case class OasScalarShapeEmitter(scalar: ScalarShape,
             result += MapEntryEmitter("type", typeDefStr, position = pos(f.value.annotations)) // TODO check this  - annotations of typeDef in parser
         }
       }
+
+    result ++= Draft7StringContentEmitter(scalar).emitters()
 
     fs.entry(ScalarShapeModel.Format) match {
       case Some(_) => // ignore, this will be set with the explicit information
