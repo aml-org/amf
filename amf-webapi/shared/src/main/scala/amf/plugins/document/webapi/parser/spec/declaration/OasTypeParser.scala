@@ -19,9 +19,7 @@ import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
-import amf.plugins.document.webapi.parser.spec.jsonschema.parser.UnevaluatedParser
-import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
-import amf.plugins.document.webapi.parser.spec.jsonschema.parser.{Draft7StringContentParser, UnevaluatedParser}
+import amf.plugins.document.webapi.parser.spec.jsonschema.parser.{ContentParser, UnevaluatedParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -420,7 +418,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
           shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations(entry)))
 
       if (isStringScalar(shape) && version.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion)) {
-        Draft7StringContentParser(map).parse(shape)
+        ContentParser(s => s.adopted(shape.id), version).parse(shape, map)
       }
 
       shape
