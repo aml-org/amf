@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.client.model.document.Dialect
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.model.document._
@@ -12,10 +11,9 @@ import amf.core.parser.{
   ReferenceCollector,
   YMapOps
 }
-import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.features.validation.CoreValidations.ExpectedModule
-import amf.validation.DialectValidations.InvalidModuleType
+import amf.validations.ParserSideValidations.InvalidModuleType
 import org.yaml.model.{YMap, YScalar, YType}
 
 /**
@@ -23,9 +21,8 @@ import org.yaml.model.{YMap, YScalar, YType}
   */
 case class WebApiRegister()(implicit ctx: WebApiContext) extends CollectionSideEffect[BaseUnit] {
   override def onCollect(alias: String, unit: BaseUnit): Unit = {
-    val library = ctx.declarations.getOrCreateLibrary(alias)
+    ctx.declarations.getOrCreateLibrary(alias)
     unit match {
-      case _: Vocabulary | _: Dialect => ctx.declarations.others += (alias -> unit)
       case d: Module =>
         val library = ctx.declarations.getOrCreateLibrary(alias)
         d.declares.foreach(library += _)
@@ -40,11 +37,10 @@ abstract class CommonReferencesParser(references: Seq[ParsedReference])(implicit
     val result = CallbackReferenceCollector(WebApiRegister())
     parseLibraries(result)
     references.foreach {
-      case ParsedReference(f: Fragment, origin: Reference, _)                          => result += (origin.url, f)
-      case ParsedReference(d: Document, origin: Reference, _)                          => result += (origin.url, d)
-      case ParsedReference(m: Module, origin: Reference, _)                            => result += (origin.url, m)
-      case ParsedReference(other @ (_: Vocabulary | _: Dialect), origin: Reference, _) => result += (origin.url, other)
-      case _                                                                           => // Nothing
+      case ParsedReference(f: Fragment, origin: Reference, _) => result += (origin.url, f)
+      case ParsedReference(d: Document, origin: Reference, _) => result += (origin.url, d)
+      case ParsedReference(m: Module, origin: Reference, _)   => result += (origin.url, m)
+      case _                                                  => // Nothing
     }
     result
   }

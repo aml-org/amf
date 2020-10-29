@@ -549,6 +549,26 @@ object ParserSideValidations extends Validations {
     "Module not found"
   )
 
+  val InvalidUnionType = validation(
+    "invalid-union-type",
+    "Union should be a sequence"
+  )
+
+  val InvalidModuleType = validation(
+    "invalid-module-type",
+    "Invalid module type"
+  )
+
+  val ClosedShapeSpecification = validation(
+    "closed-shape",
+    "Invalid property for node"
+  )
+
+  val ClosedShapeSpecificationWarning = validation(
+    "closed-shape-warning",
+    "Invalid property for node"
+  )
+
   val InvalidTypeExpression = validation(
     "invalid-type-expression",
     "Invalid type expression"
@@ -720,6 +740,7 @@ object ParserSideValidations extends Validations {
     InvalidAllowedTargets.id                     -> all(WARNING), // TODO: should be violation
     MissingDiscriminatorProperty.id              -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
+    ClosedShapeSpecificationWarning.id           -> all(WARNING),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
     HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
@@ -831,6 +852,10 @@ object ParserSideValidations extends Validations {
     InvalidStatusCode,
     InvalidUnevaluatedPropertiesType,
     InvalidUnevaluatedItemsType,
-    HeaderMustBeObject
+    HeaderMustBeObject,
+    InvalidUnionType,
+    InvalidModuleType,
+    ClosedShapeSpecification,
+    ClosedShapeSpecificationWarning
   )
 }

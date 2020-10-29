@@ -18,7 +18,6 @@ import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.core.{CompilerContext, Root}
-import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
 import amf.plugins.document.webapi.contexts.emitter.raml.{
   Raml08SpecEmitterContext,
   Raml10SpecEmitterContext,
@@ -123,17 +122,6 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
       ref.unit match {
         case e: ExternalFragment =>
           inlineFragment(ref.origin.refs, ref.ast, e.encodes, ref.unit.references, ctx)
-        // In a RAML context vocabularies and dialects will be taken as external fragments, the same happens with unknown headers
-        case vd @ (_: Vocabulary | _: Dialect) =>
-          val content = vd.raw.getOrElse("")
-          val fragment = ExternalFragment()
-            .withLocation(vd.location().getOrElse(root.location))
-            .withId(vd.id)
-            .withEncodes(
-              ExternalDomainElement()
-                .withRaw(content)
-                .withMediaType(if (content.startsWith("#%")) "application/yaml" else "application/json"))
-          inlineFragment(ref.origin.refs, None, fragment.encodes, ref.unit.references, ctx)
         case _ =>
       }
     }
