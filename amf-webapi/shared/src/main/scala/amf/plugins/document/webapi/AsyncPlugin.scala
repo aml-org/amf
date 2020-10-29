@@ -6,7 +6,7 @@ import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
-import amf.core.parser.{ParsedReference, ParserContext}
+import amf.core.parser.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
@@ -134,8 +134,12 @@ object Async20Plugin extends AsyncPlugin {
                        refs: Seq[ParsedReference],
                        options: ParsingOptions,
                        wrapped: ParserContext,
-                       ds: Option[AsyncWebApiDeclarations]) =
-    new Async20WebApiContext(loc, refs, wrapped, ds, options = options)
+                       ds: Option[AsyncWebApiDeclarations]) = {
+    // ensure unresolved references in external fragments are not resolved with main api definitions
+    val cleanContext = wrapped.copy(futureDeclarations = EmptyFutureDeclarations())
+    cleanContext.globalSpace = wrapped.globalSpace
+    new Async20WebApiContext(loc, refs, cleanContext, ds, options = options)
+  }
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     super.domainValidationProfiles(platform).filterKeys(k => k == Async20Profile.p || k == AsyncProfile.p)
