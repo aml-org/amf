@@ -10,12 +10,12 @@
       "core:name": "test",
       "apiContract:endpoint": [
         {
-          "@id": "#22/end-points/%2Fendpoint1"
+          "@id": "#23"
         }
       ]
     },
     {
-      "@id": "#22/end-points/%2Fendpoint1",
+      "@id": "#23",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -23,15 +23,15 @@
       "apiContract:path": "/endpoint1",
       "apiContract:supportedOperation": [
         {
-          "@id": "#23/get"
+          "@id": "#24"
         },
         {
-          "@id": "#23/post"
+          "@id": "#26"
         }
       ]
     },
     {
-      "@id": "#23/get",
+      "@id": "#24",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -39,12 +39,12 @@
       "apiContract:method": "get",
       "apiContract:expects": [
         {
-          "@id": "#24/request"
+          "@id": "#25"
         }
       ]
     },
     {
-      "@id": "#23/post",
+      "@id": "#26",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -52,12 +52,12 @@
       "apiContract:method": "post",
       "apiContract:expects": [
         {
-          "@id": "#26/request"
+          "@id": "#27"
         }
       ]
     },
     {
-      "@id": "#24/request",
+      "@id": "#25",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -65,12 +65,12 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#25/application%2Fjson"
+          "@id": "#14"
         }
       ]
     },
     {
-      "@id": "#26/request",
+      "@id": "#27",
       "@type": [
         "apiContract:Request",
         "apiContract:Message",
@@ -78,34 +78,34 @@
       ],
       "apiContract:payload": [
         {
-          "@id": "#27/application%2Fjson"
+          "@id": "#19"
         }
       ]
     },
     {
-      "@id": "#25/application%2Fjson",
+      "@id": "#14",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#19/A"
+        "@id": "#1"
       }
     },
     {
-      "@id": "#27/application%2Fjson",
+      "@id": "#19",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#19/A"
+        "@id": "#1"
       }
     },
     {
-      "@id": "#19/A",
+      "@id": "#1",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -116,27 +116,27 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#19/A/property/a"
+          "@id": "#2"
         },
         {
-          "@id": "#19/A/property/b"
+          "@id": "#4"
         }
       ],
       "shacl:name": "A",
       "apiContract:examples": [
         {
-          "@id": "#19/A/example/declared"
+          "@id": "#6"
         },
         {
-          "@id": "#19/A/example/endpoint1"
+          "@id": "#10"
         },
         {
-          "@id": "#19/A/example/endpointP"
+          "@id": "#15"
         }
       ]
     },
     {
-      "@id": "#19/A/property/a",
+      "@id": "#2",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -149,13 +149,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#19/A/property/a/scalar/a"
+        "@id": "#3"
       },
       "shacl:minCount": 1,
       "shacl:name": "a"
     },
     {
-      "@id": "#19/A/property/b",
+      "@id": "#4",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -168,13 +168,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#19/A/property/b/scalar/b"
+        "@id": "#5"
       },
       "shacl:minCount": 1,
       "shacl:name": "b"
     },
     {
-      "@id": "#19/A/example/declared",
+      "@id": "#6",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -187,7 +187,7 @@
       "doc:raw": "a: cristian\nb: pavon"
     },
     {
-      "@id": "#19/A/example/endpoint1",
+      "@id": "#10",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -200,7 +200,7 @@
       "doc:raw": "a: roman\nb: riquelme"
     },
     {
-      "@id": "#19/A/example/endpointP",
+      "@id": "#15",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
@@ -213,7 +213,7 @@
       "doc:raw": "a: leonardo\nb: jara"
     },
     {
-      "@id": "#19/A/property/a/scalar/a",
+      "@id": "#3",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -229,7 +229,7 @@
       "shacl:name": "a"
     },
     {
-      "@id": "#19/A/property/b/scalar/b",
+      "@id": "#5",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -383,7 +383,7 @@
       "@id": "",
       "doc:declares": [
         {
-          "@id": "#19/A"
+          "@id": "#1"
         }
       ],
       "@type": [

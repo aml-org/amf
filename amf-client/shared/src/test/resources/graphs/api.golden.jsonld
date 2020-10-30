@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#/web-api",
+      "@id": "#4",
       "@type": [
         "apiContract:WebAPI",
         "doc:RootDomainElement",
@@ -23,7 +23,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#/web-api"
+        "@id": "#4"
       },
       "doc:version": "2.1.2",
       "doc:root": true
@@ -45,12 +45,12 @@
       "shacl:name": "birthday",
       "apiContract:examples": [
         {
-          "@id": "#1/example/default-example"
+          "@id": "#2"
         }
       ]
     },
     {
-      "@id": "#1/example/default-example",
+      "@id": "#2",
       "@type": [
         "apiContract:Example",
         "doc:DomainElement"
