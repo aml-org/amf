@@ -197,7 +197,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "nestedContent:\n  User:\n    type: object | string\n\n  InvalidUser: OtherType\n",
-      "core:mediaType": "application/yaml"
+      "core:mediaType": "application/yaml",
+      "smaps": {
+        "lexical": {
+          "#2": "[(1,0)-(6,0)]"
+        }
+      }
     }
   ],
   "@context": {

@@ -734,7 +734,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"type\": \"array\",\n  \"items\": [{\n    \"$ref\": \"#/definitions/Person\"\n  },{\n    \"$ref\": \"#/definitions/Animal\"\n  }],\n  \"definitions\": {\n    \"Person\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"pet\": {\n          \"$ref\": \"#/definitions/Animal\"\n        }\n      }\n    },\n    \"Animal\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"age\": {\n          \"type\": \"integer\"\n        },\n        \"owners\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/definitions/Person\"\n          }\n        }\n      }\n    }\n  }\n}",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#2": "[(1,0)-(36,1)]"
+        }
+      }
     },
     {
       "@id": "#4",
@@ -743,7 +748,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "[{\n  \"name\": \"Astro\",\n  \"pet\": {\n    \"name\": \"Netwon\",\n    \"age\": 55,\n    \"owners\": [\"Astro\", \"Boy\"]\n  }\n}]",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#4": "[(1,0)-(8,2)]"
+        }
+      }
     }
   ],
   "@context": {
