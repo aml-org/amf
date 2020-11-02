@@ -228,8 +228,10 @@
       "shacl:minCount": 1,
       "shacl:name": "merchant",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
-          "shacl:minCount": "[(21,4)-(21,14)]",
           "#17": "[(6,4)-(8,5)]"
         }
       }
@@ -253,8 +255,10 @@
       "shacl:minCount": 1,
       "shacl:name": "operator",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
-          "shacl:minCount": "[(22,4)-(22,14)]",
           "#19": "[(9,4)-(11,5)]"
         }
       }
@@ -278,6 +282,9 @@
       "shacl:minCount": 0,
       "shacl:name": "primaryApplicant",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#21": "[(13,4)-(15,5)]"
         }
@@ -302,6 +309,9 @@
       "shacl:minCount": 0,
       "shacl:name": "additionalApplicants",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#31": "[(16,4)-(18,5)]"
         }
@@ -501,6 +511,9 @@
       "shacl:minCount": 0,
       "shacl:name": "addresses",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#23": "[(13,6)-(19,7)]"
         }
@@ -525,6 +538,9 @@
       "shacl:minCount": 0,
       "shacl:name": "expenses",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#27": "[(20,6)-(26,7)]"
         }
@@ -549,6 +565,9 @@
       "shacl:minCount": 0,
       "shacl:name": "addresses",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#33": "[(13,6)-(19,7)]"
         }
@@ -573,6 +592,9 @@
       "shacl:minCount": 0,
       "shacl:name": "expenses",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#35": "[(20,6)-(26,7)]"
         }
@@ -656,7 +678,7 @@
       ],
       "smaps": {
         "lexical": {
-          "shacl:and": "[(14,17)-(18,9)]",
+          "shacl:and": "[(14,8)-(18,9)]",
           "#24": "[(13,6)-(19,7)]"
         }
       }
@@ -698,7 +720,7 @@
       ],
       "smaps": {
         "lexical": {
-          "shacl:and": "[(14,17)-(18,9)]",
+          "shacl:and": "[(14,8)-(18,9)]",
           "#34": "[(13,6)-(19,7)]"
         }
       }

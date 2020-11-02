@@ -24,12 +24,10 @@ case class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends Asy
   override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
     AsyncServerVariableParser(entry, parent)(ctx)
 
-  override def operationParser(entry: YMapEntry, adopt: Operation => Operation): OasLikeOperationParser =
-    AsyncOperationParser(entry, adopt)(ctx)
-  override def endPointParser(entry: YMapEntry,
-                              producer: String => EndPoint,
-                              collector: List[EndPoint]): OasLikeEndpointParser =
-    AsyncEndpointParser(entry, producer, collector)(ctx)
+  override def operationParser(entry: YMapEntry, parentId: String): OasLikeOperationParser =
+    AsyncOperationParser(entry, parentId)(ctx)
+  override def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser =
+    AsyncEndpointParser(entry, parentId, collector)(ctx)
 
   override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
     Async2SecuritySchemeParser.apply

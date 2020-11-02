@@ -23,7 +23,7 @@
           "#15": "OAS 3.0"
         },
         "lexical": {
-          "apiContract:endpoint": "[(5,6)-(21,0)]",
+          "apiContract:endpoint": "[(5,0)-(21,0)]",
           "core:name": "[(4,2)-(5,0)]",
           "#15": "[(1,0)-(40,0)]",
           "core:version": "[(3,2)-(4,0)]"
@@ -157,8 +157,7 @@
       "smaps": {
         "lexical": {
           "core:description": "[(12,10)-(13,0)]",
-          "#18": "[(11,8)-(13,0)]",
-          "core:name": "[(11,8)-(11,13)]"
+          "#18": "[(11,8)-(13,0)]"
         }
       }
     },
@@ -175,8 +174,7 @@
       "smaps": {
         "lexical": {
           "core:description": "[(19,10)-(21,0)]",
-          "#21": "[(18,8)-(21,0)]",
-          "core:name": "[(18,8)-(18,13)]"
+          "#21": "[(18,8)-(21,0)]"
         }
       }
     },
@@ -265,6 +263,9 @@
       "shacl:minCount": 0,
       "shacl:name": "status",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#2": "[(26,8)-(28,0)]"
         }
@@ -289,6 +290,9 @@
       "shacl:minCount": 0,
       "shacl:name": "text",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#4": "[(28,8)-(30,0)]"
         }

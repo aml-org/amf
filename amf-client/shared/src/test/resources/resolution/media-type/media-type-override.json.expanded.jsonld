@@ -188,6 +188,21 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/bodyOne/bodyOne/property/one/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/bodyOne/bodyOne/property/one/source-map/lexical/element_0",
@@ -307,6 +322,21 @@
                                     "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/bodyOne/bodyOne/property/two/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/bodyOne/bodyOne/property/two/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
@@ -613,15 +643,15 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_2",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/core#name"
+                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(36,10)-(36,15)]"
+                                "@value": "[(36,10)-(41,11)]"
                               }
                             ]
                           },
@@ -635,19 +665,6 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(37,12)-(37,39)]"
-                              }
-                            ]
-                          },
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_1",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(36,10)-(41,11)]"
                               }
                             ]
                           }
@@ -763,7 +780,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(12,11)-(45,3)]"
+                    "@value": "[(12,2)-(45,3)]"
                   }
                 ]
               },

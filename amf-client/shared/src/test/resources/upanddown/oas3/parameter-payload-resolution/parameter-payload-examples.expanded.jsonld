@@ -202,7 +202,6 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(33,12)-(40,13)]",
-                        "core:name": "[(31,10)-(31,15)]",
                         "#10": "[(31,10)-(41,11)]",
                         "core:description": "[(32,12)-(32,40)]"
                       }
@@ -229,7 +228,7 @@
             "#7": "OAS 3.0"
           },
           "lexical": {
-            "apiContract:endpoint": "[(27,11)-(45,3)]",
+            "apiContract:endpoint": "[(27,2)-(45,3)]",
             "core:name": "[(4,4)-(4,30)]",
             "#7": "[(1,0)-(47,1)]",
             "core:version": "[(5,4)-(5,20)]"
@@ -465,8 +464,8 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#1": ""
+          "synthesized-field": {
+            "apiContract:required": "true"
           },
           "lexical": {
             "raml-shapes:schema": "[(13,8)-(16,9)]",
@@ -474,6 +473,9 @@
             "#1": "[(9,6)-(24,7)]",
             "apiContract:paramName": "[(10,8)-(10,23)]",
             "apiContract:binding": "[(11,8)-(11,22)]"
+          },
+          "declared-element": {
+            "#1": ""
           }
         }
       }

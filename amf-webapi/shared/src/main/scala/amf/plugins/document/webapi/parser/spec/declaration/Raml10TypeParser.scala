@@ -376,7 +376,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
           }
         }
         .getOrElse(ScalarShape(map)
-          .set(ScalarShapeModel.DataType, AmfScalar(DataType.String), Annotations(SynthesizedField()))
+          .set(ScalarShapeModel.DataType, AmfScalar(DataType.String), Annotations.synthesized())
           .withName(name, Annotations()))
 
       map.key("type", e => { shape.annotations += TypePropertyLexicalInfo(Range(e.key.range)) })
@@ -539,7 +539,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
   }
 
   private def parseNilUnion() = {
-    val union = UnionShape(Annotations(VirtualElement())).withName(name, nameAnnotations)
+    val union = UnionShape(Annotations.virtual()).withName(name, nameAnnotations)
     adopt(union)
 
     val parsed = node.value match {
@@ -562,9 +562,9 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               AmfArray(
                 Seq(
                   parsed,
-                  NilShape(Annotations(VirtualElement())).withId(union.id)
+                  NilShape(Annotations.virtual()).withId(union.id)
                 )),
-              Annotations(SynthesizedField()))
+              Annotations.synthesized())
   }
 
   // These are the actual custom facets, just regular properties in the AST map that have been
@@ -1456,7 +1456,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
       // we set-up default values for closed
       if (shape.inherits.isEmpty)
-        shape.set(NodeShapeModel.Closed, AmfScalar(false), Annotations(SynthesizedField()))
+        shape.set(NodeShapeModel.Closed, AmfScalar(false), Annotations.synthesized())
       else if (map.key("additionalProperties").isEmpty) {
         val closedInInhertiance = shape.effectiveInherits.exists(
           s =>
@@ -1464,7 +1464,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               .asInstanceOf[NodeShape]
               .closed
               .value())
-        shape.set(NodeShapeModel.Closed, AmfScalar(closedInInhertiance), Annotations(SynthesizedField()))
+        shape.set(NodeShapeModel.Closed, AmfScalar(closedInInhertiance), Annotations.synthesized())
       }
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
       map.key("additionalProperties".asRamlAnnotation).foreach { entry =>
@@ -1581,11 +1581,11 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
           // we detect pattern properties here
           if (propName.startsWith("/") && propName.endsWith("/")) {
             if (propName == "//") {
-              property.set(PropertyShapeModel.PatternName, AmfScalar("^.*$"), Annotations(SynthesizedField()))
+              property.set(PropertyShapeModel.PatternName, AmfScalar("^.*$"), Annotations.synthesized())
             } else {
               property.set(PropertyShapeModel.PatternName,
                            AmfScalar(propName.drop(1).dropRight(1)),
-                           Annotations(SynthesizedField()))
+                           Annotations.synthesized())
             }
           }
 
@@ -1608,17 +1608,15 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
           property.set(PropertyShapeModel.Path,
                        AmfScalar((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri()),
-                       Annotations(SynthesizedField()))
+                       Annotations.synthesized())
 
           if (property.fields.?(PropertyShapeModel.MinCount).isEmpty) {
             if (property.patternName.option().isDefined) {
-              property.set(PropertyShapeModel.MinCount, AmfScalar(0), Annotations(SynthesizedField()))
+              property.set(PropertyShapeModel.MinCount, AmfScalar(0), Annotations.synthesized())
             } else {
               val required = !propName.endsWith("?")
 
-              property.set(PropertyShapeModel.MinCount,
-                           AmfScalar(if (required) 1 else 0),
-                           Annotations(SynthesizedField()))
+              property.set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), Annotations.synthesized())
               property.set(
                 PropertyShapeModel.Name,
                 AmfScalar(if (required) propName else propName.stripSuffix("?").stripPrefix("/").stripSuffix("/"),
@@ -1627,7 +1625,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               ) // TODO property id is using a name that is not final.
               property.set(PropertyShapeModel.Path,
                            AmfScalar((Namespace.Data + entry.key.as[YScalar].text.stripSuffix("?")).iri()),
-                           Annotations(SynthesizedField()))
+                           Annotations.synthesized())
             }
           }
           Raml10TypeParser(entry,

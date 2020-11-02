@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
+import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField, VirtualElement}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
@@ -263,9 +263,14 @@ private case class Servers(default: Option[Server], servers: Seq[Server])
 
 private object Servers {
   def apply(f: FieldEntry): Servers = {
-    val (default, servers) =
-      f.arrayValues(classOf[Server]).partition(_.annotations.find(classOf[SynthesizedField]).isDefined)
-    new Servers(default.headOption, servers)
+    f.arrayValues(classOf[Server]).toList match {
+      case Nil         => Servers(None, Nil)
+      case head :: Nil => Servers(Some(head), Nil)
+      case _ =>
+        val (default, servers) =
+          f.arrayValues(classOf[Server]).partition(_.annotations.find(classOf[VirtualElement]).isDefined)
+        new Servers(default.headOption, servers)
+    }
   }
 
   def isVariable(parameter: Parameter): Boolean = parameter.schema match {

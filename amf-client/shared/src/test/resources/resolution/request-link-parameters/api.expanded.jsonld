@@ -140,14 +140,17 @@
                           }
                         ],
                         "smaps": {
-                          "declared-element": {
-                            "#4": ""
+                          "synthesized-field": {
+                            "apiContract:required": "true"
                           },
                           "lexical": {
                             "raml-shapes:schema": "[(21,6)-(23,0)]",
                             "apiContract:paramName": "[(23,6)-(24,0)]",
                             "#4": "[(20,4)-(25,0)]",
                             "apiContract:binding": "[(24,6)-(25,0)]"
+                          },
+                          "declared-element": {
+                            "#4": ""
                           }
                         }
                       }
@@ -309,14 +312,17 @@
                           }
                         ],
                         "smaps": {
-                          "declared-element": {
-                            "#10": ""
+                          "synthesized-field": {
+                            "apiContract:required": "true"
                           },
                           "lexical": {
                             "raml-shapes:schema": "[(37,6)-(39,0)]",
                             "apiContract:paramName": "[(39,6)-(40,0)]",
                             "#10": "[(36,4)-(42,0)]",
                             "apiContract:binding": "[(40,6)-(42,0)]"
+                          },
+                          "declared-element": {
+                            "#10": ""
                           }
                         }
                       }
@@ -440,14 +446,17 @@
                           }
                         ],
                         "smaps": {
-                          "declared-element": {
-                            "#6": ""
+                          "synthesized-field": {
+                            "apiContract:required": "true"
                           },
                           "lexical": {
                             "raml-shapes:schema": "[(26,6)-(28,0)]",
                             "apiContract:paramName": "[(28,6)-(29,0)]",
                             "#6": "[(25,4)-(30,0)]",
                             "apiContract:binding": "[(29,6)-(30,0)]"
+                          },
+                          "declared-element": {
+                            "#6": ""
                           }
                         }
                       }
@@ -546,7 +555,6 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(55,10)-(59,0)]",
-                        "core:name": "[(53,8)-(53,13)]",
                         "#17": "[(53,8)-(59,0)]",
                         "core:description": "[(54,10)-(55,0)]"
                       }
@@ -573,7 +581,7 @@
             "#14": "OAS 3.0"
           },
           "lexical": {
-            "apiContract:endpoint": "[(42,6)-(59,0)]",
+            "apiContract:endpoint": "[(42,0)-(59,0)]",
             "core:name": "[(4,2)-(6,0)]",
             "#14": "[(1,0)-(59,0)]",
             "core:version": "[(3,2)-(4,0)]"
@@ -662,6 +670,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true"
+              },
               "lexical": {
                 "#2": "[(17,8)-(19,0)]"
               }
@@ -776,14 +787,17 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#4": ""
+          "synthesized-field": {
+            "apiContract:required": "true"
           },
           "lexical": {
             "raml-shapes:schema": "[(21,6)-(23,0)]",
             "apiContract:paramName": "[(23,6)-(24,0)]",
             "#4": "[(20,4)-(25,0)]",
             "apiContract:binding": "[(24,6)-(25,0)]"
+          },
+          "declared-element": {
+            "#4": ""
           }
         }
       },
@@ -858,14 +872,17 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#6": ""
+          "synthesized-field": {
+            "apiContract:required": "true"
           },
           "lexical": {
             "raml-shapes:schema": "[(26,6)-(28,0)]",
             "apiContract:paramName": "[(28,6)-(29,0)]",
             "#6": "[(25,4)-(30,0)]",
             "apiContract:binding": "[(29,6)-(30,0)]"
+          },
+          "declared-element": {
+            "#6": ""
           }
         }
       },
@@ -1023,14 +1040,17 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#10": ""
+          "synthesized-field": {
+            "apiContract:required": "true"
           },
           "lexical": {
             "raml-shapes:schema": "[(37,6)-(39,0)]",
             "apiContract:paramName": "[(39,6)-(40,0)]",
             "#10": "[(36,4)-(42,0)]",
             "apiContract:binding": "[(40,6)-(42,0)]"
+          },
+          "declared-element": {
+            "#10": ""
           }
         }
       },
@@ -1129,6 +1149,9 @@
                       }
                     ],
                     "smaps": {
+                      "synthesized-field": {
+                        "shacl:minCount": "true"
+                      },
                       "lexical": {
                         "#2": "[(17,8)-(19,0)]"
                       }

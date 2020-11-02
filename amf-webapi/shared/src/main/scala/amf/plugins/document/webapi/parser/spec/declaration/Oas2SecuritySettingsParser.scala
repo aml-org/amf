@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations.VirtualElement
+import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.utils.{AmfStrings, Lazy}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -68,7 +69,7 @@ class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
 
     flow.option.foreach { f =>
       f.adopted(settings.id)
-      settings.add(OAuth2SettingsModel.Flows, f)
+      settings.set(OAuth2SettingsModel.Flows, AmfArray(Seq(f), Annotations.virtual()), Annotations.inferred())
     }
 
     settings

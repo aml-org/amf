@@ -115,7 +115,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
   private def parseChannels(entry: YMapEntry, api: AsyncApi): Unit = {
     val paths = entry.value.as[YMap]
     val endpoints = paths.entries.foldLeft(List[EndPoint]())((acc, curr) =>
-      acc ++ ctx.factory.endPointParser(curr, api.withEndPoint, acc).parse())
+      acc ++ ctx.factory.endPointParser(curr, api.id, acc).parse())
     api.set(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
   }
 
@@ -164,8 +164,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       entry => {
         ctx.addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         entry.value.as[YMap].entries.foreach { entry =>
-          val adopt     = (o: Operation) => o.adopted(parent)
-          val operation = AsyncOperationParser(entry, adopt, isTrait = true).parse()
+          val operation = AsyncOperationParser(entry, parent, isTrait = true).parse()
           operation.add(DeclaredElement())
           ctx.declarations += operation
         }

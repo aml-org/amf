@@ -17,6 +17,9 @@ import amf.plugins.document.webapi.parser.spec.oas.{
   Oas30RequestParser
 }
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
+import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel, WebApiModel}
+import amf.plugins.domain.webapi.models.security.SecurityRequirement
+import amf.plugins.domain.webapi.models.{Operation, Request, Response, security}
 import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Operation, Request, Response}
@@ -25,16 +28,15 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
-    implicit val ctx: OasLikeWebApiContext)
+abstract class OasLikeOperationParser(entry: YMapEntry, parentId: String)(implicit val ctx: OasLikeWebApiContext)
     extends SpecParserOps {
 
   protected def methodNode: AmfScalar = ScalarNode(entry.key).string()
 
   def parse(): Operation = {
     val operation: Operation = Operation(Annotations(entry))
-    operation.set(Method, methodNode) // add lexical info
-    adopt(operation)
+    operation.set(Method, methodNode, Annotations.inferred()) // add lexical info
+    operation.adopted(parentId)
 
     val map = entry.value.as[YMap]
 
@@ -65,9 +67,8 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
   }
 }
 
-abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
-    override implicit val ctx: OasWebApiContext)
-    extends OasLikeOperationParser(entry, adopt) {
+abstract class OasOperationParser(entry: YMapEntry, parentId: String)(override implicit val ctx: OasWebApiContext)
+    extends OasLikeOperationParser(entry, parentId) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
@@ -95,14 +96,9 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
       }
     )
 
-    map.key("security", entry => {
-      operation.set(WebApiModel.Security, AmfArray(Seq(), Annotations(entry.value)), Annotations(entry))
-      parseSecurity(operation, entry)
-    })
+    map.key("security".asOasExtension, entry => { parseSecurity(operation, entry) })
 
-    map.key("security".asOasExtension, entry => {
-      parseSecurity(operation, entry)
-    })
+    map.key("security", entry => { parseSecurity(operation, entry) })
 
     map.key(
       "responses",
@@ -115,12 +111,12 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
           .filter(y => !isOasAnnotation(y.key.as[YScalar].text))
           .foreach {
             entry =>
-              val node = ScalarNode(entry.key).text()
+              val node = ScalarNode(entry.key)
               responses += OasResponseParser(
                 entry.value.as[YMap], { r =>
-                  r.set(ResponseModel.Name, node, Annotations(entry.key))
+                  r.withName(node)
                     .adopted(operation.id)
-                    .withStatusCode(r.name.value())
+                    .set(ResponseModel.StatusCode, node.text(), Annotations.inferred())
                   r.annotations ++= Annotations(entry)
                   // Validation for OAS 3
                   if (ctx.isInstanceOf[Oas3WebApiContext] && entry.key.tagType != YType.Str)
@@ -142,21 +138,25 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
   private def parseSecurity(operation: Operation, entry: YMapEntry): Unit = {
     val idCounter = new IdCounter()
     // TODO check for empty array for resolution ?
-    entry.value
+    val requirements = entry.value
       .as[Seq[YNode]]
-      .foreach(s => OasLikeSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
+      .flatMap(s =>
+        OasLikeSecurityRequirementParser(s, (s: SecurityRequirement) => s.adopted(operation.id), idCounter).parse())
+    val extension = operation.security
+    operation.set(WebApiModel.Security,
+                  AmfArray(requirements ++ extension, Annotations(entry.value)),
+                  Annotations(entry))
   }
 }
 
-case class Oas20OperationParser(entry: YMapEntry, adopt: Operation => Operation)(
-    override implicit val ctx: OasWebApiContext)
-    extends OasOperationParser(entry, adopt) {
+case class Oas20OperationParser(entry: YMapEntry, parentId: String)(override implicit val ctx: OasWebApiContext)
+    extends OasOperationParser(entry, parentId) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
     Oas20RequestParser(map, (r: Request) => r.adopted(operation.id))
       .parse()
-      .map(r => operation.set(OperationModel.Request, AmfArray(Seq(r)), Annotations() += SynthesizedField()))
+      .map(r => operation.set(OperationModel.Request, AmfArray(Seq(r)), Annotations.synthesized()))
 
     map.key("schemes", OperationModel.Schemes in operation)
     map.key("consumes", OperationModel.Accepts in operation)
@@ -166,9 +166,8 @@ case class Oas20OperationParser(entry: YMapEntry, adopt: Operation => Operation)
   }
 }
 
-case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)(
-    override implicit val ctx: OasWebApiContext)
-    extends OasOperationParser(entry, adopt) {
+case class Oas30OperationParser(entry: YMapEntry, parentId: String)(override implicit val ctx: OasWebApiContext)
+    extends OasOperationParser(entry, parentId) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]

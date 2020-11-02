@@ -42,7 +42,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def withAllowReserved(allowReserved: Boolean): this.type     = set(AllowReserved, allowReserved)
   def withBinding(binding: String): this.type                  = set(Binding, binding)
   def synthesizedBinding(binding: String): this.type =
-    set(Binding, AmfScalar(binding), Annotations(SynthesizedField()))
+    set(Binding, AmfScalar(binding), Annotations.synthesized())
   def withSchema(schema: Shape): this.type            = set(Schema, schema)
   def withPayloads(payloads: Seq[Payload]): this.type = setArray(Payloads, payloads)
 

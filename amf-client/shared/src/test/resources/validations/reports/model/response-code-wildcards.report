@@ -10,7 +10,7 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json#/web-api/end-points/%2Ftest/get/6XX
   Property: http://a.ml/vocabularies/apiContract#statusCode
-  Position: Some(LexicalInformation([(42,10)-(51,11)]))
+  Position: Some(LexicalInformation([(42,10)-(42,15)]))
   Location: file://amf-client/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json
 
 - Source: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
@@ -18,5 +18,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json#/web-api/end-points/%2Ftest/get/2X1
   Property: http://a.ml/vocabularies/apiContract#statusCode
-  Position: Some(LexicalInformation([(52,10)-(61,11)]))
+  Position: Some(LexicalInformation([(52,10)-(52,15)]))
   Location: file://amf-client/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json

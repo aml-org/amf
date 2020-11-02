@@ -34,11 +34,10 @@ case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiCon
 
       val declarables = ctx.declarations.declarables()
       if (declarables.nonEmpty)
-        module.setWithoutId(DocumentModel.Declares, AmfArray(declarables), Annotations(SynthesizedField()))
+        module.setWithoutId(DocumentModel.Declares, AmfArray(declarables), Annotations.synthesized())
       if (references.nonEmpty)
-        module.setWithoutId(ModuleModel.References,
-                            AmfArray(references.baseUnitReferences()),
-                            Annotations(SynthesizedField()))
+        module
+          .setWithoutId(ModuleModel.References, AmfArray(references.baseUnitReferences()), Annotations.synthesized())
     }
 
     ctx.futureDeclarations.resolve()

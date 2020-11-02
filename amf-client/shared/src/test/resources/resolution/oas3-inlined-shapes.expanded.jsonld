@@ -203,6 +203,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:minCount": "true"
+                                  },
                                   "lexical": {
                                     "#10": "[(31,18)-(33,0)]"
                                   }
@@ -263,6 +266,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:minCount": "true"
+                                  },
                                   "lexical": {
                                     "#12": "[(33,18)-(34,32)]"
                                   }
@@ -302,7 +308,6 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:payload": "[(26,10)-(34,32)]",
-                        "core:name": "[(24,8)-(24,13)]",
                         "#7": "[(24,8)-(34,32)]",
                         "core:description": "[(25,10)-(26,0)]"
                       }
@@ -330,7 +335,7 @@
             "#3": "OAS 3.0"
           },
           "lexical": {
-            "apiContract:endpoint": "[(19,6)-(34,32)]",
+            "apiContract:endpoint": "[(19,0)-(34,32)]",
             "core:termsOfService": "[(10,2)-(12,0)]",
             "core:description": "[(9,2)-(10,0)]",
             "#3": "[(1,0)-(34,32)]",
@@ -436,14 +441,17 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#1": ""
+          "synthesized-field": {
+            "apiContract:required": "true"
           },
           "lexical": {
             "raml-shapes:schema": "[(17,6)-(19,0)]",
             "apiContract:paramName": "[(16,6)-(17,0)]",
             "#1": "[(14,4)-(19,0)]",
             "apiContract:binding": "[(15,6)-(16,0)]"
+          },
+          "declared-element": {
+            "#1": ""
           }
         }
       }

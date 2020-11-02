@@ -82,15 +82,15 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
 
       val personLink = person.link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")
       if (recursive) personLink.withSupportsRecursion(true)
-
+      val api = WebApi()
+        .withId("amf-client/shared/src/test/resources/references/" + file + "#/web-api")
+        .withName("API")
+        .withVersion("1.0")
+      if (spec == Oas20 || spec == Oas) api.withEndPoints(Nil)
       Document()
         .withId("/Users/hernan.najles/mulesoft/amf/amf-client/shared/src/test/resources/references/" + file)
         .withLocation("/Users/hernan.najles/mulesoft/amf/amf-client/shared/src/test/resources/references/" + file)
-        .withEncodes(
-          WebApi()
-            .withId("amf-client/shared/src/test/resources/references/" + file + "#/web-api")
-            .withName("API")
-            .withVersion("1.0"))
+        .withEncodes(api)
         .withReferences(Seq(dataTypeFragment))
         .withDeclares(Seq(personLink))
         .withRoot(true)

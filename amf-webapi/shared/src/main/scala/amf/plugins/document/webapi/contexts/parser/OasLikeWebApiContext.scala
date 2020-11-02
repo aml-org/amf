@@ -8,7 +8,12 @@ import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.contexts.{SpecVersionFactory, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasLikeWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeSecuritySettingsParser
-import amf.plugins.document.webapi.parser.spec.domain.{OasLikeEndpointParser, OasLikeOperationParser, OasLikeServerVariableParser, ParsingHelpers}
+import amf.plugins.document.webapi.parser.spec.domain.{
+  OasLikeEndpointParser,
+  OasLikeOperationParser,
+  OasLikeServerVariableParser,
+  ParsingHelpers
+}
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaParser
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.security.SecurityScheme
@@ -20,8 +25,8 @@ import scala.collection.mutable
 trait OasLikeSpecVersionFactory extends SpecVersionFactory {
   def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser
   // TODO ASYNC complete this
-  def operationParser(entry: YMapEntry, adopt: Operation => Operation): OasLikeOperationParser
-  def endPointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint]): OasLikeEndpointParser
+  def operationParser(entry: YMapEntry, parentId: String): OasLikeOperationParser
+  def endPointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint]): OasLikeEndpointParser
   def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser
 }
 

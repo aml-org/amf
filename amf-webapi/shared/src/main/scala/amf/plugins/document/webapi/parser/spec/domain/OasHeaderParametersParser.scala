@@ -76,13 +76,13 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
       parseOas2Header(header, map)
       header
     }
-    header.set(ParameterModel.Binding, AmfScalar("header"), Annotations() += SynthesizedField()) // we need to add the binding in order to conform all parameters validations
+    header.set(ParameterModel.Binding, AmfScalar("header"), Annotations.synthesized()) // we need to add the binding in order to conform all parameters validations
     header
   }
 
   protected def parseOas2Header(parameter: Parameter, map: YMap): Unit = {
     val name = Option(parameter.name).map(_.value())
-    parameter.set(ParameterModel.Required, !name.exists(_.endsWith("?")))
+    parameter.set(ParameterModel.Required, AmfScalar(!name.exists(_.endsWith("?"))), Annotations.synthesized())
 
     map.key("x-amf-required", (ParameterModel.Required in parameter).explicit)
 

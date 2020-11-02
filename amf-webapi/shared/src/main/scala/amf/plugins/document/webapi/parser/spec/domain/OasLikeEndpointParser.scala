@@ -11,29 +11,29 @@ import amf.plugins.document.webapi.parser.spec.async.parser.AsyncParametersParse
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncChannelBindingsParser
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
-import amf.plugins.domain.webapi.models.{EndPoint, ExtensibleWebApiDomainElement, Operation, Parameter}
+import amf.plugins.domain.webapi.models.security.SecurityRequirement
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import amf.validations.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, InvalidEndpointType}
 import org.yaml.model._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-abstract class OasLikeEndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint])(
+abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
     implicit val ctx: OasLikeWebApiContext)
     extends SpecParserOps {
 
   def parse(): Option[EndPoint] = {
-    val path = entry.key.as[YScalar].text
+    val path     = ScalarNode(entry.key).text()
+    val pathText = path.toString
+    val endpoint = EndPoint(Annotations(entry)).set(EndPointModel.Path, path, Annotations.inferred()).adopted(parentId)
 
-    val endpoint = producer(path).add(Annotations(entry))
+    checkBalancedParams(pathText, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
 
-    checkBalancedParams(path, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
-    endpoint.set(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)))
-
-    if (!TemplateUri.isValid(path))
-      ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
-    if (collector.exists(other => other.path.option() exists (identicalPaths(_, path)))) {
-      ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
+    if (!TemplateUri.isValid(pathText))
+      ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(pathText), entry.value)
+    if (collector.exists(other => other.path.option() exists (identicalPaths(_, pathText)))) {
+      ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + pathText, entry)
       None
     } else parseEndpoint(endpoint)
   }
@@ -77,9 +77,9 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, producer: String => EndPo
   }
 }
 
-abstract class OasEndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint])(
+abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
     override implicit val ctx: OasWebApiContext)
-    extends OasLikeEndpointParser(entry, producer, collector) {
+    extends OasLikeEndpointParser(entry, parentId, collector) {
 
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
     super.parseEndpointMap(endpoint, map)
@@ -141,11 +141,11 @@ abstract class OasEndpointParser(entry: YMapEntry, producer: String => EndPoint,
         val idCounter = new IdCounter()
         val securedBy = entry.value
           .as[Seq[YNode]]
-          .map(s => OasLikeSecurityRequirementParser(s, endpoint.withSecurity, idCounter).parse())
-          .collect { case Some(s) => s }
+          .flatMap(s =>
+            OasLikeSecurityRequirementParser(s, (se: SecurityRequirement) => se.adopted(endpoint.id), idCounter)
+              .parse())
 
-        if (securedBy.nonEmpty)
-          endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+        endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }
     )
 
@@ -154,10 +154,10 @@ abstract class OasEndpointParser(entry: YMapEntry, producer: String => EndPoint,
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o.adopted(endpoint.id))
+          val operationParser = ctx.factory.operationParser(entry, endpoint.id)
           operations += operationParser.parse()
         }
-        endpoint.set(EndPointModel.Operations, AmfArray(operations))
+        endpoint.set(EndPointModel.Operations, AmfArray(operations, Annotations.inferred()), Annotations.inferred())
       }
     )
 
@@ -165,9 +165,9 @@ abstract class OasEndpointParser(entry: YMapEntry, producer: String => EndPoint,
   }
 }
 
-case class Oas20EndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint])(
+case class Oas20EndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
     override implicit val ctx: OasWebApiContext)
-    extends OasEndpointParser(entry, producer, collector) {
+    extends OasEndpointParser(entry, parentId, collector) {
 
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
     super.parseEndpointMap(endpoint, map)
@@ -175,9 +175,9 @@ case class Oas20EndpointParser(entry: YMapEntry, producer: String => EndPoint, c
 
 }
 
-case class Oas30EndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint])(
+case class Oas30EndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
     override implicit val ctx: OasWebApiContext)
-    extends OasEndpointParser(entry, producer, collector) {
+    extends OasEndpointParser(entry, parentId, collector) {
 
   /**
     * Verify if two paths are identical.
@@ -199,9 +199,9 @@ case class Oas30EndpointParser(entry: YMapEntry, producer: String => EndPoint, c
   }
 }
 
-case class AsyncEndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint])(
+case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: List[EndPoint])(
     override implicit val ctx: AsyncWebApiContext)
-    extends OasLikeEndpointParser(entry, producer, collector) {
+    extends OasLikeEndpointParser(entry, parentId, collector) {
 
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
 
@@ -228,7 +228,7 @@ case class AsyncEndpointParser(entry: YMapEntry, producer: String => EndPoint, c
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o.adopted(endpoint.id))
+          val operationParser = ctx.factory.operationParser(entry, endpoint.id)
           operations += operationParser.parse()
         }
         endpoint.set(EndPointModel.Operations, AmfArray(operations))

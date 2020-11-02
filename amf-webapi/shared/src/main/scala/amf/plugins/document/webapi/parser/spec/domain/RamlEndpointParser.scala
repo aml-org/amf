@@ -147,7 +147,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
           operations += operation
           ctx.operationContexts.put(operation.id.stripSuffix("%3F"), operationContext)
         })
-        endpoint.set(EndPointModel.Operations, AmfArray(operations), Annotations(SynthesizedField()))
+        endpoint.set(EndPointModel.Operations, AmfArray(operations), Annotations.synthesized())
       }
     )
 

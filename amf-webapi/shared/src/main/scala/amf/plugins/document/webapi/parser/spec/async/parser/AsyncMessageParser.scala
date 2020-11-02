@@ -181,7 +181,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
 
     parseTraits(map, message)
 
-    val payload = Payload(Annotations(VirtualElement())).adopted(message.id)
+    val payload = Payload(Annotations.virtual()).adopted(message.id)
 
     map.key("contentType", PayloadModel.MediaType in payload)
     map.key("schemaFormat", PayloadModel.SchemaMediaType in payload)

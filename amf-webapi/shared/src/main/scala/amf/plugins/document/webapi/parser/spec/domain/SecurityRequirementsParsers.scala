@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.VirtualElement
+import amf.core.annotations.{SynthesizedField, VirtualElement}
 import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, SearchScope}
+import amf.core.parser.{Annotations, ScalarNode, SearchScope}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
@@ -16,34 +16,40 @@ import amf.validations.ParserSideValidations.{
 }
 import org.yaml.model._
 
-case class OasLikeSecurityRequirementParser(node: YNode,
-                                            producer: String => SecurityRequirement,
-                                            idCounter: IdCounter)(implicit val ctx: OasLikeWebApiContext) {
+case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequirement => Unit, idCounter: IdCounter)(
+    implicit val ctx: OasLikeWebApiContext) {
   def parse(): Option[SecurityRequirement] = node.to[YMap] match {
     case Right(map) if map.entries.nonEmpty =>
-      val securityRequirement = producer(idCounter.genId("requirement")).add(Annotations(node))
-
+      val securityRequirement =
+        SecurityRequirement(Annotations(node)).withSynthesizeName(idCounter.genId("requirement"))
+      adopted(securityRequirement)
       // Parse individual schemes
-      map.entries.foreach { entry =>
-        OasLikeParametrizedSecuritySchemeParser(entry, securityRequirement.withScheme).parse()
+      val schemes = map.entries.flatMap { entry =>
+        OasLikeParametrizedSecuritySchemeParser(entry, p => p.adopted(securityRequirement.id)).parse()
       }
+      securityRequirement.set(SecurityRequirementModel.Schemes,
+                              AmfArray(schemes, Annotations(map)),
+                              Annotations.inferred())
       Some(securityRequirement)
     case Right(map) if map.entries.isEmpty =>
       None
     case _ =>
-      val requirement = producer(node.toString).add(Annotations(node))
+      val requirement = SecurityRequirement(Annotations(node)).withName(ScalarNode(node))
+      adopted(requirement)
+
       ctx.eh.violation(InvalidSecurityRequirementObject, requirement.id, s"Invalid security requirement $node", node)
       Some(requirement)
   }
 
   case class OasLikeParametrizedSecuritySchemeParser(schemeEntry: YMapEntry,
-                                                     producer: String => ParametrizedSecurityScheme) {
+                                                     adopted: ParametrizedSecurityScheme => Unit) {
     def parse(): Option[ParametrizedSecurityScheme] = {
 
-      val name   = schemeEntry.key.as[YScalar].text
-      val scheme = producer(name).add(Annotations(schemeEntry))
+      val name = ScalarNode(schemeEntry.key)
 
-      var declaration = parseTarget(name, scheme, schemeEntry)
+      val scheme = ParametrizedSecurityScheme(Annotations(schemeEntry)).withName(name)
+      adopted(scheme)
+      var declaration = parseTarget(name.text().toString, scheme, schemeEntry)
       declaration = declaration.linkTarget match {
         case Some(d) => d.asInstanceOf[SecurityScheme]
         case None    => declaration
@@ -56,12 +62,11 @@ case class OasLikeSecurityRequirementParser(node: YNode,
 
     private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme, schemeEntry: YMapEntry) = {
       if (declaration.`type`.is("OAuth 2.0")) {
-        val settings = OAuth2Settings().adopted(scheme.id).add(Annotations(schemeEntry))
+        val settings = OAuth2Settings(Annotations(schemeEntry)).adopted(scheme.id)
         val scopes   = getScopes(schemeEntry)
         val flows = Seq(
-          settings
-            .withFlow()
-            .add(VirtualElement())
+          OAuth2Flow(Annotations.virtual())
+            .adopted(settings.id)
             .setArray(OAuth2FlowModel.Scopes, scopes, Annotations(schemeEntry.value)))
 
         scheme.scheme.settings match {
@@ -81,12 +86,17 @@ case class OasLikeSecurityRequirementParser(node: YNode,
           case _ => //Nothing to do
         }
 
-        scheme.set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows)).add(Annotations(schemeEntry))
+        scheme
+          .set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows), Annotations.inferred())
+          .add(Annotations(schemeEntry))
       } else if (declaration.`type`.is("openIdConnect")) {
         val settings = OpenIdConnectSettings().adopted(scheme.id)
         val scopes   = getScopes(schemeEntry)
-        scheme.set(ParametrizedSecuritySchemeModel.Settings,
-                   settings.setArray(OpenIdConnectSettingsModel.Scopes, scopes, Annotations(schemeEntry.value)))
+        scheme.set(
+          ParametrizedSecuritySchemeModel.Settings,
+          settings.setArray(OpenIdConnectSettingsModel.Scopes, scopes, Annotations(schemeEntry.value)),
+          Annotations.inferred()
+        )
       } else if (schemeEntry.value.as[Seq[YNode]].nonEmpty) {
         val msg = declaration.`type`.option() match {
           case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
@@ -102,11 +112,11 @@ case class OasLikeSecurityRequirementParser(node: YNode,
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
       ctx.declarations.findSecurityScheme(name, SearchScope.All) match {
         case Some(declaration) =>
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration)
+          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations.inferred())
           declaration
         case None =>
-          val securityScheme = SecurityScheme()
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme)
+          val securityScheme = SecurityScheme(Annotations.virtual())
+          scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme, Annotations.synthesized())
           ctx.eh.violation(DeclarationNotFound,
                            securityScheme.id,
                            s"Security scheme '$name' not found in declarations.",
@@ -119,7 +129,7 @@ case class OasLikeSecurityRequirementParser(node: YNode,
   private def getScopes(schemeEntry: YMapEntry) =
     schemeEntry.value
       .as[Seq[YNode]]
-      .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
+      .map(n => Scope(n).set(ScopeModel.Name, ScalarNode(n).text(), Annotations.inferred()))
 }
 
 object RamlSecurityRequirementParser {
