@@ -96,7 +96,8 @@ case class OAuth2Settings(override val fields: Fields, override val annotations:
 
   def withAuthorizationGrants(authorizationGrants: Seq[String]): this.type =
     set(AuthorizationGrants, authorizationGrants)
-  def withFlows(flows: Seq[OAuth2Flow]): this.type = setArray(Flows, flows)
+  def withFlows(flows: Seq[OAuth2Flow]): this.type =
+    set(Flows, AmfArray(flows, Annotations.virtual()), Annotations.inferred())
 
   def withFlow(): OAuth2Flow = {
     val flow = OAuth2Flow()

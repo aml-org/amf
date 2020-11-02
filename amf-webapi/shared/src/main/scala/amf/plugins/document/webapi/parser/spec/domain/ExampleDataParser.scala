@@ -17,7 +17,7 @@ import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 case class ExampleDataParser(node: YNode, example: Example, options: ExampleOptions)(implicit ctx: WebApiContext) {
   def parse(): Example = {
     if (example.fields.entry(ExampleModel.Strict).isEmpty) {
-      example.set(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations() += SynthesizedField())
+      example.set(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations.synthesized())
     }
 
     val (targetNode, mutTarget) = node match {

@@ -718,15 +718,15 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/parameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/200/source-map/lexical/element_2",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/parameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/200/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/core#name"
+                                "@value": "file://amf-client/shared/src/test/resources/resolution/parameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/200"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(40,10)-(40,15)]"
+                                "@value": "[(40,10)-(42,11)]"
                               }
                             ]
                           },
@@ -740,19 +740,6 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(41,12)-(41,29)]"
-                              }
-                            ]
-                          },
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/parameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/200/source-map/lexical/element_1",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/resolution/parameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/200"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(40,10)-(42,11)]"
                               }
                             ]
                           }
@@ -896,7 +883,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,11)-(46,3)]"
+                    "@value": "[(7,2)-(46,3)]"
                   }
                 ]
               },

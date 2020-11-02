@@ -232,6 +232,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:minCount": "true"
+                                  },
                                   "lexical": {
                                     "#9": "[(5,6)-(11,0)]"
                                   }
@@ -276,8 +279,7 @@
                     "smaps": {
                       "lexical": {
                         "core:description": "[(13,4)-(14,0)]",
-                        "#6": "[(10,8)-(11,54)]",
-                        "core:name": "[(10,8)-(10,13)]"
+                        "#6": "[(10,8)-(11,54)]"
                       }
                     }
                   }
@@ -303,7 +305,7 @@
             "#3": "OAS 2.0"
           },
           "lexical": {
-            "apiContract:endpoint": "[(5,6)-(11,54)]",
+            "apiContract:endpoint": "[(5,0)-(11,54)]",
             "core:name": "[(3,2)-(4,0)]",
             "#3": "[(1,0)-(11,54)]",
             "core:version": "[(4,2)-(5,0)]"

@@ -8,7 +8,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
 import amf.core.parser.{Annotations, FieldEntry, Value}
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.remote.{Cache, Context, Hint, RamlYamlHint}
+import amf.core.remote.{Cache, Context, Hint, OasYamlHint, RamlYamlHint}
 import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
@@ -29,6 +29,10 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
 
   test("Test raml 0.8 annotations") {
     runTest("raml08.raml", RamlYamlHint)
+  }
+
+  test("Test oas 2.0 annotations") {
+    runTest("oas20.yaml", OasYamlHint)
   }
 
   private def build(file: String, hint: Hint): Future[BaseUnit] = {

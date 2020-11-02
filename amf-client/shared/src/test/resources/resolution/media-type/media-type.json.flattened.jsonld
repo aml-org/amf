@@ -107,7 +107,7 @@
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,11)-(42,3)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(42,3)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/source-map/lexical/element_1",
@@ -207,13 +207,10 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_2"
+          "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_1"
         }
       ]
     },
@@ -301,19 +298,14 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(33,10)-(33,15)]"
+      "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(33,10)-(38,11)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(34,12)-(34,39)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(33,10)-(38,11)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/one",
@@ -452,6 +444,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/one/source-map/synthesized-field/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/one/source-map/lexical/element_0"
@@ -483,6 +480,11 @@
       "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/two/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/two/source-map/synthesized-field/element_0"
+        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -550,6 +552,11 @@
       ]
     },
     {
+      "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/one/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/one/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/one",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,14)-(22,15)]"
@@ -572,6 +579,11 @@
           "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/two/scalar/two/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/two/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myName/myName/property/two/source-map/lexical/element_0",

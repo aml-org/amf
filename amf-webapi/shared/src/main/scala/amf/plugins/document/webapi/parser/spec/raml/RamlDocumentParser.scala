@@ -154,12 +154,13 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     val references = ReferencesParser(document, root.location, "uses", map, root.references).parse()
     parseDeclarations(root, map)
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
-
     document.set(DocumentModel.Encodes, api, Annotations.inferred())
 
     addDeclarationsToModel(document)
-    if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
-
+    if (references.nonEmpty)
+      document.setWithoutId(DocumentModel.References,
+                            AmfArray(references.baseUnitReferences()),
+                            Annotations.synthesized())
     ctx.futureDeclarations.resolve()
 
     document
@@ -214,7 +215,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       entries => {
         val endpoints = mutable.ListBuffer[EndPoint]()
         entries.foreach(entry => ctx.factory.endPointParser(entry, api.withEndPoint, None, endpoints, false).parse())
-        api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(SynthesizedField()))
+        api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations.synthesized())
         ctx.mergeAllOperationContexts()
       }
     )
@@ -328,9 +329,9 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
           .as[YMap]
           .entries
           .foreach { e =>
-            val node = ScalarNode(e.key).text()
+            val node = ScalarNode(e.key)
             val res = OasResponseParser(e.value.as[YMap], { r: Response =>
-              r.set(ResponseModel.Name, node).adopted(parentPath)
+              r.withName(node).adopted(parentPath)
               r.annotations ++= Annotations(e)
             })(toOas(ctx))
               .parse()

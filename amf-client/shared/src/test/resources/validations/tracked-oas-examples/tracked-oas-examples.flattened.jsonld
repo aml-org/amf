@@ -29,7 +29,7 @@
           "#23": "OAS 2.0"
         },
         "lexical": {
-          "apiContract:endpoint": "[(24,11)-(105,3)]",
+          "apiContract:endpoint": "[(24,2)-(105,3)]",
           "core:name": "[(4,4)-(4,49)]",
           "#23": "[(1,0)-(106,1)]",
           "core:version": "[(5,4)-(5,19)]"
@@ -216,7 +216,6 @@
       ],
       "smaps": {
         "lexical": {
-          "core:name": "[(31,10)-(31,15)]",
           "#26": "[(31,10)-(41,11)]"
         }
       }
@@ -237,7 +236,6 @@
       ],
       "smaps": {
         "lexical": {
-          "core:name": "[(51,10)-(51,15)]",
           "#29": "[(51,10)-(55,11)]"
         }
       }
@@ -258,7 +256,6 @@
       ],
       "smaps": {
         "lexical": {
-          "core:name": "[(65,10)-(65,15)]",
           "#33": "[(65,10)-(75,11)]"
         }
       }
@@ -279,7 +276,6 @@
       ],
       "smaps": {
         "lexical": {
-          "core:name": "[(85,10)-(85,15)]",
           "#36": "[(85,10)-(101,11)]"
         }
       }
@@ -457,6 +453,9 @@
       "shacl:minCount": 0,
       "shacl:name": "prop1",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#2": "[(15,8)-(17,9)]"
         }
@@ -481,6 +480,9 @@
       "shacl:minCount": 0,
       "shacl:name": "prop2",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#4": "[(18,8)-(20,9)]"
         }
@@ -581,6 +583,9 @@
       "shacl:minCount": 0,
       "shacl:name": "prop1",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#43": "[(93,16)-(95,17)]"
         }
@@ -605,6 +610,9 @@
       "shacl:minCount": 0,
       "shacl:name": "prop2",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#45": "[(96,16)-(98,17)]"
         }

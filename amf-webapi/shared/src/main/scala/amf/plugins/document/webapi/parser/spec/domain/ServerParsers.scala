@@ -163,7 +163,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
       var host     = ""
       var basePath = ""
 
-      val annotations = Annotations()
+      val annotations = Annotations.synthesized()
 
       map.key("basePath").foreach { entry =>
         annotations += BasePathLexicalInformation(Range(entry.range))
@@ -179,7 +179,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         host = entry.value.as[String]
       }
 
-      val server = Server().set(ServerModel.Url, AmfScalar(host + basePath), annotations)
+      val server = Server(Annotations.virtual()).set(ServerModel.Url, AmfScalar(host + basePath), annotations)
 
       map.key("serverDescription".asOasExtension, ServerModel.Description in server)
 
@@ -195,7 +195,7 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         }
       )
 
-      api.set(WebApiModel.Servers, AmfArray(Seq(server.add(SynthesizedField())), Annotations()))
+      api.set(WebApiModel.Servers, AmfArray(Seq(server), Annotations.inferred()), Annotations.inferred())
     }
 
     parseServers("servers".asOasExtension)

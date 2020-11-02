@@ -54,7 +54,7 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val
     val node     = ScalarNode(entry.key)
     val variable = Parameter(entry).set(ParameterModel.Name, node.string(), Annotations(entry.key))
     variable.adopted(parent)
-    variable.set(ParameterModel.Binding, AmfScalar("path"), Annotations() += SynthesizedField())
+    variable.set(ParameterModel.Binding, AmfScalar("path"), Annotations.synthesized())
     variable
       .withParameterName(entry.key)
       .withRequired(true) // default value of path parameter to avoid raw validation

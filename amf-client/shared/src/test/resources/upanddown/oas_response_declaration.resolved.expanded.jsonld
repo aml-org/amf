@@ -207,15 +207,15 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200/source-map/lexical/element_2",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/core#name"
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(13,2)-(13,4)]"
+                                "@value": "[(13,2)-(16,18)]"
                               }
                             ]
                           },
@@ -229,19 +229,6 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(14,4)-(15,0)]"
-                              }
-                            ]
-                          },
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200/source-map/lexical/element_1",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(13,2)-(16,18)]"
                               }
                             ]
                           }
@@ -385,7 +372,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,6)-(12,0)]"
+                    "@value": "[(6,0)-(12,0)]"
                   }
                 ]
               },

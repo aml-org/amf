@@ -35,7 +35,7 @@ trait ExamplesEmitter {
           }
         } else {
           val idCounter = new IdCounter()
-          anonymous.foreach(e => e.withName(idCounter.genId("generated"), Annotations(SynthesizedField())))
+          anonymous.foreach(e => e.withName(idCounter.genId("generated"), Annotations.synthesized()))
           results += SafeNamedMultipleExampleEmitter("examples", examples, ordering, references)
         }
       })

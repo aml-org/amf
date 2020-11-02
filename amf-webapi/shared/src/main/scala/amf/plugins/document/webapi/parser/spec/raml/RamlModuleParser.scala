@@ -30,7 +30,9 @@ case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiCon
       UsageParser(rootMap, module).parse()
 
       addDeclarationsToModel(module)
-      if (references.nonEmpty) module.withReferences(references.baseUnitReferences())
+      if (references.nonEmpty)
+        module
+          .setWithoutId(ModuleModel.References, AmfArray(references.baseUnitReferences()), Annotations.synthesized())
     }
 
     ctx.futureDeclarations.resolve()

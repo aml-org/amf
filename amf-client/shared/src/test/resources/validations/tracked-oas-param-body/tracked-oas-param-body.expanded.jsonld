@@ -244,8 +244,10 @@
                                           }
                                         ],
                                         "smaps": {
+                                          "synthesized-field": {
+                                            "shacl:minCount": "true"
+                                          },
                                           "lexical": {
-                                            "shacl:minCount": "[(36,20)-(36,26)]",
                                             "#16": "[(39,18)-(42,0)]"
                                           }
                                         }
@@ -305,8 +307,10 @@
                                           }
                                         ],
                                         "smaps": {
+                                          "synthesized-field": {
+                                            "shacl:minCount": "true"
+                                          },
                                           "lexical": {
-                                            "shacl:minCount": "[(37,20)-(37,24)]",
                                             "#20": "[(42,18)-(44,0)]"
                                           }
                                         }
@@ -339,8 +343,10 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:minCount": "true"
+                                  },
                                   "lexical": {
-                                    "shacl:minCount": "[(28,16)-(28,23)]",
                                     "#14": "[(32,14)-(44,0)]"
                                   }
                                 }
@@ -406,8 +412,10 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:minCount": "true"
+                                  },
                                   "lexical": {
-                                    "shacl:minCount": "[(29,16)-(29,18)]",
                                     "#22": "[(44,14)-(47,0)]"
                                   }
                                 }
@@ -467,8 +475,10 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:minCount": "true"
+                                  },
                                   "lexical": {
-                                    "shacl:minCount": "[(30,16)-(30,20)]",
                                     "#24": "[(47,14)-(48,28)]"
                                   }
                                 }
@@ -755,7 +765,7 @@
             "#1": "OAS 2.0"
           },
           "lexical": {
-            "apiContract:endpoint": "[(8,6)-(48,28)]",
+            "apiContract:endpoint": "[(8,0)-(48,28)]",
             "core:description": "[(5,2)-(6,0)]",
             "#1": "[(1,0)-(48,28)]",
             "core:name": "[(4,2)-(5,0)]",

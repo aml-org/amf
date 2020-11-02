@@ -117,8 +117,8 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
     val description: String = scopeEntry.value
 
     Scope(scopeEntry)
-      .set(ScopeModel.Name, AmfScalar(name), Annotations(scopeEntry.key))
-      .set(ScopeModel.Description, AmfScalar(description), Annotations(scopeEntry.value))
+      .set(ScopeModel.Name, AmfScalar(name, Annotations(scopeEntry.key)), Annotations.inferred())
+      .set(ScopeModel.Description, AmfScalar(description, Annotations(scopeEntry.key)), Annotations.inferred())
       .adopted(parentId)
   }
 

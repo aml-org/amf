@@ -31,15 +31,17 @@
             "@value": "0.1"
           }
         ],
+        "apiContract:endpoint": [],
         "smaps": {
           "source-vendor": {
             "#9": "OAS 3.0"
           },
           "lexical": {
-            "core:version": "[(4,4)-(4,20)]",
-            "core:name": "[(5,4)-(5,38)]",
+            "apiContract:endpoint": "[(8,2)-(8,13)]",
+            "core:description": "[(6,4)-(6,120)]",
             "#9": "[(1,0)-(34,1)]",
-            "core:description": "[(6,4)-(6,120)]"
+            "core:name": "[(5,4)-(5,38)]",
+            "core:version": "[(4,4)-(4,20)]"
           }
         }
       }
@@ -139,6 +141,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "shacl:minCount": "true"
+                  },
                   "lexical": {
                     "#3": "[(27,10)-(29,11)]"
                   }
@@ -236,6 +241,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "shacl:minCount": "true"
+                  },
                   "lexical": {
                     "#7": "[(18,14)-(20,15)]"
                   }
@@ -259,7 +267,7 @@
             "#1": ""
           },
           "lexical": {
-            "shacl:and": "[(12,17)-(23,9)]",
+            "shacl:and": "[(12,8)-(23,9)]",
             "#1": "[(11,6)-(24,7)]",
             "shacl:name": "[(11,6)-(11,14)]"
           }
@@ -335,6 +343,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true"
+              },
               "lexical": {
                 "#3": "[(27,10)-(29,11)]"
               }

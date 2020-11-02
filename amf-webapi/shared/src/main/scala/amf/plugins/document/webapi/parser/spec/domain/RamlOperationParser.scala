@@ -91,7 +91,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     ctx.factory
       .requestParser(map, () => operation.withRequest(), parseOptional)
       .parse()
-      .foreach(req => operation.setArray(OperationModel.Request, List(req), Annotations() += SynthesizedField()))
+      .foreach(req => operation.setArray(OperationModel.Request, List(req), Annotations.synthesized()))
 
     map.key(
       "defaultResponse".asRamlAnnotation,

@@ -26,14 +26,16 @@
             "@value": "1.1"
           }
         ],
+        "apiContract:endpoint": [],
         "smaps": {
           "source-vendor": {
             "#7": "OAS 2.0"
           },
           "lexical": {
-            "core:version": "[(5,4)-(5,20)]",
+            "apiContract:endpoint": "[(7,2)-(7,13)]",
+            "core:name": "[(4,4)-(4,19)]",
             "#7": "[(1,0)-(26,1)]",
-            "core:name": "[(4,4)-(4,19)]"
+            "core:version": "[(5,4)-(5,20)]"
           }
         }
       }
@@ -165,6 +167,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true"
+              },
               "lexical": {
                 "#2": "[(14,8)-(20,9)]"
               }
@@ -310,6 +315,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true"
+              },
               "lexical": {
                 "#2": "[(14,8)-(20,9)]"
               }
