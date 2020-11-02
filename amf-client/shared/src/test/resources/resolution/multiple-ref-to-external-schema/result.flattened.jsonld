@@ -492,7 +492,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"definitions\": {\n    \"error400\": {\n      \"type\": \"object\",\n      \"example\": {\n        \"errors\": [\n          {\n            \"code\": 400,\n            \"message\": \"Bad Request\",\n            \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\",\n            \"help\": \"http://www.correos.es/docs/errors/PSI-012\"\n          }\n        ]\n      }\n    }\n  }\n}\n",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#2": "[(1,0)-(18,0)]"
+        }
+      }
     }
   ],
   "@context": {
