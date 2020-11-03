@@ -128,6 +128,17 @@ class Async20ResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  multiGoldenTest("Type forward referencing to check future declarations working correctly",
+                  "type-forward-referencing.%s") { config =>
+    cycle(
+      "type-forward-referencing.yaml",
+      config.golden,
+      AsyncYamlHint,
+      target = AMF,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     Async20Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
 

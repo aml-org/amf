@@ -47,6 +47,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     document.adopted(root.location).withLocation(root.location)
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
+    ctx.setJsonSchemaAST(map)
 
     val references = AsycnReferencesParser(root.references).parse()
     parseDeclarations(map)
@@ -62,6 +63,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     if (declarable.nonEmpty) document.withDeclares(declarable)
     if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
+    ctx.futureDeclarations.resolve()
     document
   }
 
