@@ -42,6 +42,26 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     cycle("draft-2019-09/duration-uuid-format.json", "draft-2019-09/jsonld/duration-uuid-format.json", JSONSchemaDraft201909SchemaVersion, JsonLdEmitter, JSON)
   }
 
+  test("Draft 7 required dependencies to Draft 7") {
+    cycle("draft-7/required-dependencies.json", "draft-7/required-dependencies.json", JSONSchemaDraft7SchemaVersion, DRAFT_7_EMITTER, JSON)
+  }
+
+  test("Draft 7 schema dependencies to Draft 7") {
+    cycle("draft-7/schema-dependencies.json", "draft-7/schema-dependencies.json", JSONSchemaDraft7SchemaVersion, DRAFT_7_EMITTER, JSON)
+  }
+
+  test("Draft 7 schema dependencies with $ref to JSON-LD") {
+    cycle("draft-7/schema-dependencies-ref.json", "draft-7/jsonld/schema-dependencies-ref.jsonld", JSONSchemaDraft7SchemaVersion, JsonLdEmitter, JSON)
+  }
+
+  test("Draft 7 required dependencies to json-ld") {
+    cycle("draft-7/required-dependencies.json", "draft-7/jsonld/required-dependencies.jsonld", JSONSchemaDraft7SchemaVersion, JsonLdEmitter, JSON)
+  }
+
+  test("Draft 7 schema dependencies to json-ld") {
+    cycle("draft-7/schema-dependencies.json", "draft-7/jsonld/schema-dependencies.jsonld", JSONSchemaDraft7SchemaVersion, JsonLdEmitter, JSON)
+  }
+
   private def cycle(path: String, golden: String, from: JSONSchemaVersion, emitter: SchemaEmitter, mediatype: String = JSON): Future[Assertion] = {
     val finalPath = basePath + path
     val finalGolden = basePath + golden

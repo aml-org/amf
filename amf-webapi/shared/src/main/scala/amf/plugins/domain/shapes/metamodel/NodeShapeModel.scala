@@ -62,10 +62,19 @@ object NodeShapeModel extends AnyShapeModel {
                            Shapes + "dependencies",
                            ModelDoc(ModelVocabularies.Shapes, "dependencies", "Dependent properties constraint"))
 
+  val SchemaDependencies = Field(
+    Array(SchemaDependenciesModel),
+    Shapes + "schemaDependencies",
+    ModelDoc(ModelVocabularies.Shapes, "schemaDependencies", "Applied schemas if property exists constraint")
+  )
+
   val UnevaluatedProperties = Field(
     ShapeModel,
     Shapes + "unevaluatedProperties",
-    ModelDoc(ModelVocabularies.Shapes, "unevaluatedProperties", "Properties that may not be evaluated in schema validation"))
+    ModelDoc(ModelVocabularies.Shapes,
+             "unevaluatedProperties",
+             "Properties that may not be evaluated in schema validation")
+  )
 
   val specificFields = List(
     MinProperties,
@@ -78,6 +87,7 @@ object NodeShapeModel extends AnyShapeModel {
     Properties,
     PropertyNames,
     Dependencies,
+    SchemaDependencies,
     UnevaluatedProperties
   )
 

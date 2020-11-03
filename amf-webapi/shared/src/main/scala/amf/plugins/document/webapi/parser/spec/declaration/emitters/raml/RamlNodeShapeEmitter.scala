@@ -5,12 +5,16 @@ import amf.core.emitter.BaseEmitters.{MapEntryEmitter, pos}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeEntryEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{ShapeDependenciesEmitter, TypeEmitterFactory}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
+import amf.plugins.document.webapi.parser.spec.toOas
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
+import amf.plugins.domain.shapes.metamodel.NodeShapeModel.{Dependencies, SchemaDependencies}
 import amf.plugins.domain.shapes.models.NodeShape
 import org.yaml.model.YType
-import amf.core.utils.AmfStrings
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable.ListBuffer
@@ -55,9 +59,10 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
 
     val propertiesMap = ListMap(node.properties.map(p => p.id -> p): _*)
 
-    fs.entry(NodeShapeModel.Dependencies)
-      .map(f => result += RamlShapeDependenciesEmitter(f, ordering, propertiesMap))
-
+    val emitterFactory: TypeEmitterFactory = shape => OasTypeEmitter(shape, ordering, Seq(), references, Seq(), Seq())(toOas(spec))
+    if (fs.entry(Dependencies).isDefined) {
+      result += ShapeDependenciesEmitter(node, ordering, propertiesMap, isRamlExtension = true, typeFactory = emitterFactory)
+    }
     if (!typeEmitted)
       result += MapEntryEmitter("type", "object")
 

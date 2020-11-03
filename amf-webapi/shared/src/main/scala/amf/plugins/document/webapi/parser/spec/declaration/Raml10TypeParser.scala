@@ -17,13 +17,11 @@ import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Ra
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, TypeName}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common._
-import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{
-  RamlJsonSchemaExpression,
-  RamlXmlSchemaExpression
-}
+import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{RamlJsonSchemaExpression, RamlXmlSchemaExpression}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
-import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser}
+import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
+import amf.plugins.document.webapi.parser.spec.toOas
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -1513,9 +1511,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
       map.key(
         "dependencies".asRamlAnnotation,
         entry => {
-          val dependencies: Seq[PropertyDependencies] =
-            ShapeDependenciesParser(entry.value.as[YMap], properties).parse()
-          shape.set(NodeShapeModel.Dependencies, AmfArray(dependencies, Annotations(entry.value)), Annotations(entry))
+          ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, properties, JSONSchemaDraft4SchemaVersion)(toOas(ctx)).parse()
         }
       )
 

@@ -103,6 +103,7 @@ AMF Model Documentation
 * [Response](#response)
 * [ScalarNode](#scalarnode)
 * [ScalarShape](#scalarshape)
+* [SchemaDependencies](#schemadependencies)
 * [SchemaShape](#schemashape)
 * [Scope](#scope)
 * [SecurityRequirement](#securityrequirement)
@@ -1139,6 +1140,7 @@ Shape that validates a record of fields, like a JS object
  | property | [[PropertyShape](#propertyshape)] | Properties associated to this node | http://www.w3.org/ns/shacl#property |
  | propertyNames | [Shape](#shape) | Property names schema | http://www.w3.org/ns/shacl#propertyNames |
  | dependencies | [[PropertyDependencies](#propertydependencies)] | Dependent properties constraint | http://a.ml/vocabularies/shapes#dependencies |
+ | schemaDependencies | [[SchemaDependencies](#schemadependencies)] | Applied schemas if property exists constraint | http://a.ml/vocabularies/shapes#schemaDependencies |
  | unevaluatedProperties | [Shape](#shape) | Properties that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedProperties |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
@@ -1410,7 +1412,6 @@ Dependency between sets of property shapes
  | ------ | ------ | ------ | ------ |
  | propertySource | url | Source property shape in the dependency | http://a.ml/vocabularies/shapes#propertySource |
  | propertyTarget | [url] | Target property shape in the dependency | http://a.ml/vocabularies/shapes#propertyTarget |
- | propertyAppliedShape | [Shape](#shape) | Target applied shape in the dependency | http://a.ml/vocabularies/shapes#propertyAppliedShape |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## PropertyMapping
@@ -1648,6 +1649,15 @@ Data shape describing a scalar value in the input data model, reified as an scal
  | raw | string | Raw textual information that cannot be processed for the current model semantics. | http://a.ml/vocabularies/document#raw |
  | reference-id | url | Internal identifier for an inlined fragment | http://a.ml/vocabularies/document#reference-id |
  | location | string | Location of an inlined fragment | http://a.ml/vocabularies/document#location |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## SchemaDependencies
+Dependency between a property shape and a schema
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | propertySource | url | Source property shape in the dependency | http://a.ml/vocabularies/shapes#propertySource |
+ | schemaTarget | [Shape](#shape) | Target applied shape in the dependency | http://a.ml/vocabularies/shapes#schemaTarget |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## SchemaShape
