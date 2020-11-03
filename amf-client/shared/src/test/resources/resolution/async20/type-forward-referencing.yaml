@@ -1,0 +1,12 @@
+asyncapi: 2.0.0
+info:
+  title: "something"
+  version: 1.0.0
+channels: {}
+components:
+  schemas:
+    OtherSchema:
+      $ref: '#/components/schemas/MySchema'
+    MySchema:
+      type: string
+

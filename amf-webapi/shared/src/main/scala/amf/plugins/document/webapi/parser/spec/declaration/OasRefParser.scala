@@ -6,6 +6,7 @@ import amf.core.model.domain.{Linkable, Shape}
 import amf.core.parser._
 import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration.utils.JsonSchemaParsingHelper
@@ -78,7 +79,7 @@ class OasRefParser(map: YMap,
           s.link(ref, annots).asInstanceOf[AnyShape].withName(name, Annotations()).withSupportsRecursion(true)
         Some(copied)
       // Local reference
-      case None if isOasContext && isDeclaration(ref) && ctx.isMainFileContext =>
+      case None if isOasLikeContext && isDeclaration(ref) && ctx.isMainFileContext =>
         val shape = AnyShape(ast).withName(name, nameAnnotations)
         val tmpShape = UnresolvedShape(Fields(),
                                        Annotations(map),
@@ -142,9 +143,9 @@ class OasRefParser(map: YMap,
     }
   }
 
-  private def isOasContext = ctx match {
-    case _ @(_: Oas2WebApiContext | _: Oas3WebApiContext) => true
-    case _                                                => false
+  private def isOasLikeContext = ctx match {
+    case _ @(_: OasLikeWebApiContext) => true
+    case _                            => false
   }
 
   private val oas2DeclarationRegex = "^(\\#\\/definitions\\/){1}([^/\\n])+$"
@@ -152,9 +153,9 @@ class OasRefParser(map: YMap,
     "^(\\#\\/components\\/){1}((schemas|parameters|securitySchemes|requestBodies|responses|headers|examples|links|callbacks){1}\\/){1}([^/\\n])+"
   private def isDeclaration(ref: String): Boolean =
     ctx match {
-      case _: Oas2WebApiContext if ref.matches(oas2DeclarationRegex) => true
-      case _: Oas3WebApiContext if ref.matches(oas3DeclarationRegex) => true
-      case _                                                         => false
+      case _: Oas2WebApiContext if ref.matches(oas2DeclarationRegex)                                => true
+      case _ @(_: Oas3WebApiContext | _: Async20WebApiContext) if ref.matches(oas3DeclarationRegex) => true
+      case _                                                                                        => false
     }
 
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
