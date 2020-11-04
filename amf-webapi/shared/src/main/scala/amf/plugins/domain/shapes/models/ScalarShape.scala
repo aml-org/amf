@@ -16,8 +16,8 @@ case class ScalarShape(override val fields: Fields, override val annotations: An
     with CommonShapeFields {
 
   def dataType: StrField = fields.field(DataType)
-  def encoding: String   = fields.field(Encoding)
-  def mediaType: String  = fields.field(MediaType)
+  def encoding: StrField   = fields.field(Encoding)
+  def mediaType: StrField  = fields.field(MediaType)
   def schema: Shape      = fields.field(Schema)
 
   def withDataType(dataType: String): this.type   = set(DataType, dataType)

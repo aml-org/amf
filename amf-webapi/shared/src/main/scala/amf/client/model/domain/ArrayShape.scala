@@ -15,7 +15,8 @@ case class ArrayShape(private[amf] override val _internal: InternalArrayShape) e
   def contains: Shape         = _internal.contains
   def minContains: Int        = _internal.minContains
   def maxContains: Int        = _internal.maxContains
-  def unevaluatedItems: Shape = _internal.unevaluatedItems
+  def unevaluatedItems: Boolean = _internal.unevaluatedItems
+  def unevaluatedItemsSchema: Shape = _internal.unevaluatedItemsSchema
 
   def withItems(items: Shape): this.type = {
     _internal.withItems(items)
@@ -37,8 +38,13 @@ case class ArrayShape(private[amf] override val _internal: InternalArrayShape) e
     this
   }
 
-  def withUnevaluatedItems(shape: Shape): this.type = {
-    _internal.withUnevaluatedItems(shape)
+  def withUnevaluatedItemsSchema(schema: Shape): this.type = {
+    _internal.withUnevaluatedItemsSchema(schema)
+    this
+  }
+
+  def withUnevaluatedItems(value: Boolean): this.type = {
+    _internal.withUnevaluatedItems(value)
     this
   }
 

@@ -162,6 +162,9 @@ object WebApiRegister {
     platform.registerWrapper(shapes.metamodel.PropertyDependenciesModel) {
       case s: shapes.models.PropertyDependencies => PropertyDependencies(s)
     }
+    platform.registerWrapper(shapes.metamodel.SchemaDependenciesModel) {
+      case s: shapes.models.SchemaDependencies => SchemaDependencies(s)
+    }
     platform.registerWrapper(shapes.metamodel.UnionShapeModel) {
       case s: shapes.models.UnionShape => UnionShape(s)
     }

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/main",
+  "definitions": {
+    "main": {
+      "type": "object",
+      "properties": {
+        "credit_card": {
+          "type": "number"
+        },
+        "billing_address": {
+          "type": "string"
+        }
+      },
+      "dependencies": {
+        "credit_card": [
+          "billing_address"
+        ],
+        "billing_address": [
+          "credit_card"
+        ]
+      }
+    }
+  }
+}

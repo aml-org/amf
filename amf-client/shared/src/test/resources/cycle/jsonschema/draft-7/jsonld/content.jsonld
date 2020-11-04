@@ -1,0 +1,41 @@
+{
+  "@graph": [
+    {
+      "@id": "/scalar/main",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "raml-shapes:encoding": "base64",
+      "raml-shapes:mediaType": "application/json",
+      "shacl:name": "main"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-shapes:DataTypeFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "/scalar/main"
+      },
+      "doc:version": "2.1.2",
+      "doc:root": false
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-client/shared/src/test/resources/cycle/jsonschema/draft-7/content.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#"
+  }
+}

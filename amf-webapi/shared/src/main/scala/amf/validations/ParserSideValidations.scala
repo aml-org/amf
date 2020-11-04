@@ -253,6 +253,16 @@ object ParserSideValidations extends Validations {
     "additionalItems should be a boolean or a map"
   )
 
+  val InvalidUnevaluatedPropertiesType = validation(
+    "invalid-unevaluated-properties-type",
+    "unevaluatedProperties should be a boolean or a map"
+  )
+
+  val InvalidUnevaluatedItemsType = validation(
+    "invalid-unevaluated-items-type",
+    "unevaluatedItems should be a boolean or a map"
+  )
+
   val InvalidTupleType = validation(
     "invalid-tuple-type",
     "Tuple should be a sequence"
@@ -811,6 +821,8 @@ object ParserSideValidations extends Validations {
     InvalidIdentifier,
     InvalidComponents,
     ExeededMaxYamlReferences,
-    InvalidStatusCode
+    InvalidStatusCode,
+    InvalidUnevaluatedPropertiesType,
+    InvalidUnevaluatedItemsType
   )
 }

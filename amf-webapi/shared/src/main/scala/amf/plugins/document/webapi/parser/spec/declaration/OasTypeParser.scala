@@ -4,6 +4,7 @@ import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.model.DataType
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, ScalarNode, _}
@@ -16,26 +17,15 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.spec.common.{
-  AnnotationParser,
-  DataNodeParser,
-  ScalarNodeParser,
-  YMapEntryLike
-}
-import amf.plugins.document.webapi.parser.spec.domain.{
-  ExampleDataParser,
-  ExampleOptions,
-  ExamplesDataParser,
-  NodeDataNodeParser,
-  RamlExamplesParser
-}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
+import amf.plugins.document.webapi.parser.spec.jsonschema.parser.{ContentParser, UnevaluatedParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.validation.DialectValidations.InvalidUnionType
@@ -381,7 +371,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
           setValue("minimum", map, ScalarShapeModel.Minimum, shape)
           setValue("maximum", map, ScalarShapeModel.Maximum, shape)
           map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
-          if (version == JSONSchemaDraft7SchemaVersion) {
+          if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion) {
             parseNumericExclusive(map, shape)
           } else {
             map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
@@ -427,8 +417,14 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
           .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations()))(entry =>
           shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations(entry)))
 
+      if (isStringScalar(shape) && version.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion)) {
+        ContentParser(s => s.adopted(shape.id), version).parse(shape, map)
+      }
+
       shape
     }
+
+    private def isStringScalar(shape: ScalarShape) = shape.dataType.option().fold(false) { value => value == DataType.String}
   }
 
   case class UnionShapeParser(nodeOrEntry: YMapEntryLike, name: String) extends AnyShapeParser() {
@@ -620,7 +616,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       map.key("maxItems", ArrayShapeModel.MaxItems in shape)
       map.key("uniqueItems", ArrayShapeModel.UniqueItems in shape)
 
-      if (version == JSONSchemaDraft7SchemaVersion)
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         InnerShapeParser("contains", ArrayShapeModel.Contains, map, shape).parse()
       shape
     }
@@ -638,7 +634,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
         entry.value.tagType match {
           case YType.Bool =>
             (TupleShapeModel.ClosedItems in shape).negated(entry)
-            if (version == JSONSchemaDraft7SchemaVersion)
+            if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
               additionalItemViolation(entry, "Invalid part type for additional items node. Expected a map")
           case YType.Map =>
             OasTypeParser(entry, s => s.adopted(shape.id), version).parse().foreach { s =>
@@ -647,7 +643,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
           case _ =>
             additionalItemViolation(
               entry,
-              if (version == JSONSchemaDraft7SchemaVersion)
+              if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
                 "Invalid part type for additional items node. Expected a map"
               else
                 "Invalid part type for additional items node. Should be a boolean or a map"
@@ -706,6 +702,10 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
         }
       }
 
+      if (version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
+        new UnevaluatedParser(version, UnevaluatedParser.unevaluatedItemsInfo).parse(map, shape)
+      }
+
       finalShape match {
         case Some(parsed: AnyShape) => parsed.withId(shape.id)
         case None                   => shape.withItems(AnyShape())
@@ -727,7 +727,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
 
       map.key("type", _ => shape.add(ExplicitField())) // todo lexical of type?? new annotation?
 
-      if (version == JSONSchemaDraft7SchemaVersion)
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         map.key("$comment", AnyShapeModel.Comment in shape)
 
       shape
@@ -735,7 +735,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
 
     private def parseExample(): Unit = {
 
-      if (version == JSONSchemaDraft7SchemaVersion || version == JSONSchemaDraft6SchemaVersion)
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft6SchemaVersion)
         parseExamplesArray()
       else
         RamlExamplesParser(map, "example", "examples".asOasExtension, shape, options)
@@ -780,6 +780,10 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
         }
       }
 
+      if (version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
+        new UnevaluatedParser(version, UnevaluatedParser.unevaluatedPropertiesInfo).parse(map, shape)
+      }
+
       if (isOas3) {
         map.key("discriminator", DiscriminatorParser(shape, _).parse())
       } else {
@@ -799,7 +803,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
           case _ => // Empty properties node.
         }
       })
-      if (version == JSONSchemaDraft7SchemaVersion)
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         InnerShapeParser("propertyNames", NodeShapeModel.PropertyNames, map, shape).parse()
 
       val patternPropEntry = map.key("patternProperties")
@@ -826,14 +830,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
         shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, entryAnnotations), valueAnnotations)
       shape.properties.foreach(p => properties += (p.name.value() -> p))
 
-      map.key(
-        "dependencies",
-        entry => {
-          val dependencies: Seq[PropertyDependencies] =
-            ShapeDependenciesParser(entry.value.as[YMap], properties).parse()
-          shape.set(NodeShapeModel.Dependencies, AmfArray(dependencies, Annotations(entry.value)), Annotations(entry))
-        }
-      )
+      parseShapeDependencies(shape, properties)
 
       map.key(
         "x-amf-merge",
@@ -844,6 +841,19 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       )
 
       shape
+    }
+  }
+
+  private def parseShapeDependencies(shape: NodeShape, properties: mutable.LinkedHashMap[String, PropertyShape]): Unit = {
+    if (version == JSONSchemaDraft201909SchemaVersion) {
+      Draft2019ShapeDependenciesParser(shape, map, shape.id, properties.toMap, version).parse()
+    } else {
+      map.key(
+        "dependencies",
+        entry => {
+          Draft4ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, properties.toMap, version).parse()
+        }
+      )
     }
   }
 
@@ -1074,12 +1084,12 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
 
       map.key("readOnly", ShapeModel.ReadOnly in shape)
 
-      if (version.isInstanceOf[OAS30SchemaVersion] || version == JSONSchemaDraft7SchemaVersion) {
+      if (version.isInstanceOf[OAS30SchemaVersion] || version.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion)) {
         map.key("writeOnly", ShapeModel.WriteOnly in shape)
         map.key("deprecated", ShapeModel.Deprecated in shape)
       }
 
-      if (version == JSONSchemaDraft7SchemaVersion) parseDraft7Fields()
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion) parseDraft7Fields()
       // normal annotations
       AnnotationParser(shape, map).parse()
 

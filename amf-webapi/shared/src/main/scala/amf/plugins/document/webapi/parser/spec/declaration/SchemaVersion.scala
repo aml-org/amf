@@ -4,7 +4,23 @@ import amf.client.render.{JSONSchemaVersion => ClientJSONSchemaVersion, JSONSche
 import amf.core.errorhandling.ErrorHandler
 import amf.plugins.features.validation.CoreValidations
 
-abstract class SchemaVersion(val name: String)
+abstract class SchemaVersion(val name: String) {
+
+  // This compare methods are shit. I had to add them to make adding JSONSchemaVersions easier. IF we could build TypeParsers dynamically we wouldn't need this.
+  def isBiggerThanOrEqualTo(jsonVersion: JSONSchemaVersion): Boolean = {
+    this match {
+      case thisJsonVersion: JSONSchemaVersion => thisJsonVersion >= jsonVersion
+      case _ => false
+    }
+  }
+
+  def isSmallerThanOrDifferentThan(jsonVersion: JSONSchemaVersion): Boolean = {
+    this match {
+      case thisJsonVersion: JSONSchemaVersion => thisJsonVersion < jsonVersion
+      case _ => true
+    }
+  }
+}
 
 object SchemaVersion {
   def fromClientOptions(schema: ClientJSONSchemaVersion): JSONSchemaVersion = schema match {
@@ -46,6 +62,7 @@ object OAS30SchemaVersion {
 abstract class JSONSchemaVersion(override val name: String, val url: String) extends SchemaVersion(name) with Ordered[JSONSchemaVersion] {
   override def compare(that: JSONSchemaVersion): Int = {
     if (name.length < that.name.length) -1
+    else if (name.length > that.name.length) 1
     else name.compareTo(that.name)
   }
 }

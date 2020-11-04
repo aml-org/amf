@@ -42,6 +42,66 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     cycle("draft-2019-09/duration-uuid-format.json", "draft-2019-09/jsonld/duration-uuid-format.json", JSONSchemaDraft201909SchemaVersion, JsonLdEmitter, JSON)
   }
 
+  test("Draft 2019-09 unevaluatedProperties") {
+    cycle("draft-2019-09/unevaluatedProps-schema.json", "draft-2019-09/unevaluatedProps-schema.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
+  test("Draft 2019-09 unevaluatedProperties boolean") {
+    cycle("draft-2019-09/unevaluatedProps-boolean.json", "draft-2019-09/unevaluatedProps-boolean.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
+  test("Draft 2019-09 unevaluatedItems boolean") {
+    cycle("draft-2019-09/unevaluatedItems-boolean.json", "draft-2019-09/unevaluatedItems-boolean.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
+  test("Draft 2019-09 unevaluatedItems schema") {
+    cycle("draft-2019-09/unevaluatedItems-schema.json", "draft-2019-09/unevaluatedItems-schema.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
+  test("Draft 7 required dependencies to Draft 7") {
+    cycle("draft-7/required-dependencies.json", "draft-7/required-dependencies.json", JSONSchemaDraft7SchemaVersion, DRAFT_7_EMITTER, JSON)
+  }
+
+  test("Draft 7 schema dependencies to Draft 7") {
+    cycle("draft-7/schema-dependencies.json", "draft-7/schema-dependencies.json", JSONSchemaDraft7SchemaVersion, DRAFT_7_EMITTER, JSON)
+  }
+
+  test("Draft 7 schema dependencies with $ref to JSON-LD") {
+    cycle("draft-7/schema-dependencies-ref.json", "draft-7/jsonld/schema-dependencies-ref.jsonld", JSONSchemaDraft7SchemaVersion, JsonLdEmitter, JSON)
+  }
+
+  test("Draft 7 required dependencies to json-ld") {
+    cycle("draft-7/required-dependencies.json", "draft-7/jsonld/required-dependencies.jsonld", JSONSchemaDraft7SchemaVersion, JsonLdEmitter, JSON)
+  }
+
+  test("Draft 7 schema dependencies to json-ld") {
+    cycle("draft-7/schema-dependencies.json", "draft-7/jsonld/schema-dependencies.jsonld", JSONSchemaDraft7SchemaVersion, JsonLdEmitter, JSON)
+  }
+
+  test("Draft 2019 dependents to Draft 2019") {
+    cycle("draft-2019-09/schema-required-dependencies.json", "draft-2019-09/schema-required-dependencies.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
+  test("Draft 2019 dependents to JsonLd") {
+    cycle("draft-2019-09/schema-required-dependencies.json", "draft-2019-09/jsonld/schema-required-dependencies.jsonld", JSONSchemaDraft201909SchemaVersion, JsonLdEmitter, JSON)
+  }
+
+  test("Draft 7 content schema to Draft 7") {
+    cycle("draft-7/content.json", "draft-7/content.json", JSONSchemaDraft7SchemaVersion, DRAFT_7_EMITTER, JSON)
+  }
+
+  test("Draft 7 content schema to JSONLD") {
+    cycle("draft-7/content.json", "draft-7/jsonld/content.jsonld", JSONSchemaDraft7SchemaVersion, JsonLdEmitter, JSON)
+  }
+
+  test("Draft 2019-09 content schema to JSONLD") {
+    cycle("draft-2019-09/content.json", "draft-2019-09/jsonld/content.jsonld", JSONSchemaDraft201909SchemaVersion, JsonLdEmitter, JSON)
+  }
+
+  test("Draft 2019-09 content schema to Draft 2019") {
+    cycle("draft-2019-09/content.json", "draft-2019-09/content.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
   private def cycle(path: String, golden: String, from: JSONSchemaVersion, emitter: SchemaEmitter, mediatype: String = JSON): Future[Assertion] = {
     val finalPath = basePath + path
     val finalGolden = basePath + golden
