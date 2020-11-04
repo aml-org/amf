@@ -1511,7 +1511,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
       map.key(
         "dependencies".asRamlAnnotation,
         entry => {
-          ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, properties, JSONSchemaDraft4SchemaVersion)(toOas(ctx)).parse()
+          Draft4ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, properties.toMap, JSONSchemaDraft4SchemaVersion)(toOas(ctx)).parse()
         }
       )
 

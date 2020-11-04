@@ -16,26 +16,14 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.spec.common.{
-  AnnotationParser,
-  DataNodeParser,
-  ScalarNodeParser,
-  YMapEntryLike
-}
-import amf.plugins.document.webapi.parser.spec.domain.{
-  ExampleDataParser,
-  ExampleOptions,
-  ExamplesDataParser,
-  NodeDataNodeParser,
-  RamlExamplesParser
-}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.validation.DialectValidations.InvalidUnionType
@@ -826,12 +814,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
         shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, entryAnnotations), valueAnnotations)
       shape.properties.foreach(p => properties += (p.name.value() -> p))
 
-      map.key(
-        "dependencies",
-        entry => {
-            ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, properties, version).parse()
-        }
-      )
+      parseShapeDependencies(shape, properties)
 
       map.key(
         "x-amf-merge",
@@ -842,6 +825,19 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       )
 
       shape
+    }
+  }
+
+  private def parseShapeDependencies(shape: NodeShape, properties: mutable.LinkedHashMap[String, PropertyShape]) = {
+    if (version == JSONSchemaDraft201909SchemaVersion) {
+      Draft2019ShapeDependenciesParser(shape, map, shape.id, properties.toMap, version).parse()
+    } else {
+      map.key(
+        "dependencies",
+        entry => {
+          Draft4ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, properties.toMap, version).parse()
+        }
+      )
     }
   }
 

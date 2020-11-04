@@ -9,32 +9,76 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{SingleArrayNode, YMapEntryLike}
 import amf.plugins.domain.shapes.metamodel.{DependenciesModel, NodeShapeModel, PropertyDependenciesModel, SchemaDependenciesModel}
 import amf.plugins.domain.shapes.models.{Dependencies, NodeShape, PropertyDependencies, SchemaDependencies}
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
-
-import scala.collection.mutable
+import org.yaml.model._
 
 /**
   *
   */
 
-case class ShapeDependenciesParser(shape: NodeShape,
-                                   map: YMap,
-                                   parentId: String,
-                                   properties: mutable.LinkedHashMap[String, PropertyShape],
-                                   version: SchemaVersion)(implicit ctx: OasLikeWebApiContext) {
+case class Draft4ShapeDependenciesParser(shape: NodeShape,
+                                         map: YMap,
+                                         parentId: String,
+                                         properties: Map[String, PropertyShape],
+                                         version: SchemaVersion)(implicit ctx: OasLikeWebApiContext) {
+
   def parse(): Unit = {
-    val (mapEntries, _) = map.entries.partition {
-      case entry: YMapEntry => entry.value.tagType.equals(YType.Map)
-      case _                => false
+
+    val mapEntries = getEntriesOfType(YType.Map)
+    parseSchemaDependencies(mapEntries)
+
+    val seqEntries = getEntriesOfType(YType.Seq)
+    parsePropertyDependencies(seqEntries)
+  }
+
+  private def parsePropertyDependencies(seqEntries: IndexedSeq[YMapEntry]) = {
+    val propertyDependencies = seqEntries.flatMap(e =>
+      DependenciesParser(e, parentId, properties, PropertyDependencyParser(e.value, properties)).parse())
+    if (propertyDependencies.nonEmpty)
+      shape.set(NodeShapeModel.Dependencies,
+        AmfArray(propertyDependencies, Annotations(VirtualObject())),
+        Annotations(Inferred()))
+  }
+
+  private def parseSchemaDependencies(entries: Seq[YMapEntry]) = {
+    val schemaDependencies = entries.flatMap(e =>
+      DependenciesParser(e, parentId, properties, SchemaDependencyParser(e.value, version)).parse())
+    if (schemaDependencies.nonEmpty)
+      shape.set(NodeShapeModel.SchemaDependencies,
+        AmfArray(schemaDependencies, Annotations(VirtualObject())),
+        Annotations(Inferred()))
+  }
+
+  private def getEntriesOfType(tagType: YType) = map.entries.partition {
+    case entry: YMapEntry => entry.value.tagType.equals(tagType)
+    case _                => false
+  }._1
+}
+
+case class Draft2019ShapeDependenciesParser(shape: NodeShape,
+                                            map: YMap,
+                                            parentId: String,
+                                            properties: Map[String, PropertyShape],
+                                            version: SchemaVersion)(implicit ctx: OasLikeWebApiContext) {
+  def parse(): Unit = {
+    map.key("dependentSchemas").foreach { entry =>
+      val schemaDependencies = entry.value
+        .as[YMap]
+        .entries
+        .flatMap(e => DependenciesParser(e, parentId, properties, SchemaDependencyParser(e.value, version)).parse())
+      shape.set(NodeShapeModel.SchemaDependencies,
+                AmfArray(schemaDependencies, Annotations(entry.value)),
+                Annotations(entry))
     }
-    val schemaDependencies = mapEntries.flatMap(e => DependenciesParser(e, parentId, properties, SchemaDependencyParser(e.value, version)).parse())
-    if (schemaDependencies.nonEmpty) shape.set(NodeShapeModel.SchemaDependencies, AmfArray(schemaDependencies, Annotations(VirtualObject())), Annotations(Inferred()))
-    val (seqEntries, _) = map.entries.partition {
-      case entry : YMapEntry => entry.value.tagType.equals(YType.Seq)
-      case _ => false
+
+    map.key("dependentRequired").foreach { entry =>
+      val propertyDependencies = entry.value
+        .as[YMap]
+        .entries
+        .flatMap(e =>
+          DependenciesParser(e, parentId, properties, PropertyDependencyParser(e.value, properties)).parse())
+      shape
+        .set(NodeShapeModel.Dependencies, AmfArray(propertyDependencies, Annotations(entry.value)), Annotations(entry))
     }
-    val propertyDependencies = seqEntries.flatMap(e => DependenciesParser(e, parentId, properties, PropertyDependencyParser(e.value, properties.toMap)).parse())
-    if (propertyDependencies.nonEmpty) shape.set(NodeShapeModel.Dependencies, AmfArray(propertyDependencies, Annotations(VirtualObject())), Annotations(Inferred()))
   }
 }
 
@@ -78,7 +122,7 @@ case class PropertyDependencyParser(node: YNode, properties: Map[String, Propert
 
 case class DependenciesParser(entry: YMapEntry,
                               parentId: String,
-                              properties: mutable.LinkedHashMap[String, PropertyShape],
+                              properties: Map[String, PropertyShape],
                               parser: SpecializedDependencyParser)(implicit ctx: OasLikeWebApiContext) {
   def parse(): Option[Dependencies] = {
 
