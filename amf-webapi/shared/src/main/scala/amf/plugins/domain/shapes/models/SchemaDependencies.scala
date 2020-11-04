@@ -23,6 +23,11 @@ case class SchemaDependencies(fields: Fields, annotations: Annotations) extends 
     Option(schemaTarget).foreach(_.adopted(id, cycle :+ id))
     this
   }
+
+  override def componentId: String = {
+    val propertySourceName = propertySource.option().map(x => x).getOrElse("unknown").split("/").last
+    s"/dependencySchema/$propertySourceName"
+  }
 }
 
 object SchemaDependencies {

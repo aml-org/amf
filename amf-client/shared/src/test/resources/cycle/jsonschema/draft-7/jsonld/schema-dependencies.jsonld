@@ -17,7 +17,7 @@
       ],
       "raml-shapes:schemaDependencies": [
         {
-          "@id": "#/main/dependency/credit_card"
+          "@id": "#/main/dependencySchema/credit_card"
         }
       ],
       "shacl:name": "main"
@@ -42,7 +42,7 @@
       "shacl:name": "credit_card"
     },
     {
-      "@id": "#/main/dependency/credit_card",
+      "@id": "#/main/dependencySchema/credit_card",
       "@type": [
         "raml-shapes:SchemaDependencies",
         "doc:DomainElement"
@@ -53,7 +53,7 @@
         }
       ],
       "raml-shapes:schemaTarget": {
-        "@id": "#/main/dependency/credit_card/schema"
+        "@id": "#/main/dependencySchema/credit_card/schema"
       }
     },
     {
@@ -73,7 +73,7 @@
       "shacl:name": "credit_card"
     },
     {
-      "@id": "#/main/dependency/credit_card/schema",
+      "@id": "#/main/dependencySchema/credit_card/schema",
       "@type": [
         "shacl:NodeShape",
         "raml-shapes:AnyShape",
@@ -84,13 +84,13 @@
       "shacl:closed": false,
       "shacl:property": [
         {
-          "@id": "#/main/dependency/credit_card/schema/property/billing_address"
+          "@id": "#/main/dependencySchema/credit_card/schema/property/billing_address"
         }
       ],
       "shacl:name": "schema"
     },
     {
-      "@id": "#/main/dependency/credit_card/schema/property/billing_address",
+      "@id": "#/main/dependencySchema/credit_card/schema/property/billing_address",
       "@type": [
         "shacl:PropertyShape",
         "shacl:Shape",
@@ -103,13 +103,13 @@
         }
       ],
       "raml-shapes:range": {
-        "@id": "#/main/dependency/credit_card/schema/property/billing_address/scalar/billing_address"
+        "@id": "#/main/dependencySchema/credit_card/schema/property/billing_address/scalar/billing_address"
       },
       "shacl:minCount": 1,
       "shacl:name": "billing_address"
     },
     {
-      "@id": "#/main/dependency/credit_card/schema/property/billing_address/scalar/billing_address",
+      "@id": "#/main/dependencySchema/credit_card/schema/property/billing_address/scalar/billing_address",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",

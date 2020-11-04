@@ -62,6 +62,14 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     cycle("draft-7/schema-dependencies.json", "draft-7/jsonld/schema-dependencies.jsonld", JSONSchemaDraft7SchemaVersion, JsonLdEmitter, JSON)
   }
 
+  test("Draft 2019 dependents to Draft 2019") {
+    cycle("draft-2019-09/schema-required-dependencies.json", "draft-2019-09/schema-required-dependencies.json", JSONSchemaDraft201909SchemaVersion, DRAFT_2019_09_EMITTER, JSON)
+  }
+
+  test("Draft 2019 dependents to JsonLd") {
+    cycle("draft-2019-09/schema-required-dependencies.json", "draft-2019-09/jsonld/schema-required-dependencies.jsonld", JSONSchemaDraft201909SchemaVersion, JsonLdEmitter, JSON)
+  }
+
   private def cycle(path: String, golden: String, from: JSONSchemaVersion, emitter: SchemaEmitter, mediatype: String = JSON): Future[Assertion] = {
     val finalPath = basePath + path
     val finalGolden = basePath + golden
