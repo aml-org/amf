@@ -5,11 +5,13 @@ import amf.core.emitter.BaseEmitters.ValueEmitter
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{ShapeDependenciesEmitter, TypeEmitterFactory}
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, OAS30SchemaVersion}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
+import amf.plugins.domain.shapes.metamodel.NodeShapeModel.{Dependencies, SchemaDependencies}
 import amf.plugins.domain.shapes.models.NodeShape
-import amf.core.utils.AmfStrings
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable.ListBuffer
@@ -68,7 +70,11 @@ case class OasNodeShapeEmitter(node: NodeShape,
 
     val properties = ListMap(node.properties.map(p => p.id -> p): _*)
 
-    fs.entry(NodeShapeModel.Dependencies).map(f => result += OasShapeDependenciesEmitter(f, ordering, properties))
+
+    val emitterFactory: TypeEmitterFactory = shape => OasTypeEmitter(shape, ordering, Seq(), references, pointer, schemaPath, isHeader)
+    if (fs.entry(SchemaDependencies).isDefined || fs.entry(Dependencies).isDefined) {
+      result += ShapeDependenciesEmitter(node, ordering, properties, isRamlExtension = false, typeFactory = emitterFactory)
+    }
 
     fs.entry(NodeShapeModel.Inherits).map(f => result += OasShapeInheritsEmitter(f, ordering, references))
 

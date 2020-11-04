@@ -829,9 +829,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       map.key(
         "dependencies",
         entry => {
-          val dependencies: Seq[PropertyDependencies] =
-            ShapeDependenciesParser(entry.value.as[YMap], properties).parse()
-          shape.set(NodeShapeModel.Dependencies, AmfArray(dependencies, Annotations(entry.value)), Annotations(entry))
+            ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, properties, version).parse()
         }
       )
 
