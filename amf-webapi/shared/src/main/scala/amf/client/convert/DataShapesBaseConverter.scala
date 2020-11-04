@@ -8,6 +8,7 @@ import amf.client.model.domain.{
   NilShape => ClientNilShape,
   NodeShape => ClientNodeShape,
   PropertyDependencies => ClientPropertyDependencies,
+  SchemaDependencies => ClientSchemaDependencies,
   ScalarShape => ClientScalarShape,
   SchemaShape => ClientSchemaShape,
   TupleShape => ClientTupleShape,
@@ -31,6 +32,7 @@ trait DataShapesBaseConverter
     with ExampleConverter
     with UnionShapeConverter
     with PropertyDependenciesConverter
+    with SchemaDependenciesConverter
 
 trait NilShapeConverter extends PlatformSecrets {
 
@@ -126,5 +128,15 @@ trait PropertyDependenciesConverter extends PlatformSecrets {
     override def asClient(from: PropertyDependencies): ClientPropertyDependencies =
       platform.wrap[ClientPropertyDependencies](from)
     override def asInternal(from: ClientPropertyDependencies): PropertyDependencies = from._internal
+  }
+}
+
+trait SchemaDependenciesConverter extends PlatformSecrets {
+
+  implicit object SchemaDependenciesMatcher
+    extends BidirectionalMatcher[SchemaDependencies, ClientSchemaDependencies] {
+    override def asClient(from: SchemaDependencies): ClientSchemaDependencies =
+      platform.wrap[ClientSchemaDependencies](from)
+    override def asInternal(from: ClientSchemaDependencies): SchemaDependencies = from._internal
   }
 }

@@ -103,6 +103,7 @@ AMF Model Documentation
 * [Response](#response)
 * [ScalarNode](#scalarnode)
 * [ScalarShape](#scalarshape)
+* [SchemaDependencies](#schemadependencies)
 * [SchemaShape](#schemashape)
 * [Scope](#scope)
 * [SecurityRequirement](#securityrequirement)
@@ -286,7 +287,8 @@ Shape that contains a nested collection of data shapes
  | maxCount | int | Maximum items count constraint | http://www.w3.org/ns/shacl#maxCount |
  | uniqueItems | boolean | Unique items constraint | http://a.ml/vocabularies/shapes#uniqueItems |
  | collectionFormat | string | Input collection format information | http://a.ml/vocabularies/shapes#collectionFormat |
- | unevaluatedItems | [Shape](#shape) | Items that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedItems |
+ | unevaluatedItems | boolean | Accepts that items may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedItems |
+ | unevaluatedItemsSchema | [Shape](#shape) | Items that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedItemsSchema |
  | qualifiedMinCount | int | Minimum number of value nodes constraint | http://www.w3.org/ns/shacl#qualifiedMinCount |
  | qualifiedMaxCount | int | Maximum number of value nodes constraint | http://www.w3.org/ns/shacl#qualifiedMaxCount |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
@@ -928,7 +930,8 @@ Data shape containing nested multi-dimensional collection shapes
  | maxCount | int | Maximum items count constraint | http://www.w3.org/ns/shacl#maxCount |
  | uniqueItems | boolean | Unique items constraint | http://a.ml/vocabularies/shapes#uniqueItems |
  | collectionFormat | string | Input collection format information | http://a.ml/vocabularies/shapes#collectionFormat |
- | unevaluatedItems | [Shape](#shape) | Items that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedItems |
+ | unevaluatedItems | boolean | Accepts that items may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedItems |
+ | unevaluatedItemsSchema | [Shape](#shape) | Items that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedItemsSchema |
  | qualifiedMinCount | int | Minimum number of value nodes constraint | http://www.w3.org/ns/shacl#qualifiedMinCount |
  | qualifiedMaxCount | int | Maximum number of value nodes constraint | http://www.w3.org/ns/shacl#qualifiedMaxCount |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
@@ -1139,7 +1142,9 @@ Shape that validates a record of fields, like a JS object
  | property | [[PropertyShape](#propertyshape)] | Properties associated to this node | http://www.w3.org/ns/shacl#property |
  | propertyNames | [Shape](#shape) | Property names schema | http://www.w3.org/ns/shacl#propertyNames |
  | dependencies | [[PropertyDependencies](#propertydependencies)] | Dependent properties constraint | http://a.ml/vocabularies/shapes#dependencies |
- | unevaluatedProperties | [Shape](#shape) | Properties that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedProperties |
+ | schemaDependencies | [[SchemaDependencies](#schemadependencies)] | Applied schemas if property exists constraint | http://a.ml/vocabularies/shapes#schemaDependencies |
+ | unevaluatedProperties | boolean | Accepts that properties may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedProperties |
+ | unevaluatedPropertiesSchema | [Shape](#shape) | Properties that may not be evaluated in schema validation | http://a.ml/vocabularies/shapes#unevaluatedPropertiesSchema |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1410,7 +1415,6 @@ Dependency between sets of property shapes
  | ------ | ------ | ------ | ------ |
  | propertySource | url | Source property shape in the dependency | http://a.ml/vocabularies/shapes#propertySource |
  | propertyTarget | [url] | Target property shape in the dependency | http://a.ml/vocabularies/shapes#propertyTarget |
- | propertyAppliedShape | [Shape](#shape) | Target applied shape in the dependency | http://a.ml/vocabularies/shapes#propertyAppliedShape |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## PropertyMapping
@@ -1648,6 +1652,15 @@ Data shape describing a scalar value in the input data model, reified as an scal
  | raw | string | Raw textual information that cannot be processed for the current model semantics. | http://a.ml/vocabularies/document#raw |
  | reference-id | url | Internal identifier for an inlined fragment | http://a.ml/vocabularies/document#reference-id |
  | location | string | Location of an inlined fragment | http://a.ml/vocabularies/document#location |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## SchemaDependencies
+Dependency between a property shape and a schema
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | propertySource | url | Source property shape in the dependency | http://a.ml/vocabularies/shapes#propertySource |
+ | schemaTarget | [Shape](#shape) | Target applied shape in the dependency | http://a.ml/vocabularies/shapes#schemaTarget |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## SchemaShape
