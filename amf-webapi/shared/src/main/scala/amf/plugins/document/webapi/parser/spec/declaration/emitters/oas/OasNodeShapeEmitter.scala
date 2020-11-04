@@ -5,11 +5,13 @@ import amf.core.emitter.BaseEmitters.ValueEmitter
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
-import amf.core.utils.AmfStrings
 import amf.core.parser.FieldEntry
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{Draft2019DependenciesEmitter, Draft4DependenciesEmitter, TypeEmitterFactory}
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, OAS30SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter
+import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter.unevaluatedPropertiesInfo
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.NodeShape
 
@@ -36,8 +38,7 @@ case class OasNodeShapeEmitter(node: NodeShape,
 
     fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
 
-    fs.entry(NodeShapeModel.Closed)
-      .filter(f => isExplicit(f) || f.scalar.toBool) match {
+    fs.entry(NodeShapeModel.Closed).filter(f => isExplicit(f) || f.scalar.toBool) match {
       case Some(f) => result += ValueEmitter("additionalProperties", f.negated)
       case _ =>
         fs.entry(NodeShapeModel.AdditionalPropertiesSchema)
@@ -49,6 +50,10 @@ case class OasNodeShapeEmitter(node: NodeShape,
                                              references,
                                              pointer,
                                              schemaPath))
+    }
+
+    if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
+      result += new UnevaluatedEmitter(node, unevaluatedPropertiesInfo, ordering, references, pointer, schemaPath)
     }
 
     if (isOas3) {
@@ -87,7 +92,5 @@ case class OasNodeShapeEmitter(node: NodeShape,
     result
   }
 
-  private def isExplicit(f: FieldEntry) = {
-    f.value.annotations.contains(classOf[ExplicitField])
-  }
+  private def isExplicit(f: FieldEntry) = f.value.annotations.contains(classOf[ExplicitField])
 }

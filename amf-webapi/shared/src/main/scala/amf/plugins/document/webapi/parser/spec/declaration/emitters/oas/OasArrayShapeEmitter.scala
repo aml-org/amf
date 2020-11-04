@@ -10,6 +10,8 @@ import amf.plugins.document.webapi.annotations.CollectionFormatFromItems
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsEmitter
+import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter.unevaluatedItemsInfo
+import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel}
 import amf.plugins.domain.shapes.models.ArrayShape
 
@@ -53,12 +55,14 @@ case class OasArrayShapeEmitter(shape: ArrayShape,
         result += OasItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath)
     }
 
+    if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
+      result += new UnevaluatedEmitter(shape, unevaluatedItemsInfo, ordering, references, pointer, schemaPath)
+    }
+
     fs.entry(NodeShapeModel.Inherits).map(f => result += OasShapeInheritsEmitter(f, ordering, references))
 
     result ++= FacetsEmitter(shape, ordering).emitters
 
     result
   }
-
-  private def isExplicit(f: FieldEntry) = f.value.annotations.contains(classOf[ExplicitField])
 }
