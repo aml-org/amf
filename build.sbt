@@ -64,8 +64,8 @@ lazy val customValidationLibJS  = "com.github.amlorg" %% "amf-custom-validation_
 
 val coreVersion = versions("amf.core")
 
-lazy val coreJVMRef = ProjectRef(workspaceDirectory / "amf-aml", "coreJVM")
-lazy val coreJSRef  = ProjectRef(workspaceDirectory / "amf-aml", "coreJS")
+lazy val coreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
+lazy val coreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
 lazy val coreLibJVM = "com.github.amlorg" %% "amf-core" % coreVersion
 lazy val coreLibJS  = "com.github.amlorg" %% "amf-core_sjs0.6" % coreVersion
 
