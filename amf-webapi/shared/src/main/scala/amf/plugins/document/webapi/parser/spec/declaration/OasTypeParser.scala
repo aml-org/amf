@@ -56,36 +56,35 @@ import scala.util.Try
  */
 object OasTypeParser {
 
-  def apply(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(
-      implicit ctx: OasLikeWebApiContext): OasTypeParser =
-    new OasTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
-
   def apply(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(
       YMapEntryLike(entry),
-      entry.key.as[YScalar].text,
+      key(entry),
       entry.value.as[YMap],
       adopt,
       getSchemaVersion(ctx)
     )
 
+  def apply(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(
+    implicit ctx: OasLikeWebApiContext): OasTypeParser =
+    new OasTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
+
+  def apply(node: YMapEntryLike, name: String, adopt: Shape => Unit, version: SchemaVersion)(
+    implicit ctx: OasLikeWebApiContext): OasTypeParser =
+    new OasTypeParser(node, name, node.asMap, adopt, version)
+
   def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit)(
-      implicit ctx: OasLikeWebApiContext): OasTypeParser =
+    implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(
       YMapEntryLike(entry),
-      entry.key.as[YScalar].text,
+      key(entry),
       entry.value.as[YMap],
       adopt,
       getSchemaVersion(ctx),
       true
     )
 
-  def apply(node: YMapEntryLike, name: String, adopt: Shape => Unit, version: SchemaVersion)(
-      implicit ctx: OasLikeWebApiContext): OasTypeParser =
-    new OasTypeParser(node, name, node.asMap, adopt, version)
-
-  def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
-    new OasTypeParser(YMapEntryLike(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx.eh))
+  private def key(entry: YMapEntry) = entry.key.as[YScalar].text
 
   private def getSchemaVersion(ctx: OasLikeWebApiContext) = {
     if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion("schema")(ctx.eh)
