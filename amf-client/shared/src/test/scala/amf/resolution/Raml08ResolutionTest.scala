@@ -33,6 +33,18 @@ class Raml08ResolutionTest extends RamlResolutionTest {
     cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml08, basePath + "included-schema/")
   }
 
+  multiGoldenTest("Resolve xml example", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      Amf,
+      directory = "amf-client/shared/src/test/resources/validations/api-with-xml-examples/",
+      renderOptions = Some(config.renderOptions.withCompactUris),
+      transformWith = Some(Raml08)
+    )
+  }
+
   multiGoldenTest("Test included schema and example", "api.%s") { config =>
     cycle("api.raml",
           config.golden,
