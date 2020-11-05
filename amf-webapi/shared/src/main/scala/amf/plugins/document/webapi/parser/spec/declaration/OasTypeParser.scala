@@ -17,6 +17,9 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.common.{
   AnnotationParser,
   DataNodeParser,
@@ -167,72 +170,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
     map.key("type").isDefined && map.key("type").get.value.asOption[YSequence].isDefined
   }
 
-  private def detect(version: SchemaVersion): TypeDef = {
-    val defaultType = version match {
-      case oasSchema: OASSchemaVersion if oasSchema.position == "parameter" => UndefinedType
-      case _                                                                => AnyType
-    }
-
-    detectDependency()
-      .orElse(detectType())
-      .orElse(detectObjectProperties())
-      .orElse(detectAmfUnion())
-      .orElse(detectItemProperties())
-      .orElse(detectNumberProperties())
-      .orElse(detectStringProperties())
-      .getOrElse(defaultType)
-  }
-
-  private def detectObjectProperties(): Option[TypeDef.ObjectType.type] =
-    map
-      .key("properties")
-      .orElse(map.key("x-amf-merge"))
-      .orElse(map.key("minProperties"))
-      .orElse(map.key("maxProperties"))
-      .orElse(map.key("dependencies"))
-      .orElse(map.key("patternProperties"))
-      .orElse(map.key("additionalProperties"))
-      .orElse(map.key("discriminator"))
-      .map(_ => ObjectType)
-
-  private def detectItemProperties(): Option[TypeDef.ArrayType.type] =
-    map
-      .key("items")
-      .orElse(map.key("minItems"))
-      .orElse(map.key("maxItems"))
-      .orElse(map.key("uniqueItems"))
-      .map(_ => ArrayType)
-
-  private def detectNumberProperties(): Option[TypeDef.NumberType.type] =
-    map
-      .key("multipleOf")
-      .orElse(map.key("minimum"))
-      .orElse(map.key("maximum"))
-      .orElse(map.key("exclusiveMinimum"))
-      .orElse(map.key("exclusiveMaximum"))
-      .map(_ => NumberType)
-
-  private def detectStringProperties(): Option[TypeDef.StrType.type] =
-    map
-      .key("minLength")
-      .orElse(map.key("maxLength"))
-      .orElse(map.key("pattern"))
-      .orElse(map.key("format"))
-      .map(_ => StrType)
-
-  private def detectDependency(): Option[TypeDef] = map.key("$ref").map(_ => LinkType)
-
-  private def detectAmfUnion(): Option[TypeDef.UnionType.type] = map.key("x-amf-union").map(_ => UnionType)
-
-  private def detectType(): Option[TypeDef] = map.key("type").flatMap { e =>
-    val typeText          = e.value.as[YScalar].text
-    val formatTextOrEmpty = map.key("format").flatMap(e => e.value.toOption[YScalar].map(_.text)).getOrElse("")
-    val result            = matchType(typeText, formatTextOrEmpty, UndefinedType)
-    if (result == UndefinedType) {
-      ctx.eh.violation(InvalidJsonSchemaType, "", s"Invalid type $typeText", e.value)
-      None
-    } else Some(result)
-  }
+  private def detect(version: SchemaVersion): TypeDef = TypeDetector.detect(version, map)(ctx.eh)
 
   private def parseDisjointUnionType(): UnionShape = {
 
@@ -434,9 +372,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       shape
     }
 
-    private def isStringScalar(shape: ScalarShape) = shape.dataType.option().fold(false) { value =>
-      value == DataType.String
-    }
+    private def isStringScalar(shape: ScalarShape) = shape.dataType.option().fold(false) { value => value == DataType.String}
   }
 
   case class UnionShapeParser(nodeOrEntry: YMapEntryLike, name: String) extends AnyShapeParser() {
@@ -672,10 +608,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
             .zipWithIndex
             .map {
               case (elem, index) =>
-                OasTypeParser(YMapEntryLike(elem),
-                              s"member$index",
-                              item => item.adopted(shape.id + "/items/" + index),
-                              version)
+                OasTypeParser(YMapEntryLike(elem), s"member$index", item => item.adopted(shape.id + "/items/" + index), version)
                   .parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
@@ -859,8 +792,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  private def parseShapeDependencies(shape: NodeShape,
-                                     properties: mutable.LinkedHashMap[String, PropertyShape]): Unit = {
+  private def parseShapeDependencies(shape: NodeShape, properties: mutable.LinkedHashMap[String, PropertyShape]): Unit = {
     if (version == JSONSchemaDraft201909SchemaVersion) {
       Draft2019ShapeDependenciesParser(shape, map, shape.id, properties.toMap, version).parse()
     } else {
