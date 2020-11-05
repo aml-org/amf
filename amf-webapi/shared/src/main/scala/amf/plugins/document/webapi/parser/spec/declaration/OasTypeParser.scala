@@ -16,7 +16,6 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
-import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
@@ -170,7 +169,13 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
     map.key("type").isDefined && map.key("type").get.value.asOption[YSequence].isDefined
   }
 
-  private def detect(version: SchemaVersion): TypeDef = TypeDetector.detect(version, map)(ctx.eh)
+  private def detect(version: SchemaVersion): TypeDef = {
+    val defaultType = version match {
+      case oasSchema: OASSchemaVersion if oasSchema.position == "parameter" => UndefinedType
+      case _                                                                => AnyType
+    }
+    TypeDetector.detect(map)(ctx.eh).getOrElse(defaultType)
+  }
 
   private def parseDisjointUnionType(): UnionShape = {
 
@@ -683,8 +688,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
 
     private def parseExample(): Unit = {
 
-      if (version isBiggerThanOrEqualTo JSONSchemaDraft6SchemaVersion)
-        parseExamplesArray()
+      if (version isBiggerThanOrEqualTo JSONSchemaDraft6SchemaVersion) parseExamplesArray()
       else
         RamlExamplesParser(map, "example", "examples".asOasExtension, shape, options)
           .parse()
