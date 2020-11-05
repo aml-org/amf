@@ -308,5 +308,9 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/json-schema-anyof/api.raml")
   }
 
+  test("Validate included xml examples") {
+    validate("/api-with-xml-examples/api.raml", Some("api-with-xml-examples.report"), profile = Raml08Profile)
+  }
+
   override val hint: Hint = RamlYamlHint
 }

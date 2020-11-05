@@ -17,6 +17,7 @@ import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape, ScalarShape}
+import amf.plugins.domain.webapi.metamodel.MessageModel.Examples
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.features.validation.CoreValidations
@@ -128,7 +129,8 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         val shape: AnyShape  = otherValue.value.asInstanceOf[AnyShape]
         val cloned           = shape.cloneShape(None).withName(target.name.value())
 
-        if (target.examples.nonEmpty) cloned.withExamples(target.examples)
+        if (target.examples.nonEmpty) cloned.setArrayWithoutId(Examples, target.examples) // If target defines examples we want to keep their original IDs, otherwise errors will be grouped for the "default-example" of the declared shape
+
         main.set(otherField, adoptInner(main.id, cloned))
         shouldMerge = false
       } else if (mainValueIsDefault) {

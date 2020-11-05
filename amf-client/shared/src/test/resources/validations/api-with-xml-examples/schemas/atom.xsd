@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema targetNamespace="http://www.w3.org/2005/Atom" elementFormDefault="qualified" 
+	attributeFormDefault="unqualified"
+	xmlns:atom="http://www.w3.org/2005/Atom" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd" />
+	<xs:element name="email" type="atom:emailType" minOccurs="0" maxOccurs="1" />
+	<xs:simpleType name="emailType">
+		<xs:annotation>
+			<xs:documentation>
+				Schema definition for an email address.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString">
+			<xs:pattern value="\w+@(\w+\.)+\w+" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
