@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
-import amf.plugins.document.webapi.parser.spec.declaration.{OAS20SchemaVersion, OasTypeParser}
+import amf.plugins.document.webapi.parser.spec.declaration.{OAS20SchemaVersion, OasTypeParser, SchemaPosition}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
@@ -91,7 +91,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
     map.key(
       "type",
       _ => {
-        OasTypeParser(YMapEntryLike(map), "schema", adoption, OAS20SchemaVersion("schema")(ctx.eh))
+        OasTypeParser(YMapEntryLike(map), "schema", adoption, OAS20SchemaVersion(SchemaPosition.Schema))
           .parse()
           .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(map)))
       }

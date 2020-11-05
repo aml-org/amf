@@ -14,6 +14,7 @@ import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
 import amf.plugins.document.webapi.parser.spec.declaration.{OasTypeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.domain.shapes.models.Example
@@ -99,7 +100,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         OasTypeParser(YMapEntryLike(filterMap),
                       "type",
                       (shape: Shape) => shape.withId(root.location + "#/shape"),
-                      OAS20SchemaVersion(position = "schema")(ctx.eh))
+                      OAS20SchemaVersion(Schema))
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 

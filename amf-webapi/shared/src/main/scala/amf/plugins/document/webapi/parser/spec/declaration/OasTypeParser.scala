@@ -17,6 +17,7 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
 import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.common.{
@@ -87,9 +88,9 @@ object OasTypeParser {
   private def key(entry: YMapEntry) = entry.key.as[YScalar].text
 
   private def getSchemaVersion(ctx: OasLikeWebApiContext) = {
-    if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion("schema")(ctx.eh)
+    if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion(Schema)
     else if (ctx.vendor == Vendor.ASYNC20) JSONSchemaDraft7SchemaVersion
-    else OAS20SchemaVersion("schema")(ctx.eh)
+    else OAS20SchemaVersion(Schema)
   }
 }
 
@@ -123,7 +124,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       parsedShape match {
         case Some(shape: AnyShape) =>
           if (isOas) // external schemas can have any top level key
-            ctx.closedShape(shape.id, map, version.asInstanceOf[OASSchemaVersion].position)
+            ctx.closedShape(shape.id, map, version.asInstanceOf[OASSchemaVersion].position.toString)
           if (isOas3) Some(checkNilUnion(shape))
           else Some(shape)
         case None => None
