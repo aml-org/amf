@@ -1,7 +1,84 @@
-#%RAML 0.8
-title: New API
-version: v1
+#%RAML 1.0
+title: recursive shapes in when merging traits
+version: 1.0
 
 securitySchemes:
-  - auth:
-      type: n-sls
+  invalid-type-open-id:
+    type: openIdConnect
+    description: invalid type which is unique to oas 3.0
+
+  invalid-type-http:
+    type: http
+    description: invalid type which is unique to oas 3.0
+
+  invalid-api-key:
+    type: apiKey
+    description: invalid type which is unique to oas 3.0
+
+  invalid-unknown:
+      type: asdfasfd
+      description: unkown type will throw validation
+
+  valid-extension:
+    type: x-someExtension
+    description: invalid type which is unique to oas 3.0
+
+  oauth_1_0:
+    description: |
+      OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
+    type: OAuth 1.0
+    settings:
+      requestTokenUri: https://api.mysampleapi.com/1/oauth/request_token
+      authorizationUri: https://api.mysampleapi.com/1/oauth/authorize
+      tokenCredentialsUri: https://api.mysampleapi.com/1/oauth/access_token
+      signatures: [ 'HMAC-SHA1', 'PLAINTEXT' ]
+  oauth_2_0:
+    description: |
+      Dropbox supports OAuth 2.0 for authenticating all API requests.
+    type: OAuth 2.0
+    describedBy:
+      headers:
+        Authorization:
+          description: |
+             Used to send a valid OAuth 2 access token. Do not use
+             with the "access_token" query string parameter.
+          type: string
+      queryParameters:
+        access_token:
+          description: |
+             Used to send a valid OAuth 2 access token. Do not use with
+             the "Authorization" header.
+          type: string
+      responses:
+        401:
+          description: |
+              Bad or expired token. This can happen if the user or Dropbox
+              revoked or expired an access token. To fix, re-authenticate
+              the user.
+        403:
+          description: |
+              Bad OAuth request (wrong consumer key, bad nonce, expired
+              timestamp...). Unfortunately, re-authenticating the user won't help here.
+    settings:
+          authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+          accessTokenUri: https://api.dropbox.com/1/oauth2/token
+          authorizationGrants: [ authorization_code, implicit, 'urn:ietf:params:oauth:grant-type:saml2-bearer' ]
+  basic:
+    description: |
+      This API supports Basic Authentication.
+    type: Basic Authentication
+  digest:
+    description: |
+      This API supports DigestSecurityScheme Authentication.
+    type: Digest Authentication
+  passthrough:
+    description: |
+      This API supports Pass Through Authentication.
+    type: Pass Through
+    describedBy:
+      queryParameters:
+        query:
+          type: string
+      headers:
+        api_key:
+          type: string
