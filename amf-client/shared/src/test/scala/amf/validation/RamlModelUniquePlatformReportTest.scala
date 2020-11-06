@@ -122,8 +122,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Some("variable-not-implemented-resourcetype.report"))
   }
 
-  test("Invalid security scheme") {
-    validate("invalid-security.raml", Some("invalid-security.report"), profile = Raml08Profile)
+  test("Invalid security scheme RAML 0.8") {
+    validate("08/invalid-security.raml", Some("08/invalid-security.report"), profile = Raml08Profile)
+  }
+
+  test("Invalid security scheme RAML 1.0") {
+    validate("invalid-security.raml", Some("invalid-security.report"), profile = Raml10Profile)
   }
 
   test("security scheme authorizationGrant RAML 1.0") {
