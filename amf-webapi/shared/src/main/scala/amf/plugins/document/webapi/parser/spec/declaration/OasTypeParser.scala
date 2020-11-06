@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.model.domain._
-import amf.core.parser._
+import amf.core.parser.{Annotations, _}
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
+import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector.LinkCriteria
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.document.webapi.parser.spec.oas.parser.types.InlineOasTypeParser
 import amf.plugins.domain.shapes.models._
@@ -65,7 +66,13 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
                          isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext)
     extends OasSpecParser {
 
-  def parse(): Option[AnyShape] = {
+  private val ast: YPart = entryOrNode.ast
+
+  private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())
+
+  def parse(): Option[AnyShape] = LinkCriteria.detect(map).flatMap { _ =>
+      new OasRefParser(map, name, nameAnnotations, ast, adopt, version).parse()
+    }.orElse(
     InlineOasTypeParser(entryOrNode, name, map, adopt, version, isDeclaration).parse()
-  }
+  )
 }

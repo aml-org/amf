@@ -11,8 +11,7 @@ import org.yaml.model.{YMap, YScalar}
 object TypeDetector {
   def detect(map: YMap)(implicit errorHandler: ErrorHandler): Option[TypeDef] = {
 
-    val detectionCriteria = LinkCriteria
-      .chain(ExplicitTypeCriteria(errorHandler))
+    val detectionCriteria = ExplicitTypeCriteria(errorHandler)
       .chain(ObjectCriteria)
       .chain(AmfUnionCriteria)
       .chain(ArrayCriteria)
