@@ -135,6 +135,8 @@ abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
     securityScheme.fields.entry(SecuritySchemeModel.Type) foreach {
       case f if f.scalar.toString == "Api Key" =>
         results += MapEntryEmitter("type", "x-apiKey", position = pos(f.value.annotations))
+      case f if f.scalar.toString == "openIdConnect" =>
+        results += MapEntryEmitter("type", "x-openIdConnect", position = pos(f.value.annotations))
       case f if isHttpBasicAuth(securityScheme) || isHttpDigestAuth(securityScheme) =>
         results ++= emitSupportedHttpAuthTypes(f, securityScheme.settings)
       case f => results += RamlScalarEmitter("type", f)

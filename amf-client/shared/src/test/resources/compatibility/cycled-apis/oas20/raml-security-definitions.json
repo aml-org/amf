@@ -1,0 +1,99 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "version": "1.1"
+  },
+  "paths": {},
+  "securityDefinitions": {
+    "oauth_2_0": {
+      "type": "oauth2",
+      "description": "Dropbox supports OAuth 2.0 for authenticating all API requests.\n",
+      "x-amf-describedBy": {
+        "headers": {
+          "Authorization": {
+            "description": "Used to send a valid OAuth 2 access token. Do not use\nwith the \"access_token\" query string parameter.\n",
+            "type": "string"
+          }
+        },
+        "queryParameters": {
+          "access_token": {
+            "description": "Used to send a valid OAuth 2 access token. Do not use with\nthe \"Authorization\" header.\n",
+            "type": "string"
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Bad or expired token. This can happen if the user or Dropbox\nrevoked or expired an access token. To fix, re-authenticate\nthe user.\n"
+          },
+          "403": {
+            "description": "Bad OAuth request (wrong consumer key, bad nonce, expired\ntimestamp...). Unfortunately, re-authenticating the user won't help here.\n"
+          }
+        }
+      },
+      "authorizationUrl": "https://www.dropbox.com/1/oauth2/authorize",
+      "tokenUrl": "https://api.dropbox.com/1/oauth2/token",
+      "scopes": {
+        "*": ""
+      },
+      "x-amf-settings": {
+        "authorizationGrants": [
+          "authorization_code",
+          "implicit",
+          "urn:ietf:params:oauth:grant-type:saml2-bearer"
+        ]
+      }
+    },
+    "basic": {
+      "type": "basic",
+      "description": "This API supports Basic Authentication.\n"
+    }
+  },
+  "x-amf-securitySchemes": {
+    "digest": {
+      "type": "Digest Authentication",
+      "description": "This API supports DigestSecurityScheme Authentication.\n"
+    },
+    "api_key": {
+      "type": "x-amf-apiKey",
+      "x-amf-describedBy": {
+        "headers": {
+          "api_key?": {
+            "type": "any"
+          }
+        }
+      },
+      "name": "api_key",
+      "in": "header"
+    },
+    "passthrough": {
+      "type": "Pass Through",
+      "description": "This API supports Pass Through Authentication.\n",
+      "x-amf-describedBy": {
+        "headers": {
+          "api_key": {
+            "type": "string"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "oauth_1_0": {
+      "type": "OAuth 1.0",
+      "description": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.\n",
+      "x-amf-settings": {
+        "requestTokenUri": "https://api.mysampleapi.com/1/oauth/request_token",
+        "authorizationUri": "https://api.mysampleapi.com/1/oauth/authorize",
+        "tokenCredentialsUri": "https://api.mysampleapi.com/1/oauth/access_token",
+        "signatures": [
+          "HMAC-SHA1",
+          "PLAINTEXT"
+        ]
+      }
+    }
+  }
+}
