@@ -626,14 +626,6 @@ object AMFRawValidations {
         value = "1"
       ),
       AMFValidation(
-        message = "Security scheme type should be one of the supported ones",
-        owlClass = security("SecurityScheme"),
-        owlProperty = security("type"),
-        constraint = sh("pattern"),
-        value =
-          "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|Api\\sKey|http|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|x-.+$"
-      ),
-      AMFValidation(
         message = "Type is mandatory in a Security Scheme Object",
         owlClass = security("SecurityScheme"),
         owlProperty = security("type"),
@@ -690,6 +682,15 @@ object AMFRawValidations {
         value = "get,put,post,delete,options,head,patch,connect,trace",
         ramlErrorMessage = "Unknown method type",
         openApiErrorMessage = "Unknown Operation method"
+      ),
+      AMFValidation(
+        message = "Security scheme type should be one of the supported ones",
+        owlClass = security("SecurityScheme"),
+        owlProperty = security("type"),
+        constraint = sh("pattern"),
+        // Includes all types due to compatibility reasons.
+        value =
+          "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|Api\\sKey|http|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|x-.+$"
       )
     )
 
@@ -1355,6 +1356,14 @@ object AMFRawValidations {
         constraint = shape("discriminatorInRequiredProperties"),
         owlClass = sh("NodeShape"),
         owlProperty = shape("discriminator"),
+      ),
+      AMFValidation(
+        message = "Security scheme type should be one of the supported ones",
+        owlClass = security("SecurityScheme"),
+        owlProperty = security("type"),
+        constraint = sh("pattern"),
+        value =
+          "^(Api\\sKey|OAuth\\s2.0|http|httpApiKey|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|x-.+)$"
       )
     )
 
