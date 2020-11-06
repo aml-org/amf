@@ -101,4 +101,37 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
           Raml,
           transformWith = Some(Raml10))
   }
+
+  test("OAS 2.0 security schemes translated to Raml") {
+    cycle("oas20/security-definitions.json",
+          "cycled-apis/raml/oas2-security-definitions.raml",
+          OasYamlHint,
+          Raml,
+          transformWith = Some(Raml10))
+  }
+
+  test("OAS 3.0 security schemes translated to Raml") {
+    cycle("oas30/security-definitions.json",
+          "cycled-apis/raml/oas3-security-definitions.raml",
+          OasYamlHint,
+          Raml,
+          transformWith = Some(Raml10))
+  }
+
+  test("Raml security schemes translated to OAS 2.0") {
+    cycle("raml10/apikey-settings.raml",
+          "cycled-apis/oas20/raml-security-definitions.json",
+          RamlYamlHint,
+          Oas20,
+          transformWith = Some(Oas20))
+  }
+
+  test("Raml security schemes translated to OAS 3.0") {
+    cycle("raml10/apikey-settings.raml",
+          "cycled-apis/oas30/raml-security-definitions.json",
+          RamlYamlHint,
+          Oas30,
+          transformWith = Some(Oas30))
+  }
+
 }
