@@ -8,12 +8,15 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{ParserContext, ReferenceHandler, SimpleReferenceHandler}
+import amf.core.parser.{ParsedReference, ParserContext, ReferenceHandler, SimpleReferenceHandler}
 import amf.core.remote.{JsonSchema, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.JSONSchemaRoot
+import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaWebApiContext, OasWebApiContext}
+import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, JSONSchemaUnspecifiedVersion}
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaParser
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.AnyShape
@@ -49,7 +52,18 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
                      parentContext: ParserContext,
                      platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
-    new JsonSchemaParser().parse(document, parentContext, options)
+    val ctx = context(document.location, document.references, options, parentContext)
+    new JsonSchemaParser().parse(document, ctx, options)
+  }
+
+  def context(loc: String,
+              refs: Seq[ParsedReference],
+              options: ParsingOptions,
+              wrapped: ParserContext,
+              ds: Option[OasWebApiDeclarations] = None): JsonSchemaWebApiContext = {
+    // todo: we can set this default as this plugin is hardcoded to not parse
+    // todo 2: we should debate the default version to use in the Plugin if we are to use it.
+    new JsonSchemaWebApiContext(loc, refs, wrapped, ds, options, JSONSchemaUnspecifiedVersion)
   }
 
   override protected def unparseAsYDocument(

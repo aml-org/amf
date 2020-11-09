@@ -1,0 +1,13 @@
+asyncapi: 2.0.0
+info:
+  title: "something"
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    MySchema:
+      properties:
+        name:
+          type: string
+        age:
+          $ref: "first-level-schema.json#/definitions/main"
