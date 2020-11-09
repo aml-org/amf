@@ -8,6 +8,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
 
   override val basePath = "amf-client/shared/src/test/resources/upanddown/"
   val base08Path        = "amf-client/shared/src/test/resources/upanddown/raml08/"
+  val baseRaml10Path    = "amf-client/shared/src/test/resources/upanddown/raml10/"
   val referencesPath    = "amf-client/shared/src/test/resources/references/"
   val productionPath    = "amf-client/shared/src/test/resources/production/"
   val validationsPath   = "amf-client/shared/src/test/resources/validations/"
@@ -709,6 +710,26 @@ class CompleteCycleTest extends FunSuiteCycleTests {
           OasJsonHint,
           Oas20,
           s"${parserResultPath}oas/")
+  }
+
+  test("Raml10 parses Draft 7 when specified") {
+    cycle(
+      "raml-reference-draft-7.raml",
+      "raml-reference-draft-7.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = baseRaml10Path
+    )
+  }
+
+  test("Raml10 parses Draft 4 when version is not specified") {
+    cycle(
+      "raml-default-schema-version.raml",
+      "raml-default-schema-version.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = baseRaml10Path
+    )
   }
 
   /**

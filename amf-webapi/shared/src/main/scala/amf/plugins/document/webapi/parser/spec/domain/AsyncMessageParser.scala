@@ -7,7 +7,7 @@ import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft7SchemaVersion,
-  JSONSchemaVersion,
+  SchemaVersion,
   OAS30SchemaVersion,
   OasLikeCreativeWorkParser,
   OasLikeTagsParser,
@@ -154,7 +154,7 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
     }
   }
 
-  def getSchemaVersion(payload: Payload)(implicit ctx: AsyncWebApiContext): JSONSchemaVersion =
+  def getSchemaVersion(payload: Payload)(implicit ctx: AsyncWebApiContext): SchemaVersion =
     Option(payload.schemaMediaType) match {
       case Some(format) if `oas30Schema`.contains(format.value()) =>
         OAS30SchemaVersion("schema")(ctx.eh)

@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "anotherName": {
+      "type": "string"
+    }
+  },
+  "if": {
+    "$ref": "second-level-schema.json#/definitions/anotherMain"
+  }
+}

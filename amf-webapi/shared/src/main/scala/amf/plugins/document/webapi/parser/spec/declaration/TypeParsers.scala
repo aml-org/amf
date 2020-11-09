@@ -33,7 +33,7 @@ case class ShapeDependenciesParser(shape: NodeShape,
                                    map: YMap,
                                    parentId: String,
                                    properties: mutable.LinkedHashMap[String, PropertyShape],
-                                   version: JSONSchemaVersion)(implicit ctx: OasLikeWebApiContext) {
+                                   version: SchemaVersion)(implicit ctx: OasLikeWebApiContext) {
   def parse(): Unit = {
     val (mapEntries, _) = map.entries.partition {
       case entry: YMapEntry => entry.value.tagType.equals(YType.Map)
@@ -63,7 +63,7 @@ trait SpecializedDependencyParser {
   def parse(dependency: Dependencies): Dependencies
 }
 
-case class SchemaDependencyParser(node: YMapEntry, version: JSONSchemaVersion)(implicit ctx: OasLikeWebApiContext)
+case class SchemaDependencyParser(node: YMapEntry, version: SchemaVersion)(implicit ctx: OasLikeWebApiContext)
     extends SpecializedDependencyParser {
 
   override def create(entry: YMapEntry): Dependencies = SchemaDependencies(entry)

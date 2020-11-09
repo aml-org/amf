@@ -14,9 +14,11 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft3SchemaVersion,
   JSONSchemaDraft4SchemaVersion,
   JSONSchemaUnspecifiedVersion,
-  JSONSchemaVersion
+  JSONSchemaVersion,
+  SchemaVersion
 }
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
+import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaInference
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validation.DialectValidations.ClosedShapeSpecification
 import amf.validations.ParserSideValidations.InvalidJsonSchemaVersion
@@ -29,7 +31,10 @@ abstract class WebApiContext(val loc: String,
                              private val ds: Option[WebApiDeclarations] = None)
     extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
     with SpecAwareContext
-    with PlatformSecrets {
+    with PlatformSecrets
+    with JsonSchemaInference {
+
+  override val defaultSchemaVersion: JSONSchemaVersion = JSONSchemaDraft4SchemaVersion
 
   val syntax: SpecSyntax
   val vendor: Vendor
@@ -124,30 +129,7 @@ abstract class WebApiContext(val loc: String,
     }
   }
 
-  def computeJsonSchemaVersion(rootAst: YNode): JSONSchemaVersion = {
-    rootAst.value match {
-      case map: YMap =>
-        map.map.get("$schema") match {
-          case Some(node) =>
-            node.value match {
-              case scalar: YScalar =>
-                scalar.text match {
-                  case txt if txt.contains("http://json-schema.org/draft-01/schema") =>
-                    JSONSchemaDraft3SchemaVersion // 1 -> 3
-                  case txt if txt.contains("http://json-schema.org/draft-02/schema") =>
-                    JSONSchemaDraft3SchemaVersion // 2 -> 3
-                  case txt if txt.contains("http://json-schema.org/draft-03/schema") => JSONSchemaDraft3SchemaVersion
-                  case _                                                             => JSONSchemaDraft4SchemaVersion // we upgrade anything else to 4
-                }
-              case _ =>
-                eh.violation(InvalidJsonSchemaVersion, "", "JSON Schema version value must be a string", node)
-                JSONSchemaDraft4SchemaVersion
-            }
-          case _ => JSONSchemaDraft4SchemaVersion
-        }
-      case _ => JSONSchemaUnspecifiedVersion
-    }
-  }
+  def computeJsonSchemaVersion(ast: YNode): SchemaVersion = parseSchemaVersion(ast, eh)
 
   def resolvedPath(base: String, str: String): String = {
     if (str.isEmpty) platform.normalizePath(base)

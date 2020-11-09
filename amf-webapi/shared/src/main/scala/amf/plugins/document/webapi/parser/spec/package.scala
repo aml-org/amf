@@ -142,10 +142,16 @@ package object spec {
                                 ctx.refs,
                                 ctx,
                                 Some(toOasDeclarations(ctx.declarations)),
-                                ctx.options)
+                                ctx.options,
+                                ctx.defaultSchemaVersion)
   }
 
   def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new JsonSchemaWebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.options)
+    new JsonSchemaWebApiContext(root,
+                                refs,
+                                ctx,
+                                Some(toOasDeclarations(ctx.declarations)),
+                                ctx.options,
+                                ctx.defaultSchemaVersion)
   }
 }

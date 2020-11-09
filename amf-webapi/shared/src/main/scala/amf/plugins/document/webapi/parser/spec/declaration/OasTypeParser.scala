@@ -40,12 +40,7 @@ import org.yaml.model._
 import scala.collection.mutable
 import scala.util.Try
 
-abstract class JSONSchemaVersion(val name: String) extends Ordered[JSONSchemaVersion] {
-  override def compare(that: JSONSchemaVersion): Int = {
-    if (name.length < that.name.length) -1
-    else if (name.length > that.name.length) 1
-    else name.compareTo(that.name)
-  }
+abstract class SchemaVersion(val name: String) {
 
   def isBiggerThanOrEqualTo(jsonVersion: JSONSchemaVersion): Boolean = {
     this match {
@@ -62,7 +57,7 @@ abstract class JSONSchemaVersion(val name: String) extends Ordered[JSONSchemaVer
   }
 }
 class OASSchemaVersion(override val name: String, val position: String)(implicit eh: ErrorHandler)
-    extends JSONSchemaVersion(name) {
+    extends SchemaVersion(name) {
   if (position != "schema" && position != "parameter")
     eh.violation(CoreValidations.ResolutionValidation,
                  "",
@@ -76,17 +71,28 @@ class OAS30SchemaVersion(override val position: String)(implicit eh: ErrorHandle
 object OAS30SchemaVersion {
   def apply(position: String)(implicit eh: ErrorHandler) = new OAS30SchemaVersion(position)(eh)
 }
-object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3")
-object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4")
-object JSONSchemaDraft7SchemaVersion extends JSONSchemaVersion("draft-7")
-object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("")
+
+abstract class JSONSchemaVersion(override val name: String, val url: String)
+    extends SchemaVersion(name)
+    with Ordered[JSONSchemaVersion] {
+  override def compare(that: JSONSchemaVersion): Int = {
+    if (name.length < that.name.length) -1
+    else if (name.length > that.name.length) 1
+    else name.compareTo(that.name)
+  }
+}
+
+object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3", "http://json-schema.org/draft-03/schema#")
+object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4", "http://json-schema.org/draft-04/schema#")
+object JSONSchemaDraft7SchemaVersion extends JSONSchemaVersion("draft-7", "http://json-schema.org/draft-07/schema#")
+object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("", "")
 
 /**
   * OpenAPI Type Parser.
   */
 object OasTypeParser {
 
-  def apply(entry: YMapEntry, adopt: Shape => Unit, version: JSONSchemaVersion)(
+  def apply(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(
       implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(Left(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
 
@@ -100,7 +106,7 @@ object OasTypeParser {
       else OAS20SchemaVersion("schema")(ctx.eh)
     )
 
-  def apply(node: YNode, name: String, adopt: Shape => Unit, version: JSONSchemaVersion)(
+  def apply(node: YNode, name: String, adopt: Shape => Unit, version: SchemaVersion)(
       implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(Right(node), name, node.as[YMap], adopt, version)
 
@@ -113,7 +119,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                          name: String,
                          map: YMap,
                          adopt: Shape => Unit,
-                         version: JSONSchemaVersion)(implicit val ctx: OasLikeWebApiContext)
+                         version: SchemaVersion)(implicit val ctx: OasLikeWebApiContext)
     extends OasSpecParser {
 
   private val ast: YPart = entryOrNode match {
@@ -187,7 +193,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     map.key("type").isDefined && map.key("type").get.value.asOption[YSequence].isDefined
   }
 
-  private def detect(version: JSONSchemaVersion): TypeDef = {
+  private def detect(version: SchemaVersion): TypeDef = {
     val defaultType = version match {
       case oasSchema: OASSchemaVersion if oasSchema.position == "parameter" => UndefinedType
       case _                                                                => AnyType
@@ -203,7 +209,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       .getOrElse(defaultType)
   }
 
-  private def detectObjectProperties(version: JSONSchemaVersion): Option[TypeDef.ObjectType.type] =
+  private def detectObjectProperties(version: SchemaVersion): Option[TypeDef.ObjectType.type] =
     map
       .key("properties")
       .orElse(map.key("x-amf-merge"))
