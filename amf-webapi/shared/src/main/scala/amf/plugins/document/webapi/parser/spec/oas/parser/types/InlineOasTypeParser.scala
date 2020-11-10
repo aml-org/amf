@@ -5,10 +5,10 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DataNode, Shape}
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.{Annotations, FutureDeclarations, Range, ScalarNode, YMapOps, YNodeLikeOps}
+import amf.core.model.domain._
 import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.parser.{Annotations, FutureDeclarations, Range, ScalarNode, YMapOps, YNodeLikeOps}
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
@@ -16,21 +16,21 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser, YMapEntryLike}
-import amf.plugins.document.webapi.parser.spec.declaration.{CommonEnumParser, Draft2019ShapeDependenciesParser, Draft4ShapeDependenciesParser, EnumParsing, JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaDraft6SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaUnspecifiedVersion, OAS20SchemaVersion, OAS30SchemaVersion, OASSchemaVersion, OasLikeCreativeWorkParser, OasRefParser, OasTypeParser, ScalarFormatType, SchemaVersion, XMLSerializerParser}
 import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector
+import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.jsonschema.parser.{ContentParser, UnevaluatedParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ArrayShapeModel, FileShapeModel, NodeShapeModel, ScalarShapeModel, TupleShapeModel, UnionShapeModel}
-import amf.plugins.domain.shapes.models.TypeDef.{AnyType, ArrayType, FileType, LinkType, NilType, ObjectType, UndefinedType, UnionType}
-import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape, FileShape, MatrixShape, NilShape, NodeShape, ScalarShape, SchemaShape, TupleShape, TypeDef, UnionShape}
+import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.models.TypeDef._
+import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.validation.DialectValidations.InvalidUnionType
-import amf.validations.ParserSideValidations.{DiscriminatorNameRequired, DuplicateRequiredItem, InvalidAdditionalItemsType, InvalidAdditionalPropertiesType, InvalidDisjointUnionType, InvalidJsonSchemaType, InvalidMediaTypeType, InvalidOrType, InvalidRequiredArrayForSchemaVersion, InvalidRequiredBooleanForSchemaVersion, InvalidRequiredValue, InvalidSchemaType, InvalidXoneType, ItemsFieldRequired, ReadOnlyPropertyMarkedRequired}
-import org.yaml.model.{YMap, YMapEntry, YNode, YPart, YScalar, YSequence, YType}
+import amf.validations.ParserSideValidations._
+import org.yaml.model._
 
 import scala.collection.mutable
 import scala.util.Try
@@ -55,7 +55,6 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     } else {
       val parsedShape = detect(version) match {
         case UnionType                   => Some(parseUnionType())
-        case LinkType                    => parseLinkType()
         case ObjectType                  => Some(parseObjectType())
         case ArrayType                   => Some(parseArrayType())
         case AnyType                     => Some(parseAnyType())
@@ -211,9 +210,6 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
   private def parseArrayType(name: String = name, map: YMap = map, adopt: Shape => Unit = adopt): AnyShape = {
     DataArrangementParser(name, ast, map, (shape: Shape) => adopt(shape)).parse()
   }
-
-  private def parseLinkType(): Option[AnyShape] =
-    new OasRefParser(map, name, nameAnnotations, ast, adopt, version).parse()
 
   private def parseObjectType(name: String = name, map: YMap = map, adopt: Shape => Unit = adopt): AnyShape = {
     if (map.key("schema".asOasExtension).isDefined) {
@@ -817,8 +813,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
             "required",
             entry => {
               if (entry.value.tagType == YType.Bool) {
-                if (version == JSONSchemaDraft4SchemaVersion || version.isInstanceOf[OASSchemaVersion]) {
-                  ctx.eh.violation(InvalidRequiredBooleanForSchemaVersion,
+                if (version != JSONSchemaDraft3SchemaVersion) {
+                  ctx.eh.warning(InvalidRequiredBooleanForSchemaVersion,
                     property.id,
                     "Required property boolean value is only supported in JSON Schema draft-3",
                     entry)

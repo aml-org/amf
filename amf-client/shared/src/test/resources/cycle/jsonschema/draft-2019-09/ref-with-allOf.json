@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "$ref": "#/$defs/main",
+  "type": "object",
+  "required": ["name", "pepito"],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "pepito": {
+      "type": "number"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/$defs/allOffEd"
+    }
+  ],
+  "$defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "anotherName"
+      ],
+      "properties": {
+        "anotherName": {
+          "type": "string"
+        }
+      }
+    },
+    "allOffEd": {
+      "type": "string",
+      "format": "email"
+    }
+  }
+}

@@ -1,7 +1,22 @@
 {
   "@graph": [
     {
-      "@id": "/scalar/main",
+      "@id": "/any/schema",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "schema",
+      "shacl:and": [
+        {
+          "@id": "#/scalar/main"
+        }
+      ]
+    },
+    {
+      "@id": "#/scalar/main",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -55,7 +70,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "/scalar/main"
+        "@id": "/any/schema"
       },
       "doc:version": "2.2.0",
       "doc:root": false

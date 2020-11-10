@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "$ref": "#/$defs/schema",
+  "$defs": {
+    "schema": {
+      "allOf": [
+        {
+          "type": "object",
+          "unevaluatedProperties": {
+            "type": "string",
+            "minLength": 3
+          }
+        }
+      ]
+    }
+  }
+}
