@@ -42,17 +42,17 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "amf://id#13/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "amf://id#13/source-map/lexical/element_1"
         },
         {
           "@id": "amf://id#13/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "amf://id#13/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -86,11 +86,6 @@
       ]
     },
     {
-      "@id": "amf://id#13/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#13",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
-    },
-    {
       "@id": "amf://id#13/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id#13",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(21,15)]"
@@ -99,6 +94,11 @@
       "@id": "amf://id#13/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(5,0)]"
+    },
+    {
+      "@id": "amf://id#13/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#13",
+      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "amf://id#16",

@@ -136,11 +136,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/source-map/lexical/element_8"
@@ -168,6 +163,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/source-map/lexical/element_7"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -392,11 +392,6 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/source-map/lexical/element_8",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#license",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,4)-(16,5)]"
@@ -440,6 +435,11 @@
       "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/source-map/lexical/element_7",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#termsOfService",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(7,48)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/petstore.swagger.io%2Fapi/source-map/host-lexical/element_0",

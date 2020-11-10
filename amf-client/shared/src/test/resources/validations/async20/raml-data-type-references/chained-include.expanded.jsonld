@@ -183,14 +183,14 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#10": "ASYNC 2.0"
-          },
           "lexical": {
             "apiContract:endpoint": "[(10,0)-(19,0)]",
             "core:name": "[(3,2)-(4,0)]",
             "#10": "[(1,0)-(19,0)]",
             "core:version": "[(4,2)-(6,0)]"
+          },
+          "source-vendor": {
+            "#10": "ASYNC 2.0"
           }
         }
       }
@@ -328,17 +328,17 @@
               "resolved-link-target": {
                 "#6": "amf://id#6"
               },
-              "source-vendor": {
-                "#6": "RAML 1.0"
+              "type-property-lexical-info": {
+                "#6": "[(3,0)-(3,4)]"
               },
               "lexical": {
                 "#6": "[(3,0)-(6,0)]"
               },
-              "type-property-lexical-info": {
-                "#6": "[(3,0)-(3,4)]"
-              },
               "resolved-link": {
                 "#6": "amf://id#8"
+              },
+              "source-vendor": {
+                "#6": "RAML 1.0"
               }
             }
           }

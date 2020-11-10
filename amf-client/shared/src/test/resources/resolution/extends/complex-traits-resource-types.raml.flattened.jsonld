@@ -51,17 +51,17 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -153,11 +153,6 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(54,46)]"
@@ -166,6 +161,11 @@
       "@id": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(46,0)-(48,0)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/extends/complex-traits-resource-types.raml#/web-api/end-points/%2Fendpoint/get/request",

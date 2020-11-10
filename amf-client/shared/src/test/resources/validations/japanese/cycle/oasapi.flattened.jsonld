@@ -85,11 +85,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/source-map/lexical/element_3"
@@ -102,6 +97,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/source-map/lexical/element_2"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -198,11 +198,6 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,18)]"
@@ -221,6 +216,11 @@
       "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(99,1)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oasapi.json#/web-api/end-points/%2F%E6%94%AF%E5%BA%97%E8%A9%B3%E7%B4%B0/get/200",

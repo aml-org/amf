@@ -351,21 +351,6 @@
             "@type": [
               "sourcemaps:SourceMap"
             ],
-            "sourcemaps:source-vendor": [
-              {
-                "@id": "#/web-api/source-map/source-vendor/element_0",
-                "sourcemaps:element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml#/web-api"
-                  }
-                ],
-                "sourcemaps:value": [
-                  {
-                    "@value": "RAML 1.0"
-                  }
-                ]
-              }
-            ],
             "sourcemaps:lexical": [
               {
                 "@id": "#/web-api/source-map/lexical/element_1",
@@ -390,6 +375,21 @@
                 "sourcemaps:value": [
                   {
                     "@value": "[(2,0)-(3,0)]"
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:source-vendor": [
+              {
+                "@id": "#/web-api/source-map/source-vendor/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml#/web-api"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "RAML 1.0"
                   }
                 ]
               }
@@ -536,21 +536,6 @@
                 "@type": [
                   "sourcemaps:SourceMap"
                 ],
-                "sourcemaps:source-vendor": [
-                  {
-                    "@id": "./type.raml#/type/source-map/source-vendor/element_0",
-                    "sourcemaps:element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type"
-                      }
-                    ],
-                    "sourcemaps:value": [
-                      {
-                        "@value": "RAML 1.0"
-                      }
-                    ]
-                  }
-                ],
                 "sourcemaps:lexical": [
                   {
                     "@id": "./type.raml#/type/source-map/lexical/element_1",
@@ -575,6 +560,21 @@
                     "sourcemaps:value": [
                       {
                         "@value": "[(2,0)-(3,14)]"
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:source-vendor": [
+                  {
+                    "@id": "./type.raml#/type/source-map/source-vendor/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "RAML 1.0"
                       }
                     ]
                   }

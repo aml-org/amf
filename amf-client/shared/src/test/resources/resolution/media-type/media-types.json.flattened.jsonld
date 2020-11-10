@@ -42,11 +42,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/lexical/element_2"
@@ -56,6 +51,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -94,11 +94,6 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(4,18)]"
@@ -112,6 +107,11 @@
       "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(45,1)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request",

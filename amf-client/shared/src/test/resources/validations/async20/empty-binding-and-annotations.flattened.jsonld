@@ -86,11 +86,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api/source-map/lexical/element_4"
@@ -106,6 +101,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api/source-map/lexical/element_3"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -315,11 +315,6 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "ASYNC 2.0"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(6,0)]"
@@ -343,6 +338,11 @@
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "ASYNC 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/web-api/some.com/server-bindings/mqtt5",

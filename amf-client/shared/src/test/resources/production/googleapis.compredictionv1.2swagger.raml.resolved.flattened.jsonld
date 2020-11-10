@@ -270,11 +270,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/source-map/lexical/element_5"
@@ -293,6 +288,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/source-map/lexical/element_4"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -885,11 +885,6 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/source-map/lexical/element_5",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#scheme",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(7,0)]"
@@ -918,6 +913,11 @@
       "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,0)-(8,0)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/https%3A%2F%2Fwww.googleapis.com%2Fprediction%2Fv1.2/source-map/lexical/element_0",

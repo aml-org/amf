@@ -64,11 +64,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/source-map/lexical/element_3"
@@ -81,6 +76,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/source-map/lexical/element_2"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -148,11 +148,6 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 3.0"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,18)]"
@@ -171,6 +166,11 @@
       "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(125,1)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "OAS 3.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/oas30api.json#/web-api/end-points/%2F%E3%83%93%E3%82%B9%E3%81%AB%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%BE%E3%81%99/post/request",

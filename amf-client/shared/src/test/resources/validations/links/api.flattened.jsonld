@@ -15,13 +15,13 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#8": "RAML 1.0"
-        },
         "lexical": {
           "core:version": "[(2,0)-(3,0)]",
           "#8": "[(2,0)-(14,14)]",
           "core:name": "[(3,0)-(5,0)]"
+        },
+        "source-vendor": {
+          "#8": "RAML 1.0"
         }
       }
     },
@@ -125,17 +125,17 @@
         "resolved-link": {
           "#7": "amf://id#7"
         },
-        "type-property-lexical-info": {
-          "#7": "[(3,0)-(3,4)]"
-        },
         "lexical": {
           "#7": "[(3,0)-(6,14)]"
         },
-        "source-vendor": {
-          "#7": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#7": "[(3,0)-(3,4)]"
         },
         "resolved-link-target": {
           "#7": "amf://id#2"
+        },
+        "source-vendor": {
+          "#7": "RAML 1.0"
         }
       }
     },
@@ -291,14 +291,14 @@
       ],
       "shacl:name": "type",
       "smaps": {
-        "source-vendor": {
-          "#2": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#2": "[(3,0)-(3,4)]"
         },
         "lexical": {
           "#2": "[(3,0)-(6,14)]"
         },
-        "type-property-lexical-info": {
-          "#2": "[(3,0)-(3,4)]"
+        "source-vendor": {
+          "#2": "RAML 1.0"
         }
       }
     }

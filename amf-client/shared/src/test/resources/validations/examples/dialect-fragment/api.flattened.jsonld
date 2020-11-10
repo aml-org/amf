@@ -43,11 +43,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api/source-map/lexical/element_2"
@@ -57,6 +52,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -91,11 +91,6 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,0)]"
@@ -109,6 +104,11 @@
       "@id": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(13,42)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/examples/dialect-fragment/api.raml#/web-api/end-points/%2Ftest/get/200",

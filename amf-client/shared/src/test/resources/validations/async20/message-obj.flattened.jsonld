@@ -65,11 +65,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/source-map/lexical/element_5"
@@ -88,6 +83,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/source-map/lexical/element_4"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -138,11 +138,6 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "ASYNC 2.0"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/source-map/lexical/element_5",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#license",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(10,0)]"
@@ -171,6 +166,11 @@
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/source-map/lexical/element_4",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(6,0)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "ASYNC 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/web-api/license/source-map/lexical/element_2",

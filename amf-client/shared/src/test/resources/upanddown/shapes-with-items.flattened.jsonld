@@ -116,11 +116,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/source-map/lexical/element_10"
@@ -154,6 +149,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/source-map/lexical/element_9"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -243,11 +243,6 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/source-map/lexical/element_10",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#license",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,4)-(15,5)]"
@@ -301,6 +296,11 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/source-map/lexical/element_9",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#termsOfService",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(7,48)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/my.api.com%2Fv1/source-map/host-lexical/element_0",

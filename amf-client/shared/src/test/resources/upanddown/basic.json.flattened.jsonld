@@ -50,11 +50,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api/source-map/lexical/element_7"
@@ -80,6 +75,11 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api/source-map/lexical/element_6"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api/source-map/source-vendor/element_0"
+        }
       ]
     },
     {
@@ -102,11 +102,6 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api/api.example.com%2Fpath/source-map/base-path-lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api/source-map/lexical/element_7",
@@ -147,6 +142,11 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api/source-map/lexical/element_6",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#contentType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(16,3)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.json#/web-api/api.example.com%2Fpath/source-map/host-lexical/element_0",

@@ -50,17 +50,17 @@
 "@type": [
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
-"http://a.ml/vocabularies/document-source-maps#source-vendor": [
-{
-"@id": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/source-map/source-vendor/element_0"
-}
-],
 "http://a.ml/vocabularies/document-source-maps#lexical": [
 {
 "@id": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/source-map/lexical/element_1"
 },
 {
 "@id": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/source-map/lexical/element_0"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#source-vendor": [
+{
+"@id": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/source-map/source-vendor/element_0"
 }
 ]
 },
@@ -140,11 +140,6 @@
 ]
 },
 {
-"@id": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/source-map/source-vendor/element_0",
-"http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/references/lib/lib.json",
-"http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
-},
-{
 "@id": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/source-map/lexical/element_1",
 "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/references/lib/lib.json",
 "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(18,0)]"
@@ -153,6 +148,11 @@
 "@id": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/source-map/lexical/element_0",
 "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#usage",
 "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,50)]"
+},
+{
+"@id": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/source-map/source-vendor/element_0",
+"http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/references/lib/lib.json",
+"http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
 },
 {
 "@id": "file://amf-client/shared/src/test/resources/references/lib/lib.json#/declarations/types/ObjectType/property/objProp1/scalar/objProp1",

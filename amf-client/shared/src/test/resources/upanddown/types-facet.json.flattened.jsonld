@@ -20,11 +20,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api/source-map/lexical/element_2"
@@ -35,12 +30,12 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api/source-map/lexical/element_1"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api/source-map/source-vendor/element_0"
+        }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api/source-map/lexical/element_2",
@@ -56,6 +51,11 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(60,1)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/types-facet.json",

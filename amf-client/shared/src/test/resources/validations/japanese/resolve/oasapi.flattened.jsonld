@@ -85,11 +85,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "amf://id#28/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "amf://id#28/source-map/lexical/element_3"
@@ -102,6 +97,11 @@
         },
         {
           "@id": "amf://id#28/source-map/lexical/element_2"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "amf://id#28/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -198,11 +198,6 @@
       ]
     },
     {
-      "@id": "amf://id#28/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#28",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
-    },
-    {
       "@id": "amf://id#28/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,18)]"
@@ -221,6 +216,11 @@
       "@id": "amf://id#28/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "amf://id#28",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(99,1)]"
+    },
+    {
+      "@id": "amf://id#28/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#28",
+      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "amf://id#31",
