@@ -5,7 +5,8 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.webapi.models.{DocumentedElement, Tag, WebApi}
+import amf.plugins.domain.webapi.models.api.Api
+import amf.plugins.domain.webapi.models.{DocumentedElement, Tag}
 
 class MandatoryDocumentationTitle()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
 
@@ -19,9 +20,9 @@ class MandatoryDocumentationTitle()(override implicit val errorHandler: ErrorHan
       case other  => other.documentations.filter(x => x != null).foreach(generateDocumentationTitle)
     }
     model match {
-      case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        val webApi = doc.encodes.asInstanceOf[WebApi]
-        ensureWebApiTitle(webApi)
+      case doc: Document if doc.encodes.isInstanceOf[Api] =>
+        val webApi = doc.encodes.asInstanceOf[Api]
+        ensureBaseApiTitle(webApi)
         model
       case _ => model
     }
@@ -61,11 +62,11 @@ class MandatoryDocumentationTitle()(override implicit val errorHandler: ErrorHan
     }
   }
 
-  private def ensureWebApiTitle(api: WebApi) = {
+  private def ensureBaseApiTitle(api: Api) = {
     if (missingTitle(api)) {
       api.withName("generated")
     }
   }
 
-  private def missingTitle(webApi: WebApi): Boolean = webApi.name.option().isEmpty
+  private def missingTitle(api: Api): Boolean = api.name.option().isEmpty
 }

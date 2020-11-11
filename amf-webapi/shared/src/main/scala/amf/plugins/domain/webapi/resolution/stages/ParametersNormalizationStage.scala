@@ -8,7 +8,8 @@ import amf.core.model.domain.AmfArray
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.parser.spec.domain.Parameters
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel, ServerModel}
-import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, WebApi}
+import amf.plugins.domain.webapi.models.api.Api
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 
 /**
   * Place parameter models in the right locations according to the RAML/OpenAPI specs and our own
@@ -20,14 +21,14 @@ abstract class ParametersNormalizationStage(profile: ProfileName)(override impli
     extends ResolutionStage() {
 
   override def resolve[T <: BaseUnit](model: T): T = model match {
-    case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-      val webApi = doc.encodes.asInstanceOf[WebApi]
-      resolve(webApi)
+    case doc: Document if doc.encodes.isInstanceOf[Api] =>
+      val api = doc.encodes.asInstanceOf[Api]
+      resolve(api)
       doc.asInstanceOf[T]
     case _ => model
   }
 
-  protected def resolve(webApi: WebApi): WebApi = webApi
+  protected def resolve(api: Api): Api = api
 
   protected def pushParamsToEndpointOperations(endpoint: EndPoint, finalParams: Parameters) = {
     endpoint.operations.foreach { op =>
@@ -59,12 +60,12 @@ class OpenApiParametersNormalizationStage(override implicit val errorHandler: Er
     * In OpenAPI we just push the endpoint parameters to the operation level, overwriting the any endpoint parameter
     * with the new definition at the operation level
     *
-    * @param webApi WebApi in
-    * @return webApi WebApi out
+    * @param api WebApi in
+    * @return api WebApi out
     */
-  override protected def resolve(webApi: WebApi): WebApi = {
+  override protected def resolve(api: Api): Api = {
     // collect endpoint path parameters
-    webApi.endPoints.foreach { endpoint =>
+    api.endPoints.foreach { endpoint =>
       val finalParams = Parameters.classified(endpoint.path.value(), endpoint.parameters)
       // collect operation query parameters
       if (finalParams.nonEmpty && endpoint.operations.nonEmpty) {
@@ -72,7 +73,7 @@ class OpenApiParametersNormalizationStage(override implicit val errorHandler: Er
         pushParamsToEndpointOperations(endpoint, finalParams)
       }
     }
-    webApi
+    api
   }
 }
 
@@ -83,23 +84,23 @@ class AmfParametersNormalizationStage(override implicit val errorHandler: ErrorH
     * In AMF we push all the parameters at the operation level.
     * Parameter references should be already resolved in previous steps.
     *
-    * @param webApi WebApi in
-    * @return webApi WebApi out
+    * @param api BaseApi in
+    * @return api BaseApi out
     */
-  override protected def resolve(webApi: WebApi): WebApi = {
+  override protected def resolve(api: Api): Api = {
     // collect endpoint path parameters
-    webApi.endPoints.foreach { endpoint =>
-      val finalParams = Parameters(path = removeParamsFromMadeUpServer(webApi))
+    api.endPoints.foreach { endpoint =>
+      val finalParams = Parameters(path = removeParamsFromMadeUpServer(api))
         .merge(Parameters.classified(endpoint.path.value(), endpoint.parameters))
       endpoint.fields.removeField(EndPointModel.Parameters)
       // collect operation query parameters
       if (finalParams.nonEmpty) pushParamsToEndpointOperations(endpoint, finalParams)
     }
-    webApi
+    api
   }
 
-  private def removeParamsFromMadeUpServer(webApi: WebApi): Seq[Parameter] = {
-    val server = webApi.servers.find(_.annotations.find(classOf[SynthesizedField]).isDefined)
+  private def removeParamsFromMadeUpServer(api: Api): Seq[Parameter] = {
+    val server = api.servers.find(_.annotations.find(classOf[SynthesizedField]).isDefined)
 
     server
       .map { s =>
@@ -121,12 +122,12 @@ class Raml10ParametersNormalizationStage(override implicit val errorHandler: Err
     * - operation for the  query, path and header parameters
     * Since parameters can be at any level due to the source of the model being an OpenAPI document
     *
-    * @param webApi WebApi in
-    * @return webApi WebApi out
+    * @param baseApi Api in
+    * @return baseApi Api out
     */
-  override protected def resolve(webApi: WebApi): WebApi = {
+  override protected def resolve(baseApi: Api): Api = {
     // collect endpoint path parameters
-    webApi.endPoints.foreach { endpoint =>
+    baseApi.endPoints.foreach { endpoint =>
       val endpointParameters = endpoint.parameters
 
       // we filter path parameters and the remaining parameters
@@ -140,6 +141,6 @@ class Raml10ParametersNormalizationStage(override implicit val errorHandler: Err
         pushParamsToEndpointOperations(endpoint, finalParams)
       }
     }
-    webApi
+    baseApi
   }
 }

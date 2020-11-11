@@ -6,7 +6,8 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ExampleTracking}
 import amf.plugins.domain.webapi.metamodel.ResponseModel
-import amf.plugins.domain.webapi.models.{Payload, WebApi}
+import amf.plugins.domain.webapi.models.api.Api
+import amf.plugins.domain.webapi.models.Payload
 import amf.validations.ResolutionSideValidations.{ExamplesWithInvalidMimeType, ExamplesWithNoSchemaDefined}
 
 /** Apply response examples to payloads schemas matching by media type
@@ -16,12 +17,12 @@ import amf.validations.ResolutionSideValidations.{ExamplesWithInvalidMimeType, E
   */
 class ResponseExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
   override def resolve[T <: BaseUnit](model: T): T = model match {
-    case d: Document if d.encodes.isInstanceOf[WebApi] =>
-      d.withEncodes(resolveWebApi(d.encodes.asInstanceOf[WebApi])).asInstanceOf[T]
+    case d: Document if d.encodes.isInstanceOf[Api] =>
+      d.withEncodes(resolveApi(d.encodes.asInstanceOf[Api])).asInstanceOf[T]
     case _ => model
   }
 
-  def resolveWebApi(webApi: WebApi): WebApi = {
+  def resolveApi(webApi: Api): Api = {
     val allResponses = webApi.endPoints.flatMap(e => e.operations).flatMap(o => o.responses)
 
     allResponses.zipWithIndex.foreach {

@@ -9,10 +9,11 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, YMapEnt
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncServerBindingsParser
 import amf.plugins.document.webapi.parser.spec.domain.{OasLikeSecurityRequirementParser, OasLikeServerParser}
 import amf.plugins.domain.webapi.metamodel.ServerModel
-import amf.plugins.domain.webapi.models.{Server, WebApi}
+import amf.plugins.domain.webapi.models.api.AsyncApi
+import amf.plugins.domain.webapi.models.Server
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-case class AsyncServersParser(map: YMap, api: WebApi)(implicit val ctx: AsyncWebApiContext) {
+case class AsyncServersParser(map: YMap, api: AsyncApi)(implicit val ctx: AsyncWebApiContext) {
 
   def parse(): Seq[Server] = {
     map.entries.map { entry =>

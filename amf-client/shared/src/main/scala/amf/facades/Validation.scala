@@ -14,7 +14,7 @@ import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.domain.webapi.WebAPIDomainPlugin
+import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.plugins.features.validation.custom.model.ValidationDialectText
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import amf.plugins.features.validation.CoreValidations
@@ -48,7 +48,7 @@ class Validation(platform: Platform) {
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
+      amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
     }
   }

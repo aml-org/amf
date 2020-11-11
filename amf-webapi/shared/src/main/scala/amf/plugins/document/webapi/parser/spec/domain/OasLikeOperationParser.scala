@@ -17,7 +17,8 @@ import amf.plugins.document.webapi.parser.spec.oas.{
   Oas30RequestParser
 }
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
-import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
+import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Operation, Request, Response}
 import amf.validations.ParserSideValidations.{DuplicatedOperationId, InvalidStatusCode}
 import org.yaml.model._

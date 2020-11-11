@@ -1,4 +1,4 @@
-package amf.plugins.domain.webapi.metamodel
+package amf.plugins.domain.webapi.metamodel.api
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
@@ -7,13 +7,13 @@ import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularie
 import amf.core.vocabulary.Namespace._
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
+import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.security.SecurityRequirementModel
-import amf.plugins.domain.webapi.models.WebApi
 
 /**
   * Web Api metamodel
   */
-object WebApiModel extends DomainElementModel with NameFieldSchema with DescriptionField with TagsModel {
+trait ApiModel extends DomainElementModel with NameFieldSchema with DescriptionField with TagsModel {
 
   val Servers =
     Field(Array(ServerModel),
@@ -73,7 +73,7 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
   )
 
   override val `type`
-    : List[ValueType] = ApiContract + "WebAPI" :: Document + "RootDomainElement" :: DomainElementModel.`type`
+    : List[ValueType] = ApiContract + "API" :: Document + "RootDomainElement" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
     List(
@@ -94,11 +94,14 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
       Tags
     ) ++ DomainElementModel.fields
 
-  override def modelInstance = WebApi()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiContract,
-    "WebAPI",
-    "Top level element describing a HTTP API"
+    "API",
+    "Top level element describing any kind of API"
   )
+}
+
+object BaseApiModel extends ApiModel {
+  override def modelInstance = throw new Exception("ApiModel is an abstract class")
 }
