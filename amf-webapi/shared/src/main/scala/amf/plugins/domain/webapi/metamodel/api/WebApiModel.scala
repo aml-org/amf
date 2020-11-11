@@ -8,7 +8,7 @@ import amf.plugins.domain.webapi.models.api.WebApi
 
 object WebApiModel extends ApiModel {
 
-  override val `type`: List[ValueType] = ApiContract + "WebAPI" :: super.`type`
+  override val `type`: List[ValueType] = ApiContract + "WebAPI" :: BaseApiModel.`type`
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiContract,
