@@ -8,6 +8,7 @@ import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ExampleTracking}
 import amf.plugins.domain.webapi.models._
 import amf._
+import amf.plugins.domain.webapi.models.api.{Api, WebApi}
 
 /**
   * Propagate examples defined in parameters and payloads onto their corresponding shape so they are validated
@@ -30,8 +31,8 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
 
   def resolveExamples(model: BaseUnit): BaseUnit = {
     model match {
-      case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        val webApiContainers   = searchPayloadAndParams(doc.encodes.asInstanceOf[WebApi])
+      case doc: Document if doc.encodes.isInstanceOf[Api] =>
+        val webApiContainers   = searchPayloadAndParams(doc.encodes.asInstanceOf[Api])
         val declaredContainers = searchDeclarations(doc)
         (webApiContainers ++ declaredContainers).foreach(setExamplesInSchema)
       case _ =>
@@ -46,8 +47,8 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
       case res: Response    => res.payloads
     }.flatten
 
-  def searchPayloadAndParams(webApi: WebApi): Seq[SchemaContainerWithId] = {
-    webApi.endPoints.flatMap { endpoint =>
+  def searchPayloadAndParams(baseApi: Api): Seq[SchemaContainerWithId] = {
+    baseApi.endPoints.flatMap { endpoint =>
       val paramSchemas    = endpoint.parameters.flatMap(_.payloads)
       val endpointSchemas = traverseEndpoint(endpoint)
       paramSchemas ++ endpointSchemas ++ endpoint.parameters

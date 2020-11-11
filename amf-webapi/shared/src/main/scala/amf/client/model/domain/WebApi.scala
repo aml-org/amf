@@ -3,7 +3,7 @@ package amf.client.model.domain
 import amf.client.convert.WebApiClientConverters._
 import amf.client.model.StrField
 import amf.core.remote.Vendor
-import amf.plugins.domain.webapi.models.{WebApi => InternalWebApi}
+import amf.plugins.domain.webapi.models.api.{WebApi => InternalWebApi}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

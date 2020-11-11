@@ -3,11 +3,11 @@ package amf.plugins.domain.webapi.resolution.stages
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfElement
-import amf.core.parser.FieldEntry
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncKeyCriteria, CustomMerge, JsonMergePatch}
 import amf.plugins.domain.webapi.metamodel.{AbstractModel, MessageModel, OperationModel}
-import amf.plugins.domain.webapi.models.{Message, Operation, WebApi}
+import amf.plugins.domain.webapi.models.api.Api
+import amf.plugins.domain.webapi.models.{Message, Operation}
 
 class JsonMergePatchStage(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
 
@@ -17,14 +17,14 @@ class JsonMergePatchStage(override implicit val errorHandler: ErrorHandler) exte
                                            Seq(CustomMessageExamplesMerge))
 
   override def resolve[T <: BaseUnit](model: T): T = model match {
-    case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-      val webApi = doc.encodes.asInstanceOf[WebApi]
+    case doc: Document if doc.encodes.isInstanceOf[Api] =>
+      val webApi = doc.encodes.asInstanceOf[Api]
       resolve(webApi)
       doc.asInstanceOf[T]
     case _ => model
   }
 
-  private def resolve(webApi: WebApi): Unit = {
+  private def resolve(webApi: Api): Unit = {
     val operations = webApi.endPoints.flatMap(_.operations)
     mergeOperations(operations)
     val messages = operations.flatMap(getMessages)

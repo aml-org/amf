@@ -8,7 +8,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys}
@@ -26,10 +26,12 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import amf.plugins.domain.webapi.metamodel.ResponseModel
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
-import amf.plugins.domain.webapi.metamodel.{ParameterModel, ResponseModel, WebApiModel}
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations._
