@@ -7,6 +7,9 @@ import org.yaml.model.{YMap, YNode}
 
 case class WebApi(fields: Fields, annotations: Annotations) extends Api(fields: Fields, annotations: Annotations) {
   override def meta: Obj = WebApiModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "#/web-api"
 }
 
 object WebApi {

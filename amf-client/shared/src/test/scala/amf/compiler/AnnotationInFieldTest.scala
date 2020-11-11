@@ -8,7 +8,8 @@ import amf.core.parser.{Annotations, Position}
 import amf.core.remote.{OasYamlHint, RamlYamlHint}
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.templates.ResourceType
-import amf.plugins.domain.webapi.models.{Parameter, Response, WebApi}
+import amf.plugins.domain.webapi.models.{Parameter, Response}
+import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.AsyncFunSuite
 import amf.core.parser.Range
 import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape

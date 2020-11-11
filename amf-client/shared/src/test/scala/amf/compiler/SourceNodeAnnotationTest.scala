@@ -6,7 +6,8 @@ import amf.core.model.domain.{AmfArray, AmfObject, Shape}
 import amf.core.parser.{Annotations, Range => PositionRange}
 import amf.core.remote.{OasJsonHint, OasYamlHint, RamlYamlHint}
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
-import amf.plugins.domain.webapi.models.{Parameter, Response, WebApi}
+import amf.plugins.domain.webapi.models.{Parameter, Response}
+import amf.plugins.domain.webapi.models.api.WebApi
 import org.mulesoft.lexer.InputRange
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 

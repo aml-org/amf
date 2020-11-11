@@ -2,7 +2,6 @@ package amf.iterator
 
 import amf.compiler.CompilerTestBuilder
 import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.traversal.iterator.{AmfElementStrategy, DomainElementStrategy}
 import amf.core.metamodel.domain.common.DescriptionField
 import amf.core.model.document.Document
 import amf.core.model.document.FieldsFilter.Local
@@ -10,7 +9,9 @@ import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{Annotations, Fields}
 import amf.core.remote.RamlYamlHint
-import amf.plugins.domain.webapi.models.{Parameter, WebApi}
+import amf.core.traversal.iterator.{AmfElementStrategy, DomainElementStrategy}
+import amf.plugins.domain.webapi.models.Parameter
+import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext

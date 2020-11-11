@@ -13,6 +13,8 @@ AMF Model Documentation
 * [ApiKeySettings](#apikeysettings)
 * [ArrayNode](#arraynode)
 * [ArrayShape](#arrayshape)
+* [AsyncApi](#asyncapi)
+* [BaseApi](#baseapi)
 * [BaseUnit](#baseunit)
 * [Callback](#callback)
 * [ChannelBinding](#channelbinding)
@@ -319,6 +321,50 @@ Shape that contains a nested collection of data shapes
  | raw | string | Raw textual information that cannot be processed for the current model semantics. | http://a.ml/vocabularies/document#raw |
  | reference-id | url | Internal identifier for an inlined fragment | http://a.ml/vocabularies/document#reference-id |
  | location | string | Location of an inlined fragment | http://a.ml/vocabularies/document#location |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## AsyncApi
+Top level element describing a asynchronous API
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
+ | identifier | string | The identifier property represents any kind of identifier, such as ISBNs, GTIN codes, UUIDs, etc. | http://a.ml/vocabularies/core#identifier |
+ | server | [[Server](#server)] | Server information | http://a.ml/vocabularies/apiContract#server |
+ | accepts | [string] | Media-types accepted in a API request | http://a.ml/vocabularies/apiContract#accepts |
+ | contentType | [string] | Media types returned by a API response | http://a.ml/vocabularies/apiContract#contentType |
+ | scheme | [string] | URI scheme for the API protocol | http://a.ml/vocabularies/apiContract#scheme |
+ | version | string | Version of the API | http://a.ml/vocabularies/core#version |
+ | termsOfService | string | Terms and conditions when using the API | http://a.ml/vocabularies/core#termsOfService |
+ | provider | [Organization](#organization) | Organization providing some kind of asset or service | http://a.ml/vocabularies/core#provider |
+ | license | [License](#license) | License for the API | http://a.ml/vocabularies/core#license |
+ | documentation | [[CreativeWork](#creativework)] | Documentation associated to the API | http://a.ml/vocabularies/core#documentation |
+ | endpoint | [[EndPoint](#endpoint)] | End points defined in the API | http://a.ml/vocabularies/apiContract#endpoint |
+ | security | [[SecurityRequirement](#securityrequirement)] | Textual indication of the kind of security scheme used | http://a.ml/vocabularies/security#security |
+ | tag | [[Tag](#tag)] | Additionally custom tagged information | http://a.ml/vocabularies/apiContract#tag |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## BaseApi
+Top level element describing any kind of API
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
+ | identifier | string | The identifier property represents any kind of identifier, such as ISBNs, GTIN codes, UUIDs, etc. | http://a.ml/vocabularies/core#identifier |
+ | server | [[Server](#server)] | Server information | http://a.ml/vocabularies/apiContract#server |
+ | accepts | [string] | Media-types accepted in a API request | http://a.ml/vocabularies/apiContract#accepts |
+ | contentType | [string] | Media types returned by a API response | http://a.ml/vocabularies/apiContract#contentType |
+ | scheme | [string] | URI scheme for the API protocol | http://a.ml/vocabularies/apiContract#scheme |
+ | version | string | Version of the API | http://a.ml/vocabularies/core#version |
+ | termsOfService | string | Terms and conditions when using the API | http://a.ml/vocabularies/core#termsOfService |
+ | provider | [Organization](#organization) | Organization providing some kind of asset or service | http://a.ml/vocabularies/core#provider |
+ | license | [License](#license) | License for the API | http://a.ml/vocabularies/core#license |
+ | documentation | [[CreativeWork](#creativework)] | Documentation associated to the API | http://a.ml/vocabularies/core#documentation |
+ | endpoint | [[EndPoint](#endpoint)] | End points defined in the API | http://a.ml/vocabularies/apiContract#endpoint |
+ | security | [[SecurityRequirement](#securityrequirement)] | Textual indication of the kind of security scheme used | http://a.ml/vocabularies/security#security |
+ | tag | [[Tag](#tag)] | Additionally custom tagged information | http://a.ml/vocabularies/apiContract#tag |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## BaseUnit

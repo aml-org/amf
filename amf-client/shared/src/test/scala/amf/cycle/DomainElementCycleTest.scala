@@ -12,6 +12,7 @@ import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.parser.spec.common.emitters.WebApiDomainElementEmitter
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.api.{Api, WebApi}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
 import org.yaml.model.{YDocument, YNode}
@@ -86,9 +87,9 @@ object CommonExtractors {
     case _ => None
   }
 
-  val webapi: BaseUnit => Option[WebApi] = {
+  val webapi: BaseUnit => Option[Api] = {
     case e: EncodesModel =>
-      Some(e.encodes.asInstanceOf[WebApi])
+      Some(e.encodes.asInstanceOf[Api])
     case _ => None
   }
 
