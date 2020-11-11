@@ -164,7 +164,7 @@ object AMFRawValidations {
         openApiErrorMessage = "Description must be strings"
       ),
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
+        owlClass = apiContract("API"),
         owlProperty = core("name"),
         constraint = minCount,
         value = "1",
@@ -172,7 +172,7 @@ object AMFRawValidations {
         openApiErrorMessage = "Info object 'title' must be a single value"
       ),
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
+        owlClass = apiContract("API"),
         owlProperty = apiContract("scheme"),
         constraint = dataType,
         value = string,
@@ -180,7 +180,7 @@ object AMFRawValidations {
         openApiErrorMessage = "Swagger object 'schemes' must be a string"
       ),
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
+        owlClass = apiContract("API"),
         owlProperty = apiContract("scheme"),
         constraint = dataType,
         value = string,
@@ -188,7 +188,7 @@ object AMFRawValidations {
         openApiErrorMessage = "Swagger object 'schemes' must be a string"
       ),
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
+        owlClass = apiContract("API"),
         owlProperty = apiContract("accepts"),
         constraint = dataType,
         value = string,
@@ -196,7 +196,7 @@ object AMFRawValidations {
         openApiErrorMessage = "Field 'consumes' must contain strings"
       ),
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
+        owlClass = apiContract("API"),
         owlProperty = apiContract("accepts"),
         constraint = sh("pattern"),
         value = "^(([-\\w]+|[*]{1})\\/([-+.\\w]+|[*]{1}))(\\s*;\\s*\\w+=[-+\\w.]+)*$",
@@ -204,7 +204,7 @@ object AMFRawValidations {
         openApiErrorMessage = "Field 'produces' must be valid"
       ),
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
+        owlClass = apiContract("API"),
         owlProperty = core("mediaType"),
         constraint = dataType,
         value = string,
@@ -212,7 +212,7 @@ object AMFRawValidations {
         openApiErrorMessage = "Field 'produces' must contain strings"
       ),
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
+        owlClass = apiContract("API"),
         owlProperty = core("version"),
         constraint = dataType,
         value = string,
@@ -220,7 +220,7 @@ object AMFRawValidations {
         openApiErrorMessage = "Info object 'version' must be string"
       ),
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
+        owlClass = apiContract("API"),
         owlProperty = core("termsOfService"),
         constraint = dataType,
         value = string,
@@ -700,7 +700,7 @@ object AMFRawValidations {
   trait RamlValidations extends RamlAndOasValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
+        owlClass = apiContract("API"),
         owlProperty = core("name"),
         constraint = sh("minLength"),
         value = "1",
@@ -1053,7 +1053,7 @@ object AMFRawValidations {
   object Async20Validations extends AmfProfileValidations with GenericValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
-        owlClass = apiContract("WebAPI"),
+        owlClass = apiContract("API"),
         owlProperty = core("version"),
         constraint = minCount,
         value = "1",
@@ -1345,8 +1345,8 @@ object AMFRawValidations {
       emailValidation(core("Organization"), core("email")),
       urlValidation(core("Organization"), core("url")),
       urlValidation(core("License"), core("url")),
-      urlValidation(apiContract("WebAPI"), core("termsOfService")),
-      uriValidation(apiContract("WebAPI"), core("identifier")),
+      urlValidation(apiContract("API"), core("termsOfService")),
+      uriValidation(apiContract("API"), core("identifier")),
       urlValidation(core("CreativeWork"), core("url")),
       urlValidation(security("OAuth2Flow"), security("authorizationUri")),
       urlValidation(security("OAuth2Flow"), security("accessTokenUri")),

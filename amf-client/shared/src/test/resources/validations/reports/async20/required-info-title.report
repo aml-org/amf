@@ -1,4 +1,14 @@
 Model: file://amf-client/shared/src/test/resources/validations/async20/validations/required-info-title.yaml
 Profile: ASYNC 2.0
-Conforms? true
-Number of results: 0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#API-name-minCount
+  Message: Info object 'title' must be a single value
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/required-info-title.yaml#/async-api
+  Property: http://a.ml/vocabularies/core#name
+  Position: Some(LexicalInformation([(1,0)-(4,12)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/required-info-title.yaml
