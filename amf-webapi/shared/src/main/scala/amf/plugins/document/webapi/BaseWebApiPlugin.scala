@@ -21,7 +21,7 @@ import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
 import amf.plugins.document.webapi.references.WebApiReferenceHandler
 import amf.plugins.document.webapi.validation.WebApiValidations
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.domain.webapi.WebAPIDomainPlugin
+import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.validations.ResolutionSideValidations.UnsupportedPipeline
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -35,7 +35,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
   override def referenceHandler(eh: ErrorHandler) = new WebApiReferenceHandler(ID, this)
 
   override def dependencies(): Seq[AMFPlugin] = Seq(
-    WebAPIDomainPlugin,
+    APIDomainPlugin,
     DataShapesDomainPlugin,
     ExternalJsonYamlRefsPlugin
   )

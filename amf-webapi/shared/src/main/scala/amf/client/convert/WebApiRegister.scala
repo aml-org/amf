@@ -7,9 +7,10 @@ import amf.core.remote.Platform
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.model
 import amf.plugins.domain.{shapes, webapi}
-import amf.plugins.domain.webapi.WebAPIDomainPlugin
+import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.plugins.domain.webapi.metamodel.bindings._
 import amf.plugins.domain.webapi.metamodel.{CorrelationIdModel, IriTemplateMappingModel, TemplatedLinkModel, templates}
+import amf.plugins.domain.webapi.models.api.AsyncApi
 import amf.plugins.features.validation.CoreValidations
 import amf.validation.DialectValidations
 import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
@@ -112,8 +113,11 @@ object WebApiRegister {
     platform.registerWrapper(webapi.metamodel.security.SettingsModel) {
       case s: webapi.models.security.Settings => new Settings(s)
     }
-    platform.registerWrapper(webapi.metamodel.WebApiModel) {
-      case s: webapi.models.WebApi => WebApi(s)
+    platform.registerWrapper(webapi.metamodel.api.WebApiModel) {
+      case s: webapi.models.api.WebApi => WebApi(s)
+    }
+    platform.registerWrapper(webapi.metamodel.api.AsyncApiModel) {
+      case s: webapi.models.api.AsyncApi => AsyncApi(s)
     }
     platform.registerWrapper(webapi.metamodel.templates.TraitModel) {
       case s: webapi.models.templates.Trait => Trait(s)
@@ -245,7 +249,7 @@ object WebApiRegister {
     platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
     platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
 
-    amf.Core.registerPlugin(WebAPIDomainPlugin)
+    amf.Core.registerPlugin(APIDomainPlugin)
   }
 
 }

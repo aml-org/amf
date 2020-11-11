@@ -3,8 +3,8 @@ package amf.plugins.document.webapi.parser.spec.oas
 import amf.core.Root
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
-import amf.plugins.domain.webapi.metamodel.WebApiModel
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
+import amf.plugins.domain.webapi.models.api.WebApi
 import org.yaml.model.YMap
 
 case class Oas2DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)

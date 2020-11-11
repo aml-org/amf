@@ -1,21 +1,21 @@
-package amf.plugins.domain.webapi.models
+package amf.plugins.domain.webapi.models.api
 
 import amf.core.annotations.{SourceVendor, SynthesizedField}
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.core.remote.Vendor
 import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.webapi.metamodel.WebApiModel
-import amf.plugins.domain.webapi.metamodel.WebApiModel.{License => WebApiLicense, _}
+import amf.plugins.domain.webapi.metamodel.api.BaseApiModel.{License => WebApiLicense, _}
+import amf.plugins.domain.webapi.models.{DocumentedElement, EndPoint, License, Organization, Server, ServerContainer, Tag}
 import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import org.yaml.model.{YMap, YNode}
 
 /**
   * Web Api internal model
   */
-case class WebApi(fields: Fields, annotations: Annotations)
+abstract class Api(fields: Fields, annotations: Annotations)
     extends NamedDomainElement
     with ServerContainer
     with DocumentedElement {
@@ -51,7 +51,7 @@ case class WebApi(fields: Fields, annotations: Annotations)
 
   def withTags(tags: Seq[Tag]): this.type = setArray(Tags, tags)
 
-  override def removeServers(): Unit = fields.removeField(WebApiModel.Servers)
+  override def removeServers(): Unit = fields.removeField(Servers)
 
   def withEndPoint(path: String): EndPoint = {
     val result = EndPoint().withPath(path)
@@ -85,25 +85,12 @@ case class WebApi(fields: Fields, annotations: Annotations)
     result
   }
 
-  override def meta: Obj = WebApiModel
-
   // todo: should source vendor be in the base unit?
 
   def sourceVendor: Option[Vendor] = annotations.find(classOf[SourceVendor]).map(a => a.vendor)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "#/web-api"
+  override def componentId: String = "#/api"
 
   override def nameField: Field = Name
-}
-
-object WebApi {
-
-  def apply(): WebApi = apply(Annotations())
-
-  def apply(ast: YMap): WebApi = apply(Annotations(ast))
-
-  def apply(node: YNode): WebApi = apply(Annotations.valueNode(node))
-
-  def apply(annotations: Annotations): WebApi = WebApi(Fields(), annotations)
 }

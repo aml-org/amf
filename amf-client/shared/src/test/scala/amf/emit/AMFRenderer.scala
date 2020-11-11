@@ -10,7 +10,7 @@ import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.domain.webapi.WebAPIDomainPlugin
+import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -29,7 +29,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
+  amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
   /** Print ast to string. */

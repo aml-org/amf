@@ -12,14 +12,12 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.async.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
-import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.AsyncHeader
 import amf.plugins.document.webapi.parser.AsyncHeader.Async20Header
 import amf.plugins.document.webapi.parser.spec.AsyncWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.async.{AsyncApi20DocumentEmitter, AsyncApi20DocumentParser}
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{Async20EditingPipeline, Async20ResolutionPipeline}
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.Api
 import amf.{Async20Profile, AsyncProfile, ProfileName}
 import org.yaml.model.YDocument
 
@@ -96,7 +94,7 @@ object Async20Plugin extends AsyncPlugin {
   override def canParse(root: Root): Boolean = AsyncHeader(root).contains(Async20Header)
 
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case document: Document => document.encodes.isInstanceOf[WebApi]
+    case document: Document => document.encodes.isInstanceOf[Api]
     case module: Module =>
       module.declares exists {
         case _: DomainElement => false

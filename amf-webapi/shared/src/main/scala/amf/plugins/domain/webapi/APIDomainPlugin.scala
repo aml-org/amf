@@ -6,44 +6,22 @@ import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.webapi.annotations._
 import amf.plugins.domain.webapi.metamodel._
-import amf.plugins.domain.webapi.metamodel.bindings.{
-  Amqp091ChannelBindingModel,
-  Amqp091ChannelExchangeModel,
-  Amqp091MessageBindingModel,
-  Amqp091QueueModel,
-  ChannelBindingModel,
-  EmptyBindingModel,
-  HttpMessageBindingModel,
-  HttpOperationBindingModel,
-  KafkaMessageBindingModel,
-  KafkaOperationBindingModel,
-  MessageBindingModel,
-  MqttMessageBindingModel,
-  MqttOperationBindingModel,
-  MqttServerBindingModel,
-  MqttServerLastWillModel,
-  OperationBindingModel,
-  ServerBindingModel,
-  WebSocketsChannelBindingModel
-}
+import amf.plugins.domain.webapi.metamodel.api.{AsyncApiModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel.bindings.{Amqp091ChannelBindingModel, Amqp091ChannelExchangeModel, Amqp091MessageBindingModel, Amqp091QueueModel, ChannelBindingModel, EmptyBindingModel, HttpMessageBindingModel, HttpOperationBindingModel, KafkaMessageBindingModel, KafkaOperationBindingModel, MessageBindingModel, MqttMessageBindingModel, MqttOperationBindingModel, MqttServerBindingModel, MqttServerLastWillModel, OperationBindingModel, ServerBindingModel, WebSocketsChannelBindingModel}
 import amf.plugins.domain.webapi.metamodel.security._
-import amf.plugins.domain.webapi.metamodel.templates.{
-  ParametrizedResourceTypeModel,
-  ParametrizedTraitModel,
-  ResourceTypeModel,
-  TraitModel
-}
+import amf.plugins.domain.webapi.metamodel.templates.{ParametrizedResourceTypeModel, ParametrizedTraitModel, ResourceTypeModel, TraitModel}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object WebAPIDomainPlugin extends AMFDomainPlugin {
+object APIDomainPlugin extends AMFDomainPlugin {
 
-  override val ID = "WebAPI Domain"
+  override val ID = "API Domain"
 
   override def dependencies() = Seq(DataShapesDomainPlugin)
 
   override def modelEntities = Seq(
     WebApiModel,
+    AsyncApiModel,
     CreativeWorkModel,
     OrganizationModel,
     LicenseModel,

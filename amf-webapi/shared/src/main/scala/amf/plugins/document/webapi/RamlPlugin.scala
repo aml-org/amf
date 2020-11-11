@@ -1,8 +1,6 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.client.plugins.AMFDocumentPlugin
-import amf.core.{CompilerContext, Root}
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.errorhandling.ErrorHandler
@@ -19,6 +17,7 @@ import amf.core.parser.{
 import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
+import amf.core.{CompilerContext, Root}
 import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
 import amf.plugins.document.webapi.contexts.emitter.raml.{
   Raml08SpecEmitterContext,
@@ -39,7 +38,7 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   Raml10EditingPipeline,
   Raml10ResolutionPipeline
 }
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.{Api, WebApi}
 import amf.plugins.features.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
@@ -260,7 +259,7 @@ object Raml10Plugin extends RamlPlugin {
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
     case _: Overlay                           => true
     case _: Extension                         => true
-    case document: Document                   => document.encodes.isInstanceOf[WebApi]
+    case document: Document                   => document.encodes.isInstanceOf[Api]
     case _: Module                            => true
     case _: DocumentationItemFragment         => true
     case _: DataTypeFragment                  => true

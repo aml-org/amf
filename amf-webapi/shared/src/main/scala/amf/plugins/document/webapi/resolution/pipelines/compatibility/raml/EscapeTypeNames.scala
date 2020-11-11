@@ -6,13 +6,13 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, TypeName}
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.Api
 
 import scala.collection.mutable
 
 class EscapeTypeNames()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
   override def resolve[T <: BaseUnit](model: T): T = model match {
-    case d: Document if d.encodes.isInstanceOf[WebApi] =>
+    case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val replacedNames: mutable.Map[String, String] = mutable.Map.empty
 

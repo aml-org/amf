@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas3
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.Api
 
 class MandatoryDocumentationUrl()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
 
@@ -11,9 +11,9 @@ class MandatoryDocumentationUrl()(override implicit val errorHandler: ErrorHandl
 
   override def resolve[T <: BaseUnit](model: T): T = {
     model match {
-      case d: Document if d.encodes.isInstanceOf[WebApi] =>
+      case d: Document if d.encodes.isInstanceOf[Api] =>
         try {
-          ensureDocumentationUrl(d.encodes.asInstanceOf[WebApi])
+          ensureDocumentationUrl(d.encodes.asInstanceOf[Api])
         } catch {
           case _: Throwable => // ignore: we don't want this to break anything
         }
@@ -22,7 +22,7 @@ class MandatoryDocumentationUrl()(override implicit val errorHandler: ErrorHandl
     }
   }
 
-  private def ensureDocumentationUrl(api: WebApi): Unit = {
+  private def ensureDocumentationUrl(api: Api): Unit = {
     api.documentations.foreach { documentation =>
       if (documentation.url.isNullOrEmpty) {
         documentation.withUrl("http://")

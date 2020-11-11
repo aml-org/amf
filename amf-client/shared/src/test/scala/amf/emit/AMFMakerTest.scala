@@ -11,7 +11,7 @@ import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi._
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
-import amf.plugins.domain.webapi.WebAPIDomainPlugin
+import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
@@ -137,7 +137,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
 

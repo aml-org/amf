@@ -5,23 +5,24 @@ import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.DomainElement
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
+import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.models.security.SecurityRequirement
 
 class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
 
   override def resolve[T <: BaseUnit](model: T): T = {
     model match {
-      case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        resolveSecurity(doc.encodes.asInstanceOf[WebApi])
+      case doc: Document if doc.encodes.isInstanceOf[Api] =>
+        resolveSecurity(doc.encodes.asInstanceOf[Api])
       case _ =>
     }
     model.asInstanceOf[T]
   }
 
-  protected def resolveSecurity(api: WebApi): Unit = {
-    val rootSecurity = getAndRemove(api, WebApiModel.Security)
+  protected def resolveSecurity(api: Api): Unit = {
+    val rootSecurity = getAndRemove(api, BaseApiModel.Security)
 
     api.endPoints.foreach { endPoint =>
       val endPointSecurity = overrideWith(rootSecurity, getAndRemove(endPoint, EndPointModel.Security))

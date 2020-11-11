@@ -25,7 +25,9 @@ import amf.plugins.document.webapi.parser.spec.oas.{OasDeclaredParametersEmitter
 import amf.plugins.document.webapi.parser.spec.raml.emitters.{NamedPropertyTypeEmitter, RamlSecuritySchemesEmitters}
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel._
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}

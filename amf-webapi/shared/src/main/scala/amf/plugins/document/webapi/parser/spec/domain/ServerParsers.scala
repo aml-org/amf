@@ -8,11 +8,13 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, TemplateUri}
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.{RamlScalarNode, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
-import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
-import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
+import amf.plugins.domain.webapi.metamodel.ServerModel
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
+import amf.plugins.domain.webapi.models.api.{Api, WebApi}
+import amf.plugins.domain.webapi.models.{Parameter, Server}
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YType}
 
@@ -154,7 +156,7 @@ case class Oas3ServersParser(map: YMap, elem: DomainElement, field: Field)(impli
   override def parse(): Unit = if (ctx.syntax == Oas3Syntax) parseServers("servers")
 }
 
-case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: OasWebApiContext)
+case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: OasWebApiContext)
     extends OasServersParser(map, api, WebApiModel.Servers) {
   override def parse(): Unit = {
     if (baseUriExists(map)) {
