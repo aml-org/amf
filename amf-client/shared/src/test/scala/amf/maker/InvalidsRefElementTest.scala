@@ -7,7 +7,7 @@ import amf.core.remote.{OasJsonHint, OasYamlHint, RamlYamlHint}
 import amf.facades.Validation
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorResponse
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import org.scalatest.AsyncFunSuite

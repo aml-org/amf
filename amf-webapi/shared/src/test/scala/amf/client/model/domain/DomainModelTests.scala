@@ -398,7 +398,7 @@ class DomainModelTests extends FunSuite with Matchers {
     val servers        = Seq(new Server()._internal)
     val requirements   = Seq(new SecurityRequirement()._internal)
 
-    val webapi = new Api()
+    val webapi = new WebApi()
       .withName(s)
       .withDescription(s)
       .withIdentifier(s)

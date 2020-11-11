@@ -11,7 +11,7 @@ import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.{Raml08Plugin, Raml10Plugin}
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}

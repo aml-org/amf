@@ -12,6 +12,7 @@ import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.parser.spec.common.emitters.WebApiDomainElementEmitter
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
 import org.yaml.model.{YDocument, YNode}

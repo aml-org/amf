@@ -6,8 +6,9 @@ import amf.core.metamodel.Field
 import amf.core.model.document.Document
 import amf.core.model.domain.AmfObject
 import amf.core.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
-import amf.plugins.domain.shapes.models.DomainExtensions._
+import amf.plugins.domain.shapes.models.DomainExtensions.propertyShapeToPropertyShape
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
+import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.domain.webapi.models._
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
