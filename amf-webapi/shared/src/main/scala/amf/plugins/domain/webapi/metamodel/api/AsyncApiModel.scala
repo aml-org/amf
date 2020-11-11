@@ -7,7 +7,7 @@ import amf.plugins.domain.webapi.models.api.AsyncApi
 
 object AsyncApiModel extends ApiModel {
 
-  override val `type`: List[ValueType] = ApiContract + "AsyncAPI" :: super.`type`
+  override val `type`: List[ValueType] = ApiContract + "AsyncAPI" :: BaseApiModel.`type`
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiContract,

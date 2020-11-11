@@ -10,12 +10,12 @@ import amf.plugins.domain.{shapes, webapi}
 import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.plugins.domain.webapi.metamodel.bindings._
 import amf.plugins.domain.webapi.metamodel.{CorrelationIdModel, IriTemplateMappingModel, TemplatedLinkModel, templates}
-import amf.plugins.domain.webapi.models.api.AsyncApi
 import amf.plugins.features.validation.CoreValidations
 import amf.validation.DialectValidations
 import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
 
 /** Shared WebApi registrations. */
+// TODO: could be renamed to ApiRegister??
 object WebApiRegister {
 
   def register(platform: Platform): Unit = {

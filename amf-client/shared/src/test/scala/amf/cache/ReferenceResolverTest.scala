@@ -5,7 +5,7 @@ import amf.client.convert.CoreClientConverters._
 import amf.client.convert.NativeOps
 import amf.client.environment.DefaultEnvironment
 import amf.client.model.document.{Document, Module}
-import amf.client.model.domain.{NodeShape, WebApi}
+import amf.client.model.domain.{NodeShape, Api}
 import amf.client.parse.RamlParser
 import amf.client.reference.ReferenceResolver
 import amf.client.resolve.Raml10Resolver
@@ -156,7 +156,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         root
           .asInstanceOf[Document]
           .encodes
-          .asInstanceOf[WebApi]
+          .asInstanceOf[Api]
           .endPoints
           .asSeq
           .head
@@ -199,7 +199,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         root
           .asInstanceOf[Document]
           .encodes
-          .asInstanceOf[WebApi]
+          .asInstanceOf[Api]
           .endPoints
           .asSeq
           .head
