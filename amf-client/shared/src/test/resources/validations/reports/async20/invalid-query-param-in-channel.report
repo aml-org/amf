@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#uri-query-param
   Message: Query parameters must not be defined in uri, use bindings instead
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-query-param-in-channel.yaml#/web-api/end-points/%2Finvalid%3Ffoo%3D1
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-query-param-in-channel.yaml#/async-api/end-points/%2Finvalid%3Ffoo%3D1
   Property: http://a.ml/vocabularies/apiContract#path
   Position: Some(LexicalInformation([(20,2)-(20,16)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-query-param-in-channel.yaml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#uri-query-param
   Message: Query parameters must not be defined in uri, use bindings instead
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-query-param-in-channel.yaml#/web-api/end-points/%2Finvalid%3Fa%3D'a'%26b%3D'2'
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-query-param-in-channel.yaml#/async-api/end-points/%2Finvalid%3Fa%3D'a'%26b%3D'2'
   Property: http://a.ml/vocabularies/apiContract#path
   Position: Some(LexicalInformation([(26,2)-(26,22)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-query-param-in-channel.yaml

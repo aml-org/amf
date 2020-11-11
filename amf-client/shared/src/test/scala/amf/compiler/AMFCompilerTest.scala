@@ -10,7 +10,7 @@ import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
 import amf.facades.Validation
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.WebApi
 import amf.{RAMLStyle, RamlProfile}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}

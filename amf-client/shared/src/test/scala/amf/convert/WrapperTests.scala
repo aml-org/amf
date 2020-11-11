@@ -33,7 +33,7 @@ import amf.internal.environment.{Environment => InternalEnvironment}
 import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.Vocabularies
 import amf.plugins.document.webapi.parser.spec.common.emitters.WebApiDomainElementEmitter
-import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
 
@@ -665,7 +665,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                    |version: 32.0.7
     """.stripMargin
 
-    val buffer = LimitedStringBuffer(450)
+    val buffer = LimitedStringBuffer(600)
     for {
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseStringAsync(input).asFuture
@@ -965,7 +965,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   private def buildBasicApi() = {
-    val api: Api = new Api().withName("test swagger entry")
+    val api: Api = new WebApi().withName("test swagger entry")
 
     api.withEndPoint("/endpoint").withOperation("get").withResponse("200").withDescription("a descrip")
     new Document().withEncodes(api)
@@ -1512,7 +1512,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         doc._internal.withId("http://location.com/myfile")
         val shape = new ScalarShape().withName("scalarDeclared").withDataType(ns)
         doc.withDeclaredElement(shape)
-        val wa = new Api().withName("test")
+        val wa = new WebApi().withName("test")
         doc.withEncodes(wa)
         val annotationType =
           new CustomDomainProperty()
