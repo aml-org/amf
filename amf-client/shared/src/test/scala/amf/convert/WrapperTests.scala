@@ -658,6 +658,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
+
   test("Generate to writer and exit") {
     val input = s"""
                    |#%RAML 1.0
@@ -673,7 +674,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     } yield {
       e shouldBe a[LimitReachedException]
 
-      buffer.toString() should include("http://a.ml/vocabularies/document#RootDomainElement")
+      buffer.toString() should include("http://a.ml/vocabularies/apiContract#API")
     }
   }
 
