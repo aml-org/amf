@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "age": {
+      "$ref": "another-unspecified-version-schema-with-draft-7-facets.json"
+    }
+  },
+  "if": {
+    "$ref": "second-level-schema.json#/definitions/anotherMain"
+  }
+}

@@ -1,5 +1,6 @@
 package amf.cycle
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
@@ -10,6 +11,8 @@ import amf.core.unsafe.PlatformSecrets
 import amf.cycle.JsonSchemaTestEmitters._
 import amf.emit.AMFRenderer
 import amf.io.FileAssertionTest
+import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
+import amf.plugins.document.webapi.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaVersion, SchemaVersion}
@@ -124,9 +127,13 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
       SchemaReference,
       content
     )
-    val fragment = new JsonSchemaParser().parse(root, ParserContext(path, eh = UnhandledParserErrorHandler), ParsingOptions(), Some(from)).get
+    val options = ParsingOptions()
+    val fragment = new JsonSchemaParser().parse(root, getBogusParserCtx(path, options), options, Some(from)).get
     fragment
   }
+
+  def getBogusParserCtx(location: String, options: ParsingOptions): JsonSchemaWebApiContext =
+    new JsonSchemaWebApiContext(location, Seq(), ParserContext(eh = UnhandledParserErrorHandler), None, options, JSONSchemaDraft7SchemaVersion)
 }
 
 sealed trait SchemaEmitter {
