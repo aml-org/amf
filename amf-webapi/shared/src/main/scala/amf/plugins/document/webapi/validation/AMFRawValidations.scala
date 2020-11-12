@@ -132,6 +132,74 @@ object AMFRawValidations {
     openApiErrorMessage = "Schema/type information required for Parameter objects",
   )
 
+  // applying base api validations with specific WebAPI and AsyncAPI keys due to backwards compatibility
+  def baseApiValidations(key: String): List[AMFValidation] = List(
+    AMFValidation(
+      owlClass = apiContract(key),
+      owlProperty = core("name"),
+      constraint = minCount,
+      value = "1",
+      ramlErrorMessage = "API title is mandatory",
+      openApiErrorMessage = "Info object 'title' must be a single value"
+    ),
+    AMFValidation(
+      owlClass = apiContract(key),
+      owlProperty = apiContract("scheme"),
+      constraint = dataType,
+      value = string,
+      ramlErrorMessage = "API BaseUri scheme information must be a string",
+      openApiErrorMessage = "Swagger object 'schemes' must be a string"
+    ),
+    AMFValidation(
+      owlClass = apiContract(key),
+      owlProperty = apiContract("scheme"),
+      constraint = dataType,
+      value = string,
+      ramlErrorMessage = "API BaseUri scheme information must be a string",
+      openApiErrorMessage = "Swagger object 'schemes' must be a string"
+    ),
+    AMFValidation(
+      owlClass = apiContract(key),
+      owlProperty = apiContract("accepts"),
+      constraint = dataType,
+      value = string,
+      ramlErrorMessage = "Default media types must contain strings",
+      openApiErrorMessage = "Field 'consumes' must contain strings"
+    ),
+    AMFValidation(
+      owlClass = apiContract(key),
+      owlProperty = apiContract("accepts"),
+      constraint = sh("pattern"),
+      value = "^(([-\\w]+|[*]{1})\\/([-+.\\w]+|[*]{1}))(\\s*;\\s*\\w+=[-+\\w.]+)*$",
+      ramlErrorMessage = "Default media types must be valid",
+      openApiErrorMessage = "Field 'produces' must be valid"
+    ),
+    AMFValidation(
+      owlClass = apiContract(key),
+      owlProperty = core("mediaType"),
+      constraint = dataType,
+      value = string,
+      ramlErrorMessage = "Default media types must be string",
+      openApiErrorMessage = "Field 'produces' must contain strings"
+    ),
+    AMFValidation(
+      owlClass = apiContract(key),
+      owlProperty = core("version"),
+      constraint = dataType,
+      value = string,
+      ramlErrorMessage = "API version must be a string",
+      openApiErrorMessage = "Info object 'version' must be string"
+    ),
+    AMFValidation(
+      owlClass = apiContract(key),
+      owlProperty = core("termsOfService"),
+      constraint = dataType,
+      value = string,
+      ramlErrorMessage = "API terms of service must be a string",
+      openApiErrorMessage = "Info object 'termsOfService' must be string"
+    )
+  )
+
   trait ProfileValidations {
     def validations(): Seq[AMFValidation]
   }
@@ -162,70 +230,6 @@ object AMFRawValidations {
         value = string,
         ramlErrorMessage = "Descriptions must be strings",
         openApiErrorMessage = "Description must be strings"
-      ),
-      AMFValidation(
-        owlClass = apiContract("API"),
-        owlProperty = core("name"),
-        constraint = minCount,
-        value = "1",
-        ramlErrorMessage = "API title is mandatory",
-        openApiErrorMessage = "Info object 'title' must be a single value"
-      ),
-      AMFValidation(
-        owlClass = apiContract("API"),
-        owlProperty = apiContract("scheme"),
-        constraint = dataType,
-        value = string,
-        ramlErrorMessage = "API BaseUri scheme information must be a string",
-        openApiErrorMessage = "Swagger object 'schemes' must be a string"
-      ),
-      AMFValidation(
-        owlClass = apiContract("API"),
-        owlProperty = apiContract("scheme"),
-        constraint = dataType,
-        value = string,
-        ramlErrorMessage = "API BaseUri scheme information must be a string",
-        openApiErrorMessage = "Swagger object 'schemes' must be a string"
-      ),
-      AMFValidation(
-        owlClass = apiContract("API"),
-        owlProperty = apiContract("accepts"),
-        constraint = dataType,
-        value = string,
-        ramlErrorMessage = "Default media types must contain strings",
-        openApiErrorMessage = "Field 'consumes' must contain strings"
-      ),
-      AMFValidation(
-        owlClass = apiContract("API"),
-        owlProperty = apiContract("accepts"),
-        constraint = sh("pattern"),
-        value = "^(([-\\w]+|[*]{1})\\/([-+.\\w]+|[*]{1}))(\\s*;\\s*\\w+=[-+\\w.]+)*$",
-        ramlErrorMessage = "Default media types must be valid",
-        openApiErrorMessage = "Field 'produces' must be valid"
-      ),
-      AMFValidation(
-        owlClass = apiContract("API"),
-        owlProperty = core("mediaType"),
-        constraint = dataType,
-        value = string,
-        ramlErrorMessage = "Default media types must be string",
-        openApiErrorMessage = "Field 'produces' must contain strings"
-      ),
-      AMFValidation(
-        owlClass = apiContract("API"),
-        owlProperty = core("version"),
-        constraint = dataType,
-        value = string,
-        ramlErrorMessage = "API version must be a string",
-        openApiErrorMessage = "Info object 'version' must be string"
-      ),
-      AMFValidation(
-        owlClass = apiContract("API"),
-        owlProperty = core("termsOfService"),
-        constraint = dataType,
-        value = string,
-        ramlErrorMessage = "API terms of service must be a string",
-        openApiErrorMessage = "Info object 'termsOfService' must be string"
       ),
       AMFValidation(
         owlClass = core("Organization"),
@@ -657,7 +661,7 @@ object AMFRawValidations {
 
   object AmfValidations extends AmfProfileValidations
 
-  trait RamlAndOasValidations extends AmfProfileValidations {
+  trait WebApiValidations extends AmfProfileValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
         owlClass = apiContract(ParameterModel.doc.displayName),
@@ -692,15 +696,15 @@ object AMFRawValidations {
         value =
           "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|Api\\sKey|http|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|x-.+$"
       )
-    )
+    ) ++ baseApiValidations("WebAPI")
 
     override def validations(): Seq[AMFValidation] = result
   }
 
-  trait RamlValidations extends RamlAndOasValidations {
+  trait RamlValidations extends WebApiValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
-        owlClass = apiContract("API"),
+        owlClass = apiContract("WebAPI"),
         owlProperty = core("name"),
         constraint = sh("minLength"),
         value = "1",
@@ -917,7 +921,7 @@ object AMFRawValidations {
     override def validations(): Seq[AMFValidation] = result
   }
 
-  trait OasValidations extends RamlAndOasValidations with GenericValidations {
+  trait OasValidations extends WebApiValidations with GenericValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
         uri = amfParser("mandatory-api-version"),
@@ -1053,7 +1057,7 @@ object AMFRawValidations {
   object Async20Validations extends AmfProfileValidations with GenericValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
-        owlClass = apiContract("API"),
+        owlClass = apiContract("AsyncAPI"),
         owlProperty = core("version"),
         constraint = minCount,
         value = "1",
@@ -1345,8 +1349,8 @@ object AMFRawValidations {
       emailValidation(core("Organization"), core("email")),
       urlValidation(core("Organization"), core("url")),
       urlValidation(core("License"), core("url")),
-      urlValidation(apiContract("API"), core("termsOfService")),
-      uriValidation(apiContract("API"), core("identifier")),
+      urlValidation(apiContract("AsyncAPI"), core("termsOfService")),
+      uriValidation(apiContract("AsyncAPI"), core("identifier")),
       urlValidation(core("CreativeWork"), core("url")),
       urlValidation(security("OAuth2Flow"), security("authorizationUri")),
       urlValidation(security("OAuth2Flow"), security("accessTokenUri")),
@@ -1365,7 +1369,7 @@ object AMFRawValidations {
         value =
           "^(Api\\sKey|OAuth\\s2.0|http|httpApiKey|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|x-.+)$"
       )
-    )
+    ) ++ baseApiValidations("AsyncAPI")
 
     override def validations(): Seq[AMFValidation] = result
   }
