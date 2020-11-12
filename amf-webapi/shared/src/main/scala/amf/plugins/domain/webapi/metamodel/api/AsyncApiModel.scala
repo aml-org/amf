@@ -11,7 +11,7 @@ object AsyncApiModel extends ApiModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiContract,
-    "API",
+    "AsyncAPI",
     "Top level element describing a asynchronous API"
   )
 
