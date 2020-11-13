@@ -156,7 +156,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         root
           .asInstanceOf[Document]
           .encodes
-          .asInstanceOf[Api]
+          .asInstanceOf[Api[_]]
           .endPoints
           .asSeq
           .head
@@ -199,7 +199,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         root
           .asInstanceOf[Document]
           .encodes
-          .asInstanceOf[Api]
+          .asInstanceOf[Api[_]]
           .endPoints
           .asSeq
           .head
