@@ -1325,12 +1325,6 @@ object AMFRawValidations {
         constraint = shape("validParameterLocation")
       ),
       AMFValidation(
-        message = "Message headers must be of type object",
-        owlClass = apiContract("Message"),
-        owlProperty = apiContract("headers"),
-        constraint = shape("mandatoryHeadersObjectNode")
-      ),
-      AMFValidation(
         uri = amfParser("uri-query-param"),
         message = "Query parameters must not be defined in uri, use bindings instead",
         owlClass = apiContract("EndPoint"),
