@@ -34,5 +34,5 @@ class AsyncExamplePropagationResolutionStage()(override implicit val errorHandle
     message.payloads.map(_.schema).foreach(trackExamplesOf(message, _))
 
   private def propagateHeaderExamplesToParameters(message: Message): Unit =
-    message.headers.map(_.schema).foreach(trackExamplesOf(message, _, MessageModel.HeaderExamples))
+    Option(message.headerObject).foreach(trackExamplesOf(message, _, MessageModel.HeaderExamples))
 }
