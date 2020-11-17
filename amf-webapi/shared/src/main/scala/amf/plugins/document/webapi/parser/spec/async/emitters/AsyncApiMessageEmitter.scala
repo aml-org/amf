@@ -120,7 +120,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
               fs.entry(MessageModel.DisplayName).map(f => result += ValueEmitter("name", f))
               val bindingOrphanAnnotations =
                 message.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
-              fs.entry(MessageModel.Headers).foreach(emitHeader(result, _))
+              fs.entry(MessageModel.HeaderSchema).foreach(emitHeader(result, _))
               fs.entry(MessageModel.CorrelationId)
                 .map(f => result += new AsyncApiCorrelationIdEmitter(f.element.asInstanceOf[CorrelationId], ordering))
               fs.entry(MessageModel.Title).map(f => result += ValueEmitter("title", f))
@@ -156,10 +156,7 @@ class AsyncApiMessageContentEmitter(message: Message, isTrait: Boolean = false, 
   }
 
   private def emitHeader(result: ListBuffer[EntryEmitter], field: FieldEntry): Unit = {
-    field.arrayValues[Parameter].headOption.foreach { param =>
-      val toEmit = param.schema
-      result += async.AsyncSchemaEmitter("headers", toEmit, ordering, Seq())
-    }
+    result += async.AsyncSchemaEmitter("headers", field.element.asInstanceOf[Shape], ordering, Seq())
   }
 
   private def emitPayloads(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit = {

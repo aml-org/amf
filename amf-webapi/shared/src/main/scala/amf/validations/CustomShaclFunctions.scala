@@ -216,20 +216,6 @@ object CustomShaclFunctions {
         if (!isObjectAndHasProperties) violation(None)
       }
     }),
-    "mandatoryHeadersObjectNode" -> ((element, violation) => {
-      for {
-        headerElement <- element.fields.?[AmfArray](MessageModel.Headers)
-        header        <- headerElement.values.headOption
-      } yield {
-        header match {
-          case p: Parameter =>
-            p.schema match {
-              case _: NodeShape => // ignore
-              case _            => violation(None)
-            }
-        }
-      }
-    }),
     "mandatoryHeaderNamePattern" -> ((element, violation) => {
       for {
         headerName <- element.fields ? [AmfScalar] ParameterModel.ParameterName
