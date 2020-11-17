@@ -48,13 +48,7 @@ object AstFinder {
   }
 
   // TODO: maybe we should decouple the JsonSchemaIndex from the ctx. Just a thought as it doesn't make sense t pass a ctx to a findNodeInIndex method.
-  private def findNodeInIndex(path: String, ctx: WebApiContext): Option[YMapEntryLike] = {
-    val res = ctx.findLocalJSONPath(path)
-    res.map(_._2).map {
-      case Left(value)  => YMapEntryLike(value)
-      case Right(value) => YMapEntryLike(value)
-    }
-  }
+  private def findNodeInIndex(path: String, ctx: WebApiContext): Option[YMapEntryLike] = ctx.findLocalJSONPath(path)
 }
 
 

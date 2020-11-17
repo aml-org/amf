@@ -138,11 +138,10 @@ abstract class WebApiContext(val loc: String,
     }
   }
 
-  def findJsonPathIn(index: JsonSchemaAstIndex, path: String) =
-    index.getNodeAndEntry(normalizeJsonPath(path)).map { (path, _) }
+  def findJsonPathIn(index: JsonSchemaAstIndex, path: String) = index.getNodeAndEntry(normalizeJsonPath(path))
 
   // TODO: Evaluate if this can return a YMapEntryLike
-  def findLocalJSONPath(path: String): Option[(String, Either[YNode, YMapEntry])] = {
+  def findLocalJSONPath(path: String): Option[YMapEntryLike] = {
     // todo: past uri?
     jsonSchemaIndex.flatMap(index => findJsonPathIn(index, path))
   }
