@@ -4,7 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type._
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies, ShapeModel}
-import amf.plugins.domain.shapes.models.PropertyDependencies
+import amf.plugins.domain.shapes.models.{PropertyDependencies, SchemaDependencies}
 import amf.core.vocabulary.Namespace.Shapes
 import amf.core.vocabulary.ValueType
 
@@ -19,9 +19,7 @@ trait DependenciesModel {
     ModelDoc(ModelVocabularies.Shapes, "propertySource", "Source property shape in the dependency"))
 }
 
-object DependenciesModel extends DependenciesModel {
-
-}
+object DependenciesModel extends DependenciesModel
 
 object PropertyDependenciesModel extends DomainElementModel with DependenciesModel {
 
@@ -56,7 +54,7 @@ object SchemaDependenciesModel extends DomainElementModel with  DependenciesMode
 
   override val `type`: List[ValueType] = List(Shapes + "SchemaDependencies") ++ DomainElementModel.`type`
 
-  override def modelInstance = PropertyDependencies()
+  override def modelInstance = SchemaDependencies()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
