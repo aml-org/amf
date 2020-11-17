@@ -17,8 +17,18 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser, YMapEntryLike}
-import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
+import amf.plugins.document.webapi.parser.spec.common.{
+  AnnotationParser,
+  DataNodeParser,
+  ScalarNodeParser,
+  YMapEntryLike
+}
+import amf.plugins.document.webapi.parser.spec.domain.{
+  ExampleOptions,
+  ExamplesDataParser,
+  NodeDataNodeParser,
+  RamlExamplesParser
+}
 import amf.plugins.document.webapi.parser.spec.jsonschema.parser.{ContentParser, UnevaluatedParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
@@ -424,7 +434,9 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
       shape
     }
 
-    private def isStringScalar(shape: ScalarShape) = shape.dataType.option().fold(false) { value => value == DataType.String}
+    private def isStringScalar(shape: ScalarShape) = shape.dataType.option().fold(false) { value =>
+      value == DataType.String
+    }
   }
 
   case class UnionShapeParser(nodeOrEntry: YMapEntryLike, name: String) extends AnyShapeParser() {
@@ -660,7 +672,10 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
             .zipWithIndex
             .map {
               case (elem, index) =>
-                OasTypeParser(YMapEntryLike(elem), s"member$index", item => item.adopted(shape.id + "/items/" + index), version)
+                OasTypeParser(YMapEntryLike(elem),
+                              s"member$index",
+                              item => item.adopted(shape.id + "/items/" + index),
+                              version)
                   .parse()
             }
           shape.withItems(items.filter(_.isDefined).map(_.get))
@@ -844,7 +859,8 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  private def parseShapeDependencies(shape: NodeShape, properties: mutable.LinkedHashMap[String, PropertyShape]): Unit = {
+  private def parseShapeDependencies(shape: NodeShape,
+                                     properties: mutable.LinkedHashMap[String, PropertyShape]): Unit = {
     if (version == JSONSchemaDraft201909SchemaVersion) {
       Draft2019ShapeDependenciesParser(shape, map, shape.id, properties.toMap, version).parse()
     } else {
@@ -994,7 +1010,7 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
             "required",
             entry => {
               if (entry.value.tagType == YType.Bool) {
-                if (version == JSONSchemaDraft4SchemaVersion || version.isInstanceOf[OASSchemaVersion]) {
+                if (version != JSONSchemaDraft3SchemaVersion) {
                   ctx.eh.violation(InvalidRequiredBooleanForSchemaVersion,
                                    property.id,
                                    "Required property boolean value is only supported in JSON Schema draft-3",

@@ -553,4 +553,10 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Some("included-example-invalid-json.report"),
              Raml08Profile)
   }
+
+  test("Invalid json draft 7 with required boolean") {
+    validate("raml/included-json-wrong-draft-key/api.raml",
+             Some("included-json-wrong-draft-key.report"),
+             Raml08Profile)
+  }
 }

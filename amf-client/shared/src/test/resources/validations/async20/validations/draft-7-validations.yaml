@@ -108,11 +108,10 @@ components:
         type: object
         properties:
           a:
-            required: true
             type: string
           b:
-            required: true
             type: number
+        required: [ a, b ]
       examples: [
         {
           "other": "Canada",
