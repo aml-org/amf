@@ -18,12 +18,13 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncMessageBindingsParser
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, ExamplesDataParser, Oas3ExampleOptions}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.Example
+import amf.plugins.domain.shapes.models.{Example, NodeShape}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.{MessageModel, ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.bindings.MessageBindings
 import amf.plugins.features.validation.CoreValidations
+import amf.validations.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 
 object AsyncMessageParser {
@@ -149,9 +150,20 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
 
     map.key(
       "headers",
-      entry =>
-        parseHeaderSchema(entry, message.id) foreach { param =>
-          message.set(MessageModel.Headers, AmfArray(Seq(param), Annotations(entry.value)), Annotations(entry))
+      entry => {
+        AsyncApiTypeParser(entry, shape => shape.withName("schema").adopted(message.id), JSONSchemaDraft7SchemaVersion)
+          .parse()
+          .foreach {
+            case n: NodeShape =>
+              message.set(MessageModel.HeaderSchema, n, Annotations(entry))
+            case _ =>
+              message.set(MessageModel.HeaderSchema, NodeShape(Annotations(VirtualObject())), Annotations(entry))
+
+              ctx.eh.violation(ParserSideValidations.HeaderMustBeObject,
+                               message.id,
+                               ParserSideValidations.HeaderMustBeObject.message,
+                               entry.value)
+          }
       }
     )
 
@@ -182,17 +194,6 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
   protected def parseTraits(map: YMap, message: Message): Unit
 
   protected def parseSchema(map: YMap, payload: Payload): Unit
-
-  private def parseHeaderSchema(entry: YMapEntry, parentId: String): Option[Parameter] = {
-    val param = Parameter(entry.value).withName("default-parameter", Annotations(SynthesizedField())).adopted(parentId) // set default name to avoid raw validations
-    val shape =
-      AsyncApiTypeParser(entry, shape => shape.withName("schema").adopted(param.id), JSONSchemaDraft7SchemaVersion)
-        .parse()
-    shape.map { schema =>
-      param.set(ParameterModel.Binding, AmfScalar("header"), Annotations() += SynthesizedField())
-      param.withSchema(schema)
-    }
-  }
 
   case class MessageExamples(headers: Seq[Example], payload: Seq[Example]) {
     def all: Seq[Example] = headers ++: payload
