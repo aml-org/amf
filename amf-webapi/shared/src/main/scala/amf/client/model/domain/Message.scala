@@ -30,6 +30,7 @@ class Message(override private[amf] val _internal: InternalMessage)
   def title: StrField                     = _internal.title
   def summary: StrField                   = _internal.summary
   def bindings: MessageBindings           = _internal.bindings
+  def headerSchema: NodeShape             = _internal.headerSchema
 
   /** Set name property of this Response. */
   override def withName(name: String): this.type = {

@@ -59,7 +59,7 @@ trait MessageModel
     ApiContract + "headerSchema",
     ModelDoc(ModelVocabularies.ApiContract,
              "headerSchema",
-             "Object Schema who's properties are headers for the communication.")
+             "Object Schema who's properties are headers for the message.")
   )
 
 }
