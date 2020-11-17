@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/raml/included-json-wrong-draft-key/api.raml
+Profile: RAML 0.8
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#invalid-required-boolean-for-schema-version
+  Message: Required property boolean value is only supported in JSON Schema draft-3
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/raml/included-json-wrong-draft-key/api.raml#/web-api/end-points/%2Fv1/post/request/application%2Fjson/application%2Fjson/property/property1
+  Property: 
+  Position: Some(LexicalInformation([(7,6)-(7,22)]))
+  Location: file://amf-client/shared/src/test/resources/validations/raml/included-json-wrong-draft-key/request.json

@@ -1,0 +1,9 @@
+#%RAML 0.8
+title: Test invalid JSON
+version: 1.0
+
+/v1:
+  post:
+    body: 
+      application/json:
+        schema: !include request.json
