@@ -88,6 +88,11 @@ class Message(override private[amf] val _internal: InternalMessage)
     this
   }
 
+  def withHeaderSchema(schema: NodeShape): this.type = {
+    _internal.withHeaderSchema(schema)
+    this
+  }
+
   def withPayload(mediaType: ClientOption[String]): Payload = _internal.withPayload(mediaType.toScala)
 
   def withPayload(): Payload = _internal.withPayload()
