@@ -3,11 +3,11 @@ package amf.plugins.domain.webapi.metamodel
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.shapes.metamodel.ExampleModel
+import amf.plugins.domain.shapes.metamodel.{ExampleModel, NodeShapeModel}
 import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
 import amf.plugins.domain.webapi.metamodel.bindings.MessageBindingsModel
 import amf.plugins.domain.webapi.models.Message
@@ -54,6 +54,14 @@ trait MessageModel
     ApiContract + "headerExamples",
     ModelDoc(ModelVocabularies.ApiContract, "headerExamples", "Examples for a header definition"))
 
+  val HeaderSchema = Field(
+    NodeShapeModel,
+    ApiContract + "headerSchema",
+    ModelDoc(ModelVocabularies.ApiContract,
+             "headerSchema",
+             "Object Schema who's properties are headers for the message.")
+  )
+
 }
 
 object MessageModel extends MessageModel {
@@ -71,7 +79,8 @@ object MessageModel extends MessageModel {
          Examples,
          Documentation,
          IsAbstract,
-         HeaderExamples) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+         HeaderExamples,
+         HeaderSchema) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = ApiContract + "Message" :: DomainElementModel.`type`
 
