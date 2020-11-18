@@ -12,6 +12,6 @@ channels:
   users/signup:
     subscribe:
       message:
-        schemaFormat: application/vnd.rai.raml;version=1.0
+        schemaFormat: application/raml+yaml;version=1.0
         payload:
           type: User
