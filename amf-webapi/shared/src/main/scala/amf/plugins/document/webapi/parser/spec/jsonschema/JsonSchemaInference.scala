@@ -25,7 +25,7 @@ trait JsonSchemaInference {
           case Some(version) => getVersionFor(version).getOrElse(defaultSchemaVersion)
           case None          => defaultSchemaVersion
         }
-      case None => JSONSchemaUnspecifiedVersion
+      case None => defaultSchemaVersion
     }
 
   private def parseSchemaEntry(ast: YNode): Option[YNode] = {
@@ -50,7 +50,7 @@ trait JsonSchemaInference {
 
   private def adaptInput(schema: String): String = schema.lastOption match {
     case Some('#') => schema
-    case _      => s"${schema}#"
+    case _         => s"${schema}#"
   }
 
   private def getVersionFor(schema: String): Option[JSONSchemaVersion] = mappings.get(schema)
