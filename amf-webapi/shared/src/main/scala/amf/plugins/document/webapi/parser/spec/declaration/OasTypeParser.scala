@@ -1011,10 +1011,10 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
             entry => {
               if (entry.value.tagType == YType.Bool) {
                 if (version != JSONSchemaDraft3SchemaVersion) {
-                  ctx.eh.violation(InvalidRequiredBooleanForSchemaVersion,
-                                   property.id,
-                                   "Required property boolean value is only supported in JSON Schema draft-3",
-                                   entry)
+                  ctx.eh.warning(InvalidRequiredBooleanForSchemaVersion,
+                                 property.id,
+                                 "Required property boolean value is only supported in JSON Schema draft-3",
+                                 entry)
                 }
                 val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
                 property.set(PropertyShapeModel.MinCount,
