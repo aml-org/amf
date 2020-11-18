@@ -54,18 +54,18 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
 
     emitOASFields(fs, result)
 
-    fs.entry(ScalarShapeModel.Pattern).map { f =>
+    fs.entry(ScalarShapeModel.Pattern).foreach { f =>
       result += RamlScalarEmitter("pattern", processRamlPattern(f))
     }
 
     fs.entry(ScalarShapeModel.Minimum)
-      .map(f => result += ValueEmitter("minimum", f, Some(NumberTypeToYTypeConverter.convert(rawTypeDef))))
+      .foreach(f => result += ValueEmitter("minimum", f, Some(NumberTypeToYTypeConverter.convert(rawTypeDef))))
 
     fs.entry(ScalarShapeModel.Maximum)
-      .map(f => result += ValueEmitter("maximum", f, Some(NumberTypeToYTypeConverter.convert(rawTypeDef))))
+      .foreach(f => result += ValueEmitter("maximum", f, Some(NumberTypeToYTypeConverter.convert(rawTypeDef))))
 
     fs.entry(ScalarShapeModel.MultipleOf)
-      .map(f => result += RamlScalarEmitter("multipleOf", f, Some(NumberTypeToYTypeConverter.convert(rawTypeDef))))
+      .foreach(f => result += RamlScalarEmitter("multipleOf", f, Some(NumberTypeToYTypeConverter.convert(rawTypeDef))))
 
     result ++= emitFormat(rawTypeDef, fs, format)
 
@@ -83,8 +83,8 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     val translationFormats = OasTypeDefMatcher.knownFormats.diff(RamlTypeDefMatcher.knownFormats)
 
     val explicitFormatOption = fs.entry(ScalarShapeModel.Format) flatMap {
-      case entry if entry.value.value.isInstanceOf[AmfScalar] =>
-        val entryFormat = entry.value.value.asInstanceOf[AmfScalar].value.toString
+      case entry if entry.element.isInstanceOf[AmfScalar] =>
+        val entryFormat = entry.scalar.value.toString
         Some(entryFormat).filter(fmt => !translationFormats(fmt))
       case _ => None
     }

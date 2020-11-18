@@ -22,6 +22,7 @@ case class Raml10TypeEmitter(shape: Shape,
   def emitters(): Seq[Emitter] = {
     shape match {
       case _
+          // TODO: encapsulate in an object. This is too hard to read and holds too many conditionals.
           if Option(shape).isDefined && shape.isInstanceOf[AnyShape]
             && shape.asInstanceOf[AnyShape].fromExternalSource
             && references.nonEmpty
@@ -33,10 +34,6 @@ case class Raml10TypeEmitter(shape: Shape,
               })
               .isDefined => // need to check ref to ask if resolution has run.
         Seq(RamlExternalSourceEmitter(shape.asInstanceOf[AnyShape], references))
-//      case _
-//          if Option(shape).isDefined && shape
-//            .isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].fromTypeExpression =>
-//        Seq(RamlTypeExpressionEmitter(shape.asInstanceOf[AnyShape]))
       case _ if Option(shape).isDefined && shape.annotations.contains(classOf[ExternalReferenceUrl]) =>
         Seq(RamlExternalReferenceUrlEmitter(shape)())
       case l: Linkable if l.isLink =>
