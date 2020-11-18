@@ -720,9 +720,10 @@ object ParserSideValidations extends Validations {
     InvalidAllowedTargets.id                     -> all(WARNING), // TODO: should be violation
     MissingDiscriminatorProperty.id              -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
-    ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation,
-    InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation,
-    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION)
+    ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
+    InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
+    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
+    InvalidRequiredBooleanForSchemaVersion.id    -> all(WARNING) // TODO: should be violation
   )
 
   override val validations: List[ValidationSpecification] = List(
