@@ -23,10 +23,7 @@ object AsyncSchemaFormats {
                         "application/vnd.apache.avro+json;version=1.9.0",
                         "application/vnd.apache.avro+yaml;version=1.9.0")
   val ramlSchema = List(
-    "application/vnd.rai.raml;version=1.0",
-    "application/vnd.rai.raml+json;version=1.0",
-    "application/vnd.rai.raml+yaml;version=1.0",
-    "application/vnd.rai.raml+xml;version=1.0"
+    "application/raml+yaml;version=1.0"
   )
 
   def getSchemaVersion(payload: Payload)(implicit errorHandler: ErrorHandler): SchemaVersion = {
