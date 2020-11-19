@@ -27,7 +27,7 @@ case class RamlNamedTypeEmitter(shape: AnyShape,
                                     Seq[BaseUnit]) => RamlTypePartEmitter)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val name = shape.name.option().getOrElse("schema") // this used to throw an exception, but with the resolution optimizacion, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
+    val name = shape.name.option().getOrElse("schema") // this used to throw an exception, but with the resolution optimization, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
     b.entry(name, b => emitLinkOr(shape, b, references)(emitInline(b)))
   }
 

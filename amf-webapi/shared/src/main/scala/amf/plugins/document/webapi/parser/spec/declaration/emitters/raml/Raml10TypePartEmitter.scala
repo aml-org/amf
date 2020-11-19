@@ -16,9 +16,9 @@ case class Raml10TypePartEmitter(shape: Shape,
 
   override def emitters: Seq[Emitter] = {
     val annotationEmitters = annotations.map(_.emitters).getOrElse(Nil)
-    ordering.sorted(
-      Raml10TypeEmitter(shape, ordering, ignored, references, forceEntry = annotationEmitters.nonEmpty)
-        .emitters() ++ annotationEmitters)
+    val typeEmitterAnnotations =
+      Raml10TypeEmitter(shape, ordering, ignored, references, forceEntry = annotationEmitters.nonEmpty).emitters()
+    ordering.sorted(typeEmitterAnnotations ++ annotationEmitters)
   }
 
 }

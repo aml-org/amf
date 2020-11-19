@@ -1,0 +1,19 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API with Types",
+    "version": ""
+  },
+  "paths": {},
+  "definitions": {
+    "Thing": {
+      "type": "object",
+      "properties": {
+        "dateOfBirth": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}

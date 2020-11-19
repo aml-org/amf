@@ -10,6 +10,7 @@ object OasTypeDefMatcher {
 
   val knownFormats: Set[String] = Set("time-only",
                                       "date-only",
+                                      "date",
                                       "date-time",
                                       "date-time-only",
                                       "password",

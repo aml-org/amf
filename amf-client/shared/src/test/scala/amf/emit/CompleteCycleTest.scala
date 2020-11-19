@@ -8,7 +8,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
 
   override val basePath = "amf-client/shared/src/test/resources/upanddown/"
   val base08Path        = "amf-client/shared/src/test/resources/upanddown/raml08/"
-  val baseRaml10Path        = "amf-client/shared/src/test/resources/upanddown/raml10/"
+  val baseRaml10Path    = "amf-client/shared/src/test/resources/upanddown/raml10/"
   val referencesPath    = "amf-client/shared/src/test/resources/references/"
   val productionPath    = "amf-client/shared/src/test/resources/production/"
   val validationsPath   = "amf-client/shared/src/test/resources/validations/"
@@ -738,6 +738,10 @@ class CompleteCycleTest extends FunSuiteCycleTests {
 
   test("CollectionFormat shape oas to raml") {
     cycle("collection-format.json", "collection-format.raml", OasJsonHint, target = Raml)
+  }
+
+  test("Date format oas to raml") {
+    cycle("date-format.json", "date-format.raml", OasJsonHint, target = Raml)
   }
 
   test("Tags node oas to oas") {
