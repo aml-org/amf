@@ -1,18 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.VirtualObject
+import amf.core.annotations.VirtualElement
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, SearchScope}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.domain.webapi.metamodel.security.{
-  OAuth2FlowModel,
-  OpenIdConnectSettingsModel,
-  ParametrizedSecuritySchemeModel,
-  ScopeModel,
-  SecurityRequirementModel
-}
+import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations.{
@@ -67,7 +61,7 @@ case class OasLikeSecurityRequirementParser(node: YNode,
         val flows = Seq(
           settings
             .withFlow()
-            .add(VirtualObject())
+            .add(VirtualElement())
             .setArray(OAuth2FlowModel.Scopes, scopes, Annotations(schemeEntry.value)))
 
         scheme.scheme.settings match {

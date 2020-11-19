@@ -333,6 +333,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
+          "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/synthesized-field/element_1"
+        },
+        {
           "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/synthesized-field/element_0"
         }
       ],
@@ -398,8 +401,13 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/synthesized-field/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/synthesized-field/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#recursive",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {

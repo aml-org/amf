@@ -21,7 +21,7 @@ class InferredOverlayTypeExampleTransform(implicit val errorHandler: ErrorHandle
 
   override def transform(main: DomainElement, overlay: DomainElement): DomainElement =
     (main, overlay, overlay.meta) match {
-      case (_: Shape, overlayScalar: ScalarShape, ScalarShapeModel) if hasInferredType(overlayScalar) =>
+      case (_: Shape, overlayScalar: ScalarShape, ScalarShapeModel) if hasSynthesizedType(overlayScalar) =>
         transformExamplesOf(overlayScalar)
       case _ => overlay
     }
@@ -45,12 +45,10 @@ class InferredOverlayTypeExampleTransform(implicit val errorHandler: ErrorHandle
     example
   }
 
-  private def hasInferredType(scalar: ScalarShape) = scalar.fields.entry(ScalarShapeModel.DataType) match {
-    case Some(FieldEntry(_, value)) => isInferred(value)
+  private def hasSynthesizedType(scalar: ScalarShape) = scalar.fields.entry(ScalarShapeModel.DataType) match {
+    case Some(FieldEntry(_, value)) => value.isSynthesized
     case None                       => false
   }
-
-  private def isInferred(value: Value) = value.annotations.contains(classOf[Inferred])
 
   class ParserErrorHandlerAdapter(val parserRun: Int, errorHandler: ErrorHandler) extends ParserErrorHandler {
     override def reportConstraint(id: String,
