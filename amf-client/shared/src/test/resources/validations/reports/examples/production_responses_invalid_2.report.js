@@ -10,5 +10,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/production/responses-invalid-2.raml#/web-api/end-points/%2Fsystem%2Ftoken/post/404.14
   Property: http://a.ml/vocabularies/apiContract#statusCode
-  Position: Some(LexicalInformation([(9,6)-(10,25)]))
+  Position: Some(LexicalInformation([(9,6)-(9,12)]))
   Location: file://amf-client/shared/src/test/resources/validations/production/responses-invalid-2.raml
