@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{SynthesizedField, VirtualObject}
+import amf.core.annotations.{SynthesizedField, VirtualElement}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, _}
@@ -202,7 +202,7 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
       }
     )
 
-    if (operation.fields.exists(OperationModel.Request)) operation.request.annotations += VirtualObject()
+    if (operation.fields.exists(OperationModel.Request)) operation.request.annotations += VirtualElement()
     ctx.factory.serversParser(map, operation).parse()
 
     operation

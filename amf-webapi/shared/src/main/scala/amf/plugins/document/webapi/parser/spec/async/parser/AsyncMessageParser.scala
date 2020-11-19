@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
-import amf.core.annotations.{SynthesizedField, TrackedElement, VirtualObject}
-import amf.core.model.domain.{AmfArray, AmfScalar, Annotation}
+import amf.core.annotations.{SynthesizedField, TrackedElement, VirtualElement}
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.annotations.ExampleIndex
@@ -16,6 +16,8 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   OasLikeTagsParser
 }
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncMessageBindingsParser
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, Oas3ExampleOptions}
+import amf.plugins.domain.shapes.models.Example
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, ExamplesDataParser, Oas3ExampleOptions}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{Example, NodeShape}
@@ -179,7 +181,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
 
     parseTraits(map, message)
 
-    val payload = Payload(Annotations(VirtualObject())).adopted(message.id)
+    val payload = Payload(Annotations(VirtualElement())).adopted(message.id)
 
     map.key("contentType", PayloadModel.MediaType in payload)
     map.key("schemaFormat", PayloadModel.SchemaMediaType in payload)

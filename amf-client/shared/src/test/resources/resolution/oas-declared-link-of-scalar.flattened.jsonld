@@ -97,11 +97,14 @@
       "doc:recursive": true,
       "shacl:name": "ServiceId",
       "smaps": {
-        "resolved-link-target": {
-          "#2": "amf://id#1"
+        "synthesized-field": {
+          "doc:recursive": "true"
         },
-        "declared-element": {
-          "#2": ""
+        "resolved-link": {
+          "#2": "amf://id#2"
+        },
+        "type-property-lexical-info": {
+          "#2": "[(14,8)-(14,14)]"
         },
         "lexical": {
           "raml-shapes:format": "[(13,8)-(13,25)]",
@@ -109,11 +112,11 @@
           "#2": "[(12,6)-(16,7)]",
           "shacl:minInclusive": "[(15,8)-(15,20)]"
         },
-        "type-property-lexical-info": {
-          "#2": "[(14,8)-(14,14)]"
+        "declared-element": {
+          "#2": ""
         },
-        "resolved-link": {
-          "#2": "amf://id#2"
+        "resolved-link-target": {
+          "#2": "amf://id#1"
         }
       }
     }
