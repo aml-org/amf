@@ -908,6 +908,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "null/parameter/uriParameter1/scalar/schema/source-map/synthesized-field/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "null/parameter/uriParameter1/scalar/schema/source-map/lexical/element_1"
@@ -946,6 +951,11 @@
       "@id": "null/parameter/uriParameter2/scalar/schema/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "null/parameter/uriParameter2/scalar/schema/source-map/synthesized-field/element_0"
+        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -1324,6 +1334,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(59,10)-(59,49)]"
     },
     {
+      "@id": "null/parameter/uriParameter1/scalar/schema/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
       "@id": "null/parameter/uriParameter1/scalar/schema/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "null/parameter/uriParameter1/scalar/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(20,4)-(23,5)]"
@@ -1332,6 +1347,11 @@
       "@id": "null/parameter/uriParameter1/scalar/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,6)-(21,37)]"
+    },
+    {
+      "@id": "null/parameter/uriParameter2/scalar/schema/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "null/parameter/uriParameter2/scalar/schema/source-map/lexical/element_1",

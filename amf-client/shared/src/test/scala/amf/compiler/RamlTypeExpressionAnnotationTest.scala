@@ -44,14 +44,12 @@ class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with 
     test(aUnion2B)
   }
 
-  // todo: Should work when APIMF-2323 is solved
   it should "annotate range for union with three elements" in {
     test(tripleUnionA)
     test(tripleUnionB)
     test(tripleUnionC)
   }
 
-  // todo: Should work when APIMF-2323 is solved
   it should "annotate ranges in an array of unions" in {
     test(unionArrayA)
     test(unionArrayB)
