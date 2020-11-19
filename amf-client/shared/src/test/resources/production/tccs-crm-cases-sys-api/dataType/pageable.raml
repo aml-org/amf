@@ -1,0 +1,32 @@
+#%RAML 1.0 Trait
+description: Parameters and responses for records returned as a set of pages
+usage: Apply to GET operations for resources that return collections
+
+queryParameters:
+  page:
+    description: The page number requested, starting from 1
+    type: integer
+    required: false
+    example: 20
+    default: 1
+  pageSize:
+    description: The number of records per page
+    type: integer
+    required: false
+    example: 5
+    default: 20
+responses:
+  200:
+    body:
+      application/json:
+        type: object
+        properties:
+          totalPages:
+            type: integer
+            description: The total number of pages, retrieved by the search criteria
+            default: 1
+          page:
+            type: integer
+            description: The current page number, starting from 1
+            default: 1
+  

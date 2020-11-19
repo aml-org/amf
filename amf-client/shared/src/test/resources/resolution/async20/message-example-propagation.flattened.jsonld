@@ -153,11 +153,14 @@
         }
       ],
       "smaps": {
-        "type-property-lexical-info": {
-          "#16": "[(15,10)-(15,14)]"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "#16": "[(14,8)-(22,0)]"
+        },
+        "type-property-lexical-info": {
+          "#16": "[(15,10)-(15,14)]"
         }
       }
     },
@@ -190,7 +193,7 @@
           "shacl:closed": "true"
         },
         "lexical": {
-          "#6": "[(9,8)-(17,0)]"
+          "#6": "[(9,8)-(14,0)]"
         },
         "type-property-lexical-info": {
           "#6": "[(10,10)-(10,14)]"
@@ -501,6 +504,9 @@
       },
       "core:name": "object_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:name": "[(28,14)-(29,0)]",
           "#29": "[(28,0)-(29,0)]"
@@ -544,6 +550,9 @@
       },
       "core:name": "object_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:a": "[(26,14)-(27,0)]",
           "#10": "[(26,0)-(27,0)]"
@@ -682,6 +691,10 @@
       ],
       "core:name": "a",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#11": "[(26,17)-(26,29)]"
         }
@@ -702,6 +715,10 @@
       ],
       "core:name": "a",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#14": "[(30,17)-(30,30)]"
         }

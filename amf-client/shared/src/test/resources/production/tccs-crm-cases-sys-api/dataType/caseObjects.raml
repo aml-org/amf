@@ -1,0 +1,42 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  accountId?:
+    type: string
+  amsTeamAssignmentId?:
+    type: string
+  amsStatus?:
+    type: string
+  amsWorkRequestAlias?:
+    type: string
+  amsStatusComment?:
+    type: string
+  amsWorkOrderTargetFinishDate?:
+    type: string
+  referenceNumber?:
+    type: string
+  contactEmail?:
+    type: string
+  contactFirstName?:
+    type: string
+  contactLastName?:
+    type: string
+  contactPhone?:
+    type: string
+  formData?:
+    type: string
+    maxLength: 4
+    description: Cleanse out all html tag , Truncate to 3500 characters and add "…..   \n Refer to Salesforce Case for complete form data"
+  locationAddress?:
+    type: string
+  latitude?:
+    type: string
+  longitude?:
+    type: string
+  caseId?:
+    type: string
+  subject?:
+    type: string
+  citySuburb?:
+    type: string
+  

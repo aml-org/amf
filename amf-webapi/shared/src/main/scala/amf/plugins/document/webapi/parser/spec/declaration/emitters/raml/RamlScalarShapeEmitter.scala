@@ -39,7 +39,7 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     val typeEmitterOption = if (scalar.inherits.isEmpty) {
       fs.entry(ScalarShapeModel.DataType)
         .flatMap(f =>
-          if (!f.value.value.annotations.contains(classOf[Inferred])) {
+          if (!f.value.isSynthesized) {
             scalar.fields
               .removeField(ShapeModel.Inherits) // for scalar doesn't make any sense to write the inherits, because it will always be another scalar with the same t
             Some(MapEntryEmitter("type", typeDef, position = pos(f.value.annotations)))

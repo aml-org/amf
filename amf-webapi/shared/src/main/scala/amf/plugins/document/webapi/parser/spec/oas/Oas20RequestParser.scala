@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.core.annotations.VirtualObject
+import amf.core.annotations.VirtualElement
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
@@ -20,7 +20,7 @@ import scala.collection.mutable.ListBuffer
 case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
   def parse(): Option[Request] = {
     val request = new Lazy[Request](() => {
-      val req = Request(map).add(VirtualObject())
+      val req = Request(map).add(VirtualElement())
       adopt(req)
       req
     })

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.VirtualObject
+import amf.core.annotations.VirtualElement
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.utils.{AmfStrings, Lazy}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -25,7 +25,7 @@ class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
               .map(entry => parseDynamicSettings(entry.value.as[YMap], defaultSettings))
               .getOrElse(defaultSettings)
         }
-        parsedSettings.annotations += VirtualObject()
+        parsedSettings.annotations += VirtualElement()
         parseAnnotations(parsedSettings)
       }
 

@@ -46,8 +46,8 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                          idTracker: IdTracker): Unit = {
     val FieldEntry(field, value) = entry
     master.fields.entry(field) match {
-      case None if restrictions allowsNodeInsertionIn field                => insertNode(master, idTracker, entry)
-      case None if field == ScalarShapeModel.DataType && isInferred(value) => skipNode()
+      case None if restrictions allowsNodeInsertionIn field                  => insertNode(master, idTracker, entry)
+      case None if field == ScalarShapeModel.DataType && value.isSynthesized => skipNode()
       // If the overlay field is a datatype and the type is inferred it must be a type that add only an example
       // Nothing to do
       case None => forbiddenInsertionError(entry)
@@ -117,8 +117,6 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       annotations
     )
   }
-
-  private def isInferred(value: Value) = value.annotations.contains(classOf[Inferred])
 
   private def isSameValue(existing: FieldEntry, master: FieldEntry): Boolean =
     existing.value.toString == master.value.toString
