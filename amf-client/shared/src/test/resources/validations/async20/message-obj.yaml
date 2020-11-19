@@ -34,8 +34,13 @@ channels:
             description: description of tag
         externalDocs:
           url: http://www.google.com
-        examples: [
-          "value"
-        ]
-#        bindings:
-#        traits:
+        examples:
+          - headers:
+              a: some text
+              b: 5
+            payload: payload
+          - payload: payload
+          - headers:
+              a: some text
+              b: 5
+

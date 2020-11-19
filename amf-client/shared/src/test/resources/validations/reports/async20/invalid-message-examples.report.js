@@ -1,14 +1,22 @@
 Model: file://amf-client/shared/src/test/resources/validations/async20/validations/message-payload-invalid-example.yaml
 Profile: ASYNC 2.0
 Conforms? false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be string
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/message-payload-invalid-example.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/example/default-example_1
-  Property: file://amf-client/shared/src/test/resources/validations/async20/validations/message-payload-invalid-example.yaml#/web-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/example/default-example_1
-  Position: Some(LexicalInformation([(18,10)-(20,11)]))
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/message-payload-invalid-example.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/example/default-example_2
+  Property: file://amf-client/shared/src/test/resources/validations/async20/validations/message-payload-invalid-example.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/example/default-example_2
+  Position: Some(LexicalInformation([(23,0)-(24,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/message-payload-invalid-example.yaml
+
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
+  Message: a should be number
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/message-payload-invalid-example.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/example/default-example_1
+  Property: file://amf-client/shared/src/test/resources/validations/async20/validations/message-payload-invalid-example.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/publish/request/example/default-example_1
+  Position: Some(LexicalInformation([(25,0)-(27,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/message-payload-invalid-example.yaml

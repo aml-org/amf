@@ -1,12 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
-import amf.plugins.document.webapi.parser.spec.common.WebApiBaseSpecParser
-import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.domain.webapi.metamodel.WebApiModel
-import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import org.yaml.model.{YMap, YMapEntry}
 import amf.core.parser.YMapOps
+import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+import amf.plugins.document.webapi.parser.spec.common.WebApiBaseSpecParser
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
+import amf.plugins.domain.webapi.models.api.Api
+import org.yaml.model.{YMap, YMapEntry}
 
-case class OasLikeInformationParser(entry: YMapEntry, api: WebApi, override implicit val ctx: OasLikeWebApiContext)
+case class OasLikeInformationParser(entry: YMapEntry, api: Api, override implicit val ctx: OasLikeWebApiContext)
     extends WebApiBaseSpecParser {
 
   def parse(): Unit = {

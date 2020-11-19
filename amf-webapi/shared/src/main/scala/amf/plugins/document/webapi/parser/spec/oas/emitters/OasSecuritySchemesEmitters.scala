@@ -6,6 +6,7 @@ import amf.core.parser.{Fields, Position}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.webapi.parser.spec.oas.{
   OasLikeSecuritySchemeTypeMappings,
   OasSecuritySchemeType,
@@ -108,7 +109,7 @@ class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
   }
 
   protected def emitInline(b: PartBuilder): Unit =
-    b.obj(traverse(ordering.sorted(new OasSecuritySchemeEmitter(securityScheme, mappedType, ordering).emitters()), _))
+    new OasSecuritySchemeEmitter(securityScheme, mappedType, ordering).emit(b)
 
 }
 
@@ -118,7 +119,7 @@ case class Oas3NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
     extends OasNamedSecuritySchemeEmitter(securityScheme, mappedType, ordering) {
 
   override protected def emitInline(b: PartBuilder): Unit =
-    b.obj(traverse(ordering.sorted(Oas3SecuritySchemeEmitter(securityScheme, mappedType, ordering).emitters()), _))
+    Oas3SecuritySchemeEmitter(securityScheme, mappedType, ordering).emit(b)
 
 }
 
@@ -142,7 +143,9 @@ class OasSecuritySchemeEmitter(securityScheme: SecurityScheme, mappedType: Secur
     ordering.sorted(results)
   }
 
-  override def emit(b: PartBuilder): Unit = b.obj(traverse(ordering.sorted(emitters()), _))
+  override def emit(b: PartBuilder): Unit = handleInlinedRefOr(b, securityScheme) {
+    b.obj(traverse(ordering.sorted(emitters()), _))
+  }
 
   override def position(): Position = pos(securityScheme.annotations)
 

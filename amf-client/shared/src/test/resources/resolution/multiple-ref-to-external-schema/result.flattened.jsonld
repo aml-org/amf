@@ -4,6 +4,7 @@
       "@id": "#3",
       "@type": [
         "apiContract:WebAPI",
+        "apiContract:API",
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
@@ -469,7 +470,7 @@
       "doc:encodes": {
         "@id": "#3"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": true
     },
     {
@@ -482,7 +483,7 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false
     },
     {
@@ -492,7 +493,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"definitions\": {\n    \"error400\": {\n      \"type\": \"object\",\n      \"example\": {\n        \"errors\": [\n          {\n            \"code\": 400,\n            \"message\": \"Bad Request\",\n            \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\",\n            \"help\": \"http://www.correos.es/docs/errors/PSI-012\"\n          }\n        ]\n      }\n    }\n  }\n}\n",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#2": "[(1,0)-(18,0)]"
+        }
+      }
     }
   ],
   "@context": {

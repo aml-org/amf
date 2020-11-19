@@ -6,7 +6,7 @@ import amf.core.metamodel.Field
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, FieldEntry, Fields, Value}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.NumberTypeToYTypeConverter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.RamlFormatTranslator
@@ -31,7 +31,7 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
 
     emitFormatRanges(fs, result)
 
-    if (spec.schemaVersion != JSONSchemaDraft7SchemaVersion) {
+    if (spec.schemaVersion isSmallerThanOrDifferentThan JSONSchemaDraft7SchemaVersion) {
       fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("exclusiveMinimum", f))
       fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("exclusiveMaximum", f))
     }
@@ -73,7 +73,7 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
   }
 
   private def emitMinAndMax(fs: Fields, result: ListBuffer[EntryEmitter]): Unit = {
-    if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion) {
+    if (spec.schemaVersion isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion) {
       fs.entry(ScalarShapeModel.Minimum)
         .foreach(emitMin(_, result, fs.entry(ScalarShapeModel.ExclusiveMinimum).exists(_.scalar.toBool)))
       fs.entry(ScalarShapeModel.Maximum)

@@ -19,12 +19,7 @@
       "get": {
         "parameters": [
           {
-            "in": "cookie",
-            "deprecated": false,
-            "name": "someCookie",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "external-param.json#/extParam"
           }
         ],
         "summary": "this is a test",

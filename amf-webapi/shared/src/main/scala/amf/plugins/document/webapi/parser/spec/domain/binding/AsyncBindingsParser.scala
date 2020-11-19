@@ -157,7 +157,7 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
 
   protected def parseSchema(field: Field, binding: DomainElement, entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): Unit = {
-    OasTypeParser(entry.value, "schema", shape => shape.withName("schema"), JSONSchemaDraft7SchemaVersion)
+    OasTypeParser(YMapEntryLike(entry.value), "schema", shape => shape.withName("schema"), JSONSchemaDraft7SchemaVersion)
       .parse()
       .foreach { shape =>
         binding.set(field, shape, Annotations(entry))

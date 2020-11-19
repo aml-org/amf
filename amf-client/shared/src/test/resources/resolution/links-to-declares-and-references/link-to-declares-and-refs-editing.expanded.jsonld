@@ -12,6 +12,7 @@
         "@id": "#29",
         "@type": [
           "apiContract:WebAPI",
+          "apiContract:API",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
@@ -726,7 +727,7 @@
     ],
     "doc:version": [
       {
-        "@value": "2.1.2"
+        "@value": "2.2.0"
       }
     ],
     "doc:root": [
@@ -843,7 +844,7 @@
         ],
         "doc:version": [
           {
-            "@value": "2.1.2"
+            "@value": "2.2.0"
           }
         ],
         "doc:root": [
@@ -1101,7 +1102,7 @@
         ],
         "doc:version": [
           {
-            "@value": "2.1.2"
+            "@value": "2.2.0"
           }
         ],
         "doc:root": [
@@ -1330,7 +1331,7 @@
         ],
         "doc:version": [
           {
-            "@value": "2.1.2"
+            "@value": "2.2.0"
           }
         ],
         "doc:root": [
@@ -1367,12 +1368,17 @@
               {
                 "@value": "application/json"
               }
-            ]
+            ],
+            "smaps": {
+              "lexical": {
+                "#24": "[(1,0)-(16,1)]"
+              }
+            }
           }
         ],
         "doc:version": [
           {
-            "@value": "2.1.2"
+            "@value": "2.2.0"
           }
         ],
         "doc:root": [

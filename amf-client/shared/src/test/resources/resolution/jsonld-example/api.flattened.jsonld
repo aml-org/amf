@@ -4,6 +4,7 @@
       "@id": "#3",
       "@type": [
         "apiContract:WebAPI",
+        "apiContract:API",
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
@@ -251,7 +252,7 @@
       "doc:encodes": {
         "@id": "#3"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": true
     },
     {
@@ -264,7 +265,7 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false
     },
     {
@@ -274,7 +275,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#2": "[(1,0)-(6,0)]"
+        }
+      }
     }
   ],
   "@context": {

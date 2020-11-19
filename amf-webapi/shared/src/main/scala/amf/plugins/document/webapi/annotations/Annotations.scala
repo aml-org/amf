@@ -149,7 +149,7 @@ case class CollectionFormatFromItems() extends Annotation
 
 case class ExternalJsonSchemaShape(original: YMapEntry) extends Annotation
 
-// used internally for emission of links that have been inlined.
+// used internally for emission of links that have been inlined. This annotation is removed in resolution
 case class ExternalReferenceUrl(url: String) extends Annotation
 
 case class ForceEntry() extends Annotation
@@ -163,3 +163,5 @@ object DeclarationKey {
   def apply(entry: YMapEntry, isAbstract: Boolean = false): DeclarationKey =
     new DeclarationKey(entry, isAbstract = isAbstract)
 }
+
+case class ExampleIndex(index: Int) extends Annotation

@@ -4,6 +4,7 @@
       "@id": "#3",
       "@type": [
         "apiContract:WebAPI",
+        "apiContract:API",
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
@@ -254,7 +255,7 @@
       "doc:encodes": {
         "@id": "#3"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": true
     },
     {
@@ -267,7 +268,7 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false
     },
     {
@@ -277,7 +278,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "definitions:\n  ResponseSchema:\n    description: The response schema\n    properties:\n      status:\n        description: 'HTTP Response code'\n        type: string\n        pattern: '^[1-5][0-9][0-9]$'\n        example: '400'\n\nresponses:\n  403Response:\n    description: a description\n    schema:\n      $ref: '#/definitions/ResponseSchema'",
-      "core:mediaType": "application/yaml"
+      "core:mediaType": "application/yaml",
+      "smaps": {
+        "lexical": {
+          "#2": "[(1,0)-(15,42)]"
+        }
+      }
     }
   ],
   "@context": {

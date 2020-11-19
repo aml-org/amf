@@ -8,6 +8,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
 
   override val basePath = "amf-client/shared/src/test/resources/upanddown/"
   val base08Path        = "amf-client/shared/src/test/resources/upanddown/raml08/"
+  val baseRaml10Path        = "amf-client/shared/src/test/resources/upanddown/raml10/"
   val referencesPath    = "amf-client/shared/src/test/resources/references/"
   val productionPath    = "amf-client/shared/src/test/resources/production/"
   val validationsPath   = "amf-client/shared/src/test/resources/validations/"
@@ -220,6 +221,28 @@ class CompleteCycleTest extends FunSuiteCycleTests {
       OasJsonHint,
       target = Amf,
       directory = s"${validationsPath}oas-security/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Raml10 parses Draft 7 when specified", "raml-reference-draft-7.%s") { config =>
+    cycle(
+      "raml-reference-draft-7.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = baseRaml10Path,
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Raml10 parses Draft 4 when version is not specified", "raml-default-schema-version.%s") { config =>
+    cycle(
+      "raml-default-schema-version.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = baseRaml10Path,
       renderOptions = Some(config.renderOptions)
     )
   }

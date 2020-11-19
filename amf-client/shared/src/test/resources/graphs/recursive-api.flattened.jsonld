@@ -1,0 +1,305 @@
+{
+  "@graph": [
+    {
+      "@id": "#9",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Recursive type",
+      "apiContract:server": [
+        {
+          "@id": "#21"
+        }
+      ],
+      "apiContract:endpoint": [
+        {
+          "@id": "#10"
+        },
+        {
+          "@id": "#15"
+        }
+      ]
+    },
+    {
+      "@id": "#21",
+      "@type": [
+        "apiContract:Server",
+        "doc:DomainElement"
+      ],
+      "core:urlTemplate": "http://localhost:4007"
+    },
+    {
+      "@id": "#10",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/recursiveTypes",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#11"
+        }
+      ]
+    },
+    {
+      "@id": "#15",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/recursiveTypes/{name}",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#16"
+        }
+      ],
+      "apiContract:parameter": [
+        {
+          "@id": "#19"
+        }
+      ]
+    },
+    {
+      "@id": "#11",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#12"
+        }
+      ]
+    },
+    {
+      "@id": "#16",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "get",
+      "apiContract:returns": [
+        {
+          "@id": "#17"
+        }
+      ]
+    },
+    {
+      "@id": "#19",
+      "@type": [
+        "apiContract:Parameter",
+        "doc:DomainElement"
+      ],
+      "core:name": "name",
+      "apiContract:paramName": "name",
+      "apiContract:required": true,
+      "apiContract:binding": "path",
+      "raml-shapes:schema": {
+        "@id": "#20"
+      }
+    },
+    {
+      "@id": "#12",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "apiContract:payload": [
+        {
+          "@id": "#13"
+        }
+      ]
+    },
+    {
+      "@id": "#17",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:statusCode": "200",
+      "core:name": "200",
+      "apiContract:payload": [
+        {
+          "@id": "#18"
+        }
+      ]
+    },
+    {
+      "@id": "#20",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "schema"
+    },
+    {
+      "@id": "#13",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#14"
+      }
+    },
+    {
+      "@id": "#18",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "raml-shapes:schema": {
+        "@id": "#1"
+      }
+    },
+    {
+      "@id": "#14",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:items": {
+        "@id": "#1"
+      },
+      "shacl:name": "schema"
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#2"
+        },
+        {
+          "@id": "#4"
+        }
+      ],
+      "shacl:name": "RecursiveType"
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#name"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#3"
+      },
+      "shacl:minCount": 1,
+      "shacl:name": "name"
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#parent"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#5"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "parent"
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "name"
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "raml-shapes:RecursiveShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:fixPoint": [
+        {
+          "@id": "#1"
+        }
+      ],
+      "doc:recursive": true,
+      "shacl:name": "RecursiveType"
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#9"
+      },
+      "doc:version": "2.1.2",
+      "doc:root": true
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "anotherMain": {
+      "type": "object",
+      "properties": {
+        "anotherName": {
+          "type": "string"
+        }
+      },
+      "if": {
+        "properties": {
+          "anotherCountry": {
+            "const": "Finlandia perro"
+          }
+        }
+      }
+    }
+  }
+}

@@ -18,8 +18,9 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
 import amf.plugins.document.webapi.parser.spec.domain.SecurityRequirementsEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{InfoEmitter, TagsEmitter}
 import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.webapi.metamodel.WebApiModel
-import amf.plugins.domain.webapi.models.{Tag, WebApi}
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
+import amf.plugins.domain.webapi.models.Tag
+import amf.plugins.domain.webapi.models.api.{Api, WebApi}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
@@ -33,8 +34,8 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
     api.emitters
   }
 
-  private def retrieveWebApi(): WebApi = document match {
-    case document: Document => document.encodes.asInstanceOf[WebApi]
+  private def retrieveWebApi(): Api = document match {
+    case document: Document => document.encodes.asInstanceOf[Api]
     case _ =>
       spec.eh.violation(ResolutionValidation,
                         document.id,
@@ -73,7 +74,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
   def versionEntry(b: YDocument.EntryBuilder): Unit =
     b.asyncapi = YNode(YScalar("2.0.0"), YType.Str) // this should not be necessary but for use the same logic
 
-  case class WebApiEmitter(api: WebApi, ordering: SpecOrdering, vendor: Option[Vendor], references: Seq[BaseUnit]) {
+  case class WebApiEmitter(api: Api, ordering: SpecOrdering, vendor: Option[Vendor], references: Seq[BaseUnit]) {
     val emitters: Seq[EntryEmitter] = {
       val fs     = api.fields
       val result = mutable.ListBuffer[EntryEmitter]()

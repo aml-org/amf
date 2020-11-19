@@ -4,6 +4,7 @@
       "@id": "#14",
       "@type": [
         "apiContract:WebAPI",
+        "apiContract:API",
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
@@ -426,7 +427,7 @@
       "doc:encodes": {
         "@id": "#14"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": true
     },
     {
@@ -439,7 +440,7 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false
     },
     {
@@ -449,7 +450,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"details\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"message\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\n        \"message\"\n      ]\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\",\n    \"details\"\n  ]\n}",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#2": "[(1,0)-(28,1)]"
+        }
+      }
     }
   ],
   "@context": {

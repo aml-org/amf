@@ -7,12 +7,14 @@ import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.utils._
+import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.webapi.contexts.emitter.oas.Oas3SpecEmitterFactory
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, DataNodeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter._
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import amf.plugins.domain.shapes.models.Example
@@ -63,14 +65,15 @@ case class Oas3ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(im
 
 case class Oas3ExampleValuesPartEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
-  override def emit(p: PartBuilder): Unit = {
-    if (example.isLink) {
-      val refUrl = OasDefinitions.appendOas3ComponentsPrefix(example.linkLabel.value(), "examples")
-      p.obj(_.entry("$ref", refUrl))
-    } else {
-      p.obj(traverse(ordering.sorted(emitters), _))
+  override def emit(p: PartBuilder): Unit =
+    handleInlinedRefOr(p, example) {
+      if (example.isLink) {
+        val refUrl = OasDefinitions.appendOas3ComponentsPrefix(example.linkLabel.value(), "examples")
+        p.obj(_.entry("$ref", refUrl))
+      } else {
+        p.obj(traverse(ordering.sorted(emitters), _))
+      }
     }
-  }
 
   val emitters: Seq[EntryEmitter] = {
     val results = ListBuffer[EntryEmitter]()
@@ -282,11 +285,14 @@ class ExpandedRamlExampleValuesEmitter(example: Example, ordering: SpecOrdering)
 
 abstract class RamlExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
-  override def emit(b: PartBuilder): Unit = emitters match {
-    case Left(p)                          => p.emit(b)
-    case Right(values) if values.nonEmpty => b.obj(traverse(ordering.sorted(values), _))
-    case _                                => NullEmitter(example.annotations).emit(b)
-  }
+  override def emit(b: PartBuilder): Unit =
+    handleInlinedRefOr(b, example) {
+      emitters match {
+        case Left(p)                          => p.emit(b)
+        case Right(values) if values.nonEmpty => b.obj(traverse(ordering.sorted(values), _))
+        case _                                => NullEmitter(example.annotations).emit(b)
+      }
+    }
 
   protected def entries: Seq[Emitter]
 

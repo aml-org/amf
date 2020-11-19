@@ -44,7 +44,7 @@ class OasAnyShapeEmitter(shape: AnyShape,
             case (anonymous, named) => examplesEmitters(anonymous.headOption, anonymous.tail ++ named, isHeader)
           })
         })
-      if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion)
+      if (spec.schemaVersion isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         shape.fields.entry(AnyShapeModel.Comment).map(c => result += ValueEmitter("$comment", c))
     }
 

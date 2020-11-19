@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterCont
 import amf.plugins.document.webapi.parser.spec.async.parser.AsyncSchemaFormats
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypePartEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, RAML10SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{SchemaVersion, RAML10SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.toRaml
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -29,15 +29,14 @@ case class AsyncSchemaEmitter(key: String,
   }
 
   private def emitAsRaml(b: EntryBuilder): Unit = {
-    val emitters =
-      Raml10TypeEmitter(shape, ordering, references = references)(toRaml(spec)).entries()
+    val emitters = Raml10TypeEmitter(shape, ordering, references = references)(toRaml(spec)).entries()
     b.entry(
       key,
       _.obj(eb => emitters.foreach(_.emit(eb)))
     )
   }
 
-  private def emitAsOas(b: EntryBuilder, schemaVersion: JSONSchemaVersion): Unit = {
+  private def emitAsOas(b: EntryBuilder, schemaVersion: SchemaVersion): Unit = {
     b.entry(
       key,
       b => {

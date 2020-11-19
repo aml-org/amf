@@ -4,7 +4,7 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
 import amf.core.remote._
 import amf.io.{BuildCycleTests, FunSuiteCycleTests}
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.Assertion
 
 import scala.concurrent.Future

@@ -23,18 +23,15 @@ object AsyncSchemaFormats {
                         "application/vnd.apache.avro+json;version=1.9.0",
                         "application/vnd.apache.avro+yaml;version=1.9.0")
   val ramlSchema = List(
-    "application/vnd.rai.raml;version=1.0",
-    "application/vnd.rai.raml+json;version=1.0",
-    "application/vnd.rai.raml+yaml;version=1.0",
-    "application/vnd.rai.raml+xml;version=1.0"
+    "application/raml+yaml;version=1.0"
   )
 
-  def getSchemaVersion(payload: Payload)(implicit errorHandler: ErrorHandler): JSONSchemaVersion = {
+  def getSchemaVersion(payload: Payload)(implicit errorHandler: ErrorHandler): SchemaVersion = {
     val value = Option(payload.schemaMediaType).map(f => f.value()).orElse(None)
     getSchemaVersion(value)
   }
 
-  def getSchemaVersion(value: Option[String])(implicit errorHandler: ErrorHandler): JSONSchemaVersion =
+  def getSchemaVersion(value: Option[String])(implicit errorHandler: ErrorHandler): SchemaVersion =
     value match {
       case Some(format) if oas30Schema.contains(format) => OAS30SchemaVersion("schema")(errorHandler)
       case Some(format) if ramlSchema.contains(format)  => RAML10SchemaVersion()
@@ -43,7 +40,7 @@ object AsyncSchemaFormats {
     }
 }
 
-case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: JSONSchemaVersion)(
+case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(
     implicit val ctx: OasLikeWebApiContext) {
 
   def parse(): Option[Shape] = version match {

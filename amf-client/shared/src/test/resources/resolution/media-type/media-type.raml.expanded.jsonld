@@ -12,6 +12,7 @@
         "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -698,7 +699,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.2"
+        "@value": "2.2.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

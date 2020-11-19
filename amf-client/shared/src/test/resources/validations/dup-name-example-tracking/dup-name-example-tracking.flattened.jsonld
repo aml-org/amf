@@ -4,6 +4,7 @@
       "@id": "#19",
       "@type": [
         "apiContract:WebAPI",
+        "apiContract:API",
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
@@ -510,7 +511,7 @@
       "doc:encodes": {
         "@id": "#19"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": true
     },
     {
@@ -523,7 +524,7 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false
     },
     {
@@ -533,7 +534,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"ok\" : true\n}",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#2": "[(1,0)-(3,1)]"
+        }
+      }
     }
   ],
   "@context": {

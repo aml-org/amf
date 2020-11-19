@@ -9,6 +9,7 @@ import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ForceEntry, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.domain.shapes.models._
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
@@ -37,7 +38,7 @@ case class Raml10TypeEmitter(shape: Shape,
 //            .isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].fromTypeExpression =>
 //        Seq(RamlTypeExpressionEmitter(shape.asInstanceOf[AnyShape]))
       case _ if Option(shape).isDefined && shape.annotations.contains(classOf[ExternalReferenceUrl]) =>
-        Seq(RamlExternalReferenceUrlEmitter(shape))
+        Seq(RamlExternalReferenceUrlEmitter(shape)())
       case l: Linkable if l.isLink =>
         val isForceEntry = forceEntry || l.annotations.contains(classOf[ForceEntry])
         val refEmitter =

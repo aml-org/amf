@@ -8,7 +8,8 @@ import amf.core.parser.{Annotations, Position}
 import amf.core.remote.{OasYamlHint, RamlYamlHint}
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.templates.ResourceType
-import amf.plugins.domain.webapi.models.{Parameter, Response, WebApi}
+import amf.plugins.domain.webapi.models.{Parameter, Response}
+import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.AsyncFunSuite
 import amf.core.parser.Range
 import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
@@ -188,7 +189,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference.json")
-      assert(targets.head._2 == Range(Position(6, 14), Position(6, 28)))
+      assert(targets.head._2 == List(Range(Position(6, 14), Position(6, 28))))
       succeed
     }
   }
@@ -201,7 +202,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference.raml")
-      assert(targets.head._2 == Range(Position(6, 14), Position(6, 28)))
+      assert(targets.head._2 == List(Range(Position(6, 14), Position(6, 28))))
       succeed
     }
   }
@@ -217,11 +218,27 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference-1.yaml")
-      assert(targets.head._2 == Range(Position(6, 5), Position(6, 30)))
+      assert(targets.head._2 == List(Range(Position(6, 5), Position(6, 30))))
 
       assert(reftargets.size == 1)
       assert(reftargets.head._1 == s"${uri}reference.json")
-      assert(reftargets.head._2 == Range(Position(1, 15), Position(1, 29)))
+      assert(reftargets.head._2 == List(Range(Position(1, 15), Position(1, 29))))
+
+      succeed
+    }
+  }
+
+  test("test raml ReferenceTarget annotations - double inclusion of same file") {
+    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
+    for {
+      unit <- build(s"${uri}root-4.raml", RamlYamlHint)
+    } yield {
+      val targets = unit.annotations.find(classOf[ReferenceTargets]).map(_.targets).getOrElse(Map.empty)
+
+      assert(targets.size == 1)
+      assert(targets.head._1 == s"${uri}example.json")
+      assert(
+        targets.head._2 == List(Range(Position(9, 22), Position(9, 34)), Range(Position(21, 30), Position(21, 42))))
 
       succeed
     }

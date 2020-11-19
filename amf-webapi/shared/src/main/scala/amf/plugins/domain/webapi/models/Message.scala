@@ -1,14 +1,15 @@
 package amf.plugins.domain.webapi.models
 
 import amf.core.metamodel.{Field, Obj}
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.{CreativeWork, Example, ExemplifiedDomainElement}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example, ExemplifiedDomainElement, NodeShape}
 import amf.plugins.domain.webapi.metamodel.MessageModel
 import amf.plugins.domain.webapi.metamodel.MessageModel._
 import amf.plugins.domain.webapi.models.bindings.{MessageBinding, MessageBindings}
 import amf.core.utils.AmfStrings
+import amf.plugins.domain.shapes.metamodel.common.ExamplesField.Examples
 
 class Message(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
@@ -25,7 +26,9 @@ class Message(override val fields: Fields, override val annotations: Annotations
   def title: StrField              = fields.field(Title)
   def summary: StrField            = fields.field(Summary)
   def bindings: MessageBindings    = fields.field(Bindings)
+  def headerExamples: Seq[Example] = fields.field(HeaderExamples)
   def headers: Seq[Parameter]      = fields.field(Headers)
+  def headerSchema: NodeShape      = fields.field(HeaderSchema)
 
   def withDescription(description: String): this.type            = set(Description, description)
   def isAbstract(isAbstract: Boolean): this.type                 = set(IsAbstract, isAbstract)
@@ -38,6 +41,8 @@ class Message(override val fields: Fields, override val annotations: Annotations
   def withSummary(summary: String): this.type                    = set(Summary, summary)
   def withBindings(bindings: MessageBindings): this.type         = set(Bindings, bindings)
   def withHeaders(headers: Seq[Parameter]): this.type            = setArray(Headers, headers)
+  def withHeaderExamples(examples: Seq[Example]): this.type      = setArray(HeaderExamples, examples)
+  def withHeaderSchema(obj: NodeShape): this.type                = set(HeaderSchema, obj)
 
   def withPayload(mediaType: Option[String] = None): Payload = {
     val result = Payload()

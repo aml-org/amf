@@ -6,9 +6,13 @@ import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
 import amf.core.parser.FieldEntry
 import amf.plugins.domain.webapi.models.{Key, Payload}
 
-case class JsonMergePatch(isNull: AmfElement => Boolean, keyCriteria: KeyCriteria, ignoredFields: Seq[Field] = Seq()) {
+case class JsonMergePatch(isNull: AmfElement => Boolean,
+                          keyCriteria: KeyCriteria,
+                          ignoredFields: Seq[Field] = Seq(),
+                          customMerges: Seq[CustomMerge] = Seq()) {
 
   def merge[T <: AmfElement](target: T, patch: T): AmfElement = {
+    customMerges.foreach(_.apply(target, patch))
     (target, patch) match {
       case (targetObject: AmfObject, patchObject: AmfObject) => mergeObjects(targetObject, patchObject)
       case (targetArray: AmfArray, patchArray: AmfArray)     => mergeObjectLikeArrays(targetArray, patchArray)
@@ -66,6 +70,10 @@ trait KeyCriteria {
   def getKeyFor(element: AmfElement): Option[String]
   def hasKey(element: AmfElement): Boolean    = getKeyFor(element).isDefined
   def hasKeysForAll(array: AmfArray): Boolean = array.values.forall(hasKey)
+}
+
+trait CustomMerge {
+  def apply(target: AmfElement, patch: AmfElement): Unit
 }
 
 case class DefaultKeyCriteria() extends KeyCriteria {

@@ -15,6 +15,7 @@ import amf.plugins.domain.shapes.models.{FileShape, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.bindings.{BindingHeaders, BindingQuery, HttpMessageBindingModel}
 import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, OpenIdConnectSettingsModel, SecuritySchemeModel}
 import amf.plugins.domain.webapi.metamodel._
+import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
 import amf.plugins.domain.webapi.models.{IriTemplateMapping, Parameter}
 import amf.plugins.domain.webapi.models.security.{OAuth2Settings, OpenIdConnectSettings}
 
@@ -138,12 +139,12 @@ object CustomShaclFunctions {
       }
     }),
     "nonEmptyListOfProtocols" -> ((element, violation) => {
-      val maybeValue = element.fields.getValueAsOption(WebApiModel.Schemes)
+      val maybeValue = element.fields.getValueAsOption(BaseApiModel.Schemes)
       maybeValue
         .map(_.value)
         .foreach {
           case AmfArray(elements, _) if elements.isEmpty =>
-            violation(Some(Annotations(), WebApiModel.Schemes))
+            violation(Some(Annotations(), BaseApiModel.Schemes))
           case _ =>
         }
     }),
@@ -213,20 +214,6 @@ object CustomShaclFunctions {
       } yield {
         val isObjectAndHasProperties = validateObjectAndHasProperties(queryElement)
         if (!isObjectAndHasProperties) violation(None)
-      }
-    }),
-    "mandatoryHeadersObjectNode" -> ((element, violation) => {
-      for {
-        headerElement <- element.fields.?[AmfArray](MessageModel.Headers)
-        header        <- headerElement.values.headOption
-      } yield {
-        header match {
-          case p: Parameter =>
-            p.schema match {
-              case _: NodeShape => // ignore
-              case _            => violation(None)
-            }
-        }
       }
     }),
     "mandatoryHeaderNamePattern" -> ((element, violation) => {

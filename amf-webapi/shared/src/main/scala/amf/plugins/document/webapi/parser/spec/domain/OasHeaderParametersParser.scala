@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
@@ -54,7 +55,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
             .getOrElse {
               ctx.obtainRemoteYNode(fullRef) match {
                 case Some(requestNode) =>
-                  OasHeaderParameterParser(requestNode.as[YMap], adopt).parse()
+                  OasHeaderParameterParser(requestNode.as[YMap], adopt).parse().add(ExternalReferenceUrl(fullRef))
                 case None =>
                   ctx.eh.violation(CoreValidations.UnresolvedReference,
                                    "",

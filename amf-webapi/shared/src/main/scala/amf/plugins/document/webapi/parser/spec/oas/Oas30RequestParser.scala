@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, _}
+import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorRequest
@@ -62,7 +63,9 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
       .getOrElse {
         ctx.navigateToRemoteYNode(fullRef) match {
           case Some(navigation) =>
-            Oas30RequestParser(navigation.remoteNode.as[YMap], parentId, definitionEntry)(navigation.context).parse()
+            Oas30RequestParser(navigation.remoteNode.as[YMap], parentId, definitionEntry)(navigation.context)
+              .parse()
+              .add(ExternalReferenceUrl(fullRef))
           case None =>
             ctx.eh.violation(CoreValidations.UnresolvedReference,
                              "",

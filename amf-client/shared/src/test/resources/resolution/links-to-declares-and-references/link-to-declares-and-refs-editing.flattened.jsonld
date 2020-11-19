@@ -4,6 +4,7 @@
       "@id": "#29",
       "@type": [
         "apiContract:WebAPI",
+        "apiContract:API",
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
@@ -876,7 +877,7 @@
       "doc:encodes": {
         "@id": "#29"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": true,
       "smaps": {
         "aliases-array": {
@@ -895,7 +896,7 @@
           "@id": "#2"
         }
       ],
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false,
       "smaps": {
         "source-vendor": {
@@ -916,7 +917,7 @@
       "doc:encodes": {
         "@id": "#7"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false,
       "smaps": {
         "lexical": {
@@ -934,7 +935,7 @@
       "doc:encodes": {
         "@id": "#15"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false,
       "smaps": {
         "lexical": {
@@ -952,7 +953,7 @@
       "doc:encodes": {
         "@id": "#24"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false
     },
     {
@@ -1001,7 +1002,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\"\n  ]\n}",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#24": "[(1,0)-(16,1)]"
+        }
+      }
     },
     {
       "@id": "#8",

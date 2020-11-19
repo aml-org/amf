@@ -6,8 +6,10 @@ import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.DomainElement
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.metamodel.{OperationModel, WebApiModel}
-import amf.plugins.domain.webapi.models.{Operation, WebApi}
+import amf.plugins.domain.webapi.metamodel.OperationModel
+import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
+import amf.plugins.domain.webapi.models.Operation
+import amf.plugins.domain.webapi.models.api.Api
 
 import scala.language.postfixOps
 
@@ -22,10 +24,10 @@ class LowercaseSchemes()(override implicit val errorHandler: ErrorHandler) exten
   }
 
   override def resolve[T <: BaseUnit](model: T): T = model match {
-    case d: Document if d.encodes.isInstanceOf[WebApi] =>
+    case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
-        val api = d.encodes.asInstanceOf[WebApi]
-        capitalizeProtocols(api, api.schemes, WebApiModel.Schemes)
+        val api = d.encodes.asInstanceOf[Api]
+        capitalizeProtocols(api, api.schemes, BaseApiModel.Schemes)
 
         model.iterator().foreach {
           case op: Operation =>

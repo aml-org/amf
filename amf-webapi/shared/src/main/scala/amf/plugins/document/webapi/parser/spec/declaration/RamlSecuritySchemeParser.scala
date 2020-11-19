@@ -34,12 +34,12 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
         map.key("type", (SecuritySchemeModel.Type in scheme).allowingAnnotations)
 
         scheme.`type`.option() match {
-          case Some("oauth2" | "basic" | "apiKey") =>
+          case Some("oauth2" | "basic" | "apiKey" | "http" | "openIdConnect") =>
             ctx.eh.warning(
               CrossSecurityWarningSpecification,
               scheme.id,
               Some(SecuritySchemeModel.Type.value.iri()),
-              "OAS 2.0 security scheme type detected in RAML 1.0 spec",
+              "OAS security scheme type detected in RAML spec",
               scheme.`type`.annotations().find(classOf[LexicalInformation]),
               Some(ctx.rootContextDocument)
             )

@@ -1,0 +1,122 @@
+{
+  "@graph": [
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:WebAPI",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "name": "API"
+    },
+    {
+      "@id": "",
+      "declares": [
+        {
+          "@id": "#1"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "encodes": {
+        "@id": "#4"
+      },
+      "version": "2.1.2",
+      "root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "shacl:name": "birthday",
+      "examples": [
+        {
+          "@id": "#2"
+        }
+      ]
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "apiContract:Example",
+        "doc:DomainElement"
+      ],
+      "strict": true,
+      "structuredValue": {
+        "@id": "#3"
+      },
+      "raw": "2015-05-23"
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "value": "2015-05-23",
+      "datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "name": "scalar_1"
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#",
+    "examples": {
+      "@id": "apiContract:examples"
+    },
+    "structuredValue": {
+      "@id": "doc:structuredValue"
+    },
+    "declares": {
+      "@id": "doc:declares"
+    },
+    "encodes": {
+      "@id": "doc:encodes"
+    },
+    "datatype": {
+      "@id": "shacl:datatype"
+    },
+    "name": {
+      "@id": "core:name"
+    },
+    "version": {
+      "@id": "doc:version"
+    },
+    "root": {
+      "@id": "doc:root"
+    },
+    "strict": {
+      "@id": "doc:strict"
+    },
+    "raw": {
+      "@id": "doc:raw"
+    },
+    "value": {
+      "@id": "data:value"
+    }
+  }
+}

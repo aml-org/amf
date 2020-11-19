@@ -7,7 +7,8 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfScalar
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
-import amf.plugins.domain.webapi.models.{EndPoint, Operation, WebApi}
+import amf.plugins.domain.webapi.models.api.Api
+import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 
 /**
   * Applies summary and description defined in path item to all of its child operations
@@ -35,8 +36,8 @@ class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInf
     */
   protected def normalizeDescriptions(unit: BaseUnit): BaseUnit = {
     unit match {
-      case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        val webApi = doc.encodes.asInstanceOf[WebApi]
+      case doc: Document if doc.encodes.isInstanceOf[Api] =>
+        val webApi = doc.encodes.asInstanceOf[Api]
         webApi.endPoints foreach applyToOperations
         doc
       case _ => unit

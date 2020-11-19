@@ -33,7 +33,7 @@ import amf.internal.environment.{Environment => InternalEnvironment}
 import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.Vocabularies
 import amf.plugins.document.webapi.parser.spec.common.emitters.WebApiDomainElementEmitter
-import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
 
@@ -447,7 +447,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       _    <- AMF.init().asFuture
       unit <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(scalarAnnotations).asFuture
     } yield {
-      val api         = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+      val api         = unit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
       val annotations = api.name.annotations().custom().asSeq
       annotations should have size 1
       val annotation = annotations.head
@@ -665,7 +665,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
                    |version: 32.0.7
     """.stripMargin
 
-    val buffer = LimitedStringBuffer(450)
+    val buffer = LimitedStringBuffer(600)
     for {
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseStringAsync(input).asFuture
@@ -787,7 +787,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       unit     <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(amflight).asFuture
       resolved <- Future.successful(AMF.resolveRaml10(unit))
     } yield {
-      val webapi = resolved.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+      val webapi = resolved.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
       webapi.endPoints.asSeq.foreach { ep =>
         ep.operations.asSeq.foreach { op =>
           op.responses.asSeq.foreach { resp =>
@@ -942,7 +942,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       doc <- AMF.ramlParser().parseStringAsync(api).asFuture
     } yield {
 
-      val seq = doc.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.asSeq.head.operations.asSeq
+      val seq = doc.asInstanceOf[Document].encodes.asInstanceOf[Api[_]].endPoints.asSeq.head.operations.asSeq
       def assertDefault(method: String, expected: Boolean) =
         seq
           .find(_.method.value().equals(method))
@@ -965,7 +965,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   private def buildBasicApi() = {
-    val api: WebApi = new WebApi().withName("test swagger entry")
+    val api: Api[_] = new WebApi().withName("test swagger entry")
 
     api.withEndPoint("/endpoint").withOperation("get").withResponse("200").withDescription("a descrip")
     new Document().withEncodes(api)
@@ -983,7 +983,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     val linked: NodeShape = nodeShape.link(Some("#/definitions/person"))
     linked.withName("Person")
     doc.encodes
-      .asInstanceOf[WebApi]
+      .asInstanceOf[Api[_]]
       .endPoints
       .asSeq
       .head
@@ -1025,7 +1025,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseStringAsync(api).asFuture
     } yield {
-      val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+      val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
       val dataNode = webApi.endPoints.asSeq.head.operations.asSeq.head.responses.asSeq.head.payloads.asSeq.head.schema
         .asInstanceOf[AnyShape]
         .examples
@@ -1092,7 +1092,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       val pathParamters: List[Parameter] = resolved
         .asInstanceOf[Document]
         .encodes
-        .asInstanceOf[WebApi]
+        .asInstanceOf[Api[_]]
         .endPoints
         .asSeq
         .last
@@ -1128,7 +1128,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       resolved <- Future { new Raml10Resolver().resolve(unit) }
     } yield {
       val baseParameters: Seq[Parameter] =
-        resolved.asInstanceOf[Document].encodes.asInstanceOf[WebApi].servers.asSeq.head.variables.asSeq
+        resolved.asInstanceOf[Document].encodes.asInstanceOf[Api[_]].servers.asSeq.head.variables.asSeq
 
       assert(baseParameters.head.name.value().equals("v1"))
       assert(baseParameters(1).name.value().equals("v2"))
@@ -1169,7 +1169,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       val shape: Shape = unit
         .asInstanceOf[Document]
         .encodes
-        .asInstanceOf[WebApi]
+        .asInstanceOf[Api[_]]
         .endPoints
         .asSeq
         .head
@@ -1191,7 +1191,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   private def removeFields(unit: BaseUnit): Future[BaseUnit] = Future {
-    val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+    val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
     webApi.description.remove()
     val operation: Operation = webApi.endPoints.asSeq.head.operations.asSeq.head
     operation.graph().remove("http://a.ml/vocabularies/apiContract#returns")
@@ -1223,7 +1223,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       assert(unit.location.startsWith(baseUrl))
       val encodes = unit.asInstanceOf[Document].encodes
       assert(encodes.id.startsWith(baseUrl))
-      assert(encodes.asInstanceOf[WebApi].name.is("Some title"))
+      assert(encodes.asInstanceOf[Api[_]].name.is("Some title"))
     }
   }
 
@@ -1251,7 +1251,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
   private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
     assert(baseUnit.location == expectedLocation)
-    val api       = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
+    val api       = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
     val endPoints = api.endPoints.asSeq
     assert(endPoints.size == 1)
 
@@ -1483,7 +1483,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       val seq = v
         .asInstanceOf[Document]
         .encodes
-        .asInstanceOf[WebApi]
+        .asInstanceOf[Api[_]]
         .endPoints
         .asSeq
         .head
@@ -1586,7 +1586,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         .asFuture
     } yield {
       val r          = new Raml10Resolver().resolve(a)
-      val operations = r.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.asSeq.head.operations.asSeq
+      val operations = r.asInstanceOf[Document].encodes.asInstanceOf[Api[_]].endPoints.asSeq.head.operations.asSeq
       val getOp      = operations.find(_.method.value().equals("get")).get
       val option = getOp.request.payloads.asSeq.head.schema
         .asInstanceOf[AnyShape]

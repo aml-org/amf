@@ -1,0 +1,20 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic content",
+    "version": "0.1"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "summary": "this is a test",
+        "operationId": "test",
+        "responses": {
+          "200": {
+            "$ref": "external-response.json"
+          }
+        }
+      }
+    }
+  }
+}

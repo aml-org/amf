@@ -11,13 +11,20 @@ import amf.core.remote.JsonSchema
 import amf.core.services.RuntimeSerializer
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
-import amf.plugins.document.webapi.contexts.emitter.oas.{
+import amf.plugins.document.webapi.contexts.emitter.jsonschema.{
   InlinedJsonSchemaEmitterContext,
-  AliasDefinitions,
   JsonSchemaEmitterContext
 }
+import amf.plugins.document.webapi.contexts.emitter.oas.AliasDefinitions
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft201909SchemaVersion,
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaDraft7SchemaVersion,
+  JSONSchemaUnspecifiedVersion,
+  JSONSchemaVersion,
+  SchemaVersion
+}
 import amf.plugins.document.webapi.parser.spec.oas.OasDeclarationsEmitter
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument
@@ -45,10 +52,12 @@ trait JsonSchemaSerializer extends PlatformSecrets {
                                    exec: BaseExecutionEnvironment): String = {
     implicit val executionContext: ExecutionContext = exec.executionContext
 
+    // TODO: WE SHOULDN'T HAVE TO CREATE A DOCUMENT TO EMIT A SCHEMA!
     AMFSerializer.init()
     val originalId = element.id
     val document   = Document().withDeclares(Seq(fixNameIfNeeded(element)))
     val jsonSchema = RuntimeSerializer(document, "application/schema+json", JsonSchema.name, shapeOptions = options)
+    // TODO: why are we stripping annotations??
     element.withId(originalId)
     element.annotations.reject(a =>
       a.isInstanceOf[ParsedJSONSchema] || a.isInstanceOf[GeneratedJSONSchema] || a.isInstanceOf[JSONSchemaRoot])
@@ -70,8 +79,11 @@ trait JsonSchemaSerializer extends PlatformSecrets {
 
 case class JsonSchemaEntry(version: JSONSchemaVersion) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val draftVersionNumber = if (version == JSONSchemaDraft7SchemaVersion) 7 else 4
-    b.entry("$schema", s"http://json-schema.org/draft-0${draftVersionNumber}/schema#")
+    val schemaUri = version match {
+      case JSONSchemaUnspecifiedVersion => JSONSchemaDraft4SchemaVersion.url
+      case _                            => version.url
+    }
+    b.entry("$schema", schemaUri)
   }
 
   override def position(): Position = Position.ZERO
@@ -84,7 +96,7 @@ case class JsonSchemaEmitter(root: Shape,
                              options: ShapeRenderOptions) {
 
   def emitDocument(): YDocument = {
-    val schemaVersion: JSONSchemaVersion = JSONSchemaVersion.fromClientOptions(options.schemaVersion)
+    val schemaVersion = SchemaVersion.fromClientOptions(options.schemaVersion)
     val context =
       if (options.isWithCompactedEmission)
         new JsonSchemaEmitterContext(options.errorHandler, options, schemaVersion = schemaVersion)
@@ -102,7 +114,8 @@ case class JsonSchemaEmitter(root: Shape,
       val name =
         if (options.isWithCompactedEmission) ctx.definitionsQueue.normalizeName(root.name.option())
         else root.name.value()
-      b.entry("$ref", OasDefinitions.appendSchemasPrefix(name))
+      val prefix = s"#${ctx.schemasDeclarationsPath}"
+      b.entry("$ref", s"$prefix$name")
     }
 
     override def position(): Position = Position.ZERO

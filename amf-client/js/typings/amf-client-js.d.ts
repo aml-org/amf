@@ -1009,7 +1009,7 @@ declare module 'amf-client-js' {
 
         linkCopy(): AnyShape
 
-        toJsonSchema: string
+        toJsonSchema(): string
 
         validate(payload: string): Promise<client.validate.ValidationReport>
 

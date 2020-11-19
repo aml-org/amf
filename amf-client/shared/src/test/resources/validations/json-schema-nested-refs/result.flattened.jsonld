@@ -4,6 +4,7 @@
       "@id": "#37",
       "@type": [
         "apiContract:WebAPI",
+        "apiContract:API",
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
@@ -80,7 +81,7 @@
       "doc:encodes": {
         "@id": "#37"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": true
     },
     {
@@ -93,7 +94,7 @@
       "doc:encodes": {
         "@id": "#4"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:references": [
         {
           "@id": "#2"
@@ -111,7 +112,7 @@
       "doc:encodes": {
         "@id": "#6"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false
     },
     {
@@ -174,7 +175,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"merchant\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"operator\": {\r\n      \"type\": \"string\"\r\n    },\r\n\r\n    \"primaryApplicant\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    },\r\n    \"additionalApplicants\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    }\r\n  },\r\n  \"required\": [\r\n    \"merchant\",\r\n    \"operator\"\r\n  ]\r\n}",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#4": "[(1,0)-(24,1)]"
+        }
+      }
     },
     {
       "@id": "#2",
@@ -186,7 +192,7 @@
       "doc:encodes": {
         "@id": "#3"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false
     },
     {
@@ -196,7 +202,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#6": "[(1,0)-(12,1)]"
+        }
+      }
     },
     {
       "@id": "#17",
@@ -329,7 +340,12 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema\",\r\n\r\n  \"expensesLiving\": {\r\n    \"type\": \"object\"\r\n  },\r\n  \"fullAddress\": {\r\n    \"type\": \"object\"\r\n  },\r\n  \"applicant\": {\r\n    \"type\": \"object\",\r\n    \"properties\": {\r\n      \"addresses\": {\r\n        \"allOf\": [\r\n          {\r\n            \"$ref\": \"#/fullAddress\"\r\n          }\r\n        ]\r\n      },\r\n      \"expenses\": {\r\n        \"anyOf\": [\r\n          {\r\n            \"$ref\": \"#/expensesLiving\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}",
-      "core:mediaType": "application/json"
+      "core:mediaType": "application/json",
+      "smaps": {
+        "lexical": {
+          "#3": "[(1,0)-(29,1)]"
+        }
+      }
     },
     {
       "@id": "#18",

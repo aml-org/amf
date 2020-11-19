@@ -4,7 +4,7 @@ import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.{AmfArray, Annotation, DataNode}
 import amf.core.parser.errorhandler.{JsonErrorHandler, WarningOnlyHandler}
 import amf.core.parser.{Annotations, ScalarNode, _}
-import amf.plugins.document.webapi.annotations.ParsedJSONExample
+import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ParsedJSONExample}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
@@ -243,7 +243,9 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
       .getOrElse {
         ctx.obtainRemoteYNode(fullRef) match {
           case Some(exampleNode) =>
-            Oas3ExampleValueParser(exampleNode.as[YMap], newExample(exampleNode), options).parse()
+            Oas3ExampleValueParser(exampleNode.as[YMap], newExample(exampleNode), options)
+              .parse()
+              .add(ExternalReferenceUrl(fullRef))
           case None =>
             ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
             val errorExample = setName(ErrorNamedExample(name, map).link(name)).adopted(parentId)

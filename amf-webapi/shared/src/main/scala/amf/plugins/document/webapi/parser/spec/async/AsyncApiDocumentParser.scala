@@ -2,10 +2,9 @@ package amf.plugins.document.webapi.parser.spec.async
 import amf.core.Root
 import amf.core.annotations.{DeclaredElement, SourceVendor}
 import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.document.{Document, Fragment, Module}
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, ParsedReference, Reference, ScalarNode, SyamlParsedDocument, YMapOps}
+import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
 import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.async.parser._
@@ -13,8 +12,7 @@ import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration.{
   AsycnReferencesParser,
   OasLikeCreativeWorkParser,
-  OasLikeTagsParser,
-  ReferencesParser
+  OasLikeTagsParser
 }
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.domain.binding.{
@@ -24,7 +22,7 @@ import amf.plugins.document.webapi.parser.spec.domain.binding.{
   AsyncServerBindingsParser
 }
 import amf.plugins.document.webapi.parser.spec.oas.OasLikeDeclarationsHelper
-import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.metamodel.bindings.{
   ChannelBindingsModel,
   MessageBindingsModel,
@@ -32,8 +30,9 @@ import amf.plugins.domain.webapi.metamodel.bindings.{
   ServerBindingsModel
 }
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
+import amf.plugins.domain.webapi.models.api.AsyncApi
 import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
-import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, WebApi}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YType}
 
@@ -47,13 +46,14 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     document.adopted(root.location).withLocation(root.location)
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
+    ctx.setJsonSchemaAST(map)
 
     val references = AsycnReferencesParser(root.references).parse()
     parseDeclarations(map)
     val declarationKeys = ctx.getDeclarationKeys
     if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
 
-    val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
+    val api = parseApi(map).add(SourceVendor(ctx.vendor))
     document
       .withEncodes(api)
       .adopted(root.location)
@@ -62,12 +62,13 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     if (declarable.nonEmpty) document.withDeclares(declarable)
     if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
+    ctx.futureDeclarations.resolve()
     document
   }
 
-  def parseWebApi(map: YMap): WebApi = {
+  def parseApi(map: YMap): AsyncApi = {
     YamlTagValidator.validate(root)
-    val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
+    val api = AsyncApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
     map.key("info", entry => OasLikeInformationParser(entry, api, ctx).parse())
     map.key("id", entry => IdentifierParser(entry, api, ctx).parse())
     map.key("channels") match {
@@ -111,7 +112,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     api
   }
 
-  private def parseChannels(entry: YMapEntry, api: WebApi): Unit = {
+  private def parseChannels(entry: YMapEntry, api: AsyncApi): Unit = {
     val paths = entry.value.as[YMap]
     val endpoints = paths.entries.foldLeft(List[EndPoint]())((acc, curr) =>
       acc ++ ctx.factory.endPointParser(curr, api.withEndPoint, acc).parse())
@@ -298,7 +299,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
 }
 
-case class IdentifierParser(entry: YMapEntry, webApi: WebApi, override implicit val ctx: AsyncWebApiContext)
+case class IdentifierParser(entry: YMapEntry, webApi: AsyncApi, override implicit val ctx: AsyncWebApiContext)
     extends WebApiBaseSpecParser {
   def parse(): Unit = {
     entry.value.tagType match {

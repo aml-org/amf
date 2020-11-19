@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.parser.{Annotations, _}
+import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorLink
@@ -38,7 +39,7 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
   private def remote(fullRef: String, map: YMap) = {
     ctx.obtainRemoteYNode(fullRef) match {
       case Some(requestNode) =>
-        buildAndPopulate(requestNode.as[YMap])
+        buildAndPopulate(requestNode.as[YMap]).add(ExternalReferenceUrl(fullRef))
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
         nameAndAdopt(new ErrorLink(fullRef, map).link(fullRef))

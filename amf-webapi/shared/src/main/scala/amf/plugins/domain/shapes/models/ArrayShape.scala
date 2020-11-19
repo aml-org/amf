@@ -69,16 +69,23 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
 case class ArrayShape(override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
-  def items: Shape    = fields.field(Items)
-  def contains: Shape = fields.field(Contains)
+  def items: Shape                  = fields.field(Items)
+  def contains: Shape               = fields.field(Contains)
+  def minContains: Int              = fields.field(MinContains)
+  def maxContains: Int              = fields.field(MaxContains)
+  def unevaluatedItems: Boolean     = fields.field(UnevaluatedItems)
+  def unevaluatedItemsSchema: Shape = fields.field(UnevaluatedItemsSchema)
+
   def withItems(items: Shape): this.type = {
     fields.set(id + "/items", Items, items, Annotations())
     this
   }
-  def withContains(contains: Shape): this.type = {
-    set(Contains, contains)
-    this
-  }
+
+  def withUnevaluatedItems(value: Boolean): this.type      = set(UnevaluatedItems, value)
+  def withUnevaluatedItemsSchema(schema: Shape): this.type = set(UnevaluatedItemsSchema, schema)
+  def withContains(contains: Shape): this.type             = set(Contains, contains)
+  def withMinContains(minTimes: Int): this.type            = set(MinContains, minTimes)
+  def withMaxContains(maxTimes: Int): this.type            = set(MaxContains, maxTimes)
 
   def hasItems = Option(fields.field(Items)).isDefined
 

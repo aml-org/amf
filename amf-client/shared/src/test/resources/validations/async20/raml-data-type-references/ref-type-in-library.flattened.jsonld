@@ -3,7 +3,8 @@
     {
       "@id": "#11",
       "@type": [
-        "apiContract:WebAPI",
+        "apiContract:AsyncAPI",
+        "apiContract:API",
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
@@ -87,7 +88,7 @@
         "apiContract:Payload",
         "doc:DomainElement"
       ],
-      "apiContract:schemaMediaType": "application/vnd.rai.raml;version=1.0",
+      "apiContract:schemaMediaType": "application/raml+yaml;version=1.0",
       "raml-shapes:schema": {
         "@id": "#2"
       },
@@ -214,7 +215,7 @@
       "doc:encodes": {
         "@id": "#11"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": true
     },
     {
@@ -231,7 +232,7 @@
           "@id": "#8"
         }
       ],
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": false,
       "smaps": {
         "source-vendor": {

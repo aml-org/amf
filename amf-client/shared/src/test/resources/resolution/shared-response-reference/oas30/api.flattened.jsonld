@@ -4,6 +4,7 @@
       "@id": "#13",
       "@type": [
         "apiContract:WebAPI",
+        "apiContract:API",
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
@@ -123,9 +124,10 @@
           "#16": "amf://id#12"
         },
         "lexical": {
-          "core:description": "[(27,6)-(28,0)]",
+          "apiContract:payload": "[(28,6)-(35,0)]",
+          "core:name": "[(26,4)-(26,22)]",
           "#16": "[(26,4)-(35,0)]",
-          "core:name": "[(26,4)-(26,22)]"
+          "core:description": "[(27,6)-(28,0)]"
         },
         "declared-element": {
           "#16": ""
@@ -155,9 +157,10 @@
           "#19": "amf://id#12"
         },
         "lexical": {
-          "core:description": "[(27,6)-(28,0)]",
+          "apiContract:payload": "[(28,6)-(35,0)]",
+          "core:name": "[(26,4)-(26,22)]",
           "#19": "[(26,4)-(35,0)]",
-          "core:name": "[(26,4)-(26,22)]"
+          "core:description": "[(27,6)-(28,0)]"
         },
         "declared-element": {
           "#19": ""
@@ -180,7 +183,8 @@
       "smaps": {
         "lexical": {
           "raml-shapes:schema": "[(30,10)-(32,0)]",
-          "#10": "[(29,8)-(35,0)]"
+          "#10": "[(29,8)-(35,0)]",
+          "core:mediaType": "[(29,8)-(29,24)]"
         }
       }
     },
@@ -433,7 +437,7 @@
       "doc:encodes": {
         "@id": "#13"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": true
     },
     {
@@ -452,9 +456,10 @@
       ],
       "smaps": {
         "lexical": {
-          "core:description": "[(27,6)-(28,0)]",
+          "apiContract:payload": "[(28,6)-(35,0)]",
+          "core:name": "[(26,4)-(26,22)]",
           "#12": "[(26,4)-(35,0)]",
-          "core:name": "[(26,4)-(26,22)]"
+          "core:description": "[(27,6)-(28,0)]"
         },
         "declared-element": {
           "#12": ""

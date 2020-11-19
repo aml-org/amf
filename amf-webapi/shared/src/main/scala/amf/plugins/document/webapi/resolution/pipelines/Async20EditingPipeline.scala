@@ -27,6 +27,7 @@ class Async20EditingPipeline(override val eh: ErrorHandler, urlShortening: Boole
     new AsyncContentTypeResolutionStage(),
     new AsyncExamplePropagationResolutionStage(),
     new ServerVariableExampleResolutionStage(),
-    new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true)
+    new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
+    new AnnotationRemovalStage()
   ) ++ url
 }

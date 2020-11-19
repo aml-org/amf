@@ -1,14 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{SpecOrdering, EntryEmitter, PartEmitter}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, Position}
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel
-import amf.plugins.domain.webapi.models.{TemplatedLink, IriTemplateMapping}
+import amf.plugins.domain.webapi.models.{IriTemplateMapping, TemplatedLink}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 
@@ -42,13 +43,14 @@ case class OasLinkPartEmitter(link: TemplatedLink, ordering: SpecOrdering, refer
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  override def emit(p: PartBuilder): Unit = {
-    if (link.isLink) {
-      OasTagToReferenceEmitter(link).emit(p)
-    } else {
-      p.obj(traverse(ordering.sorted(emitters), _))
+  override def emit(p: PartBuilder): Unit =
+    handleInlinedRefOr(p, link) {
+      if (link.isLink) {
+        OasTagToReferenceEmitter(link).emit(p)
+      } else {
+        p.obj(traverse(ordering.sorted(emitters), _))
+      }
     }
-  }
 
   val emitters: ListBuffer[EntryEmitter] = {
     val fs = link.fields

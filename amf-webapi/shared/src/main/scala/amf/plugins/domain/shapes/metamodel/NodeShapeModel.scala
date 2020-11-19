@@ -62,6 +62,22 @@ object NodeShapeModel extends AnyShapeModel {
                            Shapes + "dependencies",
                            ModelDoc(ModelVocabularies.Shapes, "dependencies", "Dependent properties constraint"))
 
+  val SchemaDependencies = Field(
+    Array(SchemaDependenciesModel),
+    Shapes + "schemaDependencies",
+    ModelDoc(ModelVocabularies.Shapes, "schemaDependencies", "Applied schemas if property exists constraint")
+  )
+
+  val UnevaluatedProperties = Field(
+    Bool,
+    Shapes + "unevaluatedProperties",
+    ModelDoc(ModelVocabularies.Shapes, "unevaluatedProperties", "Accepts that properties may not be evaluated in schema validation"))
+
+  val UnevaluatedPropertiesSchema = Field(
+    ShapeModel,
+    Shapes + "unevaluatedPropertiesSchema",
+    ModelDoc(ModelVocabularies.Shapes, "unevaluatedPropertiesSchema", "Properties that may not be evaluated in schema validation"))
+
   val specificFields = List(
     MinProperties,
     MaxProperties,
@@ -72,7 +88,10 @@ object NodeShapeModel extends AnyShapeModel {
     DiscriminatorMapping,
     Properties,
     PropertyNames,
-    Dependencies
+    Dependencies,
+    SchemaDependencies,
+    UnevaluatedProperties,
+    UnevaluatedPropertiesSchema
   )
 
   override val fields: List[Field] =

@@ -9,7 +9,7 @@ import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
 import amf.core.remote.Oas
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.emitter.oas.{JsonSchemaEmitterContext, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._

@@ -1,5 +1,7 @@
 message:
   examples:
-    -
-      user: Juancito
-      signup: Menganito
+    - payload:
+        user: Juancito
+        signup: Menganito
+      headers:
+        some-header: a

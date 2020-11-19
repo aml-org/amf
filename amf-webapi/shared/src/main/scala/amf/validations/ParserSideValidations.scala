@@ -253,6 +253,16 @@ object ParserSideValidations extends Validations {
     "additionalItems should be a boolean or a map"
   )
 
+  val InvalidUnevaluatedPropertiesType = validation(
+    "invalid-unevaluated-properties-type",
+    "unevaluatedProperties should be a boolean or a map"
+  )
+
+  val InvalidUnevaluatedItemsType = validation(
+    "invalid-unevaluated-items-type",
+    "unevaluatedItems should be a boolean or a map"
+  )
+
   val InvalidTupleType = validation(
     "invalid-tuple-type",
     "Tuple should be a sequence"
@@ -660,6 +670,11 @@ object ParserSideValidations extends Validations {
     "Missing required field for given grant type"
   )
 
+  val HeaderMustBeObject = validation(
+    "header-must-be-object",
+    "Message header must be of type object"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -705,8 +720,10 @@ object ParserSideValidations extends Validations {
     InvalidAllowedTargets.id                     -> all(WARNING), // TODO: should be violation
     MissingDiscriminatorProperty.id              -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
-    ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation,
-    InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING) // TODO: should be violation,
+    ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
+    InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
+    HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
+    InvalidRequiredBooleanForSchemaVersion.id    -> all(WARNING) // TODO: should be violation
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -811,6 +828,9 @@ object ParserSideValidations extends Validations {
     InvalidIdentifier,
     InvalidComponents,
     ExeededMaxYamlReferences,
-    InvalidStatusCode
+    InvalidStatusCode,
+    InvalidUnevaluatedPropertiesType,
+    InvalidUnevaluatedItemsType,
+    HeaderMustBeObject
   )
 }

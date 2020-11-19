@@ -4,7 +4,7 @@ import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
 import amf.core.remote.{Hint, OasJsonHint}
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.WebApi
 
 class OasParamPayloadValidationTest extends ApiShapePayloadValidationTest {
 

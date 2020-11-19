@@ -5,7 +5,7 @@ import amf.core.model.document.Document
 import amf.core.model.domain.templates.ParametrizedDeclaration
 import amf.core.remote.RamlYamlHint
 import amf.plugins.domain.shapes.models.NodeShape
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._

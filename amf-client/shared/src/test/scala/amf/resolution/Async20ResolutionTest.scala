@@ -16,12 +16,13 @@ class Async20ResolutionTest extends FunSuiteCycleTests {
   override def basePath: String       = "amf-client/shared/src/test/resources/resolution/async20/"
   private val validationsPath: String = "amf-client/shared/src/test/resources/validations/async20/"
 
-  multiGoldenTest("Message examples are propagated to payload shapes", "message-example-propagation.%s") { config =>
-    cycle("message-example-propagation.yaml",
-          config.golden,
-          AsyncYamlHint,
-          target = AMF,
-          renderOptions = Some(config.renderOptions))
+  multiGoldenTest("Message examples are propagated to payload and parameter shapes", "message-example-propagation.%s") {
+    config =>
+      cycle("message-example-propagation.yaml",
+            config.golden,
+            AsyncYamlHint,
+            target = AMF,
+            renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("defaultContentType overrides message contentType", "content-type-override.%s") { config =>
@@ -123,6 +124,17 @@ class Async20ResolutionTest extends FunSuiteCycleTests {
       AsyncYamlHint,
       target = AMF,
       directory = validationsPath + "raml-data-type-references/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
+  multiGoldenTest("Type forward referencing to check future declarations working correctly",
+                  "type-forward-referencing.%s") { config =>
+    cycle(
+      "type-forward-referencing.yaml",
+      config.golden,
+      AsyncYamlHint,
+      target = AMF,
       renderOptions = Some(config.renderOptions)
     )
   }

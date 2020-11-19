@@ -1,12 +1,17 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
 
+import amf.core.annotations.ExplicitField
 import amf.core.emitter.BaseEmitters.ValueEmitter
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
+import amf.core.model.domain.Shape
+import amf.core.parser.FieldEntry
 import amf.plugins.document.webapi.annotations.CollectionFormatFromItems
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsEmitter
+import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter.unevaluatedItemsInfo
+import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel}
 import amf.plugins.domain.shapes.models.ArrayShape
 
@@ -31,7 +36,7 @@ case class OasArrayShapeEmitter(shape: ArrayShape,
 
     fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
 
-    if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion && Option(shape.contains).isDefined)
+    if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion) && Option(shape.contains).isDefined)
       result += OasEntryShapeEmitter("contains", shape.contains, ordering, references, pointer, schemaPath)
 
     fs.entry(ArrayShapeModel.CollectionFormat) match { // What happens if there is an array of an array with collectionFormat?
@@ -48,6 +53,10 @@ case class OasArrayShapeEmitter(shape: ArrayShape,
           f)
       case None =>
         result += OasItemsShapeEmitter(shape, ordering, references, None, pointer, schemaPath)
+    }
+
+    if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
+      result += new UnevaluatedEmitter(shape, unevaluatedItemsInfo, ordering, references, pointer, schemaPath)
     }
 
     fs.entry(NodeShapeModel.Inherits).map(f => result += OasShapeInheritsEmitter(f, ordering, references))

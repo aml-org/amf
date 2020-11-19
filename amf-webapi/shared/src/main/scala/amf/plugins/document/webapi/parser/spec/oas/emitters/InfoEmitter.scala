@@ -3,10 +3,10 @@ package amf.plugins.document.webapi.parser.spec.oas.emitters
 import amf.core.annotations.LexicalInformation
 import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ValueEmitter, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.{Fields, Position}
 import amf.core.parser.Position.ZERO
+import amf.core.parser.{Fields, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.models.{License, Organization}
 import org.yaml.model.YDocument.EntryBuilder
 

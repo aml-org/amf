@@ -15,9 +15,11 @@ import amf.plugins.document.webapi.parser.spec.domain.{
   OasLinkParser
 }
 import amf.plugins.domain.webapi.metamodel._
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
+import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Parameter, WebApi}
+import amf.plugins.domain.webapi.models.Parameter
 import amf.validations.ParserSideValidations
 import org.yaml.model._
 

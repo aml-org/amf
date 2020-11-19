@@ -17,7 +17,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
   test("type - multiple inheritance with union and properties") {
     renderElement(
       "type/complex-inheritance-unions.raml",
-      CommonExtractors.namedRootInDeclares,
+      CommonExtractors.declaredWithName("root"),
       "type/complex-inheritance-unions.yaml",
       RamlYamlHint
     )
@@ -27,7 +27,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
     renderElement(
       "type/complex-inheritance-unions.raml",
       (b) => {
-        val original: Option[AnyShape] = CommonExtractors.namedRootInDeclares(b)
+        val original: Option[AnyShape] = CommonExtractors.declaredWithName("root")(b).map(_.asInstanceOf[AnyShape])
         val link: Option[AnyShape]     = original.map(_.link[AnyShape]("someName").add(ForceEntry()))
         link
       },
@@ -40,7 +40,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
     renderElement(
       "type/complex-inheritance-unions.raml",
       (b) => {
-        val original: Option[AnyShape] = CommonExtractors.namedRootInDeclares(b)
+        val original: Option[AnyShape] = CommonExtractors.declaredWithName("root")(b).map(_.asInstanceOf[AnyShape])
         val link: Option[AnyShape] =
           original.map(_.link[AnyShape]("someName.raml").add(ForceEntry()).add(ExternalFragmentRef("someName.raml")))
         link
@@ -53,7 +53,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
   test("type - reference to external fragment") {
     renderElement(
       "multiple-refs/input.raml",
-      CommonExtractors.namedRootInDeclares,
+      CommonExtractors.declaredWithName("root"),
       "multiple-refs/type-cycle-emission.yaml",
       RamlYamlHint,
       directory = jsonSchemaPath
@@ -63,7 +63,7 @@ class Raml10ElementCycleTest extends DomainElementCycleTest {
   test("type - reference to external fragment and declared type with entry") {
     renderElement(
       "type/refs-with-entry.raml",
-      CommonExtractors.namedRootInDeclares,
+      CommonExtractors.declaredWithName("root"),
       "type/refs-with-entry-emission.yaml",
       RamlYamlHint
     )

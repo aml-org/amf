@@ -1,0 +1,135 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#3",
+        "@type": [
+          "apiContract:AsyncAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "something"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "1.0.0"
+          }
+        ],
+        "apiContract:endpoint": [],
+        "smaps": {
+          "source-vendor": {
+            "#3": "ASYNC 2.0"
+          },
+          "lexical": {
+            "apiContract:endpoint": "[(5,0)-(6,0)]",
+            "core:name": "[(3,2)-(4,0)]",
+            "#3": "[(1,0)-(13,0)]",
+            "core:version": "[(4,2)-(5,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.2.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "raml-shapes:ScalarShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "OtherSchema"
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#1": "amf://id#2"
+          },
+          "declared-element": {
+            "#1": ""
+          },
+          "lexical": {
+            "shacl:datatype": "[(11,6)-(13,0)]",
+            "#1": "[(10,4)-(13,0)]"
+          },
+          "type-property-lexical-info": {
+            "#1": "[(11,6)-(11,10)]"
+          },
+          "resolved-link": {
+            "#1": "amf://id#1"
+          }
+        }
+      },
+      {
+        "@id": "#2",
+        "@type": [
+          "raml-shapes:ScalarShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:datatype": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "MySchema"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#2": ""
+          },
+          "lexical": {
+            "shacl:name": "[(10,4)-(10,12)]",
+            "#2": "[(10,4)-(13,0)]",
+            "shacl:datatype": "[(11,6)-(13,0)]"
+          },
+          "type-property-lexical-info": {
+            "#2": "[(11,6)-(11,10)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

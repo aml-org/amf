@@ -12,6 +12,7 @@
         "@id": "#3",
         "@type": [
           "apiContract:WebAPI",
+          "apiContract:API",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
@@ -282,7 +283,7 @@
     ],
     "doc:version": [
       {
-        "@value": "2.1.2"
+        "@value": "2.2.0"
       }
     ],
     "doc:root": [
@@ -314,12 +315,17 @@
               {
                 "@value": "application/json"
               }
-            ]
+            ],
+            "smaps": {
+              "lexical": {
+                "#2": "[(1,0)-(6,0)]"
+              }
+            }
           }
         ],
         "doc:version": [
           {
-            "@value": "2.1.2"
+            "@value": "2.2.0"
           }
         ],
         "doc:root": [

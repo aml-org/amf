@@ -29,7 +29,7 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   OasEditingPipeline,
   OasResolutionPipeline
 }
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.Api
 import org.yaml.model.{YDocument, YNode}
 
 sealed trait OasPlugin extends OasLikePlugin {
@@ -97,7 +97,7 @@ sealed trait OasPlugin extends OasLikePlugin {
 object Oas20Plugin extends OasPlugin {
 
   override def specContext(options: RenderOptions): OasSpecEmitterContext =
-    new Oas2SpecEmitterContext(options.errorHandler, compactEmission=options.isWithCompactedEmission)
+    new Oas2SpecEmitterContext(options.errorHandler, compactEmission = options.isWithCompactedEmission)
 
   override protected def vendor: Vendor = Oas20
 
@@ -114,7 +114,7 @@ object Oas20Plugin extends OasPlugin {
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
     case _: Overlay         => true
     case _: Extension       => true
-    case document: Document => document.encodes.isInstanceOf[WebApi]
+    case document: Document => document.encodes.isInstanceOf[Api]
     case module: Module =>
       module.declares exists {
         case _: DomainElement => true
@@ -162,7 +162,7 @@ object Oas20Plugin extends OasPlugin {
 object Oas30Plugin extends OasPlugin {
 
   override def specContext(options: RenderOptions): Oas3SpecEmitterContext =
-    new Oas3SpecEmitterContext(options.errorHandler, compactEmission=options.isWithCompactedEmission)
+    new Oas3SpecEmitterContext(options.errorHandler, compactEmission = options.isWithCompactedEmission)
 
   override protected def vendor: Vendor = Oas30
 
@@ -179,7 +179,7 @@ object Oas30Plugin extends OasPlugin {
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
     case _: Overlay         => true
     case _: Extension       => true
-    case document: Document => document.encodes.isInstanceOf[WebApi]
+    case document: Document => document.encodes.isInstanceOf[Api]
     case module: Module =>
       module.declares exists {
         case _: DomainElement => true

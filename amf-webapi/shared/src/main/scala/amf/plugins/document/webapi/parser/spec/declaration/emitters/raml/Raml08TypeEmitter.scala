@@ -6,6 +6,7 @@ import amf.core.model.domain.Shape
 import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ForceEntry, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ExamplesEmitter, SimpleTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models._
@@ -50,7 +51,7 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
           Seq(spec.localReference(shape))
       case s: Shape if s.inherits.exists(_.annotations.contains(classOf[ParsedJSONSchema])) => inheritsEmitters()
       case _ if Option(shape).isDefined && shape.annotations.contains(classOf[ExternalReferenceUrl]) =>
-        Seq(RamlExternalReferenceUrlEmitter(shape))
+        Seq(RamlExternalReferenceUrlEmitter(shape)())
       case shape: AnyShape if shape.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
         Seq(RamlJsonShapeEmitter(shape, ordering, Nil, typeKey = "schema"))
       case scalar: ScalarShape =>

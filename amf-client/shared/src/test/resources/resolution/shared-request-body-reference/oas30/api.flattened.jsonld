@@ -4,6 +4,7 @@
       "@id": "#15",
       "@type": [
         "apiContract:WebAPI",
+        "apiContract:API",
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
@@ -192,7 +193,8 @@
       "smaps": {
         "lexical": {
           "raml-shapes:schema": "[(35,10)-(37,0)]",
-          "#10": "[(34,8)-(40,0)]"
+          "#10": "[(34,8)-(40,0)]",
+          "core:mediaType": "[(34,8)-(34,24)]"
         }
       }
     },
@@ -445,7 +447,7 @@
       "doc:encodes": {
         "@id": "#15"
       },
-      "doc:version": "2.1.2",
+      "doc:version": "2.2.0",
       "doc:root": true
     }
   ],

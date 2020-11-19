@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/aml#closed-shape
   Message: Property 'somethingElseThatIsNotAValidBinding' not supported in a ASYNC 2.0 bindings node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/web-api/some.com/server-bindings
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/async-api/some.com/server-bindings
   Property: 
   Position: Some(LexicalInformation([(23,6)-(24,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/aml#closed-shape
   Message: Property 'anotherAnotherElseThatIsNotAValidBinding' not supported in a ASYNC 2.0 bindings node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/web-api/end-points/some-channel/channel-bindings
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/async-api/end-points/some-channel/channel-bindings
   Property: 
   Position: Some(LexicalInformation([(40,6)-(41,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml
@@ -24,7 +24,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/aml#closed-shape
   Message: Property 'anotherElseThatIsNotAValidBinding' not supported in a ASYNC 2.0 bindings node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/web-api/end-points/some-channel/publish/operation-bindings
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/async-api/end-points/some-channel/publish/operation-bindings
   Property: 
   Position: Some(LexicalInformation([(55,8)-(56,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml
@@ -32,7 +32,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/aml#closed-shape
   Message: Property 'anotherAnotherAnotherInvalidBinding' not supported in a ASYNC 2.0 bindings node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/web-api/end-points/some-channel/publish/request/message-bindings
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/async-api/end-points/some-channel/publish/request/message-bindings
   Property: 
   Position: Some(LexicalInformation([(69,10)-(70,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml

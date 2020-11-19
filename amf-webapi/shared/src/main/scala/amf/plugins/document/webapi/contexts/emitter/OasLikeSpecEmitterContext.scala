@@ -13,11 +13,8 @@ import amf.plugins.document.webapi.contexts.emitter.oas.OasRefEmitter
 import amf.plugins.document.webapi.contexts.{RefEmitter, SpecEmitterContext, SpecEmitterFactory}
 import amf.plugins.document.webapi.parser.OasTypeDefStringValueMatcher
 import amf.plugins.document.webapi.parser.spec.async.emitters.Draft6ExamplesEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
-  AnnotationEmitter,
-  OasAnnotationEmitter
-}
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationEmitter, OasAnnotationEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft6SchemaVersion, JSONSchemaDraft7SchemaVersion, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasExampleEmitters, OasLikeExampleEmitters}
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YType
@@ -37,7 +34,7 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
 
   def exampleEmitter: (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters =
     (isHeader, exampleOption, ordering, extensions, references) =>
-      if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion)
+      if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft6SchemaVersion))
         Draft6ExamplesEmitter(exampleOption.toSeq ++ extensions, ordering)
       else
         OasExampleEmitters.apply(isHeader, exampleOption, ordering, extensions, references)
@@ -49,7 +46,7 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
                                          refEmitter: RefEmitter = OasRefEmitter,
                                          options: ShapeRenderOptions = ShapeRenderOptions())
     extends SpecEmitterContext(eh, refEmitter, options) {
-  def schemaVersion: JSONSchemaVersion
+  def schemaVersion: SchemaVersion
   def schemasDeclarationsPath: String
 
   override def localReference(reference: Linkable): PartEmitter =

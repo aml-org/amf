@@ -4,7 +4,8 @@ import amf._
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.models.{Server, ServerContainer, WebApi}
+import amf.plugins.domain.webapi.models.api.Api
+import amf.plugins.domain.webapi.models.{Server, ServerContainer}
 
 /**
   * Place server models in the right locations according to OAS 3.0 and our own criterium for AMF
@@ -31,10 +32,10 @@ class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boole
     */
   protected def normalizeServers(unit: BaseUnit): BaseUnit = {
     unit match {
-      case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        val webApi    = doc.encodes.asInstanceOf[WebApi]
-        val endpoints = webApi.endPoints
-        propagateServers(webApi, endpoints)
+      case doc: Document if doc.encodes.isInstanceOf[Api] =>
+        val api       = doc.encodes.asInstanceOf[Api]
+        val endpoints = api.endPoints
+        propagateServers(api, endpoints)
         endpoints.foreach { endPoint =>
           propagateServers(endPoint, endPoint.operations)
         }

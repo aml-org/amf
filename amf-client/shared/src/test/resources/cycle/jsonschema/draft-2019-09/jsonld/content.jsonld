@@ -1,0 +1,70 @@
+{
+  "@graph": [
+    {
+      "@id": "/scalar/main",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "raml-shapes:encoding": "base64",
+      "raml-shapes:mediaType": "application/jwt",
+      "raml-shapes:contentSchema": {
+        "@id": "#/array/contentSchema"
+      },
+      "shacl:name": "main"
+    },
+    {
+      "@id": "#/array/contentSchema",
+      "@type": [
+        "raml-shapes:ArrayShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:items": {
+        "@id": "#/array/contentSchema/items/any/items"
+      },
+      "shacl:minCount": 2,
+      "raml-shapes:unevaluatedItems": false,
+      "shacl:name": "contentSchema"
+    },
+    {
+      "@id": "#/array/contentSchema/items/any/items",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "items"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-shapes:DataTypeFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "/scalar/main"
+      },
+      "doc:version": "2.2.0",
+      "doc:root": false
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-client/shared/src/test/resources/cycle/jsonschema/draft-2019-09/content.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#"
+  }
+}

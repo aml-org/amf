@@ -8,7 +8,9 @@ import amf.core.model.domain.{AmfScalar, DomainElement, Shape}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.{ExampleTracking, FileShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel._
-import amf.plugins.domain.webapi.models.{Payload, Request, WebApi}
+import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
+import amf.plugins.domain.webapi.models.api.Api
+import amf.plugins.domain.webapi.models.{Payload, Request}
 import amf.validations.ResolutionSideValidations.InvalidConsumesWithFileParameter
 import amf.{Oas20Profile, OasProfile, ProfileName}
 
@@ -23,15 +25,15 @@ class MediaTypeResolutionStage(profile: ProfileName,
     extends ResolutionStage() {
   override def resolve[T <: BaseUnit](model: T): T = {
     model match {
-      case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        propagatePayloads(doc.encodes.asInstanceOf[WebApi])
-        resolveMediaTypes(doc.encodes.asInstanceOf[WebApi])
+      case doc: Document if doc.encodes.isInstanceOf[Api] =>
+        propagatePayloads(doc.encodes.asInstanceOf[Api])
+        resolveMediaTypes(doc.encodes.asInstanceOf[Api])
       case _ =>
     }
     model.asInstanceOf[T]
   }
 
-  def propagatePayloads(api: WebApi): Unit = {
+  def propagatePayloads(api: Api): Unit = {
     api.endPoints.foreach { endpoint =>
       val payloads = endpoint.payloads
       endpoint.fields.removeField(EndPointModel.Payloads)
@@ -49,9 +51,9 @@ class MediaTypeResolutionStage(profile: ProfileName,
     }
   }
 
-  def resolveMediaTypes(api: WebApi): Unit = {
-    val rootAccepts     = getAndRemove(api, WebApiModel.Accepts, keepMediaTypesInModel)
-    val rootContentType = getAndRemove(api, WebApiModel.ContentType, keepMediaTypesInModel)
+  def resolveMediaTypes(api: Api): Unit = {
+    val rootAccepts     = getAndRemove(api, BaseApiModel.Accepts, keepMediaTypesInModel)
+    val rootContentType = getAndRemove(api, BaseApiModel.ContentType, keepMediaTypesInModel)
 
     api.endPoints.foreach { endPoint =>
       endPoint.operations.foreach { operation =>

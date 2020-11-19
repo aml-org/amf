@@ -9,11 +9,11 @@ import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.domain.shapes.models._
 import org.yaml.model.{YDocument, YNode}
 import amf.core.emitter.BaseEmitters._
+import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 
 case class OasTypeEmitter(shape: Shape,
                           ordering: SpecOrdering,

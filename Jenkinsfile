@@ -130,7 +130,10 @@ pipeline {
     }
     stage('Trigger amf projects') {
       when {
-        branch 'develop'
+        anyOf {
+          branch 'develop'
+          branch 'release/*'
+        }
       }
       steps {
         script {
@@ -145,16 +148,18 @@ pipeline {
               echo "Starting Amf Interface Tests Applications/AMF/amfinterfacetests/master"
               build job: 'application/AMF/amf-interface-tests/master', wait: false
 
-              if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop') {
-                echo "Starting Amf Metadata Tests Applications/AMF/amf-metadata/master"
+              if (env.BRANCH_NAME == 'develop') {
                 build job: "application/AMF/amf-metadata/${env.BRANCH_NAME}", wait: false
               } else {
                 echo "Skipping Amf Metadata Tests Build Trigger as env.BRANCH_NAME is not master or develop"
               }
+              def newAmfVersion = getAmfVersion()
+              echo "Starting ApiQuery hook API-Query/api-query-amf-integration/master with amf version: ${newAmfVersion}"
+              build job: "API-Query/api-query-amf-integration/master", wait: false, parameters: [[$class: 'StringParameterValue', name: 'AMF_NEW_VERSION', value: newAmfVersion]]
             }
           } catch(ignored) {
-            failedStage = failedStage + " TCKUTOR "
-            unstable "Failed TCKUTOR job trigger"
+            failedStage = failedStage + " JOBS TRIGGER "
+            unstable "Failed triggering downstream jobs"
           }
         }
       }
@@ -184,4 +189,12 @@ pipeline {
       }
     }
   }
+}
+
+Boolean isDevelop() {
+  env.BRANCH_NAME == "develop"
+}
+
+String getAmfVersion() {
+  sh(returnStdout: true, script: "sbt version | tail -n 1 | grep -o '[0-9].[0-9].[0-9].*'").trim()
 }

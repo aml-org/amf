@@ -11,7 +11,8 @@
       {
         "@id": "#10",
         "@type": [
-          "apiContract:WebAPI",
+          "apiContract:AsyncAPI",
+          "apiContract:API",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
@@ -66,7 +67,7 @@
                         ],
                         "apiContract:schemaMediaType": [
                           {
-                            "@value": "application/vnd.rai.raml;version=1.0"
+                            "@value": "application/raml+yaml;version=1.0"
                           }
                         ],
                         "raml-shapes:schema": [
@@ -197,7 +198,7 @@
     ],
     "doc:version": [
       {
-        "@value": "2.1.2"
+        "@value": "2.2.0"
       }
     ],
     "doc:root": [
@@ -345,7 +346,7 @@
         ],
         "doc:version": [
           {
-            "@value": "2.1.2"
+            "@value": "2.2.0"
           }
         ],
         "doc:references": [
@@ -418,7 +419,7 @@
             ],
             "doc:version": [
               {
-                "@value": "2.1.2"
+                "@value": "2.2.0"
               }
             ],
             "doc:root": [

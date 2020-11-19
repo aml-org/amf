@@ -12,6 +12,7 @@
         "@id": "#29",
         "@type": [
           "apiContract:WebAPI",
+          "apiContract:API",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
@@ -272,7 +273,8 @@
                             "smaps": {
                               "lexical": {
                                 "apiContract:examples": "[(16,14)-(19,0)]",
-                                "#15": "[(13,12)-(19,0)]"
+                                "#15": "[(13,12)-(19,0)]",
+                                "core:mediaType": "[(13,12)-(13,28)]"
                               }
                             }
                           }
@@ -462,7 +464,8 @@
                         "smaps": {
                           "lexical": {
                             "apiContract:examples": "[(24,12)-(27,0)]",
-                            "#19": "[(21,10)-(27,0)]"
+                            "#19": "[(21,10)-(27,0)]",
+                            "core:mediaType": "[(21,10)-(21,26)]"
                           }
                         }
                       }
@@ -534,6 +537,7 @@
                         ],
                         "smaps": {
                           "lexical": {
+                            "core:mediaType": "[(31,12)-(31,28)]",
                             "#17": "[(31,12)-(37,0)]"
                           }
                         }
@@ -541,9 +545,10 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "core:description": "[(29,10)-(30,0)]",
+                        "apiContract:payload": "[(30,10)-(37,0)]",
+                        "core:name": "[(28,8)-(28,13)]",
                         "#32": "[(28,8)-(37,0)]",
-                        "core:name": "[(28,8)-(28,13)]"
+                        "core:description": "[(29,10)-(30,0)]"
                       }
                     }
                   }
@@ -808,7 +813,8 @@
                             "smaps": {
                               "lexical": {
                                 "apiContract:examples": "[(90,10)-(92,64)]",
-                                "#16": "[(87,8)-(92,64)]"
+                                "#16": "[(87,8)-(92,64)]",
+                                "core:mediaType": "[(87,8)-(87,24)]"
                               }
                             }
                           }
@@ -1000,7 +1006,8 @@
                         "smaps": {
                           "lexical": {
                             "apiContract:examples": "[(78,10)-(81,0)]",
-                            "#18": "[(75,8)-(81,0)]"
+                            "#18": "[(75,8)-(81,0)]",
+                            "core:mediaType": "[(75,8)-(75,24)]"
                           }
                         }
                       }
@@ -1206,7 +1213,8 @@
                         "smaps": {
                           "lexical": {
                             "apiContract:examples": "[(69,10)-(72,0)]",
-                            "#20": "[(66,8)-(72,0)]"
+                            "#20": "[(66,8)-(72,0)]",
+                            "core:mediaType": "[(66,8)-(66,24)]"
                           }
                         }
                       }
@@ -1216,9 +1224,10 @@
                         "#37": "amf://id#27"
                       },
                       "lexical": {
-                        "core:description": "[(64,6)-(65,0)]",
+                        "apiContract:payload": "[(65,6)-(72,0)]",
+                        "core:name": "[(63,4)-(63,14)]",
                         "#37": "[(63,4)-(72,0)]",
-                        "core:name": "[(63,4)-(63,14)]"
+                        "core:description": "[(64,6)-(65,0)]"
                       },
                       "declared-element": {
                         "#37": ""
@@ -1259,7 +1268,7 @@
     ],
     "doc:version": [
       {
-        "@value": "2.1.2"
+        "@value": "2.2.0"
       }
     ],
     "doc:root": [
@@ -2054,6 +2063,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:examples": "[(90,10)-(92,64)]",
+                "core:mediaType": "[(87,8)-(87,24)]",
                 "#16": "[(87,8)-(92,64)]",
                 "raml-shapes:schema": "[(88,10)-(90,0)]"
               }
@@ -2534,6 +2544,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:examples": "[(69,10)-(72,0)]",
+                "core:mediaType": "[(66,8)-(66,24)]",
                 "#20": "[(66,8)-(72,0)]",
                 "raml-shapes:schema": "[(67,10)-(69,0)]"
               }
@@ -2542,9 +2553,10 @@
         ],
         "smaps": {
           "lexical": {
-            "core:description": "[(64,6)-(65,0)]",
+            "apiContract:payload": "[(65,6)-(72,0)]",
+            "core:name": "[(63,4)-(63,14)]",
             "#27": "[(63,4)-(72,0)]",
-            "core:name": "[(63,4)-(63,14)]"
+            "core:description": "[(64,6)-(65,0)]"
           },
           "declared-element": {
             "#27": ""
@@ -3136,6 +3148,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:examples": "[(78,10)-(81,0)]",
+                "core:mediaType": "[(75,8)-(75,24)]",
                 "#18": "[(75,8)-(81,0)]",
                 "raml-shapes:schema": "[(76,10)-(78,0)]"
               }

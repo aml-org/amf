@@ -11,7 +11,8 @@
       {
         "@id": "#4",
         "@type": [
-          "apiContract:WebAPI",
+          "apiContract:AsyncAPI",
+          "apiContract:API",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
@@ -66,29 +67,23 @@
                         ],
                         "apiContract:schemaMediaType": [
                           {
-                            "@value": "application/vnd.rai.raml;version=1.0"
+                            "@value": "application/raml+yaml;version=1.0"
                           }
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#2/link-2645995",
+                            "@id": "#2",
                             "@type": [
-                              "raml-shapes:ScalarShape",
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
                               "raml-shapes:Shape",
                               "doc:DomainElement"
                             ],
-                            "doc:link-target": [
-                              {
-                                "@id": "#2"
+                            "smaps": {
+                              "lexical": {
+                                "#2": "[(3,6)-(3,10)]"
                               }
-                            ],
-                            "doc:link-label": [
-                              {
-                                "@value": "User"
-                              }
-                            ]
+                            }
                           }
                         ],
                         "smaps": {
@@ -135,7 +130,7 @@
     ],
     "doc:version": [
       {
-        "@value": "2.1.2"
+        "@value": "2.2.0"
       }
     ],
     "doc:root": [
@@ -155,46 +150,21 @@
           {
             "@id": "#2",
             "@type": [
-              "raml-shapes:ScalarShape",
               "raml-shapes:AnyShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
             ],
-            "shacl:datatype": [
-              {
-                "@id": "http://www.w3.org/2001/XMLSchema#string"
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "User"
-              }
-            ],
             "smaps": {
-              "resolved-link-target": {
-                "#2": "amf://id#2"
-              },
-              "declared-element": {
-                "#2": ""
-              },
               "lexical": {
-                "shacl:name": "[(8,4)-(8,8)]",
-                "#2": "[(8,4)-(11,0)]",
-                "shacl:datatype": "[(9,6)-(11,0)]"
-              },
-              "type-property-lexical-info": {
-                "#2": "[(9,6)-(9,10)]"
-              },
-              "resolved-link": {
-                "#2": "amf://id#3"
+                "#2": "[(3,6)-(3,10)]"
               }
             }
           }
         ],
         "doc:version": [
           {
-            "@value": "2.1.2"
+            "@value": "2.2.0"
           }
         ],
         "doc:root": [
@@ -211,7 +181,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#2",
+        "@id": "#3",
         "@type": [
           "raml-shapes:ScalarShape",
           "raml-shapes:AnyShape",
@@ -230,22 +200,16 @@
           }
         ],
         "smaps": {
-          "resolved-link-target": {
-            "#2": "amf://id#2"
-          },
           "declared-element": {
-            "#2": ""
+            "#3": ""
           },
           "lexical": {
             "shacl:name": "[(8,4)-(8,8)]",
-            "#2": "[(8,4)-(11,0)]",
+            "#3": "[(8,4)-(11,0)]",
             "shacl:datatype": "[(9,6)-(11,0)]"
           },
           "type-property-lexical-info": {
-            "#2": "[(9,6)-(9,10)]"
-          },
-          "resolved-link": {
-            "#2": "amf://id#3"
+            "#3": "[(9,6)-(9,10)]"
           }
         }
       }

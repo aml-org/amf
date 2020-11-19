@@ -12,6 +12,7 @@
         "@id": "#37",
         "@type": [
           "apiContract:WebAPI",
+          "apiContract:API",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
@@ -84,7 +85,7 @@
     ],
     "doc:version": [
       {
-        "@value": "2.1.2"
+        "@value": "2.2.0"
       }
     ],
     "doc:root": [
@@ -116,12 +117,17 @@
               {
                 "@value": "application/json"
               }
-            ]
+            ],
+            "smaps": {
+              "lexical": {
+                "#4": "[(1,0)-(24,1)]"
+              }
+            }
           }
         ],
         "doc:version": [
           {
-            "@value": "2.1.2"
+            "@value": "2.2.0"
           }
         ],
         "doc:references": [
@@ -148,12 +154,17 @@
                   {
                     "@value": "application/json"
                   }
-                ]
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#3": "[(1,0)-(29,1)]"
+                  }
+                }
               }
             ],
             "doc:version": [
               {
-                "@value": "2.1.2"
+                "@value": "2.2.0"
               }
             ],
             "doc:root": [
@@ -192,12 +203,17 @@
               {
                 "@value": "application/json"
               }
-            ]
+            ],
+            "smaps": {
+              "lexical": {
+                "#6": "[(1,0)-(12,1)]"
+              }
+            }
           }
         ],
         "doc:version": [
           {
-            "@value": "2.1.2"
+            "@value": "2.2.0"
           }
         ],
         "doc:root": [

@@ -11,11 +11,16 @@ channels:
   smartylighting/streetlights/1/0/event/{streetlightId}/lighting/measured:
     publish:
       message:
-
+        headers:
+          type: object
+          properties:
+            a:
+              type: number
         payload:
           type: string
-        examples: [
-          {
-            "key": "value"
-          }
-        ]
+        examples:
+          - payload:
+              key: value
+            headers:
+              a: invalid value
+

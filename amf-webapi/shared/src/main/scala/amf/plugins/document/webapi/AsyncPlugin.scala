@@ -6,20 +6,18 @@ import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
-import amf.core.parser.{ParsedReference, ParserContext}
+import amf.core.parser.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.async.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
-import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.AsyncHeader
 import amf.plugins.document.webapi.parser.AsyncHeader.Async20Header
 import amf.plugins.document.webapi.parser.spec.AsyncWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.async.{AsyncApi20DocumentEmitter, AsyncApi20DocumentParser}
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{Async20EditingPipeline, Async20ResolutionPipeline}
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.Api
 import amf.{Async20Profile, AsyncProfile, ProfileName}
 import org.yaml.model.YDocument
 
@@ -96,7 +94,7 @@ object Async20Plugin extends AsyncPlugin {
   override def canParse(root: Root): Boolean = AsyncHeader(root).contains(Async20Header)
 
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case document: Document => document.encodes.isInstanceOf[WebApi]
+    case document: Document => document.encodes.isInstanceOf[Api]
     case module: Module =>
       module.declares exists {
         case _: DomainElement => false
@@ -134,8 +132,12 @@ object Async20Plugin extends AsyncPlugin {
                        refs: Seq[ParsedReference],
                        options: ParsingOptions,
                        wrapped: ParserContext,
-                       ds: Option[AsyncWebApiDeclarations]) =
-    new Async20WebApiContext(loc, refs, wrapped, ds, options = options)
+                       ds: Option[AsyncWebApiDeclarations]) = {
+    // ensure unresolved references in external fragments are not resolved with main api definitions
+    val cleanContext = wrapped.copy(futureDeclarations = EmptyFutureDeclarations())
+    cleanContext.globalSpace = wrapped.globalSpace
+    new Async20WebApiContext(loc, refs, cleanContext, ds, options = options)
+  }
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     super.domainValidationProfiles(platform).filterKeys(k => k == Async20Profile.p || k == AsyncProfile.p)

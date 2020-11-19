@@ -1,0 +1,90 @@
+{
+  "@graph": [
+    {
+      "@id": "#4",
+      "@type": [
+        "apiContract:WebAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "API"
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#1"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#4"
+      },
+      "doc:version": "2.1.2",
+      "doc:root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "shacl:name": "birthday",
+      "apiContract:examples": [
+        {
+          "@id": "#2"
+        }
+      ]
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "apiContract:Example",
+        "doc:DomainElement"
+      ],
+      "doc:strict": true,
+      "doc:structuredValue": {
+        "@id": "#3"
+      },
+      "doc:raw": "2015-05-23"
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "data:Scalar",
+        "data:Node",
+        "doc:DomainElement"
+      ],
+      "data:value": "2015-05-23",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "core:name": "scalar_1"
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

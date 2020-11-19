@@ -10,13 +10,11 @@ import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasNamedTypeEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
-  RamlNamedTypeEmitter,
-  RamlRecursiveShapeTypeEmitter
-}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{RamlNamedTypeEmitter, RamlRecursiveShapeTypeEmitter}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.EntryBuilder
@@ -74,6 +72,7 @@ object AsyncDeclaredTypesEmitters {
 case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
     implicit spec: OasSpecEmitterContext)
     extends DeclaredTypesEmitters(types, references, ordering) {
+
   override def emitTypes(b: EntryBuilder): Unit = {
     if (types.nonEmpty || spec.definitionsQueue.nonEmpty)
       b.entry(
@@ -102,7 +101,13 @@ abstract class DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
     extends EntryEmitter {
   override def position(): Position = types.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
 
-  val key: String = if (spec.vendor == Vendor.OAS30 || spec.vendor == Vendor.ASYNC20) "schemas" else "definitions"
+  // TODO: THIS SHOULD BE PART OF A SpecSettings object or something of the sort that the context has and we could access.
+  val key: String = spec.vendor match {
+    case Vendor.OAS30 | Vendor.ASYNC20 => "schemas"
+    case Vendor.JSONSCHEMA if spec.isInstanceOf[JsonSchemaEmitterContext] =>
+      spec.asInstanceOf[JsonSchemaEmitterContext].schemasDeclarationsPath.replace("/", "")
+    case _ => "definitions"
+  }
 
   def emitTypes(b: EntryBuilder): Unit
 

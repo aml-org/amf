@@ -8,6 +8,7 @@ import amf.core.resolution.stages.{ExternalSourceRemovalStage, ReferenceResoluti
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages.{
+  AnnotationRemovalStage,
   MediaTypeResolutionStage,
   PayloadAndParameterResolutionStage,
   ResponseExamplesResolutionStage
@@ -23,7 +24,8 @@ class ValidationResolutionPipeline(profile: ProfileName, override val eh: ErrorH
     new ShapeNormalizationStage(profile, keepEditingInfo = false),
     new MediaTypeResolutionStage(profile, isValidation = true),
     new ResponseExamplesResolutionStage(),
-    new PayloadAndParameterResolutionStage(profile)
+    new PayloadAndParameterResolutionStage(profile),
+    new AnnotationRemovalStage()
   )
 
   override val steps: Seq[ResolutionStage] = baseSteps

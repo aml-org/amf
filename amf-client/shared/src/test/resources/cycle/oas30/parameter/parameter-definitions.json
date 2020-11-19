@@ -77,6 +77,9 @@
         "schema": {
           "type": "string"
         }
+      },
+      "external-ref": {
+        "$ref": "external-param.json#/external-cookie-param"
       }
     },
     "headers": {
@@ -102,7 +105,8 @@
         },
         "example": {
           "lat": 5,
-          "long": 4
+          "long": 4.6,
+          "booleanFacet": true
         }
       }
     }

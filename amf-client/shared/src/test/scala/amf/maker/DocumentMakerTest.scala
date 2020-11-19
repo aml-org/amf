@@ -6,7 +6,7 @@ import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.domain.shapes.models.DomainExtensions._
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.{Assertion, Succeeded}
 
 import scala.concurrent.Future

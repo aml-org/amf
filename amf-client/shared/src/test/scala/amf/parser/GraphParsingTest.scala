@@ -1,0 +1,28 @@
+package amf.parser
+import amf.core.emitter.RenderOptions
+import amf.core.remote.{Amf, AmfJsonHint}
+import amf.io.FunSuiteCycleTests
+
+class GraphParsingTest extends FunSuiteCycleTests {
+  override def basePath: String = "amf-client/shared/src/test/resources/graphs/"
+
+  test("Parse api with context with expanded term definitions") {
+    val ro = RenderOptions().withCompactUris.withPrettyPrint.withFlattenedJsonLd
+    cycle("api.source.jsonld", "api.golden.jsonld", AmfJsonHint, Amf, renderOptions = Some(ro))
+  }
+
+  test("Conserve id values when parsing to maintain consistency with recursive fixpoints - flattened") {
+    val ro = RenderOptions().withCompactUris.withPrettyPrint.withFlattenedJsonLd
+    cycle("recursive-api.flattened.jsonld",
+          "recursive-api.flattened.jsonld",
+          AmfJsonHint,
+          Amf,
+          renderOptions = Some(ro))
+  }
+
+  test("Conserve id values when parsing to maintain consistency with recursive fixpoints - expanded") {
+    val ro = RenderOptions().withCompactUris.withPrettyPrint
+    cycle("recursive-api.expanded.jsonld", "recursive-api.expanded.jsonld", AmfJsonHint, Amf, renderOptions = Some(ro))
+  }
+
+}

@@ -8,6 +8,7 @@ import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
 import amf.core.parser.{
+  Annotations,
   CompilerReferenceCollector,
   InferredLinkReference,
   LinkReference,
@@ -108,7 +109,7 @@ class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
 
     case parsed: SyamlParsedDocument =>
       val result =
-        ExternalDomainElement()
+        ExternalDomainElement(Annotations(parsed.document))
           .withId(document.location + "#/")
           .withRaw(document.raw)
           .withMediaType(docMediaType(document))

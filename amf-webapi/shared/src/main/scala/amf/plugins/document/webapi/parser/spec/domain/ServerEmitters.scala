@@ -16,8 +16,10 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
 import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, toRaml}
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ScalarShape
-import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel.ServerModel
+import amf.plugins.domain.webapi.metamodel.api.{BaseApiModel, WebApiModel}
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.api.Api
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -82,7 +84,7 @@ abstract class Oas3ServersEmitter(elem: DomainElement,
   }
 }
 
-case class Oas3WebApiServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+case class Oas3WebApiServersEmitter(api: Api, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
     extends OasServersEmitter(api, f, ordering, references) {
 
@@ -120,7 +122,7 @@ case class Oas3OperationServersEmitter(operation: Operation,
   }
 }
 
-case class Oas2ServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+case class Oas2ServersEmitter(api: Api, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
     extends OasServersEmitter(api, f, ordering, references) {
 
@@ -150,9 +152,9 @@ case class Oas2ServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering
         result += MapEntryEmitter("basePath",
                                   uri.path,
                                   position = pos(f.value.annotations, classOf[BasePathLexicalInformation]))
-      if (uri.protocol.nonEmpty && !api.fields.exists(WebApiModel.Schemes))
+      if (uri.protocol.nonEmpty && !api.fields.exists(BaseApiModel.Schemes))
         result += spec.arrayEmitter("schemes",
-                                    FieldEntry(WebApiModel.Schemes,
+                                    FieldEntry(BaseApiModel.Schemes,
                                                Value(AmfArray(Seq(AmfScalar(uri.protocol))), f.value.annotations)),
                                     ordering)
     }

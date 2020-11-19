@@ -1,34 +1,27 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.client.parse.DefaultParserErrorHandler
-import amf.core.annotations.{Aliases, LexicalInformation, SourceLocation, SynthesizedField}
+import amf.core.annotations.Aliases
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Type.Scalar
-import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
-import amf.core.metamodel.domain.DomainElementModel._
+import amf.core.metamodel.document.BaseUnitModel
 import amf.core.metamodel.domain.common._
-import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.metamodel.domain.templates.KeyField
-import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
+import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.document._
-import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, ParserContext, Value}
+import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.annotations.{ExtensionProvenance, Inferred}
+import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.domain.shapes.metamodel.common._
-import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.webapi.metamodel._
-import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
-import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
+import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
-import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import amf.validations.ResolutionSideValidations.MissingExtensionInReferences
 import amf.{ProfileName, Raml08Profile}
@@ -102,7 +95,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
   }
 
   def removeExtends(document: Document): BaseUnit = {
-    document.encodes.asInstanceOf[WebApi].endPoints.foreach { endpoint =>
+    document.encodes.asInstanceOf[Api].endPoints.foreach { endpoint =>
       if (!keepEditingInfo) {
         endpoint.fields.removeField(DomainElementModel.Extends)
       }
@@ -116,7 +109,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
   }
 
   def mergeReferences(document: Document,
-                      extension: ExtensionLike[WebApi],
+                      extension: ExtensionLike[Api],
                       extensionId: String,
                       extensionLocation: Option[String]): Unit = {
     val existing = document.references.map(_.id) ++ Seq(document.id, extension.id)
@@ -169,7 +162,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
         referenceStage.resolve(document)
 
         // Current Target Tree Object is set to the Target Tree root (API).
-        val masterTree = document.asInstanceOf[EncodesModel].encodes.asInstanceOf[WebApi]
+        val masterTree = document.asInstanceOf[EncodesModel].encodes.asInstanceOf[Api]
 
         // First I need to merge all the declarations and references to Master Tree
         extensions.foreach {
@@ -181,7 +174,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             val iriMerger = IriMerger(document.id + "#", extension.id + "#")
 
             mergeDeclarations(document,
-                              extension.asInstanceOf[ExtensionLike[WebApi]],
+                              extension.asInstanceOf[ExtensionLike[Api]],
                               iriMerger,
                               extension.id,
                               ExtendsHelper.findUnitLocationOfElement(extension.id, model))
@@ -189,7 +182,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             mergeAliases(document, extension)
 
             mergeReferences(document,
-                            extension.asInstanceOf[ExtensionLike[WebApi]],
+                            extension.asInstanceOf[ExtensionLike[Api]],
                             extension.id,
                             ExtendsHelper.findUnitLocationOfElement(extension.id, model))
         }
@@ -231,7 +224,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
   /** Merge annotation types, types, security schemes, resource types,  */
   def mergeDeclarations(master: Document,
-                        extension: ExtensionLike[WebApi],
+                        extension: ExtensionLike[Api],
                         iriMerger: IriMerger,
                         extensionId: String,
                         extensionLocation: Option[String]): Unit = {
@@ -372,7 +365,7 @@ object MergingRestrictions {
       DescriptionField.Description,
       DocumentationField.Documentation,
       TagModel.Documentation,
-      WebApiModel.Documentations,
+      BaseApiModel.Documentations,
       BaseUnitModel.Usage,
       ExamplesField.Examples,
       DomainElementModel.CustomDomainProperties
@@ -386,7 +379,7 @@ object MergingRestrictions {
     )
 
     val blockedObjectFields: Seq[Field] = Seq(
-      WebApiModel.Servers
+      BaseApiModel.Servers
     )
 
     def isAllowedField(field: Field): Boolean             = allowedFields.contains(field)

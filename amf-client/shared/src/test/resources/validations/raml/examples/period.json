@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "id": "period.json",
+  "properties": {
+    "duration": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "interval": {
+      "type": "string",
+      "enum": [
+        "minute",
+        "hour",
+        "day",
+        "week",
+        "month"
+      ]
+    }
+  },
+  "required": [
+    "duration",
+    "interval"
+  ],
+  "additionalProperties": false
+}

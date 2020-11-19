@@ -1,0 +1,115 @@
+{
+  "@graph": [
+    {
+      "@id": "#/main",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#/main/property/durationFormat"
+        },
+        {
+          "@id": "#/main/property/uuidFormat"
+        }
+      ],
+      "shacl:name": "main"
+    },
+    {
+      "@id": "#/main/property/durationFormat",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#durationFormat"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/main/property/durationFormat/scalar/durationFormat"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "durationFormat"
+    },
+    {
+      "@id": "#/main/property/uuidFormat",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#uuidFormat"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#/main/property/uuidFormat/scalar/uuidFormat"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "uuidFormat"
+    },
+    {
+      "@id": "#/main/property/durationFormat/scalar/durationFormat",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "raml-shapes:format": "duration",
+      "shacl:name": "durationFormat"
+    },
+    {
+      "@id": "#/main/property/uuidFormat/scalar/uuidFormat",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "raml-shapes:format": "uuid",
+      "shacl:name": "uuidFormat"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-shapes:DataTypeFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#/main"
+      },
+      "doc:version": "2.2.0",
+      "doc:root": false
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-client/shared/src/test/resources/cycle/jsonschema/draft-2019-09/duration-uuid-format.json",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "doc": "http://a.ml/vocabularies/document#"
+  }
+}
