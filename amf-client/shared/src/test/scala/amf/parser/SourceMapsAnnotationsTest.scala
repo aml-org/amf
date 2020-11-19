@@ -16,11 +16,12 @@ import amf.io.BuildCycleTests
 import amf.plugins.document.webapi.parser.spec.raml.expression.ExpressionMember
 import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
 
-  private val directory: String = "amf-client/shared/src/test/resources/parser/annotations/"
+  override implicit val executionContext = ExecutionContext.Implicits.global
+  private val directory: String          = "amf-client/shared/src/test/resources/parser/annotations/"
 
   test("Test raml 1.0 annotations") {
     runTest("raml10.raml", RamlYamlHint)
