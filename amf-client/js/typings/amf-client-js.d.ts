@@ -1890,9 +1890,11 @@ declare module 'amf-client-js' {
 
       }
 
-      export class WebApi extends DomainElement {
+      abstract class Api extends DomainElement {
+
         name: StrField
         description: StrField
+        identifier: StrField
         schemes: StrField[]
         endPoints: EndPoint[]
         accepts: StrField[]
@@ -1904,6 +1906,20 @@ declare module 'amf-client-js' {
         documentations: CreativeWork[]
         servers: Server[]
         security: SecurityRequirement[]
+
+        withDocumentationTitle(title: string): CreativeWork
+
+        withDocumentationUrl(url: string): CreativeWork
+
+        withEndPoint(path: string): EndPoint
+
+        withServer(url: string): Server
+
+        withDefaultServer(url: string): Server
+
+      }
+
+      export class WebApi extends Api {
 
         withName(name: string): this
 
@@ -1930,16 +1946,35 @@ declare module 'amf-client-js' {
         withServers(servers: Server[]): this
 
         withSecurity(security: SecurityRequirement[]): this
+      }
 
-        withDocumentationTitle(title: string): CreativeWork
+      export class AsyncApi extends Api {
 
-        withDocumentationUrl(url: string): CreativeWork
+        withName(name: string): this
 
-        withEndPoint(path: string): EndPoint
+        withDescription(description: string): this
 
-        withServer(url: string): Server
+        withSchemes(schemes: string[]): this
 
-        withDefaultServer(url: string): Server
+        withEndPoints(endPoints: EndPoint[]): this
+
+        withAccepts(accepts: string[]): this
+
+        withContentType(contentType: string[]): this
+
+        withVersion(version: string): this
+
+        withTermsOfService(terms: string): this
+
+        withProvider(provider: Organization): this
+
+        withLicense(license: License): this
+
+        withDocumentation(documentations: CreativeWork[]): this
+
+        withServers(servers: Server[]): this
+
+        withSecurity(security: SecurityRequirement[]): this
       }
 
     }
