@@ -71,82 +71,18 @@ trait ApiFieldSetter[T] {
 
   private[amf] val _internal: InternalApi
 
-  /** Set description property of this WebApi. */
-  def withDescription(description: String): T = {
-    _internal.withDescription(description)
-    this.asInstanceOf[T]
-  }
-
-  /** Set identifier property of this WebApi. */
-  def withIdentifier(identifier: String): T = {
-    _internal.withIdentifier(identifier)
-    this.asInstanceOf[T]
-  }
-
-  /** Set schemes property of this WebApi. */
-  def withSchemes(schemes: ClientList[String]): T = {
-    _internal.withSchemes(schemes.asInternal)
-    this.asInstanceOf[T]
-  }
-
-  /** Set endPoints property of this WebApi. */
-  def withEndPoints(endPoints: ClientList[EndPoint]): T = {
-    _internal.withEndPoints(endPoints.asInternal)
-    this.asInstanceOf[T]
-  }
-
-  /** Set accepts property of this WebApi. */
-  def withAccepts(accepts: ClientList[String]): T = {
-    _internal.withAccepts(accepts.asInternal)
-    this.asInstanceOf[T]
-  }
-
-  /** Set contentType property of this WebApi. */
-  def withContentType(contentType: ClientList[String]): T = {
-    _internal.withContentType(contentType.asInternal)
-    this.asInstanceOf[T]
-  }
-
-  /** Set version property of this WebApi. */
-  def withVersion(version: String): T = {
-    _internal.withVersion(version)
-    this.asInstanceOf[T]
-  }
-
-  /** Set termsOfService property of this WebApi. */
-  def withTermsOfService(terms: String): T = {
-    _internal.withTermsOfService(terms)
-    this.asInstanceOf[T]
-  }
-
-  /** Set provider property of this WebApi using a Organization */
-  def withProvider(provider: Organization): T = {
-    _internal.withProvider(provider)
-    this.asInstanceOf[T]
-  }
-
-  /** Set license property of this WebApi using a License */
-  def withLicense(license: License): T = {
-    _internal.withLicense(license)
-    this.asInstanceOf[T]
-  }
-
-  /** Set documentation property of this WebApi using a CreativeWork */
-  def withDocumentation(documentations: ClientList[CreativeWork]): T = {
-    _internal.withDocumentations(documentations.asInternal)
-    this.asInstanceOf[T]
-  }
-
-  /** Set servers property of this WebApi using a list of Server objects. */
-  def withServers(servers: ClientList[Server]): T = {
-    _internal.withServers(servers.asInternal)
-    this.asInstanceOf[T]
-  }
-
-  /** Set security property of this WebApi using a list of SecurityRequirement */
-  def withSecurity(security: ClientList[SecurityRequirement]): T = {
-    _internal.withSecurity(security.asInternal)
-    this.asInstanceOf[T]
-  }
+  def withDescription(description: String): T
+  def withIdentifier(identifier: String): T
+  def withSchemes(schemes: ClientList[String]): T
+  def withEndPoints(endPoints: ClientList[EndPoint]): T
+  def withAccepts(accepts: ClientList[String]): T
+  def withContentType(contentType: ClientList[String]): T
+  def withVersion(version: String): T
+  def withTermsOfService(terms: String): T
+  def withProvider(provider: Organization): T
+  def withLicense(license: License): T
+  def withDocumentation(documentations: ClientList[CreativeWork]): T
+  def withServers(servers: ClientList[Server]): T
+  def withSecurity(security: ClientList[SecurityRequirement]): T
 
 }
