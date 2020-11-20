@@ -151,6 +151,7 @@ class OasRefParser(map: YMap,
   private val oas2DeclarationRegex = "^(\\#\\/definitions\\/){1}([^/\\n])+$"
   private val oas3DeclarationRegex =
     "^(\\#\\/components\\/){1}((schemas|parameters|securitySchemes|requestBodies|responses|headers|examples|links|callbacks){1}\\/){1}([^/\\n])+"
+
   private def isDeclaration(ref: String): Boolean =
     ctx match {
       case _: Oas2WebApiContext if ref.matches(oas2DeclarationRegex)                                => true

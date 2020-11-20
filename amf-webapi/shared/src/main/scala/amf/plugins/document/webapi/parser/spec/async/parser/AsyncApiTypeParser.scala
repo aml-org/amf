@@ -5,6 +5,7 @@ import amf.core.model.domain.Shape
 import amf.core.parser.SearchScope
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.{WebApiDeclarations, toRaml}
 import amf.plugins.domain.webapi.models.Payload
@@ -33,7 +34,7 @@ object AsyncSchemaFormats {
 
   def getSchemaVersion(value: Option[String])(implicit errorHandler: ErrorHandler): SchemaVersion =
     value match {
-      case Some(format) if oas30Schema.contains(format) => OAS30SchemaVersion("schema")(errorHandler)
+      case Some(format) if oas30Schema.contains(format) => OAS30SchemaVersion(Schema)
       case Some(format) if ramlSchema.contains(format)  => RAML10SchemaVersion()
       // async20 schemas are handled with draft 7. Avro schema is not supported
       case _ => JSONSchemaDraft7SchemaVersion

@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.client.render.{JSONSchemaVersion => ClientJSONSchemaVersion, JSONSchemaVersions => ClientJSONSchemaVersions}
-import amf.core.errorhandling.ErrorHandler
-import amf.plugins.features.validation.CoreValidations
+import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Position
 
 abstract class SchemaVersion(val name: String) {
 
@@ -36,28 +35,24 @@ object SchemaVersion {
   }
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~ RAML ~~~~~~~~~~~~~~~~~~~~~~~~
+
 abstract class RAMLSchemaVersion(override val name: String) extends SchemaVersion(name)
 case class RAML10SchemaVersion()                            extends RAMLSchemaVersion("raml1.0")
 
-class OASSchemaVersion(override val name: String, val position: String)(implicit eh: ErrorHandler)
-    extends SchemaVersion(name) {
-  if (position != "schema" && position != "parameter")
-    eh.violation(CoreValidations.ResolutionValidation,
-                 "",
-                 s"Invalid schema position '$position', only 'schema' and 'parameter' are valid")
+// ~~~~~~~~~~~~~~~~~~~~~~~~ OAS ~~~~~~~~~~~~~~~~~~~~~~~~
+
+object SchemaPosition extends Enumeration {
+  type Position = Value
+  val Schema = Value("schema")
+  val Parameter = Value("parameter")
 }
 
-class OAS20SchemaVersion(override val position: String)(implicit eh: ErrorHandler)
-    extends OASSchemaVersion("oas2.0", position)
-object OAS20SchemaVersion {
-  def apply(position: String)(implicit eh: ErrorHandler) = new OAS20SchemaVersion(position)
-}
+class OASSchemaVersion(override val name: String, val position: Position) extends SchemaVersion(name)
+case class OAS20SchemaVersion(override val position: Position) extends OASSchemaVersion("oas2.0", position)
+case class OAS30SchemaVersion(override val position: Position) extends OASSchemaVersion("oas3.0.0", position)
 
-class OAS30SchemaVersion(override val position: String)(implicit eh: ErrorHandler)
-    extends OASSchemaVersion("oas3.0.0", position)
-object OAS30SchemaVersion {
-  def apply(position: String)(implicit eh: ErrorHandler) = new OAS30SchemaVersion(position)(eh)
-}
+// ~~~~~~~~~~~~~~~~~~~~~~~~ JSON Schema ~~~~~~~~~~~~~~~~~~~~~~~~
 
 abstract class JSONSchemaVersion(override val name: String, val url: String) extends SchemaVersion(name) with Ordered[JSONSchemaVersion] {
   override def compare(that: JSONSchemaVersion): Int = {

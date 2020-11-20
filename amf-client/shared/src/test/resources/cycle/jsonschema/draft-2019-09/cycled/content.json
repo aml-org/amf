@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "$ref": "#/$defs/schema",
+  "$defs": {
+    "schema": {
+      "allOf": [
+        {
+          "type": "string",
+          "contentMediaType": "application/jwt",
+          "contentEncoding": "base64",
+          "contentSchema": {
+            "type": "array",
+            "items": {},
+            "minItems": 2,
+            "unevaluatedItems": false
+          }
+        }
+      ]
+    }
+  }
+}

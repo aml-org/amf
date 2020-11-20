@@ -97,16 +97,19 @@ case class JsonSchemaEmitter(root: Shape,
 
   def emitDocument(): YDocument = {
     val schemaVersion = SchemaVersion.fromClientOptions(options.schemaVersion)
-    val context =
-      if (options.isWithCompactedEmission)
-        new JsonSchemaEmitterContext(options.errorHandler, options, schemaVersion = schemaVersion)
-      else InlinedJsonSchemaEmitterContext(options.errorHandler, options, schemaVersion = schemaVersion)
+    val context = createContextWith(schemaVersion)
     val emitters = Seq(JsonSchemaEntry(schemaVersion), jsonSchemaRefEntry(context)) ++ sortedTypeEntries(context)
     YDocument(b => {
       b.obj { b =>
         traverse(emitters, b)
       }
     })
+  }
+
+  private def createContextWith(schemaVersion: JSONSchemaVersion) = {
+    if (options.isWithCompactedEmission)
+      new JsonSchemaEmitterContext(options.errorHandler, options, schemaVersion = schemaVersion)
+    else InlinedJsonSchemaEmitterContext(options.errorHandler, options, schemaVersion = schemaVersion)
   }
 
   private def jsonSchemaRefEntry(ctx: JsonSchemaEmitterContext) = new EntryEmitter {

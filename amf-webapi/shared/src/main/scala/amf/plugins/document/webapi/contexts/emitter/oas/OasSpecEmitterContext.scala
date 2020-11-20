@@ -11,13 +11,9 @@ import amf.core.remote.{Oas20, Oas30, Vendor}
 import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.plugins.document.webapi.contexts.{RefEmitter, TagToReferenceEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
-  AnnotationTypeEmitter,
-  FacetsInstanceEmitter,
-  OasAnnotationTypeEmitter,
-  OasFacetsInstanceEmitter
-}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationTypeEmitter, FacetsInstanceEmitter, OasAnnotationTypeEmitter, OasFacetsInstanceEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.emitters._
@@ -158,7 +154,7 @@ class Oas3SpecEmitterContext(eh: ErrorHandler,
                              compactEmission: Boolean = true)
     extends OasSpecEmitterContext(eh, refEmitter, options, compactEmission) {
   override val anyOfKey: String                = "anyOf"
-  val schemaVersion: SchemaVersion             = OAS30SchemaVersion("schema")(eh)
+  val schemaVersion: SchemaVersion             = OAS30SchemaVersion(Schema)
   override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory(this)
   override val vendor: Vendor                  = Oas30
   override def schemasDeclarationsPath: String = "/components/schemas/"
@@ -169,7 +165,7 @@ class Oas2SpecEmitterContext(eh: ErrorHandler,
                              options: ShapeRenderOptions = ShapeRenderOptions(),
                              compactEmission: Boolean = true)
     extends OasSpecEmitterContext(eh, refEmitter, options, compactEmission) {
-  val schemaVersion: SchemaVersion             = OAS20SchemaVersion("schema")(eh)
+  val schemaVersion: SchemaVersion             = OAS20SchemaVersion(Schema)
   override val factory: OasSpecEmitterFactory  = new Oas2SpecEmitterFactory(this)
   override val vendor: Vendor                  = Oas20
   override def schemasDeclarationsPath: String = "/definitions/"

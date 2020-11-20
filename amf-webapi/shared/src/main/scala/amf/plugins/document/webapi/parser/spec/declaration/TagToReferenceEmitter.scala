@@ -11,7 +11,9 @@ import amf.plugins.document.webapi.contexts.TagToReferenceEmitter
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.OasDefinitions._
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
+import amf.plugins.domain.webapi.models
 import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
 import amf.plugins.domain.webapi.models.{Callback, CorrelationId, Message, Parameter, Payload, Response, TemplatedLink}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
@@ -21,46 +23,35 @@ import org.yaml.model.YType
 /**
   *
   */
-case class OasTagToReferenceEmitter(
-    link: DomainElement
-)(implicit override val spec: OasLikeSpecEmitterContext)
+case class OasTagToReferenceEmitter(link: DomainElement)(implicit override val spec: OasLikeSpecEmitterContext)
     extends OasSpecEmitter
     with TagToReferenceEmitter {
+
   def emit(b: PartBuilder): Unit = {
-    follow() match {
-      case s: Shape if s.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(
-          b,
-          OasDefinitions
-            .appendSchemasPrefix(referenceLabel, Some(spec.vendor))
-        )
-      case p: Parameter if p.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(referenceLabel))
-      case p: Payload if p.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(referenceLabel))
-      case r: Response if r.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendResponsesDefinitionsPrefix(referenceLabel))
-      case c: Callback if c.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "callbacks"))
-      case c: TemplatedLink if c.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "links"))
-      case c: CorrelationId if c.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "correlationIds"))
-      case m: Message if m.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b,
-                 OasDefinitions.appendOas3ComponentsPrefix(referenceLabel,
-                                                           if (m.isAbstract.value()) "messageTraits" else "messages"))
-      case c: ServerBindings if c.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "serverBindings"))
-      case c: OperationBindings if c.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "operationBindings"))
-      case c: ChannelBindings if c.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "channelBindings"))
-      case c: MessageBindings if c.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "messageBindings"))
-      case _ => spec.ref(b, referenceLabel)
-    }
+    val lastElementInLinkChain = follow()
+    val urlToEmit =
+      if (isDeclaredElement(lastElementInLinkChain)) getRefUrlFor(lastElementInLinkChain) else referenceLabel
+    spec.ref(b, urlToEmit)
   }
+
+  private def getRefUrlFor(element: DomainElement, default: String = referenceLabel) = element match {
+    case _: Shape                            => appendSchemasPrefix(referenceLabel, Some(spec.vendor))
+    case _: Parameter                        => appendParameterDefinitionsPrefix(referenceLabel)
+    case _: Payload                          => appendParameterDefinitionsPrefix(referenceLabel)
+    case _: Response                         => appendResponsesDefinitionsPrefix(referenceLabel)
+    case _: Callback                         => appendOas3ComponentsPrefix(referenceLabel, "callbacks")
+    case _: TemplatedLink                    => appendOas3ComponentsPrefix(referenceLabel, "links")
+    case _: CorrelationId                    => appendOas3ComponentsPrefix(referenceLabel, "correlationIds")
+    case m: Message if m.isAbstract.value()  => appendOas3ComponentsPrefix(referenceLabel, "messageTraits")
+    case m: Message if !m.isAbstract.value() => appendOas3ComponentsPrefix(referenceLabel, "messages")
+    case _: ServerBindings                   => appendOas3ComponentsPrefix(referenceLabel, "serverBindings")
+    case _: OperationBindings                => appendOas3ComponentsPrefix(referenceLabel, "operationBindings")
+    case _: ChannelBindings                  => appendOas3ComponentsPrefix(referenceLabel, "channelBindings")
+    case _: MessageBindings                  => appendOas3ComponentsPrefix(referenceLabel, "messageBindings")
+    case _                                   => default
+  }
+
+  private def isDeclaredElement(element: DomainElement) = element.annotations.contains(classOf[DeclaredElement])
 
   /** Follow links until first declaration or last element in chain */
   private def follow(): DomainElement = follow(link)

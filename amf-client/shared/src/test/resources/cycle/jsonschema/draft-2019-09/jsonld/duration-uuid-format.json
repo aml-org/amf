@@ -1,6 +1,21 @@
 {
   "@graph": [
     {
+      "@id": "/any/schema",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "schema",
+      "shacl:and": [
+        {
+          "@id": "#/main"
+        }
+      ]
+    },
+    {
       "@id": "#/main",
       "@type": [
         "shacl:NodeShape",
@@ -100,7 +115,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#/main"
+        "@id": "/any/schema"
       },
       "doc:version": "2.2.0",
       "doc:root": false
@@ -108,8 +123,8 @@
   ],
   "@context": {
     "@base": "file://amf-client/shared/src/test/resources/cycle/jsonschema/draft-2019-09/duration-uuid-format.json",
-    "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#"
   }
 }
