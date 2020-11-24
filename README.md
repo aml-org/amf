@@ -32,7 +32,7 @@ and the following syntactic models:
 - JSON-LD "AMF model"
 - RAML 0.8 / 1.0 (mapped to "WebApi")
 - OpenAPI (OAS) 2.0 / 3.0 (mapped to "WebApi")
-- AsyncAPI 2.0 (beta) (mapped to "WebApi")
+- AsyncAPI 2.0 (mapped to "AsyncApi")
 
 The models above and any other models may be extended and supported via custom [AML-defined models](https://a.ml/aml-spec). Other formats and models that cannot be expressed with AML may also be supported via plugins. 
 
