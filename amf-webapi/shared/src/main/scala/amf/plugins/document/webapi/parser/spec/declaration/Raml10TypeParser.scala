@@ -17,7 +17,10 @@ import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Ra
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, TypeName}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common._
-import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{RamlJsonSchemaExpression, RamlXmlSchemaExpression}
+import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{
+  RamlJsonSchemaExpression,
+  RamlXmlSchemaExpression
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
@@ -1504,13 +1507,11 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         }
       )
 
-      val properties = mutable.LinkedHashMap[String, PropertyShape]()
-      shape.properties.foreach(p => properties += (p.name.value() -> p))
-
       map.key(
         "dependencies".asRamlAnnotation,
         entry => {
-          Draft4ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, properties.toMap, JSONSchemaDraft4SchemaVersion)(toOas(ctx)).parse()
+          Draft4ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, JSONSchemaDraft4SchemaVersion)(
+            toOas(ctx)).parse()
         }
       )
 

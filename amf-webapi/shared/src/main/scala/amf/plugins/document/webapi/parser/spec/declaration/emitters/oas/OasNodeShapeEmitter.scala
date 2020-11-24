@@ -8,8 +8,16 @@ import amf.core.model.domain.Shape
 import amf.core.parser.FieldEntry
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{Draft2019DependenciesEmitter, Draft4DependenciesEmitter, TypeEmitterFactory}
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, OAS30SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{
+  Draft2019DependenciesEmitter,
+  Draft4DependenciesEmitter,
+  TypeEmitterFactory
+}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft201909SchemaVersion,
+  JSONSchemaDraft7SchemaVersion,
+  OAS30SchemaVersion
+}
 import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter
 import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter.unevaluatedPropertiesInfo
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
@@ -73,15 +81,13 @@ case class OasNodeShapeEmitter(node: NodeShape,
       .map(f =>
         result += OasPropertiesShapeEmitter(f, ordering, references, pointer = pointer, schemaPath = schemaPath))
 
-    val properties = ListMap(node.properties.map(p => p.id -> p): _*)
-
-
-    val emitterFactory: TypeEmitterFactory = shape => OasTypeEmitter(shape, ordering, Seq(), references, pointer, schemaPath, isHeader)
+    val emitterFactory: TypeEmitterFactory = shape =>
+      OasTypeEmitter(shape, ordering, Seq(), references, pointer, schemaPath, isHeader)
 
     if (spec.schemaVersion == JSONSchemaDraft201909SchemaVersion) {
-      result += Draft2019DependenciesEmitter(node, ordering, properties, typeFactory = emitterFactory)
+      result += Draft2019DependenciesEmitter(node, ordering, typeFactory = emitterFactory)
     } else {
-      result += Draft4DependenciesEmitter(node, ordering, properties, isRamlExtension = false, typeFactory = emitterFactory)
+      result += Draft4DependenciesEmitter(node, ordering, isRamlExtension = false, typeFactory = emitterFactory)
     }
 
     fs.entry(NodeShapeModel.Inherits).map(f => result += OasShapeInheritsEmitter(f, ordering, references))

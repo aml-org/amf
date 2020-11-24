@@ -1460,8 +1460,8 @@ Dependency between sets of property shapes
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | propertySource | url | Source property shape in the dependency | http://a.ml/vocabularies/shapes#propertySource |
- | propertyTarget | [url] | Target property shape in the dependency | http://a.ml/vocabularies/shapes#propertyTarget |
+ | propertySource | string | Source property name in the dependency | http://a.ml/vocabularies/shapes#propertySource |
+ | propertyTarget | [string] | Target property name in the dependency | http://a.ml/vocabularies/shapes#propertyTarget |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## PropertyMapping
@@ -1708,7 +1708,7 @@ Dependency between a property shape and a schema
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | propertySource | url | Source property shape in the dependency | http://a.ml/vocabularies/shapes#propertySource |
+ | propertySource | string | Source property name in the dependency | http://a.ml/vocabularies/shapes#propertySource |
  | schemaTarget | [Shape](#shape) | Target applied shape in the dependency | http://a.ml/vocabularies/shapes#schemaTarget |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 

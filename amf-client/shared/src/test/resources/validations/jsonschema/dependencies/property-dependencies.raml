@@ -1,0 +1,37 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+      "type": "object",
+      "properties": {
+        "otherProperty": {
+          "type": "string"
+        }
+      },
+      "dependencies": {
+        "undefinedProperty": ["otherProperty"]
+      }
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              undefinedProperty: some value
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              undefinedProperty: some value
+              otherProperty: valid
