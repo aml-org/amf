@@ -85,9 +85,8 @@ case class Draft2019TypeParser(entryOrNode: YMapEntryLike,
                                version: SchemaVersion,
                                isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext) {
 
-  private val ast: YPart = entryOrNode.ast
+  private val ast: YPart                   = entryOrNode.ast
   private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())
-
 
   def parse: Option[AnyShape] = {
     val hasLink = LinkCriteria.detect(map).isDefined
@@ -102,12 +101,13 @@ case class Draft2019TypeParser(entryOrNode: YMapEntryLike,
 
   private def isSingleEntryMap(map: YMap) = map.entries.size == 1
 
-  private def mergeLinkWithShapeAllOf(reffedShape: Option[AnyShape], restOfShape: Option[AnyShape]): Option[AnyShape] = {
+  private def mergeLinkWithShapeAllOf(reffedShape: Option[AnyShape],
+                                      restOfShape: Option[AnyShape]): Option[AnyShape] = {
     (reffedShape, restOfShape) match {
       case (Some(reffed), Some(rest)) => Some(mergeLinkWithShapeAllOf(reffed, rest))
-      case (_, Some(rest)) => Some(rest)
-      case (Some(reffed), _) => Some(reffed)
-      case _ => None
+      case (_, Some(rest))            => Some(rest)
+      case (Some(reffed), _)          => Some(reffed)
+      case _                          => None
     }
   }
 
@@ -133,7 +133,7 @@ case class Draft4TypeParser(entryOrNode: YMapEntryLike,
                             version: SchemaVersion,
                             isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext) {
 
-  private val ast: YPart = entryOrNode.ast
+  private val ast: YPart                   = entryOrNode.ast
   private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())
 
   def parse: Option[AnyShape] = {

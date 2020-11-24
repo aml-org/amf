@@ -5,7 +5,7 @@ Number of results: 6
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'a' not supported in a RAML 1.0 webApi node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api
@@ -13,7 +13,7 @@ Level: Violation
   Position: Some(LexicalInformation([(10,0)-(11,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'b' not supported in a RAML 1.0 endPoint node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested
@@ -21,7 +21,7 @@ Level: Violation
   Position: Some(LexicalInformation([(13,2)-(14,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'c' not supported in a RAML 1.0 operation node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get
@@ -29,7 +29,7 @@ Level: Violation
   Position: Some(LexicalInformation([(16,4)-(17,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'd' not supported in a RAML 1.0 response node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200
@@ -37,7 +37,7 @@ Level: Violation
   Position: Some(LexicalInformation([(20,8)-(21,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'e' not supported in a RAML 1.0 object node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200/application%2Fjson/schema
@@ -45,7 +45,7 @@ Level: Violation
   Position: Some(LexicalInformation([(24,12)-(25,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'f' not supported in a RAML 1.0 string node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/closed_nodes/api.raml#/web-api/end-points/%2Fnested/get/200/application%2Fjson/schema/property/a/scalar/a

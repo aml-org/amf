@@ -28,7 +28,6 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{ScalarType, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.validation.DialectValidations.InvalidUnionType
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YPart, _}
 

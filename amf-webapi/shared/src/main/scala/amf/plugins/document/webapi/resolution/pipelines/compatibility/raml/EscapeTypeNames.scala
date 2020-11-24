@@ -3,7 +3,7 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{Linkable, Shape}
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.document.vocabularies.emitters.common.IdCounter
+import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, TypeName}
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.webapi.models.api.Api

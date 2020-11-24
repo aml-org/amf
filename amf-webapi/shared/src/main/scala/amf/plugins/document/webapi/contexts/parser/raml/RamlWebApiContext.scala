@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.TypeInfo
 import amf.plugins.document.webapi.parser.spec.domain.ParsingHelpers
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, SpecSyntax}
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
-import amf.validation.DialectValidations.ClosedShapeSpecification
+import amf.validations.ParserSideValidations.ClosedShapeSpecification
 import org.yaml.model._
 
 import scala.collection.mutable
