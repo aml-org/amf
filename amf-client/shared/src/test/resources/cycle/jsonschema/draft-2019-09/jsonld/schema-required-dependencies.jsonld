@@ -89,15 +89,9 @@
         "raml-shapes:PropertyDependencies",
         "doc:DomainElement"
       ],
-      "raml-shapes:propertySource": [
-        {
-          "@id": "#/main/property/credit_card"
-        }
-      ],
+      "raml-shapes:propertySource": "credit_card",
       "raml-shapes:propertyTarget": [
-        {
-          "@id": "#/main/property/something_else"
-        }
+        "something_else"
       ]
     },
     {
@@ -106,11 +100,7 @@
         "raml-shapes:SchemaDependencies",
         "doc:DomainElement"
       ],
-      "raml-shapes:propertySource": [
-        {
-          "@id": "#/main/property/credit_card"
-        }
-      ],
+      "raml-shapes:propertySource": "credit_card",
       "raml-shapes:schemaTarget": {
         "@id": "#/main/dependencySchema/credit_card/schema"
       }

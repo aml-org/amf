@@ -477,7 +477,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
   }
 
-  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
+  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit)
+      extends DataArrangementShapeParser() {
 
     override def parse(): AnyShape = {
       adopt(shape)
@@ -531,7 +532,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
+  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit)
+      extends DataArrangementShapeParser() {
     override def parse(): AnyShape = {
       checkJsonIdentity(shape, map, adopt, ctx.declarations.futureDeclarations)
       super.parse()
@@ -684,7 +686,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, entryAnnotations), valueAnnotations)
       shape.properties.foreach(p => properties += (p.name.value() -> p))
 
-      parseShapeDependencies(shape, properties)
+      parseShapeDependencies(shape)
 
       map.key(
         "x-amf-merge",
@@ -698,15 +700,14 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  private def parseShapeDependencies(shape: NodeShape,
-                                     properties: mutable.LinkedHashMap[String, PropertyShape]): Unit = {
+  private def parseShapeDependencies(shape: NodeShape): Unit = {
     if (version == JSONSchemaDraft201909SchemaVersion) {
-      Draft2019ShapeDependenciesParser(shape, map, shape.id, properties.toMap, version).parse()
+      Draft2019ShapeDependenciesParser(shape, map, shape.id, version).parse()
     } else {
       map.key(
         "dependencies",
         entry => {
-          Draft4ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, properties.toMap, version).parse()
+          Draft4ShapeDependenciesParser(shape, entry.value.as[YMap], shape.id, version).parse()
         }
       )
     }
@@ -754,7 +755,10 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     required
       .foreach {
         case (name, nodes) if nodes.size > 1 =>
-          ctx.eh.violation(DuplicateRequiredItem, shape.id, s"'$name' is duplicated in 'required' property", nodes.last)
+          ctx.eh.violation(DuplicateRequiredItem,
+                           shape.id,
+                           s"'$name' is duplicated in 'required' property",
+                           nodes.last)
         case _ => // ignore
       }
 
@@ -889,7 +893,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       )
 
       map.key("enum", ShapeModel.Values in shape using enumParser)
-      map.key("externalDocs", AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
+      map.key("externalDocs",
+              AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 
       map.key(

@@ -72,15 +72,9 @@
         "raml-shapes:PropertyDependencies",
         "doc:DomainElement"
       ],
-      "raml-shapes:propertySource": [
-        {
-          "@id": "#/main/property/credit_card"
-        }
-      ],
+      "raml-shapes:propertySource": "credit_card",
       "raml-shapes:propertyTarget": [
-        {
-          "@id": "#/main/property/billing_address"
-        }
+        "billing_address"
       ]
     },
     {
@@ -89,15 +83,9 @@
         "raml-shapes:PropertyDependencies",
         "doc:DomainElement"
       ],
-      "raml-shapes:propertySource": [
-        {
-          "@id": "#/main/property/billing_address"
-        }
-      ],
+      "raml-shapes:propertySource": "billing_address",
       "raml-shapes:propertyTarget": [
-        {
-          "@id": "#/main/property/credit_card"
-        }
+        "credit_card"
       ]
     },
     {

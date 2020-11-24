@@ -18,8 +18,8 @@ trait TypeEmitterFactory {
 
 abstract class AbstractDependenciesEmitter(nodeShape: NodeShape,
                                            ordering: SpecOrdering,
-                                           propertiesMap: Map[String, PropertyShape],
-                                           typeFactory: TypeEmitterFactory) extends EntryEmitter {
+                                           typeFactory: TypeEmitterFactory)
+    extends EntryEmitter {
 
   protected def schemaDependenciesEmitters: Seq[DependencyEmitter] = {
     nodeShape.fields
@@ -27,7 +27,7 @@ abstract class AbstractDependenciesEmitter(nodeShape: NodeShape,
       .map { entry =>
         val dependencies = entry.arrayValues[SchemaDependencies]
         dependencies.map(dep =>
-          DependencyEmitter(dep, ordering, propertiesMap, SchemaDependenciesEmitter(dep, ordering, typeFactory)))
+          DependencyEmitter(dep, ordering, SchemaDependenciesEmitter(dep, ordering, typeFactory)))
       }
       .getOrElse(Seq())
   }
@@ -37,8 +37,7 @@ abstract class AbstractDependenciesEmitter(nodeShape: NodeShape,
       .entry(Dependencies)
       .map { entry =>
         val dependencies = entry.arrayValues[PropertyDependencies]
-        dependencies.map(dep =>
-          DependencyEmitter(dep, ordering, propertiesMap, PropertyDependenciesEmitter(dep, ordering, propertiesMap)))
+        dependencies.map(dep => DependencyEmitter(dep, ordering, PropertyDependenciesEmitter(dep, ordering)))
       }
       .getOrElse(Seq())
   }
@@ -51,37 +50,33 @@ abstract class AbstractDependenciesEmitter(nodeShape: NodeShape,
       .getOrElse(Position.ZERO)
 }
 
-case class Draft2019DependenciesEmitter(nodeShape: NodeShape,
-                                        ordering: SpecOrdering,
-                                        propertiesMap: Map[String, PropertyShape],
-                                        typeFactory: TypeEmitterFactory)
-  extends AbstractDependenciesEmitter(nodeShape, ordering, propertiesMap, typeFactory) {
+case class Draft2019DependenciesEmitter(nodeShape: NodeShape, ordering: SpecOrdering, typeFactory: TypeEmitterFactory)
+    extends AbstractDependenciesEmitter(nodeShape, ordering, typeFactory) {
 
   override def emit(b: EntryBuilder): Unit = {
 
-    val propertyDependencies  = propertyDependenciesEmitters
-    val schemaDependencies = schemaDependenciesEmitters
+    val propertyDependencies = propertyDependenciesEmitters
+    val schemaDependencies   = schemaDependenciesEmitters
 
     if (propertyDependencies.nonEmpty) {
-      b.entry("dependentRequired",
-        _.obj { b => traverse(ordering.sorted(propertyDependencies), b) }
-      )
+      b.entry("dependentRequired", _.obj { b =>
+        traverse(ordering.sorted(propertyDependencies), b)
+      })
     }
 
     if (schemaDependencies.nonEmpty) {
-      b.entry("dependentSchemas",
-        _.obj { b => traverse(ordering.sorted(schemaDependencies), b) }
-      )
+      b.entry("dependentSchemas", _.obj { b =>
+        traverse(ordering.sorted(schemaDependencies), b)
+      })
     }
   }
 }
 
 case class Draft4DependenciesEmitter(nodeShape: NodeShape,
                                      ordering: SpecOrdering,
-                                     propertiesMap: Map[String, PropertyShape],
                                      isRamlExtension: Boolean,
                                      typeFactory: TypeEmitterFactory)
-    extends AbstractDependenciesEmitter(nodeShape, ordering, propertiesMap, typeFactory) {
+    extends AbstractDependenciesEmitter(nodeShape, ordering, typeFactory) {
   override def emit(b: EntryBuilder): Unit = {
 
     val key = if (isRamlExtension) "dependencies".asRamlAnnotation else "dependencies"
@@ -116,34 +111,24 @@ case class SchemaDependenciesEmitter(dependency: Dependencies, ordering: SpecOrd
   override def position(): Position = pos(dependency.annotations)
 }
 
-case class DependencyEmitter(dependency: Dependencies,
-                             ordering: SpecOrdering,
-                             properties: Map[String, PropertyShape],
-                             emitter: PartEmitter)
+case class DependencyEmitter(dependency: Dependencies, ordering: SpecOrdering, emitter: PartEmitter)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    properties
-      .get(dependency.propertySource.value())
-      .foreach { p =>
-        b.entry(
-          p.name.value(),
-          b => emitter.emit(b)
-        )
-      }
+    b.entry(
+      dependency.propertySource.value(),
+      b => emitter.emit(b)
+    )
+
   }
 
   override def position(): Position = pos(dependency.annotations)
 }
 
-case class PropertyDependenciesEmitter(dependency: Dependencies,
-                                       ordering: SpecOrdering,
-                                       properties: Map[String, PropertyShape])
-    extends PartEmitter {
+case class PropertyDependenciesEmitter(dependency: Dependencies, ordering: SpecOrdering) extends PartEmitter {
 
   override def emit(b: PartBuilder): Unit = {
     dependency.fields.entry(PropertyDependenciesModel.PropertyTarget).foreach { entry =>
-      val targets = entry.array.scalars.flatMap(iri =>
-        properties.get(iri.value.toString).map(p => AmfScalar(p.name.value(), iri.annotations)))
+      val targets = entry.array.scalars
       b.list { b =>
         traverse(ordering.sorted(targets.map(t => ScalarEmitter(AmfScalar(t)))), b)
       }

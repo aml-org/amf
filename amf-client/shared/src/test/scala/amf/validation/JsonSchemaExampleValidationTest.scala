@@ -163,5 +163,18 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
     validate("/required/unspecified-boolean.raml")
   }
 
+  test("JSON Schema 4 property dependencies with unknown source property") {
+    validate("/dependencies/property-dependencies.raml", Some("/dependencies/property-dependencies.report"))
+  }
+
+  test("JSON Schema 4 property dependencies with unknown target property") {
+    validate("/dependencies/property-dependencies-unkown-target.raml",
+             Some("/dependencies/property-dependencies-unknown-target.report"))
+  }
+
+  test("JSON Schema 4 schema dependencies with unknown source property") {
+    validate("/dependencies/schema-dependencies.raml", Some("/dependencies/schema-dependencies.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

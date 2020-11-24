@@ -11,12 +11,11 @@ import amf.core.vocabulary.ValueType
 /**
   *
   */
-
 trait DependenciesModel {
   val PropertySource = Field(
-    Iri,
+    Str,
     Shapes + "propertySource",
-    ModelDoc(ModelVocabularies.Shapes, "propertySource", "Source property shape in the dependency"))
+    ModelDoc(ModelVocabularies.Shapes, "propertySource", "Source property name in the dependency"))
 }
 
 object DependenciesModel extends DependenciesModel
@@ -24,9 +23,9 @@ object DependenciesModel extends DependenciesModel
 object PropertyDependenciesModel extends DomainElementModel with DependenciesModel {
 
   val PropertyTarget = Field(
-    Array(Iri),
+    Array(Str),
     Shapes + "propertyTarget",
-    ModelDoc(ModelVocabularies.Shapes, "propertyTarget", "Target property shape in the dependency"))
+    ModelDoc(ModelVocabularies.Shapes, "propertyTarget", "Target property name in the dependency"))
 
   override def fields: List[Field] =
     List(PropertySource, PropertyTarget) ++ DomainElementModel.fields
@@ -42,7 +41,7 @@ object PropertyDependenciesModel extends DomainElementModel with DependenciesMod
   )
 }
 
-object SchemaDependenciesModel extends DomainElementModel with  DependenciesModel {
+object SchemaDependenciesModel extends DomainElementModel with DependenciesModel {
 
   val SchemaTarget = Field(
     ShapeModel,
@@ -62,4 +61,3 @@ object SchemaDependenciesModel extends DomainElementModel with  DependenciesMode
     "Dependency between a property shape and a schema"
   )
 }
-
