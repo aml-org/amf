@@ -35,7 +35,7 @@ abstract class OasLikeOperationParser(entry: YMapEntry, parentId: String)(implic
 
   def parse(): Operation = {
     val operation: Operation = Operation(Annotations(entry))
-    operation.set(Method, methodNode, Annotations.inferred()) // add lexical info
+    operation.set(Method, methodNode, Annotations.inferred())
     operation.adopted(parentId)
 
     val map = entry.value.as[YMap]
