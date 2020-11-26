@@ -57,6 +57,25 @@ class AstIndexTest extends FunSuite with Matchers with PlatformSecrets{
     runIndex(pathToFile, expected, JSONSchemaDraft7SchemaVersion)
   }
 
+  test("Json Schema Draft 2019-09 - $id and $anchor resolution test") {
+    val pathToFile = "amf-webapi/shared/src/test/resources/ast-index/draft-2019-spec-example.json"
+    val expected = Seq(
+      "#",
+      "https://example.com/root.json",
+      "https://example.com/root.json#",
+      "https://example.com/root.json#foo",
+      "https://example.com/root.json#/$defs/A",
+      "https://example.com/root.json#/$defs/B",
+      "https://example.com/other.json#bar",
+      "https://example.com/other.json#/$defs/X",
+      "https://example.com/t/inner.json#",
+      "https://example.com/t/inner.json#bar",
+      "urn:uuid:ee564b8a-7a87-4125-8c96-e9f123d6766f",
+      "urn:uuid:ee564b8a-7a87-4125-8c96-e9f123d6766f#"
+    )
+    runIndex(pathToFile, expected, JSONSchemaDraft201909SchemaVersion)
+  }
+
   test("Scalar map") {
     val pathToFile = "amf-webapi/shared/src/test/resources/ast-index/scalar-map.json"
     val expected = Seq(

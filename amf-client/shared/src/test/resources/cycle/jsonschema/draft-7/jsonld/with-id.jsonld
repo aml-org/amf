@@ -1,0 +1,130 @@
+{
+  "@graph": [
+    {
+      "@id": "/any/schema",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "schema",
+      "shacl:xone": [
+        {
+          "@id": "#/xone/0/scalar/A"
+        },
+        {
+          "@id": "#/xone/1/scalar/B"
+        },
+        {
+          "@id": "#/xone/2/scalar/X"
+        },
+        {
+          "@id": "#/xone/3/scalar/Y"
+        },
+        {
+          "@id": "#/xone/4/scalar/C"
+        }
+      ]
+    },
+    {
+      "@id": "#/xone/0/scalar/A",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "A"
+    },
+    {
+      "@id": "#/xone/1/scalar/B",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "shacl:name": "B"
+    },
+    {
+      "@id": "#/xone/2/scalar/X",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "shacl:name": "X"
+    },
+    {
+      "@id": "#/xone/3/scalar/Y",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "Y"
+    },
+    {
+      "@id": "#/xone/4/scalar/C",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "shacl:name": "C"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-shapes:DataTypeFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "/any/schema"
+      },
+      "doc:version": "2.3.0",
+      "doc:root": false
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-client/shared/src/test/resources/cycle/jsonschema/draft-7/with-id.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "$id": "https://example.com/root.json",
+  "oneOf": [
+    { "$ref":  "https://example.com/root.json#foo" },
+    { "$ref":  "https://example.com/other.json" },
+    { "$ref":  "https://example.com/other.json#bar" },
+    { "$ref":  "https://example.com/t/inner.json#bar" },
+    { "$ref":  "urn:uuid:ee564b8a-7a87-4125-8c96-e9f123d6766f" }
+  ],
+  "$defs": {
+    "A": { "$anchor": "foo" },
+    "B": {
+      "$id": "other.json",
+      "$defs": {
+        "X": { "$anchor": "bar" },
+        "Y": {
+          "$id": "t/inner.json",
+          "$anchor": "bar"
+        }
+      }
+    },
+    "C": {
+      "$id": "urn:uuid:ee564b8a-7a87-4125-8c96-e9f123d6766f"
+    }
+  }
+}

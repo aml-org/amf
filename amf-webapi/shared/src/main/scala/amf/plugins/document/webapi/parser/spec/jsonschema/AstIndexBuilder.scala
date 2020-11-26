@@ -5,35 +5,47 @@ import java.net.URI
 import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaDraft6SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaVersion, SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft201909SchemaVersion,
+  JSONSchemaDraft3SchemaVersion,
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaDraft6SchemaVersion,
+  JSONSchemaDraft7SchemaVersion,
+  JSONSchemaVersion,
+  SchemaVersion
+}
 import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
 import org.yaml.model._
 
 object AstIndexBuilder {
   def buildAst(node: YNode, refCounter: AliasCounter, version: SchemaVersion)(implicit ctx: WebApiContext): AstIndex = {
-    val locationUri = getBaseUri(ctx)
+    val locationUri             = getBaseUri(ctx)
     val specificResolutionScope = locationUri.flatMap(loc => getResolutionScope(version, loc)).toSeq
-    val scopes = Seq(LexicalResolutionScope()) ++ specificResolutionScope
+    val scopes                  = Seq(LexicalResolutionScope()) ++ specificResolutionScope
     new AstIndexBuilder(refCounter).build(node, scopes)
   }
 
-  private def getBaseUri(ctx: WebApiContext): Option[URI] = try {
-    Some(new URI(ctx.jsonSchemaRefGuide.currentLoc))
-  } catch {
-    case _: Throwable => None
-  }
+  private def getBaseUri(ctx: WebApiContext): Option[URI] =
+    try {
+      Some(new URI(ctx.jsonSchemaRefGuide.currentLoc))
+    } catch {
+      case _: Throwable => None
+    }
 
   private def getResolutionScope(version: SchemaVersion, baseUri: URI): Option[ResolutionScope] = version match {
-    case JSONSchemaDraft3SchemaVersion | JSONSchemaDraft4SchemaVersion | JSONSchemaDraft6SchemaVersion => Some(Draft4ResolutionScope(baseUri))
-    case JSONSchemaDraft7SchemaVersion => Some(Draft7ResolutionScope(baseUri))
-    case _ => None
+    case JSONSchemaDraft3SchemaVersion | JSONSchemaDraft4SchemaVersion | JSONSchemaDraft6SchemaVersion =>
+      Some(Draft4ResolutionScope(baseUri))
+    case JSONSchemaDraft7SchemaVersion      => Some(Draft7ResolutionScope(baseUri))
+    case JSONSchemaDraft201909SchemaVersion => Some(Draft2019ResolutionScope(baseUri))
+    case _                                  => None
   }
 }
 
 case class AstIndexBuilder private (private val refCounter: AliasCounter)(implicit ctx: WebApiContext) {
 
   def build(node: YNode, scopes: Seq[ResolutionScope]): AstIndex = {
-    val entrySeq = scopes.flatMap(_.resolve("", YMapEntryLike(node))) ++ index(YMapEntryLike(node), scopes).sortBy(t => t._1)
+    val entrySeq = scopes.flatMap(_.resolve("", YMapEntryLike(node))) ++ index(YMapEntryLike(node), scopes).sortBy(t =>
+      t._1)
     AstIndex(entrySeq.toMap)
   }
 
