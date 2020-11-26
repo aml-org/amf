@@ -65,11 +65,6 @@
         },
         "lexical": {
           "#11": "[(4,4)-(6,12)]"
-        },
-        "extension-provenance": {
-          "apiContract:expects": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-          "#11": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-          "apiContract:method": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
         }
       }
     },
@@ -104,10 +99,6 @@
         }
       ],
       "smaps": {
-        "extension-provenance": {
-          "apiContract:parameter": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-          "#12": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
-        },
         "lexical": {
           "apiContract:parameter": "[(5,6)-(6,12)]",
           "#12": "[(5,6)-(6,12)]"
@@ -155,13 +146,6 @@
         "@id": "#14"
       },
       "smaps": {
-        "extension-provenance": {
-          "apiContract:binding": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-          "apiContract:paramName": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-          "#13": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-          "core:name": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-          "apiContract:required": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
-        },
         "lexical": {
           "raml-shapes:schema": "[(6,8)-(6,12)]",
           "#13": "[(6,8)-(6,12)]"
@@ -202,10 +186,6 @@
       ],
       "shacl:name": "schema",
       "smaps": {
-        "extension-provenance": {
-          "shacl:name": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-          "shacl:datatype": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
-        },
         "lexical": {
           "#14": "[(6,8)-(6,12)]"
         }
