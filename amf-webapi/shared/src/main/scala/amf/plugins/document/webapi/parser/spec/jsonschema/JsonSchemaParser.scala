@@ -11,6 +11,7 @@ import amf.plugins.document.webapi.contexts.parser.raml.Raml08WebApiContext
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, OasTypeParser}
+import amf.plugins.document.webapi.parser.spec.jsonschema.AstFinder.getPointedAstOrNode
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaRootCreator.createRootFrom
 import amf.plugins.document.webapi.parser.spec.toOasDeclarations
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
@@ -35,10 +36,10 @@ class JsonSchemaParser{
         val shapeId: String      = deriveShapeIdFrom(document)
         val JsonReference(url, hashFragment) = JsonReference.buildReference(document.location)
         val jsonSchemaContext = makeJsonSchemaContext(document, parentContext, url, options)
-        val rootAst = AstFinder.getPointedAstOrNode(parsedDoc.document.node, shapeId, hashFragment, url, jsonSchemaContext)
+        val rootAst = getPointedAstOrNode(parsedDoc.document.node, shapeId, hashFragment, url, jsonSchemaContext)
         val version = optionalVersion.getOrElse(jsonSchemaContext.computeJsonSchemaVersion(parsedDoc.document.node))
         val parsed =
-          OasTypeParser(rootAst, rootAst.key.map(_.as[String]).getOrElse("schema"), shape => shape.withId(shapeId), version = version)(jsonSchemaContext)
+          OasTypeParser(rootAst, keyValueOrDefault(rootAst), shape => shape.withId(shapeId), version = version)(jsonSchemaContext)
             .parse() match {
             case Some(shape) => shape
             case None =>
@@ -51,10 +52,14 @@ class JsonSchemaParser{
     }
   }
 
+  private def keyValueOrDefault(rootAst: YMapEntryLike) = {
+    rootAst.key.map(_.as[String]).getOrElse("schema")
+  }
+
   private def makeJsonSchemaContext(document: Root,
-                            parentContext: WebApiContext,
-                            url: String,
-                            options: ParsingOptions): JsonSchemaWebApiContext = {
+                                    parentContext: WebApiContext,
+                                    url: String,
+                                    options: ParsingOptions): JsonSchemaWebApiContext = {
 
     val cleanNested = ParserContext(url, document.references, EmptyFutureDeclarations(), parentContext.eh)
     cleanNested.globalSpace = parentContext.globalSpace

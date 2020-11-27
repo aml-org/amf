@@ -6,24 +6,16 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.utils.{AliasCounter, AmfStrings, IdCounter}
 import amf.plugins.document.webapi.annotations.DeclarationKey
-import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaAstIndex, OasWebApiContext}
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaVersion,
-  SchemaVersion
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
-import amf.plugins.document.webapi.parser.spec.jsonschema.{AstFinder, JsonSchemaInference}
+import amf.plugins.document.webapi.parser.spec.jsonschema.{AstFinder, AstIndex, AstIndexBuilder, JsonSchemaInference}
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.validations.ParserSideValidations.{
-  ClosedShapeSpecification,
-  ClosedShapeSpecificationWarning,
-  InvalidJsonSchemaVersion
-}
+import amf.validations.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
 import org.yaml.model._
 
 abstract class WebApiContext(val loc: String,
@@ -51,7 +43,7 @@ abstract class WebApiContext(val loc: String,
     case _                  => None
   }
 
-  private var jsonSchemaIndex: Option[JsonSchemaAstIndex] = wrapped match {
+  private var jsonSchemaIndex: Option[AstIndex] = wrapped match {
     case wac: WebApiContext => wac.jsonSchemaIndex
     case _                  => None
   }
@@ -60,7 +52,7 @@ abstract class WebApiContext(val loc: String,
 
   def setJsonSchemaAST(value: YNode): Unit = {
     localJSONSchemaContext = Some(value)
-    jsonSchemaIndex = Some(JsonSchemaAstIndex(value)(this))
+    jsonSchemaIndex = Some(AstIndexBuilder.buildAst(value, AliasCounter(options.getMaxYamlReferences), computeJsonSchemaVersion(value))(this))
   }
 
   globalSpace = wrapped.globalSpace
@@ -138,12 +130,10 @@ abstract class WebApiContext(val loc: String,
     }
   }
 
-  def findJsonPathIn(index: JsonSchemaAstIndex, path: String) =
-    index.getNodeAndEntry(normalizeJsonPath(path)).map { (path, _) }
 
-  // TODO: Evaluate if this can return a YMapEntryLike
-  def findLocalJSONPath(path: String): Option[(String, Either[YNode, YMapEntry])] = {
-    // todo: past uri?
+  def findJsonPathIn(index: AstIndex, path: String) = index.getNode(normalizeJsonPath(path))
+
+  def findLocalJSONPath(path: String): Option[YMapEntryLike] = {
     jsonSchemaIndex.flatMap(index => findJsonPathIn(index, path))
   }
 
