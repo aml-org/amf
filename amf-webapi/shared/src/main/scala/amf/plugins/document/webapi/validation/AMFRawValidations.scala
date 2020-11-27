@@ -482,6 +482,32 @@ object AMFRawValidations {
         openApiErrorMessage = "uniqueItems of a Schema object of type 'array' must be a boolean"
       ),
       AMFValidation(
+        message = "minContains for an array type must be an integer",
+        owlClass = shape("ArrayShape"),
+        owlProperty = sh("qualifiedMinCount"),
+        constraint = dataType,
+        value = integer,
+      ),
+      AMFValidation(
+        message = "maxContains for an array type must be an integer",
+        owlClass = shape("ArrayShape"),
+        owlProperty = sh("qualifiedMaxCount"),
+        constraint = dataType,
+        value = integer
+      ),
+      AMFValidation(
+        message = "minContains facet should be greater or equal than 0",
+        owlClass = shape("ArrayShape"),
+        owlProperty = sh("qualifiedMinCount"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        message = "maxContains facet should be greater or equal than 0",
+        owlClass = shape("ArrayShape"),
+        owlProperty = sh("qualifiedMaxCount"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
         owlClass = shape("ScalarShape"),
         owlProperty = sh("pattern"),
         constraint = dataType,

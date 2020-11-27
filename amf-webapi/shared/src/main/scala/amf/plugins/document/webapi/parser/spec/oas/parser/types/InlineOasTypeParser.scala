@@ -561,6 +561,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       if (version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
         new UnevaluatedParser(version, UnevaluatedParser.unevaluatedItemsInfo).parse(map, shape)
+        map.key("minContains", ArrayShapeModel.MinContains in shape)
+        map.key("maxContains", ArrayShapeModel.MaxContains in shape)
       }
 
       finalShape match {

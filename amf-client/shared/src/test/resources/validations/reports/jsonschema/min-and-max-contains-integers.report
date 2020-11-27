@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/validations/jsonschema/min-and-max-contains-integers.json
+Profile: OAS 2.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#ArrayShape-qualifiedMinCount-datatype
+  Message: minContains for an array type must be an integer
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/min-and-max-contains-integers.json#/array/invalid
+  Property: http://www.w3.org/ns/shacl#qualifiedMinCount
+  Position: Some(LexicalInformation([(10,21)-(10,33)]))
+  Location: amf-client/shared/src/test/resources/validations/jsonschema/min-and-max-contains-integers.json
+
+- Source: http://a.ml/vocabularies/amf/parser#ArrayShape-qualifiedMaxCount-datatype
+  Message: maxContains for an array type must be an integer
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/min-and-max-contains-integers.json#/array/invalid
+  Property: http://www.w3.org/ns/shacl#qualifiedMaxCount
+  Position: Some(LexicalInformation([(11,21)-(11,25)]))
+  Location: amf-client/shared/src/test/resources/validations/jsonschema/min-and-max-contains-integers.json

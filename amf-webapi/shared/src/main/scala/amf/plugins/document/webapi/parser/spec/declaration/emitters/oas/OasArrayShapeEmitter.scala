@@ -36,6 +36,10 @@ case class OasArrayShapeEmitter(shape: ArrayShape,
 
     fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
 
+    fs.entry(ArrayShapeModel.MinContains).map(f => result += ValueEmitter("minContains", f))
+
+    fs.entry(ArrayShapeModel.MaxContains).map(f => result += ValueEmitter("maxContains", f))
+
     if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion) && Option(shape.contains).isDefined)
       result += OasEntryShapeEmitter("contains", shape.contains, ordering, references, pointer, schemaPath)
 
