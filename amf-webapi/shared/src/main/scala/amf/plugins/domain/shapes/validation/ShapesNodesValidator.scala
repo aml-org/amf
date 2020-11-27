@@ -16,12 +16,14 @@ object ShapesNodesValidator {
 
     validateEnums(candidates, severity, env).flatMap { r =>
       if (!r.conforms) Future.successful(r)
-      else
+      else {
         // filter for only enum cases
-        PayloadValidationPluginsHandler.validateAll(
+        val result = PayloadValidationPluginsHandler.validateAll(
           candidates.filter(_.payload.fields.exists(PayloadFragmentModel.Encodes)),
           severity,
           env) // filter for only enum cases
+        result
+      }
     }
   }
 

@@ -7,34 +7,17 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.validation.json.{
-  InvalidJSONValueException,
-  JSONObject,
-  JSONTokenerHack,
-  ScalarTokenerHack
-}
+import amf.plugins.document.webapi.validation.json.{InvalidJSONValueException, JSONObject, JSONTokenerHack, ScalarTokenerHack}
 import amf.plugins.domain.shapes.models.ScalarShape
-import amf.validations.PayloadValidations.{
-  ExampleValidationErrorSpecification,
-  SchemaException => InternalSchemaException
-}
-import org.everit.json.schema.internal.{
-  DateFormatValidator,
-  DateTimeFormatValidator,
-  EmailFormatValidator,
-  HostnameFormatValidator,
-  IPV4Validator,
-  IPV6Validator,
-  RegexFormatValidator,
-  URIFormatValidator,
-  URIV4FormatValidator
-}
+import amf.validations.PayloadValidations.{ExampleValidationErrorSpecification, SchemaException => InternalSchemaException}
+import org.everit.json.schema.internal.{DateFormatValidator, DateTimeFormatValidator, EmailFormatValidator, HostnameFormatValidator, IPV4Validator, IPV6Validator, RegexFormatValidator, URIFormatValidator, URIV4FormatValidator}
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
 import org.json.JSONException
 
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
+import scala.collection.mutable.ArrayBuffer
 
 class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, val env: Environment)
     extends PlatformPayloadValidator(shape, env) {
@@ -147,8 +130,10 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
     JvmReportValidationProcessor(profileName, shape)
 }
 
-case class JvmReportValidationProcessor(override val profileName: ProfileName, shape: Shape)
+case class JvmReportValidationProcessor(override val profileName: ProfileName, shape: Shape, override protected var intermediateResults: Seq[AMFValidationResult] = Seq())
     extends ReportValidationProcessor {
+
+  override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 
   override def processException(r: Throwable, element: Option[DomainElement]): Return = {
     val results = r match {

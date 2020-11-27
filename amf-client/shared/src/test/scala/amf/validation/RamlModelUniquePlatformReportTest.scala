@@ -559,4 +559,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Some("included-json-wrong-draft-key.report"),
              Raml08Profile)
   }
+
+  test("Draft 2019 unsupported facets for validation throw warning") {
+    validate("raml/draft-2019/draft-2019-unsupported-facets-warning.raml", Some("draft-2019-unsupported-facets-warning.report"))
+  }
 }

@@ -40,7 +40,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
     val payloadResults = index.aggregate(indexedResults)
     val schemaResults = indexedResults
       .filter {
-        case (_, validations) => validations.exists(_.validationId == PayloadValidations.SchemaException.id)
+        case (_, validations) => validations.exists(v => v.validationId == PayloadValidations.SchemaException.id || v.validationId == PayloadValidations.UntranslatableDraft2019Fields.id)
       }
       .flatMap(_._2)
     payloadResults ++ schemaResults

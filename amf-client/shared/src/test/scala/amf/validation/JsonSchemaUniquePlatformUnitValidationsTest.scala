@@ -20,6 +20,10 @@ class JsonSchemaUniquePlatformUnitValidationsTest extends UniquePlatformReportGe
     validate("min-and-max-contains-integers.json", Some("min-and-max-contains-integers.report"))
   }
 
+  test("unused facets in validation throw warning") {
+    validate("unused-validation-facets.json", Some("unused-validation-facets.report"))
+  }
+
   override protected def parse(path: String, eh: DefaultParserErrorHandler, finalHint: Hint): Future[BaseUnit] = {
     Future.successful(parseSchema(platform, path, "application/json", eh))
   }

@@ -3,11 +3,12 @@ package amf.validations
 import java.util.regex.Pattern
 
 import amf.core.annotations.SynthesizedField
+import amf.core.metamodel.Field
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement, Shape}
 import amf.core.parser.Annotations
-import amf.core.services.RuntimeValidator.CustomShaclFunctions
+import amf.core.services.RuntimeValidator.{CustomShaclFunctions, PropertyInfo}
 import amf.core.utils.RegexConverter
 import amf.plugins.document.webapi.validation.runtimeexpression.{AsyncExpressionValidator, Oas3ExpressionValidator}
 import amf.plugins.domain.shapes.metamodel._
