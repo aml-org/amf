@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{SynthesizedField, VirtualElement}
+import amf.core.annotations.VirtualElement
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, _}
@@ -17,11 +17,9 @@ import amf.plugins.document.webapi.parser.spec.oas.{
   Oas30RequestParser
 }
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
-import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel, WebApiModel}
-import amf.plugins.domain.webapi.models.security.SecurityRequirement
-import amf.plugins.domain.webapi.models.{Operation, Request, Response, security}
 import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel}
+import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import amf.plugins.domain.webapi.models.{Operation, Request, Response}
 import amf.validations.ParserSideValidations.{DuplicatedOperationId, InvalidStatusCode}
 import org.yaml.model._

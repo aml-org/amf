@@ -342,6 +342,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema/property/age/source-map/lexical/element_1"
+        },
+        {
           "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema/property/age/source-map/lexical/element_0"
         }
       ]
@@ -396,9 +399,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema/property/age/source-map/lexical/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema/property/age/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema/property/age",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,16)-(14,17)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema/property/age/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(9,16)-(9,21)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema/property/age/scalar/age/source-map/type-property-lexical-info/element_0",

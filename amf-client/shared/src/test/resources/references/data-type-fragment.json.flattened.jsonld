@@ -295,6 +295,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map/lexical/element_1"
+        },
+        {
           "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map/lexical/element_0"
         }
       ]
@@ -344,9 +347,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map/lexical/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(10,5)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,10)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/property/name/scalar/name/source-map/type-property-lexical-info/element_0",

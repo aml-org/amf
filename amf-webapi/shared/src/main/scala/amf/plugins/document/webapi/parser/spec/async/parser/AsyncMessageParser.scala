@@ -159,7 +159,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
             case n: NodeShape =>
               message.set(MessageModel.HeaderSchema, n, Annotations(entry))
             case _ =>
-              message.set(MessageModel.HeaderSchema, NodeShape(Annotations(VirtualObject())), Annotations(entry))
+              message.set(MessageModel.HeaderSchema, NodeShape(Annotations.virtual()), Annotations(entry))
 
               ctx.eh.violation(ParserSideValidations.HeaderMustBeObject,
                                message.id,
