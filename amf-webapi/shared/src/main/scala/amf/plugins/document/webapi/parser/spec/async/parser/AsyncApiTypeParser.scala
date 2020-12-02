@@ -1,8 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
+import amf.core.annotations.{DefinedByVendor, SourceVendor}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.Shape
 import amf.core.parser.SearchScope
+import amf.core.remote.Raml10
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition._
@@ -53,11 +55,14 @@ case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: S
 case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)(
     implicit val ctx: OasLikeWebApiContext) {
 
-  def parse(): Option[Shape] =
-    ctx.link(entry.value) match {
+  def parse(): Option[Shape] = {
+    val shape = ctx.link(entry.value) match {
       case Left(refValue) => handleRef(refValue)
       case Right(_)       => parseRamlType(entry)
     }
+    shape.foreach(_.annotations += DefinedByVendor(Raml10))
+    shape
+  }
 
   private def parseRamlType(entry: YMapEntryLike): Option[Shape] = {
     val context = toRaml(ctx)
