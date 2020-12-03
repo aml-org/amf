@@ -23,6 +23,7 @@ import org.yaml.model.YDocument._
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -151,8 +152,18 @@ case class NamedMultipleExampleEmitter(key: String,
     extends MultipleExampleEmitter(key, examples, ordering, references) {
 
   def emit(b: PartBuilder) = {
-    val emitters = examples.map(NamedExampleEmitter(_, ordering))
-    b.obj(traverse(ordering.sorted(emitters), _))
+    val emitters = examplesWithKey.map { case (key, example) => new KeyedExampleEmitter(key, example, ordering) }
+    b.obj(traverse(ordering.sorted(emitters.toList), _))
+  }
+
+  private def examplesWithKey: Map[String, Example] = {
+    val counter = new IdCounter()
+    examples.foldLeft(Map.empty[String, Example]) {
+      case (map, ex) =>
+        val name = ex.name.option()
+        val key  = name.filter(!map.contains(_)).getOrElse(counter.genId("amf_example"))
+        map + (key -> ex)
+    }
   }
 }
 
