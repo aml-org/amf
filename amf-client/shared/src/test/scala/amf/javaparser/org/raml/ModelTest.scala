@@ -64,9 +64,11 @@ trait ModelValidationTest extends DirectoryTest {
       .collect({ case d: Document => d })
       .flatMap(_.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor))
     maybeVendor match {
-      case Some(Raml08) => Raml08Profile
-      case Some(Oas20)  => Oas20Profile
-      case _            => RamlProfile
+      case Some(Raml08)     => Raml08Profile
+      case Some(Oas20)      => Oas20Profile
+      case Some(Oas30)      => Oas30Profile
+      case Some(AsyncApi20) => Async20Profile
+      case _                => RamlProfile
     }
   }
 

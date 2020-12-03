@@ -33,17 +33,14 @@ class OasAnyShapeEmitter(shape: AnyShape,
     if (spec.options.isWithDocumentation) {
       shape.fields
         .entry(AnyShapeModel.Examples)
-        .map(f => {
+        .map { f =>
           val examples = spec.filterLocal(f.array.values.collect({ case e: Example => e }))
-          val tuple    = examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
-
-          result ++= (tuple match {
-            case (Nil, Nil)         => Nil
-            case (named, Nil)       => examplesEmitters(named.headOption, named.tail, isHeader)
-            case (Nil, named)       => examplesEmitters(None, named, isHeader)
-            case (anonymous, named) => examplesEmitters(anonymous.headOption, anonymous.tail ++ named, isHeader)
-          })
-        })
+          if (examples.nonEmpty) {
+            val (anonymous, named) =
+              examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
+            result ++= examplesEmitters(anonymous.headOption, anonymous.drop(1) ++ named, isHeader)
+          }
+        }
       if (spec.schemaVersion isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion)
         shape.fields.entry(AnyShapeModel.Comment).map(c => result += ValueEmitter("$comment", c))
     }

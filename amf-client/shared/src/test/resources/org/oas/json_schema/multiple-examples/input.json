@@ -1,0 +1,78 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "test",
+    "version": "0.1.0"
+  },
+  "components": {
+    "schemas": {
+      "root": {
+        "type": "object",
+        "properties": {
+          "a": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/first": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "accountId": "value 1"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/root"
+                }
+              }
+            },
+            "description": "sd"
+          }
+        }
+      }
+    },
+    "/pets": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "accountId": "value 2"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/root"
+                }
+              }
+            },
+            "description": "sd"
+          }
+        }
+      }
+    },
+    "/other": {
+      "get": {
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "accountId": "value 3"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/root"
+                }
+              }
+            },
+            "description": "sd"
+          }
+        }
+      }
+    }
+  }
+}
