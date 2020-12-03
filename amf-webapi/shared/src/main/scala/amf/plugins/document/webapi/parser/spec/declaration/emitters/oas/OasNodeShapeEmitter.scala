@@ -18,9 +18,13 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft7SchemaVersion,
   OAS30SchemaVersion
 }
-import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter
+import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.{
+  UnevaluatedEmitter,
+  UntranslatableDraft2019FieldsPresentGuard
+}
 import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter.unevaluatedPropertiesInfo
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
+import amf.plugins.domain.shapes.metamodel.NodeShapeModel.{UnevaluatedProperties, UnevaluatedPropertiesSchema}
 import amf.plugins.domain.shapes.models.NodeShape
 
 import scala.collection.immutable.ListMap
@@ -60,7 +64,9 @@ case class OasNodeShapeEmitter(node: NodeShape,
                                              schemaPath))
     }
 
-    if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
+    UntranslatableDraft2019FieldsPresentGuard(node,
+                                              Seq(UnevaluatedPropertiesSchema, UnevaluatedProperties),
+                                              Seq("unevaluatedProperties")).evaluateOrRun { () =>
       result += new UnevaluatedEmitter(node, unevaluatedPropertiesInfo, ordering, references, pointer, schemaPath)
     }
 
