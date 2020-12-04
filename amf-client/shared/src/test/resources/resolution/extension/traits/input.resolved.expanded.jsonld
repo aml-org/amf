@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#11",
+        "@id": "#10",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -28,7 +28,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#12",
+            "@id": "#11",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -40,7 +40,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#14",
+                "@id": "#13",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -57,7 +57,7 @@
                 ],
                 "doc:extends": [
                   {
-                    "@id": "#15",
+                    "@id": "#14",
                     "@type": [
                       "apiContract:ParametrizedTrait",
                       "doc:ParametrizedDeclaration",
@@ -133,21 +133,18 @@
                           }
                         ],
                         "smaps": {
-                          "extension-provenance": {
-                            "#5": "id->amf://id#10"
+                          "resolved-link-target": {
+                            "#5": "amf://id#9"
                           },
-                          "resolved-link": {
-                            "#5": "amf://id#8"
+                          "declared-element": {
+                            "#5": ""
                           },
                           "lexical": {
                             "doc:dataNode": "[(8,4)-(10,0)]",
                             "#5": "[(7,2)-(10,0)]"
                           },
-                          "declared-element": {
-                            "#5": ""
-                          },
-                          "resolved-link-target": {
-                            "#5": "amf://id#9"
+                          "resolved-link": {
+                            "#5": "amf://id#8"
                           }
                         }
                       }
@@ -155,21 +152,21 @@
                     "smaps": {
                       "lexical": {
                         "core:name": "[(12,9)-(12,14)]",
-                        "#15": "[(12,9)-(12,14)]"
+                        "#14": "[(12,9)-(12,14)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#14": "[(10,2)-(10,6)]"
+                    "#13": "[(10,2)-(10,6)]"
                   }
                 }
               }
             ],
             "doc:extends": [
               {
-                "@id": "#13",
+                "@id": "#12",
                 "@type": [
                   "apiContract:ParametrizedTrait",
                   "doc:ParametrizedDeclaration",
@@ -264,7 +261,7 @@
                 "smaps": {
                   "lexical": {
                     "core:name": "[(9,7)-(9,13)]",
-                    "#13": "[(9,7)-(9,13)]"
+                    "#12": "[(9,7)-(9,13)]"
                   }
                 }
               }
@@ -272,17 +269,17 @@
             "smaps": {
               "lexical": {
                 "doc:extends": "[(9,2)-(10,0)]",
-                "#12": "[(8,0)-(10,6)]"
+                "#11": "[(8,0)-(10,6)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#11": "RAML 1.0"
+            "#10": "RAML 1.0"
           },
           "lexical": {
-            "#11": "[(2,0)-(10,6)]"
+            "#10": "[(2,0)-(10,6)]"
           }
         }
       }
@@ -441,21 +438,18 @@
           }
         ],
         "smaps": {
-          "extension-provenance": {
-            "#5": "id->amf://id#10"
+          "resolved-link-target": {
+            "#5": "amf://id#9"
           },
-          "resolved-link": {
-            "#5": "amf://id#8"
+          "declared-element": {
+            "#5": ""
           },
           "lexical": {
             "doc:dataNode": "[(8,4)-(10,0)]",
             "#5": "[(7,2)-(10,0)]"
           },
-          "declared-element": {
-            "#5": ""
-          },
-          "resolved-link-target": {
-            "#5": "amf://id#9"
+          "resolved-link": {
+            "#5": "amf://id#8"
           }
         }
       }

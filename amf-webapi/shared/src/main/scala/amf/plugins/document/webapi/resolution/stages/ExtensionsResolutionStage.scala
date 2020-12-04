@@ -13,7 +13,6 @@ import amf.core.model.domain._
 import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
@@ -120,7 +119,6 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     }
 
     val refs = document.references ++ extensionReferences.filter(unit => !existing.contains(unit.id)).map { unit =>
-      unit.annotations += ExtensionProvenance(extensionId, extensionLocation)
       unit
     }
 
@@ -245,7 +243,6 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
         case None =>
           val extendedDeclaration =
             adoptInner(master.id + "#/declarations", declaration, mergingTracker).asInstanceOf[DomainElement]
-          if (keepEditingInfo) extendedDeclaration.annotations += ExtensionProvenance(extensionId, extensionLocation)
           declarations += extendedDeclaration
       }
     }
@@ -320,7 +317,6 @@ class ExtensionResolutionStage(override val profile: ProfileName, override val k
                                           extensionId: String,
                                           extensionLocation: Option[String]): Unit = {
     other.values.foreach { value =>
-      if (keepEditingInfo) value.annotations += ExtensionProvenance(extensionId, extensionLocation)
       target.add(field, value)
     }
   }
@@ -339,7 +335,6 @@ class OverlayResolutionStage(override val profile: ProfileName, override val kee
                                           extensionId: String,
                                           extensionLocation: Option[String]): Unit = {
     val seq: Seq[AmfElement] = other.values.map { value =>
-      if (keepEditingInfo) value.annotations += ExtensionProvenance(extensionId, extensionLocation)
       value
     }
     target.setArray(field, seq)

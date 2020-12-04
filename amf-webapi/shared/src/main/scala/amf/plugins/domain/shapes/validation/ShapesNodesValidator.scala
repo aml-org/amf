@@ -1,6 +1,7 @@
 package amf.plugins.domain.shapes.validation
 
 import amf.core.metamodel.document.PayloadFragmentModel
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ScalarNode, Shape}
 import amf.core.utils.MediaTypeMatcher
@@ -15,12 +16,14 @@ object ShapesNodesValidator {
 
     validateEnums(candidates, severity, env).flatMap { r =>
       if (!r.conforms) Future.successful(r)
-      else
+      else {
         // filter for only enum cases
-        PayloadValidationPluginsHandler.validateAll(
+        val result = PayloadValidationPluginsHandler.validateAll(
           candidates.filter(_.payload.fields.exists(PayloadFragmentModel.Encodes)),
           severity,
           env) // filter for only enum cases
+        result
+      }
     }
   }
 
@@ -30,12 +33,18 @@ object ShapesNodesValidator {
       .groupBy(_.shape)
       .keys
       .flatMap({
-        case s: Shape if s.values.nonEmpty =>
-          s.values.map(v => ValidationCandidate(s, PayloadFragment(v, defaultMediaTypeFor(v))))
-        case _ => Nil
+        case s: Shape if s.values.nonEmpty => shapeEnumCandidates(s)
+        case _                             => Nil
       })
     //call to validation
     PayloadValidationPluginsHandler.validateAll(enumsCandidates.toSeq, severity, env)
+  }
+
+  private[validation] def shapeEnumCandidates(shape: Shape): Seq[ValidationCandidate] = {
+    val enums       = shape.values
+    val shallowCopy = shape.copyShape()
+    shallowCopy.fields.removeField(ShapeModel.Values) // remove enum values from shape as is in not necessary when validating each enum value.
+    enums.map(v => ValidationCandidate(shallowCopy, PayloadFragment(v, defaultMediaTypeFor(v))))
   }
 
   def defaultMediaTypeFor(dataNode: DataNode): String = dataNode match {

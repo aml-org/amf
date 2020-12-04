@@ -10,7 +10,7 @@ import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, FieldEntry, Value}
-import amf.plugins.document.webapi.annotations.{ExtensionProvenance, Inferred}
+import amf.plugins.document.webapi.annotations.{Inferred}
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
@@ -55,7 +55,6 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       case Some(existing) if restrictions allowsOverride field =>
         field.`type` match {
           case _: Type.Scalar =>
-            if (keepEditingInfo) entry.element.annotations += ExtensionProvenance(extensionId, extensionLocation)
             master.set(field, entry.element)
           case Type.ArrayLike(element) =>
             mergeArrays(master, field, element, existing.array, entry.array)
@@ -66,7 +65,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                           entry.element.asInstanceOf[DomainElement])
           case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
             master
-              .set(field, entry.domainElement, Annotations(ExtensionProvenance(overlay.id, extensionLocation)))
+              .set(field, entry.domainElement)
           case _: DomainElementModel =>
             merge(existing.domainElement, entry.domainElement, idTracker)
           case _ =>
@@ -92,7 +91,6 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
   private def insertNode(master: DomainElement, idTracker: IdTracker, entry: FieldEntry): Unit = {
     val FieldEntry(field, value) = entry
     val newValue                 = adoptInner(master.id, value.value, idTracker)
-    if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
     master.set(field, newValue)
   }
 
@@ -143,7 +141,6 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       case (e: DataNode, o: DataNode) if areSameType(existing, overlay) => DataNodeMerging.merge(e, o)
       case _                                                            =>
         // Different types of nodes means the overlay has redefined this extension, so replace it
-        if (keepEditingInfo) overlay.annotations += ExtensionProvenance(extensionId, extensionLocation)
         master.set(field, overlay)
     }
   }
@@ -168,7 +165,6 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       val scalar = scalarValue.value
       if (!existing.contains(scalar)) {
         val scalarValue = AmfScalar(scalar)
-        if (keepEditingInfo) scalarValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
         target.add(field, scalarValue)
       }
     }

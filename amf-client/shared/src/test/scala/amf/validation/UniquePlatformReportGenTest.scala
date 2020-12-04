@@ -4,6 +4,7 @@ import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 import amf._
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.errorhandling.AmfReportBuilder
+import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
 import amf.core.validation.AMFValidationReport
@@ -57,12 +58,16 @@ sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTes
       _ <- if (profileFile.isDefined)
         validation.loadValidationProfile(directory + profileFile.get, DefaultParserErrorHandler.withRun())
       else Future.unit
-      model  <- AMFCompiler(directory + api, platform, finalHint, eh = eh).build()
+      model  <- parse(directory + api, eh, finalHint)
       report <- validation.validate(model, profile)
       r      <- handleReport(report, golden.map(processGolden))
     } yield {
       r
     }
+  }
+
+  protected def parse(path: String, eh: DefaultParserErrorHandler, finalHint: Hint): Future[BaseUnit] = {
+    AMFCompiler(path, platform, finalHint, eh = eh).build()
   }
 
   protected def processGolden(g: String): String

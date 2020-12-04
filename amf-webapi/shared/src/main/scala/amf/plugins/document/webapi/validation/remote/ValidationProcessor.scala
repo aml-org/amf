@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.validation.remote
 import amf.ProfileName
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.model.domain.DomainElement
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
@@ -8,6 +9,7 @@ trait ValidationProcessor {
   type Return
   def processResults(r: Seq[AMFValidationResult]): Return
   def processException(r: Throwable, element: Option[DomainElement]): Return
+  def keepResults(r: Seq[AMFValidationResult]): Unit
 }
 
 object BooleanValidationProcessor extends ValidationProcessor {
@@ -16,17 +18,21 @@ object BooleanValidationProcessor extends ValidationProcessor {
   override def processResults(r: Seq[AMFValidationResult]): Return =
     !r.exists(_.level == SeverityLevels.VIOLATION)
   override def processException(r: Throwable, element: Option[DomainElement]): Return = false
+  override def keepResults(r: Seq[AMFValidationResult]): Unit = Unit
 }
 
 trait ReportValidationProcessor extends ValidationProcessor {
   val profileName: ProfileName
+  protected var intermediateResults: Seq[AMFValidationResult]
   override type Return = AMFValidationReport
   override def processResults(r: Seq[AMFValidationResult]): AMFValidationReport = {
-    AMFValidationReport(!r.exists(_.level == SeverityLevels.VIOLATION),
+    val results = r ++ intermediateResults
+    AMFValidationReport(!results.exists(_.level == SeverityLevels.VIOLATION),
                         "http://test.com/payload#validations",
                         profileName,
-                        r)
+                        results)
   }
+
   protected def processCommonException(r: Throwable, element: Option[DomainElement]): Seq[AMFValidationResult] = {
     r match {
       case e: UnknownDiscriminator =>

@@ -1999,6 +1999,11 @@ declare module 'amf-client-js' {
       export class AMFValidation {
         static register(): any
       }
+
+      export class AMFCustomValidation {
+        static register(): any
+      }
+
     }
   }
 
