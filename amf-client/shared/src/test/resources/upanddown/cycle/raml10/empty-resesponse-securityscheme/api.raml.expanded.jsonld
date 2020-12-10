@@ -265,6 +265,21 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/settings/oauth2/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/security#flows"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/settings/oauth2/source-map/lexical/element_1",
@@ -275,7 +290,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(5,0)-(8,0)]"
+                        "@value": "[(4,9)-(8,0)]"
                       }
                     ]
                   },
@@ -417,7 +432,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.3.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

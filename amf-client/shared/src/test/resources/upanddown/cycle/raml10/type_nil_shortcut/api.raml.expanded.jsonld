@@ -12,6 +12,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -140,7 +141,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.3.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -449,7 +450,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,4)-(15,0)]"
+                    "@value": "[(8,12)-(15,0)]"
                   }
                 ]
               },
@@ -590,7 +591,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(15,4)-(21,0)]"
+                        "@value": "[(15,18)-(21,0)]"
                       }
                     ]
                   }
@@ -635,7 +636,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(15,4)-(21,0)]"
+                    "@value": "[(15,18)-(21,0)]"
                   }
                 ]
               },
@@ -776,7 +777,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(21,4)-(25,43)]"
+                        "@value": "[(21,18)-(25,43)]"
                       }
                     ]
                   }
@@ -821,7 +822,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(21,4)-(25,43)]"
+                    "@value": "[(21,18)-(25,43)]"
                   }
                 ]
               },

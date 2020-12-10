@@ -18,6 +18,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/overlay/api.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -118,7 +119,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.3.0"
       }
     ],
     "http://a.ml/vocabularies/document#usage": [
@@ -181,6 +182,7 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/banking-api/api.raml#/web-api",
             "@type": [
               "http://a.ml/vocabularies/apiContract#WebAPI",
+              "http://a.ml/vocabularies/apiContract#API",
               "http://a.ml/vocabularies/document#RootDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -2132,7 +2134,7 @@
         ],
         "http://a.ml/vocabularies/document#version": [
           {
-            "@value": "2.1.0"
+            "@value": "2.3.0"
           }
         ],
         "http://a.ml/vocabularies/document#root": [

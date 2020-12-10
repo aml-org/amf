@@ -4,6 +4,7 @@
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
+        "http://a.ml/vocabularies/apiContract#API",
         "http://a.ml/vocabularies/document#RootDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -1364,7 +1365,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_3",
+      "http://a.ml/vocabularies/core#name": "id",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_2/scalar_3/source-map"
@@ -1384,7 +1385,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_4",
+      "http://a.ml/vocabularies/core#name": "addressType",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_2/scalar_4/source-map"
@@ -1404,7 +1405,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_5",
+      "http://a.ml/vocabularies/core#name": "country",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_2/scalar_5/source-map"
@@ -1424,7 +1425,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_6",
+      "http://a.ml/vocabularies/core#name": "state",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_2/scalar_6/source-map"
@@ -1444,7 +1445,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_7",
+      "http://a.ml/vocabularies/core#name": "city",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_2/scalar_7/source-map"
@@ -1464,7 +1465,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_8",
+      "http://a.ml/vocabularies/core#name": "street_address",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_2/scalar_8/source-map"
@@ -1484,7 +1485,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_9",
+      "http://a.ml/vocabularies/core#name": "zip",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_2/scalar_9/source-map"
@@ -1536,7 +1537,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_11",
+      "http://a.ml/vocabularies/core#name": "id",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_10/scalar_11/source-map"
@@ -1556,7 +1557,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_12",
+      "http://a.ml/vocabularies/core#name": "addressType",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_10/scalar_12/source-map"
@@ -1576,7 +1577,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_13",
+      "http://a.ml/vocabularies/core#name": "country",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_10/scalar_13/source-map"
@@ -1596,7 +1597,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_14",
+      "http://a.ml/vocabularies/core#name": "state",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_10/scalar_14/source-map"
@@ -1616,7 +1617,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_15",
+      "http://a.ml/vocabularies/core#name": "city",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_10/scalar_15/source-map"
@@ -1636,7 +1637,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_16",
+      "http://a.ml/vocabularies/core#name": "street_address",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_10/scalar_16/source-map"
@@ -1656,7 +1657,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_17",
+      "http://a.ml/vocabularies/core#name": "zip",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_10/scalar_17/source-map"
@@ -1708,7 +1709,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_19",
+      "http://a.ml/vocabularies/core#name": "id",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_18/scalar_19/source-map"
@@ -1728,7 +1729,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_20",
+      "http://a.ml/vocabularies/core#name": "addressType",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_18/scalar_20/source-map"
@@ -1748,7 +1749,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_21",
+      "http://a.ml/vocabularies/core#name": "country",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_18/scalar_21/source-map"
@@ -1768,7 +1769,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_22",
+      "http://a.ml/vocabularies/core#name": "state",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_18/scalar_22/source-map"
@@ -1788,7 +1789,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_23",
+      "http://a.ml/vocabularies/core#name": "city",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_18/scalar_23/source-map"
@@ -1808,7 +1809,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_24",
+      "http://a.ml/vocabularies/core#name": "street_address",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_18/scalar_24/source-map"
@@ -1828,7 +1829,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_25",
+      "http://a.ml/vocabularies/core#name": "zip",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default/example/blah/array_1/object_18/scalar_25/source-map"
@@ -2347,7 +2348,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -2381,7 +2382,7 @@
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations"
         }
       ],
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#references": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml"
@@ -2405,7 +2406,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/external"
       },
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#root": false,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -2570,7 +2571,7 @@
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/declarations/types/AddressData"
         }
       ],
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#usage": "Location Type",
       "http://a.ml/vocabularies/document#root": false,
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -3006,7 +3007,7 @@
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(29,17)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(29,17)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/source-map/lexical/element_0",
@@ -3032,7 +3033,7 @@
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(23,14)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(23,14)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/Location/property/id/scalar/id",
@@ -3305,6 +3306,11 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/items/default-node/source-map/type-expression/element_0"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/items/default-node/source-map/lexical/element_0"
+        }
       ]
     },
     {
@@ -3477,7 +3483,7 @@
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(11,17)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(11,17)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/source-map/lexical/element_0",
@@ -3587,6 +3593,11 @@
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/items/default-node/source-map/type-expression/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/items/default-node",
       "http://a.ml/vocabularies/document-source-maps#value": "Location"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/items/default-node/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/items/default-node",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(21,10)-(21,20)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/declarations/types/AddressData/property/country/scalar/country",

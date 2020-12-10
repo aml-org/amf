@@ -20,7 +20,7 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   * Cycle tests using temporary file and directory creator
   */
-abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite {
+trait JsonLdSerializationSuite {
   def testedForms: Seq[JsonLdDocumentForm] = Seq(FlattenedForm, ExpandedForm)
 
   def defaultRenderOptions: RenderOptions = RenderOptions()
@@ -33,6 +33,9 @@ abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite {
 
     }
   }
+}
+
+abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite with JsonLdSerializationSuite {
 
   private def validatePattern(pattern: String, patternName: String): Unit = {
     if (!pattern.contains("%s")) {
