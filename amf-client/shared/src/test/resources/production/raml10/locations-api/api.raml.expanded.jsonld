@@ -12,6 +12,7 @@
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -2961,7 +2962,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.3.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -4159,6 +4160,21 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/items/default-node/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/items/default-node"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(21,10)-(21,20)]"
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -4239,7 +4255,7 @@
         ],
         "http://a.ml/vocabularies/document#version": [
           {
-            "@value": "2.1.0"
+            "@value": "2.3.0"
           }
         ],
         "http://a.ml/vocabularies/document#references": [
@@ -4859,7 +4875,7 @@
             ],
             "http://a.ml/vocabularies/document#version": [
               {
-                "@value": "2.1.0"
+                "@value": "2.3.0"
               }
             ],
             "http://a.ml/vocabularies/document#usage": [
@@ -5053,7 +5069,7 @@
         ],
         "http://a.ml/vocabularies/document#version": [
           {
-            "@value": "2.1.0"
+            "@value": "2.3.0"
           }
         ],
         "http://a.ml/vocabularies/document#root": [

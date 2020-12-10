@@ -4,6 +4,7 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
+        "http://a.ml/vocabularies/apiContract#API",
         "http://a.ml/vocabularies/document#RootDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -239,6 +240,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable/source-map/lexical/element_1"
+        },
+        {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable/source-map/lexical/element_0"
         }
       ]
@@ -294,7 +298,7 @@
       "http://a.ml/vocabularies/data#query": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable/object_1/object_2/object_3"
       },
-      "http://a.ml/vocabularies/core#name": "object_2",
+      "http://a.ml/vocabularies/core#name": "queryParameters",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable/object_1/object_2/source-map"
@@ -321,9 +325,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable/source-map/lexical/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(11,0)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#dataNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,6)-(11,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api/end-points/%2Fsongs/get/searchable_0/scalar_1/source-map",
@@ -351,7 +360,7 @@
       "http://a.ml/vocabularies/data#example": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable/object_1/object_2/object_3/scalar_4"
       },
-      "http://a.ml/vocabularies/core#name": "object_3",
+      "http://a.ml/vocabularies/core#name": "query",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable/object_1/object_2/object_3/source-map"
@@ -400,7 +409,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_4",
+      "http://a.ml/vocabularies/core#name": "example",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/declarations/traits/searchable/object_1/object_2/object_3/scalar_4/source-map"
@@ -473,7 +482,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-string-quoted-node/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#root": true
     }
   ]

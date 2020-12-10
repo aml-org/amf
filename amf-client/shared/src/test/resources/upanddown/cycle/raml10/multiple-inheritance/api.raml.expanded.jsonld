@@ -12,6 +12,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -75,7 +76,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.3.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -1066,7 +1067,7 @@
             ],
             "http://a.ml/vocabularies/shapes#anyOf": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/Dog/link-68892",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/Dog/link--584566169",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1083,10 +1084,33 @@
                   {
                     "@value": "Dog"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/Dog/link--584566169/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/Dog/link--584566169/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/Dog/link--584566169"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(19,28)-(19,31)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/Cat/link-67510",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/Cat/link--192448542",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -1103,6 +1127,29 @@
                   {
                     "@value": "Cat"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/Cat/link--192448542/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/Cat/link--192448542/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/Cat/link--192448542"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(19,34)-(19,37)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -1116,6 +1163,21 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/HomeAnimal1/union/HomeAnimal/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#type-expression": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/HomeAnimal1/union/HomeAnimal/source-map/type-expression/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/HomeAnimal1/union/HomeAnimal"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "Dog | Cat"
+                      }
+                    ]
+                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
@@ -1141,21 +1203,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(19,3)-(19,13)]"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#type-expression": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/HomeAnimal1/union/HomeAnimal/source-map/type-expression/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance/api.raml#/declarations/types/HomeAnimal1/union/HomeAnimal"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "Dog | Cat"
                       }
                     ]
                   }

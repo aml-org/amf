@@ -12,6 +12,7 @@
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
+          "http://a.ml/vocabularies/apiContract#API",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -9181,7 +9182,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.1.0"
+        "@value": "2.3.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -9418,7 +9419,7 @@
             ],
             "http://a.ml/vocabularies/shapes#anyOf": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/ImportFormat/link-2033425436",
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/ImportFormat/link--1825385672",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -9435,10 +9436,33 @@
                   {
                     "@value": "ImportFormat"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/ImportFormat/link--1825385672/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/ImportFormat/link--1825385672/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/ImportFormat/link--1825385672"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(74,10)-(74,22)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/Picture/link-1086911710",
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/Picture/link--486269571",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -9455,6 +9479,29 @@
                   {
                     "@value": "Picture"
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/Picture/link--486269571/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/Picture/link--486269571/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/Picture/link--486269571"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(74,25)-(74,32)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 ]
               }
             ],
@@ -9463,21 +9510,6 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/Unionable/union/default-union/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/Unionable/union/default-union/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/Unionable/union/default-union"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(74,4)-(75,0)]"
-                      }
-                    ]
-                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#type-expression": [
                   {
@@ -9490,6 +9522,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "ImportFormat | Picture"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/Unionable/union/default-union/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/Unionable/union/default-union"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(74,4)-(75,0)]"
                       }
                     ]
                   }
@@ -9799,6 +9846,21 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "string"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/ImportFormat/property/targets/array/targets/items/scalar/default-scalar/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/raml10/demo-api/api.raml#/declarations/types/ImportFormat/property/targets/array/targets/items/scalar/default-scalar"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(71,14)-(71,22)]"
                               }
                             ]
                           }
