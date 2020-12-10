@@ -208,6 +208,18 @@ class AnyShape(val fields: Fields, val annotations: Annotations = Annotations())
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = AnyShape.apply
 
   override def copyShape(): this.type = super.copyShape().withId(id)
+
+  // Method to check that the AnyShape is an any type
+  def isAnyType: Boolean =
+    this.getClass == classOf[AnyShape] &&
+      !fields.exists(AnyShapeModel.Xone) &&
+      !fields.exists(AnyShapeModel.Or) &&
+      !fields.exists(AnyShapeModel.And) &&
+      !fields.exists(AnyShapeModel.Not) &&
+      !fields.exists(AnyShapeModel.If) &&
+      !fields.exists(AnyShapeModel.Else) &&
+      !fields.exists(AnyShapeModel.Then) &&
+      !fields.exists(AnyShapeModel.Inherits)
 }
 
 object AnyShape {

@@ -198,5 +198,20 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
     }
   }
 
+  test("Test that any payload conforms against an any type") {
+    AMF.init().flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+
+      val test = new AnyShape()
+
+      val report = test
+        .payloadValidator("application/json")
+        .asOption
+        .get
+        .syncValidate("application/json", "any example")
+      report.conforms shouldBe true
+    }
+  }
+
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 }
