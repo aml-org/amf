@@ -109,4 +109,8 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("JSON with duplicate keys") {
     validate("duplicate-keys.json", Some("duplicate-keys.report"), Oas30Profile, overridedHint = Some(OasJsonHint))
   }
+
+  test("Valid $ref with array indices in pointer") {
+    validate("ref-with-array-indices.json", None, Oas30Profile, overridedHint = Some(OasJsonHint))
+  }
 }

@@ -67,7 +67,7 @@ case class AstIndexBuilder private (private val refCounter: AliasCounter)(implic
 
   private def index(seq: YSequence, scopes: Seq[ResolutionScope]): IndexedSeq[(String, YMapEntryLike)] =
     seq.nodes.zipWithIndex.flatMap {
-      case (node, i) => scopes.flatMap(_.resolve(i.toString, YMapEntryLike(node))) ++ index(YMapEntryLike(node), scopes)
+      case (node, i) => scopes.flatMap(_.resolve(i.toString, YMapEntryLike(node))) ++ index(YMapEntryLike(node), updateScopes(fakeEntryForScopeUpdate(i, node), scopes))
     }
 
   private def index(map: YMap, scopes: Seq[ResolutionScope]): IndexedSeq[(String, YMapEntryLike)] = {
@@ -87,4 +87,6 @@ case class AstIndexBuilder private (private val refCounter: AliasCounter)(implic
       Seq()
     } else runThunk
   }
+
+  private def fakeEntryForScopeUpdate(seqIndex: Int, node: YNode): YMapEntryLike = YMapEntryLike(seqIndex.toString, node)
 }

@@ -123,6 +123,21 @@ class AstIndexTest extends FunSuite with Matchers with PlatformSecrets{
     runIndex(pathToFile, expected, JSONSchemaDraft4SchemaVersion)
   }
 
+  test("Inner seq elements by index") {
+    val pathToFile = "amf-webapi/shared/src/test/resources/ast-index/inner-seq-elements-by-index.json"
+    val expected = Seq(
+      "/",
+      "/seq",
+      "/seq/0/a",
+      "/seq/0/b",
+      "/seq/0/b/c",
+      "/seq/1/a",
+      "/seq/1/b",
+      "/seq/1/b/c",
+    )
+    runIndex(pathToFile, expected, JSONSchemaDraft4SchemaVersion)
+  }
+
   private def runIndex(pathToFile: String, mustBeInIndex: Seq[String], version: JSONSchemaVersion): Assertion = {
     val content = platform.fs.syncFile(pathToFile).read()
     val doc = JsonParser(content).document()
