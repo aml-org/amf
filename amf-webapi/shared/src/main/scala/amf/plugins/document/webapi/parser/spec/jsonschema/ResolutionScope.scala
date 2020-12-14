@@ -12,9 +12,7 @@ trait ResolutionScope {
   def resolve(key: String, node: YMapEntryLike): Seq[(String, YMapEntryLike)]
 
   def getNext(entryLike: YMapEntryLike): ResolutionScope =
-    entryLike.key
-      .flatMap(_.asScalar)
-      .map(_.text)
+    entryLike.keyText
       .map(key => getInstance(path + "/" + key))
       .getOrElse(this)
 
