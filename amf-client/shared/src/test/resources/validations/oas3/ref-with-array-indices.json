@@ -1,0 +1,38 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "SomeTitle",
+    "version": "1.0.0"
+  },
+  "components": {
+    "schemas": {
+      "TheFirstObjReffer": {
+        "$ref": "#/components/schemas/TheOneOf/oneOf/0/properties/aKey"
+      },
+      "TheSecondObjReffer": {
+        "$ref": "#/components/schemas/TheOneOf/oneOf/1/properties/anotherKey"
+      },
+      "TheOneOf": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "aKey": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "anotherKey": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "paths": {}
+}
