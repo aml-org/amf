@@ -112,11 +112,11 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     cycle("draft-2019-09/min-and-max-contains.json", "draft-2019-09/cycled/min-and-max-contains.json", DRAFT_2019_09_EMITTER, JSON)
   }
 
-  test("Draft 7 $id referencing test") {
+  ignore("Draft 7 $id referencing test") {
     cycle("draft-7/with-id.json", "draft-7/jsonld/with-id.jsonld", JsonLdEmitter, JSON)
   }
 
-  test("Draft 2019-09 $id and $anchor referencing test") {
+  ignore("Draft 2019-09 $id and $anchor referencing test") {
     cycle("draft-2019-09/with-id.json", "draft-2019-09/jsonld/with-id.jsonld", JsonLdEmitter, JSON)
   }
 
