@@ -4,7 +4,9 @@ import java.net.URI
 
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 
-case class AstIndex(private val map: Map[String, YMapEntryLike]) {
+import scala.collection.mutable
+
+case class AstIndex(private val map: mutable.Map[String, YMapEntryLike]) {
 
   def getNode(reference: String): Option[YMapEntryLike] = {
     val toLookUp = clean(reference)
