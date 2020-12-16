@@ -3,13 +3,16 @@ package amf.plugins.document.webapi.parser.spec.jsonschema
 import java.net.URI
 
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.spec.jsonschema.CommonDraft4To7ResolutionScope.{formatFragment, formatUri}
 import org.yaml.model.{YNode, YType}
+
+import scala.collection.mutable
 
 trait ResolutionScope {
 
   protected val path: String
 
-  def resolve(key: String, node: YMapEntryLike): Seq[(String, YMapEntryLike)]
+  def resolve(key: String, node: YMapEntryLike, acc: mutable.Map[String, YMapEntryLike]): Unit
 
   def getNext(entryLike: YMapEntryLike): ResolutionScope =
     entryLike.keyText
@@ -21,12 +24,18 @@ trait ResolutionScope {
 
 case class LexicalResolutionScope(protected val path: String = "") extends ResolutionScope {
 
-  override def resolve(key: String, node: YMapEntryLike): Seq[(String, YMapEntryLike)] = {
-    val pathToKey = s"$path/$key"
-    Seq((pathToKey, node))
+  override def resolve(key: String, node: YMapEntryLike, acc: mutable.Map[String, YMapEntryLike]): Unit = {
+    val pathToKey = path + "/" + key
+    acc.put(pathToKey, node)
   }
 
   override protected def getInstance(path: String): ResolutionScope = LexicalResolutionScope(path)
+}
+
+object CommonDraft4To7ResolutionScope {
+
+  def formatUri(uri: String): String = if (uri.endsWith("#")) uri.dropRight(1) else uri
+  def formatFragment(fragment: String): String = if (fragment.startsWith("#")) fragment else s"#$fragment"
 }
 
 abstract class CommonDraft4To7ResolutionScope(private val baseUri: URI, protected val path: String = "")
@@ -44,14 +53,14 @@ abstract class CommonDraft4To7ResolutionScope(private val baseUri: URI, protecte
 
   private def hasFragment(unresolvedId: String) =
     try {
-      Option(new URI(unresolvedId).getFragment).isDefined
+      new URI(unresolvedId).getFragment != null
     } catch {
       case _: Throwable => false
     }
 
-  override def resolve(key: String, entryLike: YMapEntryLike): Seq[(String, YMapEntryLike)] = {
-    val currentEntry = resolveIdValue(formatFragment(s"$path/$key")).map(uri => (uri.toString, entryLike)).toSeq
-    currentEntry ++ entryFromIdNode(entryLike)
+  override def resolve(key: String, entryLike: YMapEntryLike, acc: mutable.Map[String, YMapEntryLike]): Unit = {
+    resolveIdValue(formatFragment(s"$path/$key")).foreach(uri => acc.put(uri.toString, entryLike))
+    entryFromIdNode(entryLike).foreach(t => acc.put(t._1, t._2))
   }
 
   protected def entryFromIdNode(entryLike: YMapEntryLike): Seq[(String, YMapEntryLike)] = {
@@ -62,17 +71,17 @@ abstract class CommonDraft4To7ResolutionScope(private val baseUri: URI, protecte
       }.toSeq
   }
 
-  protected def lookAheadForId(entryLike: YMapEntryLike): Option[String] = {
-    val optionalIdNode = getIdKey(entryLike)
-    optionalIdNode.flatMap(_.asScalar).map(_.text)
-  }
-
   protected def resolveIdValue(id: String): Option[URI] =
     try {
       Some(baseUri.resolve(id))
     } catch {
       case _: Throwable => None
     }
+
+  protected def lookAheadForId(entryLike: YMapEntryLike): Option[String] = {
+    val optionalIdNode = getIdKey(entryLike)
+    optionalIdNode.flatMap(_.asScalar).map(_.text)
+  }
 
   protected def getIdKey(entryLike: YMapEntryLike): Option[YNode] = {
     entryLike.value.tagType match {
@@ -82,10 +91,6 @@ abstract class CommonDraft4To7ResolutionScope(private val baseUri: URI, protecte
   }
 
   protected def getIdFromMap(map: Map[YNode, YNode]): Option[YNode]
-
-  protected def formatUri(uri: String): String = if (uri.endsWith("#")) uri.dropRight(1) else uri
-
-  protected def formatFragment(fragment: String): String = if (fragment.startsWith("#")) fragment else s"#$fragment"
 
   protected def getInstanceWithNewBase(path: URI): ResolutionScope
 }
