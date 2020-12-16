@@ -12,7 +12,6 @@ import amf.plugins.document.webapi.BaseWebApiPlugin
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration.LibraryLocationParser
-import amf.validation.DialectValidations.InvalidModuleType
 import amf.validations.ParserSideValidations._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._

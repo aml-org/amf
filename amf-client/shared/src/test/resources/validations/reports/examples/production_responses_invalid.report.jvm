@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'application/json' not supported in a RAML 1.0 response node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/production/responses-invalid.raml#/web-api/end-points/%2Ftest%2F%7Bid%7D/patch/body

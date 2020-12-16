@@ -1,6 +1,21 @@
 {
   "@graph": [
     {
+      "@id": "/any/schema",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "schema",
+      "shacl:and": [
+        {
+          "@id": "#/main"
+        }
+      ]
+    },
+    {
       "@id": "#/main",
       "@type": [
         "shacl:NodeShape",
@@ -74,15 +89,9 @@
         "raml-shapes:PropertyDependencies",
         "doc:DomainElement"
       ],
-      "raml-shapes:propertySource": [
-        {
-          "@id": "#/main/property/credit_card"
-        }
-      ],
+      "raml-shapes:propertySource": "credit_card",
       "raml-shapes:propertyTarget": [
-        {
-          "@id": "#/main/property/something_else"
-        }
+        "something_else"
       ]
     },
     {
@@ -91,11 +100,7 @@
         "raml-shapes:SchemaDependencies",
         "doc:DomainElement"
       ],
-      "raml-shapes:propertySource": [
-        {
-          "@id": "#/main/property/credit_card"
-        }
-      ],
+      "raml-shapes:propertySource": "credit_card",
       "raml-shapes:schemaTarget": {
         "@id": "#/main/dependencySchema/credit_card/schema"
       }
@@ -192,16 +197,16 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#/main"
+        "@id": "/any/schema"
       },
-      "doc:version": "2.2.0",
+      "doc:version": "2.3.0",
       "doc:root": false
     }
   ],
   "@context": {
     "@base": "file://amf-client/shared/src/test/resources/cycle/jsonschema/draft-2019-09/schema-required-dependencies.json",
-    "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#"
   }
 }

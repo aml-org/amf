@@ -112,15 +112,18 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
             None,
             null
           )))
-    } else {
-      try {
-        performValidation(buildCandidate(mediaType, payload), validationProcessor)
-      } catch {
-        case e: InvalidJsonObject => validationProcessor.processException(e, None)
-        case e: InvalidJsonValue  => validationProcessor.processException(e, None)
+    } else
+      shape match {
+        // if the shape is of type any, any payload should validate against it so the validation is skipped
+        case anyShape: AnyShape if anyShape.isAnyType => validationProcessor.processResults(Nil)
+        case _ =>
+          try {
+            performValidation(buildCandidate(mediaType, payload), validationProcessor)
+          } catch {
+            case e: InvalidJsonObject => validationProcessor.processException(e, None)
+            case e: InvalidJsonValue  => validationProcessor.processException(e, None)
+          }
       }
-
-    }
   }
 
   private def generateSchema(
@@ -131,7 +134,7 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
     dataType.fields
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-    val schemaOption: Option[CharSequence] = generateSchemaString(dataType)
+    val schemaOption: Option[CharSequence] = generateSchemaString(dataType, validationProcessor)
 
     schemaOption match {
       case Some(charSequence) => loadSchema(charSequence, fragmentShape, validationProcessor)
@@ -139,12 +142,17 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
     }
   }
 
-  private def generateSchemaString(dataType: DataTypeFragment): Option[CharSequence] = {
-    val renderOptions =
-      new ShapeRenderOptions().withoutDocumentation.withCompactedEmission.withSchemaVersion(JsonSchemaDraft7)
+  private def generateSchemaString(dataType: DataTypeFragment,
+                                   validationProcessor: ValidationProcessor): Option[CharSequence] = {
+    val errorHandler = DefaultParserErrorHandler.withRun()
+    val renderOptions = new ShapeRenderOptions().withoutDocumentation.withCompactedEmission
+      .withSchemaVersion(JsonSchemaDraft7)
+      .withErrorHandler(errorHandler)
+      .withEmitWarningForUnsupportedValidationFacets(true)
     val declarations = List(dataType.encodes)
     val emitter      = JsonSchemaEmitter(dataType.encodes, declarations, options = renderOptions)
     val document     = SyamlParsedDocument(document = emitter.emitDocument())
+    validationProcessor.keepResults(errorHandler.getErrors)
     SYamlSyntaxPlugin.unparse("application/json", document)
   }
 

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "$ref": "#/$defs/invalid",
+  "$defs": {
+    "invalid": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minContains": -4,
+      "maxContains": -5,
+      "$ref": "#/$defs/valid"
+    },
+    "valid": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minContains": 3,
+      "maxContains": 8
+    }
+  }
+}

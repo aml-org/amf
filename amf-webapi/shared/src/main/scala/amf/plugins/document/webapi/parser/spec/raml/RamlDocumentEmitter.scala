@@ -85,11 +85,10 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
     extends RamlRootLevelEmitters(document, ordering) {
 
   override def emitters: Seq[EntryEmitter] = {
-    val declares   = declarationsEmitter()
-    val references = ReferencesEmitter(document, ordering)
-    val extension  = extensionEmitter()
-    val usage: Option[ValueEmitter] =
-      document.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
+    val declares                    = declarationsEmitter()
+    val references                  = ReferencesEmitter(document, ordering)
+    val extension                   = extensionEmitter()
+    val usage: Option[ValueEmitter] = document.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage", f))
 
     declares ++ extension ++ usage :+ references
   }
@@ -214,7 +213,7 @@ case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering) extends
             case _ => None
           }
       }.toSeq
-      val missingModuleEmitters = modules.filter(m => modulesEmitted.get(m.id).isEmpty).map { module =>
+      val missingModuleEmitters = modules.filter(m => !modulesEmitted.contains(m.id)).map { module =>
         Some(ReferenceEmitter(module, Some(Aliases(Set())), ordering, () => idCounter.genId("uses")))
       }
       val finalEmitters = (aliasesEmitters ++ missingModuleEmitters).collect { case Some(e) => e }

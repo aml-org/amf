@@ -67,7 +67,6 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
     "declared-element"           -> DeclaredElement,
     "inline-element"             -> InlineElement,
     "local-link-path"            -> LocalLinkPath,
-    "extension-provenance"       -> ExtensionProvenance,
     "form-body-parameter"        -> FormBodyParameter,
     "parameter-name-for-payload" -> ParameterNameForPayload,
     "required-param-payload"     -> RequiredParamPayload,

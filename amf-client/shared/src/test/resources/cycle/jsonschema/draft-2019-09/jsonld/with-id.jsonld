@@ -1,0 +1,100 @@
+{
+  "@graph": [
+    {
+      "@id": "/any/schema",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "schema",
+      "shacl:xone": [
+        {
+          "@id": "#/xone/0/any/A"
+        },
+        {
+          "@id": "#/xone/1/any/B"
+        },
+        {
+          "@id": "#/xone/2/any/X"
+        },
+        {
+          "@id": "#/xone/3/any/Y"
+        },
+        {
+          "@id": "#/xone/4/any/C"
+        }
+      ]
+    },
+    {
+      "@id": "#/xone/0/any/A",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "A"
+    },
+    {
+      "@id": "#/xone/1/any/B",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "B"
+    },
+    {
+      "@id": "#/xone/2/any/X",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "X"
+    },
+    {
+      "@id": "#/xone/3/any/Y",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "Y"
+    },
+    {
+      "@id": "#/xone/4/any/C",
+      "@type": [
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:name": "C"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "raml-shapes:DataTypeFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "/any/schema"
+      },
+      "doc:version": "2.3.0",
+      "doc:root": false
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-client/shared/src/test/resources/cycle/jsonschema/draft-2019-09/with-id.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#"
+  }
+}

@@ -4,6 +4,7 @@ import amf._
 import amf.core.validation.{SeverityLevels => Severity}
 import amf.core.vocabulary.Namespace.XsdTypes
 import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 import amf.plugins.domain.webapi.metamodel._
 
 object AMFRawValidations {
@@ -117,6 +118,7 @@ object AMFRawValidations {
 
   val dataType: ValueType = sh("datatype")
   val minCount: ValueType = sh("minCount")
+  val maxCount: ValueType = sh("maxCount")
 
   // values
   val string: String  = XsdTypes.xsdString.iri()
@@ -482,6 +484,32 @@ object AMFRawValidations {
         openApiErrorMessage = "uniqueItems of a Schema object of type 'array' must be a boolean"
       ),
       AMFValidation(
+        message = "minContains for an array type must be an integer",
+        owlClass = shape("ArrayShape"),
+        owlProperty = sh("qualifiedMinCount"),
+        constraint = dataType,
+        value = integer,
+      ),
+      AMFValidation(
+        message = "maxContains for an array type must be an integer",
+        owlClass = shape("ArrayShape"),
+        owlProperty = sh("qualifiedMaxCount"),
+        constraint = dataType,
+        value = integer
+      ),
+      AMFValidation(
+        message = "minContains facet should be greater or equal than 0",
+        owlClass = shape("ArrayShape"),
+        owlProperty = sh("qualifiedMinCount"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
+        message = "maxContains facet should be greater or equal than 0",
+        owlClass = shape("ArrayShape"),
+        owlProperty = sh("qualifiedMaxCount"),
+        constraint = sh("minInclusive")
+      ),
+      AMFValidation(
         owlClass = shape("ScalarShape"),
         owlProperty = sh("pattern"),
         constraint = dataType,
@@ -653,6 +681,34 @@ object AMFRawValidations {
         owlClass = shape("ScalarShape"),
         owlProperty = sh("pattern"),
         constraint = shape("patternValidation"),
+      ),
+      AMFValidation(
+        owlClass = sh("NodeShape"),
+        owlProperty = shape("unevaluatedPropertiesSchema"),
+        constraint = maxCount,
+        severity = Severity.WARNING,
+        message = "Unevaluated properties facet won't be taken into account in validation"
+      ),
+      AMFValidation(
+        owlClass = shape("ArrayShape"),
+        owlProperty = shape("unevaluatedItemsSchema"),
+        constraint = maxCount,
+        severity = Severity.WARNING,
+        message = "Unevaluated items facet won't be taken into account in validation"
+      ),
+      AMFValidation(
+        owlClass = shape("ArrayShape"),
+        owlProperty = sh("qualifiedMinCount"),
+        constraint = maxCount,
+        severity = Severity.WARNING,
+        message = "minContains facet won't be taken into account in validation"
+      ),
+      AMFValidation(
+        owlClass = shape("ArrayShape"),
+        owlProperty = sh("qualifiedMaxCount"),
+        constraint = maxCount,
+        severity = Severity.WARNING,
+        message = "maxContains facet won't be taken into account in validation"
       )
     )
 

@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "$ref": "#/$defs/invalid",
+  "$defs": {
+    "invalid": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minContains": "asdasdasad",
+      "maxContains": true
+    }
+  }
+}

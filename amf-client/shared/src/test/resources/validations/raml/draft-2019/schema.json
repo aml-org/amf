@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "$ref": "#/$defs/main",
+  "$defs": {
+    "main": {
+      "type": "object",
+      "unevaluatedProperties": {
+        "type": "string",
+        "minLength": 3
+      },
+      "properties": {
+        "arrayProp": {
+          "type": "array",
+          "items": {},
+          "minContains": 1,
+          "maxContains": 3,
+          "unevaluatedItems": {
+            "type": "string",
+            "minLength": 5
+          }
+        }
+      }
+    }
+  }
+}

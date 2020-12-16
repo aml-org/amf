@@ -47,7 +47,7 @@ class OasRefParser(map: YMap,
       case _       => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
         // now we work with canonical JSON schema pointers, not local refs
         val referencedShape = ctx.findLocalJSONPath(ref) match {
-          case Some((_, _)) => searchLocalJsonSchema(ref, if (ctx.linkTypes) strippedPrefixRef else ref, e)
+          case Some(_) => searchLocalJsonSchema(ref, if (ctx.linkTypes) strippedPrefixRef else ref, e)
           case _            => searchRemoteJsonSchema(ref, if (ctx.linkTypes) strippedPrefixRef else ref, e)
         }
         referencedShape.foreach(safeAdoption)
@@ -97,26 +97,23 @@ class OasRefParser(map: YMap,
         val tmpShape: UnresolvedShape = createAndRegisterUnresolvedShape(e, ref, text)
         ctx.registerJsonSchema(ref, tmpShape)
         ctx.findLocalJSONPath(r) match {
-          case Some((_, shapeNode)) =>
-            val entry = shapeNode match {
-              case Right(e) => e
-              case Left(n)  => YMapEntry(name, n)
-            }
-            OasTypeParser(entry, adopt, version)
+          case Some(entryLike) =>
+            val definitiveName = entryLike.key.map(_.as[String])getOrElse(name)
+            OasTypeParser(entryLike, definitiveName, adopt, version)
               .parse()
               .map { shape =>
                 ctx.futureDeclarations.resolveRef(text, shape)
                 ctx.registerJsonSchema(ref, shape)
-                if (ctx.linkTypes || ref.equals("#"))
-                  shapeNode match {
-                    case Right(entry) =>
-                      shape
-                        .link(text, Annotations(ast))
-                        .asInstanceOf[AnyShape]
-                        .withName(entry.key.asScalar.map(_.text).getOrElse(name), Annotations(entry.key))
-                    case _ =>
-                      shape.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
-                  } else shape
+                if (ctx.linkTypes || ref.equals("#")) {
+                  val link  = shape.link(text, Annotations(ast)).asInstanceOf[AnyShape]
+                  val (nextName, annotations) = entryLike.key match {
+                    case Some(keyNode) =>
+                      val key = keyNode.asScalar.map(_.text).getOrElse(name)
+                      (key, Annotations(keyNode))
+                    case None => (name, Annotations())
+                  }
+                  link.withName(nextName, annotations)
+                } else shape
               } orElse { Some(tmpShape) }
 
           case None => Some(tmpShape)
@@ -151,6 +148,7 @@ class OasRefParser(map: YMap,
   private val oas2DeclarationRegex = "^(\\#\\/definitions\\/){1}([^/\\n])+$"
   private val oas3DeclarationRegex =
     "^(\\#\\/components\\/){1}((schemas|parameters|securitySchemes|requestBodies|responses|headers|examples|links|callbacks){1}\\/){1}([^/\\n])+"
+
   private def isDeclaration(ref: String): Boolean =
     ctx match {
       case _: Oas2WebApiContext if ref.matches(oas2DeclarationRegex)                                => true

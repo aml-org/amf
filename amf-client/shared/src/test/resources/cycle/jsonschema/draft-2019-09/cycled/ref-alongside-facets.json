@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "$ref": "#/$defs/schema",
+  "$defs": {
+    "schema": {
+      "type": "object",
+      "required": [
+        "name",
+        "pepito"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "pepito": {
+          "type": "number"
+        }
+      },
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "anotherName"
+          ],
+          "properties": {
+            "anotherName": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

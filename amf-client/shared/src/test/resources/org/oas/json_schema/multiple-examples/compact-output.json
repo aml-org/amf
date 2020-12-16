@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "type": "object",
+      "example": {
+        "value": {
+          "accountId": "value 1"
+        }
+      },
+      "x-amf-examples": {
+        "amf_example_1": {
+          "value": {
+            "accountId": "value 2"
+          }
+        },
+        "amf_example_2": {
+          "value": {
+            "accountId": "value 3"
+          }
+        }
+      },
+      "additionalProperties": true,
+      "properties": {
+        "a": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

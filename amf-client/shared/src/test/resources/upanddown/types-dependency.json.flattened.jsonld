@@ -734,18 +734,10 @@
         "http://a.ml/vocabularies/shapes#PropertyDependencies",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/shapes#propertySource": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/application%2Framl/schema/property/credit_card"
-        }
-      ],
+      "http://a.ml/vocabularies/shapes#propertySource": "credit_card",
       "http://a.ml/vocabularies/shapes#propertyTarget": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/application%2Framl/schema/property/city"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/application%2Framl/schema/property/postal"
-        }
+        "city",
+        "postal"
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -759,21 +751,11 @@
         "http://a.ml/vocabularies/shapes#PropertyDependencies",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/shapes#propertySource": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/application%2Framl/schema/property/street"
-        }
-      ],
+      "http://a.ml/vocabularies/shapes#propertySource": "street",
       "http://a.ml/vocabularies/shapes#propertyTarget": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/application%2Framl/schema/property/number"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/application%2Framl/schema/property/postal"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/application%2Framl/schema/property/city"
-        }
+        "number",
+        "postal",
+        "city"
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -787,15 +769,9 @@
         "http://a.ml/vocabularies/shapes#PropertyDependencies",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/shapes#propertySource": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/application%2Framl/schema/property/number"
-        }
-      ],
+      "http://a.ml/vocabularies/shapes#propertySource": "number",
       "http://a.ml/vocabularies/shapes#propertyTarget": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/application%2Framl/schema/property/street"
-        }
+        "street"
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -1355,15 +1331,9 @@
         "http://a.ml/vocabularies/shapes#PropertyDependencies",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/shapes#propertySource": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/someName/someName/property/address/address/property/city"
-        }
-      ],
+      "http://a.ml/vocabularies/shapes#propertySource": "city",
       "http://a.ml/vocabularies/shapes#propertyTarget": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/someName/someName/property/address/address/property/postal"
-        }
+        "postal"
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -1377,21 +1347,11 @@
         "http://a.ml/vocabularies/shapes#PropertyDependencies",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/shapes#propertySource": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/someName/someName/property/address/address/property/street"
-        }
-      ],
+      "http://a.ml/vocabularies/shapes#propertySource": "street",
       "http://a.ml/vocabularies/shapes#propertyTarget": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/someName/someName/property/address/address/property/number"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/someName/someName/property/address/address/property/postal"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/someName/someName/property/address/address/property/city"
-        }
+        "number",
+        "postal",
+        "city"
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -1405,15 +1365,9 @@
         "http://a.ml/vocabularies/shapes#PropertyDependencies",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/shapes#propertySource": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/someName/someName/property/address/address/property/number"
-        }
-      ],
+      "http://a.ml/vocabularies/shapes#propertySource": "number",
       "http://a.ml/vocabularies/shapes#propertyTarget": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api/end-points/%2Flevel-zero/get/request/someName/someName/property/address/address/property/street"
-        }
+        "street"
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -2121,7 +2075,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/types-dependency.json#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "2.2.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#root": true
     }
   ]

@@ -47,11 +47,7 @@
         "raml-shapes:SchemaDependencies",
         "doc:DomainElement"
       ],
-      "raml-shapes:propertySource": [
-        {
-          "@id": "#/main/property/credit_card"
-        }
-      ],
+      "raml-shapes:propertySource": "credit_card",
       "raml-shapes:schemaTarget": {
         "@id": "#/main/dependencySchema/credit_card/schema"
       }
@@ -134,7 +130,7 @@
       "doc:encodes": {
         "@id": "#/main"
       },
-      "doc:version": "2.2.0",
+      "doc:version": "2.3.0",
       "doc:root": false
     }
   ],

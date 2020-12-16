@@ -10,7 +10,6 @@ import amf.core.parser.{Annotations, FragmentRef, ParserContext}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.resolution.stages.helpers.ResolvedNamedEntity
 import amf.core.validation.core.ValidationSpecification
-import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.parser.raml.{
   Raml08WebApiContext,
   Raml10WebApiContext,
@@ -121,7 +120,6 @@ object ExtendsHelper {
         operation
       }
 
-    if (keepEditingInfo) annotateExtensionId(operation, extensionId, findUnitLocationOfElement(extensionId, unit))
     new ReferenceResolutionStage(keepEditingInfo)(errorHandler).resolveDomainElement(operation)
   }
 
@@ -215,7 +213,6 @@ object ExtendsHelper {
 
     collector.toList match {
       case element :: _ =>
-        if (keepEditingInfo) annotateExtensionId(element, extensionId, extensionLocation)
         new ReferenceResolutionStage(keepEditingInfo)(errorHandler).resolveDomainElement(element)
       case Nil =>
         errorHandler.violation(
@@ -236,30 +233,6 @@ object ExtendsHelper {
       case l: Module if l.declares.exists(_.id == elementId) => l.location().getOrElse(l.id)
       case f: Fragment if f.encodes.id == elementId          => f.location().getOrElse(f.id)
     })
-  }
-
-  private def annotateExtensionId(point: DomainElement, extensionId: String, extensionLocation: Option[String]): Unit = {
-    val annotation = ExtensionProvenance(extensionId, extensionLocation)
-    if (!point.fields
-          .fields()
-          .headOption
-          .exists(_.value.annotations.collect({ case e: ExtensionProvenance => e }).exists(_.baseId == extensionId))) {
-      point.fields.fields().foreach { field =>
-        field.value.annotations += annotation
-        field.value.value match {
-          case elem: DomainElement => annotateExtensionId(elem, extensionId, extensionLocation)
-          case arr: AmfArray =>
-            arr.values.foreach {
-              case elem: DomainElement =>
-                elem.annotations += annotation
-                annotateExtensionId(elem, extensionId, extensionLocation)
-              case other =>
-                other.annotations += annotation
-            }
-          case scalar => scalar.annotations += annotation
-        }
-      }
-    }
   }
 
   private def getDeclaringUnit(refs: List[BaseUnit], sourceName: String): Option[BaseUnit] = refs match {

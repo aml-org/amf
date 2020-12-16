@@ -8,14 +8,14 @@ import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.annotations.DeclarationKey
-import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaAstIndex, OasWebApiContext}
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
-import amf.plugins.document.webapi.parser.spec.jsonschema.{AstFinder, JsonSchemaInference}
+import amf.plugins.document.webapi.parser.spec.jsonschema.{AstFinder, JsonSchemaAstIndex, JsonSchemaInference}
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.validation.DialectValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
+import amf.validations.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
 import org.yaml.model._
 
 abstract class WebApiContext(val loc: String,
@@ -25,8 +25,8 @@ abstract class WebApiContext(val loc: String,
                              declarationsOption: Option[WebApiDeclarations] = None)
     extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
     with SpecAwareContext
-    with PlatformSecrets with JsonSchemaInference {
-
+    with PlatformSecrets
+    with JsonSchemaInference {
 
   override val defaultSchemaVersion: JSONSchemaVersion = JSONSchemaDraft4SchemaVersion
 
@@ -130,13 +130,15 @@ abstract class WebApiContext(val loc: String,
     }
   }
 
+
   def findJsonPathIn(index: JsonSchemaAstIndex, path: String) = index.getNodeAndEntry(normalizeJsonPath(path)).map { (path, _) }
 
   // TODO: Evaluate if this can return a YMapEntryLike
-  def findLocalJSONPath(path: String): Option[(String, Either[YNode, YMapEntry])] = {
+  def findLocalJSONPath(path: String): Option[YMapEntryLike] = {
     // todo: past uri?
-    jsonSchemaIndex.flatMap(index => findJsonPathIn(index, path))
+    jsonSchemaIndex.flatMap(index => findJsonPathIn(index, path)).map(_._2)
   }
+
 
   def link(node: YNode): Either[String, YNode]
   protected def ignore(shape: String, property: String): Boolean

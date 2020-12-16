@@ -5,7 +5,7 @@ Number of results: 4
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'somethingElseThatIsNotAValidBinding' not supported in a ASYNC 2.0 bindings node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/async-api/some.com/server-bindings
@@ -13,7 +13,7 @@ Level: Violation
   Position: Some(LexicalInformation([(23,6)-(24,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'anotherAnotherElseThatIsNotAValidBinding' not supported in a ASYNC 2.0 bindings node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/async-api/end-points/some-channel/channel-bindings
@@ -21,7 +21,7 @@ Level: Violation
   Position: Some(LexicalInformation([(40,6)-(41,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'anotherElseThatIsNotAValidBinding' not supported in a ASYNC 2.0 bindings node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/async-api/end-points/some-channel/publish/operation-bindings
@@ -29,7 +29,7 @@ Level: Violation
   Position: Some(LexicalInformation([(55,8)-(56,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'anotherAnotherAnotherInvalidBinding' not supported in a ASYNC 2.0 bindings node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-binding-names.yaml#/async-api/end-points/some-channel/publish/request/message-bindings

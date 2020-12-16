@@ -4,7 +4,8 @@ import amf.core.emitter.ShapeRenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.emitter.oas.{InlinedJsonSchemaEmitterFactory, Oas2SpecEmitterContext, OasSpecEmitterFactory}
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaVersion, OAS20SchemaVersion, OAS30SchemaVersion, SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaVersion, OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition, SchemaVersion}
 import amf.plugins.document.webapi.parser.{JsonSchemaTypeDefMatcher, OasTypeDefStringValueMatcher}
 
 import scala.util.matching.Regex
@@ -32,7 +33,7 @@ class JsonSchemaEmitterContext(override val eh: ErrorHandler,
 
 object JsonSchemaEmitterContext {
   def apply(eh: ErrorHandler, options: ShapeRenderOptions): JsonSchemaEmitterContext =
-    new JsonSchemaEmitterContext(eh, options, OAS20SchemaVersion("schema")(eh))
+    new JsonSchemaEmitterContext(eh, options, OAS20SchemaVersion(Schema))
 }
 
 final case class InlinedJsonSchemaEmitterContext(override val eh: ErrorHandler,
@@ -44,5 +45,5 @@ final case class InlinedJsonSchemaEmitterContext(override val eh: ErrorHandler,
 
 object InlinedJsonSchemaEmitterContext {
   def apply(eh: ErrorHandler, options: ShapeRenderOptions): InlinedJsonSchemaEmitterContext =
-    InlinedJsonSchemaEmitterContext(eh, options, schemaVersion = OAS20SchemaVersion("schema")(eh))
+    InlinedJsonSchemaEmitterContext(eh, options, schemaVersion = OAS20SchemaVersion(Schema))
 }

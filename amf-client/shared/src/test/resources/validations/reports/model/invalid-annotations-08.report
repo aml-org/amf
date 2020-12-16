@@ -5,7 +5,7 @@ Number of results: 4
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property '(someAnnotation)' not supported in a RAML 0.8 webApi node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml#/web-api
@@ -13,7 +13,7 @@ Level: Violation
   Position: Some(LexicalInformation([(3,0)-(4,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property '(thisOtherOne)' not supported in a RAML 0.8 endPoint node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml#/web-api/end-points/%2Fthis-one
@@ -21,7 +21,7 @@ Level: Violation
   Position: Some(LexicalInformation([(5,2)-(7,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property '(why)' not supported in a RAML 0.8 operation node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml#/web-api/end-points/%2Fthis-one/get
@@ -29,7 +29,7 @@ Level: Violation
   Position: Some(LexicalInformation([(8,4)-(11,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml
 
-- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
   Message: Property 'annotationTypes' not supported in a RAML 0.8 webApi node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/invalid-annotations-08/invalid-annotations-08.raml#/web-api

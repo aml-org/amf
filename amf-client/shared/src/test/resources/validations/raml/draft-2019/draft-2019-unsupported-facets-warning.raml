@@ -1,0 +1,9 @@
+#%RAML 1.0
+title: "Something"
+/endpoint:
+  get:
+    body:
+      application/json:
+        type: !include ./schema.json
+        example:
+          a: true

@@ -25,4 +25,31 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("recursive-api.expanded.jsonld", "recursive-api.expanded.jsonld", AmfJsonHint, Amf, renderOptions = Some(ro))
   }
 
+  test("Parse compacted id fields correctly applying base - flattened source") {
+    val ro = RenderOptions().withPrettyPrint
+    cycle("recursive-api.flattened.jsonld",
+          "recursive-api-full-uris.expanded.jsonld",
+          AmfJsonHint,
+          Amf,
+          renderOptions = Some(ro))
+  }
+
+  test("Parse compacted id fields correctly applying base - expanded source") {
+    val ro = RenderOptions().withPrettyPrint
+    cycle("recursive-api.expanded.jsonld",
+          "recursive-api-full-uris.expanded.jsonld",
+          AmfJsonHint,
+          Amf,
+          renderOptions = Some(ro))
+  }
+
+  test("Parse expanded uri fields") {
+    val ro = RenderOptions().withPrettyPrint
+    cycle("recursive-api-full-uris.expanded.jsonld",
+          "recursive-api-full-uris.expanded.jsonld",
+          AmfJsonHint,
+          Amf,
+          renderOptions = Some(ro))
+  }
+
 }
