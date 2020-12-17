@@ -1,0 +1,58 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ALB API",
+    "description": "Rest Api to access ALB infos",
+    "version": "1.0.0"
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "some-schema": {
+        "type": "object",
+        "properties": {
+          "integer-prop": {
+            "type": "integer",
+            "nullable": true
+          },
+          "string-prop": {
+            "type": "string",
+            "nullable": true
+          },
+          "date-prop": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "float-prop": {
+            "type": "string",
+            "nullable": true,
+            "format": "float"
+          },
+          "string-with-other-fields-prop": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "T",
+              "L",
+              "G",
+              "H",
+              "R",
+              "O"
+            ],
+            "description": "some description"
+          },
+          "object-with-other-fields-prop": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

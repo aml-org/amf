@@ -4,6 +4,7 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.resolution.stages.ResolutionStage
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.RamlUnionEmitterHelper
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.models.UnionShape
 
@@ -27,17 +28,19 @@ class UnionsAsTypeExpressions()(override implicit val errorHandler: ErrorHandler
       model.iterator().foreach {
         case union: UnionShape =>
           val names = union.anyOf.map { shape =>
-            collectedDecls.find(_.id == shape.id) match {
-              case Some(declared: Shape) if declared.name.option().isDefined =>
-                declared.name.value()
-              case _ =>
-                if (shape.name.option().isEmpty) {
-                  val namedShape = s"GenShape$counter"
-                  counter += 1
-                  shape.withName(namedShape)
-                }
-                collectedDecls += shape
-                shape.name
+            RamlUnionEmitterHelper.shapeAsSingleType(shape).getOrElse {
+              collectedDecls.find(_.id == shape.id) match {
+                case Some(declared: Shape) if declared.name.option().isDefined =>
+                  declared.name.value()
+                case _ =>
+                  if (shape.name.option().isEmpty) {
+                    val namedShape = s"GenShape$counter"
+                    counter += 1
+                    shape.withName(namedShape)
+                  }
+                  collectedDecls += shape
+                  shape.name.value()
+              }
             }
           }
           union.annotations += ParsedFromTypeExpression(names.mkString(" | "))

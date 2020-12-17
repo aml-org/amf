@@ -134,4 +134,12 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
           transformWith = Some(Oas30))
   }
 
+  test("OAS 3.0 nullable schemas are translated with union expression to raml") {
+    cycle("oas30/nullable-fields.json",
+          "cycled-apis/raml/oas-nullable-fields.raml",
+          OasYamlHint,
+          Raml,
+          transformWith = Some(Raml10))
+  }
+
 }

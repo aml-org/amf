@@ -7,21 +7,27 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 
 object RamlUnionEmitterHelper {
-  def inlinedEmission(shape: UnionShape): Option[String] = {
-    val union: Seq[String] = shape.anyOf.map {
-      case scalar: ScalarShape if isSimpleScalar(scalar) =>
-        val typeName = RamlTypeDefStringValueMatcher
-          .matchType(TypeDefXsdMapping.typeDef(scalar.dataType.value()), scalar.format.option())
-        typeName.format
-          .getOrElse(typeName.typeDef)
-      case s: Shape if s.isLink && s.linkLabel.option().isDefined => s.linkLabel.value()
-      case n: NilShape if n.fields.fields().isEmpty               => "nil"
-      case a: ArrayShape if a.fields.fields().isEmpty             => "array"
-      case a: NodeShape if a.fields.fields().isEmpty              => "object"
-      case a: AnyShape if a.fields.fields().isEmpty               => "any"
-      case _                                                      => return None
-    }
-    Some(union.mkString(" | "))
+  def inlinedEmission(shape: UnionShape with ShapeHelpers): Option[String] = {
+    shape.typeExpression // use union expression stored in annotation
+      .orElse {
+        val unionTypes: Seq[Option[String]] = shape.anyOf.map(shapeAsSingleType)
+        if (unionTypes.forall(_.isDefined)) Some(unionTypes.flatten.mkString(" | "))
+        else None
+
+      }
+  }
+
+  def shapeAsSingleType(s: Shape): Option[String] = s match {
+    case scalar: ScalarShape if isSimpleScalar(scalar) =>
+      val typeName = RamlTypeDefStringValueMatcher
+        .matchType(TypeDefXsdMapping.typeDef(scalar.dataType.value()), scalar.format.option())
+      Some(typeName.format.getOrElse(typeName.typeDef))
+    case s: Shape if s.isLink && s.linkLabel.option().isDefined => Some(s.linkLabel.value())
+    case n: NilShape if n.fields.fields().isEmpty               => Some("nil")
+    case a: ArrayShape if a.fields.fields().isEmpty             => Some("array")
+    case a: NodeShape if a.fields.fields().isEmpty              => Some("object")
+    case a: AnyShape if a.fields.fields().isEmpty               => Some("any")
+    case _                                                      => None
   }
 
   private def isSimpleScalar(scalar: ScalarShape): Boolean =
