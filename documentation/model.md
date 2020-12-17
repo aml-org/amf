@@ -1477,7 +1477,7 @@ Semantic mapping from an input AST in a dialect document to the output graph of 
  | mapValueProperty | string | Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty | http://a.ml/vocabularies/meta#mapValueProperty |
  | mapTermProperty | url | Marks the mapping as a 'map' mapping syntax.  | http://a.ml/vocabularies/meta#mapTermProperty |
  | mapTermValueProperty | url | Marks the mapping as a 'map value' mapping syntax | http://a.ml/vocabularies/meta#mapTermValueProperty |
- | minCount | int | Minimum count constraint over tha mapped property | http://www.w3.org/ns/shacl#minCount |
+ | minCount | int | Minimum count constraint over the mapped property | http://www.w3.org/ns/shacl#minCount |
  | pattern | string | Pattern constraint over the mapped property | http://www.w3.org/ns/shacl#pattern |
  | minInclusive | double | Minimum inclusive constraint over the mapped property | http://www.w3.org/ns/shacl#minInclusive |
  | maxInclusive | double | Maximum inclusive constraint over the mapped property | http://www.w3.org/ns/shacl#maxInclusive |
