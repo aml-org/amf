@@ -123,7 +123,6 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.json4s"                 %% "json4s-native"          % "3.5.4",
     libraryDependencies += "org.topbraid"               % "shacl"                   % "1.3.0",
     libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.18",
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.9.8",
     mainClass in Compile := Some("amf.Main"),
     packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
     mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions",
