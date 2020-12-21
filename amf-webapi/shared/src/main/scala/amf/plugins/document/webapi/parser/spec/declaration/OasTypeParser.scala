@@ -52,7 +52,7 @@ object OasTypeParser {
       true
     )
 
-  private def key(entry: YMapEntry) = entry.key.as[YScalar].text
+  private def key(entry: YMapEntry)(implicit errorHandler: IllegalTypeHandler) = entry.key.as[YScalar].text
 
   private def getSchemaVersion(ctx: OasLikeWebApiContext) = {
     if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion(Schema)

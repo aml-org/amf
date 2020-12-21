@@ -113,4 +113,12 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Valid $ref with array indices in pointer") {
     validate("ref-with-array-indices.json", None, Oas30Profile, overridedHint = Some(OasJsonHint))
   }
+
+  test("'type' facet of types produces a violation") {
+    validate("invalid-type-facet-as-map.yaml", Some("invalid-type-facet-as-map.report"), Oas30Profile)
+  }
+
+  test("invalid schema name as seq") {
+    validate("invalid-schema-name-as-seq.yaml", Some("invalid-schema-name-as-seq.report"), Oas30Profile)
+  }
 }

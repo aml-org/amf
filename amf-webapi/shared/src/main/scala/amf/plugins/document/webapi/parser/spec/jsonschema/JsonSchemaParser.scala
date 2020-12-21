@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.jsonschema
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.model.document.{EncodesModel, Fragment}
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{EmptyFutureDeclarations, ParserContext, SyamlParsedDocument}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
@@ -39,7 +40,7 @@ class JsonSchemaParser{
         val rootAst = getPointedAstOrNode(parsedDoc.document.node, shapeId, hashFragment, url, jsonSchemaContext)
         val version = optionalVersion.getOrElse(jsonSchemaContext.computeJsonSchemaVersion(parsedDoc.document.node))
         val parsed =
-          OasTypeParser(rootAst, keyValueOrDefault(rootAst), shape => shape.withId(shapeId), version = version)(jsonSchemaContext)
+          OasTypeParser(rootAst, keyValueOrDefault(rootAst)(jsonSchemaContext.eh), shape => shape.withId(shapeId), version = version)(jsonSchemaContext)
             .parse() match {
             case Some(shape) => shape
             case None =>
@@ -52,7 +53,7 @@ class JsonSchemaParser{
     }
   }
 
-  private def keyValueOrDefault(rootAst: YMapEntryLike) = {
+  private def keyValueOrDefault(rootAst: YMapEntryLike)(implicit errorHandler: ParserErrorHandler) = {
     rootAst.key.map(_.as[String]).getOrElse("schema")
   }
 
