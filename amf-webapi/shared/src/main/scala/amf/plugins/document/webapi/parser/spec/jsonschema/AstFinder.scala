@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.jsonschema
 import amf.core.Root
 import amf.core.model.document.Fragment
 import amf.core.parser.SyamlParsedDocument
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaRootCreator.createRootFrom
@@ -33,6 +34,9 @@ object AstFinder {
                           hashFragment: Option[String],
                           url: String,
                           ctx: WebApiContext): YMapEntryLike = {
+
+    implicit val errorHandler: ParserErrorHandler = ctx.eh
+
     ctx.setJsonSchemaAST(node)
     val rootAst = hashFragment match {
       case Some(fragment) => findNodeInIndex(fragment, ctx)
