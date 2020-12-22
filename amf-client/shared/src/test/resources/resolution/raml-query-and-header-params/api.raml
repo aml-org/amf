@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: aq-1463
+version: 1.0
+
+baseUri: http://localhost:4567
+
+/customers:
+  /endpoint:
+    get:
+      queryParameters:
+        addressId:
+          required: true
+          type: string
+      headers:
+        addressId:
+          required: false
+          type: string
+      description: Returns Customer data
+      responses:
+        200:
+          body:
+            application/json:
+              type: string

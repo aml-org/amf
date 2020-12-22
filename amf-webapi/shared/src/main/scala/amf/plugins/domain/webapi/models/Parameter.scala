@@ -99,7 +99,10 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   override def meta: Obj = ParameterModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/parameter/" + name.option().getOrElse("default-parameter").urlComponentEncoded
+  override def componentId: String =
+    s"/parameter/${encoded(binding, "default-binding")}/${encoded(name, "default-name")}"
+
+  private def encoded(value: StrField, default: String) = value.option().map(_.urlComponentEncoded).getOrElse(default)
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Parameter.apply
