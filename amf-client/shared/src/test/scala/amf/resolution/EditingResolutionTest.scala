@@ -935,5 +935,18 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("Operation query and header parameters with same name", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath + "raml-query-and-header-params/",
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
   override val basePath: String = ""
 }

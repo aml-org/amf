@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#variable": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/path/version",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -67,7 +67,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#schema": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/default-binding/version/scalar/version",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -92,13 +92,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/default-binding/version/scalar/version/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version/source-map/lexical/element_2",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/default-binding/version/scalar/version/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://www.w3.org/ns/shacl#datatype"
@@ -111,7 +111,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/default-binding/version/scalar/version/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#description"
@@ -124,10 +124,10 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/default-binding/version/scalar/version/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version"
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/default-binding/version/scalar/version"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -139,10 +139,10 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version/source-map/type-property-lexical-info/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/default-binding/version/scalar/version/source-map/type-property-lexical-info/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version"
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/default-binding/version/scalar/version"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -158,16 +158,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/path/version/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/path/version/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/path/version"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -177,7 +177,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/path/version/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#description"
@@ -194,7 +194,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/path/year",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -216,7 +216,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#schema": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year/scalar/year",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/path/year/scalar/year",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -238,16 +238,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/path/year/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year/source-map/synthesized-field/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/path/year/source-map/synthesized-field/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/path/year"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -353,7 +353,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#header": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/header/Zencoder-Api-Key",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -380,7 +380,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/scalar/Zencoder-Api-Key",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/default-binding/Zencoder-Api-Key/scalar/Zencoder-Api-Key",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -405,16 +405,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/scalar/Zencoder-Api-Key/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/default-binding/Zencoder-Api-Key/scalar/Zencoder-Api-Key/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/scalar/Zencoder-Api-Key/source-map/lexical/element_1",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/default-binding/Zencoder-Api-Key/scalar/Zencoder-Api-Key/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/scalar/Zencoder-Api-Key"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/default-binding/Zencoder-Api-Key/scalar/Zencoder-Api-Key"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -424,7 +424,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/scalar/Zencoder-Api-Key/source-map/lexical/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/default-binding/Zencoder-Api-Key/scalar/Zencoder-Api-Key/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#name"
@@ -443,16 +443,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/header/Zencoder-Api-Key/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/source-map/lexical/element_1",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/header/Zencoder-Api-Key/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/header/Zencoder-Api-Key"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -462,7 +462,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/header/Zencoder-Api-Key/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/apiContract#required"

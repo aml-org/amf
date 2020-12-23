@@ -24,7 +24,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components
   Message: Name user#Id does not match regular expression ^[a-zA-Z0-9\.\-_]+$ for component declarations
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/parameters/parameter/user%23Id
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml#/declarations/parameters/parameter/default-binding/user%23Id
   Property: 
   Position: Some(LexicalInformation([(29,4)-(34,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/invalid-component-names.yaml
