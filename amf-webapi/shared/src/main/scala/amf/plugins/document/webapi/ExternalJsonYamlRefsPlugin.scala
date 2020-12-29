@@ -5,19 +5,9 @@ import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
-import amf.core.model.document.{BaseUnit, ExternalFragment}
+import amf.core.model.document.{BaseUnit, ExternalFragment, InferredModuleFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
-import amf.core.parser.{
-  Annotations,
-  CompilerReferenceCollector,
-  InferredLinkReference,
-  LinkReference,
-  ParsedDocument,
-  ParserContext,
-  ReferenceCollector,
-  ReferenceHandler,
-  SyamlParsedDocument
-}
+import amf.core.parser.{Annotations, CompilerReferenceCollector, Fields, InferredLinkReference, LinkReference, ParsedDocument, ParserContext, ReferenceCollector, ReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.Platform
 import amf.core.utils._
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
@@ -115,7 +105,7 @@ class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
           .withMediaType(docMediaType(document))
       result.parsed = Some(parsed.document.node)
       val references = document.references.map(_.unit)
-      val fragment = ExternalFragment()
+      val fragment = InferredModuleFragment(Fields(), Annotations())
         .withLocation(document.location)
         .withId(document.location)
         .withEncodes(result)

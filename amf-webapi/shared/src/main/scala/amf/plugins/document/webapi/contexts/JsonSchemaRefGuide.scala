@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.contexts
 
-import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
+import amf.core.model.document.{ExternalFragment, Fragment, InferredModuleFragment, RecursiveUnit}
 import amf.core.parser.ParsedReference
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.parser.spec.jsonschema.AstFinder
@@ -25,14 +25,14 @@ case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReferenc
 
   def withFragmentAndInFileReference[T](ref: String)(action: (Fragment, Option[String]) => Option[T]): Option[T] = {
     if (!context.validateRefFormatWithError(ref)) return None
-    val fileUrl      = getFileUrl(ref)
-    val referenceUrl = getReferenceUrl(fileUrl)
+    val fileUrl      = getResolvedFileUri(ref)
+    val uriFragment  = getUriFragment(fileUrl)
     obtainFragmentFromFullRef(fileUrl) flatMap { fragment =>
-      action(fragment, referenceUrl)
+      action(fragment, uriFragment)
     }
   }
 
-  def getFileUrl(ref: String): String = context.resolvedPath(currentLoc, ref)
+  def getResolvedFileUri(ref: String): String = context.resolvedPath(currentLoc, ref)
 
   def changeJsonSchemaSearchDestination(loc: String): JsonSchemaRefGuide = {
     val optionalRef = references
@@ -43,20 +43,26 @@ case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReferenc
       .getOrElse(this)
   }
 
-  private def getReferenceUrl(fileUrl: String): Option[String] = {
+  private def getUriFragment(fileUrl: String): Option[String] = {
     fileUrl.split("#") match {
       case s: Array[String] if s.size > 1 => Some(s.last)
       case _                              => None
     }
   }
 
+  private def uriWithoutFragment(uri: String): Option[String] = uri.split("#").headOption
+
   private def obtainFragmentFromFullRef(fileUrl: String): Option[Fragment] = {
-    val baseFileUrl = fileUrl.split("#").head
-    references
-      .filter(r => r.unit.location().isDefined)
-      .find(_.unit.location().get == baseFileUrl) collectFirst {
-      case ref if ref.unit.isInstanceOf[ExternalFragment] => ref.unit.asInstanceOf[ExternalFragment]
-      case ref if ref.unit.isInstanceOf[RecursiveUnit]    => ref.unit.asInstanceOf[RecursiveUnit]
+    uriWithoutFragment(fileUrl).flatMap { findReferenceWithLocation }.collectFirst {
+        case ref if ref.unit.isInstanceOf[ExternalFragment] => ref.unit.asInstanceOf[ExternalFragment]
+        case ref if ref.unit.isInstanceOf[RecursiveUnit] => ref.unit.asInstanceOf[RecursiveUnit]
+        case ref if ref.unit.isInstanceOf[InferredModuleFragment] => ref.unit.asInstanceOf[InferredModuleFragment]
     }
+  }
+
+  private def findReferenceWithLocation(uri: String): Option[ParsedReference] = {
+      references
+        .filter(r => r.unit.location().isDefined)
+        .find(_.unit.location().get == uri)
   }
 }

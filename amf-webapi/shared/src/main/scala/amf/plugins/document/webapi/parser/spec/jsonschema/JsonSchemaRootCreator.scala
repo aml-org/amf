@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
 import amf.core.Root
-import amf.core.model.document.{BaseUnit, ExternalFragment, Fragment, RecursiveUnit}
+import amf.core.model.document.{BaseUnit, ExternalFragment, Fragment, InferredModuleFragment, RecursiveUnit}
 import amf.core.parser.{ParsedReference, Reference, SchemaReference, SyamlParsedDocument}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.validations.ParserSideValidations.UnableToParseJsonSchema
@@ -16,7 +16,8 @@ object JsonSchemaRootCreator {
 
   def getYNodeFrom(inputFragment: Fragment, errorHandler: ParserErrorHandler): YNode = {
     inputFragment match {
-      case fragment: ExternalFragment                        => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, errorHandler))
+      case fragment: ExternalFragment  => fragment.encodes.parsed.getOrElse(parsedFragment(inputFragment, errorHandler))
+      case fragment: InferredModuleFragment => parsedFragment(inputFragment, errorHandler)
       case fragment: RecursiveUnit if fragment.raw.isDefined => parsedFragment(inputFragment, errorHandler)
       case _ =>
         errorHandler.violation(UnableToParseJsonSchema,

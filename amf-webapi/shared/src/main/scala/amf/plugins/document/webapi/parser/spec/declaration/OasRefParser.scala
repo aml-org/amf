@@ -162,7 +162,7 @@ class OasRefParser(map: YMap,
       case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullRef, e, u)
       case Some(shape)              => createLinkToParsedShape(ref, shape)
       case _ =>
-        val fileUrl = ctx.jsonSchemaRefGuide.getFileUrl(ref)
+        val fileUrl = ctx.jsonSchemaRefGuide.getResolvedFileUri(ref)
         // TODO: parsed json schema is registered with ref but searched with fullRef, leads to repeated parsing
         parseRemoteSchema(ref) match {
           case None =>
@@ -171,7 +171,7 @@ class OasRefParser(map: YMap,
             tmpShape.unresolved(text, e, "warning").withSupportsRecursion(true)
             Some(tmpShape)
           case Some(jsonSchemaShape) =>
-            jsonSchemaShape.annotations.+=(ExternalJsonSchemaShape(e))
+            jsonSchemaShape.annotations += ExternalJsonSchemaShape(e)
             if (ctx.declarations.fragments.contains(text)) {
               // case when in an OAS spec we point with a regular $ref to something that is external
               // and holds a JSON schema we need to promote an external fragment to data type fragment
@@ -211,9 +211,9 @@ class OasRefParser(map: YMap,
   }
 
   private def parseRemoteSchema(fullRef: String): Option[AnyShape] = {
-    ctx.parseRemoteJSONPath(fullRef).map { shape =>
-      ctx.registerJsonSchema(fullRef, shape)
-      ctx.futureDeclarations.resolveRef(fullRef, shape)
+    ctx.parseRemoteJsonSchema(fullRef).map { shape =>
+//      ctx.registerJsonSchema(fullRef, shape)
+//      ctx.futureDeclarations.resolveRef(fullRef, shape)
       shape
     }
   }

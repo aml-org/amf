@@ -26,6 +26,8 @@ class JsonSchemaAstIndex(root: YNode, val refsCounter: AliasCounter)(implicit va
     case _            => // ignore
   }
 
+  def keySet = index.keySet
+
   private def indexMap(m: YMap): Unit = {
     val maybeEntry = m.key("id").orElse(m.key("$id"))
     // root base id

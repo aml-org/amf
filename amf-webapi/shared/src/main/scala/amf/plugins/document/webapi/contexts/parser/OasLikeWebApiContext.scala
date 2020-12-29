@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.contexts.parser
 
 import amf.core.client.ParsingOptions
-import amf.core.model.document.ExternalFragment
+import amf.core.model.document.{ExternalFragment, InferredModuleFragment}
 import amf.core.model.domain.Shape
 import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
@@ -96,10 +96,14 @@ abstract class OasLikeWebApiContext(loc: String,
     }
   }
 
-  def parseRemoteJSONPath(ref: String): Option[AnyShape] = {
+  def parseRemoteJsonSchema(ref: String): Option[AnyShape] = {
     jsonSchemaRefGuide.withFragmentAndInFileReference(ref) { (fragment, referenceUrl) =>
       val newCtx = makeCopyWithJsonPointerContext().moveToReference(fragment.location().get)
-      new JsonSchemaParser().parse(fragment, referenceUrl)(newCtx)
+      fragment match {
+        case inferred: InferredModuleFragment =>
+          inferred.parse(ref, "JsonSchema", () => new JsonSchemaParser().parse(fragment, referenceUrl)(newCtx)).map(_.asInstanceOf[AnyShape])
+        case _ => new JsonSchemaParser().parse(fragment, referenceUrl)(newCtx)
+      }
     }
   }
 
