@@ -15,7 +15,7 @@ import scala.concurrent.ExecutionContext
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Shape with PlatformSecrets {
+class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Shape with ValidatorAware with PlatformSecrets {
 
   @JSExportTopLevel("model.domain.AnyShape")
   def this() = this(InternalAnyShape())
