@@ -8,6 +8,7 @@ AMF Model Documentation
 * [Amqp091MessageBinding](#amqp091messagebinding)
 * [Amqp091OperationBinding](#amqp091operationbinding)
 * [Amqp091Queue](#amqp091queue)
+* [AnnotationMapping](#annotationmapping)
 * [AnnotationTypeDeclarationFragment](#annotationtypedeclarationfragment)
 * [AnyShape](#anyshape)
 * [ApiKeySettings](#apikeysettings)
@@ -212,6 +213,34 @@ It can be extended by any domain element adding bindings for the variables in th
  | exclusive | boolean | Whether the queue should be used only by one connection or not | http://a.ml/vocabularies/apiBinding#exclusive |
  | autoDelete | boolean | Whether the exchange should be deleted when the last queue is unbound from it | http://a.ml/vocabularies/apiBinding#autoDelete |
  | vhost | string | The virtual host of the exchange | http://a.ml/vocabularies/apiBinding#vhost |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## AnnotationMapping
+Semantic mapping for an AST node used to extend other documents
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | annotationTarget | [url] | Target class whose instances can be extended with this annotation | http://a.ml/vocabularies/meta#annotationTarget |
+ | path | url | URI in the mapped graph for this mapped property | http://www.w3.org/ns/shacl#path |
+ | name | string | Name in the source AST for the mapped property | http://a.ml/vocabularies/core#name |
+ | datatype | url | Scalar constraint over the type of the mapped property | http://www.w3.org/ns/shacl#datatype |
+ | node | [url] | Object constraint over the type of the mapped property | http://www.w3.org/ns/shacl#node |
+ | mapProperty | string | Marks the mapping as a 'map' mapping syntax. Directly related with mapTermKeyProperty | http://a.ml/vocabularies/meta#mapProperty |
+ | mapValueProperty | string | Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty | http://a.ml/vocabularies/meta#mapValueProperty |
+ | mapTermProperty | url | Marks the mapping as a 'map' mapping syntax.  | http://a.ml/vocabularies/meta#mapTermProperty |
+ | mapTermValueProperty | url | Marks the mapping as a 'map value' mapping syntax | http://a.ml/vocabularies/meta#mapTermValueProperty |
+ | minCount | int | Minimum count constraint over tha mapped property | http://www.w3.org/ns/shacl#minCount |
+ | pattern | string | Pattern constraint over the mapped property | http://www.w3.org/ns/shacl#pattern |
+ | minInclusive | double | Minimum inclusive constraint over the mapped property | http://www.w3.org/ns/shacl#minInclusive |
+ | maxInclusive | double | Maximum inclusive constraint over the mapped property | http://www.w3.org/ns/shacl#maxInclusive |
+ | allowMultiple | boolean | Allows multiple mapped nodes for the property mapping | http://a.ml/vocabularies/meta#allowMultiple |
+ | sorted | boolean | Marks the mapping as requiring order in the mapped collection of nodes | http://a.ml/vocabularies/meta#sorted |
+ | in | [Any] | Enum constraint for the values of the property mapping | http://www.w3.org/ns/shacl#in |
+ | typeDiscriminatorMap | string | Information about the discriminator values in the source AST for the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorMap |
+ | unique | boolean | Marks the values for the property mapping as a primary key for this type of node | http://a.ml/vocabularies/meta#unique |
+ | externallyLinkable | boolean | Marks this object property as supporting external links | http://a.ml/vocabularies/meta#externallyLinkable |
+ | typeDiscriminatorName | string | Information about the field in the source AST to be used as discrimintaro in the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorName |
+ | mergePolicy | string | Indication of how to merge this graph node when applying a patch document | http://a.ml/vocabularies/meta#mergePolicy |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## AnnotationTypeDeclarationFragment
@@ -1488,7 +1517,7 @@ Semantic mapping from an input AST in a dialect document to the output graph of 
  | mapValueProperty | string | Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty | http://a.ml/vocabularies/meta#mapValueProperty |
  | mapTermProperty | url | Marks the mapping as a 'map' mapping syntax.  | http://a.ml/vocabularies/meta#mapTermProperty |
  | mapTermValueProperty | url | Marks the mapping as a 'map value' mapping syntax | http://a.ml/vocabularies/meta#mapTermValueProperty |
- | minCount | int | Minimum count constraint over the mapped property | http://www.w3.org/ns/shacl#minCount |
+ | minCount | int | Minimum count constraint over tha mapped property | http://www.w3.org/ns/shacl#minCount |
  | pattern | string | Pattern constraint over the mapped property | http://www.w3.org/ns/shacl#pattern |
  | minInclusive | double | Minimum inclusive constraint over the mapped property | http://www.w3.org/ns/shacl#minInclusive |
  | maxInclusive | double | Maximum inclusive constraint over the mapped property | http://www.w3.org/ns/shacl#maxInclusive |

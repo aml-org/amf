@@ -103,6 +103,8 @@ trait SpecEmitterFactory {
 
   def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter
 
+  def annotationKeyDecorator(key: String): String
+
   def parametrizedSecurityEmitter: (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter
 
   def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => AbstractSecurityRequirementEmitter

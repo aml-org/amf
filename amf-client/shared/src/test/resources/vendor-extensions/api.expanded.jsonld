@@ -1,0 +1,900 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/web-api",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "Orders API"
+          }
+        ],
+        "apiContract:server": [
+          {
+            "@id": "#/web-api/http%3A%2F%2Fapi.mythical.com%2Forder",
+            "@type": [
+              "apiContract:Server",
+              "doc:DomainElement"
+            ],
+            "core:urlTemplate": [
+              {
+                "@value": "http://api.mythical.com/order"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/web-api/http%3A%2F%2Fapi.mythical.com%2Forder/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/web-api/http%3A%2F%2Fapi.mythical.com%2Forder/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "core:urlTemplate"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(5,0)-(6,0)]"
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:synthesized-field": [
+                  {
+                    "@id": "#/web-api/http%3A%2F%2Fapi.mythical.com%2Forder/source-map/synthesized-field/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/web-api/http%3A%2F%2Fapi.mythical.com%2Forder"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "apiContract:accepts": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "apiContract:contentType": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "1.0.0"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#/web-api/end-points/%2Fusers",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/users"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/web-api/end-points/%2Fusers/get",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#/web-api/end-points/%2Fusers/get/200",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#/web-api/end-points/%2Fusers/get/200/default",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#/web-api/end-points/%2Fusers/get/200/default/array/default",
+                            "@type": [
+                              "raml-shapes:ArrayShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "raml-shapes:items": [
+                              {
+                                "@id": "#/web-api/end-points/%2Fusers/get/200/default/array/default/items/items",
+                                "@type": [
+                                  "shacl:NodeShape",
+                                  "raml-shapes:AnyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "doc:link-target": [
+                                  {
+                                    "@id": "#/declarations/types/User"
+                                  }
+                                ],
+                                "doc:link-label": [
+                                  {
+                                    "@value": "User"
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "items"
+                                  }
+                                ],
+                                "sourcemaps:sources": [
+                                  {
+                                    "@id": "#/web-api/end-points/%2Fusers/get/200/default/array/default/items/items/source-map",
+                                    "@type": [
+                                      "sourcemaps:SourceMap"
+                                    ],
+                                    "sourcemaps:lexical": [
+                                      {
+                                        "@id": "#/web-api/end-points/%2Fusers/get/200/default/array/default/items/items/source-map/lexical/element_0",
+                                        "sourcemaps:element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/web-api/end-points/%2Fusers/get/200/default/array/default/items/items"
+                                          }
+                                        ],
+                                        "sourcemaps:value": [
+                                          {
+                                            "@value": "[(22,17)-(22,21)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "default"
+                              }
+                            ],
+                            "sourcemaps:sources": [
+                              {
+                                "@id": "#/web-api/end-points/%2Fusers/get/200/default/array/default/source-map",
+                                "@type": [
+                                  "sourcemaps:SourceMap"
+                                ],
+                                "sourcemaps:auto-generated-name": [
+                                  {
+                                    "@id": "#/web-api/end-points/%2Fusers/get/200/default/array/default/source-map/auto-generated-name/element_0",
+                                    "sourcemaps:element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/web-api/end-points/%2Fusers/get/200/default/array/default"
+                                      }
+                                    ],
+                                    "sourcemaps:value": [
+                                      {
+                                        "@value": ""
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "sourcemaps:lexical": [
+                                  {
+                                    "@id": "#/web-api/end-points/%2Fusers/get/200/default/array/default/source-map/lexical/element_0",
+                                    "sourcemaps:element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/web-api/end-points/%2Fusers/get/200/default/array/default"
+                                      }
+                                    ],
+                                    "sourcemaps:value": [
+                                      {
+                                        "@value": "[(21,8)-(23,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "sourcemaps:sources": [
+                          {
+                            "@id": "#/web-api/end-points/%2Fusers/get/200/default/source-map",
+                            "@type": [
+                              "sourcemaps:SourceMap"
+                            ],
+                            "sourcemaps:lexical": [
+                              {
+                                "@id": "#/web-api/end-points/%2Fusers/get/200/default/source-map/lexical/element_0",
+                                "sourcemaps:element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/web-api/end-points/%2Fusers/get/200/default"
+                                  }
+                                ],
+                                "sourcemaps:value": [
+                                  {
+                                    "@value": "[(21,8)-(23,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "sourcemaps:sources": [
+                      {
+                        "@id": "#/web-api/end-points/%2Fusers/get/200/source-map",
+                        "@type": [
+                          "sourcemaps:SourceMap"
+                        ],
+                        "sourcemaps:lexical": [
+                          {
+                            "@id": "#/web-api/end-points/%2Fusers/get/200/source-map/lexical/element_1",
+                            "sourcemaps:element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/web-api/end-points/%2Fusers/get/200"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(20,6)-(23,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "#/web-api/end-points/%2Fusers/get/200/source-map/lexical/element_0",
+                            "sourcemaps:element": [
+                              {
+                                "@value": "apiContract:payload"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(21,8)-(23,0)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:sources": [
+                  {
+                    "@id": "#/web-api/end-points/%2Fusers/get/source-map",
+                    "@type": [
+                      "sourcemaps:SourceMap"
+                    ],
+                    "sourcemaps:lexical": [
+                      {
+                        "@id": "#/web-api/end-points/%2Fusers/get/source-map/lexical/element_1",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/web-api/end-points/%2Fusers/get"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(18,2)-(23,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "#/web-api/end-points/%2Fusers/get/source-map/lexical/element_0",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "apiContract:returns"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(19,4)-(23,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/web-api/end-points/%2Fusers/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/web-api/end-points/%2Fusers/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/web-api/end-points/%2Fusers"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(17,0)-(23,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "#/web-api/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:single-value-array": [
+              {
+                "@id": "#/web-api/source-map/single-value-array/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "apiContract:accepts"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              },
+              {
+                "@id": "#/web-api/source-map/single-value-array/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "apiContract:contentType"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "#/web-api/source-map/lexical/element_5",
+                "sourcemaps:element": [
+                  {
+                    "@value": "apiContract:contentType"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(4,0)-(5,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/web-api/source-map/lexical/element_3",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/web-api"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(2,0)-(23,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/web-api/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "apiContract:accepts"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(4,0)-(5,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/web-api/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:version"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(3,0)-(4,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/web-api/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(2,0)-(3,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/web-api/source-map/lexical/element_4",
+                "sourcemaps:element": [
+                  {
+                    "@value": "apiContract:server"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(5,0)-(6,0)]"
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:source-vendor": [
+              {
+                "@id": "#/web-api/source-map/source-vendor/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/web-api"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.3.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declarations/types/User",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declarations/types/User/property/name",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#name"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#/declarations/types/User/property/name/scalar/name",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "name"
+                  }
+                ],
+                "apiContract:businessTerm": [
+                  {
+                    "@id": "http://cloudinformationmodel.org/model/firstName"
+                  }
+                ],
+                "sourcemaps:sources": [
+                  {
+                    "@id": "#/declarations/types/User/property/name/scalar/name/source-map",
+                    "@type": [
+                      "sourcemaps:SourceMap"
+                    ],
+                    "sourcemaps:type-property-lexical-info": [
+                      {
+                        "@id": "#/declarations/types/User/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/declarations/types/User/property/name/scalar/name"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(16,8)-(16,12)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "sourcemaps:lexical": [
+                      {
+                        "@id": "#/declarations/types/User/property/name/scalar/name/source-map/lexical/element_2",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "shacl:datatype"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(16,8)-(17,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "#/declarations/types/User/property/name/scalar/name/source-map/lexical/element_0",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "apiContract:businessTerm"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(15,8)-(16,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "#/declarations/types/User/property/name/scalar/name/source-map/lexical/element_1",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/declarations/types/User/property/name/scalar/name"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(14,6)-(17,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "name"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/types/User/property/name/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/types/User/property/name/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/declarations/types/User/property/name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(14,6)-(17,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "User"
+          }
+        ],
+        "apiContract:businessTerm": [
+          {
+            "@id": "http://cloudinformationmodel.org/model/Individual"
+          }
+        ],
+        "apiContract:testNested": [
+          {
+            "@id": "#/declarations/types/User/(test-nested)/(test-nested)",
+            "@type": [
+              "apiContract:Other",
+              "file://amf-client/shared/src/test/resources/vendor-extensions/extension.yaml#/declarations/Other",
+              "meta:DialectDomainElement",
+              "doc:DomainElement"
+            ],
+            "data:a": [
+              {
+                "@value": "hello"
+              }
+            ],
+            "data:b": [
+              {
+                "@id": "#/declarations/types/User/(test-nested)/(test-nested)/b",
+                "@type": [
+                  "apiContract:Another",
+                  "file://amf-client/shared/src/test/resources/vendor-extensions/extension.yaml#/declarations/Another",
+                  "meta:DialectDomainElement",
+                  "doc:DomainElement"
+                ],
+                "data:c": [
+                  {
+                    "@value": "world"
+                  }
+                ],
+                "sourcemaps:sources": [
+                  {
+                    "@id": "#/declarations/types/User/(test-nested)/(test-nested)/b/source-map",
+                    "@type": [
+                      "sourcemaps:SourceMap"
+                    ],
+                    "sourcemaps:lexical": [
+                      {
+                        "@id": "#/declarations/types/User/(test-nested)/(test-nested)/b/source-map/lexical/element_1",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/declarations/types/User/(test-nested)/(test-nested)/b"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(11,0)-(12,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "#/declarations/types/User/(test-nested)/(test-nested)/b/source-map/lexical/element_0",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "data:c"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(11,8)-(12,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/types/User/(test-nested)/(test-nested)/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/types/User/(test-nested)/(test-nested)/source-map/lexical/element_2",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "data:a"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(12,6)-(13,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/types/User/(test-nested)/(test-nested)/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "data:b"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(10,8)-(12,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/types/User/(test-nested)/(test-nested)/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/declarations/types/User/(test-nested)/(test-nested)"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(10,0)-(13,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "#/declarations/types/User/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:declared-element": [
+              {
+                "@id": "#/declarations/types/User/source-map/declared-element/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/declarations/types/User"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "#/declarations/types/User/source-map/lexical/element_4",
+                "sourcemaps:element": [
+                  {
+                    "@value": "apiContract:businessTerm"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(8,4)-(9,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/types/User/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml#/declarations/types/User"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(7,2)-(17,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/types/User/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "apiContract:testNested"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(9,18)-(13,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/types/User/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "shacl:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(7,2)-(7,6)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/types/User/source-map/lexical/element_3",
+                "sourcemaps:element": [
+                  {
+                    "@value": "shacl:property"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(13,4)-(17,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-client/shared/src/test/resources/vendor-extensions/api.raml",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#",
+      "meta": "http://a.ml/vocabularies/meta#",
+      "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
+    }
+  }
+]

@@ -153,17 +153,17 @@ trait SpecParserOps {
       val result = RamlScalarNode(node)
       target match {
         case SingleTarget(element) =>
-          custom ++= collectDomainExtensions(element.id + s"/${field.value.name}", result)
+          custom ++= collectDomainExtensions(Some(element.id + s"/${field.value.name}"), result)
             .map(DomainExtensionAnnotation)
-        case EmptyTarget => custom ++= collectDomainExtensions(null, result).map(DomainExtensionAnnotation)
+        case EmptyTarget => custom ++= collectDomainExtensions(None, result).map(DomainExtensionAnnotation)
       }
       result
     }
 
-    private def collectDomainExtensions(parent: String, n: ScalarNode): Seq[DomainExtension] = {
+    private def collectDomainExtensions(id: Option[String], n: ScalarNode): Seq[DomainExtension] = {
       n match {
         case n: RamlScalarValuedNode =>
-          AnnotationParser.parseExtensions(parent, n.obj)
+          AnnotationParser.parseExtensions(None, id, n.obj)
         case _: DefaultScalarNode =>
           Nil
       }

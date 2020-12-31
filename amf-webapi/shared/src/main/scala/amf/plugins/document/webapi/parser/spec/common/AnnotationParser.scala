@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.core.VendorExtensionCompiler
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -16,8 +17,9 @@ import org.yaml.model._
 
 case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] = Nil)(implicit val ctx: WebApiContext) {
   def parse(): Unit = {
-    val extensions = parseExtensions(element.id, map, target)
-    setExtensions(extensions)
+    val extensions    = parseExtensions(Some(element),None, map, target)
+    val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
+    if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
   }
 
   // NOTE: DONE LIKE THIS BECAUSE OF SCALA JS LINKING ERRORS
@@ -27,7 +29,7 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
   def parseOrphanNode(orphanNodeName: String): Unit = {
     map.key(orphanNodeName) match {
       case Some(orphanMapEntry) if orphanMapEntry.value.tagType == YType.Map =>
-        val extensions = parseExtensions(element.id, orphanMapEntry.value.as[YMap])
+        val extensions = parseExtensions(Some(element), None, orphanMapEntry.value.as[YMap])
         extensions.foreach { extension =>
           Option(extension.extension).foreach(_.annotations += OrphanOasExtension(orphanNodeName))
         }
@@ -46,14 +48,21 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
 }
 
 object AnnotationParser {
-  def parseExtensions(parent: String, map: YMap, target: List[String] = Nil)(
-      implicit ctx: WebApiContext): Seq[DomainExtension] =
+  def parseExtensions(element: Option[DomainElement], elementId: Option[String], map: YMap, target: List[String] = Nil)(
+      implicit ctx: WebApiContext): Seq[DomainExtension] = {
+    val parent: String = element.map(_.id).orElse(elementId).orNull
     map.entries.flatMap { entry =>
-      resolveAnnotation(entryKey(entry)).map(ExtensionParser(_, parent, entry, target).parse().add(Annotations(entry)))
+      val key = entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
+      resolveAnnotation(key) match {
+        case Some(annotation) =>
+          if (element.isDefined && VendorExtensionCompiler.parseVendorExtension(annotation, entry, element.get, ctx)) {
+            Seq() // already parsed as vendor extension
+          } else {
+            Seq(ExtensionParser(annotation, parent, entry, target).parse().add(Annotations(entry)))
+          }
+        case _                => Seq() // ignore, not an annotation
+      }
     }
-
-  private def entryKey(entry: YMapEntry) = {
-    entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
   }
 }
 
