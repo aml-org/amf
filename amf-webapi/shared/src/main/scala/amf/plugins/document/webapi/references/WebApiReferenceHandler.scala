@@ -6,6 +6,7 @@ import amf.core.annotations.SourceAST
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser._
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote._
 import amf.core.utils._
 import amf.plugins.document.webapi.BaseWebApiPlugin
@@ -25,10 +26,14 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   private val references = CompilerReferenceCollector()
 
   override def collect(parsed: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
+    collect(parsed)(ctx.eh)
+  }
+
+  private def collect(parsed: ParsedDocument)(implicit errorHandler: ParserErrorHandler): CompilerReferenceCollector = {
     val doc = parsed.asInstanceOf[SyamlParsedDocument].document
-    libraries(doc, ctx)
-    links(doc, ctx)
-    if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(doc, ctx)
+    libraries(doc)
+    links(doc)
+    if (isRamlOverlayOrExtension(vendor, parsed)) overlaysAndExtensions(doc)
     references
   }
 
@@ -53,7 +58,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def overlaysAndExtensions(document: YDocument, ctx: ParserContext): Unit = {
+  private def overlaysAndExtensions(document: YDocument)(implicit errorHandler: ParserErrorHandler): Unit = {
     document.node.to[YMap] match {
       case Right(map) =>
         val ext = vendor match {
@@ -68,7 +73,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
             .foreach(entry =>
               entry.value.tagType match {
                 case YType.Map | YType.Seq | YType.Null =>
-                  ctx.eh
+                  errorHandler
                     .violation(InvalidExtensionsType, "", s"Expected scalar but found: ${entry.value}", entry.value)
                 case _ => extension(entry) // assume scalar
             })
@@ -77,19 +82,21 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def extension(entry: YMapEntry): Unit = {
+  private def extension(entry: YMapEntry)(implicit errorHandler: ParserErrorHandler): Unit = {
     references += (entry.value.as[YScalar].text, ExtensionReference, entry.value)
   }
 
-  private def links(part: YPart, ctx: ParserContext): Unit = {
+  private def links(part: YPart)(implicit errorHandler: ParserErrorHandler): Unit = {
     vendor match {
-      case Raml10.name | Raml08.name | Raml.name => ramlLinks(part, ctx)
-      case Oas20.name | Oas30.name               => oasLinks(part, ctx)
-      case AsyncApi20.name                       => oasLinks(part, ctx); ramlLinks(part, ctx)
+      case Raml10.name | Raml08.name | Raml.name => ramlLinks(part)
+      case Oas20.name | Oas30.name               => oasLinks(part)
+      case AsyncApi20.name =>
+        oasLinks(part)
+        ramlLinks(part)
     }
   }
 
-  private def libraries(document: YDocument, ctx: ParserContext): Unit = {
+  private def libraries(document: YDocument)(implicit errorHandler: ParserErrorHandler): Unit = {
     document.to[YMap] match {
       case Right(map) =>
         val uses = vendor match {
@@ -102,10 +109,10 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
             .key(u)
             .foreach(entry => {
               entry.value.tagType match {
-                case YType.Map  => entry.value.as[YMap].entries.foreach(library(_, ctx))
+                case YType.Map  => entry.value.as[YMap].entries.foreach(library(_))
                 case YType.Null =>
                 case _ =>
-                  ctx.eh.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value)
+                  errorHandler.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value)
               }
             })
         })
@@ -113,26 +120,26 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def library(entry: YMapEntry, ctx: ParserContext): Unit =
-    LibraryLocationParser(entry, ctx) match {
+  private def library(entry: YMapEntry)(implicit errorHandler: ParserErrorHandler): Unit =
+    LibraryLocationParser(entry) match {
       case Some(location) => references += (location, LibraryReference, entry.value)
-      case _              => ctx.eh.violation(ModuleNotFound, "", "Missing library location", entry)
+      case _              => errorHandler.violation(ModuleNotFound, "", "Missing library location", entry)
     }
 
-  def oasLinks(part: YPart, ctx: ParserContext): Unit = {
+  private def oasLinks(part: YPart)(implicit errorHandler: ParserErrorHandler): Unit = {
     part match {
-      case map: YMap if map.entries.size == 1 && isRef(map.entries.head) => oasInclude(map, ctx)
-      case _                                                             => part.children.foreach(c => oasLinks(c, ctx))
+      case map: YMap if map.entries.size == 1 && isRef(map.entries.head) => oasInclude(map)
+      case _                                                             => part.children.foreach(c => oasLinks(c))
     }
   }
 
-  private def oasInclude(map: YMap, ctx: ParserContext): Unit = {
+  private def oasInclude(map: YMap)(implicit errorHandler: ParserErrorHandler): Unit = {
     val ref = map.entries.head
     ref.value.tagType match {
       case YType.Str =>
         references += (ref.value
           .as[String], LinkReference, ref.value) // this is not for all scalar, link must be a string
-      case _ => ctx.eh.violation(UnexpectedReference, "", s"Unexpected $$ref with $ref", ref.value)
+      case _ => errorHandler.violation(UnexpectedReference, "", s"Unexpected $$ref with $ref", ref.value)
     }
   }
 
@@ -143,15 +150,15 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  def ramlLinks(part: YPart, ctx: ParserContext): Unit = {
+  private def ramlLinks(part: YPart)(implicit errorHandler: ParserErrorHandler): Unit = {
     part match {
-      case node: YNode if node.tagType == YType.Include         => ramlInclude(node, ctx)
+      case node: YNode if node.tagType == YType.Include         => ramlInclude(node)
       case scalar: YScalar if scalar.value.isInstanceOf[String] => checkInlined(scalar)
-      case _                                                    => part.children.foreach(ramlLinks(_, ctx))
+      case _                                                    => part.children.foreach(ramlLinks(_))
     }
   }
 
-  val linkRegex: Regex = "(\"\\$ref\":\\s*\".*\")".r
+  private val linkRegex: Regex = "(\"\\$ref\":\\s*\".*\")".r
 
   private def checkInlined(scalar: YScalar): Unit = {
     val str = scalar.value.asInstanceOf[String]
@@ -168,11 +175,11 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def ramlInclude(node: YNode, ctx: ParserContext): Unit = {
+  private def ramlInclude(node: YNode)(implicit errorHandler: ParserErrorHandler): Unit = {
     node.value match {
       case scalar: YScalar =>
         references += (scalar.text, LinkReference, node)
-      case _ => ctx.eh.violation(UnexpectedReference, "", s"Unexpected !include with ${node.value}", node)
+      case _ => errorHandler.violation(UnexpectedReference, "", s"Unexpected !include with ${node.value}", node)
     }
   }
 

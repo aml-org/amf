@@ -640,7 +640,7 @@ object Oas3ParameterParser {
     "deepObject"     -> List("query")
   )
 
-  def parseExplodeField(map: YMap, result: Parameter): Unit = {
+  def parseExplodeField(map: YMap, result: Parameter)(implicit errorHandler: IllegalTypeHandler): Unit = {
     map.key("explode") match {
       case Some(entry) =>
         result.fields.setWithoutId(ParameterModel.Explode,

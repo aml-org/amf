@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.{DefaultParserErrorHandler, IgnoringErrorHandler}
 import amf.core.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.ErrorHandler
@@ -22,6 +22,7 @@ import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
 import amf.{ProfileName, Raml08Profile}
+import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -144,7 +145,7 @@ class ExtendsResolutionStage(
 
       val branches = ListBuffer[BranchContainer]()
 
-      val operationTree = OperationTreeBuilder(operation).build()
+      val operationTree = OperationTreeBuilder(operation)(IgnoringErrorHandler()).build()
       val branchesObj   = Branches()(extendsContext)
 
       // Method branch
@@ -332,6 +333,16 @@ class ExtendsResolutionStage(
     }
 
     private def buildNode(node: YNode): Seq[ElementTree] = {
+      withRefCounterGuard(node) {
+        node.value match {
+          case map: YMap      => map.entries.map { buildEntry }
+          case seq: YSequence => seq.nodes.flatMap { buildNode }
+          case _              => Nil
+        }
+      }
+    }
+
+    private def withRefCounterGuard(node: YNode)(thunk: => Seq[ElementTree]) = {
       if (refsCounter.exceedsThreshold(node)) {
         errorHandler.violation(
           ExeededMaxYamlReferences,
@@ -339,15 +350,7 @@ class ExtendsResolutionStage(
           "Exceeded maximum yaml references threshold"
         )
         Nil
-      } else {
-        node.tagType match {
-          case YType.Map =>
-            node.as[YMap].entries.map { buildEntry }
-          case YType.Seq =>
-            node.as[Seq[YNode]].flatMap { buildNode }
-          case _ => Nil
-        }
-      }
+      } else thunk
     }
 
     def build(): ElementTree = {
@@ -377,12 +380,9 @@ class ExtendsResolutionStage(
     override protected val rootKey: String = endpoint.path.value()
   }
 
-  private case class OperationTreeBuilder(operation: Operation) extends ElementTreeBuilder(operation) {
+  private case class OperationTreeBuilder(operation: Operation)(implicit errorHandler: IllegalTypeHandler) extends ElementTreeBuilder(operation) {
     override protected def astFromEmition: YNode =
-      YDocument(
-        f =>
-          f.obj(Raml10OperationEmitter(operation, SpecOrdering.Lexical, Nil)(
-            new Raml10SpecEmitterContext(errorHandler)).emit)).node
+      YDocument(f => emitOperation(operation, f)).node
         .as[YMap]
         .entries
         .headOption
@@ -392,4 +392,7 @@ class ExtendsResolutionStage(
     override protected val rootKey: String = operation.method.value()
   }
 
+  private def emitOperation(operation: Operation, f: PartBuilder) = {
+    f.obj(Raml10OperationEmitter(operation, SpecOrdering.Lexical, Nil)(new Raml10SpecEmitterContext(errorHandler)).emit)
+  }
 }

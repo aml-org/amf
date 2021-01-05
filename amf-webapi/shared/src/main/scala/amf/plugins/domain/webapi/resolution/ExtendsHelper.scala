@@ -10,12 +10,8 @@ import amf.core.parser.{Annotations, FragmentRef, ParserContext}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.resolution.stages.helpers.ResolvedNamedEntity
 import amf.core.validation.core.ValidationSpecification
-import amf.plugins.document.webapi.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  RamlWebApiContextType
-}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
@@ -48,34 +44,7 @@ object ExtendsHelper {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
-    val document = YDocument(
-      {
-        _.obj {
-          _.entry(
-            YNode(
-              YScalar.withLocation(
-                name,
-                YType.Str,
-                trAnnotations
-                  .find(classOf[SourceAST])
-                  .map(_.ast)
-                  .collectFirst({ case e: YMapEntry => Annotations(e.key) })
-                  .getOrElse(trAnnotations)
-                  .sourceLocation
-              ),
-              YType.Str
-            ),
-            DataNodeEmitter(node,
-                            if (trAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
-                            else SpecOrdering.Default,
-                            referencesCollector)(ctx.eh).emit(_)
-          )
-        }
-      },
-      node.location().getOrElse("")
-    )
-
-    val entry = document.as[YMap].entries.head
+    val entry = emitDataNode(node, trAnnotations, name, referencesCollector)(ctx)
 
     entryAsOperation(profile,
                      unit,
@@ -133,9 +102,27 @@ object ExtendsHelper {
                                 keepEditingInfo: Boolean,
                                 context: Option[RamlWebApiContext] = None,
                                 errorHandler: ErrorHandler): EndPoint = {
+
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
+    val entry: YMapEntry = emitDataNode(node, rtAnnotations, name, referencesCollector)(ctx)
+
+    entryAsEndpoint(profile,
+                    unit,
+                    node,
+                    name,
+                    extensionId,
+                    keepEditingInfo,
+                    entry,
+                    node.annotations,
+                    errorHandler,
+                    extensionLocation,
+                    referencesCollector,
+                    context)
+  }
+
+  private def emitDataNode[T <: BaseUnit](node: DataNode, rtAnnotations: Annotations, name: String, referencesCollector: mutable.Map[String, DomainElement])(implicit ctx: WebApiContext) = {
     val document = YDocument(
       {
         _.obj {
@@ -153,30 +140,18 @@ object ExtendsHelper {
               ),
               YType.Str
             ),
-            DataNodeEmitter(node,
-                            if (rtAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
-                            else SpecOrdering.Default,
-                            referencesCollector)(ctx.eh).emit(_)
+            DataNodeEmitter(node, getSpecOrderingFrom(rtAnnotations), referencesCollector)(ctx.eh).emit(_)
           )
         }
       },
       node.location().getOrElse("")
     )
+    document.as[YMap].entries.head
+  }
 
-    val entry = document.as[YMap].entries.head
-
-    entryAsEndpoint(profile,
-                    unit,
-                    node,
-                    name,
-                    extensionId,
-                    keepEditingInfo,
-                    entry,
-                    node.annotations,
-                    errorHandler,
-                    extensionLocation,
-                    referencesCollector,
-                    context)
+  private def getSpecOrderingFrom[T <: BaseUnit](rtAnnotations: Annotations) = {
+    if (rtAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
+    else SpecOrdering.Default
   }
 
   def entryAsEndpoint[T <: BaseUnit](profile: ProfileName,
