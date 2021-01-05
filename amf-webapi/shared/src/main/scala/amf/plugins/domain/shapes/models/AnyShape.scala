@@ -6,7 +6,7 @@ import amf.core.annotations.DeclaredElement
 import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.StrField
 import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape}
+import amf.core.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape, ValidatorAware}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.core.validation.{AMFValidationReport, PayloadValidator, SeverityLevels}
@@ -91,7 +91,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations = Annotations())
     with ExternalSourceElement
     with InheritanceChain
     with DocumentedElement
-    with ExemplifiedDomainElement {
+    with ExemplifiedDomainElement
+    with ValidatorAware {
 
   // TODO: should return Option has field can be null
   def documentation: CreativeWork     = fields.field(Documentation)
