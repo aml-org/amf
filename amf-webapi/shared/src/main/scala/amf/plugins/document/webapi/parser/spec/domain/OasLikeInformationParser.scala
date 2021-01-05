@@ -19,7 +19,7 @@ case class OasLikeInformationParser(entry: YMapEntry, api: Api, override implici
     info.key("termsOfService", WebApiModel.TermsOfService in api)
     info.key("version", WebApiModel.Version in api)
     info.key("contact", WebApiModel.Provider in api using OrganizationParser.parse)
-    info.key("license", WebApiModel.License in api using LicenseParser.parse)
+    info.key("license", WebApiModel.License in api using LicenseParser.parseAml)
   }
 
 }

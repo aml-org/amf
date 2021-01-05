@@ -202,7 +202,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
     map.key("termsOfService".asRamlAnnotation, WebApiModel.TermsOfService in api)
     map.key("protocols", (WebApiModel.Schemes in api).allowingSingleValue)
     map.key("contact".asRamlAnnotation, WebApiModel.Provider in api using OrganizationParser.parse)
-    map.key("license".asRamlAnnotation, WebApiModel.License in api using LicenseParser.parse)
+    map.key("license".asRamlAnnotation, WebApiModel.License in api using LicenseParser.parseAml)
 
     map.key(
       "tags".asRamlAnnotation,
