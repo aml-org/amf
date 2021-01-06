@@ -142,8 +142,15 @@ class AstIndexTest extends FunSuite with Matchers with PlatformSecrets{
     val content = platform.fs.syncFile(pathToFile).read()
     val doc = JsonParser(content).document()
     val ctx = new Async20WebApiContext("loc", Seq(), ParserContext(eh = UnhandledParserErrorHandler))
-    val index = AstIndexBuilder.buildAst(doc.node, AliasCounter(), version)(ctx)
+    val index = AstIndexBuilder(AliasCounter())(ctx).build(doc.node, Seq(LexicalResolutionScope(), getSpecificEntryBuilderFor(version, new URI(pathToFile))))
     val foundReferences = mustBeInIndex.filter(e => index.getNode(e).isDefined).sorted
     foundReferences.size shouldBe mustBeInIndex.size
+  }
+
+  private def getSpecificEntryBuilderFor(version: JSONSchemaVersion, baseUri: URI) = version match {
+    case JSONSchemaDraft4SchemaVersion => Draft4ResolutionScope(baseUri)
+    case JSONSchemaDraft7SchemaVersion => Draft7ResolutionScope(baseUri)
+    case JSONSchemaDraft201909SchemaVersion => Draft2019ResolutionScope(baseUri)
+    case _ => throw new IllegalArgumentException(s"There isn't a defined entry builder for version: $version")
   }
 }
