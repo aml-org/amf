@@ -2351,6 +2351,19 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
+  test("Avoid duplicate errors from invalid json in parsing and extends resolution") {
+    val api = "file://amf-client/shared/src/test/resources/validations/raml/invalid-json-example-included/api.raml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new Raml10Parser().parseFileAsync(api).asFuture
+      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.asSeq.size == 1)
+    }
+  }
+
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }
