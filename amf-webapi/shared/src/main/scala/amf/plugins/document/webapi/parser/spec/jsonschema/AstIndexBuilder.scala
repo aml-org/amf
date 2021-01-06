@@ -11,15 +11,11 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-/**
-  * Waiting to be used. It not used in production due to performance problems that have to be taken care of first.
-  */
-
 object AstIndexBuilder {
   def buildAst(node: YNode, refCounter: AliasCounter, version: SchemaVersion)(implicit ctx: WebApiContext): AstIndex = {
     val locationUri             = getBaseUri(ctx)
     val specificResolutionScope = locationUri.flatMap(loc => getResolutionScope(version, loc)).toSeq
-    val scopes                  = Seq(LexicalResolutionScope())  ++ specificResolutionScope
+    val scopes                  = Seq(LexicalResolutionScope()) ++ specificResolutionScope
     new AstIndexBuilder(refCounter).build(node, scopes)
   }
 
@@ -75,7 +71,9 @@ case class AstIndexBuilder private (private val refCounter: AliasCounter)(implic
 
   private def index(map: YMap, scopes: Seq[ResolutionScope], acc: mutable.Map[String, YMapEntryLike]): Unit = {
     map.entries.foreach { entry =>
-      scopes.foreach(_.resolve(entry.key.as[YScalar].text, YMapEntryLike(entry), acc))
+      entry.key.asOption[YScalar].foreach { scalarKey =>
+        scopes.foreach(_.resolve(scalarKey.text, YMapEntryLike(entry), acc))
+      }
       index(YMapEntryLike(entry), scopes, acc)
     }
   }
