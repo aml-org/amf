@@ -1,0 +1,26 @@
+{
+  "@graph": [
+    {
+      "@id": "#4",
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "name": "API",
+      "http://a.ml/vocabularies/document#root": true
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "strict": {
+      "@id": "something",
+      "@type": {
+        "a": ["an unexpected map", 5]
+      }
+    }
+  }
+}

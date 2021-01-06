@@ -237,10 +237,7 @@ object RamlExampleValuesEmitter {
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
     val explicitMetaFields =
-      List(ExampleModel.Strict,
-           ExampleModel.Description,
-           ExampleModel.DisplayName,
-           ExampleModel.CustomDomainProperties)
+      List(ExampleModel.Strict, ExampleModel.Description, ExampleModel.DisplayName, ExampleModel.CustomDomainProperties)
         .filter { f =>
           fs.entry(f) match {
             case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])
@@ -356,16 +353,11 @@ case class StringToAstEmitter(value: String) extends PartEmitter {
   }
   private def emitNode(node: YNode, b: PartBuilder): Unit = {
 
-    node.tagType match {
-      case YType.Map =>
-        val map = node.as[YMap]
-        b.obj(e => map.entries.foreach(entry => e.entry(entry.key.as[String], p => emitNode(entry.value, p))))
-      case YType.Seq =>
-        val seq = node.as[Seq[YNode]]
-        b.list(p => seq.foreach(emitNode(_, p)))
-      case _ =>
-        val scalar = node.as[YScalar]
-        b += scalar.text
+    node.value match {
+      case map: YMap       => b.obj(e => map.entries.foreach(entry => e.entry(entry.key, p => emitNode(entry.value, p))))
+      case seq: YSequence  => b.list(p => seq.nodes.foreach(emitNode(_, p)))
+      case scalar: YScalar => b += scalar.text
+      case _               => // ignore
     }
   }
 

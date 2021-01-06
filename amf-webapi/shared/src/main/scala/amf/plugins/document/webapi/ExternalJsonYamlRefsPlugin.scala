@@ -7,17 +7,8 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
-import amf.core.parser.{
-  Annotations,
-  CompilerReferenceCollector,
-  InferredLinkReference,
-  LinkReference,
-  ParsedDocument,
-  ParserContext,
-  ReferenceCollector,
-  ReferenceHandler,
-  SyamlParsedDocument
-}
+import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.parser.{Annotations, CompilerReferenceCollector, InferredLinkReference, LinkReference, ParsedDocument, ParserContext, ReferenceCollector, ReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.Platform
 import amf.core.utils._
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
@@ -40,9 +31,13 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
   }
 
   override def collect(inputParsed: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
+    collect(inputParsed)(ctx.eh)
+  }
+
+  private def collect(inputParsed: ParsedDocument)(implicit errorHandler: ParserErrorHandler) = {
     inputParsed match {
       case parsed: SyamlParsedDocument =>
-        links(parsed.document, ctx)
+        links(parsed.document)
         refUrls.foreach { ref =>
           if (ref.nodeValue.startsWith("http:") || ref.nodeValue.startsWith("https:"))
             references += (ref.nodeValue, LinkReference, ref.node) // this is not for all scalars, link must be a string
@@ -55,23 +50,23 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
     references
   }
 
-  def links(part: YPart, ctx: ParserContext): Unit = {
+  private def links(part: YPart)(implicit errorHandler: ParserErrorHandler): Unit = {
     val childrens = part match {
       case map: YMap if map.map.contains("$ref") =>
-        collectRef(map, ctx)
+        collectRef(map)
         part.children.filter(c => c != map.entries.find(_.key.as[YScalar].text == "$ref").get)
       case _ => part.children
     }
-    childrens.foreach(c => links(c, ctx))
+    childrens.foreach(c => links(c))
   }
 
-  private def collectRef(map: YMap, ctx: ParserContext): Unit = {
+  private def collectRef(map: YMap)(implicit errorHandler: ParserErrorHandler): Unit = {
     val ref = map.map("$ref")
     ref.tagType match {
       case YType.Str =>
         val refValue = ref.as[String]
         if (!refValue.startsWith("#")) refUrls += RefNode(ref, refValue.split("#").head)
-      case _ => ctx.eh.violation(UnresolvedReference, "", s"Unexpected $$ref with $ref", ref.value)
+      case _ => errorHandler.violation(UnresolvedReference, "", s"Unexpected $$ref with $ref", ref.value)
     }
   }
 }
