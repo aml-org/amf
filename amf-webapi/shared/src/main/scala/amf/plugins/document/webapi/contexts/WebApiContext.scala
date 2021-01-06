@@ -11,12 +11,17 @@ import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaVersion,
+  SchemaVersion
+}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.parser.spec.jsonschema.{AstFinder, AstIndex, AstIndexBuilder, JsonSchemaInference}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
 import org.yaml.model._
+import scala.collection.mutable
 
 abstract class WebApiContext(val loc: String,
                              refs: Seq[ParsedReference],
@@ -50,9 +55,21 @@ abstract class WebApiContext(val loc: String,
 
   var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(this)
 
+  var indexCache: mutable.Map[String, AstIndex] = mutable.Map[String, AstIndex]()
+
   def setJsonSchemaAST(value: YNode): Unit = {
+    val location = value.sourceName
     localJSONSchemaContext = Some(value)
-    jsonSchemaIndex = Some(AstIndexBuilder.buildAst(value, AliasCounter(options.getMaxYamlReferences), computeJsonSchemaVersion(value))(this))
+    val index = indexCache.getOrElse(
+      location, {
+        val result = AstIndexBuilder.buildAst(value,
+                                              AliasCounter(options.getMaxYamlReferences),
+                                              computeJsonSchemaVersion(value))(this)
+        indexCache.put(location, result)
+        result
+      }
+    )
+    jsonSchemaIndex = Some(index)
   }
 
   globalSpace = wrapped.globalSpace
@@ -129,7 +146,6 @@ abstract class WebApiContext(val loc: String,
       if (s.startsWith("/")) s.stripPrefix("/") else s
     }
   }
-
 
   def findJsonPathIn(index: AstIndex, path: String) = index.getNode(normalizeJsonPath(path))
 

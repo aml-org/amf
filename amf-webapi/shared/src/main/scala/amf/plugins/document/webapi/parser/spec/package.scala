@@ -87,7 +87,7 @@ package object spec {
 
   // TODO oas2? raml10?
   def toOas(ctx: WebApiContext): OasWebApiContext = {
-    ctx.vendor match {
+    val result = ctx.vendor match {
       case Vendor.OAS30 =>
         new Oas3WebApiContext(ctx.rootContextDocument,
                               ctx.refs,
@@ -101,11 +101,14 @@ package object spec {
                               Some(toOasDeclarations(ctx.declarations)),
                               ctx.options)
     }
-
+    result.indexCache = ctx.indexCache
+    result
   }
 
   def toOas(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.options)
+    val result = new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.options)
+    result.indexCache = ctx.indexCache
+    result
   }
 
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {
@@ -139,14 +142,24 @@ package object spec {
   }
 
   def toJsonSchema(ctx: WebApiContext): JsonSchemaWebApiContext = {
-    new JsonSchemaWebApiContext(ctx.rootContextDocument,
-                                ctx.refs,
-                                ctx,
-                                Some(toOasDeclarations(ctx.declarations)),
-                                ctx.options, ctx.defaultSchemaVersion)
+    val result = new JsonSchemaWebApiContext(ctx.rootContextDocument,
+                                             ctx.refs,
+                                             ctx,
+                                             Some(toOasDeclarations(ctx.declarations)),
+                                             ctx.options,
+                                             ctx.defaultSchemaVersion)
+    result.indexCache = ctx.indexCache
+    result
   }
 
   def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new JsonSchemaWebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.options, ctx.defaultSchemaVersion)
+    val result = new JsonSchemaWebApiContext(root,
+                                             refs,
+                                             ctx,
+                                             Some(toOasDeclarations(ctx.declarations)),
+                                             ctx.options,
+                                             ctx.defaultSchemaVersion)
+    result.indexCache = ctx.indexCache
+    result
   }
 }
