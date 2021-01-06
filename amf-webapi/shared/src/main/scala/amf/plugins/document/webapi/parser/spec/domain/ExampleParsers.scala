@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.LexicalInformation
-import amf.core.model.domain.{AmfArray, Annotation, DataNode}
-import amf.core.parser.errorhandler.{JsonErrorHandler, WarningOnlyHandler}
+import amf.core.model.domain.{AmfArray, Annotation, DataNode, ExternalDomainElement}
+import amf.core.parser.errorhandler.{JsonErrorHandler, ParserErrorHandler, WarningOnlyHandler}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ParsedJSONExample}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -10,7 +10,12 @@ import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorNamedExample
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{
+  AnnotationParser,
+  DataNodeParser,
+  ExternalFragmentHelper,
+  SpecParserOps
+}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.common.ExamplesField
@@ -21,7 +26,8 @@ import amf.validations.ParserSideValidations.{
   ExclusivePropertiesSpecification,
   InvalidFragmentType
 }
-import org.mulesoft.lexer.Position
+import org.mulesoft.lexer.{Position, SourceLocation}
+import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 
@@ -290,18 +296,11 @@ case class NodeDataNodeParser(node: YNode,
       case Some(_) if isScalar                                  => Some(node)
       case Some(scalar) if JSONSchema.unapply(scalar.text).isDefined =>
         jsonText = Some(scalar.text)
-        node
-          .toOption[YScalar]
-          .map { scalar =>
-            val parser =
-              if (!fromExternal)
-                JsonParserFactory.fromCharsWithSource(
-                  scalar.text,
-                  scalar.sourceName,
-                  Position(node.range.lineFrom, node.range.columnFrom))(errorHandler)
-              else JsonParserFactory.fromCharsWithSource(scalar.text, scalar.sourceName)(ctx.eh)
-            parser.document().node
+        Some(
+          ExternalFragmentHelper.searchNodeInFragments(node).getOrElse {
+            jsonParser(scalar, errorHandler).document().node
           }
+        )
       case Some(scalar) if XMLSchema.unapply(scalar.text).isDefined => None
       case _                                                        => Some(node) // return default node for xml too.
     }
@@ -314,6 +313,14 @@ case class NodeDataNodeParser(node: YNode,
 
     }
   }
+
+  private def jsonParser(scalar: YScalar, errorHandler: ParserErrorHandler): JsonParser =
+    if (fromExternal)
+      JsonParserFactory.fromCharsWithSource(scalar.text, scalar.sourceName)(ctx.eh)
+    else
+      JsonParserFactory.fromCharsWithSource(scalar.text,
+                                            scalar.sourceName,
+                                            Position(node.range.lineFrom, node.range.columnFrom))(errorHandler)
 
   private def parseDataNode(exampleNode: Option[YNode], ann: Seq[Annotation] = Seq()) = {
     val dataNode = exampleNode.map { ex =>
