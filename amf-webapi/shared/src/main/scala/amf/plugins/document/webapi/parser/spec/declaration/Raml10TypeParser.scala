@@ -14,17 +14,18 @@ import amf.core.vocabulary.Namespace.Shapes
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
-import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, TypeName}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeDetection.parseFormat
 import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{RamlJsonSchemaExpression, RamlXmlSchemaExpression}
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
+import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.spec.toOas
+import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, TypeName}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel._
+import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{ScalarType, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
@@ -32,7 +33,6 @@ import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YPart, _}
 
-import scala.collection.mutable
 import scala.language.postfixOps
 
 object Raml10TypeParser {
@@ -1210,10 +1210,18 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
     protected def checkSchemaInProperty(elements: Seq[AmfElement],
                                         location: Option[String] = None,
                                         entryRange: Range): Unit = {
-      elements.foreach {
+      elements.foreach { checkForForeignTypeInheritance(_, location, entryRange)}
+    }
+    protected def checkSchemaInheritance(base: Shape, elements: Seq[AmfElement], entryRange: Range): Unit = {
+      if (base.meta != AnyShapeModel && !emptyObjectType(base) && !emptyScalarType(base) && !emptyArrayType(base)) {
+        elements.foreach { checkForForeignTypeInheritance(_, base.location(), entryRange)}
+      }
+    }
+
+    private def checkForForeignTypeInheritance(element: AmfElement, location: Option[String], entryRange: Range): Unit = {
+      element match {
         case shape: AnyShape
-            if shape.annotations.contains(classOf[ParsedJSONSchema]) ||
-              shape.annotations.contains(classOf[SchemaIsJsonSchema]) =>
+          if isParsedJsonSchema(shape) || isSchemaIsJsonSchema(shape) =>
           ctx.eh.warning(
             JsonSchemaInheratinaceWarningSpecification,
             shape.id,
@@ -1233,34 +1241,6 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
             location.orElse(xml.location())
           )
         case _ => // ignore
-      }
-    }
-    protected def checkSchemaInheritance(base: Shape, elements: Seq[AmfElement], entryRange: Range): Unit = {
-      if (base.meta != AnyShapeModel && !emptyObjectType(base) && !emptyScalarType(base) && !emptyArrayType(base)) {
-        elements.foreach {
-          case shape: AnyShape
-              if shape.annotations.contains(classOf[ParsedJSONSchema]) ||
-                shape.annotations.contains(classOf[SchemaIsJsonSchema]) =>
-            ctx.eh.warning(
-              JsonSchemaInheratinaceWarningSpecification,
-              shape.id,
-              Some(ShapeModel.Inherits.value.iri()),
-              "Inheritance from JSON Schema",
-              Some(LexicalInformation(entryRange)),
-              base.location()
-            )
-
-          case xml: SchemaShape =>
-            ctx.eh.violation(
-              XmlSchemaInheratinaceWarningSpecification,
-              xml.id,
-              Some(ShapeModel.Inherits.value.iri()),
-              "Inheritance from XML Schema",
-              Some(LexicalInformation(entryRange)),
-              base.location()
-            )
-          case _ => // ignore
-        }
       }
     }
 
@@ -1284,6 +1264,14 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         case _                        => false
       }
     }
+  }
+
+  private def isSchemaIsJsonSchema(shape: AnyShape) = {
+    shape.annotations.contains(classOf[SchemaIsJsonSchema])
+  }
+
+  private def isParsedJsonSchema(shape: AnyShape) = {
+    shape.annotations.contains(classOf[ParsedJSONSchema])
   }
 
   case class InheritanceParser(entry: YMapEntry, shape: Shape, fatherMap: Option[YMap])(
