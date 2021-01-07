@@ -16,11 +16,7 @@ import amf.validations.ParserSideValidations._
 import amf.validations.ResolutionSideValidations.InvalidTypeInheritanceErrorSpecification
 import org.yaml.model._
 
-import scala.collection.mutable
 
-/**
-  *
-  */
 object RamlTypeDetection {
   def apply(node: YNode, parent: String, format: Option[String] = None, defaultType: DefaultType = StringDefaultType)(
       implicit ctx: RamlWebApiContext): Option[TypeDef] =
@@ -65,7 +61,6 @@ case class RamlTypeDetector(parent: String,
         case _               => inferTypeFromPossibleShapeFacets(map)
       }
 
-    // Default type as received from the parsing process
     case YType.Null => Some(defaultType.typeDef)
 
     case _ =>
@@ -127,22 +122,13 @@ case class RamlTypeDetector(parent: String,
     infer
   }
 
-  private def isPatternProperty(e: YMapEntry) = {
-    e.key.as[YScalar].text.matches(".*/.*")
-  }
+  private def isPatternProperty(e: YMapEntry) = e.key.as[YScalar].text.matches(".*/.*")
 
-  private def detectProperties(map: YMap): Option[TypeDef] = {
-    map.key("properties").map(_ => ObjectType)
-  }
+  private def detectProperties(map: YMap): Option[TypeDef] = map.key("properties").map(_ => ObjectType)
 
   private def detectFileTypes(map: YMap): Option[TypeDef] = map.key("fileTypes").map(_ => FileType)
 
-  private def detectItems(map: YMap): Option[TypeDef] = {
-    map.key("items") match {
-      case Some(_) => Some(ArrayType)
-      case None    => None
-    }
-  }
+  private def detectItems(map: YMap): Option[TypeDef] = map.key("items").map(_ => ArrayType)
 
   private def detectAnyOf(map: YMap): Option[TypeDef] = map.key("anyOf").map(_ => UnionType)
 
@@ -157,9 +143,7 @@ case class RamlTypeDetector(parent: String,
     }
   }
 
-  private def isExactlyAny(e: YMapEntry, t: TypeDef) = {
-    t == AnyType && e.value.toString() != "any"
-  }
+  private def isExactlyAny(e: YMapEntry, t: TypeDef) = t == AnyType && e.value.toString() != "any"
 
   private def inferTypeFromPossibleShapeFacets(map: YMap) =
     ShapeClassTypeDefMatcher.fetchByRamlSyntax(map).orElse(Some(defaultType.typeDef))
@@ -283,8 +267,7 @@ case class RamlTypeDetector(parent: String,
     def fetchByRamlSyntax(map: YMap): Option[TypeDef] = {
       val defs = findShapesThatSupportKeysFrom(map).toList
       Option(defs.filter(!_.equals("shape")) match {
-        case Nil if defs contains "shape"    => StrType
-        case Nil if !(defs contains "shape") => defaultType.typeDef
+        case Nil => defaultType.typeDef
         case head :: Nil =>
           head match {
             case "nodeShape"         => ObjectType
