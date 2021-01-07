@@ -12,6 +12,7 @@ import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefString
 import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
+import amf.plugins.domain.shapes.parser.TypeDefXsdMapping._
 import amf.validations.ParserSideValidations._
 import amf.validations.ResolutionSideValidations.InvalidTypeInheritanceErrorSpecification
 import org.yaml.model._
@@ -67,9 +68,7 @@ case class RamlTypeDetector(parent: String,
       val scalar = node.as[YScalar]
       scalar.text match {
         case t if isRamlVariable(t) =>
-          if (ctx.contextType == RamlWebApiContextType.DEFAULT) {
-            throwInvalidAbstractDeclarationError(node, t)
-          }
+          if (ctx.contextType == RamlWebApiContextType.DEFAULT) throwInvalidAbstractDeclarationError(node, t)
           None
         case XMLSchema(_)                                                                  => Some(XMLSchemaType)
         case JSONSchema(_)                                                                 => Some(JSONSchemaType)
@@ -221,10 +220,9 @@ case class RamlTypeDetector(parent: String,
           }
         case _: NilShape => Some(NilType)
         case s: ScalarShape =>
-          val TypeName(typeDef, format) =
-            RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(s.dataType.value()), s.format.option())
-          Some(matchWellKnownType(TypeName(typeDef, format)))
-        case union: UnionShape => if (plainUnion) InheritsUnionMatcher(union, part) else Some(UnionType)
+          val typeName = RamlTypeDefStringValueMatcher.matchType(typeDef(s.dataType.value()), s.format.option())
+          Some(matchWellKnownType(typeName))
+        case union: UnionShape => if (plainUnion) simplifyUnionComponentsToType(union, part) else Some(UnionType)
         case _: NodeShape      => Some(ObjectType)
         case _: ArrayShape     => Some(ArrayType)
         case _: MatrixShape    => Some(ArrayType)
@@ -232,21 +230,10 @@ case class RamlTypeDetector(parent: String,
         case _                 => None
       }
 
-    object InheritsUnionMatcher {
-      def apply(union: UnionShape, part: YNode)(implicit ctx: ParserContext): Option[TypeDef] =
-        new InheritsUnionMatcher(union).matchUnionFather(part)
-    }
-
-    case class InheritsUnionMatcher(union: UnionShape)(implicit ctx: ParserContext) {
-      def matchUnionFather(part: YPart): Option[TypeDef] = {
-        val typeSet =
-          union.anyOf.flatMap(t => ShapeClassTypeDefMatcher(t, part.asInstanceOf[YNode], plainUnion = true)).toSet
-        if (typeSet.size == 1) {
-          Some(typeSet.head)
-        } else {
-          Some(UnionType)
-        }
-      }
+    private def simplifyUnionComponentsToType(union: UnionShape, part: YPart)(implicit ctx: ParserContext): Option[TypeDef] = {
+      val typeSet = union.anyOf.flatMap(t => ShapeClassTypeDefMatcher(t, part.asInstanceOf[YNode], plainUnion = true)).toSet
+      if (typeSet.size == 1) Some(typeSet.head)
+      else Some(UnionType)
     }
 
     private def findShapesThatSupportKeysFrom(map: YMap): Seq[String] = {
