@@ -5,7 +5,7 @@ import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchWellKnownType}
 import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeDetection.parseFormat
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher, TypeName}
@@ -44,17 +44,16 @@ case class RamlTypeDetector(parent: String,
 
     case YType.Seq =>
       val sequence = node.as[Seq[YNode]]
-      InheritsTypeDetecter(collectTypeDefs(sequence), node) // todo review with pedro
-        .orElse(Some(ObjectType)) // type expression type?
+      InheritsTypeDetecter(collectTypeDefs(sequence), node).orElse(Some(ObjectType)) // type expression type?
 
     case YType.Map =>
       val map          = node.as[YMap]
-      val typeExplicit = detectTypeOrSchema(map)
+      val typeExplicit = detectExplicitTypeOrSchema(map)
       val inferred     = inferTypeFrom(map)
       (typeExplicit, inferred) match {
         case (Some(JSONSchemaType), Some(_)) =>
           ctx.eh.warning(
-            JsonSchemaInheratinaceWarningSpecification,
+            JsonSchemaInheritanceWarning,
             parent,
             Some(ShapeModel.Inherits.value.iri()),
             "Inheritance from JSON Schema",
@@ -77,25 +76,24 @@ case class RamlTypeDetector(parent: String,
             throwInvalidAbstractDeclarationError(node, t)
           }
           None
-        case XMLSchema(_)  => Some(XMLSchemaType)
-        case JSONSchema(_) => Some(JSONSchemaType)
-        case RamlTypeDefMatcher.TypeExpression(text) => parseAndMatchTypeExpression(node, text)
-        case t if t.endsWith("?") => Some(NilUnionType)
-        case t: String if matchType(TypeName(t), default = UndefinedType) == UndefinedType =>
+        case XMLSchema(_)                                                                  => Some(XMLSchemaType)
+        case JSONSchema(_)                                                                 => Some(JSONSchemaType)
+        case RamlTypeDefMatcher.TypeExpression(text)                                       => parseAndMatchTypeExpression(node, text)
+        case t if t.endsWith("?")                                                          => Some(NilUnionType)
+        case t: String if matchWellKnownType(TypeName(t), default = UndefinedType) == UndefinedType =>
           // it might be a named type
           // its for identify the type, so i can search in all the scope, no need to difference between named ref and includes.
 
-          ctx.declarations
-            .findType(scalar.text, SearchScope.All) match {
+          ctx.declarations.findType(scalar.text, SearchScope.All) match {
             case Some(ancestor) if recursive => ShapeClassTypeDefMatcher(ancestor, node, recursive)
             case Some(_) if !recursive       => Some(ObjectType)
             case None                        => Some(UndefinedType)
           }
         case _ =>
-          val t = scalar.text
+          val text = scalar.text
           format
-            .map(f => matchType(TypeName(t, f)))
-            .orElse(Some(matchType(TypeName(t))))
+            .map(f => matchWellKnownType(TypeName(text, f)))
+            .orElse(Some(matchWellKnownType(TypeName(text))))
       }
   }
 
@@ -105,16 +103,16 @@ case class RamlTypeDetector(parent: String,
       .flatMap(s => ShapeClassTypeDefMatcher(s, node, recursive))
       .map {
         case TypeDef.UnionType | TypeDef.ArrayType if !recursive => TypeExpressionType
-        case other => other
+        case other                                               => other
       }
     // exception case when F: C|D (not type, not recursion, union but only have a typeexpression to parse de union
   }
 
   private def throwInvalidAbstractDeclarationError(node: YNode, t: String) = {
     ctx.eh.violation(InvalidAbstractDeclarationParameterInType,
-      parent,
-      s"Resource Type/Trait parameter $t in type",
-      node)
+                     parent,
+                     s"Resource Type/Trait parameter $t in type",
+                     node)
   }
 
   private def isRamlVariable(t: String) = t.startsWith("<<") && t.endsWith(">>")
@@ -148,22 +146,19 @@ case class RamlTypeDetector(parent: String,
 
   private def detectAnyOf(map: YMap): Option[TypeDef] = map.key("anyOf").map(_ => UnionType)
 
-  private def detectTypeOrSchema(map: YMap): Option[TypeDef] = {
-    if (map.entries.nonEmpty) {
-      // let's try to detect based on the explicit value of 'type'
-      typeOrSchema(map).flatMap(
-        e => {
-          // let's call ourselves recursively with the value of type
-          val result = RamlTypeDetector(parent, parseFormat(map), recursive = true).detect(e.value)
-          result match {
-            case Some(t) if t == UndefinedType || (t == AnyType && e.value.toString() != "any") => None
-            case Some(other)                                                                    => Some(other)
-            case None                                                                           => result
-          }
-        }
-      )
+  private def detectExplicitTypeOrSchema(map: YMap): Option[TypeDef] = {
+    typeOrSchema(map).flatMap { e =>
+      val result = RamlTypeDetector(parent, parseFormat(map), recursive = true).detect(e.value)
+      result match {
+        case Some(t) if t == UndefinedType || isExactlyAny(e, t) => None
+        case Some(other)                                         => Some(other)
+        case None                                                => result
+      }
+    }
+  }
 
-    } else None
+  private def isExactlyAny(e: YMapEntry, t: TypeDef) = {
+    t == AnyType && e.value.toString() != "any"
   }
 
   private def inferTypeFromPossibleShapeFacets(map: YMap) =
@@ -206,7 +201,7 @@ case class RamlTypeDetector(parent: String,
           if (definedTypes.isEmpty) Some(UndefinedType)
           else {
             val head = definedTypes.headOption
-            if (definedTypes.count(_.equals(head.get)) != definedTypes.size) {
+            if (inheritsHasDifferentSuperClasses(definedTypes)) {
               ctx.eh.violation(InvalidTypeInheritanceErrorSpecification,
                                parent,
                                "Can't inherit from more than one class type",
@@ -219,6 +214,11 @@ case class RamlTypeDetector(parent: String,
 
     def shapeToType(inherits: Seq[Shape], part: YNode)(implicit ctx: ParserContext): Option[TypeDef] =
       apply(inherits.flatMap(s => ShapeClassTypeDefMatcher(s, part, plainUnion = true)).toList, part)
+  }
+
+  private def inheritsHasDifferentSuperClasses(definedTypes: List[TypeDef]) = {
+    val head = definedTypes.headOption
+    definedTypes.count(_.equals(head.get)) != definedTypes.size
   }
 
   object ShapeClassTypeDefMatcher {
@@ -239,7 +239,7 @@ case class RamlTypeDetector(parent: String,
         case s: ScalarShape =>
           val TypeName(typeDef, format) =
             RamlTypeDefStringValueMatcher.matchType(TypeDefXsdMapping.typeDef(s.dataType.value()), s.format.option())
-          Some(matchType(TypeName(typeDef, format)))
+          Some(matchWellKnownType(TypeName(typeDef, format)))
         case union: UnionShape => if (plainUnion) InheritsUnionMatcher(union, part) else Some(UnionType)
         case _: NodeShape      => Some(ObjectType)
         case _: ArrayShape     => Some(ArrayType)

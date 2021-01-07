@@ -24,19 +24,19 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         implicit val ctx: Raml10WebApiContext =
           new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledParserErrorHandler))
 
-        var res = RamlExpressionParser.parse(adopt, expression = "integer")
+        var res = RamlExpressionParser.check(adopt, expression = "integer")
         assert(res.get.isInstanceOf[ScalarShape])
         assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
-        res = RamlExpressionParser.parse(adopt, expression = "(integer)")
+        res = RamlExpressionParser.check(adopt, expression = "(integer)")
         assert(res.get.isInstanceOf[ScalarShape])
         assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
-        res = RamlExpressionParser.parse(adopt, expression = "((integer))")
+        res = RamlExpressionParser.check(adopt, expression = "((integer))")
         assert(res.get.isInstanceOf[ScalarShape])
         assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
-        res = RamlExpressionParser.parse(adopt, expression = "integer[]")
+        res = RamlExpressionParser.check(adopt, expression = "integer[]")
         assert(res.get.isInstanceOf[ArrayShape])
         assert(
           res.get
@@ -47,7 +47,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
             .is((Namespace.Xsd + "integer").iri()))
         assert(res != null)
 
-        res = RamlExpressionParser.parse(adopt, expression = "(integer)[]")
+        res = RamlExpressionParser.check(adopt, expression = "(integer)[]")
         assert(res.get.isInstanceOf[ArrayShape])
         assert(
           res.get
@@ -62,13 +62,13 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         try {
 
           val fail = new Raml10WebApiContext("", Nil, ctx)
-          RamlExpressionParser.parse(adopt, expression = "[]")(fail)
+          RamlExpressionParser.check(adopt, expression = "[]")(fail)
         } catch {
           case e: Exception => error = true
         }
         assert(error)
 
-        res = RamlExpressionParser.parse(adopt, expression = "integer | string")
+        res = RamlExpressionParser.check(adopt, expression = "integer | string")
         assert(res.get.isInstanceOf[UnionShape])
         var union = res.get.asInstanceOf[UnionShape]
         assert(union.anyOf.length == 2)
@@ -77,7 +77,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
         assert(res != null)
 
-        res = RamlExpressionParser.parse(adopt, expression = "(integer )| (string)")
+        res = RamlExpressionParser.check(adopt, expression = "(integer )| (string)")
         assert(res.get.isInstanceOf[UnionShape])
         union = res.get.asInstanceOf[UnionShape]
         assert(union.anyOf.length == 2)
@@ -86,7 +86,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
         assert(res != null)
 
-        res = RamlExpressionParser.parse(adopt, expression = "(integer | string) | number")
+        res = RamlExpressionParser.check(adopt, expression = "(integer | string) | number")
 
         assert(res.get.isInstanceOf[UnionShape])
         union = res.get.asInstanceOf[UnionShape]
@@ -98,7 +98,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
                  (Namespace.Shapes + "number").iri()))
         assert(res != null)
 
-        res = RamlExpressionParser.parse(adopt, expression = "(integer | string)[]")
+        res = RamlExpressionParser.check(adopt, expression = "(integer | string)[]")
         assert(res.get.isInstanceOf[ArrayShape])
         var array = res.get.asInstanceOf[ArrayShape]
         assert(array.items.isInstanceOf[UnionShape])
@@ -108,7 +108,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
         assert(res != null)
 
-        res = RamlExpressionParser.parse(adopt, expression = "(integer | string[])")
+        res = RamlExpressionParser.check(adopt, expression = "(integer | string[])")
         assert(res != null)
         assert(res.get.isInstanceOf[UnionShape])
         union = res.get.asInstanceOf[UnionShape]
@@ -125,7 +125,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
             .is((Namespace.Xsd + "string").iri()))
 
         val caught = intercept[Exception] { // Result type: Assertion
-          res = RamlExpressionParser.parse(adopt, expression = "[]string")
+          res = RamlExpressionParser.check(adopt, expression = "[]string")
           assert(res != null)
           assert(res.get.isInstanceOf[UnionShape])
           union = res.get.asInstanceOf[UnionShape]
@@ -142,7 +142,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
               .is((Namespace.Xsd + "string").iri()))
         }
 //        assert(caught.getMessage.contains("Error parsing type expression, cannot accept type ScalarShape")
-        res = RamlExpressionParser.parse(adopt, expression = "integer | string[]")
+        res = RamlExpressionParser.check(adopt, expression = "integer | string[]")
         assert(res != null)
         assert(res.get.isInstanceOf[UnionShape])
         union = res.get.asInstanceOf[UnionShape]
@@ -158,7 +158,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
             .dataType
             .is((Namespace.Xsd + "string").iri()))
 
-        res = RamlExpressionParser.parse(adopt, expression = "integer[][]")
+        res = RamlExpressionParser.check(adopt, expression = "integer[][]")
         assert(res != null)
         assert(res.get.isInstanceOf[MatrixShape])
         var matrix = res.get.asInstanceOf[MatrixShape]

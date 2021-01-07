@@ -20,7 +20,7 @@ object RamlTypeDefMatcher {
     case _         => None
   }
 
-  def matchType(typeName: TypeName, default: TypeDef = ObjectType, isRef: Boolean = false): TypeDef = {
+  def matchWellKnownType(typeName: TypeName, default: TypeDef = ObjectType, isRef: Boolean = false): TypeDef = {
     val TypeName(ramlType, format) = typeName
     ramlType match {
       case XMLSchema(_) if !isRef      => XMLSchemaType

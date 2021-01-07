@@ -20,7 +20,7 @@ class EscapeTypeNames()(override implicit val errorHandler: ErrorHandler) extend
         d.iterator().foreach {
           case shape: Shape =>
             shape.name.option().map { name =>
-              RamlTypeDefMatcher.matchType(TypeName(name), default = UndefinedType) match {
+              RamlTypeDefMatcher.matchWellKnownType(TypeName(name), default = UndefinedType) match {
                 case UndefinedType if name.contains(".") =>
                   val newName = name.replace(".", "_")
                   replacedNames(name) = newName

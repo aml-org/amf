@@ -93,10 +93,10 @@ trait RamlTypeSyntax {
     if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str
           .indexOf("}") > -1 || (str.startsWith("<<") && str.endsWith(">>"))) {
       false
-    } else RamlTypeDefMatcher.matchType(TypeName(str), default = UndefinedType, isRef = isRef) != UndefinedType
+    } else RamlTypeDefMatcher.matchWellKnownType(TypeName(str), default = UndefinedType, isRef = isRef) != UndefinedType
 
   def isTypeExpression(str: String): Boolean = {
-    try { RamlTypeDefMatcher.matchType(TypeName(str), default = UndefinedType) == TypeExpressionType } catch {
+    try { RamlTypeDefMatcher.matchWellKnownType(TypeName(str), default = UndefinedType) == TypeExpressionType } catch {
       case _: Exception => false
     }
   }
@@ -660,7 +660,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
           val text = node.as[YScalar].text
           parseReference(node, shape.id, createLink(_, text, shape.id))
             .getOrElse {
-              if (RamlTypeDefMatcher.matchType(TypeName(text), default = UndefinedType) == ObjectType)
+              if (RamlTypeDefMatcher.matchWellKnownType(TypeName(text), default = UndefinedType) == ObjectType)
                 shape.add(ExplicitField())
               else {
                 val unresolve = UnresolvedShape(Fields(),
@@ -1223,7 +1223,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         case shape: AnyShape
           if isParsedJsonSchema(shape) || isSchemaIsJsonSchema(shape) =>
           ctx.eh.warning(
-            JsonSchemaInheratinaceWarningSpecification,
+            JsonSchemaInheritanceWarning,
             shape.id,
             Some(ShapeModel.Inherits.value.iri()),
             "Invalid reference to JSON Schema",
@@ -1233,7 +1233,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
         case xml: SchemaShape =>
           ctx.eh.violation(
-            XmlSchemaInheratinaceWarningSpecification,
+            XmlSchemaInheritancceWarning,
             xml.id,
             Some(ShapeModel.Inherits.value.iri()),
             "Invalid reference to XML Schema",
@@ -1352,7 +1352,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               val baseClass = text match {
                 case JSONSchema(_) =>
                   ctx.eh.warning(
-                    JsonSchemaInheratinaceWarningSpecification,
+                    JsonSchemaInheritanceWarning,
                     shape.id,
                     Some(ShapeModel.Inherits.value.iri()),
                     "Inheritance from JSON Schema",
