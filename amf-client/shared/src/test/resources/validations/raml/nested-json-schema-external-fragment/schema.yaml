@@ -1,0 +1,17 @@
+SomeSchema: |
+  {
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required": true,
+    "properties": {
+      "A": {
+        "type": "integer",
+        "required": true
+      },
+      "B": {
+        "type": "string",
+        "required": true
+      }
+    }
+  }
