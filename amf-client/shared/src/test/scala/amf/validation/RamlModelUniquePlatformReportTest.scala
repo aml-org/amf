@@ -561,6 +561,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Draft 2019 unsupported facets for validation throw warning") {
-    validate("raml/draft-2019/draft-2019-unsupported-facets-warning.raml", Some("draft-2019-unsupported-facets-warning.report"))
+    validate("raml/draft-2019/draft-2019-unsupported-facets-warning.raml",
+             Some("draft-2019-unsupported-facets-warning.report"))
   }
+
+  test("valid example defined nested within external fragment") {
+    validate("raml/nested-example-external-fragment/api.raml", None, Raml08Profile)
+  }
+
 }

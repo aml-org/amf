@@ -1,5 +1,5 @@
 package amf.validation
-import amf.Raml10Profile
+import amf.{Raml08Profile, Raml10Profile}
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
@@ -52,6 +52,12 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
 
   test("Annotation type with invalid example") {
     validate("annotation-types-invalid-example.raml", Some("annotation-types-invalid-example.report"), Raml10Profile)
+  }
+
+  test("nested json schema defined in external fragment") {
+    validate("raml/nested-json-schema-external-fragment/api.raml",
+             Some("invalid-example-result.report"),
+             Raml08Profile)
   }
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"

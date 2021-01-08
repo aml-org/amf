@@ -1,0 +1,23 @@
+displayName: some name
+description: description
+post:
+  description: |
+    Create a new attachment.
+  body:
+    application/json:
+      schema: !include schema.json
+      example: |
+        {
+          "table": "incident"
+        }
+  responses:
+    200:
+      description: The attachment was added to the item.
+      body:
+        application/json:
+          example: |
+            {
+              "meta": null,
+              "status": 200,
+              "result": {}
+            }
