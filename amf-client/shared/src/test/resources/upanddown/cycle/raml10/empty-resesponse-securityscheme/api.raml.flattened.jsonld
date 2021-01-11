@@ -10,12 +10,12 @@
       "http://a.ml/vocabularies/core#description": "desc",
       "http://a.ml/vocabularies/apiContract#header": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/h1"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/header/h1"
         }
       ],
       "http://a.ml/vocabularies/apiContract#parameter": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/q1"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/query/q1"
         }
       ],
       "http://a.ml/vocabularies/apiContract#response": [],
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/h1",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/header/h1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -39,16 +39,16 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "header",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/h1/scalar/schema"
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/default-binding/h1/scalar/schema"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/h1/source-map"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/header/h1/source-map"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/q1",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/query/q1",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -58,11 +58,11 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "query",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/q1/scalar/schema"
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/default-binding/q1/scalar/schema"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/q1/source-map"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/query/q1/source-map"
         }
       ]
     },
@@ -124,7 +124,7 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/h1/scalar/schema",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/default-binding/h1/scalar/schema",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -140,18 +140,18 @@
       "http://www.w3.org/ns/shacl#name": "schema"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/h1/source-map",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/header/h1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/h1/source-map/lexical/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/header/h1/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/q1/scalar/schema",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/default-binding/q1/scalar/schema",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -167,13 +167,13 @@
       "http://www.w3.org/ns/shacl#name": "schema"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/q1/source-map",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/query/q1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/q1/source-map/lexical/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/query/q1/source-map/lexical/element_0"
         }
       ]
     },
@@ -251,13 +251,13 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(11,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/h1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/h1",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/header/h1/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/header/h1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,4)-(11,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/q1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/q1",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/query/q1/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/query/q1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,4)-(13,0)]"
     },
     {

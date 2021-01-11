@@ -71,7 +71,7 @@
       ],
       "http://a.ml/vocabularies/apiContract#parameter": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/uriParam"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/path/uriParam"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -166,7 +166,7 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/uriParam",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/path/uriParam",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Parameter",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -176,11 +176,11 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "path",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/uriParam/scalar/uriParam"
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/default-binding/uriParam/scalar/uriParam"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/uriParam/source-map"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/path/uriParam/source-map"
         }
       ]
     },
@@ -304,7 +304,7 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/uriParam/scalar/uriParam",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/default-binding/uriParam/scalar/uriParam",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -320,13 +320,13 @@
       "http://www.w3.org/ns/shacl#name": "uriParam"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/uriParam/source-map",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/path/uriParam/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/uriParam/source-map/synthesized-field/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/path/uriParam/source-map/synthesized-field/element_0"
         }
       ]
     },
@@ -421,8 +421,8 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,4)-(14,32)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/uriParam/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/uriParam",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/path/uriParam/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types_problems2/api.raml#/web-api/end-points/%2Ftrial%2F%7BuriParam%7D/parameter/path/uriParam",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {

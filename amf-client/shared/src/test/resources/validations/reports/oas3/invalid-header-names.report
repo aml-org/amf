@@ -8,7 +8,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#mandatory-header-name-pattern
   Message: Header name must comply RFC-7230
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-header-names.yaml#/web-api/end-points/%2FmyPath/parameter/X-%40-ID
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-header-names.yaml#/web-api/end-points/%2FmyPath/parameter/header/X-%40-ID
   Property: 
   Position: Some(LexicalInformation([(9,8)-(13,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-header-names.yaml

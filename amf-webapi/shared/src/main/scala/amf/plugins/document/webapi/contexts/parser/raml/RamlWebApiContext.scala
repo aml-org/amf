@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.contexts.parser.raml
 import amf.core.client.ParsingOptions
 import amf.core.model.domain.Shape
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{Payload, Vendor}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -73,6 +74,8 @@ abstract class RamlWebApiContext(override val loc: String,
   }
 
   override def link(node: YNode): Either[String, YNode] = {
+    implicit val errorHandler: IllegalTypeHandler = eh
+
     node match {
       case _ if isInclude(node) => Left(node.as[YScalar].text)
       case _                    => Right(node)
@@ -114,6 +117,9 @@ abstract class RamlWebApiContext(override val loc: String,
     * can be defined in the AST node
     */
   def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo): Unit = {
+
+    implicit val errorHandler: IllegalTypeHandler = eh
+
     val node       = shape.id
     val facets     = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
     val shapeLabel = RamlShapeTypeBeautifier.beautify(shapeType)

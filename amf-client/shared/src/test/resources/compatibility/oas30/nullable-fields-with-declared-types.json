@@ -1,0 +1,22 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ALB API",
+    "description": "Rest Api to access ALB infos",
+    "version": "1.0.0"
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "unique-name": {
+        "type": "object",
+        "nullable": true,
+        "properties": {
+          "some-prop": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

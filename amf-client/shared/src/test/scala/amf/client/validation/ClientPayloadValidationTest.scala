@@ -1,12 +1,15 @@
 package amf.client.validation
 
-import amf.client.convert.{NativeOps, WebApiRegister}
 import amf.client.convert.CoreClientConverters._
+import amf.client.convert.{NativeOps, WebApiRegister}
 import amf.client.model.DataTypes
-import amf.client.model.domain.{AnyShape, ArrayShape, NodeShape, PropertyShape, ScalarShape, Shape}
+import amf.client.model.domain._
 import amf.core.AMF
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import org.scalatest.{AsyncFunSuite, Matchers}
+import amf.core.model.domain.{RecursiveShape => InternalRecursiveShape}
+import amf.core.parser.{Annotations, Fields}
+import amf.plugins.domain.shapes.models.{ScalarShape => InternalScalarShape}
 
 import scala.concurrent.ExecutionContext
 
@@ -210,6 +213,17 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
         .get
         .syncValidate("application/json", "any example")
       report.conforms shouldBe true
+    }
+  }
+
+  test("Test that recursive shape has a payload validator") {
+    amf.Core.init().asFuture.flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+      val innerShape = InternalScalarShape().withDataType(DataTypes.Number)
+      val recursiveShape = RecursiveShape(InternalRecursiveShape(innerShape))
+      val validator = recursiveShape.payloadValidator("application/json").asOption.get
+      validator.syncValidate("application/json", "5").conforms shouldBe true
+      validator.syncValidate("application/json", "true").conforms shouldBe false
     }
   }
 

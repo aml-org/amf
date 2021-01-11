@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/data#camelcase-query-parameters
   Message: Query parameters names must be in camelcase
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/mercury.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/get/request/parameter/expand_param
+  Target: file://amf-client/shared/src/test/resources/validations/mercury.raml#/web-api/end-points/%2Fresource%2F%7Bresource_id%7D/get/request/parameter/query/expand_param
   Property: 
   Position: Some(LexicalInformation([(32,16)-(39,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/mercury.raml

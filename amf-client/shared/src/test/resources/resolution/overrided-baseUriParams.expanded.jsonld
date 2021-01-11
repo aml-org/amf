@@ -35,7 +35,7 @@
             ],
             "http://a.ml/vocabularies/apiContract#variable": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain",
+                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/path/apiDomain",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Parameter",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -67,7 +67,7 @@
                 ],
                 "http://a.ml/vocabularies/shapes#schema": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain",
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
                       "http://a.ml/vocabularies/shapes#AnyShape",
@@ -92,11 +92,11 @@
                     ],
                     "http://www.w3.org/ns/shacl#in": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain/list",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain/list",
                         "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                         "http://www.w3.org/2000/01/rdf-schema#_1": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain/list/scalar_1",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain/list/scalar_1",
                             "@type": [
                               "http://a.ml/vocabularies/data#Scalar",
                               "http://a.ml/vocabularies/data#Node",
@@ -119,16 +119,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain/list/scalar_1/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain/list/scalar_1/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain/list/scalar_1/source-map/lexical/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain/list/scalar_1/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain/list/scalar_1"
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain/list/scalar_1"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -146,13 +146,13 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain/source-map/lexical/element_2",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/core#description"
@@ -165,7 +165,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://www.w3.org/ns/shacl#in"
@@ -178,10 +178,10 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/scalar/apiDomain"
+                                "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/default-binding/apiDomain/scalar/apiDomain"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -197,16 +197,16 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/path/apiDomain/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/path/apiDomain/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain"
+                            "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/path/apiDomain"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -216,7 +216,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/apiDomain/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/https%3A%2F%2F%7BapiDomain%7D.ec2.amazonaws.com/parameter/path/apiDomain/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "http://a.ml/vocabularies/core#description"
@@ -330,7 +330,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/path/apiDomain",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -357,7 +357,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/scalar/apiDomain",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/apiDomain/scalar/apiDomain",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -377,11 +377,11 @@
                             ],
                             "http://www.w3.org/ns/shacl#in": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/scalar/apiDomain/list",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/apiDomain/scalar/apiDomain/list",
                                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/scalar/apiDomain/list/scalar_1",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/apiDomain/scalar/apiDomain/list/scalar_1",
                                     "@type": [
                                       "http://a.ml/vocabularies/data#Scalar",
                                       "http://a.ml/vocabularies/data#Node",
@@ -404,16 +404,16 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/scalar/apiDomain/list/scalar_1/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/apiDomain/scalar/apiDomain/list/scalar_1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/scalar/apiDomain/list/scalar_1/source-map/lexical/element_0",
+                                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/apiDomain/scalar/apiDomain/list/scalar_1/source-map/lexical/element_0",
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/scalar/apiDomain/list/scalar_1"
+                                                "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/apiDomain/scalar/apiDomain/list/scalar_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -431,16 +431,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/scalar/apiDomain/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/apiDomain/scalar/apiDomain/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/scalar/apiDomain/source-map/lexical/element_1",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/apiDomain/scalar/apiDomain/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/scalar/apiDomain"
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/apiDomain/scalar/apiDomain"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -450,7 +450,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/scalar/apiDomain/source-map/lexical/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/apiDomain/scalar/apiDomain/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://www.w3.org/ns/shacl#in"
@@ -469,16 +469,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/path/apiDomain/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/path/apiDomain/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/apiDomain"
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/path/apiDomain"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -492,7 +492,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/version",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/path/version",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -519,7 +519,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/version/scalar/version",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/default-binding/version/scalar/version",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -541,16 +541,16 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/version/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/path/version/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/version/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/path/version/source-map/synthesized-field/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/version"
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/overrided-baseUriParams.raml#/web-api/end-points/%2Fhistory%2F%7Bversion%7D/parameter/path/version"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [

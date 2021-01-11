@@ -1,0 +1,9 @@
+#%RAML 0.8
+title: title
+version: v2
+baseUri: https://some.uri
+mediaType:  application/json
+protocols: [HTTPS]
+
+/endpoint: !include external-fragment.yaml
+

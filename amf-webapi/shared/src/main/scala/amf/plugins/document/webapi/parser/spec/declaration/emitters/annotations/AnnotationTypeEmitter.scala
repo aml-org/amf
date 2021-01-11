@@ -10,11 +10,7 @@ import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
-  Raml10TypeEmitter,
-  RamlRecursiveShapeEmitter,
-  RamlTypeExpressionEmitter
-}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{Raml10TypeEmitter, RamlRecursiveShapeEmitter}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.RenderSideValidations.RenderValidation
@@ -86,9 +82,8 @@ case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: S
       Option(f.value.value) match {
         case Some(shape: AnyShape) =>
           Raml10TypeEmitter(shape, ordering, Nil, Nil).emitters() match {
-            case es if es.forall(_.isInstanceOf[RamlTypeExpressionEmitter]) => es
-            case es if es.forall(_.isInstanceOf[EntryEmitter])              => es.collect { case e: EntryEmitter => e }
-            case other                                                      => throw new Exception(s"IllegalTypeDeclarations found: $other")
+            case es if es.forall(_.isInstanceOf[EntryEmitter]) => es.collect { case e: EntryEmitter => e }
+            case other                                         => throw new Exception(s"IllegalTypeDeclarations found: $other")
           }
         case Some(shape: RecursiveShape) => RamlRecursiveShapeEmitter(shape, ordering, Nil).emitters()
         case Some(x) =>

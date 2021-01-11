@@ -36,7 +36,7 @@ sonarProperties ++= Map(
   "sonar.tests"                      -> "amf-client/shared/src/test/scala"
 )
 
-val settings = Common.settings ++ Common.publish ++ Seq(
+val commonSettings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
   resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal),
   resolvers += "jitpack" at "https://jitpack.io",
@@ -44,7 +44,6 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
-    "com.github.scopt" %%% "scopt"     % "3.7.0"
   ),
   logBuffered in Test := false
 )
@@ -82,17 +81,15 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
       name := "amf-webapi"
     ))
   .in(file("./amf-webapi"))
-  .settings(settings)
+  .settings(commonSettings)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "org.scala-lang.modules"            % "scala-java8-compat_2.12" % "0.8.0",
-    libraryDependencies += "org.json4s"                        %% "json4s-native"          % "3.5.4",
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema"  % "1.9.2",
+    libraryDependencies += "org.json" % "json" % "20180130",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar",
     mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions"
   )
   .jsSettings(
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations"
@@ -115,15 +112,15 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
   .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
   .dependsOn(webapi)
   .in(file("./amf-client"))
-  .settings(settings)
+  .settings(commonSettings)
+  .settings(
+    libraryDependencies += "com.github.scopt" %%% "scopt" % "3.7.0"
+  )
   .jvmSettings(
     libraryDependencies += "org.scala-js"               %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.reflections"            % "reflections"             % "0.9.12",
-    libraryDependencies += "org.scala-lang.modules"     % "scala-java8-compat_2.12" % "0.8.0",
-    libraryDependencies += "org.json4s"                 %% "json4s-native"          % "3.5.4",
-    libraryDependencies += "org.topbraid"               % "shacl"                   % "1.3.0",
+    libraryDependencies += "org.scala-lang.modules" %% "scala-java8-compat" % "0.8.0",
     libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.18",
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.9.8",
     mainClass in Compile := Some("amf.Main"),
     packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
     mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions",
@@ -149,7 +146,6 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     }
   )
   .jsSettings(
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
   )

@@ -9,24 +9,12 @@ import amf.plugins.features.validation.CoreValidations.{RecursiveShapeSpecificat
 
 trait ShapeHelpers { this: Shape =>
 
-  def fromTypeExpression: Boolean = this.annotations.contains(classOf[ParsedFromTypeExpression])
-
   def fromExternalSource: Boolean = this match {
     case any: AnyShape => any.referenceId.option().isDefined
     case _             => false
   }
 
-  def typeExpression(eh: ErrorHandler): String = this.annotations.find(classOf[ParsedFromTypeExpression]) match {
-    case Some(expr: ParsedFromTypeExpression) => expr.value
-    case _ =>
-      eh.violation(ResolutionValidation,
-                   this.id,
-                   None,
-                   "Trying to extract non existent type expression",
-                   position(),
-                   location())
-      ""
-  }
+  def typeExpression: Option[String] = this.annotations.find(classOf[ParsedFromTypeExpression]).map(_.value)
 
   def externalSourceID: Option[String] = this match {
     case any: AnyShape => any.referenceId.option()

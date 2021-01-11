@@ -24,6 +24,7 @@ import amf.plugins.document.webapi.annotations.{
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.parser.spec.common.ExternalFragmentHelper
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.declaration.utils.JsonSchemaParsingHelper
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
@@ -35,6 +36,7 @@ import amf.validations.ParserSideValidations.{JsonSchemaFragmentNotFound, Unable
 import org.mulesoft.lexer.Position
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
+import org.yaml.parser.JsonParser
 
 import scala.collection.mutable
 
@@ -139,6 +141,9 @@ case class RamlJsonSchemaExpression(key: YNode,
   }
 
   case class RamlExternalOasLibParser(ctx: RamlWebApiContext, text: String, valueAST: YNode, path: String) {
+
+    private implicit val errorHandler: IllegalTypeHandler = ctx.eh
+
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
       // todo: this should be migrated to JsonSchemaParser
@@ -174,9 +179,10 @@ case class RamlJsonSchemaExpression(key: YNode,
                              value: YNode,
                              extLocation: Option[String]): AnyShape = {
 
-    val url               = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location)
-    val parser            = getParser(text, valueAST, url)
-    val schemaEntry       = YMapEntry(key, parser.document().node)
+    val node = ExternalFragmentHelper.searchNodeInFragments(valueAST).getOrElse {
+      jsonParser(extLocation, text, valueAST).document().node
+    }
+    val schemaEntry       = YMapEntry(key, node)
     val jsonSchemaContext = getContext(valueAST, schemaEntry)
     val fullRef           = jsonSchemaContext.resolvedPath(jsonSchemaContext.rootContextDocument, "")
 
@@ -188,6 +194,17 @@ case class RamlJsonSchemaExpression(key: YNode,
     cleanGlobalSpace()
     savePromotedFragmentsFromNestedContext(jsonSchemaContext)
     s
+  }
+
+  private def jsonParser(extLocation: Option[String], text: String, valueAST: YNode): JsonParser = {
+    val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location)
+    url
+      .map { JsonParserFactory.fromCharsWithSource(text, _)(ctx.eh) }
+      .getOrElse(
+        JsonParserFactory.fromCharsWithSource(text,
+                                              valueAST.value.sourceName,
+                                              Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx.eh)
+      )
   }
 
   private def getContext(valueAST: YNode, schemaEntry: YMapEntry) = {
@@ -213,14 +230,6 @@ case class RamlJsonSchemaExpression(key: YNode,
     ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
   }
 
-  private def getParser(text: String, valueAST: YNode, url: Option[String]) = {
-    if (url.isDefined)
-      JsonParserFactory.fromCharsWithSource(text, url.get)(ctx.eh)
-    else
-      JsonParserFactory.fromCharsWithSource(text,
-                                            valueAST.value.sourceName,
-                                            Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx.eh)
-  }
   private def actualParsing(adopt: Shape => Unit,
                             value: YNode,
                             schemaEntry: YMapEntry,

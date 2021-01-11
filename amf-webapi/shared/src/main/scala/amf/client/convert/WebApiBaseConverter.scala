@@ -57,8 +57,8 @@ import amf.client.model.domain.{
   WebSocketsChannelBinding => ClientWebSocketsChannelBinding
 }
 import amf.client.validate.{PayloadValidator => ClientInternalPayloadValidator}
-import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.PayloadValidator
+import amf.core.unsafe.PlatformSecrets
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.bindings.amqp._
@@ -92,7 +92,6 @@ trait WebApiBaseConverter
     with TemplatedLinkConverter
     with CallbackConverter
     with EncodingConverter
-    with PayloadValidatorConverter
     with OAuth2FlowConverter
     with SecurityRequirementConverter
     with CorrelationIdConverter
@@ -546,16 +545,5 @@ trait TemplatedLinkConverter extends PlatformSecrets {
   implicit object TemplatedLinkConverter extends BidirectionalMatcher[TemplatedLink, ClientTemplatedLink] {
     override def asClient(from: TemplatedLink): ClientTemplatedLink   = platform.wrap[ClientTemplatedLink](from)
     override def asInternal(from: ClientTemplatedLink): TemplatedLink = from._internal
-  }
-}
-
-trait PayloadValidatorConverter {
-
-  implicit object PayloadValidatorMatcher
-      extends BidirectionalMatcher[PayloadValidator, ClientInternalPayloadValidator] {
-    override def asClient(from: PayloadValidator): ClientInternalPayloadValidator =
-      new ClientInternalPayloadValidator(from)
-
-    override def asInternal(from: ClientInternalPayloadValidator): PayloadValidator = from._internal
   }
 }

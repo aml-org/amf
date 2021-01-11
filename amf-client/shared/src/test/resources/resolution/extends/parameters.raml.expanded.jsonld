@@ -60,7 +60,7 @@
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -92,7 +92,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title/scalar/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -117,16 +117,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title/scalar/schema/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title/scalar/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -136,7 +136,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#description"
@@ -155,13 +155,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title/source-map/lexical/element_2",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title/source-map/lexical/element_2",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#description"
@@ -174,7 +174,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -187,10 +187,10 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title/source-map/lexical/element_1",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/title"
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/title"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -204,7 +204,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -236,7 +236,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -261,16 +261,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -280,7 +280,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#description"
@@ -299,13 +299,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/source-map/lexical/element_2",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields/source-map/lexical/element_2",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#description"
@@ -318,7 +318,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -331,10 +331,10 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields/source-map/lexical/element_1",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/digest_all_fields"
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/digest_all_fields"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -348,7 +348,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -380,7 +380,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token/scalar/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -405,16 +405,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token/scalar/schema/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token/scalar/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -424,7 +424,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#description"
@@ -443,13 +443,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token/source-map/lexical/element_2",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token/source-map/lexical/element_2",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#description"
@@ -462,7 +462,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -475,10 +475,10 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token/source-map/lexical/element_1",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/access_token"
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/access_token"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -492,7 +492,7 @@
                         ]
                       },
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -524,7 +524,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages/scalar/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
@@ -549,16 +549,16 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages/scalar/schema/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages/scalar/schema/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages/scalar/schema/source-map/lexical/element_1",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages/scalar/schema/source-map/lexical/element_1",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages/scalar/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages/scalar/schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -568,7 +568,7 @@
                                     ]
                                   },
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages/scalar/schema/source-map/lexical/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages/scalar/schema/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
                                         "@value": "http://a.ml/vocabularies/core#description"
@@ -587,13 +587,13 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages/source-map/lexical/element_2",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages/source-map/lexical/element_2",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/core#description"
@@ -606,7 +606,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages/source-map/lexical/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "http://a.ml/vocabularies/shapes#schema"
@@ -619,10 +619,10 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages/source-map/lexical/element_1",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/numPages"
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/extends/parameters.raml#/web-api/end-points/%2Fbooks/get/request/parameter/query/numPages"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [

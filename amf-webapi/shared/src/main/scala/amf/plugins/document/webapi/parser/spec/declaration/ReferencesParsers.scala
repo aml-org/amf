@@ -66,7 +66,7 @@ case class ReferencesParser(baseUnit: BaseUnit, id: String, key: String, map: YM
               .entries
               .foreach(e => {
                 val alias: String = e.key.as[YScalar].text
-                val urlOption     = LibraryLocationParser(e, ctx)
+                val urlOption     = LibraryLocationParser(e)(ctx.eh)
                 urlOption.foreach { url =>
                   target(url).foreach {
                     case module: DeclaresModel =>
