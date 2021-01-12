@@ -1,17 +1,22 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
-import java.net.URI
-
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-
+import java.net.URI
 import scala.collection.mutable
 
-case class AstIndex(private val map: mutable.Map[String, YMapEntryLike]) {
+case class AstIndex(private val map: mutable.Map[String, YMapEntryLike], resolvers: Seq[ReferenceResolver]) {
 
   def getNode(reference: String): Option[YMapEntryLike] = {
     val toLookUp = clean(reference)
-    map.get(toLookUp)
+    map.get(toLookUp).orElse { callResolvers(toLookUp) }
   }
+
+  private def callResolvers(reference: String): Option[YMapEntryLike] =
+    resolvers.iterator.map(_.resolve(reference, map.toMap)).collectFirst {
+      case Some(entry) =>
+        map.put(reference, entry)
+        entry
+    }
 
   private def clean(reference: String): String = {
     if (reference.startsWith("#/")) reference.drop(1)
@@ -28,4 +33,6 @@ case class AstIndex(private val map: mutable.Map[String, YMapEntryLike]) {
       case _: Throwable => false
     }
   }
+
+  private[jsonschema] def valueInMap(k: String): Option[YMapEntryLike] = map.get(k)
 }
