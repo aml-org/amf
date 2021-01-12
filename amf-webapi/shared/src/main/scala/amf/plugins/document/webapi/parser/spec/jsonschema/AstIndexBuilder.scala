@@ -5,7 +5,15 @@ import java.net.URI
 import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaDraft6SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaVersion, SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft201909SchemaVersion,
+  JSONSchemaDraft3SchemaVersion,
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaDraft6SchemaVersion,
+  JSONSchemaDraft7SchemaVersion,
+  JSONSchemaVersion,
+  SchemaVersion
+}
 import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
 import org.yaml.model._
 
@@ -16,7 +24,8 @@ object AstIndexBuilder {
     val locationUri             = getBaseUri(ctx)
     val specificResolutionScope = locationUri.flatMap(loc => getResolutionScope(version, loc)).toSeq
     val scopes                  = Seq(LexicalResolutionScope()) ++ specificResolutionScope
-    new AstIndexBuilder(refCounter).build(node, scopes)
+    val resolvers               = Seq(FragmentTraversingResolver)
+    new AstIndexBuilder(refCounter).build(node, scopes, resolvers)
   }
 
   private def getBaseUri(ctx: WebApiContext): Option[URI] =
@@ -28,8 +37,8 @@ object AstIndexBuilder {
 
   private def getResolutionScope(version: SchemaVersion, baseUri: URI): Option[ResolutionScope] = version match {
     case JSONSchemaDraft3SchemaVersion | JSONSchemaDraft4SchemaVersion | JSONSchemaDraft6SchemaVersion =>
-      Some(Draft4ResolutionScope(baseUri))
-    case JSONSchemaDraft7SchemaVersion      => Some(Draft7ResolutionScope(baseUri))
+      Some(Draft4IdResolutionScope(baseUri))
+    case JSONSchemaDraft7SchemaVersion      => Some(Draft7IdResolutionScope(baseUri))
     case JSONSchemaDraft201909SchemaVersion => Some(Draft2019ResolutionScope(baseUri))
     case _                                  => None
   }
@@ -37,14 +46,16 @@ object AstIndexBuilder {
 
 case class AstIndexBuilder private (private val refCounter: AliasCounter)(implicit ctx: WebApiContext) {
 
-  def build(node: YNode, scopes: Seq[ResolutionScope]): AstIndex = {
+  def build(node: YNode, scopes: Seq[ResolutionScope], resolvers: Seq[ReferenceResolver]): AstIndex = {
     val acc = mutable.Map.empty[String, YMapEntryLike]
     scopes.foreach(_.resolve("", YMapEntryLike(node), acc))
     index(YMapEntryLike(node), scopes, acc)
-    AstIndex(acc)
+    AstIndex(acc, resolvers)
   }
 
-  private def index(entryLike: YMapEntryLike, scopes: Seq[ResolutionScope], acc: mutable.Map[String, YMapEntryLike]): Unit =
+  private def index(entryLike: YMapEntryLike,
+                    scopes: Seq[ResolutionScope],
+                    acc: mutable.Map[String, YMapEntryLike]): Unit =
     refThresholdExceededOr(entryLike.value) {
       entryLike.value.tagType match {
         case YType.Map =>
@@ -53,7 +64,7 @@ case class AstIndexBuilder private (private val refCounter: AliasCounter)(implic
         case YType.Seq =>
           val nextScopes = updateScopes(entryLike, scopes)
           index(entryLike.asSequence, nextScopes, acc)
-        case _         => Seq()
+        case _ => Seq()
 
       }
     }
@@ -88,5 +99,6 @@ case class AstIndexBuilder private (private val refCounter: AliasCounter)(implic
     } else runThunk
   }
 
-  private def fakeEntryForScopeUpdate(seqIndex: Int, node: YNode): YMapEntryLike = YMapEntryLike(seqIndex.toString, node)
+  private def fakeEntryForScopeUpdate(seqIndex: Int, node: YNode): YMapEntryLike =
+    YMapEntryLike(seqIndex.toString, node)
 }
