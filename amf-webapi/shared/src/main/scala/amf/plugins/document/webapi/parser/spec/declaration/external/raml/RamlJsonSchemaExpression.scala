@@ -4,23 +4,9 @@ import amf.core.Root
 import amf.core.annotations.ExternalFragmentRef
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
-import amf.core.parser.{
-  Annotations,
-  InferredLinkReference,
-  JsonParserFactory,
-  ParsedReference,
-  Reference,
-  ReferenceFragmentPartition,
-  SyamlParsedDocument,
-  YMapOps
-}
+import amf.core.parser.{Annotations, InferredLinkReference, JsonParserFactory, ParsedReference, Reference, ReferenceFragmentPartition, SyamlParsedDocument, YMapOps}
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.annotations.{
-  ExternalReferenceUrl,
-  JSONSchemaId,
-  ParsedJSONSchema,
-  SchemaIsJsonSchema
-}
+import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext

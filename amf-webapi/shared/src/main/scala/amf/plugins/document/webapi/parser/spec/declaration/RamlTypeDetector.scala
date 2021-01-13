@@ -5,7 +5,12 @@ import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchWellKnownType}
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{
+  JSONSchema,
+  XMLSchema,
+  isWellKnownType,
+  matchWellKnownType
+}
 import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeDetection.parseFormat
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher, TypeName}
@@ -16,7 +21,6 @@ import amf.plugins.domain.shapes.parser.TypeDefXsdMapping._
 import amf.validations.ParserSideValidations._
 import amf.validations.ResolutionSideValidations.InvalidTypeInheritanceErrorSpecification
 import org.yaml.model._
-
 
 object RamlTypeDetection {
   def apply(node: YNode, parent: String, format: Option[String] = None, defaultType: DefaultType = StringDefaultType)(
@@ -34,7 +38,8 @@ object RamlTypeDetection {
 case class RamlTypeDetector(parent: String,
                             format: Option[String] = None,
                             defaultType: DefaultType = StringDefaultType,
-                            recursive: Boolean = false)(implicit ctx: RamlWebApiContext)
+                            recursive: Boolean = false,
+                            isExplicit: Boolean = false)(implicit ctx: RamlWebApiContext)
     extends RamlTypeSyntax {
 
   def detect(node: YNode): Option[TypeDef] = node.tagType match {
@@ -43,38 +48,23 @@ case class RamlTypeDetector(parent: String,
       val sequence = node.as[Seq[YNode]]
       InheritsTypeDetecter(collectTypeDefs(sequence), node).orElse(Some(ObjectType)) // type expression type?
 
-    case YType.Map =>
-      val map          = node.as[YMap]
-      val typeExplicit = detectExplicitTypeOrSchema(map)
-      val inferred     = inferTypeFrom(map)
-      (typeExplicit, inferred) match {
-        case (Some(JSONSchemaType), Some(_)) =>
-          ctx.eh.warning(
-            JsonSchemaInheritanceWarning,
-            parent,
-            Some(ShapeModel.Inherits.value.iri()),
-            "Inheritance from JSON Schema",
-            node.value
-          )
-          typeExplicit
-        case (Some(_), _)    => typeExplicit
-        case (None, Some(_)) => inferred
-        case _               => inferTypeFromPossibleShapeFacets(map)
-      }
+    case YType.Map => detectOrInferType(node)
 
     case YType.Null => Some(defaultType.typeDef)
 
     case _ =>
       val scalar = node.as[YScalar]
       scalar.text match {
-        case t if isRamlVariable(t) =>
-          if (ctx.contextType == RamlWebApiContextType.DEFAULT) throwInvalidAbstractDeclarationError(node, t)
+        case t if isRamlVariable(t) && ctx.contextType == RamlWebApiContextType.DEFAULT =>
+          throwInvalidAbstractDeclarationError(node, t)
           None
-        case XMLSchema(_)                                                                  => Some(XMLSchemaType)
-        case JSONSchema(_)                                                                 => Some(JSONSchemaType)
-        case RamlTypeDefMatcher.TypeExpression(text)                                       => parseAndMatchTypeExpression(node, text)
-        case t if t.endsWith("?")                                                          => Some(NilUnionType)
-        case t: String if matchWellKnownType(TypeName(t), default = UndefinedType) == UndefinedType =>
+        case t if isRamlVariable(t) && ctx.contextType != RamlWebApiContextType.DEFAULT => None
+//        case XMLSchema(_) | JSONSchema(_) if isExplicit => Some(AnyType)
+        case XMLSchema(_)                                                               => Some(XMLSchemaType)
+        case JSONSchema(_)                                                              => Some(JSONSchemaType)
+        case RamlTypeDefMatcher.TypeExpression(text)                                    => parseAndMatchTypeExpression(node, text)
+        case t if t.endsWith("?")                                                       => Some(NilUnionType)
+        case t: String if !isWellKnownType(TypeName(t))                                  =>
           // it might be a named type
           // its for identify the type, so i can search in all the scope, no need to difference between named ref and includes.
 
@@ -89,6 +79,26 @@ case class RamlTypeDetector(parent: String,
             .map(f => matchWellKnownType(TypeName(text, f)))
             .orElse(Some(matchWellKnownType(TypeName(text))))
       }
+  }
+
+  private def detectOrInferType(node: YNode) = {
+    val map = node.as[YMap]
+    val typeExplicit = detectExplicitTypeOrSchema(map)
+    val inferred = inferTypeFrom(map)
+    (typeExplicit, inferred) match {
+      case (Some(JSONSchemaType), Some(_)) =>
+        ctx.eh.warning(
+          JsonSchemaInheritanceWarning,
+          parent,
+          Some(ShapeModel.Inherits.value.iri()),
+          "Inheritance from JSON Schema",
+          node.value
+        )
+        typeExplicit
+      case (Some(_), _) => typeExplicit
+      case (None, Some(_)) => inferred
+      case _ => inferTypeFromPossibleShapeFacets(map)
+    }
   }
 
   private def parseAndMatchTypeExpression(node: YNode, text: String) = {
@@ -230,8 +240,10 @@ case class RamlTypeDetector(parent: String,
         case _                 => None
       }
 
-    private def simplifyUnionComponentsToType(union: UnionShape, part: YPart)(implicit ctx: ParserContext): Option[TypeDef] = {
-      val typeSet = union.anyOf.flatMap(t => ShapeClassTypeDefMatcher(t, part.asInstanceOf[YNode], plainUnion = true)).toSet
+    private def simplifyUnionComponentsToType(union: UnionShape, part: YPart)(
+        implicit ctx: ParserContext): Option[TypeDef] = {
+      val typeSet =
+        union.anyOf.flatMap(t => ShapeClassTypeDefMatcher(t, part.asInstanceOf[YNode], plainUnion = true)).toSet
       if (typeSet.size == 1) Some(typeSet.head)
       else Some(UnionType)
     }

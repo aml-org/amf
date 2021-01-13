@@ -20,6 +20,9 @@ object RamlTypeDefMatcher {
     case _         => None
   }
 
+  def isWellKnownType(typeName: TypeName, isRef: Boolean = false): Boolean =
+    matchWellKnownType(typeName, UndefinedType, isRef) != UndefinedType
+
   def matchWellKnownType(typeName: TypeName, default: TypeDef = ObjectType, isRef: Boolean = false): TypeDef = {
     val TypeName(ramlType, format) = typeName
     ramlType match {
