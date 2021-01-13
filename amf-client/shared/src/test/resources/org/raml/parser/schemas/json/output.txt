@@ -1,20 +1,12 @@
 #%RAML 1.0
 title: API with Examples
 types:
-  User: |-
-    {
-      "$schema": "http://json-schema.org/draft-04/schema#",
-      "id": "http://jsonschema.net",
-      "type": "object",
-      "properties": {
-        "name": {
-          "id": "http://jsonschema.net/name",
-          "type": "string"
-        },
-        "age": {
-          "id": "http://jsonschema.net/age",
-          "type": "integer"
-        }
-      },
-      "required": ["age"]
-    }
+  User:
+    additionalProperties: true
+    properties:
+      name:
+        type: string
+        required: false
+      age:
+        type: integer
+        required: true

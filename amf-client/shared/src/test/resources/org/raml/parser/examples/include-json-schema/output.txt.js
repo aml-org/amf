@@ -10,8 +10,8 @@ Level: Violation
 name should be string
 
   Level: Violation
-  Target: file://user.json/#/definitions/User/example/bad
-  Property: file://user.json/#/definitions/User/example/bad
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/declarations/types/User/example/bad
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml#/declarations/types/User/example/bad
   Position: Some(LexicalInformation([(13,10)-(16,11)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema/input.raml
 

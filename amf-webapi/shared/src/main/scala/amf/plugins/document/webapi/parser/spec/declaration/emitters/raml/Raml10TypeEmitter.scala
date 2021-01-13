@@ -7,7 +7,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
 import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.parser.Position
-import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ForceEntry, ParsedJSONSchema}
+import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ExternalSchemaWrapper, ForceEntry, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.domain.shapes.models._
@@ -21,6 +21,8 @@ case class Raml10TypeEmitter(shape: Shape,
                              forceEntry: Boolean = false)(implicit spec: RamlSpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
     shape match {
+      case shape: AnyShape if shape.annotations.contains(classOf[ExternalSchemaWrapper]) =>
+          Seq(RamlExternalSchemaWrapperEmitter(shape, ordering, ignored, references, forceEntry))
       case shape: AnyShape if shapeWasParsedFromAnExternalFragment(shape) =>
         Seq(RamlExternalSourceEmitter(shape.asInstanceOf[AnyShape], references))
       case shape: Shape if hasExternalReferenceUrl(shape) =>

@@ -71,8 +71,7 @@ trait ExampleParser {
   def parseExamples(shape: AnyShape, map: YMap, options: ExampleOptions = DefaultExampleOptions)(
       implicit ctx: WebApiContext): Unit = {
 
-    RamlExamplesParser(map, "example", "examples", shape, options.checkScalar(shape))
-      .parse()
+    RamlExamplesParser(map, "example", "examples", shape, options.checkScalar(shape)).parse()
   }
 }
 

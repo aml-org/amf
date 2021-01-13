@@ -59,7 +59,7 @@ case class RamlTypeDetector(parent: String,
           throwInvalidAbstractDeclarationError(node, t)
           None
         case t if isRamlVariable(t) && ctx.contextType != RamlWebApiContextType.DEFAULT => None
-//        case XMLSchema(_) | JSONSchema(_) if isExplicit => Some(AnyType)
+//        case XMLSchema(_) | JSONSchema(_) if isExplicit => Some(ExternalSchemaWrapper)
         case XMLSchema(_)                                                               => Some(XMLSchemaType)
         case JSONSchema(_)                                                              => Some(JSONSchemaType)
         case RamlTypeDefMatcher.TypeExpression(text)                                    => parseAndMatchTypeExpression(node, text)
@@ -143,9 +143,10 @@ case class RamlTypeDetector(parent: String,
 
   private def detectExplicitTypeOrSchema(map: YMap): Option[TypeDef] = {
     typeOrSchema(map).flatMap { e =>
-      val result = RamlTypeDetector(parent, parseFormat(map), recursive = true).detect(e.value)
+      val result = RamlTypeDetector(parent, parseFormat(map), recursive = true, isExplicit = true).detect(e.value)
       result match {
         case Some(t) if t == UndefinedType || isExactlyAny(e, t) => None
+        case Some(ExternalSchemaWrapper)                         => None
         case Some(other)                                         => Some(other)
         case None                                                => result
       }
@@ -276,7 +277,7 @@ case class RamlTypeDetector(parent: String,
             case "fileShape"         => TypeDef.FileType
           }
         // explicit inheritance
-        case _ :: tail if tail.nonEmpty && map.key("type").isDefined => TypeDef.AnyType
+        case _ :: tail if tail.nonEmpty && map.key("type").isDefined || map.key("schema").isDefined => TypeDef.AnyType
         // multiple matches without inheritance
         case _ :: tail if tail.nonEmpty => MultipleMatch
       })
