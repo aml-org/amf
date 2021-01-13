@@ -61,8 +61,7 @@ object RamlTypeDefMatcher {
     }
   }
 
-  private def ltrim(s: String) =
-    s.replaceAll("^(\\s+|[\uFEFF-\uFFFF])", "")
+  private def ltrim(s: String) = s.replaceAll("^(\\s+|[\uFEFF-\uFFFF])", "")
 
   object XMLSchema {
     def unapply(str: String): Option[String] = {
@@ -82,12 +81,13 @@ object RamlTypeDefMatcher {
 
   object TypeExpression {
     def unapply(str: String): Option[String] = {
-      val trimed = ltrim(str.trim)
-      if ((trimed.contains("[]") && !trimed.startsWith("[") && trimed.endsWith("]")) || trimed.contains("|") || trimed
-            .contains("(") || trimed.contains(")"))
-        Some(str)
+      val trimmed = ltrim(str.trim)
+      if (canBeArray(trimmed) || canBeUnion(str)) Some(str)
       else None
     }
+
+    private def canBeUnion(str: String) = str.contains("|") || str.contains("(") || str.contains(")")
+    private def canBeArray(str: String) = str.contains("[]") && !str.startsWith("[") && str.endsWith("]")
   }
 }
 

@@ -17,10 +17,8 @@ import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Ra
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, TypeName}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common._
-import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{
-  RamlJsonSchemaExpression,
-  RamlXmlSchemaExpression
-}
+import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeDetection.parseFormat
+import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{RamlJsonSchemaExpression, RamlXmlSchemaExpression}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
@@ -481,15 +479,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
   }
 
   def parse(): Option[Shape] = {
-    val info: Option[TypeDef] =
-      RamlTypeDetection(node,
-                        "",
-                        node
-                          .toOption[YMap]
-                          .flatMap { m =>
-                            m.key("format").orElse(m.key("format".asRamlAnnotation)).map(_.value.toString())
-                          },
-                        defaultType)
+    val info: Option[TypeDef] = RamlTypeDetection(node, "", parseFormat(node), defaultType)
     val result = info.map {
       case XMLSchemaType                         => RamlXmlSchemaExpression(key, node, adopt, parseExample = true).parse()
       case JSONSchemaType                        => RamlJsonSchemaExpression(key, node, adopt, parseExample = true).parse()
