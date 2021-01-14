@@ -25,7 +25,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#mediaType": "traitContentType",
-      "http://a.ml/vocabularies/apiContract#schemaMediaType": "baseSchemaFormat",
+      "http://a.ml/vocabularies/apiContract#schemaMediaType": "traitSchemaFormat",
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "target/message/default/scalar/schema"
       }
@@ -41,7 +41,7 @@
       ],
       "http://www.w3.org/ns/shacl#datatype": [
         {
-          "@id": "http://www.w3.org/2001/XMLSchema#string"
+          "@id": "http://a.ml/vocabularies/shapes#number"
         }
       ],
       "http://www.w3.org/ns/shacl#name": "schema"

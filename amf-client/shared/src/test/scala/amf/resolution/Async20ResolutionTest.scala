@@ -3,7 +3,7 @@ package amf.resolution
 import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.remote.AsyncYamlHint
+import amf.core.remote.{AsyncApi20, AsyncYamlHint, Vendor}
 import amf.core.remote.Vendor._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
@@ -12,9 +12,11 @@ import amf.plugins.document.webapi.Async20Plugin
 
 import scala.concurrent.Future
 
-class Async20ResolutionTest extends FunSuiteCycleTests {
+class Async20ResolutionTest extends ResolutionTest {
   override def basePath: String       = "amf-client/shared/src/test/resources/resolution/async20/"
   private val validationsPath: String = "amf-client/shared/src/test/resources/validations/async20/"
+
+
 
   multiGoldenTest("Message examples are propagated to payload and parameter shapes", "message-example-propagation.%s") {
     config =>
@@ -47,6 +49,24 @@ class Async20ResolutionTest extends FunSuiteCycleTests {
           AsyncYamlHint,
           target = AMF,
           renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Message traits are merged to message and removed from extends", "message-trait-merging-and-removed.%s") { config =>
+    cycle("message-trait-merging.yaml",
+      config.golden,
+      AsyncYamlHint,
+      target = AMF,
+      renderOptions = Some(config.renderOptions),
+      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE))
+  }
+
+  multiGoldenTest("Operation traits are merged to operation and removed from extends", "operation-trait-merging-and-removed.%s") { config =>
+    cycle("operation-trait-merging.yaml",
+      config.golden,
+      AsyncYamlHint,
+      target = AMF,
+      renderOptions = Some(config.renderOptions),
+      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE))
   }
 
   multiGoldenTest("Named parameter with reference to parameter in components", "named-parameter-with-ref.%s") {
@@ -139,8 +159,9 @@ class Async20ResolutionTest extends FunSuiteCycleTests {
     )
   }
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    Async20Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
+
+  override val defaultVendor: Option[Vendor] = Some(AsyncApi20)
+  override val defaultPipelineToUse: String = ResolutionPipeline.EDITING_PIPELINE
 
   override def defaultRenderOptions: RenderOptions =
     RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint
