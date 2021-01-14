@@ -25,7 +25,7 @@ class Async20ResolutionPipeline(override val eh: ErrorHandler) extends Resolutio
     references,
     new ExternalSourceRemovalStage,
     new ShapeNormalizationStage(profileName, keepEditingInfo = false),
-    new JsonMergePatchStage(),
+    new JsonMergePatchStage(isEditing = false),
     new AsyncContentTypeResolutionStage(),
     new AsyncExamplePropagationResolutionStage(),
     new ServerVariableExampleResolutionStage(),

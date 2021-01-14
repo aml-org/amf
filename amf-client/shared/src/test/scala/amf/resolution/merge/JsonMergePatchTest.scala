@@ -3,23 +3,22 @@ package amf.resolution.merge
 import amf.Core
 import amf.client.convert.{BaseUnitConverter, NativeOps}
 import amf.client.parse.DefaultParserErrorHandler
-import amf.client.render.{AmfGraphRenderer, RenderOptions}
 import amf.core.emitter.BaseEmitters.traverse
-import amf.core.emitter.{RenderOptions => CoreRenderOptions}
-import amf.core.emitter.SpecOrdering
+import amf.core.emitter.{RenderOptions, SpecOrdering}
 import amf.core.model.document.Document
 import amf.core.model.domain.{DataNode, ScalarNode}
 import amf.core.parser.{ParserContext, YMapOps}
+import amf.core.remote.Vendor.AMF
+import amf.emit.AMFRenderer
+import amf.facades.Validation
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
 import amf.plugins.document.webapi.parser.spec.async.Subscribe
 import amf.plugins.document.webapi.parser.spec.async.parser.{AsyncMessageParser, AsyncOperationParser}
 import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
-import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncKeyCriteria, JsonMergePatch}
-import amf.plugins.domain.webapi.metamodel.AbstractModel
+import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncJsonMergePatch, AsyncKeyCriteria, JsonMergePatch}
 import amf.plugins.domain.webapi.models.{Message, Operation}
-import amf.plugins.domain.webapi.resolution.stages.CustomMessageExamplesMerge
 import org.mulesoft.common.io.Fs
 import org.scalatest.{Assertion, Matchers}
 import org.yaml.model.{YDocument, YMap, YNode}
@@ -28,12 +27,7 @@ import org.yaml.render.YamlRender
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait JsonMergePatchTest
-    extends MultiJsonldAsyncFunSuite
-    with Matchers
-    with FileAssertionTest
-    with BaseUnitConverter
-    with NativeOps {
+class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val basePath                                             = "amf-client/shared/src/test/resources/resolution/merge"
@@ -114,7 +108,7 @@ trait JsonMergePatchTest
     val golden   = fixture.golden
     val document = fixture.handler.build(fixture.target, fixture.patch)
     for {
-      _ <- Core.init().asFuture
+      _ <- Validation(platform)
       f <- {
         renderOptions match {
           case Some(ro) => fixture.handler.renderToString(document, ro)
@@ -130,16 +124,13 @@ trait JsonMergePatchTest
 
     def build(targetFile: String, patchFile: String): Document
 
-    def getMerger: JsonMergePatch =
-      JsonMergePatch(_ => false, AsyncKeyCriteria(), Seq(AbstractModel.IsAbstract), Seq(CustomMessageExamplesMerge))
+    def getMerger: JsonMergePatch = AsyncJsonMergePatch()
 
     def getBogusParserCtx: AsyncWebApiContext =
       new Async20WebApiContext("loc", Seq(), ParserContext(eh = DefaultParserErrorHandler()))
 
     def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): Future[String] =
-      new AmfGraphRenderer()
-        .generateString(BaseUnitMatcher.asClient(document), renderOptions)
-        .asFuture
+      new AMFRenderer(document, AMF, renderOptions, None).renderToString
 
     def defaultRenderOptions: RenderOptions = new RenderOptions().withPrettyPrint
   }
@@ -192,7 +183,7 @@ trait JsonMergePatchTest
     }
 
     def parseNode(filePath: String, id: String): DataNode = {
-      val content  = Fs.syncFile(filePath).read()
+      val content  = platform.fs.syncFile(filePath).read()
       val document = YamlParser(content).documents().head
       document
         .as[YMap]
@@ -214,7 +205,7 @@ trait JsonMergePatchTest
           )
         }
       }
-      Future { YamlRender.render(ydocument) }
+      Future.successful { YamlRender.render(ydocument) }
     }
 
     override def getMerger: JsonMergePatch =

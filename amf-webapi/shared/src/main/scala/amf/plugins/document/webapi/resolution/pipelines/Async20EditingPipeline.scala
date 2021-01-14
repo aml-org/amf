@@ -23,7 +23,7 @@ class Async20EditingPipeline(override val eh: ErrorHandler, urlShortening: Boole
   override val steps: Seq[ResolutionStage] = Seq(
     references,
     new ShapeNormalizationStage(profileName, keepEditingInfo = true),
-    new JsonMergePatchStage(),
+    new JsonMergePatchStage(isEditing = true),
     new AsyncContentTypeResolutionStage(),
     new AsyncExamplePropagationResolutionStage(),
     new ServerVariableExampleResolutionStage(),
