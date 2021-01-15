@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema#",
+    "id": "http://com.cookbook.tutorial/recipe",
+    "type": "object",
+    "properties": {
+        "ingredients": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "/": {
+                        "$ref": "http://com.cookbook.tutorial/ingredient"
+                    }
+                }
+            }
+        }
+    }
+}

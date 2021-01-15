@@ -4,36 +4,32 @@ import _root_.org.scalatest.{Assertion, Matchers}
 import amf._
 import amf.client.AMF
 import amf.client.convert.CoreClientConverters._
-import amf.client.convert.NativeOps
+import amf.client.convert.{CoreClientConverters, NativeOps}
 import amf.client.environment.{DefaultEnvironment, Environment}
 import amf.client.model.document._
 import amf.client.model.domain._
-import amf.plugins.domain.webapi.models.{CorrelationId => InternalCorrelationId}
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Async20Resolver, Oas20Resolver, Oas30Resolver, Raml08Resolver, Raml10Resolver}
+import amf.client.resolve._
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.errorhandling.StaticErrorCollector
 import amf.core.exception.UnsupportedVendorException
 import amf.core.model.document.{Document => InternalDocument}
-import amf.core.model.domain.{
-  ArrayNode => InternalArrayNode,
-  ObjectNode => InternalObjectNode,
-  ScalarNode => InternalScalarNode
-}
+import amf.core.model.domain.{ArrayNode => InternalArrayNode, ObjectNode => InternalObjectNode, ScalarNode => InternalScalarNode}
 import amf.core.parser.Range
-import amf.core.remote.{Aml, Oas20, Raml10, Vendor}
+import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
-import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.internal.environment.{Environment => InternalEnvironment}
 import amf.internal.resource.StringResourceLoader
+import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.plugins.document.Vocabularies
 import amf.plugins.document.webapi.parser.spec.common.emitters.WebApiDomainElementEmitter
 import amf.plugins.domain.webapi.metamodel.api.WebApiModel
+import amf.plugins.domain.webapi.models.{CorrelationId => InternalCorrelationId}
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
 
@@ -622,6 +618,39 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       unit shouldBe a[Document]
       val declarations = unit.asInstanceOf[Document].declares.asSeq
       declarations should have size 1
+    }
+  }
+
+  test("Network error report has position and location") {
+    val uri = "file://amf-client/shared/src/test/resources/compiler/network-error/api.raml"
+
+    case class DummyHttpResourceLoader() extends ResourceLoader {
+      override def fetch(resource: String): ClientFuture[Content] = {
+        try {
+          throw new Exception("Dummy error!")
+        } catch {
+          case e: Exception => throw NetworkError(e)
+        }
+      }
+
+      /** Accepts specified resource. */
+      override def accepts(resource: String): Boolean = resource.startsWith("http")
+}
+
+    val fileLoader = platform.loaders().filter(x => x.accepts("file://")).head
+    val clientLoader: ClientLoader = CoreClientConverters.ResourceLoaderMatcher.asClient(fileLoader).asInstanceOf[ClientLoader]
+    val environment = Environment.empty().add(DummyHttpResourceLoader().asInstanceOf[ClientLoader]).add(clientLoader)
+
+    for {
+      _     <- AMF.init().asFuture
+      unit  <- new RamlParser(environment).parseFileAsync(uri).asFuture
+      report <- AMF.validate(unit, Raml10Profile, MessageStyles.RAML).asFuture
+    } yield {
+      report.conforms shouldBe false
+      val networkError = report.results.asSeq.last
+      networkError.message should include ("Network Error:")
+      networkError.position should not be None
+      networkError.location should not be None
     }
   }
 
