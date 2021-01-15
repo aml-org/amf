@@ -93,6 +93,8 @@ declare module 'amf-client-js' {
 
     static parser(vendor: string, mediaType: string): parse.Parser
 
+    static parser(vendor: string, mediaType: string, env: client.environment.Environment): parse.Parser
+
     static validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle?: MessageStyle): Promise<client.validate.ValidationReport>
 
     static validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: MessageStyle, env: client.environment.Environment): Promise<client.validate.ValidationReport>
