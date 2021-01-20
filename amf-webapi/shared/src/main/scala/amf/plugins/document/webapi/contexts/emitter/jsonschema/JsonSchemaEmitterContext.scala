@@ -5,8 +5,7 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.emitter.oas.{InlinedJsonSchemaEmitterFactory, Oas2SpecEmitterContext, OasSpecEmitterFactory}
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, JSONSchemaVersion, OAS20SchemaVersion, OAS30SchemaVersion, SchemaPosition, SchemaVersion}
-import amf.plugins.document.webapi.parser.{JsonSchemaTypeDefMatcher, OasTypeDefStringValueMatcher}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaVersion, OAS20SchemaVersion, SchemaVersion}
 
 import scala.util.matching.Regex
 
@@ -14,7 +13,6 @@ class JsonSchemaEmitterContext(override val eh: ErrorHandler,
                                override val options: ShapeRenderOptions = ShapeRenderOptions(),
                                override val schemaVersion: SchemaVersion)
     extends Oas2SpecEmitterContext(eh = eh, options = options) {
-  override val typeDefMatcher: OasTypeDefStringValueMatcher = JsonSchemaTypeDefMatcher
 
   override val anyOfKey: String                = "anyOf"
   override val nameRegex: Regex                = """^[a-zA-Z0-9\.\-_]+$""".r

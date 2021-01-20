@@ -227,5 +227,14 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
     }
   }
 
+  test("Long type with int64 format is validated as long") {
+    amf.Core.init().asFuture.flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+      val shape = new ScalarShape().withDataType(DataTypes.Long).withFormat("int64")
+      val validator = shape.payloadValidator("application/json").asOption.get
+      validator.syncValidate("application/json", "0.1").conforms shouldBe false
+    }
+  }
+
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 }
