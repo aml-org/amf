@@ -4,6 +4,7 @@ import amf.core.Root
 import amf.core.annotations.DeclaredElement
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.YMapOps
+import amf.core.remote.Context
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.plugins.document.webapi.annotations.DeclarationKey
@@ -142,7 +143,8 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
           ctx.declarations += shape.add(DeclaredElement())
           // This is a workaround for the weird situations where we reuse a local RAML identifier inside a json schema without
           // a proper $ref
-          val localRaml08RefInJson = platform.normalizePath(ctx.basePath(ctx.rootContextDocument) + shape.name.value())
+          val localRaml08RefInJson =
+            platform.normalizePath(Context.stripFileName(ctx.rootContextDocument) + shape.name.value())
           ctx.futureDeclarations.resolveRef(localRaml08RefInJson, shape)
         case None => ctx.eh.violation(InvalidTypeDefinition, parent, s"Error parsing shape '$entry'", entry)
       }

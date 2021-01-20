@@ -3,8 +3,18 @@ package amf.plugins.document.webapi.parser.spec.declaration.external.raml
 import amf.core.Root
 import amf.core.annotations.{ExternalFragmentRef, VirtualObject}
 import amf.core.metamodel.domain.ShapeModel
+import amf.core.unsafe.PlatformSecrets
 import amf.core.model.domain.{AmfArray, Shape}
-import amf.core.parser.{Annotations, InferredLinkReference, JsonParserFactory, ParsedReference, Reference, ReferenceFragmentPartition, SyamlParsedDocument, YMapOps}
+import amf.core.parser.{
+  Annotations,
+  InferredLinkReference,
+  JsonParserFactory,
+  ParsedReference,
+  Reference,
+  ReferenceFragmentPartition,
+  SyamlParsedDocument,
+  YMapOps
+}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -30,16 +40,17 @@ case class RamlJsonSchemaExpression(key: YNode,
                                     override val value: YNode,
                                     override val adopt: Shape => Unit,
                                     parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
-    extends RamlExternalTypesParser {
+    extends RamlExternalTypesParser
+    with PlatformSecrets {
 
   override def parseValue(origin: ValueAndOrigin): AnyShape = value.value match {
     case map: YMap if parseExample =>
-      val parsed: AnyShape = parseWrappedSchema(origin)
+      val parsed: AnyShape  = parseWrappedSchema(origin)
       val wrapper: AnyShape = parseSchemaWrapper(map, parsed, origin: ValueAndOrigin)
       wrapper.annotations += ExternalSchemaWrapper()
       wrapper
     case _ =>
-      val parsed  = parseJsonFromValueAndOrigin(origin, adopt)
+      val parsed = parseJsonFromValueAndOrigin(origin, adopt)
       parsed.annotations += SchemaIsJsonSchema()
       parsed
 
@@ -63,7 +74,8 @@ case class RamlJsonSchemaExpression(key: YNode,
     )
     parseExamples(wrapper, value.as[YMap])
     wrapperName(key).foreach(_ => wrapper.withName(_, Annotations(key)))
-    val typeEntryAnnotations = map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
+    val typeEntryAnnotations =
+      map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
     wrapper.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations(VirtualObject())), typeEntryAnnotations)
     wrapper
   }
@@ -197,7 +209,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     }
     val schemaEntry       = YMapEntry(key, node)
     val jsonSchemaContext = getContext(valueAST, schemaEntry)
-    val fullRef           = jsonSchemaContext.resolvedPath(jsonSchemaContext.rootContextDocument, "")
+    val fullRef           = platform.normalizePath(jsonSchemaContext.rootContextDocument)
 
     val tmpShape: UnresolvedShape =
       JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), schemaEntry, jsonSchemaContext, fullRef)
@@ -270,7 +282,7 @@ case class RamlJsonSchemaExpression(key: YNode,
         if (inlined.origTag.tagType == YType.Include) {
           // JSON schema file we need to update the context
           val rawPath            = inlined.origValue.asInstanceOf[YScalar].text
-          val normalizedFilePath = normalizePath(rawPath)
+          val normalizedFilePath = stripPointsAndFragment(rawPath)
           ctx.refs.find(r => r.unit.location().exists(_.endsWith(normalizedFilePath))) match {
             case Some(ref) =>
               toJsonSchema(
@@ -291,7 +303,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     }
   }
 
-  private def normalizePath(rawPath: String): String = {
+  private def stripPointsAndFragment(rawPath: String): String = {
     //    TODO: we need to resolve paths but this conflicts with absolute references to exchange_modules
     //    val file = rawPath.split("#").head
     //    val root               = ctx.rootContextDocument
