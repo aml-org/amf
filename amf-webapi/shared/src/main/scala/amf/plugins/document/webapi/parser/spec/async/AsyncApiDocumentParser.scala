@@ -5,7 +5,7 @@ import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
-import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys, Inferred}
+import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.async.parser._
 import amf.plugins.document.webapi.parser.spec.common._
@@ -50,17 +50,13 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
     val references = AsycnReferencesParser(root.references).parse()
     parseDeclarations(map)
-    val declarationKeys = ctx.getDeclarationKeys
 
     val api = parseApi(map).add(SourceVendor(ctx.vendor))
     document
       .withEncodes(api)
       .adopted(root.location)
 
-    val declarable = ctx.declarations.declarables()
-    val ann        = Annotations(DeclarationKeys(declarationKeys))
-    if (declarable.isEmpty) ann += Inferred()
-    document.withDeclares(declarable, ann)
+    addDeclarationsToModel(document)
     if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     ctx.futureDeclarations.resolve()

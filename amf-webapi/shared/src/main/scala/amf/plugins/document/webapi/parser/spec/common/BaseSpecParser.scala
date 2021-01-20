@@ -3,9 +3,11 @@ package amf.plugins.document.webapi.parser.spec.common
 import amf.core.annotations.{DomainExtensionAnnotation, ExplicitField, SingleValueArray}
 import amf.core.metamodel.Type.ArrayLike
 import amf.core.metamodel.{Field, Obj, Type}
+import amf.core.model.document.DeclaresModel
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{ArrayNode => _, ScalarNode => _, _}
 import amf.core.parser._
+import amf.plugins.document.webapi.annotations.{DeclarationKeys, Inferred}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.validations.ParserSideValidations.{
@@ -17,7 +19,20 @@ import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
 
-trait WebApiBaseSpecParser extends BaseSpecParser with SpecParserOps
+trait WebApiBaseSpecParser extends BaseSpecParser with SpecParserOps {
+
+  protected def addDeclarationsToModel(model: DeclaresModel)(implicit ctx: WebApiContext): Unit = {
+
+    val declarationKeys = ctx.getDeclarationKeys
+    val ann             = Annotations(DeclarationKeys(declarationKeys))
+
+    val declarable = ctx.declarations.declarables()
+    if (declarable.isEmpty) ann += Inferred()
+    model.withDeclares(declarable, ann)
+
+  }
+
+}
 
 trait SpecParserOps {
 
@@ -26,8 +41,8 @@ trait SpecParserOps {
                                     node: String,
                                     property: String,
                                     ctx: WebApiContext): Unit = {
-    val pattern1 = "\\{[^\\}]*\\{".r
-    val pattern2 = "\\}[^\\{]*\\}".r
+    val pattern1 = "\\{[^}]*\\{".r
+    val pattern2 = "}[^{]*}".r
     if (pattern1.findFirstMatchIn(path).nonEmpty || pattern2.findFirstMatchIn(path).nonEmpty) {
       ctx.eh.violation(
         PathTemplateUnbalancedParameters,
@@ -39,7 +54,7 @@ trait SpecParserOps {
     }
   }
 
-  class ObjectField(target: Target, field: Field)(implicit iv: WebApiContext) extends Function1[YMapEntry, Unit] {
+  class ObjectField(target: Target, field: Field)(implicit iv: WebApiContext) extends (YMapEntry => Unit) {
 
     // Custom annotations
     private val custom: Annotations = Annotations()

@@ -10,7 +10,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter}
-import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys, Inferred}
+import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
@@ -93,17 +93,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
     val references = ReferencesParser(document, root.location, "uses".asOasExtension, map, root.references).parse()
     parseDeclarations(root, map)
-    val declarationKeys = ctx.getDeclarationKeys
 
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
     document
       .withEncodes(api)
       .adopted(root.location)
 
-    val declarable = ctx.declarations.declarables()
-    val ann        = Annotations(DeclarationKeys(declarationKeys))
-    if (declarable.isEmpty) ann += Inferred()
-    document.withDeclares(declarable, ann)
+    addDeclarationsToModel(document)
     if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     ctx.futureDeclarations.resolve()
