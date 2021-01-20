@@ -59,12 +59,14 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
                                  (entry: YMapEntry) => ResourceType(entry),
                                  map,
                                  parent + "/resourceTypes",
-                                 ResourceTypeModel).parse()
+                                 ResourceTypeModel,
+                                 this).parse()
       AbstractDeclarationsParser("traits".asOasExtension,
                                  (entry: YMapEntry) => Trait(entry),
                                  map,
                                  parent + "/traits",
-                                 TraitModel)
+                                 TraitModel,
+                                 this)
         .parse()
       ctx.closedShape(parent, map, "components")
       validateNames()

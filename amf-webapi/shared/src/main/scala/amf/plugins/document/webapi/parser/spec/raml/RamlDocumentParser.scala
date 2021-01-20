@@ -296,7 +296,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       },
       map,
       parent + "/traits",
-      TraitModel
+      TraitModel,
+      this
     ).parse()
     AbstractDeclarationsParser(
       "resourceTypes",
@@ -307,7 +308,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       },
       map,
       parent + "/resourceTypes",
-      ResourceTypeModel
+      ResourceTypeModel,
+      this
     ).parse()
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseParameterDeclarations("parameters".asRamlAnnotation, map, root.location + "#/parameters")

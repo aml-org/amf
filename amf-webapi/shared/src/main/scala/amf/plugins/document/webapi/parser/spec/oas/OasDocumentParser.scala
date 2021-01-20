@@ -114,12 +114,14 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
                                (entry: YMapEntry) => ResourceType(entry),
                                map,
                                parent + "/resourceTypes",
-                               ResourceTypeModel).parse()
+                               ResourceTypeModel,
+                               this).parse()
     AbstractDeclarationsParser("traits".asOasExtension,
                                (entry: YMapEntry) => Trait(entry),
                                map,
                                parent + "/traits",
-                               TraitModel)
+                               TraitModel,
+                               this)
       .parse()
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseParameterDeclarations(map, parent + "/parameters")
