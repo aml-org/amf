@@ -1,5 +1,7 @@
 type: object
 properties:
-  full-schema: !include external-1.json
-  relative-pointer: !include external-2.json#/definitions/Cat
+  full-schema:
+    type: !include external-1.json
+  relative-pointer:
+    type: !include external-2.json#/definitions/Cat
   xml-schema: !include external-3.xsd

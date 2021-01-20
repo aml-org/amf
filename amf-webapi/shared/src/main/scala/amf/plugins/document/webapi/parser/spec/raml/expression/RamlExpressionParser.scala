@@ -27,14 +27,6 @@ object RamlExpressionParser {
       .map(addAnnotations(_, part, expression))
   }
 
-  def parse(adopt: Shape => Unit, expression: String)(implicit ctx: WebApiContext): Option[Shape] = {
-    val parser = new RamlExpressionASTBuilder(new RamlExpressionLexer(expression, Position.ZERO).lex(),
-                                              ContextDeclarationFinder(ctx),
-                                              Annotations(),
-                                              EmptyRegister())(ctx.eh)
-    parser.build().map(adoptShapeTree(_, adopt))
-  }
-
   def check(adopt: Shape => Unit, expression: String)(implicit ctx: WebApiContext): Option[Shape] = {
     val tokens = new RamlExpressionLexer(expression, Position.ZERO).lex()
     val builder =

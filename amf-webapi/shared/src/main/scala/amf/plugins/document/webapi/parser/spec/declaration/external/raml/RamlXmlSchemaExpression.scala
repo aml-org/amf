@@ -21,15 +21,12 @@ case class RamlXmlSchemaExpression(key: YNode,
     extends RamlExternalTypesParser {
   override def parseValue(origin: ValueAndOrigin): SchemaShape = {
     val (maybeReferenceId, maybeLocation, maybeFragmentLabel): (Option[String], Option[String], Option[String]) =
-      origin.oriUrl
-        .map(ReferenceFragmentPartition.apply) match {
-        case Some((path, uri)) =>
-          val maybeRef = ctx.declarations.fragments
-            .get(path)
-          (maybeRef
-             .map(_.encoded.id + uri.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse("")),
-           maybeRef.flatMap(_.location),
-           uri)
+      origin.originalUrlText.map(ReferenceFragmentPartition.apply) match {
+        case Some((uriWithoutFragment, fragment)) =>
+          val optionalReference = ctx.declarations.fragments.get(uriWithoutFragment)
+          val optionalReferenceId = optionalReference.map(_.encoded.id + fragment.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse(""))
+          val optionalLocation = optionalReference.flatMap(_.location)
+          (optionalReferenceId, optionalLocation, fragment)
         case None => (None, None, None)
       }
 
@@ -37,59 +34,73 @@ case class RamlXmlSchemaExpression(key: YNode,
       case YType.Map =>
         val map = value.as[YMap]
         val parsedSchema = nestedTypeOrSchema(map) match {
-          case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
-            val shape =
-              SchemaShape().withRaw(typeEntry.value.as[YScalar].text).withMediaType("application/xml")
-            shape.withName(key.as[String])
-            adopt(shape)
-            shape
+          case Some(typeEntry: YMapEntry)  => buildSchemaShapeFrom(typeEntry)
           case _ =>
-            val shape = SchemaShape()
-            adopt(shape)
-            ctx.eh.violation(InvalidXmlSchemaType,
-                             shape.id,
-                             "Cannot parse XML Schema expression out of a non string value",
-                             value)
+            val shape: SchemaShape = emptySchemaShape
+            throwInvalidXmlSchemaFormat(shape)
             shape
         }
-        map.key("displayName", (ShapeModel.DisplayName in parsedSchema).allowingAnnotations)
-        map.key("description", (ShapeModel.Description in parsedSchema).allowingAnnotations)
-        map.key(
-          "default",
-          entry => {
-            val dataNodeResult = NodeDataNodeParser(entry.value, parsedSchema.id, quiet = false).parse()
-            parsedSchema.setDefaultStrValue(entry)
-            dataNodeResult.dataNode.foreach { dataNode =>
-              parsedSchema.set(ShapeModel.Default, dataNode, Annotations(entry))
-            }
-          }
-        )
-        parseExamples(parsedSchema, value.as[YMap])
-
+        parseWrappedFields(map, parsedSchema)
         parsedSchema
       case YType.Seq =>
-        val shape = SchemaShape()
-        adopt(shape)
-        ctx.eh.violation(InvalidXmlSchemaType,
-                         shape.id,
-                         "Cannot parse XML Schema expression out of a non string value",
-                         value)
+        val shape: SchemaShape = emptySchemaShape
+        throwInvalidXmlSchemaFormat(shape)
         shape
       case _ =>
-        val raw   = value.as[YScalar].text
-        val shape = SchemaShape().withRaw(raw).withMediaType("application/xml")
-        shape.withName(key.as[String])
-        adopt(shape)
-        shape
+        val scalar = value.as[YScalar]
+        buildSchemaShapeFrom(scalar)
     }
     maybeReferenceId match {
       case Some(r) => parsed.withReference(r)
       case _       => parsed.annotations += LexicalInformation(Range(value.range))
     }
-    origin.oriUrl.foreach(url => parsed.annotations += (ExternalReferenceUrl(url)))
+    origin.originalUrlText.foreach(url => parsed.annotations += (ExternalReferenceUrl(url)))
     parsed.set(SchemaShapeModel.Location, maybeLocation.getOrElse(ctx.loc))
     maybeFragmentLabel.foreach { parsed.annotations += ExternalFragmentRef(_) }
     parsed
+  }
+
+  private def buildSchemaShapeFrom(scalar: YScalar) = {
+    val shape = SchemaShape().withRaw(scalar.text).withMediaType("application/xml")
+    shape.withName(key.as[String])
+    adopt(shape)
+    shape
+  }
+
+  private def parseWrappedFields(map: YMap, parsedSchema: SchemaShape) = {
+    map.key("displayName", (ShapeModel.DisplayName in parsedSchema).allowingAnnotations)
+    map.key("description", (ShapeModel.Description in parsedSchema).allowingAnnotations)
+    map.key(
+      "default",
+      entry => {
+        val dataNodeResult = NodeDataNodeParser(entry.value, parsedSchema.id, quiet = false).parse()
+        parsedSchema.setDefaultStrValue(entry)
+        dataNodeResult.dataNode.foreach { dataNode =>
+          parsedSchema.set(ShapeModel.Default, dataNode, Annotations(entry))
+        }
+      }
+    )
+    parseExamples(parsedSchema, value.as[YMap])
+  }
+
+  private def buildSchemaShapeFrom(typeEntry: YMapEntry) = {
+    val shape = SchemaShape().withRaw(typeEntry.value.toString).withMediaType("application/xml")
+    shape.withName(key.as[String])
+    adopt(shape)
+    shape
+  }
+
+  private def throwInvalidXmlSchemaFormat(shape: SchemaShape) = {
+    ctx.eh.violation(InvalidXmlSchemaType,
+      shape.id,
+      "Cannot parse XML Schema expression out of a non string value",
+      value)
+  }
+
+  private def emptySchemaShape = {
+    val shape = SchemaShape()
+    adopt(shape)
+    shape
   }
 
   override val externalType: String = "XML"

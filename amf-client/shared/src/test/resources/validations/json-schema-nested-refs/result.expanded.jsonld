@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#37",
+        "@id": "#39",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -28,7 +28,7 @@
         ],
         "apiContract:server": [
           {
-            "@id": "#38",
+            "@id": "#40",
             "@type": [
               "apiContract:Server",
               "doc:DomainElement"
@@ -43,7 +43,7 @@
                 "core:urlTemplate": "[(2,0)-(4,0)]"
               },
               "synthesized-field": {
-                "#38": "true"
+                "#40": "true"
               }
             }
           }
@@ -72,13 +72,13 @@
             "core:version": "[(5,0)-(6,0)]",
             "apiContract:accepts": "[(6,0)-(7,0)]",
             "core:description": "[(7,0)-(9,0)]",
-            "#37": "[(2,0)-(16,0)]",
+            "#39": "[(2,0)-(16,0)]",
             "core:name": "[(4,0)-(5,0)]",
             "apiContract:server": "[(2,0)-(4,0)]",
             "apiContract:contentType": "[(6,0)-(7,0)]"
           },
           "source-vendor": {
-            "#37": "RAML 1.0"
+            "#39": "RAML 1.0"
           }
         }
       }
@@ -235,12 +235,512 @@
         ],
         "shacl:closed": [
           {
-            "@value": true
+            "@value": false
           }
         ],
         "shacl:property": [
           {
-            "@id": "#17",
+            "@id": "#18",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#primaryApplicant"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#19",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:property": [
+                  {
+                    "@id": "#20",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#addresses"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#21",
+                        "@type": [
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "addresses"
+                          }
+                        ],
+                        "shacl:and": [
+                          {
+                            "@id": "#22",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "fullAddress"
+                              }
+                            ],
+                            "smaps": {
+                              "resolved-link-target": {
+                                "#22": "amf://id#22"
+                              },
+                              "type-property-lexical-info": {
+                                "#22": "[(8,4)-(8,10)]"
+                              },
+                              "lexical": {
+                                "#22": "[(7,2)-(9,3)]"
+                              },
+                              "resolved-link": {
+                                "#22": "amf://id#23"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "shacl:and": "[(14,17)-(18,9)]",
+                            "#21": "[(13,6)-(19,7)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "addresses"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#20": "[(13,6)-(19,7)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#24",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#expenses"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#25",
+                        "@type": [
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "expenses"
+                          }
+                        ],
+                        "shacl:or": [
+                          {
+                            "@id": "#26",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "expensesLiving"
+                              }
+                            ],
+                            "smaps": {
+                              "resolved-link-target": {
+                                "#26": "amf://id#26"
+                              },
+                              "type-property-lexical-info": {
+                                "#26": "[(5,4)-(5,10)]"
+                              },
+                              "lexical": {
+                                "#26": "[(4,2)-(6,3)]"
+                              },
+                              "resolved-link": {
+                                "#26": "amf://id#27"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "shacl:or": "[(21,17)-(25,9)]",
+                            "#25": "[(20,6)-(26,7)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "expenses"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#24": "[(20,6)-(26,7)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "applicant"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#19": "[(11,4)-(11,10)]"
+                  },
+                  "lexical": {
+                    "#19": "[(10,2)-(28,3)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "primaryApplicant"
+              }
+            ],
+            "smaps": {
+              "inheritance-provenance": {
+                "#18": "amf://id#17"
+              },
+              "lexical": {
+                "#18": "[(13,4)-(15,5)]"
+              }
+            }
+          },
+          {
+            "@id": "#28",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#additionalApplicants"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#29",
+                "@type": [
+                  "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:property": [
+                  {
+                    "@id": "#30",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#addresses"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#31",
+                        "@type": [
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "addresses"
+                          }
+                        ],
+                        "shacl:and": [
+                          {
+                            "@id": "#22",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "fullAddress"
+                              }
+                            ],
+                            "smaps": {
+                              "resolved-link-target": {
+                                "#22": "amf://id#22"
+                              },
+                              "type-property-lexical-info": {
+                                "#22": "[(8,4)-(8,10)]"
+                              },
+                              "lexical": {
+                                "#22": "[(7,2)-(9,3)]"
+                              },
+                              "resolved-link": {
+                                "#22": "amf://id#23"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "shacl:and": "[(14,17)-(18,9)]",
+                            "#31": "[(13,6)-(19,7)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "addresses"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#30": "[(13,6)-(19,7)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#32",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#expenses"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#33",
+                        "@type": [
+                          "raml-shapes:AnyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "expenses"
+                          }
+                        ],
+                        "shacl:or": [
+                          {
+                            "@id": "#26",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "expensesLiving"
+                              }
+                            ],
+                            "smaps": {
+                              "resolved-link-target": {
+                                "#26": "amf://id#26"
+                              },
+                              "type-property-lexical-info": {
+                                "#26": "[(5,4)-(5,10)]"
+                              },
+                              "lexical": {
+                                "#26": "[(4,2)-(6,3)]"
+                              },
+                              "resolved-link": {
+                                "#26": "amf://id#27"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "shacl:or": "[(21,17)-(25,9)]",
+                            "#33": "[(20,6)-(26,7)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "expenses"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#32": "[(20,6)-(26,7)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "applicant"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#29": "[(11,4)-(11,10)]"
+                  },
+                  "lexical": {
+                    "#29": "[(10,2)-(28,3)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "additionalApplicants"
+              }
+            ],
+            "smaps": {
+              "inheritance-provenance": {
+                "#28": "amf://id#17"
+              },
+              "lexical": {
+                "#28": "[(16,4)-(18,5)]"
+              }
+            }
+          },
+          {
+            "@id": "#34",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -254,7 +754,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#18",
+                "@id": "#35",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -274,11 +774,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#18": "[(7,6)-(7,12)]"
+                    "#35": "[(7,6)-(7,12)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(7,6)-(7,22)]",
-                    "#18": "[(6,4)-(8,5)]"
+                    "#35": "[(6,4)-(8,5)]"
                   }
                 }
               }
@@ -294,14 +794,17 @@
               }
             ],
             "smaps": {
+              "inheritance-provenance": {
+                "#34": "amf://id#17"
+              },
               "lexical": {
                 "shacl:minCount": "[(21,4)-(21,14)]",
-                "#17": "[(6,4)-(8,5)]"
+                "#34": "[(6,4)-(8,5)]"
               }
             }
           },
           {
-            "@id": "#19",
+            "@id": "#36",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -315,7 +818,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#20",
+                "@id": "#37",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -335,11 +838,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#20": "[(10,6)-(10,12)]"
+                    "#37": "[(10,6)-(10,12)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(10,6)-(10,22)]",
-                    "#20": "[(9,4)-(11,5)]"
+                    "#37": "[(9,4)-(11,5)]"
                   }
                 }
               }
@@ -355,503 +858,12 @@
               }
             ],
             "smaps": {
+              "inheritance-provenance": {
+                "#36": "amf://id#17"
+              },
               "lexical": {
                 "shacl:minCount": "[(22,4)-(22,14)]",
-                "#19": "[(9,4)-(11,5)]"
-              }
-            }
-          },
-          {
-            "@id": "#21",
-            "@type": [
-              "shacl:PropertyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
-            ],
-            "shacl:path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#primaryApplicant"
-              }
-            ],
-            "raml-shapes:range": [
-              {
-                "@id": "#22",
-                "@type": [
-                  "shacl:NodeShape",
-                  "raml-shapes:AnyShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:closed": [
-                  {
-                    "@value": false
-                  }
-                ],
-                "shacl:property": [
-                  {
-                    "@id": "#23",
-                    "@type": [
-                      "shacl:PropertyShape",
-                      "shacl:Shape",
-                      "raml-shapes:Shape",
-                      "doc:DomainElement"
-                    ],
-                    "shacl:path": [
-                      {
-                        "@id": "http://a.ml/vocabularies/data#addresses"
-                      }
-                    ],
-                    "raml-shapes:range": [
-                      {
-                        "@id": "#24",
-                        "@type": [
-                          "raml-shapes:AnyShape",
-                          "shacl:Shape",
-                          "raml-shapes:Shape",
-                          "doc:DomainElement"
-                        ],
-                        "shacl:name": [
-                          {
-                            "@value": "addresses"
-                          }
-                        ],
-                        "shacl:and": [
-                          {
-                            "@id": "#25",
-                            "@type": [
-                              "shacl:NodeShape",
-                              "raml-shapes:AnyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ],
-                            "shacl:closed": [
-                              {
-                                "@value": false
-                              }
-                            ],
-                            "shacl:property": [],
-                            "doc:recursive": [
-                              {
-                                "@value": true
-                              }
-                            ],
-                            "shacl:name": [
-                              {
-                                "@value": "fullAddress"
-                              }
-                            ],
-                            "smaps": {
-                              "resolved-link-target": {
-                                "#25": "amf://id#25"
-                              },
-                              "type-property-lexical-info": {
-                                "#25": "[(8,4)-(8,10)]"
-                              },
-                              "lexical": {
-                                "#25": "[(7,2)-(9,3)]"
-                              },
-                              "resolved-link": {
-                                "#25": "amf://id#26"
-                              }
-                            }
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "shacl:and": "[(14,17)-(18,9)]",
-                            "#24": "[(13,6)-(19,7)]"
-                          }
-                        }
-                      }
-                    ],
-                    "shacl:minCount": [
-                      {
-                        "@value": 0
-                      }
-                    ],
-                    "shacl:name": [
-                      {
-                        "@value": "addresses"
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#23": "[(13,6)-(19,7)]"
-                      }
-                    }
-                  },
-                  {
-                    "@id": "#27",
-                    "@type": [
-                      "shacl:PropertyShape",
-                      "shacl:Shape",
-                      "raml-shapes:Shape",
-                      "doc:DomainElement"
-                    ],
-                    "shacl:path": [
-                      {
-                        "@id": "http://a.ml/vocabularies/data#expenses"
-                      }
-                    ],
-                    "raml-shapes:range": [
-                      {
-                        "@id": "#28",
-                        "@type": [
-                          "raml-shapes:AnyShape",
-                          "shacl:Shape",
-                          "raml-shapes:Shape",
-                          "doc:DomainElement"
-                        ],
-                        "shacl:name": [
-                          {
-                            "@value": "expenses"
-                          }
-                        ],
-                        "shacl:or": [
-                          {
-                            "@id": "#29",
-                            "@type": [
-                              "shacl:NodeShape",
-                              "raml-shapes:AnyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ],
-                            "shacl:closed": [
-                              {
-                                "@value": false
-                              }
-                            ],
-                            "shacl:property": [],
-                            "doc:recursive": [
-                              {
-                                "@value": true
-                              }
-                            ],
-                            "shacl:name": [
-                              {
-                                "@value": "expensesLiving"
-                              }
-                            ],
-                            "smaps": {
-                              "resolved-link-target": {
-                                "#29": "amf://id#29"
-                              },
-                              "type-property-lexical-info": {
-                                "#29": "[(5,4)-(5,10)]"
-                              },
-                              "lexical": {
-                                "#29": "[(4,2)-(6,3)]"
-                              },
-                              "resolved-link": {
-                                "#29": "amf://id#30"
-                              }
-                            }
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "shacl:or": "[(21,17)-(25,9)]",
-                            "#28": "[(20,6)-(26,7)]"
-                          }
-                        }
-                      }
-                    ],
-                    "shacl:minCount": [
-                      {
-                        "@value": 0
-                      }
-                    ],
-                    "shacl:name": [
-                      {
-                        "@value": "expenses"
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#27": "[(20,6)-(26,7)]"
-                      }
-                    }
-                  }
-                ],
-                "shacl:name": [
-                  {
-                    "@value": "applicant"
-                  }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "#22": "[(11,4)-(11,10)]"
-                  },
-                  "lexical": {
-                    "#22": "[(10,2)-(28,3)]"
-                  }
-                }
-              }
-            ],
-            "shacl:minCount": [
-              {
-                "@value": 0
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "primaryApplicant"
-              }
-            ],
-            "smaps": {
-              "lexical": {
-                "#21": "[(13,4)-(15,5)]"
-              }
-            }
-          },
-          {
-            "@id": "#31",
-            "@type": [
-              "shacl:PropertyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
-            ],
-            "shacl:path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#additionalApplicants"
-              }
-            ],
-            "raml-shapes:range": [
-              {
-                "@id": "#32",
-                "@type": [
-                  "shacl:NodeShape",
-                  "raml-shapes:AnyShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:closed": [
-                  {
-                    "@value": false
-                  }
-                ],
-                "shacl:property": [
-                  {
-                    "@id": "#33",
-                    "@type": [
-                      "shacl:PropertyShape",
-                      "shacl:Shape",
-                      "raml-shapes:Shape",
-                      "doc:DomainElement"
-                    ],
-                    "shacl:path": [
-                      {
-                        "@id": "http://a.ml/vocabularies/data#addresses"
-                      }
-                    ],
-                    "raml-shapes:range": [
-                      {
-                        "@id": "#34",
-                        "@type": [
-                          "raml-shapes:AnyShape",
-                          "shacl:Shape",
-                          "raml-shapes:Shape",
-                          "doc:DomainElement"
-                        ],
-                        "shacl:name": [
-                          {
-                            "@value": "addresses"
-                          }
-                        ],
-                        "shacl:and": [
-                          {
-                            "@id": "#25",
-                            "@type": [
-                              "shacl:NodeShape",
-                              "raml-shapes:AnyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ],
-                            "shacl:closed": [
-                              {
-                                "@value": false
-                              }
-                            ],
-                            "shacl:property": [],
-                            "doc:recursive": [
-                              {
-                                "@value": true
-                              }
-                            ],
-                            "shacl:name": [
-                              {
-                                "@value": "fullAddress"
-                              }
-                            ],
-                            "smaps": {
-                              "resolved-link-target": {
-                                "#25": "amf://id#25"
-                              },
-                              "type-property-lexical-info": {
-                                "#25": "[(8,4)-(8,10)]"
-                              },
-                              "lexical": {
-                                "#25": "[(7,2)-(9,3)]"
-                              },
-                              "resolved-link": {
-                                "#25": "amf://id#26"
-                              }
-                            }
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "shacl:and": "[(14,17)-(18,9)]",
-                            "#34": "[(13,6)-(19,7)]"
-                          }
-                        }
-                      }
-                    ],
-                    "shacl:minCount": [
-                      {
-                        "@value": 0
-                      }
-                    ],
-                    "shacl:name": [
-                      {
-                        "@value": "addresses"
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#33": "[(13,6)-(19,7)]"
-                      }
-                    }
-                  },
-                  {
-                    "@id": "#35",
-                    "@type": [
-                      "shacl:PropertyShape",
-                      "shacl:Shape",
-                      "raml-shapes:Shape",
-                      "doc:DomainElement"
-                    ],
-                    "shacl:path": [
-                      {
-                        "@id": "http://a.ml/vocabularies/data#expenses"
-                      }
-                    ],
-                    "raml-shapes:range": [
-                      {
-                        "@id": "#36",
-                        "@type": [
-                          "raml-shapes:AnyShape",
-                          "shacl:Shape",
-                          "raml-shapes:Shape",
-                          "doc:DomainElement"
-                        ],
-                        "shacl:name": [
-                          {
-                            "@value": "expenses"
-                          }
-                        ],
-                        "shacl:or": [
-                          {
-                            "@id": "#29",
-                            "@type": [
-                              "shacl:NodeShape",
-                              "raml-shapes:AnyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ],
-                            "shacl:closed": [
-                              {
-                                "@value": false
-                              }
-                            ],
-                            "shacl:property": [],
-                            "doc:recursive": [
-                              {
-                                "@value": true
-                              }
-                            ],
-                            "shacl:name": [
-                              {
-                                "@value": "expensesLiving"
-                              }
-                            ],
-                            "smaps": {
-                              "resolved-link-target": {
-                                "#29": "amf://id#29"
-                              },
-                              "type-property-lexical-info": {
-                                "#29": "[(5,4)-(5,10)]"
-                              },
-                              "lexical": {
-                                "#29": "[(4,2)-(6,3)]"
-                              },
-                              "resolved-link": {
-                                "#29": "amf://id#30"
-                              }
-                            }
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "shacl:or": "[(21,17)-(25,9)]",
-                            "#36": "[(20,6)-(26,7)]"
-                          }
-                        }
-                      }
-                    ],
-                    "shacl:minCount": [
-                      {
-                        "@value": 0
-                      }
-                    ],
-                    "shacl:name": [
-                      {
-                        "@value": "expenses"
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#35": "[(20,6)-(26,7)]"
-                      }
-                    }
-                  }
-                ],
-                "shacl:name": [
-                  {
-                    "@value": "applicant"
-                  }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "#32": "[(11,4)-(11,10)]"
-                  },
-                  "lexical": {
-                    "#32": "[(10,2)-(28,3)]"
-                  }
-                }
-              }
-            ],
-            "shacl:minCount": [
-              {
-                "@value": 0
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "additionalApplicants"
-              }
-            ],
-            "smaps": {
-              "lexical": {
-                "#31": "[(16,4)-(18,5)]"
+                "#36": "[(9,4)-(11,5)]"
               }
             }
           }
@@ -1110,20 +1122,19 @@
           }
         ],
         "smaps": {
+          "inheritance-provenance": {
+            "doc:reference-id": "amf://id#17"
+          },
           "declared-element": {
             "#7": ""
           },
           "lexical": {
             "apiContract:examples": "[(12,4)-(16,0)]",
-            "shacl:closed": "[(4,2)-(4,31)]",
-            "#7": "[(10,2)-(24,1)]",
+            "#7": "[(10,11)-(16,0)]",
             "shacl:name": "[(10,2)-(10,10)]"
           },
-          "type-property-lexical-info": {
-            "#7": "[(3,2)-(3,8)]"
-          },
-          "parsed-json-schema": {
-            "#7": "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"merchant\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"operator\": {\r\n      \"type\": \"string\"\r\n    },\r\n\r\n    \"primaryApplicant\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    },\r\n    \"additionalApplicants\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    }\r\n  },\r\n  \"required\": [\r\n    \"merchant\",\r\n    \"operator\"\r\n  ]\r\n}"
+          "inherited-shapes": {
+            "#7": "amf://id#38"
           }
         }
       }

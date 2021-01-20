@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: something
+types:
+  A:
+    description: an inlined json schema
+    examples:
+        test:
+          input: "my string"
+    type: |
+                {
+                  "$schema": "http://json-schema.org/draft-03/schema",
+                  "properties": {
+                    "input": {
+                      "required": false,
+                      "type": "string"
+                    }
+                  },
+                  "description": "Inner description",
+                  "required": false,
+                  "type": "object"
+                }

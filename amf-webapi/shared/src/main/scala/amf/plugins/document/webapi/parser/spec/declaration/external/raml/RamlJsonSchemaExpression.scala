@@ -1,26 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.declaration.external.raml
 
 import amf.core.Root
-import amf.core.annotations.ExternalFragmentRef
+import amf.core.annotations.{ExternalFragmentRef, VirtualObject}
 import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain.Shape
-import amf.core.parser.{
-  Annotations,
-  InferredLinkReference,
-  JsonParserFactory,
-  ParsedReference,
-  Reference,
-  ReferenceFragmentPartition,
-  SyamlParsedDocument,
-  YMapOps
-}
+import amf.core.model.domain.{AmfArray, Shape}
+import amf.core.parser.{Annotations, InferredLinkReference, JsonParserFactory, ParsedReference, Reference, ReferenceFragmentPartition, SyamlParsedDocument, YMapOps}
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.annotations.{
-  ExternalReferenceUrl,
-  JSONSchemaId,
-  ParsedJSONSchema,
-  SchemaIsJsonSchema
-}
+import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
@@ -46,8 +32,57 @@ case class RamlJsonSchemaExpression(key: YNode,
                                     parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
 
-  override def parseValue(origin: ValueAndOrigin): AnyShape = {
-    val parsed: AnyShape = origin.oriUrl match {
+  override def parseValue(origin: ValueAndOrigin): AnyShape = value.value match {
+    case map: YMap if parseExample =>
+      val parsed: AnyShape = parseWrappedSchema(origin)
+      val wrapper: AnyShape = parseSchemaWrapper(map, parsed, origin: ValueAndOrigin)
+      wrapper.annotations += ExternalSchemaWrapper()
+      wrapper
+    case _ =>
+      val parsed  = parseJsonFromValueAndOrigin(origin, adopt)
+      parsed.annotations += SchemaIsJsonSchema()
+      parsed
+
+  }
+
+  private def parseSchemaWrapper(map: YMap, parsed: AnyShape, origin: ValueAndOrigin) = {
+    val wrapper = parsed.meta.modelInstance
+    wrapper.annotations ++= Annotations(value)
+    adopt(wrapper)
+    map.key("displayName", (ShapeModel.DisplayName in wrapper).allowingAnnotations)
+    map.key("description", (ShapeModel.Description in wrapper).allowingAnnotations)
+    map.key(
+      "default",
+      entry => {
+        val dataNodeResult = NodeDataNodeParser(entry.value, wrapper.id, quiet = false).parse()
+        wrapper.setDefaultStrValue(entry)
+        dataNodeResult.dataNode.foreach { dataNode =>
+          wrapper.set(ShapeModel.Default, dataNode, Annotations(entry))
+        }
+      }
+    )
+    parseExamples(wrapper, value.as[YMap])
+    wrapperName(key).foreach(_ => wrapper.withName(_, Annotations(key)))
+    val typeEntryAnnotations = map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
+    wrapper.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations(VirtualObject())), typeEntryAnnotations)
+    wrapper
+  }
+
+  private def parseWrappedSchema(origin: ValueAndOrigin) = {
+    val forcedSchemaAdoption = (s: Shape) => {
+      adopt(s)
+      s.id = s"${s.id}/schema/"
+    }
+    val parsed = parseJsonFromValueAndOrigin(origin, forcedSchemaAdoption)
+    parsed.annotations += SchemaIsJsonSchema()
+    parsed.withName("schema")
+    parsed
+  }
+
+  private def wrapperName(key: YNode) = key.asScalar.map(_.text)
+
+  private def parseJsonFromValueAndOrigin(origin: ValueAndOrigin, adopt: Shape => Unit) = {
+    origin.originalUrlText match {
       case Some(url) =>
         parseValueWithUrl(origin, url).add(ExternalReferenceUrl(url))
       case None =>
@@ -55,28 +90,6 @@ case class RamlJsonSchemaExpression(key: YNode,
         shape.annotations += ParsedJSONSchema(origin.text)
         shape
     }
-
-    // parsing the potential example
-    if (parseExample && value.tagType == YType.Map) {
-      val map = value.as[YMap]
-
-      map.key("displayName", (ShapeModel.DisplayName in parsed).allowingAnnotations)
-      map.key("description", (ShapeModel.Description in parsed).allowingAnnotations)
-      map.key(
-        "default",
-        entry => {
-          val dataNodeResult = NodeDataNodeParser(entry.value, parsed.id, quiet = false).parse()
-          parsed.setDefaultStrValue(entry)
-          dataNodeResult.dataNode.foreach { dataNode =>
-            parsed.set(ShapeModel.Default, dataNode, Annotations(entry))
-          }
-        }
-      )
-      parseExamples(parsed, value.as[YMap])
-    }
-
-    parsed.annotations += SchemaIsJsonSchema()
-    parsed
   }
 
   private def parseValueWithUrl(origin: ValueAndOrigin, url: String) = {
@@ -131,7 +144,7 @@ case class RamlJsonSchemaExpression(key: YNode,
   }
 
   private def parseFragment(origin: ValueAndOrigin, basePath: String) = {
-    val shape = parseJsonShape(origin.text, key, origin.valueAST, adopt, value, origin.oriUrl)
+    val shape = parseJsonShape(origin.text, key, origin.valueAST, adopt, value, origin.originalUrlText)
     ctx.declarations.fragments
       .get(basePath)
       .foreach(e => shape.withReference(e.encoded.id))
@@ -190,7 +203,6 @@ case class RamlJsonSchemaExpression(key: YNode,
       JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), schemaEntry, jsonSchemaContext, fullRef)
 
     val s = actualParsing(adopt, value, schemaEntry, jsonSchemaContext, fullRef, tmpShape)
-
     cleanGlobalSpace()
     savePromotedFragmentsFromNestedContext(jsonSchemaContext)
     s
