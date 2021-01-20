@@ -253,7 +253,7 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
     map.key(
       "securitySchemes",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        addDeclarationKey(DeclarationKey(e))
         e.value.tagType match {
           case YType.Map =>
             e.value.as[YMap].entries.foreach { entry =>
@@ -318,7 +318,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
     map.key(
       key,
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries
@@ -340,7 +340,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
     map.key(
       "annotationTypes",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e, isAbstract = true))
+        addDeclarationKey(DeclarationKey(e, isAbstract = true))
         e.value.tagType match {
           case YType.Map =>
             e.value
@@ -372,7 +372,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
 
   private def parseTypeDeclarations(map: YMap, parent: String): Unit = {
     typeOrSchema(map).foreach { e =>
-      ctx.addDeclarationKey(DeclarationKey(e))
+      addDeclarationKey(DeclarationKey(e))
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
@@ -432,7 +432,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
     map.key(
       key,
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries

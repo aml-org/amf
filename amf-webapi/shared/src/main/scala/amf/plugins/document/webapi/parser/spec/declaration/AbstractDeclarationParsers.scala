@@ -25,7 +25,7 @@ case class AbstractDeclarationsParser(key: String,
     map.key(
       key,
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        addDeclarationKey(DeclarationKey(e))
         e.value.tagType match {
           case YType.Map =>
             e.value

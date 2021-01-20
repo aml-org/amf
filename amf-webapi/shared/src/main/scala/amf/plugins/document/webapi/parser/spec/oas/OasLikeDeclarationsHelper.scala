@@ -6,6 +6,7 @@ import amf.core.model.domain.{AmfScalar, NamedDomainElement}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+import amf.plugins.document.webapi.parser.spec.common.DeclarationKeyCollector
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.validations.ParserSideValidations
@@ -15,11 +16,12 @@ import org.yaml.model.{YMap, YScalar}
 trait OasLikeDeclarationsHelper {
   protected val definitionsKey: String
 
-  def parseTypeDeclarations(map: YMap, typesPrefix: String)(implicit ctx: OasLikeWebApiContext): Unit = {
+  def parseTypeDeclarations(map: YMap, typesPrefix: String, declarationKeysHolder: Option[DeclarationKeyCollector])(
+      implicit ctx: OasLikeWebApiContext): Unit = {
     map.key(
       definitionsKey,
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        declarationKeysHolder.foreach(_.addDeclarationKey(DeclarationKey(entry)))
         entry.value
           .as[YMap]
           .entries

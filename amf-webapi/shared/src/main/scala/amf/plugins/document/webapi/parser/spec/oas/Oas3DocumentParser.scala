@@ -47,7 +47,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
       parseExamplesDeclaration(map, parent + "/examples")
       parseLinkDeclarations(map, parent + "/links")
       super.parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
-      super.parseTypeDeclarations(map, parent + "/types")
+      super.parseTypeDeclarations(map, parent + "/types", Some(this))
       parseHeaderDeclarations(map, parent + "/headers")
       super.parseParameterDeclarations(map, parent + "/parameters")
       super.parseResponsesDeclarations("responses", map, parent + "/responses")
@@ -74,7 +74,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "examples",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        addDeclarationKey(DeclarationKey(e))
         Oas3NamedExamplesParser(e, parent)
           .parse()
           .foreach(ex => ctx.declarations += ex.add(DeclaredElement()))
@@ -86,7 +86,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "requestBodies",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e, isAbstract = true))
+        addDeclarationKey(DeclarationKey(e, isAbstract = true))
         e.value
           .as[YMap]
           .entries
@@ -103,7 +103,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "headers",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry, isAbstract = true))
+        addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         val headers: Seq[Parameter] =
           OasHeaderParametersParser(entry.value.as[YMap], _.adopted(parent)).parse()
         headers.foreach(header => {
@@ -118,7 +118,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "links",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries
@@ -131,7 +131,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "callbacks",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries

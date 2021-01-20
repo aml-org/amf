@@ -108,7 +108,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
   def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"
-    parseTypeDeclarations(map, parent + "/types")
+    parseTypeDeclarations(map, parent + "/types", Some(this))
     parseAnnotationTypeDeclarations(map, parent)
     AbstractDeclarationsParser("resourceTypes".asOasExtension,
                                (entry: YMapEntry) => ResourceType(entry),
@@ -131,7 +131,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "annotationTypes".asOasExtension,
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e, isAbstract = true))
+        addDeclarationKey(DeclarationKey(e, isAbstract = true))
         e.value
           .as[YMap]
           .entries
@@ -178,7 +178,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       key,
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        addDeclarationKey(DeclarationKey(e))
         e.value.as[YMap].entries.foreach { entry =>
           val securityScheme: SecurityScheme = ctx.factory
             .securitySchemeParser(
@@ -204,7 +204,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "parameters",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries
@@ -234,7 +234,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       key,
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries

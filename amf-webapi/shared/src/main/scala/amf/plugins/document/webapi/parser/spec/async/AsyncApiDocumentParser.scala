@@ -125,7 +125,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
       parseSecuritySchemeDeclarations(componentsMap, parent + "/securitySchemes")
       parseCorrelationIdDeclarations(componentsMap, parent + "/correlationIds")
-      super.parseTypeDeclarations(componentsMap, parent + "/types")
+      super.parseTypeDeclarations(componentsMap, parent + "/types", Some(this))
       parseParameterDeclarations(componentsMap, parent + "/parameters")
 
       parseMessageBindingsDeclarations(componentsMap, parent + "/messageBindings")
@@ -146,7 +146,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       "messages",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        addDeclarationKey(DeclarationKey(e))
         e.value.as[YMap].entries.foreach { entry =>
           val message = AsyncMessageParser(YMapEntryLike(entry), parent, None).parse()
           message.add(DeclaredElement())
@@ -159,7 +159,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       "operationTraits",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry, isAbstract = true))
+        addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         entry.value.as[YMap].entries.foreach { entry =>
           val adopt     = (o: Operation) => o.adopted(parent)
           val operation = AsyncOperationParser(entry, adopt, isTrait = true).parse()
@@ -173,7 +173,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       "messageTraits",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry, isAbstract = true))
+        addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         entry.value.as[YMap].entries.foreach { entry =>
           val message = AsyncMessageParser(YMapEntryLike(entry), parent, None, isTrait = true).parse()
           message.add(DeclaredElement())
@@ -186,7 +186,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     map.key(
       "securitySchemes",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        addDeclarationKey(DeclarationKey(e))
         e.value.as[YMap].entries.foreach { entry =>
           ctx.declarations += ctx.factory
             .securitySchemeParser(
@@ -210,7 +210,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       "parameters",
       paramsMap => {
-        ctx.addDeclarationKey(DeclarationKey(paramsMap))
+        addDeclarationKey(DeclarationKey(paramsMap))
         val parameters: Seq[Parameter] = AsyncParametersParser(parent, paramsMap.value.as[YMap]).parse()
         parameters map { param =>
           param.add(DeclaredElement())
@@ -224,7 +224,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       "correlationIds",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        addDeclarationKey(DeclarationKey(e))
         e.value.as[YMap].entries.foreach { entry =>
           val correlationId = AsyncCorrelationIdParser(YMapEntryLike(entry), parent).parse()
           ctx.declarations += correlationId.add(DeclaredElement())
@@ -284,7 +284,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     componentsMap.key(
       keyword,
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        addDeclarationKey(DeclarationKey(e))
         e.value.as[YMap].entries.foreach { entry =>
           val bindings: T = parse(entry)
           bindings.add(DeclaredElement())
