@@ -11,7 +11,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
-import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys}
+import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys, Inferred}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.contexts.parser.raml.{
   ExtensionLikeWebApiContext,
@@ -153,14 +153,17 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     val references = ReferencesParser(document, root.location, "uses", map, root.references).parse()
     parseDeclarations(root, map)
-    val declarationKeys = ctx.getDeclarationKeys
-    if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
-
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
+
     document.withEncodes(api)
 
-    val declarables = ctx.declarations.declarables()
-    if (declarables.nonEmpty) document.withDeclares(declarables)
+    val declarables     = ctx.declarations.declarables()
+    val declarationKeys = ctx.getDeclarationKeys
+    val ann             = Annotations(DeclarationKeys(declarationKeys))
+
+    if (declarables.isEmpty) ann += Inferred()
+    document.withDeclares(declarables, ann)
+
     if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     ctx.futureDeclarations.resolve()

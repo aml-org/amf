@@ -4,7 +4,7 @@ import amf.core.Root
 import amf.core.annotations.SourceVendor
 import amf.core.model.document.Module
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.annotations.DeclarationKeys
+import amf.plugins.document.webapi.annotations.{DeclarationKeys, Inferred}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
 import org.yaml.model._
@@ -29,11 +29,12 @@ case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiCon
 
       parseDeclarations(root, rootMap)
       val declarationKeys = ctx.getDeclarationKeys
-      if (declarationKeys.nonEmpty) module.add(DeclarationKeys(declarationKeys))
       UsageParser(rootMap, module).parse()
 
       val declarables = ctx.declarations.declarables()
-      if (declarables.nonEmpty) module.withDeclares(declarables)
+      val ann         = Annotations(DeclarationKeys(declarationKeys))
+      if (declarables.isEmpty) ann += Inferred()
+      module.withDeclares(declarables, ann)
       if (references.nonEmpty) module.withReferences(references.baseUnitReferences())
     }
 
