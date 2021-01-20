@@ -39,7 +39,6 @@ abstract class WebApiContext(val loc: String,
 
   val syntax: SpecSyntax
   val vendor: Vendor
-  private var declarationKeys: List[DeclarationKey] = List.empty
   val declarations: WebApiDeclarations = declarationsOption.getOrElse(
     new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
 
@@ -175,12 +174,6 @@ abstract class WebApiContext(val loc: String,
   def getEntryKey(entry: YMapEntry): String = {
     entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
   }
-
-  def addDeclarationKey(key: DeclarationKey): Unit = {
-    declarationKeys = key :: declarationKeys
-  }
-
-  def getDeclarationKeys: List[DeclarationKey] = this.declarationKeys
 
   protected def nextValidation(node: String, shape: String, ast: YMap): Unit =
     throwClosedShapeError(node, s"Cannot validate unknown node type $shape for $vendor", ast)

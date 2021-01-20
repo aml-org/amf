@@ -8,7 +8,12 @@ import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.{
+  AbstractVariables,
+  DataNodeParser,
+  DeclarationKeyCollector,
+  YMapEntryLike
+}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.validations.ParserSideValidations.{InvalidAbstractDeclarationType, NullAbstractDeclaration}
 import org.yaml.model._
@@ -20,12 +25,13 @@ case class AbstractDeclarationsParser(key: String,
                                       producer: YMapEntry => AbstractDeclaration,
                                       map: YMap,
                                       customProperties: String,
-                                      model: DomainElementModel)(implicit ctx: WebApiContext) {
+                                      model: DomainElementModel,
+                                      declarationKeyCollector: DeclarationKeyCollector)(implicit ctx: WebApiContext) {
   def parse(): Unit = {
     map.key(
       key,
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        declarationKeyCollector.addDeclarationKey(DeclarationKey(e))
         e.value.tagType match {
           case YType.Map =>
             e.value

@@ -156,7 +156,7 @@ case class RamlJsonSchemaExpression(key: YNode,
       Oas2DocumentParser(
         Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
         jsonSchemaContext)
-        .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")(jsonSchemaContext)
+        .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/", None)(jsonSchemaContext)
       val resolvedShapes = jsonSchemaContext.declarations.shapes.values.toSeq
       val shapesMap      = mutable.Map[String, AnyShape]()
       resolvedShapes.map(s => (s, s.annotations.find(classOf[JSONSchemaId]))).foreach {

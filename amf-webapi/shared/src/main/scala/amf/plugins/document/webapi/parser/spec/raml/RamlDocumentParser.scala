@@ -11,7 +11,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
-import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys}
+import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.contexts.parser.raml.{
   ExtensionLikeWebApiContext,
@@ -153,14 +153,11 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     val references = ReferencesParser(document, root.location, "uses", map, root.references).parse()
     parseDeclarations(root, map)
-    val declarationKeys = ctx.getDeclarationKeys
-    if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
-
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
+
     document.withEncodes(api)
 
-    val declarables = ctx.declarations.declarables()
-    if (declarables.nonEmpty) document.withDeclares(declarables)
+    addDeclarationsToModel(document)
     if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     ctx.futureDeclarations.resolve()
@@ -256,7 +253,7 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
     map.key(
       "securitySchemes",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        addDeclarationKey(DeclarationKey(e))
         e.value.tagType match {
           case YType.Map =>
             e.value.as[YMap].entries.foreach { entry =>
@@ -299,7 +296,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       },
       map,
       parent + "/traits",
-      TraitModel
+      TraitModel,
+      this
     ).parse()
     AbstractDeclarationsParser(
       "resourceTypes",
@@ -310,7 +308,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       },
       map,
       parent + "/resourceTypes",
-      ResourceTypeModel
+      ResourceTypeModel,
+      this
     ).parse()
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseParameterDeclarations("parameters".asRamlAnnotation, map, root.location + "#/parameters")
@@ -321,7 +320,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
     map.key(
       key,
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries
@@ -343,7 +342,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
     map.key(
       "annotationTypes",
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e, isAbstract = true))
+        addDeclarationKey(DeclarationKey(e, isAbstract = true))
         e.value.tagType match {
           case YType.Map =>
             e.value
@@ -375,7 +374,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
 
   private def parseTypeDeclarations(map: YMap, parent: String): Unit = {
     typeOrSchema(map).foreach { e =>
-      ctx.addDeclarationKey(DeclarationKey(e))
+      addDeclarationKey(DeclarationKey(e))
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
@@ -435,7 +434,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
     map.key(
       key,
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries

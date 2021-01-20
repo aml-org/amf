@@ -41,7 +41,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
             if (amfObject.annotations.contains(classOf[SourceAST]))
               assert(amfObject.annotations.contains(classOf[SourceNode]))
             checkAnnotation(amfObject)
-          case array: AmfArray if array.values.head.isInstanceOf[AmfObject] =>
+          case array: AmfArray if array.values.nonEmpty && array.values.head.isInstanceOf[AmfObject] =>
             array.values.asInstanceOf[Seq[AmfObject]].foreach { checkAnnotation }
           case _ =>
         }
