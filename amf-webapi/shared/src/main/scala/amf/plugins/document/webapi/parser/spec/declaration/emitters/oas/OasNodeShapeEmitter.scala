@@ -24,7 +24,11 @@ import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.{
 }
 import amf.plugins.document.webapi.parser.spec.jsonschema.emitter.UnevaluatedEmitter.unevaluatedPropertiesInfo
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
-import amf.plugins.domain.shapes.metamodel.NodeShapeModel.{UnevaluatedProperties, UnevaluatedPropertiesSchema}
+import amf.plugins.domain.shapes.metamodel.NodeShapeModel.{
+  AdditionalPropertiesSchema,
+  UnevaluatedProperties,
+  UnevaluatedPropertiesSchema
+}
 import amf.plugins.domain.shapes.models.NodeShape
 
 import scala.collection.immutable.ListMap
@@ -50,18 +54,20 @@ case class OasNodeShapeEmitter(node: NodeShape,
 
     fs.entry(NodeShapeModel.MaxProperties).map(f => result += ValueEmitter("maxProperties", f))
 
-    fs.entry(NodeShapeModel.Closed).filter(f => isExplicit(f) || f.scalar.toBool) match {
-      case Some(f) => result += ValueEmitter("additionalProperties", f.negated)
-      case _ =>
-        fs.entry(NodeShapeModel.AdditionalPropertiesSchema)
-          .map(
-            f =>
-              result += OasEntryShapeEmitter("additionalProperties",
-                                             f.element.asInstanceOf[Shape],
-                                             ordering,
-                                             references,
-                                             pointer,
-                                             schemaPath))
+    val additionalPropertiesSchema = fs.entry(AdditionalPropertiesSchema)
+
+    additionalPropertiesSchema match {
+      case Some(f) =>
+        result += OasEntryShapeEmitter("additionalProperties",
+                                       f.element.asInstanceOf[Shape],
+                                       ordering,
+                                       references,
+                                       pointer,
+                                       schemaPath)
+      case None =>
+        fs.entry(NodeShapeModel.Closed)
+          .filter(f => isExplicit(f) || f.scalar.toBool)
+          .foreach(f => result += ValueEmitter("additionalProperties", f.negated))
     }
 
     UntranslatableDraft2019FieldsPresentGuard(node,
