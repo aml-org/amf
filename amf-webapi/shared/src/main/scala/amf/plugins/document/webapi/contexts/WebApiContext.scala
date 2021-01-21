@@ -4,10 +4,10 @@ import amf.core.client.ParsingOptions
 import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, ParsedReference, ParserContext}
-import amf.core.remote.Context.resolveRelativeTo
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.{AliasCounter, IdCounter}
+import amf.core.utils.UriUtils.resolve
+import amf.core.utils.{Absolute, AliasCounter, IdCounter, RelativeToIncludedFile}
 import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec._
@@ -123,15 +123,6 @@ abstract class WebApiContext(val loc: String,
   }
 
   def computeJsonSchemaVersion(ast: YNode): SchemaVersion = parseSchemaVersion(ast, eh)
-
-  def resolvedPath(current: String, url: String): String = {
-    val base = url match {
-      case Absolute(_)               => None
-      case RelativeToIncludedFile(_) => Some(current)
-    }
-    val encodedUrl = platform.encodeURI(url)
-    resolveRelativeTo(base, encodedUrl)
-  }
 
   private def normalizeJsonPath(path: String): String = {
     if (path == "#" || path == "" || path == "/") "/" // exception root cases
