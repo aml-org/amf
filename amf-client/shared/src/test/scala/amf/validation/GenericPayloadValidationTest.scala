@@ -7,7 +7,7 @@ import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, Validation}
 import amf.internal.environment.Environment
-import amf.plugins.document.graph.emitter.JsonLdEmitter
+import amf.plugins.document.graph.emitter.EmbeddedJsonLdEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import amf.{AmfProfile, PayloadProfile}
@@ -129,7 +129,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
   private def render(filePayload: BaseUnit) = {
     val builder = JsonOutputBuilder()
-    JsonLdEmitter.emit(filePayload, builder)
+    EmbeddedJsonLdEmitter.emit(filePayload, builder)
     builder.result.toString
   }
 }

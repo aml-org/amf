@@ -10,9 +10,8 @@ import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor}
 import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm, NoForm}
+import amf.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
 import org.scalactic.Fail
-import org.scalatest.words.{IncludeWord, ShouldVerb}
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -21,14 +20,14 @@ import scala.concurrent.{ExecutionContext, Future}
   * Cycle tests using temporary file and directory creator
   */
 trait JsonLdSerializationSuite {
-  def testedForms: Seq[JsonLdDocumentForm] = Seq(FlattenedForm, ExpandedForm)
+  def testedForms: Seq[JsonLdDocumentForm] = Seq(FlattenedForm, EmbeddedForm)
 
   def defaultRenderOptions: RenderOptions = RenderOptions()
 
   def renderOptionsFor(documentForm: JsonLdDocumentForm): RenderOptions = {
     documentForm match {
       case FlattenedForm => defaultRenderOptions.withFlattenedJsonLd
-      case ExpandedForm  => defaultRenderOptions.withoutFlattenedJsonLd
+      case EmbeddedForm  => defaultRenderOptions.withoutFlattenedJsonLd
       case _             => defaultRenderOptions
 
     }

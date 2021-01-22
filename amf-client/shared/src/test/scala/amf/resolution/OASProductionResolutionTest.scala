@@ -4,7 +4,6 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Amf, Oas30, OasJsonHint, OasYamlHint}
-import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm}
 import amf.plugins.document.webapi.Oas20Plugin
 
 class OASProductionResolutionTest extends ResolutionTest {

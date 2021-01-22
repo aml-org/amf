@@ -5,7 +5,6 @@ import amf.core.model.document.BaseUnit
 import amf.core.remote.{Amf, Raml, Raml08, RamlYamlHint}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
-import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm}
 
 import scala.concurrent.{ExecutionContext, Future}
 
