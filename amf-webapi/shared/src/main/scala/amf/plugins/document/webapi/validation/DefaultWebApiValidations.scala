@@ -12,7 +12,7 @@ import scala.collection.mutable.ArrayBuffer
 trait ImportUtils {
   protected def validationId(validation: AMFValidation): String =
     validation.uri match {
-      case Some(s) => Namespace.expand(s.trim).iri()
+      case Some(s) => Namespace.staticAliases.expand(s.trim).iri()
       case None =>
         val classPostfix    = postfix(validation.owlClass, "domain")
         val propertyPostfix = postfix(validation.owlProperty, "property")
@@ -89,12 +89,12 @@ object DefaultAMFValidations extends ImportUtils {
         targetClass = Seq(validation.owlClass)
       )
 
-      Namespace.expand(validation.target.trim).iri() match {
+      Namespace.staticAliases.expand(validation.target.trim).iri() match {
         case "http://www.w3.org/ns/shacl#path" =>
           val valueType = if (validation.constraint.trim.contains("#")) {
             val strings = validation.constraint.trim.split("#")
             ValueType(Namespace.find(strings.head).get, strings.last)
-          } else Namespace.expand(validation.constraint)
+          } else Namespace.staticAliases.expand(validation.constraint)
           valueType match {
             case sh @ ValueType(Namespace.Shacl, _) =>
               Seq(spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation, sh))))
