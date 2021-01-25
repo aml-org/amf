@@ -269,7 +269,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         case n if n.isNumber =>
           setValue("minimum", map, ScalarShapeModel.Minimum, shape)
           setValue("maximum", map, ScalarShapeModel.Maximum, shape)
-          map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
+          setValue("multipleOf", map, ScalarShapeModel.MultipleOf, shape)
           if (version isBiggerThanOrEqualTo JSONSchemaDraft7SchemaVersion) {
             parseNumericExclusive(map, shape)
           } else {

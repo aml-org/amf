@@ -1,0 +1,217 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#WebAPI",
+        "http://a.ml/vocabularies/apiContract#API",
+        "http://a.ml/vocabularies/document#RootDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "some title",
+      "http://a.ml/vocabularies/apiContract#endpoint": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api/end-points/%2Fsample"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api/end-points/%2Fsample",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#EndPoint",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#path": "/sample",
+      "http://a.ml/vocabularies/apiContract#supportedOperation": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api/end-points/%2Fsample/post"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api/end-points/%2Fsample/post",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Operation",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#method": "post",
+      "http://a.ml/vocabularies/apiContract#expects": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api/end-points/%2Fsample/post/request"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api/end-points/%2Fsample/post/request",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Request",
+        "http://a.ml/vocabularies/apiContract#Message",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/apiContract#payload": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api/end-points/%2Fsample/post/request/application%2Fjson"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api/end-points/%2Fsample/post/request/application%2Fjson",
+      "@type": [
+        "http://a.ml/vocabularies/apiContract#Payload",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#mediaType": "application/json",
+      "http://a.ml/vocabularies/shapes#schema": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api/end-points/%2Fsample/post/request/application%2Fjson/schema"
+      }
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api/end-points/%2Fsample/post/request/application%2Fjson/schema",
+      "@type": [
+        "http://www.w3.org/ns/shacl#NodeShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#closed": false,
+      "http://www.w3.org/ns/shacl#name": "schema"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml",
+      "http://a.ml/vocabularies/document#declares": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long02"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long01"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long03"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long-98"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long00"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long-99"
+        }
+      ],
+      "@type": [
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/web-api"
+      },
+      "http://a.ml/vocabularies/document#version": "2.3.0",
+      "http://a.ml/vocabularies/document#root": true
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long02",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#maxInclusive": 10000000000000002,
+      "http://www.w3.org/ns/shacl#name": "long02"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long01",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#maxInclusive": 10000000000000001,
+      "http://www.w3.org/ns/shacl#name": "long01"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long03",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#maxInclusive": 10000000000000003,
+      "http://www.w3.org/ns/shacl#name": "long03"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long-98",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#maxInclusive": 9999999999999998,
+      "http://www.w3.org/ns/shacl#name": "long-98"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long00",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#maxInclusive": 10000000000000000,
+      "http://www.w3.org/ns/shacl#name": "long00"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/large-integer-values.raml#/declarations/types/scalar/long-99",
+      "@type": [
+        "http://a.ml/vocabularies/shapes#ScalarShape",
+        "http://a.ml/vocabularies/shapes#AnyShape",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/shapes#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#maxInclusive": 9999999999999999,
+      "http://www.w3.org/ns/shacl#name": "long-99"
+    }
+  ]
+}

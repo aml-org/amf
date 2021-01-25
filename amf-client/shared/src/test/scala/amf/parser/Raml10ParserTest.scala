@@ -15,4 +15,13 @@ class Raml10ParserTest extends FunSuiteCycleTests {
           Amf,
           renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint))
   }
+
+  multiGoldenTest("16 digit long numbers maintain precision in jsonld emission", "large-integer-values.%s") { config =>
+    cycle("large-integer-values.raml",
+          config.golden,
+          RamlYamlHint,
+          Amf,
+          renderOptions = Some(config.renderOptions.withPrettyPrint))
+  }
+
 }
