@@ -5,6 +5,7 @@ import amf.io.FunSuiteCycleTests
 
 class GraphParsingTest extends FunSuiteCycleTests {
   override def basePath: String = "amf-client/shared/src/test/resources/graphs/"
+  val upanddownPath: String     = "amf-client/shared/src/test/resources/upanddown/"
 
   test("Parse api with context with expanded term definitions") {
     val ro = RenderOptions().withCompactUris.withPrettyPrint.withFlattenedJsonLd
@@ -50,6 +51,18 @@ class GraphParsingTest extends FunSuiteCycleTests {
           AmfJsonHint,
           Amf,
           renderOptions = Some(ro))
+  }
+
+  test("Maintain precision in 16 digit long value when parsing") {
+    val ro = RenderOptions().withPrettyPrint
+    cycle(
+      "large-integer-values.expanded.jsonld",
+      "large-integer-values.expanded.jsonld",
+      AmfJsonHint,
+      Amf,
+      directory = upanddownPath + "raml10/",
+      renderOptions = Some(ro)
+    )
   }
 
 }
