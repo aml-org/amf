@@ -1529,6 +1529,12 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
   case class PropertyShapeParser(entry: YMapEntry, producer: String => PropertyShape) {
 
+    private def setPathTo(shape: PropertyShape, name: String, annotations: Annotations) = {
+      shape.set(
+        PropertyShapeModel.Path,
+        AmfScalar((Namespace.Data + name.urlComponentEncoded).iri(), annotations))
+    }
+
     def parse(): Option[PropertyShape] = {
 
       entry.key.asScalar match {
@@ -1561,10 +1567,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
             case _ =>
           }
-
-          property.set(
-            PropertyShapeModel.Path,
-            AmfScalar((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri(), Annotations(entry.key)))
+          setPathTo(property, entry.key.as[YScalar].text, Annotations(entry.key))
 
           if (property.fields.?(PropertyShapeModel.MinCount).isEmpty) {
             if (property.patternName.option().isDefined) {
@@ -1576,8 +1579,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
               property.set(
                 PropertyShapeModel.Name,
                 if (required) propName else propName.stripSuffix("?").stripPrefix("/").stripSuffix("/")) // TODO property id is using a name that is not final.
-              property.set(PropertyShapeModel.Path,
-                           (Namespace.Data + entry.key.as[YScalar].text.stripSuffix("?")).iri())
+              setPathTo(property, entry.key.as[YScalar].text.stripSuffix("?"), Annotations(entry.key))
             }
           }
           Raml10TypeParser(entry,
