@@ -52,4 +52,24 @@ class GraphParsingTest extends FunSuiteCycleTests {
           renderOptions = Some(ro))
   }
 
+  test("Parse api with @base and absolute IRIs - flattened") {
+    val ro = RenderOptions().withPrettyPrint.withFlattenedJsonLd
+    cycle("api.source.flattened.jsonld",
+          "api.golden.flattened.jsonld",
+          AmfJsonHint,
+          Amf,
+          renderOptions = Some(ro),
+          directory = s"$basePath/base-and-absolute-iris/")
+  }
+
+  test("Parse api with @base and absolute IRIs - expanded") {
+    val ro = RenderOptions().withPrettyPrint.withoutFlattenedJsonLd
+    cycle("api.source.expanded.jsonld",
+          "api.golden.expanded.jsonld",
+          AmfJsonHint,
+          Amf,
+          renderOptions = Some(ro),
+          directory = s"$basePath/base-and-absolute-iris/")
+  }
+
 }
