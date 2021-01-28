@@ -7,7 +7,7 @@ Level: Warning
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /dateOfBirth [bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
-/phoneNo expected type: Number, found: String
+/phoneNo expected type: Integer, found: String
 
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/example/default-example
@@ -17,9 +17,9 @@ Level: Warning
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /application/user/dateOfBirth [bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
-/application/user/monthsAtCurrAdd expected type: Number, found: String
+/application/user/monthsAtCurrAdd expected type: Integer, found: String
 /user/dateOfBirth [bla bla bla] is not a valid date-time. Expected [yyyy-MM-dd'T'HH:mm:ssZ, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}Z, yyyy-MM-dd'T'HH:mm:ss[+-]HH:mm, yyyy-MM-dd'T'HH:mm:ss.[0-9]{1,9}[+-]HH:mm]
-/user/monthsAtCurrAdd expected type: Number, found: String
+/user/monthsAtCurrAdd expected type: Integer, found: String
 
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/example/default-example

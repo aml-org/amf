@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.validation.json
 
 import java.lang
-
-import org.json.JSONTokener
+import org.json.{JSONTokener}
 
 import scala.util.matching.Regex
 
@@ -34,66 +33,28 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
 
         val string = sb.toString.trim()
         if ("" == string) throw this.syntaxError("Missing value")
-        stringToValue(string)
+        JSONObject.stringToValue(string)
     }
   }
 
   protected def shouldContinueParsing(newChar: Char) = newChar >= ' ' && ",:]}/\\\"[{;=#".indexOf(newChar) < 0
 
-  private def checkNumber(s: String): Option[Object] =
-    try {
-      if (isDecimalNotation(s) || isBiggerThanLong(s)) checkDouble(s) else checkLong(s)
-    } catch {
-      case _: Exception => None
+  private def hack(value: Object) =
+    value match {
+      case double: lang.Double      => hackDecimal(double.toString, double)
+      case bd: java.math.BigDecimal => hackDecimal(bd.toString, bd)
+      case _                        => value
     }
 
-  private def isBiggerThanLong(s: String): Boolean = java.lang.Double.valueOf(s) match {
-    case num if num < Long.MinValue || Long.MaxValue < num => true
-    case _                                                 => false
-  }
-
-  private def checkLong(s: String) = java.lang.Long.valueOf(s) match {
-    case l if s == l.toString => Some(if (l.longValue == l.intValue) Integer.valueOf(l.intValue) else l)
-    case _                    => None
-  }
-
-  private def checkDouble(s: String) = java.lang.Double.valueOf(s) match {
-    case d if !d.isInfinite && !d.isNaN => Some(d)
-    case d if d.isInfinite              => Some(new java.math.BigDecimal(s))
-    case _                              => None
-  }
-
-  private def numberOption(s: String): Option[Object] = s.charAt(0) match {
-    case i if (i >= '0' && i <= '9') || i == '-' => checkNumber(s)
-    case _                                       => None
-  }
-
-  private def stringToValue(string: String): Object = string match {
-    case ci"true"  => java.lang.Boolean.TRUE
-    case ci"false" => java.lang.Boolean.FALSE
-    case ci"null"  => org.json.JSONObject.NULL
-    case _ =>
-      numberOption(string) match {
-        case Some(o) => o
-        case _       => throw new InvalidJSONValueException("Unquoted string value")
-      }
-  }
-
-  private def isDecimalNotation(s: String): Boolean =
-    s.indexOf('.') > -1 || s.indexOf('e') > -1 || s.indexOf('E') > -1 || "-0" == s
-
-  private def hack(value: Object) = value match {
-    case double: lang.Double => hackDouble(double)
-    case _                   => value
-  }
-
-  private def hackDouble(d: java.lang.Double): Object = {
+  /**
+    * numbers ending with .0 are converted to longs
+    * */
+  private def hackDecimal(str: String, value: Object): Object = {
     val pattern = "[0-9]+(\\.0+)".r
-    val str     = d.toString
 
     str match {
-      case pattern(group) => Integer.valueOf(str.stripSuffix(group))
-      case _              => d
+      case pattern(group) => java.lang.Long.valueOf(str.stripSuffix(group))
+      case _              => value
     }
   }
 

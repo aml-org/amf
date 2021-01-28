@@ -7,7 +7,7 @@ Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: 1.5 is not greater or equal to 2
-expected type: Integer, found: Double
+expected type: Integer, found: BigDecimal
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/anyOf/api1.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/any/schema/example/default-example

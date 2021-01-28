@@ -60,6 +60,10 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
              Raml08Profile)
   }
 
+  test("maximum/minimum validation with 17 digit numbers") {
+    validate("raml/big-number-examples.raml", Some("invalid-big-numbers.report"), Raml10Profile)
+  }
+
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/multi-plat-model/"
   override val hint: Hint  = RamlYamlHint
