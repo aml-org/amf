@@ -41,8 +41,10 @@ class AmfInstance(env: AmfEnvironment,
 
   def parse(uri: String, vendor: Vendor) = parse(uri, Some(vendor))
 
-  def resolve(bu: BaseUnit): BaseUnit = {} // clone? BaseUnit.resolved
-  def validate(bu: BaseUnit): AMFValidationReport // how we can handle the parsing validations? error handler at base unit?
+  def resolve(bu: BaseUnit, profileName: ProfileName): AmfResult = {} // clone? BaseUnit.resolved
+
+  // bu.clone?
+  def validate(bu: BaseUnit, profileName: ProfileName): AMFValidationReport // how we can handle the parsing validations? error handler at base unit?
 
 }
 

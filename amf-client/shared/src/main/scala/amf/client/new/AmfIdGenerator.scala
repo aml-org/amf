@@ -6,20 +6,23 @@ import amf.plugins.document.vocabularies.emitters.common.IdCounter
 trait AmfIdGenerator {
 
   // get id or set id?
-  def id(d: DomainElement, parent: String): String
+  def id(d: DomainElement, baseUri: String): String
 
 }
 
 // how get parent?
 object PathAmfIdGenerator extends AmfIdGenerator {
-  override def id(d: DomainElement, parent: String): String = {
-    parent + "/" + d.componentId
+  override def id(d: DomainElement, baseUri: String): String = {
+    baseUri + "/" + d.componentId
   }
 }
 
 class AutoIncrementAmfIdGenerator() extends AmfIdGenerator {
+
+  // check order for test?
+
   private val idCounter = new IdCounter()
-  override def id(d: DomainElement, parent: String): String = {
+  override def id(d: DomainElement, baseUri: String): String = {
     idCounter.genId("file://")
   }
 }
