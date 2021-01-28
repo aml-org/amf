@@ -6,7 +6,8 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.{AliasCounter, AmfStrings, IdCounter}
+import amf.core.utils.UriUtils.resolve
+import amf.core.utils.{Absolute, AliasCounter, IdCounter, RelativeToIncludedFile}
 import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec._
@@ -21,6 +22,7 @@ import amf.plugins.document.webapi.parser.spec.jsonschema.{AstFinder, AstIndex, 
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
 import org.yaml.model._
+
 import scala.collection.mutable
 
 abstract class WebApiContext(val loc: String,
@@ -121,22 +123,6 @@ abstract class WebApiContext(val loc: String,
   }
 
   def computeJsonSchemaVersion(ast: YNode): SchemaVersion = parseSchemaVersion(ast, eh)
-
-  def resolvedPath(base: String, str: String): String =
-    if (str.isEmpty) platform.normalizePath(base)
-    else if (str.startsWith("/")) str
-    else if (str.contains(":")) str
-    else if (str.startsWith("#")) base.split("#").head + str
-    else if (shouldSkipDot(base, str)) basePath(base) + str.substring(2)
-    else platform.normalizePath(basePath(base).urlDecoded + str)
-
-  def shouldSkipDot(base: String, path: String): Boolean =
-    (basePath(base) == "file://" || basePath(base) == "file:///") && path.startsWith("./")
-
-  def basePath(path: String): String = {
-    val withoutHash = if (path.contains("#")) path.split("#").head else path
-    withoutHash.splitAt(withoutHash.lastIndexOf("/"))._1 + "/"
-  }
 
   private def normalizeJsonPath(path: String): String = {
     if (path == "#" || path == "" || path == "/") "/" // exception root cases

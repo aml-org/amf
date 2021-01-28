@@ -5,7 +5,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.utils.{AmfStrings, IdCounter, UriUtils}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.{
   BodyParameter,
@@ -523,7 +523,7 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
           case Some(payload) =>
             OasParameter(payload.link(refUrl, Annotations(map)).asInstanceOf[Payload], Some(ref))
           case None =>
-            val fullRef = ctx.resolvedPath(ctx.rootContextDocument, refUrl)
+            val fullRef = UriUtils.resolveRelativeTo(ctx.rootContextDocument, refUrl)
             ctx.parseRemoteOasParameter(fullRef, parentId)(toOas(ctx)) match {
               case Some(oasParameter) =>
                 for {
