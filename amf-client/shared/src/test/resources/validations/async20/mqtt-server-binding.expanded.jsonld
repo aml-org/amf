@@ -50,7 +50,7 @@
                   "http://a.ml/vocabularies/apiBinding#ServerBindings",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/apiBinding#binding": [
+                "http://a.ml/vocabularies/apiBinding#bindings": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/mqtt-server",
                     "@type": [
@@ -314,7 +314,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/validations/async20/mqtt-server-binding.yaml#/async-api/http%3A%2F%2Fsome.com/server-bindings/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiBinding#binding"
+                            "@value": "http://a.ml/vocabularies/apiBinding#bindings"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [

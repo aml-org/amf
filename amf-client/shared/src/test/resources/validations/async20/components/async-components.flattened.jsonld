@@ -1061,7 +1061,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "someMessageBinding",
-      "http://a.ml/vocabularies/apiBinding#binding": [
+      "http://a.ml/vocabularies/apiBinding#bindings": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/mqtt-message"
         },
@@ -1101,7 +1101,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "someOperationBinding",
-      "http://a.ml/vocabularies/apiBinding#binding": [
+      "http://a.ml/vocabularies/apiBinding#bindings": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/http-operation"
         }
@@ -1138,7 +1138,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "someChannelBinding",
-      "http://a.ml/vocabularies/apiBinding#binding": [
+      "http://a.ml/vocabularies/apiBinding#bindings": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/someChannelBinding/web-socket-channel"
         }
@@ -1175,7 +1175,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "someServerBinding",
-      "http://a.ml/vocabularies/apiBinding#binding": [
+      "http://a.ml/vocabularies/apiBinding#bindings": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/mqtt-server"
         }
@@ -2225,7 +2225,7 @@
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/messageBindings/someMessageBinding/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#binding",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindings",
       "http://a.ml/vocabularies/document-source-maps#value": "[(72,0)-(77,0)]"
     },
     {
@@ -2298,7 +2298,7 @@
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/operationBindings/someOperationBinding/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#binding",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindings",
       "http://a.ml/vocabularies/document-source-maps#value": "[(92,0)-(101,0)]"
     },
     {
@@ -2340,7 +2340,7 @@
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/channelBindings/someChannelBinding/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#binding",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindings",
       "http://a.ml/vocabularies/document-source-maps#value": "[(106,0)-(108,0)]"
     },
     {
@@ -2391,7 +2391,7 @@
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/declarations/serverBindings/someServerBinding/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#binding",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindings",
       "http://a.ml/vocabularies/document-source-maps#value": "[(82,0)-(87,0)]"
     },
     {

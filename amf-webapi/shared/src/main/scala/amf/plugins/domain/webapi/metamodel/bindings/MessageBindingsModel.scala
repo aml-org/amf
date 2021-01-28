@@ -14,8 +14,8 @@ object MessageBindingsModel extends DomainElementModel with NameFieldSchema {
 
   val Bindings = Field(
     Array(MessageBindingModel),
-    ApiBinding + "binding",
-    ModelDoc(ModelVocabularies.ApiBinding, "binding", "List of message bindings")
+    ApiBinding + "bindings",
+    ModelDoc(ModelVocabularies.ApiBinding, "bindings", "List of message bindings")
   )
 
   override def fields: List[Field] =

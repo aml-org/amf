@@ -45,7 +45,7 @@
                   "http://a.ml/vocabularies/apiBinding#ChannelBindings",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/apiBinding#binding": [
+                "http://a.ml/vocabularies/apiBinding#bindings": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/amqp-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/amqp091-channel",
                     "@type": [
@@ -428,7 +428,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/validations/async20/amqp-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiBinding#binding"
+                            "@value": "http://a.ml/vocabularies/apiBinding#bindings"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
