@@ -218,7 +218,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
 
       assert(targets.size == 1)
       assert(targets.head._1 == s"${uri}reference-1.yaml")
-      assert(targets.head._2 == List(Range(Position(6, 5), Position(6, 30))))
+      assert(targets.head._2 == List(Range(Position(6, 14), Position(6, 30))))
 
       assert(reftargets.size == 1)
       assert(reftargets.head._1 == s"${uri}reference.json")
