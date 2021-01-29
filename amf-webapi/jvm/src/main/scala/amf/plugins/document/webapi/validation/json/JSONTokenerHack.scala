@@ -12,7 +12,7 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
   /** This is extracted from JSONTokener class to replace the JSONObject.stringToValue method used in the superclass
     * so that we can fail when an unquoted value is processed (as all the other json parsers).
     */
-  private def nextValueHack(): Object = hack {
+  private def nextValueHack(): Object = hackDecimal {
     this.nextClean() match {
       case c @ ('"' | '\'') =>
         this.nextString(c)
@@ -39,21 +39,21 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
 
   protected def shouldContinueParsing(newChar: Char) = newChar >= ' ' && ",:]}/\\\"[{;=#".indexOf(newChar) < 0
 
-  private def hack(value: Object) =
+  /**
+    * numbers ending with .0 are converted to integer value. This is needed to maintain compatibility with js.
+    * */
+  private def hackDecimal(value: Object) =
     value match {
-      case double: lang.Double      => hackDecimal(double.toString, double)
-      case bd: java.math.BigDecimal => hackDecimal(bd.toString, bd)
+      case double: lang.Double      => removeRedundantDecimal(double.toString, double)
+      case bd: java.math.BigDecimal => removeRedundantDecimal(bd.toString, bd)
       case _                        => value
     }
 
-  /**
-    * numbers ending with .0 are converted to longs
-    * */
-  private def hackDecimal(str: String, value: Object): Object = {
+  private def removeRedundantDecimal(str: String, value: Object): Object = {
     val pattern = "[0-9]+(\\.0+)".r
 
     str match {
-      case pattern(group) => java.lang.Long.valueOf(str.stripSuffix(group))
+      case pattern(group) => JSONObject.stringToValue(str.stripSuffix(group))
       case _              => value
     }
   }
