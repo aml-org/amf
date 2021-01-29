@@ -64,7 +64,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
-  Message: /a is not less than 100
+  Message: /a 100 is not less than 100
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/exclusive-with-values/example/default-example_2
   Property: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/exclusive-with-values/example/default-example_2
@@ -72,7 +72,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml
 
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
-  Message: subject must not be valid against schema {"type":"object","properties":{"a":{"type":"string"},"b":{"type":"number"}},"required":["a","b"]}
+  Message: subject must not be valid against schema {"type":"object","required":["a","b"],"properties":{"a":{"type":"string"},"b":{"type":"number"}}}
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/any/notKeyword/example/default-example_2
   Property: file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/any/notKeyword/example/default-example_2

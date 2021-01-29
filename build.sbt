@@ -84,8 +84,8 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .settings(commonSettings)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema"  % "1.9.2",
-    libraryDependencies += "org.json" % "json" % "20180130",
+    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema"  % "1.12.2",
+    libraryDependencies += "org.json" % "json" % "20201115",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar",
     mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions"
   )
