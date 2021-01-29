@@ -82,7 +82,7 @@ abstract class OasLikeWebApiContext(loc: String,
     case _                    => true
   }
 
-  val shapesThatDontPermitRef = List("paths")
+  val shapesThatDontPermitRef = List("paths", "operation")
 
   override def ignore(shape: String, property: String): Boolean =
     property.startsWith("x-") || (property == "$ref" && !shapesThatDontPermitRef.contains(shape)) || (property

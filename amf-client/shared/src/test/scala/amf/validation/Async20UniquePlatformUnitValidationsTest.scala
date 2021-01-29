@@ -317,4 +317,12 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     )
   }
 
+  test("Validate ref key in operation object") {
+    validate(
+      "invalid-ref-key-operation.yaml",
+      Some("invalid-ref-key-operation.report"),
+      Async20Profile
+    )
+  }
+
 }
