@@ -434,7 +434,8 @@
                                             ],
                                             "smaps": {
                                               "synthesized-field": {
-                                                "doc:recursive": "true"
+                                                "doc:recursive": "true",
+                                                "shacl:closed": "true"
                                               },
                                               "resolved-link": {
                                                 "#25": "amf://id#34"
@@ -474,14 +475,17 @@
                                       }
                                     ],
                                     "smaps": {
-                                      "resolved-link-target": {
-                                        "#21": "amf://id#21"
+                                      "synthesized-field": {
+                                        "shacl:closed": "true"
+                                      },
+                                      "resolved-link": {
+                                        "#21": "amf://id#33"
                                       },
                                       "lexical": {
                                         "#21": "[(9,4)-(18,5)]"
                                       },
-                                      "resolved-link": {
-                                        "#21": "amf://id#33"
+                                      "resolved-link-target": {
+                                        "#21": "amf://id#21"
                                       }
                                     }
                                   }
@@ -738,7 +742,8 @@
                                     ],
                                     "smaps": {
                                       "synthesized-field": {
-                                        "doc:recursive": "true"
+                                        "doc:recursive": "true",
+                                        "shacl:closed": "true"
                                       },
                                       "resolved-link": {
                                         "#25": "amf://id#34"

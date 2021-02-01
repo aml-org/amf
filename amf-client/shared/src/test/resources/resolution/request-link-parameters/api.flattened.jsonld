@@ -393,7 +393,8 @@
       "shacl:name": "aSchema",
       "smaps": {
         "synthesized-field": {
-          "doc:recursive": "true"
+          "doc:recursive": "true",
+          "shacl:closed": "true"
         },
         "type-property-lexical-info": {
           "#1": "[(15,6)-(15,10)]"
@@ -448,14 +449,17 @@
       "shacl:property": [],
       "shacl:name": "schema",
       "smaps": {
-        "auto-generated-name": {
-          "#19": ""
+        "synthesized-field": {
+          "shacl:closed": "true"
+        },
+        "type-property-lexical-info": {
+          "#19": "[(58,16)-(58,20)]"
         },
         "lexical": {
           "#19": "[(57,14)-(59,0)]"
         },
-        "type-property-lexical-info": {
-          "#19": "[(58,16)-(58,20)]"
+        "auto-generated-name": {
+          "#19": ""
         }
       }
     },

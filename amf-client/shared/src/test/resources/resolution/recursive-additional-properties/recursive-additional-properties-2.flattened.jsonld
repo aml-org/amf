@@ -64,7 +64,8 @@
       "shacl:name": "Something.DataContracts.Push.PushOption",
       "smaps": {
         "synthesized-field": {
-          "doc:recursive": "true"
+          "doc:recursive": "true",
+          "shacl:closed": "true"
         },
         "resolved-link": {
           "#1": "amf://id#8"
@@ -101,21 +102,24 @@
       ],
       "shacl:name": "Something.DataContracts.Push.PushOptionChoice",
       "smaps": {
-        "resolved-link-target": {
-          "#4": "amf://id#4"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#4": ""
+        "resolved-link": {
+          "#4": "amf://id#9"
+        },
+        "type-property-lexical-info": {
+          "#4": "[(15,4)-(15,8)]"
         },
         "lexical": {
           "shacl:name": "[(14,2)-(14,47)]",
           "#4": "[(14,2)-(20,71)]"
         },
-        "type-property-lexical-info": {
-          "#4": "[(15,4)-(15,8)]"
+        "declared-element": {
+          "#4": ""
         },
-        "resolved-link": {
-          "#4": "amf://id#9"
+        "resolved-link-target": {
+          "#4": "amf://id#4"
         }
       }
     },
@@ -211,11 +215,14 @@
       "shacl:property": [],
       "shacl:name": "properties",
       "smaps": {
-        "type-property-lexical-info": {
-          "#6": "[(18,8)-(18,12)]"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "#6": "[(17,6)-(20,71)]"
+        },
+        "type-property-lexical-info": {
+          "#6": "[(18,8)-(18,12)]"
         }
       }
     },

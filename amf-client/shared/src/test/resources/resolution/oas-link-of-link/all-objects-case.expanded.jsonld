@@ -516,6 +516,19 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declarations/types/C/source-map/synthesized-field/element_1",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#closed"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      },
+                      {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declarations/types/C/source-map/synthesized-field/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
@@ -637,9 +650,24 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declarations/types/any/E/source-map/declared-element/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declarations/types/any/E/source-map/synthesized-field/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#closed"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "true"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declarations/types/any/E/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declarations/types/any/E"
@@ -647,7 +675,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "[(14,4)-(14,8)]"
                   }
                 ]
               }
@@ -667,9 +695,9 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declarations/types/any/E/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declarations/types/any/E/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/all-objects-case.yaml#/declarations/types/any/E"
@@ -677,7 +705,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(14,4)-(14,8)]"
+                    "@value": ""
                   }
                 ]
               }

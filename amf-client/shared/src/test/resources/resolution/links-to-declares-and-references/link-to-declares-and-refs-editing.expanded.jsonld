@@ -661,14 +661,17 @@
                               }
                             ],
                             "smaps": {
-                              "auto-generated-name": {
-                                "#48": ""
+                              "synthesized-field": {
+                                "shacl:closed": "true"
+                              },
+                              "type-property-lexical-info": {
+                                "#48": "[(3,2)-(3,8)]"
                               },
                               "lexical": {
                                 "#48": "[(43,10)-(16,1)]"
                               },
-                              "type-property-lexical-info": {
-                                "#48": "[(3,2)-(3,8)]"
+                              "auto-generated-name": {
+                                "#48": ""
                               },
                               "parsed-json-schema": {
                                 "#48": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\"\n  ]\n}"

@@ -6266,9 +6266,9 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/source-map/declared-element/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -6277,6 +6277,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/source-map/declared-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#parsed-json-schema": [
@@ -6532,6 +6537,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/source-map/synthesized-field/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/source-map/lexical/element_0"
@@ -6539,9 +6549,9 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/source-map/lexical/element_1",
@@ -6552,6 +6562,11 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,13)-(52,14)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/source-map/parsed-json-schema/element_0",
@@ -6803,9 +6818,9 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -6818,7 +6833,17 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/source-map/lexical/element_1"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/source-map/type-property-lexical-info/element_0"
+        }
       ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/source-map/lexical/element_0",
@@ -6971,6 +6996,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/type/source-map/synthesized-field/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/type/source-map/lexical/element_0"
@@ -7003,6 +7033,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/totalSeats/source-map/synthesized-field/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/totalSeats/source-map/lexical/element_0"
@@ -7010,9 +7045,9 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(42,17)-(42,23)]"
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/source-map/lexical/element_2",
@@ -7028,6 +7063,11 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane",
       "http://a.ml/vocabularies/document-source-maps#value": "[(40,15)-(51,16)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(42,17)-(42,23)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/type/scalar/type/source-map",
@@ -7047,6 +7087,11 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/type/scalar/type/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/type/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/type/source-map/lexical/element_0",
@@ -7071,6 +7116,11 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/totalSeats/scalar/totalSeats/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/totalSeats/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/totalSeats/source-map/lexical/element_0",

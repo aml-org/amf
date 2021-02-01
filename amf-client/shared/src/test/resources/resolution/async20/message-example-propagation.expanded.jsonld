@@ -136,6 +136,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:minCount": "true"
+                                  },
                                   "lexical": {
                                     "#16": "[(17,12)-(19,0)]"
                                   }
@@ -522,11 +525,14 @@
                               }
                             ],
                             "smaps": {
-                              "type-property-lexical-info": {
-                                "#15": "[(15,10)-(15,14)]"
+                              "synthesized-field": {
+                                "shacl:closed": "true"
                               },
                               "lexical": {
                                 "#15": "[(14,8)-(22,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#15": "[(15,10)-(15,14)]"
                               }
                             }
                           }
@@ -609,6 +615,9 @@
                               }
                             ],
                             "smaps": {
+                              "synthesized-field": {
+                                "shacl:minCount": "true"
+                              },
                               "lexical": {
                                 "#6": "[(12,12)-(14,0)]"
                               }
@@ -809,11 +818,14 @@
                           }
                         ],
                         "smaps": {
-                          "type-property-lexical-info": {
-                            "#5": "[(10,10)-(10,14)]"
+                          "synthesized-field": {
+                            "shacl:closed": "true"
                           },
                           "lexical": {
                             "#5": "[(9,8)-(14,0)]"
+                          },
+                          "type-property-lexical-info": {
+                            "#5": "[(10,10)-(10,14)]"
                           }
                         }
                       }

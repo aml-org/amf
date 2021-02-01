@@ -379,7 +379,8 @@
                     ],
                     "smaps": {
                       "synthesized-field": {
-                        "doc:recursive": "true"
+                        "doc:recursive": "true",
+                        "shacl:closed": "true"
                       },
                       "resolved-link": {
                         "#4": "amf://id#10"
@@ -407,11 +408,14 @@
                   }
                 ],
                 "smaps": {
-                  "type-property-lexical-info": {
-                    "#3": "[(27,8)-(27,12)]"
+                  "synthesized-field": {
+                    "shacl:closed": "true"
                   },
                   "lexical": {
                     "#3": "[(24,6)-(28,0)]"
+                  },
+                  "type-property-lexical-info": {
+                    "#3": "[(27,8)-(27,12)]"
                   }
                 }
               }
@@ -453,7 +457,8 @@
         ],
         "smaps": {
           "synthesized-field": {
-            "doc:recursive": "true"
+            "doc:recursive": "true",
+            "shacl:closed": "true"
           },
           "resolved-link": {
             "#1": "amf://id#7"
@@ -580,7 +585,8 @@
         ],
         "smaps": {
           "synthesized-field": {
-            "doc:recursive": "true"
+            "doc:recursive": "true",
+            "shacl:closed": "true"
           },
           "resolved-link": {
             "#4": "amf://id#10"

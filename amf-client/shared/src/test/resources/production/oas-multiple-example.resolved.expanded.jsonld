@@ -873,15 +873,18 @@
                               }
                             ],
                             "smaps": {
-                              "auto-generated-name": {
-                                "#48": ""
+                              "synthesized-field": {
+                                "shacl:closed": "true"
+                              },
+                              "type-property-lexical-info": {
+                                "#48": "[(110,14)-(110,20)]"
                               },
                               "lexical": {
                                 "apiContract:examples": "[(100,14)-(109,15)]",
                                 "#48": "[(99,12)-(123,13)]"
                               },
-                              "type-property-lexical-info": {
-                                "#48": "[(110,14)-(110,20)]"
+                              "auto-generated-name": {
+                                "#48": ""
                               }
                             }
                           }
@@ -1869,7 +1872,8 @@
         ],
         "smaps": {
           "synthesized-field": {
-            "doc:recursive": "true"
+            "doc:recursive": "true",
+            "shacl:closed": "true"
           },
           "resolved-link": {
             "#1": "amf://id#32"

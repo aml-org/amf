@@ -312,9 +312,15 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       map
         .key("type")
-        .fold(shape
-          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations()))(entry =>
-          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations(entry)))
+        .fold(
+          shape
+            .set(ScalarShapeModel.DataType,
+                 AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)),
+                 Annotations.synthesized()))(
+          entry =>
+            shape.set(ScalarShapeModel.DataType,
+                      AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef), Annotations(entry.value)),
+                      Annotations(entry)))
 
       if (isStringScalar(shape) && version.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion)) {
         ContentParser(s => s.adopted(shape.id), version).parse(shape, map)
@@ -553,9 +559,12 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         item  <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"), version).parse()
       } yield {
         item match {
-          case array: ArrayShape   => shape.withItems(array).toMatrixShape
-          case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
-          case other: AnyShape     => shape.withItems(other)
+          case array: ArrayShape =>
+            shape.set(ArrayShapeModel.Items, array, Annotations(entry)).toMatrixShape
+          case matrix: MatrixShape =>
+            shape.set(ArrayShapeModel.Items, matrix, Annotations(entry)).toMatrixShape
+          case other: AnyShape =>
+            shape.set(ArrayShapeModel.Items, other, Annotations(entry))
         }
       }
 
@@ -621,14 +630,14 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       map.key("minProperties", NodeShapeModel.MinProperties in shape)
       map.key("maxProperties", NodeShapeModel.MaxProperties in shape)
 
-      shape.set(NodeShapeModel.Closed, value = false)
+      shape.set(NodeShapeModel.Closed, AmfScalar(value = false), Annotations.synthesized())
 
       map.key("additionalProperties").foreach { entry =>
         entry.value.tagType match {
           case YType.Bool => (NodeShapeModel.Closed in shape).negated.explicit(entry)
           case YType.Map =>
             OasTypeParser(entry, s => s.adopted(shape.id), version).parse().foreach { s =>
-              shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))
+              shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations.synthesized())
             }
           case _ =>
             ctx.eh.violation(InvalidAdditionalPropertiesType,
@@ -806,17 +815,18 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
     def parse(): PropertyShape = {
 
-      val name                = entry.key.as[YScalar].text
-      val required            = requiredFields.contains(name)
-      val requiredAnnotations = requiredFields.get(name).map(node => Annotations(node)).getOrElse(Annotations())
+      val name     = entry.key.as[YScalar].text
+      val required = requiredFields.contains(name)
 
       val property = producer(name)
         .add(Annotations(entry))
-        .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), requiredAnnotations += ExplicitField())
+        .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), Annotations.synthesized())
 
       property.set(
         PropertyShapeModel.Path,
-        AmfScalar((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri(), Annotations(entry.key)))
+        AmfScalar((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri(), Annotations(entry.key)),
+        Annotations.inferred()
+      )
 
       if (version.isInstanceOf[OAS20SchemaVersion])
         validateReadOnlyAndRequired(entry.value.toOption[YMap], property, required)
@@ -846,7 +856,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       OasTypeParser(entry, shape => shape.adopted(property.id), version)
         .parse()
-        .foreach(property.set(PropertyShapeModel.Range, _))
+        .foreach(property.set(PropertyShapeModel.Range, _, Annotations.inferred()))
 
       if (patterned) property.withPatternName(name)
 
