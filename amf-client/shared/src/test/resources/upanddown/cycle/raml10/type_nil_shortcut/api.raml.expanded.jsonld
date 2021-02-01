@@ -195,10 +195,23 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declarations/annotations/base/union/base/scalar/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declarations/annotations/base/union/base/scalar/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declarations/annotations/base/union/base/scalar/"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(1,0)-(1,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declarations/annotations/base/union/base/scalar/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#datatype"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -224,6 +237,29 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "base"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declarations/annotations/base/union/base/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declarations/annotations/base/union/base/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#anyOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -410,6 +446,29 @@
             "http://www.w3.org/ns/shacl#name": [
               {
                 "@value": "schema"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declarations/annotations/ignored/union/schema/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/declarations/annotations/ignored/union/schema/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#anyOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }

@@ -162,10 +162,23 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/parameter/path/version/source-map/synthesized-field/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/parameter/path/version/source-map/synthesized-field/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/parameter/path/version"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/parameter/path/version/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#binding"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -350,6 +363,34 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
+                                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/default-binding/x-union/union/schema/example/stringExample/scalar_1/source-map/synthesized-field/element_1",
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://www.w3.org/ns/shacl#datatype"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "true"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/default-binding/x-union/union/schema/example/stringExample/scalar_1/source-map/synthesized-field/element_0",
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/core#name"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "true"
+                                              }
+                                            ]
+                                          }
+                                        ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
                                             "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/default-binding/x-union/union/schema/example/stringExample/scalar_1/source-map/lexical/element_0",
@@ -511,6 +552,34 @@
                                         "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/default-binding/x-union/union/schema/example/numberExample/scalar_1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/default-binding/x-union/union/schema/example/numberExample/scalar_1/source-map/synthesized-field/element_1",
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://www.w3.org/ns/shacl#datatype"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "true"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/default-binding/x-union/union/schema/example/numberExample/scalar_1/source-map/synthesized-field/element_0",
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/core#name"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "true"
+                                              }
+                                            ]
+                                          }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
@@ -702,6 +771,34 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/header/x-union/source-map/synthesized-field/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#required"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/header/x-union/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiContract#binding"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/header/x-union/source-map/lexical/element_1",
@@ -805,9 +902,24 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#supportedOperation"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint"
@@ -816,6 +928,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(6,0)-(14,27)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(6,0)-(6,9)]"
                       }
                     ]
                   }
@@ -830,17 +955,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/source-map/source-vendor/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api"
+                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "RAML 1.0"
+                    "@value": "true"
                   }
                 ]
               }
@@ -895,6 +1020,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(2,0)-(14,27)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/source-map/source-vendor/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "RAML 1.0"
                   }
                 ]
               }

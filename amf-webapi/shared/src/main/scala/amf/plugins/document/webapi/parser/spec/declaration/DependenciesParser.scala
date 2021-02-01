@@ -1,10 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.VirtualObject
-import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.annotations.Inferred
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{SingleArrayNode, YMapEntryLike}
 import amf.plugins.domain.shapes.metamodel.{
@@ -36,8 +33,8 @@ case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: 
       seqEntries.map(e => DependenciesParser(e, parentId, PropertyDependencyParser(e.value)).parse())
     if (propertyDependencies.nonEmpty)
       shape.set(NodeShapeModel.Dependencies,
-                AmfArray(propertyDependencies, Annotations(VirtualObject())),
-                Annotations(Inferred()))
+                AmfArray(propertyDependencies, Annotations.virtual()),
+                Annotations.inferred())
   }
 
   private def parseSchemaDependencies(entries: Seq[YMapEntry]) = {
@@ -45,8 +42,8 @@ case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: 
       entries.map(e => DependenciesParser(e, parentId, SchemaDependencyParser(e.value, version)).parse())
     if (schemaDependencies.nonEmpty)
       shape.set(NodeShapeModel.SchemaDependencies,
-                AmfArray(schemaDependencies, Annotations(VirtualObject())),
-                Annotations(Inferred()))
+                AmfArray(schemaDependencies, Annotations.virtual()),
+                Annotations.inferred())
   }
 
   private def getEntriesOfType(tagType: YType) =

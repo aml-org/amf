@@ -15,12 +15,15 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#8": "RAML 1.0"
+        "synthesized-field": {
+          "apiContract:endpoint": "true"
         },
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
           "#8": "[(2,0)-(16,27)]"
+        },
+        "source-vendor": {
+          "#8": "RAML 1.0"
         }
       }
     },
@@ -42,8 +45,13 @@
         }
       ],
       "smaps": {
+        "synthesized-field": {
+          "apiContract:supportedOperation": "true"
+        },
         "lexical": {
-          "#9": "[(9,0)-(16,27)]"
+          "doc:extends": "[(10,2)-(11,0)]",
+          "#9": "[(9,0)-(16,27)]",
+          "apiContract:path": "[(9,0)-(9,9)]"
         }
       }
     },
@@ -172,6 +180,10 @@
         "@id": "#17"
       },
       "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true",
+          "apiContract:required": "true"
+        },
         "lexical": {
           "raml-shapes:schema": "[(8,8)-(8,15)]",
           "#16": "[(8,8)-(8,15)]"
@@ -206,6 +218,9 @@
       },
       "core:name": "object_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:get": "[(5,4)-(9,0)]",
           "#2": "[(5,4)-(9,0)]"
@@ -266,6 +281,9 @@
       },
       "core:name": "get",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:headers": "[(7,6)-(9,0)]",
           "#3": "[(6,0)-(9,0)]",
@@ -288,6 +306,10 @@
       ],
       "core:name": "description",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#4": "[(6,19)-(6,25)]"
         }
@@ -305,6 +327,9 @@
       },
       "core:name": "headers",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:APIKey": "[(8,8)-(9,0)]",
           "#5": "[(8,0)-(9,0)]"
@@ -326,6 +351,10 @@
       ],
       "core:name": "APIKey",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#6": "[(8,15)-(8,15)]"
         }

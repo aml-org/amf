@@ -520,14 +520,22 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1/source-map/orphan-oas-extension/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1/source-map/orphan-oas-extension/element_0"
         }
       ]
     },
@@ -821,14 +829,22 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1/source-map/orphan-oas-extension/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1/source-map/orphan-oas-extension/element_0"
         }
       ]
     },
@@ -1026,14 +1042,24 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,0)-(25,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1/source-map/orphan-oas-extension/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "bindings"
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1/source-map/synthesized-field/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,19)-(23,29)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1/source-map/orphan-oas-extension/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/extension/scalar_1",
+      "http://a.ml/vocabularies/document-source-maps#value": "bindings"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/default",
@@ -1262,14 +1288,22 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1/source-map/orphan-oas-extension/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1/source-map/orphan-oas-extension/element_0"
         }
       ]
     },
@@ -1453,14 +1487,24 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(28,0)-(41,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1/source-map/orphan-oas-extension/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "bindings"
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1/source-map/synthesized-field/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(39,19)-(39,30)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1/source-map/orphan-oas-extension/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/extension/scalar_1",
+      "http://a.ml/vocabularies/document-source-maps#value": "bindings"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/some.com/server-bindings/mqtt5/source-map/lexical/element_1",
@@ -1750,14 +1794,22 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1/source-map/orphan-oas-extension/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#orphan-oas-extension": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1/source-map/orphan-oas-extension/element_0"
         }
       ]
     },
@@ -1908,14 +1960,24 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(44,0)-(55,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1/source-map/orphan-oas-extension/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "bindings"
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1/source-map/synthesized-field/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(53,21)-(53,34)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1/source-map/orphan-oas-extension/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/extension/scalar_1",
+      "http://a.ml/vocabularies/document-source-maps#value": "bindings"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/channel-bindings/mqtt5/source-map/lexical/element_1",
@@ -2188,14 +2250,24 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(57,0)-(68,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1/source-map/orphan-oas-extension/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "bindings"
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1/source-map/synthesized-field/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(66,23)-(66,34)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1/source-map/orphan-oas-extension/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/request/extension/scalar_1",
+      "http://a.ml/vocabularies/document-source-maps#value": "bindings"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-binding-and-annotations.yaml#/async-api/end-points/some-channel/publish/operation-bindings/mqtt5/source-map/lexical/element_1",

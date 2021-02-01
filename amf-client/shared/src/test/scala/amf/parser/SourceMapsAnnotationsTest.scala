@@ -27,7 +27,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     runTest("raml10.raml", RamlYamlHint)
   }
 
-  test("Test raml 0.0 annotations") {
+  test("Test raml 0.8 annotations") {
     runTest("raml08.raml", RamlYamlHint)
   }
 

@@ -203,17 +203,14 @@
       ],
       "shacl:name": "Person",
       "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#21": "amf://id#33"
+        "resolved-link-target": {
+          "#21": "amf://id#21"
         },
         "lexical": {
           "#21": "[(9,4)-(18,5)]"
         },
-        "resolved-link-target": {
-          "#21": "amf://id#21"
+        "resolved-link": {
+          "#21": "amf://id#33"
         }
       }
     },
@@ -242,8 +239,7 @@
       "shacl:name": "Animal",
       "smaps": {
         "synthesized-field": {
-          "doc:recursive": "true",
-          "shacl:closed": "true"
+          "doc:recursive": "true"
         },
         "resolved-link": {
           "#25": "amf://id#34"

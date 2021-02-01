@@ -10,7 +10,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, Value}
-import amf.plugins.document.vocabularies.emitters.common.IdCounter
+import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._

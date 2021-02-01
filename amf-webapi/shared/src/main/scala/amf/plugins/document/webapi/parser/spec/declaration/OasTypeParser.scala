@@ -1,13 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, Inferred, NilUnion, SynthesizedField}
-import amf.core.metamodel.Field
-import amf.core.annotations.VirtualObject
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.Vendor
-import amf.plugins.document.webapi.annotations.Inferred
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
@@ -93,7 +89,8 @@ case class Draft2019TypeParser(entryOrNode: YMapEntryLike,
   def parse: Option[AnyShape] = {
     val hasLink = LinkCriteria.detect(map).isDefined
     if (!hasLink) InlineOasTypeParser(entryOrNode, name, map, adopt, version, isDeclaration).parse()
-    else if (hasLink && isSingleEntryMap(map)) new OasRefParser(map, name, nameAnnotations, ast, adopt, version).parse()
+    else if (hasLink && isSingleEntryMap(map))
+      new OasRefParser(map, name, nameAnnotations, ast, adopt, version).parse()
     else {
       val reffedShape = new OasRefParser(map, name, nameAnnotations, ast, adopt, version).parse()
       val restOfShape = InlineOasTypeParser(entryOrNode, name, map, adopt, version, isDeclaration).parse()
@@ -103,8 +100,7 @@ case class Draft2019TypeParser(entryOrNode: YMapEntryLike,
 
   private def isSingleEntryMap(map: YMap) = map.entries.size == 1
 
-  private def mergeLinkWithShapeAllOf(reffedShape: Option[AnyShape],
-                                      restOfShape: Option[AnyShape]): Option[AnyShape] = {
+  private def mergeLinkWithShapeAllOf(reffedShape: Option[AnyShape], restOfShape: Option[AnyShape]): Option[AnyShape] = {
     (reffedShape, restOfShape) match {
       case (Some(reffed), Some(rest)) => Some(mergeLinkWithShapeAllOf(reffed, rest))
       case (_, Some(rest))            => Some(rest)
@@ -122,7 +118,7 @@ case class Draft2019TypeParser(entryOrNode: YMapEntryLike,
           value.annotations
         )
       case None =>
-        container.set(ShapeModel.And, AmfArray(Seq(linkShape), Annotations(VirtualObject())), Annotations(Inferred()))
+        container.set(ShapeModel.And, AmfArray(Seq(linkShape), Annotations.virtual()), Annotations.inferred())
     }
     container
   }

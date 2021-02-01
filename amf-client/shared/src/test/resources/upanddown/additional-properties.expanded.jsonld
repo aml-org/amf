@@ -201,24 +201,9 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/synthesized-field/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://www.w3.org/ns/shacl#closed"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "true"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType"
@@ -226,7 +211,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(10,6)-(10,12)]"
+                    "@value": ""
                   }
                 ]
               }
@@ -272,9 +257,9 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/declared-element/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/upanddown/additional-properties.json#/declarations/types/ObjType"
@@ -282,7 +267,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "[(10,6)-(10,12)]"
                   }
                 ]
               }

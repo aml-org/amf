@@ -18,7 +18,10 @@ import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Ra
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeDetection.parseFormat
-import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{RamlJsonSchemaExpression, RamlXmlSchemaExpression}
+import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{
+  RamlJsonSchemaExpression,
+  RamlXmlSchemaExpression
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
@@ -96,7 +99,8 @@ trait RamlTypeSyntax {
     if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str
           .indexOf("}") > -1 || (str.startsWith("<<") && str.endsWith(">>"))) {
       false
-    } else RamlTypeDefMatcher.matchWellKnownType(TypeName(str), default = UndefinedType, isRef = isRef) != UndefinedType
+    } else
+      RamlTypeDefMatcher.matchWellKnownType(TypeName(str), default = UndefinedType, isRef = isRef) != UndefinedType
 
   def isTypeExpression(str: String): Boolean = {
     try { RamlTypeDefMatcher.matchWellKnownType(TypeName(str), default = UndefinedType) == TypeExpressionType } catch {
@@ -194,20 +198,15 @@ case class Raml08TypeParser(entryOrNode: YMapEntryLike,
         Option(SimpleTypeParser(name, adopt, map, defaultType.typeDef).parse())
       } { _ =>
         val maybeShape = Raml08SchemaParser(map, adopt).parse()
-
         maybeShape.map { s =>
-          val inherits = s.meta.modelInstance.withName("inherits", Annotations())
-          adopt(inherits)
+          if (map.key("example").isDefined) {
 
-          RamlSingleExampleParser("example",
-                                  map,
-                                  inherits.withExample,
-                                  ExampleOptions(strictDefault = true, quiet = true).checkScalar(s))
-            .parse()
-            .fold(s) { e =>
-              inherits.set(ShapeModel.Inherits, AmfArray(Seq(s)))
-              inherits.setArray(ScalarShapeModel.Examples, Seq(e))
-            }
+            val inherits: AnyShape = s.meta.modelInstance.withName("inherits", Annotations())
+            adopt(inherits)
+            Raml08ExampleParser(inherits, map).parse()
+            inherits.set(ShapeModel.Inherits, AmfArray(Seq(s)))
+            inherits
+          } else s
         }
       }
   }
@@ -281,6 +280,28 @@ case class Raml08TypeParser(entryOrNode: YMapEntryLike,
   }
 }
 
+case class Raml08ExampleParser(s: AnyShape, map: YMap)(implicit ctx: RamlWebApiContext) {
+
+  def parse(): Unit = {
+    map
+      .key("example")
+      .foreach(entry => {
+        getExamples(map, s)
+          .foreach(e => {
+            s.set(ScalarShapeModel.Examples, AmfArray(Seq(e), Annotations(entry.value)), Annotations(entry))
+          })
+      })
+  }
+
+  private def getExamples(map: YMap, inherits: AnyShape): Option[Example] = {
+    RamlSingleExampleParser("example",
+                            map,
+                            inherits.withExample,
+                            ExampleOptions(strictDefault = true, quiet = true).checkScalar(s))
+      .parse()
+  }
+
+}
 case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPart, adopt: Shape => Unit)(
     implicit ctx: RamlWebApiContext) {
   def parse(): Option[AnyShape] = {
@@ -438,12 +459,8 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
       .dataType
       .option()
       .getOrElse("") == DataType.String
-    RamlSingleExampleParser("example",
-                            map,
-                            shape.withExample,
-                            ExampleOptions(strictDefault = true, quiet = true).checkScalar(shape))
-      .parse()
-      .foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
+
+    Raml08ExampleParser(shape, map).parse()
 
     map.key(
       "default",
@@ -1232,18 +1249,19 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
     protected def checkSchemaInProperty(elements: Seq[AmfElement],
                                         location: Option[String] = None,
                                         entryRange: Range): Unit = {
-      elements.foreach { checkForForeignTypeInheritance(_, location, entryRange)}
+      elements.foreach { checkForForeignTypeInheritance(_, location, entryRange) }
     }
     protected def checkSchemaInheritance(base: Shape, elements: Seq[AmfElement], entryRange: Range): Unit = {
       if (base.meta != AnyShapeModel && !emptyObjectType(base) && !emptyScalarType(base) && !emptyArrayType(base)) {
-        elements.foreach { checkForForeignTypeInheritance(_, base.location(), entryRange)}
+        elements.foreach { checkForForeignTypeInheritance(_, base.location(), entryRange) }
       }
     }
 
-    private def checkForForeignTypeInheritance(element: AmfElement, location: Option[String], entryRange: Range): Unit = {
+    private def checkForForeignTypeInheritance(element: AmfElement,
+                                               location: Option[String],
+                                               entryRange: Range): Unit = {
       element match {
-        case shape: AnyShape
-          if isParsedJsonSchema(shape) || isSchemaIsJsonSchema(shape) =>
+        case shape: AnyShape if isParsedJsonSchema(shape) || isSchemaIsJsonSchema(shape) =>
           ctx.eh.warning(
             JsonSchemaInheritanceWarning,
             shape.id,

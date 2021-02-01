@@ -1,10 +1,19 @@
 package amf.plugins.document.webapi.parser.spec.declaration.external.raml
 
 import amf.core.Root
-import amf.core.annotations.{ExternalFragmentRef, VirtualObject}
+import amf.core.annotations.ExternalFragmentRef
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfArray, Shape}
-import amf.core.parser.{Annotations, InferredLinkReference, JsonParserFactory, ParsedReference, Reference, ReferenceFragmentPartition, SyamlParsedDocument, YMapOps}
+import amf.core.parser.{
+  Annotations,
+  InferredLinkReference,
+  JsonParserFactory,
+  ParsedReference,
+  Reference,
+  ReferenceFragmentPartition,
+  SyamlParsedDocument,
+  YMapOps
+}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -34,12 +43,12 @@ case class RamlJsonSchemaExpression(key: YNode,
 
   override def parseValue(origin: ValueAndOrigin): AnyShape = value.value match {
     case map: YMap if parseExample =>
-      val parsed: AnyShape = parseWrappedSchema(origin)
+      val parsed: AnyShape  = parseWrappedSchema(origin)
       val wrapper: AnyShape = parseSchemaWrapper(map, parsed, origin: ValueAndOrigin)
       wrapper.annotations += ExternalSchemaWrapper()
       wrapper
     case _ =>
-      val parsed  = parseJsonFromValueAndOrigin(origin, adopt)
+      val parsed = parseJsonFromValueAndOrigin(origin, adopt)
       parsed.annotations += SchemaIsJsonSchema()
       parsed
 
@@ -62,9 +71,10 @@ case class RamlJsonSchemaExpression(key: YNode,
       }
     )
     parseExamples(wrapper, value.as[YMap])
-    wrapperName(key).foreach(_ => wrapper.withName(_, Annotations(key)))
-    val typeEntryAnnotations = map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
-    wrapper.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations(VirtualObject())), typeEntryAnnotations)
+    wrapperName(key).foreach(t => wrapper.withName(t, Annotations(key)))
+    val typeEntryAnnotations =
+      map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
+    wrapper.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations.virtual()), typeEntryAnnotations)
     wrapper
   }
 

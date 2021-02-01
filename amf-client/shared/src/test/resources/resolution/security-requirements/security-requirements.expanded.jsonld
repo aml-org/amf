@@ -184,6 +184,10 @@
                                               }
                                             ],
                                             "smaps": {
+                                              "synthesized-field": {
+                                                "core:name": "true",
+                                                "shacl:datatype": "true"
+                                              },
                                               "lexical": {
                                                 "#6": "[(14,15)-(14,38)]"
                                               }
@@ -224,6 +228,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "apiContract:binding": "true"
+                                  },
                                   "lexical": {
                                     "raml-shapes:schema": "[(12,4)-(17,0)]",
                                     "core:description": "[(15,6)-(16,0)]",
@@ -303,6 +310,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "apiContract:binding": "true"
+                                  },
                                   "lexical": {
                                     "raml-shapes:schema": "[(7,4)-(11,0)]",
                                     "core:description": "[(9,6)-(10,0)]",
@@ -692,6 +702,10 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "apiContract:binding": "true",
+                                    "apiContract:required": "true"
+                                  },
                                   "lexical": {
                                     "raml-shapes:schema": "[(19,4)-(25,0)]",
                                     "#22": "[(19,4)-(25,0)]",
@@ -770,6 +784,10 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "apiContract:binding": "true",
+                                    "apiContract:required": "true"
+                                  },
                                   "lexical": {
                                     "raml-shapes:schema": "[(12,4)-(18,0)]",
                                     "#24": "[(12,4)-(18,0)]",
@@ -898,19 +916,26 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:supportedOperation": "true"
+              },
               "lexical": {
+                "apiContract:path": "[(7,0)-(7,5)]",
                 "#31": "[(7,0)-(8,6)]"
               }
             }
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#30": "RAML 1.0"
+          "synthesized-field": {
+            "apiContract:endpoint": "true"
           },
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
             "#30": "[(2,0)-(8,6)]"
+          },
+          "source-vendor": {
+            "#30": "RAML 1.0"
           }
         }
       }
@@ -1048,6 +1073,10 @@
                               }
                             ],
                             "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true",
+                                "shacl:datatype": "true"
+                              },
                               "lexical": {
                                 "#6": "[(14,15)-(14,38)]"
                               }
@@ -1088,6 +1117,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "apiContract:binding": "true"
+                  },
                   "lexical": {
                     "raml-shapes:schema": "[(12,4)-(17,0)]",
                     "core:description": "[(15,6)-(16,0)]",
@@ -1167,6 +1199,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "apiContract:binding": "true"
+                  },
                   "lexical": {
                     "raml-shapes:schema": "[(7,4)-(11,0)]",
                     "core:description": "[(9,6)-(10,0)]",
@@ -1854,6 +1889,10 @@
                           }
                         ],
                         "smaps": {
+                          "synthesized-field": {
+                            "core:name": "true",
+                            "shacl:datatype": "true"
+                          },
                           "lexical": {
                             "#6": "[(14,15)-(14,38)]"
                           }
@@ -1894,6 +1933,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:binding": "true"
+              },
               "lexical": {
                 "raml-shapes:schema": "[(12,4)-(17,0)]",
                 "core:description": "[(15,6)-(16,0)]",
@@ -1973,6 +2015,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:binding": "true"
+              },
               "lexical": {
                 "raml-shapes:schema": "[(7,4)-(11,0)]",
                 "core:description": "[(9,6)-(10,0)]",
@@ -2329,6 +2374,10 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:binding": "true",
+                "apiContract:required": "true"
+              },
               "lexical": {
                 "raml-shapes:schema": "[(19,4)-(25,0)]",
                 "#22": "[(19,4)-(25,0)]",
@@ -2407,6 +2456,10 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:binding": "true",
+                "apiContract:required": "true"
+              },
               "lexical": {
                 "raml-shapes:schema": "[(12,4)-(18,0)]",
                 "#24": "[(12,4)-(18,0)]",

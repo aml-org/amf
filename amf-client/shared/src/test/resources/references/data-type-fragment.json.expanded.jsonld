@@ -271,17 +271,17 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/source-map/synthesized-field/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/source-map/type-property-lexical-info/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://www.w3.org/ns/shacl#closed"
+                        "@value": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "true"
+                        "@value": "[(3,2)-(3,8)]"
                       }
                     ]
                   }
@@ -310,21 +310,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(7,2)-(11,3)]"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/source-map/type-property-lexical-info/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(3,2)-(3,8)]"
                       }
                     ]
                   }

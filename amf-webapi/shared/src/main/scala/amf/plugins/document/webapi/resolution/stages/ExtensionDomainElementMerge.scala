@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.{Inferred, SynthesizedField, VirtualNode}
+import amf.core.annotations.{SynthesizedField, VirtualNode}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel.Sources
@@ -9,8 +9,7 @@ import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, FieldEntry, Value}
-import amf.plugins.document.webapi.annotations.{ExtensionProvenance,Inferred}
+import amf.core.parser.{Annotations, FieldEntry}
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel

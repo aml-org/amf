@@ -46,9 +46,9 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
-      "sourcemaps:source-vendor": [
+      "sourcemaps:synthesized-field": [
         {
-          "@id": "#/web-api/source-map/source-vendor/element_0"
+          "@id": "#/web-api/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
@@ -57,6 +57,11 @@
         },
         {
           "@id": "#/web-api/source-map/lexical/element_0"
+        }
+      ],
+      "sourcemaps:source-vendor": [
+        {
+          "@id": "#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -101,16 +106,24 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
+      "sourcemaps:synthesized-field": [
+        {
+          "@id": "#/web-api/end-points/%2Fcontacts/source-map/synthesized-field/element_0"
+        }
+      ],
       "sourcemaps:lexical": [
+        {
+          "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_1"
+        },
         {
           "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "#/web-api/source-map/source-vendor/element_0",
-      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api",
-      "sourcemaps:value": "RAML 0.8"
+      "@id": "#/web-api/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "apiContract:endpoint",
+      "sourcemaps:value": "true"
     },
     {
       "@id": "#/web-api/source-map/lexical/element_1",
@@ -121,6 +134,11 @@
       "@id": "#/web-api/source-map/lexical/element_0",
       "sourcemaps:element": "core:name",
       "sourcemaps:value": "[(2,0)-(3,0)]"
+    },
+    {
+      "@id": "#/web-api/source-map/source-vendor/element_0",
+      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api",
+      "sourcemaps:value": "RAML 0.8"
     },
     {
       "@id": "#/web-api/end-points/%2Fcontacts/get/200",
@@ -191,9 +209,19 @@
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0",
+      "@id": "#/web-api/end-points/%2Fcontacts/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "apiContract:supportedOperation",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_1",
       "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts",
       "sourcemaps:value": "[(21,0)-(34,50)]"
+    },
+    {
+      "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0",
+      "sourcemaps:element": "apiContract:path",
+      "sourcemaps:value": "[(21,0)-(21,9)]"
     },
     {
       "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml",

@@ -545,17 +545,14 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "type-property-lexical-info": {
-          "#48": "[(3,2)-(3,8)]"
+        "auto-generated-name": {
+          "#48": ""
         },
         "lexical": {
           "#48": "[(43,10)-(16,1)]"
         },
-        "auto-generated-name": {
-          "#48": ""
+        "type-property-lexical-info": {
+          "#48": "[(3,2)-(3,8)]"
         },
         "parsed-json-schema": {
           "#48": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\"\n  ]\n}"
@@ -962,14 +959,11 @@
       "doc:version": "2.3.0",
       "doc:root": false,
       "smaps": {
-        "synthesized-field": {
-          "doc:declares": "true"
+        "source-vendor": {
+          "#1": "RAML 1.0"
         },
         "lexical": {
           "#1": "[(1,0)-(5,15)]"
-        },
-        "source-vendor": {
-          "#1": "RAML 1.0"
         }
       }
     },
