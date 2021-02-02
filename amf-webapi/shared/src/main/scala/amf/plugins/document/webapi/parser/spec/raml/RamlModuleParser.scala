@@ -5,7 +5,10 @@ import amf.core.annotations.SourceVendor
 import amf.core.model.document.Module
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.LIBRARY
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
+import amf.plugins.document.webapi.parser.spec.raml.RamlAnnotationTargets.targetsFor
 import org.yaml.model._
 
 /**
@@ -31,6 +34,8 @@ case class RamlModuleParser(root: Root)(implicit override val ctx: RamlWebApiCon
 
       addDeclarationsToModel(module)
       if (references.nonEmpty) module.withReferences(references.baseUnitReferences())
+
+      AnnotationParser(module, rootMap, targetsFor(LIBRARY)).parse()
     }
 
     ctx.futureDeclarations.resolve()

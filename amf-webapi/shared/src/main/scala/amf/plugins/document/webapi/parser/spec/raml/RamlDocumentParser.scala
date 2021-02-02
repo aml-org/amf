@@ -13,16 +13,13 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
-import amf.plugins.document.webapi.contexts.parser.raml.{
-  ExtensionLikeWebApiContext,
-  RamlWebApiContext,
-  RamlWebApiContextType
-}
+import amf.plugins.document.webapi.contexts.parser.raml.{ExtensionLikeWebApiContext, RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.parser.spec.raml.RamlAnnotationTargets.targetsFor
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
@@ -231,16 +228,9 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       }
     )
 
-    AnnotationParser(api, map, obtainTarget(ctx.contextType)).parse()
+    AnnotationParser(api, map, targetsFor(ctx.contextType)).parse()
 
     api
-  }
-
-  private def obtainTarget(contextType: RamlWebApiContextType): List[String] = contextType match {
-    case RamlWebApiContextType.DEFAULT   => List(VocabularyMappings.webapi)
-    case RamlWebApiContextType.OVERLAY   => List(VocabularyMappings.overlay)
-    case RamlWebApiContextType.EXTENSION => List(VocabularyMappings.extension)
-    case _                               => Nil
   }
 }
 

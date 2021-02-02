@@ -1,0 +1,18 @@
+#%RAML 1.0 Library
+
+(someVeryCoolLibraryAnnotation): io.test.lib
+(aSuperCoolResourceAnnotation): uh oh this should be invalid
+
+types:
+  Test:
+    type: object
+    properties:
+      value: string
+
+annotationTypes:
+  someVeryCoolLibraryAnnotation:
+    type: string
+    allowedTargets: Library
+  aSuperCoolResourceAnnotation:
+    type: string
+    allowedTargets: Resource
