@@ -1,0 +1,1433 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#20",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "API"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "1.0"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#21",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/endpointA"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#22",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#24",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "500"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "500"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#25",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#26",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [
+                              {
+                                "@id": "#27",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#causes"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#28",
+                                    "@type": [
+                                      "raml-shapes:ArrayShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "raml-shapes:items": [
+                                      {
+                                        "@id": "#29",
+                                        "@type": [
+                                          "raml-shapes:RecursiveShape",
+                                          "shacl:Shape",
+                                          "raml-shapes:Shape",
+                                          "doc:DomainElement"
+                                        ],
+                                        "raml-shapes:fixPoint": [
+                                          {
+                                            "@id": "#26"
+                                          }
+                                        ],
+                                        "doc:recursive": [
+                                          {
+                                            "@value": true
+                                          }
+                                        ],
+                                        "shacl:name": [
+                                          {
+                                            "@value": "schema"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "auto-generated-name": {
+                                            "#29": ""
+                                          },
+                                          "resolved-link": {
+                                            "#29": "amf://id#30"
+                                          },
+                                          "lexical": {
+                                            "#29": "[(5,6)-(21,7)]"
+                                          },
+                                          "type-property-lexical-info": {
+                                            "#29": "[(6,9)-(6,15)]"
+                                          },
+                                          "resolved-link-target": {
+                                            "#29": "amf://id#26"
+                                          },
+                                          "parsed-json-schema": {
+                                            "#29": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "causes"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "type-property-lexical-info": {
+                                        "#28": "[(12,15)-(12,21)]"
+                                      },
+                                      "lexical": {
+                                        "#28": "[(11,12)-(16,13)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "causes"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "#27": "[(11,12)-(16,13)]"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#31",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#status"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#32",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "status"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "type-property-lexical-info": {
+                                        "#32": "[(18,15)-(18,21)]"
+                                      },
+                                      "lexical": {
+                                        "shacl:datatype": "[(18,15)-(18,31)]",
+                                        "#32": "[(17,12)-(19,13)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "status"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "shacl:minCount": "[(8,12)-(8,20)]",
+                                    "#31": "[(17,12)-(19,13)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "doc:reference-id": [
+                              {
+                                "@id": "#2"
+                              }
+                            ],
+                            "smaps": {
+                              "auto-generated-name": {
+                                "#26": ""
+                              },
+                              "resolved-link": {
+                                "#26": "amf://id#30"
+                              },
+                              "lexical": {
+                                "#26": "[(5,6)-(21,7)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#26": "[(6,9)-(6,15)]"
+                              },
+                              "resolved-link-target": {
+                                "#26": "amf://id#26"
+                              },
+                              "parsed-json-schema": {
+                                "#26": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#25": "[(29,10)-(32,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(28,8)-(32,0)]",
+                        "#24": "[(27,6)-(32,0)]"
+                      }
+                    }
+                  }
+                ],
+                "doc:extends": [
+                  {
+                    "@id": "#23",
+                    "@type": [
+                      "apiContract:ParametrizedTrait",
+                      "doc:ParametrizedDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "myTrait"
+                      }
+                    ],
+                    "doc:target": [
+                      {
+                        "@id": "#12",
+                        "@type": [
+                          "apiContract:Trait",
+                          "doc:AbstractDeclaration",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "myTrait"
+                          }
+                        ],
+                        "doc:dataNode": [
+                          {
+                            "@id": "#13",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:responses": [
+                              {
+                                "@id": "#14",
+                                "@type": [
+                                  "data:Object",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:500": [
+                                  {
+                                    "@id": "#15",
+                                    "@type": [
+                                      "data:Object",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:body": [
+                                      {
+                                        "@id": "#16",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:application%2Fjson": [
+                                          {
+                                            "@id": "#17",
+                                            "@type": [
+                                              "data:Object",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:type": [
+                                              {
+                                                "@id": "#18",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "type"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#18": "[(1,0)-(1,0)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "application/json"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "data:type": "[(11,12)-(13,0)]",
+                                                "#17": "[(11,0)-(13,0)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "body"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "data:application%2Fjson": "[(10,10)-(13,0)]",
+                                            "#16": "[(10,0)-(13,0)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "500"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "data:body": "[(9,8)-(13,0)]",
+                                        "#15": "[(9,0)-(13,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "responses"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "data:500": "[(8,6)-(13,0)]",
+                                    "#14": "[(8,0)-(13,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "object_1"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "data:responses": "[(7,4)-(13,0)]",
+                                "#13": "[(7,4)-(13,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "resolved-link-target": {
+                            "#12": "amf://id#12"
+                          },
+                          "declared-element": {
+                            "#12": ""
+                          },
+                          "lexical": {
+                            "doc:dataNode": "[(7,4)-(13,0)]",
+                            "#12": "[(6,2)-(13,0)]"
+                          },
+                          "resolved-link": {
+                            "#12": "amf://id#19"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "core:name": "[(25,9)-(25,16)]",
+                        "#23": "[(25,9)-(25,16)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "doc:extends": "[(25,4)-(26,0)]",
+                    "#22": "[(24,2)-(32,0)]",
+                    "apiContract:returns": "[(26,4)-(32,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#21": "[(23,0)-(32,0)]"
+              }
+            }
+          },
+          {
+            "@id": "#33",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/endpointB"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#35",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#36",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "500"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "500"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#37",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#38",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [
+                              {
+                                "@id": "#27",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#causes"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#28",
+                                    "@type": [
+                                      "raml-shapes:ArrayShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "raml-shapes:items": [
+                                      {
+                                        "@id": "#29",
+                                        "@type": [
+                                          "raml-shapes:RecursiveShape",
+                                          "shacl:Shape",
+                                          "raml-shapes:Shape",
+                                          "doc:DomainElement"
+                                        ],
+                                        "raml-shapes:fixPoint": [
+                                          {
+                                            "@id": "#26"
+                                          }
+                                        ],
+                                        "doc:recursive": [
+                                          {
+                                            "@value": true
+                                          }
+                                        ],
+                                        "shacl:name": [
+                                          {
+                                            "@value": "schema"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "auto-generated-name": {
+                                            "#29": ""
+                                          },
+                                          "resolved-link": {
+                                            "#29": "amf://id#30"
+                                          },
+                                          "lexical": {
+                                            "#29": "[(5,6)-(21,7)]"
+                                          },
+                                          "type-property-lexical-info": {
+                                            "#29": "[(6,9)-(6,15)]"
+                                          },
+                                          "resolved-link-target": {
+                                            "#29": "amf://id#26"
+                                          },
+                                          "parsed-json-schema": {
+                                            "#29": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "causes"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "type-property-lexical-info": {
+                                        "#28": "[(12,15)-(12,21)]"
+                                      },
+                                      "lexical": {
+                                        "#28": "[(11,12)-(16,13)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "causes"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "#27": "[(11,12)-(16,13)]"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#31",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#status"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#32",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "status"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "type-property-lexical-info": {
+                                        "#32": "[(18,15)-(18,21)]"
+                                      },
+                                      "lexical": {
+                                        "shacl:datatype": "[(18,15)-(18,31)]",
+                                        "#32": "[(17,12)-(19,13)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "status"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "shacl:minCount": "[(8,12)-(8,20)]",
+                                    "#31": "[(17,12)-(19,13)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "doc:reference-id": [
+                              {
+                                "@id": "#2"
+                              }
+                            ],
+                            "smaps": {
+                              "auto-generated-name": {
+                                "#38": ""
+                              },
+                              "lexical": {
+                                "#38": "[(5,6)-(21,7)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#38": "[(6,9)-(6,15)]"
+                              },
+                              "parsed-json-schema": {
+                                "#38": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#37": "[(38,10)-(40,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(37,8)-(40,0)]",
+                        "#36": "[(36,6)-(40,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:returns": "[(35,4)-(40,0)]",
+                    "#35": "[(34,2)-(40,0)]"
+                  }
+                }
+              }
+            ],
+            "doc:extends": [
+              {
+                "@id": "#34",
+                "@type": [
+                  "apiContract:ParametrizedResourceType",
+                  "doc:ParametrizedDeclaration",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "myRt"
+                  }
+                ],
+                "doc:target": [
+                  {
+                    "@id": "#3",
+                    "@type": [
+                      "apiContract:ResourceType",
+                      "doc:AbstractDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "myRt"
+                      }
+                    ],
+                    "doc:dataNode": [
+                      {
+                        "@id": "#4",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:post": [
+                          {
+                            "@id": "#5",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:responses": [
+                              {
+                                "@id": "#6",
+                                "@type": [
+                                  "data:Object",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:500": [
+                                  {
+                                    "@id": "#7",
+                                    "@type": [
+                                      "data:Object",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:body": [
+                                      {
+                                        "@id": "#8",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:application%2Fjson": [
+                                          {
+                                            "@id": "#9",
+                                            "@type": [
+                                              "data:Object",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:type": [
+                                              {
+                                                "@id": "#10",
+                                                "@type": [
+                                                  "data:Scalar",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "data:value": [
+                                                  {
+                                                    "@value": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
+                                                  }
+                                                ],
+                                                "shacl:datatype": [
+                                                  {
+                                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "type"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#10": "[(1,0)-(1,0)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "application/json"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "data:type": "[(20,14)-(23,0)]",
+                                                "#9": "[(20,0)-(23,0)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "body"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "data:application%2Fjson": "[(19,12)-(23,0)]",
+                                            "#8": "[(19,0)-(23,0)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "500"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "data:body": "[(18,10)-(23,0)]",
+                                        "#7": "[(18,0)-(23,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "responses"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "data:500": "[(17,8)-(23,0)]",
+                                    "#6": "[(17,0)-(23,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "post"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "data:responses": "[(16,6)-(23,0)]",
+                                "#5": "[(16,0)-(23,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "object_1"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "data:post": "[(15,4)-(23,0)]",
+                            "#4": "[(15,4)-(23,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "resolved-link-target": {
+                        "#3": "amf://id#3"
+                      },
+                      "declared-element": {
+                        "#3": ""
+                      },
+                      "lexical": {
+                        "doc:dataNode": "[(15,4)-(23,0)]",
+                        "#3": "[(14,2)-(23,0)]"
+                      },
+                      "resolved-link": {
+                        "#3": "amf://id#11"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "core:name": "[(33,8)-(33,12)]",
+                    "#34": "[(33,8)-(33,12)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#33": "[(32,0)-(40,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#20": "RAML 1.0"
+          },
+          "lexical": {
+            "core:version": "[(3,0)-(5,0)]",
+            "#20": "[(2,0)-(40,0)]",
+            "core:name": "[(2,0)-(3,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.3.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:references": [
+      {
+        "@id": "#1",
+        "@type": [
+          "doc:ExternalFragment",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#2",
+            "@type": [
+              "doc:ExternalDomainElement",
+              "doc:DomainElement"
+            ],
+            "doc:raw": [
+              {
+                "@value": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
+              }
+            ],
+            "core:mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#2": "[(1,0)-(24,1)]"
+              }
+            }
+          }
+        ],
+        "doc:version": [
+          {
+            "@value": "2.3.0"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#3",
+        "@type": [
+          "apiContract:ResourceType",
+          "doc:AbstractDeclaration",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "myRt"
+          }
+        ],
+        "doc:dataNode": [
+          {
+            "@id": "#4",
+            "@type": [
+              "data:Object",
+              "data:Node",
+              "doc:DomainElement"
+            ],
+            "data:post": [
+              {
+                "@id": "#5",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:responses": [
+                  {
+                    "@id": "#6",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:500": [
+                      {
+                        "@id": "#7",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:body": [
+                          {
+                            "@id": "#8",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:application%2Fjson": [
+                              {
+                                "@id": "#9",
+                                "@type": [
+                                  "data:Object",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:type": [
+                                  {
+                                    "@id": "#10",
+                                    "@type": [
+                                      "data:Scalar",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:value": [
+                                      {
+                                        "@value": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "type"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#10": "[(1,0)-(1,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "application/json"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "data:type": "[(20,14)-(23,0)]",
+                                    "#9": "[(20,0)-(23,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "body"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "data:application%2Fjson": "[(19,12)-(23,0)]",
+                                "#8": "[(19,0)-(23,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "500"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "data:body": "[(18,10)-(23,0)]",
+                            "#7": "[(18,0)-(23,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "responses"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:500": "[(17,8)-(23,0)]",
+                        "#6": "[(17,0)-(23,0)]"
+                      }
+                    }
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "data:responses": "[(16,6)-(23,0)]",
+                    "#5": "[(16,0)-(23,0)]"
+                  }
+                }
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "object_1"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "data:post": "[(15,4)-(23,0)]",
+                "#4": "[(15,4)-(23,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#3": "amf://id#3"
+          },
+          "declared-element": {
+            "#3": ""
+          },
+          "lexical": {
+            "doc:dataNode": "[(15,4)-(23,0)]",
+            "#3": "[(14,2)-(23,0)]"
+          },
+          "resolved-link": {
+            "#3": "amf://id#11"
+          }
+        }
+      },
+      {
+        "@id": "#12",
+        "@type": [
+          "apiContract:Trait",
+          "doc:AbstractDeclaration",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "myTrait"
+          }
+        ],
+        "doc:dataNode": [
+          {
+            "@id": "#13",
+            "@type": [
+              "data:Object",
+              "data:Node",
+              "doc:DomainElement"
+            ],
+            "data:responses": [
+              {
+                "@id": "#14",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:500": [
+                  {
+                    "@id": "#15",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:body": [
+                      {
+                        "@id": "#16",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:application%2Fjson": [
+                          {
+                            "@id": "#17",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:type": [
+                              {
+                                "@id": "#18",
+                                "@type": [
+                                  "data:Scalar",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:value": [
+                                  {
+                                    "@value": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
+                                  }
+                                ],
+                                "shacl:datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "type"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "#18": "[(1,0)-(1,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "application/json"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "data:type": "[(11,12)-(13,0)]",
+                                "#17": "[(11,0)-(13,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "body"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "data:application%2Fjson": "[(10,10)-(13,0)]",
+                            "#16": "[(10,0)-(13,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "500"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:body": "[(9,8)-(13,0)]",
+                        "#15": "[(9,0)-(13,0)]"
+                      }
+                    }
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "responses"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "data:500": "[(8,6)-(13,0)]",
+                    "#14": "[(8,0)-(13,0)]"
+                  }
+                }
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "object_1"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "data:responses": "[(7,4)-(13,0)]",
+                "#13": "[(7,4)-(13,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#12": "amf://id#12"
+          },
+          "declared-element": {
+            "#12": ""
+          },
+          "lexical": {
+            "doc:dataNode": "[(7,4)-(13,0)]",
+            "#12": "[(6,2)-(13,0)]"
+          },
+          "resolved-link": {
+            "#12": "amf://id#19"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

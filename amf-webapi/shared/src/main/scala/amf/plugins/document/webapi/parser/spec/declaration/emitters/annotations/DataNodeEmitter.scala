@@ -15,10 +15,11 @@ import org.yaml.model.{YMapEntry, YNode, YScalar, YType}
 
 import scala.collection.mutable
 
-case class DataNodeEmitter(
-    dataNode: DataNode,
-    ordering: SpecOrdering,
-    referencesCollector: mutable.Map[String, DomainElement] = mutable.Map())(implicit eh: ErrorHandler)
+case class DataNodeEmitter(dataNode: DataNode,
+                           ordering: SpecOrdering,
+                           referencesCollector: mutable.Map[String, DomainElement] = mutable.Map())(
+    implicit eh: ErrorHandler,
+    nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
     extends PartEmitter {
   private val xsdString: String  = Namespace.XsdTypes.xsdString.iri()
   private val xsdInteger: String = Namespace.XsdTypes.xsdInteger.iri()
@@ -80,7 +81,7 @@ case class DataNodeEmitter(
                             value.value.asInstanceOf[DataNode],
                             ordering,
                             referencesCollector,
-                            value.annotations)
+                            value.annotations)(eh, nodeRefIds)
       }
       .toSeq
   }
@@ -139,12 +140,13 @@ case class DataNodeEmitter(
   }
 }
 
-private[annotations] case class DataPropertyEmitter(key: String,
-                                                    value: DataNode,
-                                                    ordering: SpecOrdering,
-                                                    referencesCollector: mutable.Map[String, DomainElement] =
-                                                      mutable.Map(),
-                                                    propertyAnnotations: Annotations)(implicit eh: ErrorHandler)
+private[annotations] case class DataPropertyEmitter(
+    key: String,
+    value: DataNode,
+    ordering: SpecOrdering,
+    referencesCollector: mutable.Map[String, DomainElement] = mutable.Map(),
+    propertyAnnotations: Annotations)(implicit eh: ErrorHandler,
+                                      nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
@@ -152,7 +154,7 @@ private[annotations] case class DataPropertyEmitter(key: String,
     b.entry(
       YNode(YScalar.withLocation(key.urlComponentDecoded, YType.Str, keyAnnotations.sourceLocation), YType.Str),
       // In the current implementation there can only be one value, we are NOT flattening arrays
-      DataNodeEmitter(value, ordering, referencesCollector)(eh).emit(_)
+      DataNodeEmitter(value, ordering, referencesCollector).emit(_)
     )
   }
 

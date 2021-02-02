@@ -1,0 +1,134 @@
+#%RAML 1.0
+title: API
+version: 1.0
+
+traits:
+  myTrait:
+    responses:
+      500:
+        body:
+          application/json:
+            type: |
+              {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "type": "object",
+                "definitions": {
+                  "SomeSchema": {
+                    "type": "object",
+                    "required": [
+                      "status"
+                    ],
+                    "properties": {
+                      "causes": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/SomeSchema"
+                        }
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "$ref": "#/definitions/SomeSchema"
+              }
+
+resourceTypes:
+  myRt:
+    post:
+      responses:
+        500:
+          body:
+            application/json:
+              type: |
+                {
+                  "$schema": "http://json-schema.org/draft-07/schema#",
+                  "type": "object",
+                  "definitions": {
+                    "SomeSchema": {
+                      "type": "object",
+                      "required": [
+                        "status"
+                      ],
+                      "properties": {
+                        "causes": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/SomeSchema"
+                          }
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "$ref": "#/definitions/SomeSchema"
+                }
+
+/endpointA:
+  post:
+    is: [myTrait]
+    responses:
+      500:
+        body:
+          application/json:
+            type: |
+              {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "type": "object",
+                "definitions": {
+                  "SomeSchema": {
+                    "type": "object",
+                    "required": [
+                      "status"
+                    ],
+                    "properties": {
+                      "causes": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/SomeSchema"
+                        }
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "$ref": "#/definitions/SomeSchema"
+              }
+
+/endpointB:
+  type: myRt
+  post:
+    responses:
+      500:
+        body:
+          application/json:
+            type: |
+              {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "type": "object",
+                "definitions": {
+                  "SomeSchema": {
+                    "type": "object",
+                    "required": [
+                      "status"
+                    ],
+                    "properties": {
+                      "causes": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/SomeSchema"
+                        }
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "$ref": "#/definitions/SomeSchema"
+              }

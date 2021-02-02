@@ -137,6 +137,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
                                       ctx.contextType,
                                       ctx.options)
           }
+          operationContext.nodeRefIds ++= ctx.nodeRefIds
           val operation = RamlOperationParser(entry, endpoint.withOperation, parseOptionalOperations)(operationContext)
             .parse()
           operations += operation
