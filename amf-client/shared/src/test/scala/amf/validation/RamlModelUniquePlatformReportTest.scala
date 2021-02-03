@@ -568,4 +568,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("valid example defined nested within external fragment") {
     validate("raml/nested-example-external-fragment/api.raml", None, Raml08Profile)
   }
+
+  test("RAML Library annotations") {
+    validate("raml/library-annotations.raml", Some("library-annotations.report"))
+  }
 }
