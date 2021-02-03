@@ -1,7 +1,5 @@
 package amf.validation
 
-import amf.common.Diff
-import amf.common.Diff.makeString
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Document, Module, PayloadFragment}
@@ -13,6 +11,8 @@ import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
 import amf.{RAMLStyle, RamlProfile}
+import org.mulesoft.common.test.Diff
+import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.ExecutionContext
