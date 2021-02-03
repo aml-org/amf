@@ -1,0 +1,30 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1",
+    "title": "test"
+  },
+  "paths": {
+    "/register": {
+      "get": {
+        "parameters": [
+          {
+            "name": "test",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "minimum": "2asdf",
+              "minLength": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    }
+  }
+}
