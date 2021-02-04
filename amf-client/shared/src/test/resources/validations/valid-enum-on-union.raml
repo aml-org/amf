@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Some API
+
+types:
+  AnimalWithPaws:
+    properties:
+      name: string
+      pawsCount: number
+  AnimalWithHoofs:
+    properties:
+      name: string
+      hoofsCount: number
+  Animal:
+    type: AnimalWithPaws | AnimalWithHoofs
+    example:
+      name: Cat
+      pawsCount: 4
+    enum:
+      - name: Cat
+        pawsCount: 4
+      - name: Horse
+        hoofsCount: 4
