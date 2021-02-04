@@ -19,7 +19,7 @@ AMF (AML Modeling Framework) is an open-source programming framework, capable of
 - Support for bi-directional transformation and export
 - Support for custom (parsing/resolution/generation) pipelines
 
-## Native support
+## Native supportaaa
 
 AMF natively supports the following formats:
 - YAML
