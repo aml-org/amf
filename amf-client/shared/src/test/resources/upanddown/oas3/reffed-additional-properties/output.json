@@ -1,0 +1,37 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "something",
+    "version": "1.0.0"
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "Types": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "party"
+        ],
+        "properties": {
+          "party": {
+            "additionalProperties": {
+              "title": "PartyType",
+              "type": "object",
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            },
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

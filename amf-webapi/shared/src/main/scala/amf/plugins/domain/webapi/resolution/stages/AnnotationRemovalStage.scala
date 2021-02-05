@@ -5,7 +5,7 @@ import amf.core.model.document.{BaseUnit, Document, FieldsFilter}
 import amf.core.model.domain.Annotation
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.traversal.iterator.{DomainElementIterator, IdCollector, InstanceCollector}
-import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
+import amf.plugins.document.webapi.annotations.{ExternalJsonSchemaShape, ExternalReferenceUrl}
 
 class AnnotationRemovalStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
 
@@ -17,7 +17,7 @@ class AnnotationRemovalStage()(override implicit val errorHandler: ErrorHandler)
     case _ => model
   }
 
-  val removalList = List(classOf[ExternalReferenceUrl])
+  val removalList = List(classOf[ExternalReferenceUrl], classOf[ExternalJsonSchemaShape])
 
   def eliminationCriteria(a: Annotation): Boolean = removalList.exists(_.isInstance(a))
 

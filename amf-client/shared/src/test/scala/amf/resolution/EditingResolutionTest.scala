@@ -957,5 +957,9 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  test("Additional properties are inlined after resolution") {
+    cycle("api.yaml", "output.json", OasYamlHint, Oas30, directory = s"$cyclePath/oas3/reffed-additional-properties/", transformWith = Some(Oas30), eh = Some(UnhandledParserErrorHandler))
+  }
+
   override val basePath: String = ""
 }

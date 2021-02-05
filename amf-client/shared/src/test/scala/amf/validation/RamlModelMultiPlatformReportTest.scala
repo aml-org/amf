@@ -64,6 +64,10 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
     validate("raml/big-number-examples.raml", Some("invalid-big-numbers.report"), Raml10Profile)
   }
 
+  test("Reffed additional properties in JSON Schema subschema are validated") {
+    validate("raml/reffed-additional-properties/api.raml", Some("reffed-additional-properties.report"))
+  }
+
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/multi-plat-model/"
   override val hint: Hint  = RamlYamlHint
