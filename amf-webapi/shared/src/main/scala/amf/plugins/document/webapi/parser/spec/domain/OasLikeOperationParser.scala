@@ -31,6 +31,8 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
 
   protected def methodNode: AmfScalar = ScalarNode(entry.key).string()
 
+  protected val closedShapeName = "operation"
+
   def parse(): Operation = {
     val operation: Operation = Operation(Annotations(entry))
     operation.set(Method, methodNode) // add lexical info
@@ -38,7 +40,7 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
 
     val map = entry.value.as[YMap]
 
-    ctx.closedShape(operation.id, map, "operation")
+    ctx.closedShape(operation.id, map, closedShapeName)
 
     map.key("operationId").foreach { entry =>
       val operationId = entry.value.toString()
@@ -71,6 +73,8 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
+
+    ctx.closedShape(operation.id, map, "operation")
 
     map.key("deprecated", OperationModel.Deprecated in operation)
 

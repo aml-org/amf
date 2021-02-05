@@ -93,12 +93,12 @@ private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Op
     override implicit val ctx: AsyncWebApiContext)
     extends AsyncOperationParser(entry, adopt) {
 
+  override protected val closedShapeName: String = "operationTrait"
+
   override def parse(): Operation = {
     val operation = super.parse()
     operation.set(OperationModel.Name, methodNode, Annotations(entry.key))
-    val map = entry.value.as[YMap]
     operation.withAbstract(true)
-    ctx.closedShape(operation.id, map, "operationTrait")
     operation
   }
 
