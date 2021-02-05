@@ -957,5 +957,42 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  test("Additional properties are inlined after resolution") {
+    cycle(
+      "api.yaml",
+      "output.json",
+      OasYamlHint,
+      Oas30,
+      directory = s"$cyclePath/oas3/reffed-additional-properties/",
+      transformWith = Some(Oas30),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
+  multiGoldenTest("Resolved extension shouldn't lose Root field", "api.%s") { config =>
+    cycle(
+      "extension.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = s"$extendsPath/to-jsonld-and-back/",
+      transformWith = Some(Raml10),
+      renderOptions = Option(config.renderOptions),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
+  multiSourceTest("Resolved extension shouldn't lose Root field to RAML", "api.%s") { config =>
+    cycle(
+      config.source,
+      "cycled-api.raml",
+      AmfJsonHint,
+      target = Raml,
+      directory = s"$extendsPath/to-jsonld-and-back/",
+      transformWith = Some(Raml10),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
   override val basePath: String = ""
 }

@@ -38,14 +38,17 @@ class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: B
     with PlatformSecrets {
   override def resolve[T <: BaseUnit](model: T): T = {
     val extendsStage = new ExtendsResolutionStage(profile, keepEditingInfo)
-    model match {
+    val resolvedModel = model match {
       case overlay: Overlay =>
         new OverlayResolutionStage(profile, keepEditingInfo).resolve(model, overlay).asInstanceOf[T]
       case extension: Extension =>
         new ExtensionResolutionStage(profile, keepEditingInfo).resolve(model, extension).asInstanceOf[T]
       case _ => extendsStage.resolve(model)
     }
+    assignNewRoot(resolvedModel)
   }
+
+  private def assignNewRoot[T <: BaseUnit](model: T): T = model.withRoot(true)
 }
 
 case class IdTracker() {
