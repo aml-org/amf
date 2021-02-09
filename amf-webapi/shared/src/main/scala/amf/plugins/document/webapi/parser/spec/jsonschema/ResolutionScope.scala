@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.jsonschema
 import java.net.URI
 
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.jsonschema.CommonDraft4To7ResolutionScope.{formatFragment, formatUri}
+import amf.plugins.document.webapi.parser.spec.jsonschema.CommonIdResolutionScope.{formatFragment, formatUri}
 import org.yaml.model.{YNode, YType}
 
 import scala.collection.mutable
@@ -32,13 +32,13 @@ case class LexicalResolutionScope(protected val path: String = "") extends Resol
   override protected def getInstance(path: String): ResolutionScope = LexicalResolutionScope(path)
 }
 
-object CommonDraft4To7ResolutionScope {
+object CommonIdResolutionScope {
 
-  def formatUri(uri: String): String = if (uri.endsWith("#")) uri.dropRight(1) else uri
+  def formatUri(uri: String): String           = if (uri.endsWith("#")) uri.dropRight(1) else uri
   def formatFragment(fragment: String): String = if (fragment.startsWith("#")) fragment else s"#$fragment"
 }
 
-abstract class CommonDraft4To7ResolutionScope(private val baseUri: URI, protected val path: String = "")
+abstract class CommonIdResolutionScope(private val baseUri: URI, protected val path: String = "")
     extends ResolutionScope {
   override def getNext(entryLike: YMapEntryLike): ResolutionScope = {
     val optionalIdNode      = getIdKey(entryLike)
@@ -59,7 +59,6 @@ abstract class CommonDraft4To7ResolutionScope(private val baseUri: URI, protecte
     }
 
   override def resolve(key: String, entryLike: YMapEntryLike, acc: mutable.Map[String, YMapEntryLike]): Unit = {
-    resolveIdValue(formatFragment(s"$path/$key")).foreach(uri => acc.put(uri.toString, entryLike))
     entryFromIdNode(entryLike).foreach(t => acc.put(t._1, t._2))
   }
 
@@ -68,7 +67,8 @@ abstract class CommonDraft4To7ResolutionScope(private val baseUri: URI, protecte
       .flatMap { resolveIdValue }
       .map { uri =>
         (formatUri(uri.toString), entryLike)
-      }.toSeq
+      }
+      .toSeq
   }
 
   protected def resolveIdValue(id: String): Option[URI] =
@@ -95,22 +95,22 @@ abstract class CommonDraft4To7ResolutionScope(private val baseUri: URI, protecte
   protected def getInstanceWithNewBase(path: URI): ResolutionScope
 }
 
-case class Draft4ResolutionScope(private val baseUri: URI, override val path: String = "")
-    extends CommonDraft4To7ResolutionScope(baseUri, path) {
+case class Draft4IdResolutionScope(private val baseUri: URI, override val path: String = "")
+    extends CommonIdResolutionScope(baseUri, path) {
   protected def getIdFromMap(map: Map[YNode, YNode]): Option[YNode] = map.get("id")
-  override protected def getInstance(path: String): ResolutionScope = Draft4ResolutionScope(baseUri, path)
-  protected def getInstanceWithNewBase(path: URI): ResolutionScope  = Draft4ResolutionScope(path)
+  override protected def getInstance(path: String): ResolutionScope = Draft4IdResolutionScope(baseUri, path)
+  protected def getInstanceWithNewBase(path: URI): ResolutionScope  = Draft4IdResolutionScope(path)
 }
 
-case class Draft7ResolutionScope(private val baseUri: URI, override val path: String = "")
-    extends CommonDraft4To7ResolutionScope(baseUri, path) {
+case class Draft7IdResolutionScope(private val baseUri: URI, override val path: String = "")
+    extends CommonIdResolutionScope(baseUri, path) {
   protected def getIdFromMap(map: Map[YNode, YNode]): Option[YNode] = map.get("$id")
-  override protected def getInstance(path: String): ResolutionScope = Draft7ResolutionScope(baseUri, path)
-  protected def getInstanceWithNewBase(path: URI): ResolutionScope  = Draft7ResolutionScope(path)
+  override protected def getInstance(path: String): ResolutionScope = Draft7IdResolutionScope(baseUri, path)
+  protected def getInstanceWithNewBase(path: URI): ResolutionScope  = Draft7IdResolutionScope(path)
 }
 
 case class Draft2019ResolutionScope(private val baseUri: URI, override val path: String = "")
-    extends CommonDraft4To7ResolutionScope(baseUri, path) {
+    extends CommonIdResolutionScope(baseUri, path) {
 
   protected def getIdFromMap(map: Map[YNode, YNode]): Option[YNode]         = map.get("$id")
   override protected def getInstanceWithNewBase(path: URI): ResolutionScope = Draft2019ResolutionScope(path)
@@ -124,14 +124,16 @@ case class Draft2019ResolutionScope(private val baseUri: URI, override val path:
       case Some(anchor) =>
         val entryFromId =
           if (isDifferentThanBase(nextOrSameBaseUriId)) Some(creatNodeFrom(nextOrSameBaseUriId, entryLike)) else None
-        entryFromId.toSeq ++ resolveAnchor(s"#$anchor", nextOrSameBaseUriId).map(uri => (uri.toString, entryLike)).toSeq
+        entryFromId.toSeq ++ resolveAnchor(s"#$anchor", nextOrSameBaseUriId)
+          .map(uri => (uri.toString, entryLike))
+          .toSeq
       case _ if isDifferentThanBase(nextOrSameBaseUriId) => Some(creatNodeFrom(nextOrSameBaseUriId, entryLike)).toSeq
-      case _                                         => Seq()
+      case _                                             => Seq()
     }
     result
   }
 
-  private def isDifferentThanBase(nextOrSameBaseUriId: URI) = !nextOrSameBaseUriId.equals(baseUri)
+  private def isDifferentThanBase(nextOrSameBaseUriId: URI)             = !nextOrSameBaseUriId.equals(baseUri)
   private def creatNodeFrom(nextBaseUri: URI, entryLike: YMapEntryLike) = (formatUri(nextBaseUri.toString), entryLike)
 
   private def lookAheadForAnchor(entryLike: YMapEntryLike): Option[String] = {

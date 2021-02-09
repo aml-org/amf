@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "required": ["party"],
+  "properties": {
+    "party": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "PartyType.json"
+      }
+    }
+  }
+}

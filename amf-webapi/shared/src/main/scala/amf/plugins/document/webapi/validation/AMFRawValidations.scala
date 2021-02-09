@@ -32,24 +32,22 @@ object AMFRawValidations {
                       val openApiErrorMessage: String,
                       val severity: String)
   object AMFValidation {
-    def fromStrings(
-        uri: String = "",
-        message: String = "",
-        owlClass: String,
-        owlProperty: String,
-        target: String = "sh:path",
-        constraint: String,
-        value: String = "0",
-        ramlErrorMessage: String = "",
-        openApiErrorMessage: String = "",
-        severity: String = Severity.VIOLATION,
-    ): AMFValidation = {
+    def fromStrings(uri: String = "",
+                    message: String = "",
+                    owlClass: String,
+                    owlProperty: String,
+                    target: String = "sh:path",
+                    constraint: String,
+                    value: String = "0",
+                    ramlErrorMessage: String = "",
+                    openApiErrorMessage: String = "",
+                    severity: String = Severity.VIOLATION): AMFValidation = {
 
-      def iri(s: String) = Namespace.uri(s).iri()
+      def iri(s: String) = Namespace.staticAliases.uri(s).iri()
       val sameMessage    = message.nonEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
 
       new AMFValidation(
-        uri = optional(uri).map(Namespace.uri(_).iri()),
+        uri = optional(uri).map(Namespace.staticAliases.uri(_).iri()),
         message = optional(message),
         owlClass = iri(owlClass),
         owlProperty = iri(owlProperty),
@@ -62,18 +60,16 @@ object AMFRawValidations {
       )
     }
 
-    def apply(
-        uri: Option[ValueType] = None,
-        message: String = "",
-        owlClass: ValueType,
-        owlProperty: ValueType,
-        target: ValueType = sh("path"),
-        constraint: ValueType,
-        value: String = "0",
-        ramlErrorMessage: String = "",
-        openApiErrorMessage: String = "",
-        severity: String = Severity.VIOLATION
-    ): AMFValidation = {
+    def apply(uri: Option[ValueType] = None,
+              message: String = "",
+              owlClass: ValueType,
+              owlProperty: ValueType,
+              target: ValueType = sh("path"),
+              constraint: ValueType,
+              value: String = "0",
+              ramlErrorMessage: String = "",
+              openApiErrorMessage: String = "",
+              severity: String = Severity.VIOLATION): AMFValidation = {
 
       val sameMessage = message.nonEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
 
@@ -93,7 +89,7 @@ object AMFRawValidations {
 
     def adaptValue(constraint: String, value: String): String =
       if (constraint.endsWith("pattern")) value
-      else Namespace.uri(value).iri() // this might not be a URI, but trying to expand it is still safe
+      else Namespace.staticAliases.uri(value).iri() // this might not be a URI, but trying to expand it is still safe
 
     def optional(s: String): Option[String] = if (s.isEmpty) None else Some(s.trim)
   }

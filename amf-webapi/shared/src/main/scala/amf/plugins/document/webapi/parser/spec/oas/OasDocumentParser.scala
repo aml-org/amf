@@ -10,7 +10,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter}
-import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys}
+import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
@@ -93,16 +93,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
     val references = ReferencesParser(document, root.location, "uses".asOasExtension, map, root.references).parse()
     parseDeclarations(root, map)
-    val declarationKeys = ctx.getDeclarationKeys
-    if (declarationKeys.nonEmpty) document.add(DeclarationKeys(declarationKeys))
 
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
     document
       .withEncodes(api)
       .adopted(root.location)
 
-    val declarable = ctx.declarations.declarables()
-    if (declarable.nonEmpty) document.withDeclares(declarable)
+    addDeclarationsToModel(document)
     if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
 
     ctx.futureDeclarations.resolve()
@@ -111,18 +108,20 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
   def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"
-    parseTypeDeclarations(map, parent + "/types")
+    parseTypeDeclarations(map, parent + "/types", Some(this))
     parseAnnotationTypeDeclarations(map, parent)
     AbstractDeclarationsParser("resourceTypes".asOasExtension,
                                (entry: YMapEntry) => ResourceType(entry),
                                map,
                                parent + "/resourceTypes",
-                               ResourceTypeModel).parse()
+                               ResourceTypeModel,
+                               this).parse()
     AbstractDeclarationsParser("traits".asOasExtension,
                                (entry: YMapEntry) => Trait(entry),
                                map,
                                parent + "/traits",
-                               TraitModel)
+                               TraitModel,
+                               this)
       .parse()
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseParameterDeclarations(map, parent + "/parameters")
@@ -134,7 +133,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "annotationTypes".asOasExtension,
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e, isAbstract = true))
+        addDeclarationKey(DeclarationKey(e, isAbstract = true))
         e.value
           .as[YMap]
           .entries
@@ -181,7 +180,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       key,
       e => {
-        ctx.addDeclarationKey(DeclarationKey(e))
+        addDeclarationKey(DeclarationKey(e))
         e.value.as[YMap].entries.foreach { entry =>
           val securityScheme: SecurityScheme = ctx.factory
             .securitySchemeParser(
@@ -207,7 +206,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "parameters",
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries
@@ -237,7 +236,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       key,
       entry => {
-        ctx.addDeclarationKey(DeclarationKey(entry))
+        addDeclarationKey(DeclarationKey(entry))
         entry.value
           .as[YMap]
           .entries

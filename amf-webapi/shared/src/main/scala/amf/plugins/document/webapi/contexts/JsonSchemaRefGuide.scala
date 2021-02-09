@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.contexts
 import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.parser.ParsedReference
 import amf.core.unsafe.PlatformSecrets
+import amf.core.utils.UriUtils
 import amf.plugins.document.webapi.parser.spec.jsonschema.AstFinder
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaRootCreator.getYNodeFrom
 import org.yaml.model.YNode
@@ -32,7 +33,7 @@ case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReferenc
     }
   }
 
-  def getFileUrl(ref: String): String = context.resolvedPath(currentLoc, ref)
+  def getFileUrl(ref: String): String = UriUtils.resolveRelativeTo(currentLoc, ref)
 
   def changeJsonSchemaSearchDestination(loc: String): JsonSchemaRefGuide = {
     val optionalRef = references

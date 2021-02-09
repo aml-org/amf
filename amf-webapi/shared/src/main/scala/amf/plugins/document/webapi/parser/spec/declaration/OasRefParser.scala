@@ -4,6 +4,7 @@ import amf.core.annotations.ExternalFragmentRef
 import amf.core.metamodel.domain.LinkableElementModel
 import amf.core.model.domain.{Linkable, Shape}
 import amf.core.parser._
+import amf.core.utils.UriUtils
 import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
@@ -48,7 +49,7 @@ class OasRefParser(map: YMap,
         // now we work with canonical JSON schema pointers, not local refs
         val referencedShape = ctx.findLocalJSONPath(ref) match {
           case Some(_) => searchLocalJsonSchema(ref, if (ctx.linkTypes) strippedPrefixRef else ref, e)
-          case _            => searchRemoteJsonSchema(ref, if (ctx.linkTypes) strippedPrefixRef else ref, e)
+          case _       => searchRemoteJsonSchema(ref, if (ctx.linkTypes) strippedPrefixRef else ref, e)
         }
         referencedShape.foreach(safeAdoption)
         referencedShape
@@ -69,7 +70,7 @@ class OasRefParser(map: YMap,
     val (ref, text) =
       if (ctx.linkTypes) (r, t)
       else {
-        val fullref = ctx.resolvedPath(ctx.rootContextDocument, r)
+        val fullref = UriUtils.resolveRelativeTo(ctx.rootContextDocument, r)
         (fullref, fullref)
       }
     ctx.findJsonSchema(ref) match {
@@ -98,14 +99,14 @@ class OasRefParser(map: YMap,
         ctx.registerJsonSchema(ref, tmpShape)
         ctx.findLocalJSONPath(r) match {
           case Some(entryLike) =>
-            val definitiveName = entryLike.key.map(_.as[String])getOrElse(name)
+            val definitiveName = entryLike.key.map(_.as[String]) getOrElse (name)
             OasTypeParser(entryLike, definitiveName, adopt, version)
               .parse()
               .map { shape =>
                 ctx.futureDeclarations.resolveRef(text, shape)
                 ctx.registerJsonSchema(ref, shape)
                 if (ctx.linkTypes || ref.equals("#")) {
-                  val link  = shape.link(text, Annotations(ast)).asInstanceOf[AnyShape]
+                  val link = shape.link(text, Annotations(ast)).asInstanceOf[AnyShape]
                   val (nextName, annotations) = entryLike.key match {
                     case Some(keyNode) =>
                       val key = keyNode.asScalar.map(_.text).getOrElse(name)
@@ -157,16 +158,15 @@ class OasRefParser(map: YMap,
     }
 
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
-    val fullRef = ctx.resolvedPath(ctx.rootContextDocument, ref)
-    ctx.findJsonSchema(fullRef) match {
-      case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullRef, e, u)
+    val fullUrl = UriUtils.resolveRelativeTo(ctx.rootContextDocument, ref)
+    ctx.findJsonSchema(fullUrl) match {
+      case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullUrl, e, u)
       case Some(shape)              => createLinkToParsedShape(ref, shape)
-      case _ =>
-        val fileUrl = ctx.jsonSchemaRefGuide.getFileUrl(ref)
+      case _                        =>
         // TODO: parsed json schema is registered with ref but searched with fullRef, leads to repeated parsing
         parseRemoteSchema(ref) match {
           case None =>
-            val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fileUrl)
+            val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fullUrl)
             // it might still be resolvable at the RAML (not JSON Schema) level
             tmpShape.unresolved(text, e, "warning").withSupportsRecursion(true)
             Some(tmpShape)
@@ -175,7 +175,7 @@ class OasRefParser(map: YMap,
             if (ctx.declarations.fragments.contains(text)) {
               // case when in an OAS spec we point with a regular $ref to something that is external
               // and holds a JSON schema we need to promote an external fragment to data type fragment
-              promoteParsedShape(ref, text, fullRef, jsonSchemaShape)
+              promoteParsedShape(ref, text, fullUrl, jsonSchemaShape)
             } else Some(jsonSchemaShape)
         }
     }

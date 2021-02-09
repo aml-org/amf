@@ -1,7 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.core.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.AmfObject
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -12,13 +13,18 @@ import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.validations.ParserSideValidations.InvalidAnnotationTarget
 import org.yaml.model._
 
-case class AnnotationParser(element: DomainElement, map: YMap, target: List[String] = Nil)(
+case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] = Nil)(
     implicit val ctx: WebApiContext) {
   def parse(): Unit = {
     val extensions    = parseExtensions(element.id, map, target)
-    val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
-    if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
+    val oldExtensions = customDomainPropertiesFrom(element)
+    if (extensions.nonEmpty) setCustomDomainProperties(oldExtensions ++ extensions)
   }
+
+  // NOTE: DONE LIKE THIS BECAUSE OF SCALA JS LINKING ERRORS
+  private def customDomainPropertiesFrom(obj: AmfObject) = Option(obj.fields.field(CustomDomainProperties)).getOrElse(Seq[DomainExtension]())
+  private def setCustomDomainProperties(extensions: Seq[DomainExtension]) =
+    element.setArray(CustomDomainProperties, extensions)
 
   def parseOrphanNode(orphanNodeName: String): Unit = {
     map.key(orphanNodeName) match {
@@ -27,8 +33,8 @@ case class AnnotationParser(element: DomainElement, map: YMap, target: List[Stri
         extensions.foreach { extension =>
           Option(extension.extension).foreach(_.annotations += OrphanOasExtension(orphanNodeName))
         }
-        val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
-        if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
+        val oldExtensions = customDomainPropertiesFrom(element)
+        if (extensions.nonEmpty) setCustomDomainProperties(oldExtensions ++ extensions)
       case _ => // ignore
     }
   }
@@ -38,9 +44,12 @@ object AnnotationParser {
   def parseExtensions(parent: String, map: YMap, target: List[String] = Nil)(
       implicit ctx: WebApiContext): Seq[DomainExtension] =
     map.entries.flatMap { entry =>
-      val key = entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
-      resolveAnnotation(key).map(ExtensionParser(_, parent, entry, target).parse().add(Annotations(entry)))
+      resolveAnnotation(entryKey(entry)).map(ExtensionParser(_, parent, entry, target).parse().add(Annotations(entry)))
     }
+
+  private def entryKey(entry: YMapEntry) = {
+    entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
+  }
 }
 
 private case class ExtensionParser(annotation: String, parent: String, entry: YMapEntry, target: List[String] = Nil)(

@@ -50,11 +50,16 @@
             "name": "generated",
             "schema": {
               "type": "object",
-              "properties": {
-                "a": {
-                  "type": "string"
+              "x-amf-merge": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "string"
+                    }
+                  }
                 }
-              }
+              ]
             }
           }
         ],

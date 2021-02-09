@@ -42,7 +42,7 @@
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/web-api/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(20,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(19,5)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/web-api/source-map/lexical/element_0",
@@ -65,7 +65,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "2.3.0",
+      "http://a.ml/vocabularies/document#version": "2.4.0",
       "http://a.ml/vocabularies/document#root": true
     },
     {
@@ -231,7 +231,7 @@
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/declarations/types/mySchema/source-map/parsed-json-schema/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/declarations/types/mySchema",
-      "http://a.ml/vocabularies/document-source-maps#value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"title\": \"My schema\",\n  \"description\": \"My description\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"myProperty\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ],\n      \"default\": null\n    }\n  }\n}\n"
+      "http://a.ml/vocabularies/document-source-maps#value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"title\": \"My schema\",\n  \"description\": \"My description\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"myProperty\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ],\n      \"default\": null\n    }\n  }\n}"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/api-with-multi-line-schema/api.raml#/declarations/types/mySchema/property/myProperty/union/myProperty/string",

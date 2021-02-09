@@ -1,0 +1,14 @@
+#%RAML 1.0 Library
+
+(someVeryCoolAnnotation): io.test.lib
+
+types:
+  Test:
+    type: object
+    properties:
+      value: string
+
+annotationTypes:
+  someVeryCoolAnnotation:
+    type: string
+    allowedTargets: Library

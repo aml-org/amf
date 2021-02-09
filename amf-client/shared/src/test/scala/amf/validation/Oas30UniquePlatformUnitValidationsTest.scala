@@ -121,4 +121,9 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("invalid schema name as seq") {
     validate("invalid-schema-name-as-seq.yaml", Some("invalid-schema-name-as-seq.report"), Oas30Profile)
   }
+
+  test("Validate ref key in operation object") {
+    validate("invalid-ref-key-operation.json", Some("invalid-ref-key-operation.report"), Oas20Profile)
+  }
+
 }

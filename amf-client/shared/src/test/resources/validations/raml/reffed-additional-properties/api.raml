@@ -1,0 +1,8 @@
+#%RAML 1.0
+title: "something"
+/endpoint:
+  post:
+    body:
+      application/json:
+        type: !include schema.json
+        example: !include example.json

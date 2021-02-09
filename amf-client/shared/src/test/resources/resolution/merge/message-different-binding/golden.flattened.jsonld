@@ -8,21 +8,9 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "message",
-      "http://a.ml/vocabularies/apiContract#payload": [
-        {
-          "@id": "target/message/default"
-        }
-      ],
       "http://a.ml/vocabularies/apiBinding#binding": {
         "@id": "target/message/message-bindings"
       }
-    },
-    {
-      "@id": "target/message/default",
-      "@type": [
-        "http://a.ml/vocabularies/apiContract#Payload",
-        "http://a.ml/vocabularies/document#DomainElement"
-      ]
     },
     {
       "@id": "target/message/message-bindings",
@@ -91,7 +79,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "testId/message"
       },
-      "http://a.ml/vocabularies/document#version": "2.3.0",
+      "http://a.ml/vocabularies/document#version": "2.4.0",
       "http://a.ml/vocabularies/document#root": false
     }
   ]

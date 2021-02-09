@@ -93,11 +93,3 @@ trait OasTypeDefStringValueMatcher {
 }
 
 object CommonOasTypeDefMatcher extends OasTypeDefStringValueMatcher
-
-object JsonSchemaTypeDefMatcher extends OasTypeDefStringValueMatcher {
-
-  override def matchType(typeDef: TypeDef): String = {
-    if (typeDef == LongType) "number"
-    else super.matchType(typeDef)
-  }
-}

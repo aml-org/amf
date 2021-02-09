@@ -3,8 +3,8 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.core.emitter.RenderOptions
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{AmfJsonHint, Hint}
-import amf.io.{BuildCycleTests, JsonLdSerializationSuite, MultiJsonldAsyncFunSuite}
-import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm, JsonLdSerialization, NoForm}
+import amf.io.{BuildCycleTests, JsonLdSerializationSuite}
+import amf.plugins.document.graph._
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.{Assertion, AsyncFreeSpec}
 
@@ -59,7 +59,7 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonL
 
         goldenCycle(dirName, s"$dirName/dumped$fileExtension")
 
-        val knownJsonLdForms = Seq(NoForm, FlattenedForm, ExpandedForm)
+        val knownJsonLdForms = Seq(NoForm, FlattenedForm, EmbeddedForm)
         knownJsonLdForms.foreach { form =>
           s"Steps for ${form.name} json-ld serialization $dirName" - {
             if (existGoldenForForm(d, form)) {

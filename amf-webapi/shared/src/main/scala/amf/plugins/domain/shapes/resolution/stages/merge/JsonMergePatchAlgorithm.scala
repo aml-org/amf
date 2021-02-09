@@ -8,8 +8,8 @@ import amf.plugins.domain.webapi.models.{Key, Payload}
 
 case class JsonMergePatch(isNull: AmfElement => Boolean,
                           keyCriteria: KeyCriteria,
-                          ignoredFields: Seq[Field] = Seq(),
-                          customMerges: Seq[CustomMerge] = Seq()) {
+                          ignoredFields: Set[Field] = Set(),
+                          customMerges: Set[CustomMerge] = Set()) {
 
   def merge[T <: AmfElement](target: T, patch: T): AmfElement = {
     customMerges.foreach(_.apply(target, patch))

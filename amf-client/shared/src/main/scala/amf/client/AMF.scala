@@ -111,6 +111,8 @@ object CoreWrapper {
 
   def parser(vendor: String, mediaType: String): Parser = Core.parser(vendor, mediaType)
 
+  def parser(vendor: String, mediaType: String, env: Environment): Parser = Core.parser(vendor, mediaType, env)
+
   def generator(vendor: String, mediaType: String): Renderer = Core.generator(vendor, mediaType)
 
   def resolver(vendor: String): Resolver = Core.resolver(vendor)

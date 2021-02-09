@@ -1,0 +1,147 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/async-api",
+        "@type": [
+          "apiContract:AsyncAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "something"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "aversion"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#/async-api/end-points/aChannel",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "aChannel"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/async-api/end-points/aChannel/publish",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "publish"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#/async-api/end-points/aChannel/publish/request",
+                    "@type": [
+                      "apiContract:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#/async-api/end-points/aChannel/publish/request/baseContentType",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "baseContentType"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "core:mediaType": "[(11,8)-(12,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:displayName": [
+                      {
+                        "@value": "secondMessage"
+                      }
+                    ],
+                    "core:title": [
+                      {
+                        "@value": "secondTitle"
+                      }
+                    ],
+                    "core:summary": [
+                      {
+                        "@value": "firstSummary"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#/async-api/end-points/aChannel/publish/request": "[(9,0)-(15,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:expects": "[(8,6)-(15,0)]",
+                    "#/async-api/end-points/aChannel/publish": "[(7,4)-(15,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#/async-api/end-points/aChannel": "[(6,2)-(15,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#/async-api": "ASYNC 2.0"
+          },
+          "lexical": {
+            "apiContract:endpoint": "[(5,0)-(15,0)]",
+            "core:name": "[(3,2)-(4,0)]",
+            "#/async-api": "[(1,0)-(22,24)]",
+            "core:version": "[(4,2)-(5,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.4.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

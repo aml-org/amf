@@ -16,7 +16,7 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/parser#json-schema-inheritance
   Message: Invalid reference to JSON Schema
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml#/declarations/types/Person
+  Target: file://amf-client/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml#/declarations/types/Person/schema
   Property: http://a.ml/vocabularies/shapes#inherits
   Position: Some(LexicalInformation([(18,4)-(21,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml

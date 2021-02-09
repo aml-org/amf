@@ -267,5 +267,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/examples/same-filename-example.raml")
   }
 
+  test("using number larger than long in schema definition") {
+    checkValid("/raml/big-number-in-schema.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

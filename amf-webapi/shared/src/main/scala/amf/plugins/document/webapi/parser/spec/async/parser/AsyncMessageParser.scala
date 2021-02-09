@@ -179,16 +179,26 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
 
     parseTraits(map, message)
 
+    if (shouldParsePayloadModel(map)) parsePayload(map, message)
+
+    ctx.closedShape(message.id, map, "message")
+    AnnotationParser(message, map).parse()
+    message
+  }
+
+  private def parsePayload(map: YMap, message: Message) = {
     val payload = Payload(Annotations(VirtualObject())).adopted(message.id)
 
     map.key("contentType", PayloadModel.MediaType in payload)
     map.key("schemaFormat", PayloadModel.SchemaMediaType in payload)
     parseSchema(map, payload)
 
-    ctx.closedShape(message.id, map, "message")
     message.set(MessageModel.Payloads, AmfArray(Seq(payload)))
-    AnnotationParser(message, map).parse()
-    message
+  }
+
+  private def shouldParsePayloadModel(map: YMap) = {
+    val payloadMapKeys = Set("contentType", "schemaFormat", "payload")
+    map.map.keySet.flatMap(_.asScalar).map(_.text).intersect(payloadMapKeys).nonEmpty
   }
 
   protected def parseTraits(map: YMap, message: Message): Unit

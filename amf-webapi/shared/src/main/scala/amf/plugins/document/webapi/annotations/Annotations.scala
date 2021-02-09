@@ -39,6 +39,8 @@ object ParsedJSONExample extends AnnotationGraphLoader {
 
 case class SchemaIsJsonSchema() extends Annotation
 
+case class ExternalSchemaWrapper() extends Annotation
+
 case class GeneratedJSONSchema(rawText: String) extends Annotation
 
 /** Represents generated RAML Data Type. */

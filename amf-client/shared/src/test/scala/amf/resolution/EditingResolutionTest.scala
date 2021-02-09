@@ -9,7 +9,6 @@ import amf.core.remote.Vendor.AMF
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
-import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -586,17 +585,16 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
-  multiGoldenTest("raml with declared element link of link of link", "link-of-link/link-of-link-of-link.%s") {
-    config =>
-      cycle(
-        "link-of-link/link-of-link-of-link.raml",
-        config.golden,
-        RamlYamlHint,
-        target = Amf,
-        directory = resolutionPath,
-        transformWith = Some(Raml10),
-        renderOptions = Some(config.renderOptions)
-      )
+  multiGoldenTest("raml with declared element link of link of link", "link-of-link/link-of-link-of-link.%s") { config =>
+    cycle(
+      "link-of-link/link-of-link-of-link.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("raml with declared element link of link in api", "link-of-link/in-api/link-of-link-in-api.%s") {
@@ -662,17 +660,16 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
-  multiGoldenTest("Shared request body references in OAS 3.0", "shared-request-body-reference/oas30/api.%s") {
-    config =>
-      cycle(
-        "shared-request-body-reference/oas30/api.yaml",
-        config.golden,
-        OasYamlHint,
-        target = Amf,
-        directory = resolutionPath,
-        transformWith = Some(Oas30),
-        renderOptions = Some(config.renderOptions)
-      )
+  multiGoldenTest("Shared request body references in OAS 3.0", "shared-request-body-reference/oas30/api.%s") { config =>
+    cycle(
+      "shared-request-body-reference/oas30/api.yaml",
+      config.golden,
+      OasYamlHint,
+      target = Amf,
+      directory = resolutionPath,
+      transformWith = Some(Oas30),
+      renderOptions = Some(config.renderOptions)
+    )
   }
 
   multiGoldenTest("Shared examples in OAS 3.0", "shared-oas-30-examples/api.%s") { config =>
@@ -944,6 +941,55 @@ class EditingResolutionTest extends ResolutionTest {
       directory = resolutionPath + "raml-query-and-header-params/",
       transformWith = Some(Raml10),
       renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
+  multiGoldenTest("Raml properties have encoded uris as shacl:path", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      Amf,
+      directory = resolutionPath + "encoded-uris-in-properties/",
+      transformWith = Some(Raml10),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
+  test("Additional properties are inlined after resolution") {
+    cycle(
+      "api.yaml",
+      "output.json",
+      OasYamlHint,
+      Oas30,
+      directory = s"$cyclePath/oas3/reffed-additional-properties/",
+      transformWith = Some(Oas30),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
+  multiGoldenTest("Resolved extension shouldn't lose Root field", "api.%s") { config =>
+    cycle(
+      "extension.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = s"$extendsPath/to-jsonld-and-back/",
+      transformWith = Some(Raml10),
+      renderOptions = Option(config.renderOptions),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
+  multiSourceTest("Resolved extension shouldn't lose Root field to RAML", "api.%s") { config =>
+    cycle(
+      config.source,
+      "cycled-api.raml",
+      AmfJsonHint,
+      target = Raml,
+      directory = s"$extendsPath/to-jsonld-and-back/",
+      transformWith = Some(Raml10),
       eh = Some(UnhandledParserErrorHandler)
     )
   }

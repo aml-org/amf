@@ -439,12 +439,12 @@ object ParserSideValidations extends Validations {
     "Unexpected 'fileTypes' syntax. Options are string or sequence"
   )
 
-  val JsonSchemaInheratinaceWarningSpecification = validation(
+  val JsonSchemaInheritanceWarning = validation(
     "json-schema-inheritance",
     "Inheriting from JSON Schema"
   )
 
-  val XmlSchemaInheratinaceWarningSpecification = validation(
+  val XmlSchemaInheritancceWarning = validation(
     "xml-schema-inheritance",
     "Inheriting from XML Schema"
   )
@@ -707,7 +707,7 @@ object ParserSideValidations extends Validations {
       OasProfile   -> VIOLATION,
       Oas20Profile -> VIOLATION
     ),
-    JsonSchemaInheratinaceWarningSpecification.id -> all(WARNING),
+    JsonSchemaInheritanceWarning.id -> all(WARNING),
     PatternPropertiesOnClosedNodeSpecification.id -> Map(
       RamlProfile   -> VIOLATION,
       Raml10Profile -> VIOLATION,
@@ -754,8 +754,8 @@ object ParserSideValidations extends Validations {
     UnknownSecuritySchemeErrorSpecification,
     MissingSecuritySchemeErrorSpecification,
     UnknownScopeErrorSpecification,
-    JsonSchemaInheratinaceWarningSpecification,
-    XmlSchemaInheratinaceWarningSpecification,
+    JsonSchemaInheritanceWarning,
+    XmlSchemaInheritancceWarning,
     DuplicatedPropertySpecification,
     ExamplesMustBeAMap,
     ExamplesMustBeASeq,

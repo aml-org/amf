@@ -6,17 +6,24 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.utils.UriUtils.resolve
+import amf.core.utils.{Absolute, AliasCounter, IdCounter, RelativeToIncludedFile}
 import amf.plugins.document.webapi.annotations.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaVersion,
+  SchemaVersion
+}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
-import amf.plugins.document.webapi.parser.spec.jsonschema.{AstFinder, JsonSchemaAstIndex, JsonSchemaInference}
+import amf.plugins.document.webapi.parser.spec.jsonschema.{AstFinder, AstIndex, AstIndexBuilder, JsonSchemaInference}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.ParserSideValidations.{ClosedShapeSpecification, ClosedShapeSpecificationWarning}
 import org.yaml.model._
+
+import scala.collection.mutable
 
 abstract class WebApiContext(val loc: String,
                              refs: Seq[ParsedReference],
@@ -34,7 +41,6 @@ abstract class WebApiContext(val loc: String,
 
   val syntax: SpecSyntax
   val vendor: Vendor
-  private var declarationKeys: List[DeclarationKey] = List.empty
   val declarations: WebApiDeclarations = declarationsOption.getOrElse(
     new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
 
@@ -43,16 +49,28 @@ abstract class WebApiContext(val loc: String,
     case _                  => None
   }
 
-  private var jsonSchemaIndex: Option[JsonSchemaAstIndex] = wrapped match {
+  private var jsonSchemaIndex: Option[AstIndex] = wrapped match {
     case wac: WebApiContext => wac.jsonSchemaIndex
     case _                  => None
   }
 
   var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(this)
 
+  var indexCache: mutable.Map[String, AstIndex] = mutable.Map[String, AstIndex]()
+
   def setJsonSchemaAST(value: YNode): Unit = {
+    val location = value.sourceName
     localJSONSchemaContext = Some(value)
-    jsonSchemaIndex = Some(JsonSchemaAstIndex(value)(this))
+    val index = indexCache.getOrElse(
+      location, {
+        val result = AstIndexBuilder.buildAst(value,
+                                              AliasCounter(options.getMaxYamlReferences),
+                                              computeJsonSchemaVersion(value))(this)
+        indexCache.put(location, result)
+        result
+      }
+    )
+    jsonSchemaIndex = Some(index)
   }
 
   globalSpace = wrapped.globalSpace
@@ -106,22 +124,6 @@ abstract class WebApiContext(val loc: String,
 
   def computeJsonSchemaVersion(ast: YNode): SchemaVersion = parseSchemaVersion(ast, eh)
 
-  def resolvedPath(base: String, str: String): String =
-    if (str.isEmpty) platform.normalizePath(base)
-    else if (str.startsWith("/")) str
-    else if (str.contains(":")) str
-    else if (str.startsWith("#")) base.split("#").head + str
-    else if (shouldSkipDot(base, str)) basePath(base) + str.substring(2)
-    else platform.normalizePath(basePath(base).urlDecoded + str)
-
-  def shouldSkipDot(base: String, path: String): Boolean =
-    (basePath(base) == "file://" || basePath(base) == "file:///") && path.startsWith("./")
-
-  def basePath(path: String): String = {
-    val withoutHash = if (path.contains("#")) path.split("#").head else path
-    withoutHash.splitAt(withoutHash.lastIndexOf("/"))._1 + "/"
-  }
-
   private def normalizeJsonPath(path: String): String = {
     if (path == "#" || path == "" || path == "/") "/" // exception root cases
     else {
@@ -130,15 +132,11 @@ abstract class WebApiContext(val loc: String,
     }
   }
 
+  def findJsonPathIn(index: AstIndex, path: String) = index.getNode(normalizeJsonPath(path))
 
-  def findJsonPathIn(index: JsonSchemaAstIndex, path: String) = index.getNodeAndEntry(normalizeJsonPath(path)).map { (path, _) }
-
-  // TODO: Evaluate if this can return a YMapEntryLike
   def findLocalJSONPath(path: String): Option[YMapEntryLike] = {
-    // todo: past uri?
-    jsonSchemaIndex.flatMap(index => findJsonPathIn(index, path)).map(_._2)
+    jsonSchemaIndex.flatMap(index => findJsonPathIn(index, path))
   }
-
 
   def link(node: YNode): Either[String, YNode]
   protected def ignore(shape: String, property: String): Boolean
@@ -162,12 +160,6 @@ abstract class WebApiContext(val loc: String,
   def getEntryKey(entry: YMapEntry): String = {
     entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
   }
-
-  def addDeclarationKey(key: DeclarationKey): Unit = {
-    declarationKeys = key :: declarationKeys
-  }
-
-  def getDeclarationKeys: List[DeclarationKey] = this.declarationKeys
 
   protected def nextValidation(node: String, shape: String, ast: YMap): Unit =
     throwClosedShapeError(node, s"Cannot validate unknown node type $shape for $vendor", ast)

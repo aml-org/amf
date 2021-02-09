@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: a title
+version: 1.0
+baseUri: http://someuri.com
+mediaType: application/json
+
+
+/subscription:
+  /usage:
+    displayName: name
+    description: lalal
+    post:
+      body:
+        application/json:
+          # define number with 21 digits (cannot be stored in long)
+          type: |
+            {
+              "type": "object",
+              "properties": {
+                "someNumber": {
+                  "type": "number",
+                  "maximum": 999999999999999999999
+                }
+              }
+            }
+          example: {
+            "someNumber": 0
+          }

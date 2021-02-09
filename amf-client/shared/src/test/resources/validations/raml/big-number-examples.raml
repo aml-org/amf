@@ -1,0 +1,40 @@
+#%RAML 1.0
+title: some title
+types:
+  BigNumberMax:
+    type: number
+    maximum: 9999999999999999
+    examples:
+      valid: 9999999999999999
+      wrong0: 10000000000000000
+      wrong1: 10000000000000001
+      wrong2: 10000000000000002
+      wrong3: 10000000000000003
+
+  BigNumberMin:
+    type: number
+    minimum: 10000000000000000
+    examples:
+      valid: 10000000000000000
+      wrong1: 9999999999999999
+
+  BigIntMax:
+    type: integer
+    maximum: 9999999999999999
+    examples:
+      valid: 9999999999999999
+      wrong0: 10000000000000000
+      wrong1: 10000000000000001
+      wrong2: 10000000000000002
+      wrong3: 10000000000000003
+
+  BigIntMin:
+    type: integer
+    minimum: 10000000000000000
+    examples:
+      valid: 10000000000000000
+      wrong1: 9999999999999999
+
+
+
+

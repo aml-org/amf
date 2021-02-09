@@ -18,11 +18,11 @@ import amf.plugins.document.webapi.parser.spec.toOasDeclarations
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 
-class JsonSchemaParser{
+class JsonSchemaParser {
 
   def parse(inputFragment: Fragment, pointer: Option[String])(implicit ctx: OasLikeWebApiContext): Option[AnyShape] = {
 
-    val doc: Root = createRootFrom(inputFragment, pointer, ctx.eh)
+    val doc: Root     = createRootFrom(inputFragment, pointer, ctx.eh)
     val parsingResult = parse(doc, ctx, new ParsingOptions())
 
     parsingResult.collect {
@@ -30,17 +30,23 @@ class JsonSchemaParser{
     }
   }
 
-  def parse(document: Root, parentContext: WebApiContext, options: ParsingOptions, optionalVersion: Option[JSONSchemaVersion] = None): Option[DataTypeFragment] = {
+  def parse(document: Root,
+            parentContext: WebApiContext,
+            options: ParsingOptions,
+            optionalVersion: Option[JSONSchemaVersion] = None): Option[DataTypeFragment] = {
 
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
-        val shapeId: String      = deriveShapeIdFrom(document)
+        val shapeId: String                  = deriveShapeIdFrom(document)
         val JsonReference(url, hashFragment) = JsonReference.buildReference(document.location)
-        val jsonSchemaContext = makeJsonSchemaContext(document, parentContext, url, options)
-        val rootAst = getPointedAstOrNode(parsedDoc.document.node, shapeId, hashFragment, url, jsonSchemaContext)
-        val version = optionalVersion.getOrElse(jsonSchemaContext.computeJsonSchemaVersion(parsedDoc.document.node))
+        val jsonSchemaContext                = makeJsonSchemaContext(document, parentContext, url, options)
+        val rootAst                          = getPointedAstOrNode(parsedDoc.document.node, shapeId, hashFragment, url, jsonSchemaContext)
+        val version                          = optionalVersion.getOrElse(jsonSchemaContext.computeJsonSchemaVersion(parsedDoc.document.node))
         val parsed =
-          OasTypeParser(rootAst, keyValueOrDefault(rootAst)(jsonSchemaContext.eh), shape => shape.withId(shapeId), version = version)(jsonSchemaContext)
+          OasTypeParser(rootAst,
+                        keyValueOrDefault(rootAst)(jsonSchemaContext.eh),
+                        shape => shape.withId(shapeId),
+                        version = version)(jsonSchemaContext)
             .parse() match {
             case Some(shape) => shape
             case None =>
@@ -68,7 +74,14 @@ class JsonSchemaParser{
     // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
     val inheritedDeclarations = getInheritedDeclarations(parentContext)
 
-    new JsonSchemaWebApiContext(url, document.references, cleanNested, inheritedDeclarations, options, parentContext.defaultSchemaVersion)
+    val schemaContext = new JsonSchemaWebApiContext(url,
+                                                    document.references,
+                                                    cleanNested,
+                                                    inheritedDeclarations,
+                                                    options,
+                                                    parentContext.defaultSchemaVersion)
+    schemaContext.indexCache = parentContext.indexCache
+    schemaContext
   }
 
   private def getInheritedDeclarations(parserContext: ParserContext) = {
@@ -78,13 +91,17 @@ class JsonSchemaParser{
     }
   }
 
-  private def deriveShapeIdFrom(doc: Root): String = if (doc.location.contains("#")) doc.location else doc.location + "#/"
+  private def deriveShapeIdFrom(doc: Root): String =
+    if (doc.location.contains("#")) doc.location else doc.location + "#/"
 
-  private def throwUnparsableJsonSchemaError(document: Root, shapeId: String, jsonSchemaContext: JsonSchemaWebApiContext, rootAst: YMapEntryLike): Unit = {
+  private def throwUnparsableJsonSchemaError(document: Root,
+                                             shapeId: String,
+                                             jsonSchemaContext: JsonSchemaWebApiContext,
+                                             rootAst: YMapEntryLike): Unit = {
     jsonSchemaContext.eh.violation(UnableToParseJsonSchema,
-      shapeId,
-      s"Cannot parse JSON Schema at ${document.location}",
-      rootAst.value)
+                                   shapeId,
+                                   s"Cannot parse JSON Schema at ${document.location}",
+                                   rootAst.value)
   }
 
   private def wrapInDataTypeFragment(document: Root, parsed: AnyShape): DataTypeFragment = {

@@ -1,0 +1,202 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#6",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "Something"
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#6": "RAML 1.0"
+          },
+          "lexical": {
+            "core:name": "[(2,0)-(3,0)]",
+            "#6": "[(2,0)-(8,41)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.4.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#2",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#from"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "from"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#3": "[(7,6)-(8,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "from"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#2": "[(7,6)-(8,0)]"
+              }
+            }
+          },
+          {
+            "@id": "#4",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#amount%20after%20conversion"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#5",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "amount after conversion"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#5": "[(8,6)-(8,41)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "amount after conversion"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#4": "[(8,6)-(8,41)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "myTypeWithEncodedUris"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#1": ""
+          },
+          "lexical": {
+            "shacl:name": "[(4,2)-(4,23)]",
+            "#1": "[(4,2)-(8,41)]"
+          },
+          "type-property-lexical-info": {
+            "#1": "[(5,4)-(5,8)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

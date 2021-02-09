@@ -566,15 +566,6 @@
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/apiContract#payload": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/default",
-                        "@type": [
-                          "http://a.ml/vocabularies/apiContract#Payload",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/core#correlationId": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/validations/async20/components/async-components.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2Flighting%2Fmeasured/publish/request/default-id",
@@ -1065,7 +1056,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.3.0"
+        "@value": "2.4.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -1125,7 +1116,7 @@
         ],
         "http://a.ml/vocabularies/document#version": [
           {
-            "@value": "2.3.0"
+            "@value": "2.4.0"
           }
         ],
         "http://a.ml/vocabularies/document#root": [
@@ -2072,7 +2063,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,21)-(9,3)]"
+                    "@value": "[(2,2)-(9,3)]"
                   }
                 ]
               }

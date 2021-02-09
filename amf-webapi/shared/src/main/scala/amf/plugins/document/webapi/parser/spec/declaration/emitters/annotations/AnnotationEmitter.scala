@@ -12,7 +12,7 @@ import org.yaml.model.YDocument.EntryBuilder
 /**
   *
   */
-case class AnnotationsEmitter(element: DomainElement, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+case class AnnotationsEmitter(element: CustomizableElement, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters: Seq[EntryEmitter] =
     element.customDomainProperties
       .filter(!isOrphanOasExtension(_))

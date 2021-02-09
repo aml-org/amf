@@ -317,4 +317,28 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
     )
   }
 
+  test("Validate ref key in operation object") {
+    validate(
+      "invalid-ref-key-operation.yaml",
+      Some("invalid-ref-key-operation.report"),
+      Async20Profile
+    )
+  }
+
+  test("Valid ref key in message trait defined in components") {
+    validate(
+      "external-reference/valid-external-ref-message-trait.yaml",
+      None,
+      Async20Profile
+    )
+  }
+
+  test("Valid ref key in operation trait defined in components") {
+    validate(
+      "external-reference/valid-external-ref-operation-trait.yaml",
+      None,
+      Async20Profile
+    )
+  }
+
 }

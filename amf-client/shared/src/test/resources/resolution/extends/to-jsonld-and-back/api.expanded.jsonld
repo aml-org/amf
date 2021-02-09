@@ -1,0 +1,56 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#1",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "Go Ravens Extension"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "v1"
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#1": "RAML 1.0"
+          },
+          "lexical": {
+            "#1": "[(2,0)-(3,12)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.4.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

@@ -110,7 +110,7 @@ class ValidationDialectTextGenerator(profile: ValidationProfile) {
   }
 
   def compact(uri: String): String =
-    Namespace
+    Namespace.staticAliases
       .compact(uri)
       .replace(":", ".")
       .replace("raml-doc.", "doc.")

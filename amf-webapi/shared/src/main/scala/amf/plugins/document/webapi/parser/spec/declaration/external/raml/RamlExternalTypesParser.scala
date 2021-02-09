@@ -29,9 +29,8 @@ trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with Ram
     case _           => None
   }
 
-  protected case class ValueAndOrigin(text: String,
-                                      valueAST: YNode,
-                                      oriUrl: Option[String],
+  protected case class ValueAndOrigin(text: String, valueAST: YNode,
+                                      originalUrlText: Option[String],
                                       errorShape: Option[AnyShape] = None)
 
   protected def buildTextAndOrigin(): ValueAndOrigin = {
@@ -46,7 +45,8 @@ trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with Ram
         }
       case YType.Seq =>
         failSchemaExpressionParser
-      case _ => ValueAndOrigin(value.as[YScalar].text, value, getOrigin(value))
+      case _ =>
+        ValueAndOrigin(value.as[YScalar].text, value, getOrigin(value))
     }
   }
 
