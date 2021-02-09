@@ -18,7 +18,10 @@ import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Ra
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeDetection.parseFormat
-import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{RamlJsonSchemaExpression, RamlXmlSchemaExpression}
+import amf.plugins.document.webapi.parser.spec.declaration.external.raml.{
+  RamlJsonSchemaExpression,
+  RamlXmlSchemaExpression
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
@@ -40,14 +43,16 @@ object Raml10TypeParser {
   def apply(entry: YMapEntry,
             adopt: Shape => Unit,
             typeInfo: TypeInfo = TypeInfo(),
-            defaultType: DefaultType = StringDefaultType)(implicit ctx: RamlWebApiContext): Raml10TypeParser =
-    new Raml10TypeParser(YMapEntryLike(entry), entry.key, adopt, typeInfo, defaultType)(
-      new Raml10WebApiContext(ctx.rootContextDocument,
-                              ctx.refs,
-                              ctx,
-                              Some(ctx.declarations),
-                              ctx.contextType,
-                              ctx.options))
+            defaultType: DefaultType = StringDefaultType)(implicit ctx: RamlWebApiContext): Raml10TypeParser = {
+    val context = new Raml10WebApiContext(ctx.rootContextDocument,
+                                          ctx.refs,
+                                          ctx,
+                                          Some(ctx.declarations),
+                                          ctx.contextType,
+                                          ctx.options)
+    context.nodeRefIds ++= ctx.nodeRefIds
+    new Raml10TypeParser(YMapEntryLike(entry), entry.key, adopt, typeInfo, defaultType)(context)
+  }
 
   def apply(node: YNode, name: String, adopt: Shape => Unit, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml10TypeParser =
@@ -93,7 +98,8 @@ trait RamlTypeSyntax {
     if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str
           .indexOf("}") > -1 || (str.startsWith("<<") && str.endsWith(">>"))) {
       false
-    } else RamlTypeDefMatcher.matchWellKnownType(TypeName(str), default = UndefinedType, isRef = isRef) != UndefinedType
+    } else
+      RamlTypeDefMatcher.matchWellKnownType(TypeName(str), default = UndefinedType, isRef = isRef) != UndefinedType
 
   def isTypeExpression(str: String): Boolean = {
     try { RamlTypeDefMatcher.matchWellKnownType(TypeName(str), default = UndefinedType) == TypeExpressionType } catch {
@@ -144,9 +150,13 @@ object Raml08TypeParser {
                               options = ctx.options))
 
   def apply(entry: YMapEntry, adopt: Shape => Unit, isAnnotation: Boolean, defaultType: DefaultType)(
-      implicit ctx: RamlWebApiContext): Raml08TypeParser =
+      implicit ctx: RamlWebApiContext): Raml08TypeParser = {
+    val context =
+      new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations), options = ctx.options)
+    context.nodeRefIds ++= ctx.nodeRefIds
     new Raml08TypeParser(YMapEntryLike(entry), entry.key, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
-      new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations), options = ctx.options))
+      context)
+  }
 
   def apply(entryOrNode: YMapEntryLike,
             name: String,
@@ -1210,18 +1220,19 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
     protected def checkSchemaInProperty(elements: Seq[AmfElement],
                                         location: Option[String] = None,
                                         entryRange: Range): Unit = {
-      elements.foreach { checkForForeignTypeInheritance(_, location, entryRange)}
+      elements.foreach { checkForForeignTypeInheritance(_, location, entryRange) }
     }
     protected def checkSchemaInheritance(base: Shape, elements: Seq[AmfElement], entryRange: Range): Unit = {
       if (base.meta != AnyShapeModel && !emptyObjectType(base) && !emptyScalarType(base) && !emptyArrayType(base)) {
-        elements.foreach { checkForForeignTypeInheritance(_, base.location(), entryRange)}
+        elements.foreach { checkForForeignTypeInheritance(_, base.location(), entryRange) }
       }
     }
 
-    private def checkForForeignTypeInheritance(element: AmfElement, location: Option[String], entryRange: Range): Unit = {
+    private def checkForForeignTypeInheritance(element: AmfElement,
+                                               location: Option[String],
+                                               entryRange: Range): Unit = {
       element match {
-        case shape: AnyShape
-          if isParsedJsonSchema(shape) || isSchemaIsJsonSchema(shape) =>
+        case shape: AnyShape if isParsedJsonSchema(shape) || isSchemaIsJsonSchema(shape) =>
           ctx.eh.warning(
             JsonSchemaInheritanceWarning,
             shape.id,

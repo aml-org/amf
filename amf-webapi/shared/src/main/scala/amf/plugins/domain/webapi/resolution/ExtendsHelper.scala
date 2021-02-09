@@ -11,7 +11,12 @@ import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.resolution.stages.helpers.ResolvedNamedEntity
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.contexts.parser.raml.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  RamlWebApiContextType
+}
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
@@ -44,8 +49,9 @@ object ExtendsHelper {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
-    val entry = emitDataNode(node, trAnnotations, name, referencesCollector)(ctx)
+    val entry               = emitDataNode(node, trAnnotations, name, referencesCollector)(ctx)
 
+    context.map(_.nodeRefIds ++= ctx.nodeRefIds)
     entryAsOperation(profile,
                      unit,
                      name,
@@ -82,6 +88,7 @@ object ExtendsHelper {
         (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
           ctx.declarations += e._2
         }
+        ctxForTrait.nodeRefIds ++= ctx.nodeRefIds
         ctxForTrait.contextType = RamlWebApiContextType.TRAIT
         val operation = ctxForTrait.factory
           .operationParser(entry, _ => Operation().withId(extensionId + "/applied"), true)
@@ -106,8 +113,9 @@ object ExtendsHelper {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
-    val entry: YMapEntry = emitDataNode(node, rtAnnotations, name, referencesCollector)(ctx)
+    val entry: YMapEntry    = emitDataNode(node, rtAnnotations, name, referencesCollector)(ctx)
 
+    context.map(_.nodeRefIds ++= ctx.nodeRefIds)
     entryAsEndpoint(profile,
                     unit,
                     node,
@@ -122,7 +130,12 @@ object ExtendsHelper {
                     context)
   }
 
-  private def emitDataNode[T <: BaseUnit](node: DataNode, rtAnnotations: Annotations, name: String, referencesCollector: mutable.Map[String, DomainElement])(implicit ctx: WebApiContext) = {
+  private def emitDataNode[T <: BaseUnit](
+      node: DataNode,
+      rtAnnotations: Annotations,
+      name: String,
+      referencesCollector: mutable.Map[String, DomainElement])(implicit ctx: WebApiContext) = {
+    val refIds: mutable.Map[YNode, String] = mutable.Map.empty
     val document = YDocument(
       {
         _.obj {
@@ -140,12 +153,13 @@ object ExtendsHelper {
               ),
               YType.Str
             ),
-            DataNodeEmitter(node, getSpecOrderingFrom(rtAnnotations), referencesCollector)(ctx.eh).emit(_)
+            DataNodeEmitter(node, getSpecOrderingFrom(rtAnnotations), referencesCollector)(ctx.eh, refIds).emit(_)
           )
         }
       },
       node.location().getOrElse("")
     )
+    ctx.nodeRefIds ++= refIds
     document.as[YMap].entries.head
   }
 
@@ -179,6 +193,7 @@ object ExtendsHelper {
       (ctxForResourceType.declarations.resourceTypes ++ ctxForResourceType.declarations.traits).foreach { e =>
         ctx.declarations += e._2
       }
+      ctxForResourceType.nodeRefIds ++= ctx.nodeRefIds
       ctxForResourceType.contextType = RamlWebApiContextType.RESOURCE_TYPE
       ctxForResourceType.factory
         .endPointParser(entry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true)

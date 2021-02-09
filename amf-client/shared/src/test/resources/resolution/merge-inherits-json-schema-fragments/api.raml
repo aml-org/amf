@@ -1,0 +1,39 @@
+#%RAML 1.0
+title: API
+version: 1.0
+
+traits:
+  myTrait:
+    responses:
+      500:
+        body:
+          application/json:
+            type: !include schema.json#Person
+
+resourceTypes:
+  myRt:
+    post:
+      responses:
+        500:
+          body:
+            application/json:
+              type: !include schema.json#Person
+
+
+/endpointA:
+  post:
+    is: [myTrait]
+    responses:
+      500:
+        body:
+          application/json:
+            type: !include schema.json#Animal
+
+/endpointB:
+  type: myRt
+  post:
+    responses:
+      500:
+        body:
+          application/json:
+            type: !include schema.json#Animal

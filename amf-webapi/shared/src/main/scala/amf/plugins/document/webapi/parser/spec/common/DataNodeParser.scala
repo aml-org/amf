@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.core.annotations.ReferenceId
 import amf.core.model.DataType
 import amf.core.model.document.{EncodesModel, ExternalFragment}
 import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
@@ -10,6 +11,7 @@ import amf.plugins.features.validation.CoreValidations.SyamlError
 import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
 import org.mulesoft.common.time.SimpleDateTime
 import org.mulesoft.lexer.InputRange
+import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
@@ -34,11 +36,27 @@ class DataNodeParser private (node: YNode,
       )
       DataObjectNode()
     } else {
-      node.tag.tagType match {
+      val parsedNode = node.tag.tagType match {
         case YType.Seq => parseArray(node.as[Seq[YNode]], node)
         case YType.Map => parseObject(node.as[YMap])
         case _         => ScalarNodeParser(parameters, parent, idCounter).parse(node)
       }
+      node match {
+        case m: MutRef =>
+          (m.origValue, m.target) match {
+            case (referenceText: YScalar, Some(target)) =>
+              val url: String = target.location.sourceName
+              referenceText.text.split("#") match {
+                case Array(_, fragmentPath) => parsedNode.annotations += ReferenceId(s"$url#$fragmentPath")
+                case _                      => parsedNode.annotations += ReferenceId(url)
+              }
+            case (_, Some(target)) =>
+              parsedNode.annotations += ReferenceId(s"${target.location.sourceName}")
+            case _ => // Ignore
+          }
+        case _ => // Ignore
+      }
+      parsedNode
     }
   }
 

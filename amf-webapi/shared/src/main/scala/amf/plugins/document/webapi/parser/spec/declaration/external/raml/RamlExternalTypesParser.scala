@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.declaration.external.raml
 
 import amf.core.model.domain.Shape
 import amf.core.parser._
+import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.{ExampleParser, RamlTypeSyntax}
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
@@ -24,12 +25,14 @@ trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with Ram
     }
   }
 
-  protected def getOrigin(node: YNode): Option[String] = node match {
-    case ref: MutRef => Some(ref.origValue.toString)
-    case _           => None
+  protected def getOrigin(node: YNode): Option[String] = (node, ctx) match {
+    case (ref: MutRef, _)        => Some(ref.origValue.toString)
+    case (_, wac: WebApiContext) => wac.nodeRefIds.get(node)
+    case _                       => None
   }
 
-  protected case class ValueAndOrigin(text: String, valueAST: YNode,
+  protected case class ValueAndOrigin(text: String,
+                                      valueAST: YNode,
                                       originalUrlText: Option[String],
                                       errorShape: Option[AnyShape] = None)
 

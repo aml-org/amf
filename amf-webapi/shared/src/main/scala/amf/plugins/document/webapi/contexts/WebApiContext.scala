@@ -29,7 +29,8 @@ abstract class WebApiContext(val loc: String,
                              refs: Seq[ParsedReference],
                              val options: ParsingOptions,
                              wrapped: ParserContext,
-                             declarationsOption: Option[WebApiDeclarations] = None)
+                             declarationsOption: Option[WebApiDeclarations] = None,
+                             val nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
     extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
     with SpecAwareContext
     with PlatformSecrets

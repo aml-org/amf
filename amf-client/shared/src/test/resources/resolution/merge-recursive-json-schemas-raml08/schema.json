@@ -1,0 +1,24 @@
+{
+   "$schema":"http://json-schema.org/draft-07/schema#",
+   "type":"object",
+   "definitions":{
+      "SomeSchema":{
+         "type":"object",
+         "required":[
+            "status"
+         ],
+         "properties":{
+            "causes":{
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/SomeSchema"
+               }
+            },
+            "status":{
+               "type": "string"
+            }
+         }
+      }
+   },
+   "$ref": "#/definitions/SomeSchema"
+}

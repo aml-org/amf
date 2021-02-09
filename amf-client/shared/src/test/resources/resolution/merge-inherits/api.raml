@@ -1,0 +1,50 @@
+#%RAML 1.0
+title: API
+version: 1.0
+
+types:
+  Person:
+    properties:
+      name: string
+  Employee:
+    properties:
+      employeeId: string
+  Engineer:
+    properties:
+      engineeringSkill: string
+
+traits:
+  employeeTrait:
+    responses:
+      500:
+        body:
+          application/json:
+            type: [Employee, Person]
+
+resourceTypes:
+  employeeResourceType:
+    post:
+      responses:
+        500:
+          body:
+            application/json:
+              type: [Employee, Person]
+
+
+/engineersTraitEndpoint:
+  post:
+    is: [employeeTrait]
+    responses:
+      500:
+        body:
+          application/json:
+            type: [Employee, Engineer]
+
+/engineersResourceTypeEndpoint:
+  type: employeeResourceType
+  post:
+    responses:
+      500:
+        body:
+          application/json:
+            type: [Employee, Engineer]
