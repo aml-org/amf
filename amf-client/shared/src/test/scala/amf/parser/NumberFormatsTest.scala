@@ -1,7 +1,5 @@
 package amf.parser
 
-import amf.common.Diff
-import amf.common.Diff.makeString
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.Fragment
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
@@ -12,6 +10,8 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
+import org.mulesoft.common.test.Diff
+import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 

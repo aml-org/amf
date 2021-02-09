@@ -11,8 +11,6 @@ import amf.io.FunSuiteCycleTests
 import amf.plugins.domain.webapi.models.security.{HttpSettings, SecurityScheme}
 import amf.plugins.domain.webapi.models.templates.Trait
 import org.scalatest.Matchers._
-import amf.common.Tests.checkDiff
-
 import scala.concurrent.Future
 
 class ParsedCloneTest extends FunSuiteCycleTests {

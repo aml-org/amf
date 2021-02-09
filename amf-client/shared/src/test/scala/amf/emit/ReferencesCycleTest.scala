@@ -1,13 +1,13 @@
 package amf.emit
 
 import amf.core.emitter.RenderOptions
-import amf.common.ListAssertions
-import amf.common.Tests.checkDiff
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import org.mulesoft.common.io.AsyncFile
+import org.mulesoft.common.test.ListAssertions
+import org.mulesoft.common.test.Tests.checkDiff
 
 import scala.concurrent.Future
 

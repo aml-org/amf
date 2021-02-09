@@ -1,7 +1,6 @@
 package amf.emit
 
 import amf.Core
-import amf.common.ListAssertions
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.Document
@@ -13,6 +12,7 @@ import amf.plugins.document.webapi._
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
+import org.mulesoft.common.test.ListAssertions
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
 import org.yaml.model.YMap

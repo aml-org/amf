@@ -1,6 +1,6 @@
 package amf.maker
 
-import amf.common.{AmfObjectTestMatcher, ListAssertions}
+import amf.common.{AmfObjectTestMatcher}
 import amf.compiler.CompilerTestBuilder
 import amf.core.metamodel.Field
 import amf.core.model.document.Document
@@ -10,6 +10,7 @@ import amf.plugins.domain.shapes.models.DomainExtensions.propertyShapeToProperty
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
 import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.domain.webapi.models._
+import org.mulesoft.common.test.ListAssertions
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
 import scala.concurrent.{ExecutionContext, Future}

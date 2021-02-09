@@ -1,6 +1,5 @@
 package amf.validation
 
-import amf.common.Tests.checkDiff
 import amf.core.emitter.RenderOptions
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
@@ -8,6 +7,7 @@ import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
+import org.mulesoft.common.test.Tests.checkDiff
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.{ExecutionContext, Future}

@@ -13,11 +13,14 @@ import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
 import amf.client.resolve._
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
-import amf.common.Diff
 import amf.core.errorhandling.StaticErrorCollector
 import amf.core.exception.UnsupportedVendorException
 import amf.core.model.document.{Document => InternalDocument}
-import amf.core.model.domain.{ArrayNode => InternalArrayNode, ObjectNode => InternalObjectNode, ScalarNode => InternalScalarNode}
+import amf.core.model.domain.{
+  ArrayNode => InternalArrayNode,
+  ObjectNode => InternalObjectNode,
+  ScalarNode => InternalScalarNode
+}
 import amf.core.parser.Range
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -31,6 +34,7 @@ import amf.plugins.document.webapi.parser.spec.common.emitters.WebApiDomainEleme
 import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.models.{CorrelationId => InternalCorrelationId}
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
+import org.mulesoft.common.test.Diff
 import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -635,20 +639,21 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
       /** Accepts specified resource. */
       override def accepts(resource: String): Boolean = resource.startsWith("http")
-}
+    }
 
     val fileLoader = platform.loaders().filter(x => x.accepts("file://")).head
-    val clientLoader: ClientLoader = CoreClientConverters.ResourceLoaderMatcher.asClient(fileLoader).asInstanceOf[ClientLoader]
+    val clientLoader: ClientLoader =
+      CoreClientConverters.ResourceLoaderMatcher.asClient(fileLoader).asInstanceOf[ClientLoader]
     val environment = Environment.empty().add(DummyHttpResourceLoader().asInstanceOf[ClientLoader]).add(clientLoader)
 
     for {
-      _     <- AMF.init().asFuture
-      unit  <- new RamlParser(environment).parseFileAsync(uri).asFuture
+      _      <- AMF.init().asFuture
+      unit   <- new RamlParser(environment).parseFileAsync(uri).asFuture
       report <- AMF.validate(unit, Raml10Profile, MessageStyles.RAML).asFuture
     } yield {
       report.conforms shouldBe false
       val networkError = report.results.asSeq.last
-      networkError.message should include ("Network Error:")
+      networkError.message should include("Network Error:")
       networkError.position should not be None
       networkError.location should not be None
     }
