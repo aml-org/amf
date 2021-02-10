@@ -26,7 +26,7 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin with JsonSchema
 
   override def dependencies(): Seq[AMFPlugin] = Nil
 
-  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
+  override def init()(implicit executionContext: ExecutionContext): AMFPlugin = this
 
   override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 

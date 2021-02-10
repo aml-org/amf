@@ -18,7 +18,7 @@ import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
+trait UnitCacheTest extends AsyncFunSuite with Matchers with NativeOps {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

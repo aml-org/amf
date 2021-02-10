@@ -110,7 +110,7 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
 
     override def dependencies(): Seq[AMFPlugin] = Nil
 
-    override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
+    override def init()(implicit executionContext: ExecutionContext): AMFPlugin = this
     override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator =
       AnyMathPayloadValidator(s, defaultSeverity)
   }

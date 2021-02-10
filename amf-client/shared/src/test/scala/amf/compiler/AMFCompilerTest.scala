@@ -132,7 +132,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     amf.core.AMF.init()
     object FeaturePlugin extends AMFFeaturePlugin {
 
-      override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future { this }
+      override def init()(implicit executionContext: ExecutionContext): AMFPlugin = this
 
       var invocations: mutable.ListBuffer[String] = mutable.ListBuffer()
 
