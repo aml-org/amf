@@ -495,6 +495,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
             any.fields.removeField(AnyShapeModel.Examples)
             any.fields.removeField(AnyShapeModel.DefaultValueString)
             any.fields.removeField(AnyShapeModel.Default)
+            any.fields.removeField(AnyShapeModel.Values)
           case _ => // ignore
         }
         shape

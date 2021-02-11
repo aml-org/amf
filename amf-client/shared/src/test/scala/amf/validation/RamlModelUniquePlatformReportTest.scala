@@ -572,4 +572,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("RAML Library annotations") {
     validate("raml/library-annotations.raml", Some("library-annotations.report"))
   }
+
+  test("Valid enum on union") {
+    validate("valid-enum-on-union.raml", None, Raml10Profile)
+  }
 }
