@@ -402,7 +402,7 @@ Model defining the information for a HTTP callback/ webhook
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
- | binding | [[ChannelBinding](#channelbinding)] | List of channel bindings | http://a.ml/vocabularies/apiBinding#binding |
+ | bindings | [[ChannelBinding](#channelbinding)] | List of channel bindings | http://a.ml/vocabularies/apiBinding#bindings |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1049,7 +1049,7 @@ Data shape containing nested multi-dimensional collection shapes
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
- | binding | [[MessageBinding](#messagebinding)] | List of message bindings | http://a.ml/vocabularies/apiBinding#binding |
+ | bindings | [[MessageBinding](#messagebinding)] | List of message bindings | http://a.ml/vocabularies/apiBinding#bindings |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1333,7 +1333,7 @@ Action that can be executed using a particular HTTP invocation
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
- | binding | [[OperationBinding](#operationbinding)] | List of operation bindings | http://a.ml/vocabularies/apiBinding#binding |
+ | bindings | [[OperationBinding](#operationbinding)] | List of operation bindings | http://a.ml/vocabularies/apiBinding#bindings |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -1825,7 +1825,7 @@ Information about the network accessible locations where the API is available
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
- | binding | [[ServerBinding](#serverbinding)] | List of server bindings | http://a.ml/vocabularies/apiBinding#binding |
+ | bindings | [[ServerBinding](#serverbinding)] | List of server bindings | http://a.ml/vocabularies/apiBinding#bindings |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
