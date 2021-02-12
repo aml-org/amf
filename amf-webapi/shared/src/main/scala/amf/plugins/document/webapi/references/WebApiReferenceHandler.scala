@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.references
 
+import amf.client.`new`.amfcore.AmfParsePlugin
 import amf.core.CompilerContext
 import amf.core.TaggedReferences._
 import amf.core.annotations.SourceAST
@@ -21,7 +22,7 @@ import org.yaml.parser.YamlParser
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 
-class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends ReferenceHandler {
+class WebApiReferenceHandler(vendor: String, plugin: AmfParsePlugin) extends ReferenceHandler {
 
   private val references = CompilerReferenceCollector()
 
@@ -193,7 +194,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val updated = compilerContext.forReference(reference.unit.id, withNormalizedUri = false)
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, r.refs.map(_.node), allowRecursiveRefs = true, plugin)
+          r.resolve(updated, r.refs.map(_.node), allowRecursiveRefs = true, plugin) // why would this always allow recursions?
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), updated)
@@ -228,7 +229,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   }
 
   private def isRamlOrYaml(encodes: ExternalDomainElement) =
-    plugin.documentSyntaxes.contains(encodes.mediaType.value())
+    plugin.supportedMediatypes.contains(encodes.mediaType.value())
 
   private def resolveUnitDocument(reference: ParsedReference, ctx: ParserContext): Either[String, YDocument] = {
     reference.unit match {

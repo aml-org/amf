@@ -3,7 +3,12 @@ package amf.client.parse
 import amf.client.environment.Environment
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Raml10
-import amf.plugins.document.webapi.Raml10Plugin
+import amf.plugins.document.webapi.{
+  ExternalJsonYamlRefsParsePlugin,
+  Raml08ParsePlugin,
+  Raml10ParsePlugin,
+  Raml10Plugin
+}
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 
@@ -19,4 +24,7 @@ class Raml10Parser private (private val env: Option[Environment])
   def this(environment: Environment) = this(Some(environment))
 
   AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
+  AMFPluginsRegistry.registerNewInterfacePlugin(Raml10ParsePlugin)
+  AMFPluginsRegistry.registerNewInterfacePlugin(ExternalJsonYamlRefsParsePlugin)
+
 }

@@ -3,7 +3,12 @@ package amf.client.parse
 import amf.client.environment.Environment
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Payload
-import amf.plugins.document.webapi.PayloadPlugin
+import amf.plugins.document.webapi.{
+  ExternalJsonYamlRefsParsePlugin,
+  PayloadParsePlugin,
+  PayloadPlugin,
+  Raml08ParsePlugin
+}
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 
@@ -19,4 +24,7 @@ class YamlPayloadParser private (private val env: Option[Environment])
   def this(environment: Environment) = this(Some(environment))
 
   AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
+  AMFPluginsRegistry.registerNewInterfacePlugin(PayloadParsePlugin)
+  AMFPluginsRegistry.registerNewInterfacePlugin(ExternalJsonYamlRefsParsePlugin)
+
 }

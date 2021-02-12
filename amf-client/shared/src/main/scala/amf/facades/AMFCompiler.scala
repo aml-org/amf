@@ -1,9 +1,11 @@
 package amf.facades
 
+import amf.client.`new`.amfcore.AmfParsePlugin
 import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Syntax.{Json, PlainText, Yaml}
 import amf.core.remote._
 import amf.core.{CompilerContext, CompilerContextBuilder, Root, AMFCompiler => ModularCompiler}
@@ -26,6 +28,10 @@ class AMFCompiler private (
     base.foreach(builder.withFileContext)
     builder.build()
   }
+
+  // This will be a parameter in the AMFCompiler, cannot break interface until mayor version
+  private val parsingPlugins: List[AmfParsePlugin] = AMFPluginsRegistry.obtainStaticEnv().registry.plugins.parsePlugins
+
   def build(): Future[BaseUnit] = {
 
     val mediaType = hint.syntax match {
@@ -37,6 +43,7 @@ class AMFCompiler private (
 
     new ModularCompiler(
       compilerContext,
+      parsingPlugins,
       mediaType,
       Some(hint.vendor.name),
       parsingOptions = parsingOptions
@@ -54,6 +61,7 @@ class AMFCompiler private (
 
     new ModularCompiler(
       compilerContext,
+      parsingPlugins,
       mediaType,
       Some(hint.vendor.name)
     ).root()
