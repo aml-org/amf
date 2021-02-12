@@ -63,18 +63,13 @@ class ExtendsResolutionStage(
         val node = rt.dataNode.copyNode()
         node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
           apiContext.eh.violation(ResolutionValidation, r.id, None, message, r.position(), r.location()))
-
-        ExtendsHelper.asEndpoint(
+        val extendsHelper = ExtendsHelper(profile, keepEditingInfo = keepEditingInfo, errorHandler, Some(apiContext))
+        extendsHelper.asEndpoint(
           context.model,
-          profile,
           node,
           rt.annotations,
           r.name.value(),
-          r.id,
-          Option(r.target).flatMap(t => ExtendsHelper.findUnitLocationOfElement(t.id, context.model)),
-          keepEditingInfo,
-          Some(apiContext),
-          errorHandler
+          r.id
         )
 
       case _ =>
@@ -293,17 +288,13 @@ class ExtendsResolutionStage(
                                         parameterized.location())
               })
 
-              val op = ExtendsHelper.asOperation(
-                profile,
+              val extendsHelper = ExtendsHelper(profile, keepEditingInfo = true, errorHandler, Some(apiContext))
+              val op = extendsHelper.asOperation(
                 node,
                 context.model,
                 parameterized.name.option().getOrElse(""),
                 parameterized.annotations,
-                t.id,
-                ExtendsHelper.findUnitLocationOfElement(t.id, context.model),
-                keepEditingInfo,
-                Some(apiContext),
-                errorHandler
+                t.id
               )
 
               val children = op.traits.flatMap(resolve(_, context, apiContext, subTree))
@@ -380,7 +371,8 @@ class ExtendsResolutionStage(
     override protected val rootKey: String = endpoint.path.value()
   }
 
-  private case class OperationTreeBuilder(operation: Operation)(implicit errorHandler: IllegalTypeHandler) extends ElementTreeBuilder(operation) {
+  private case class OperationTreeBuilder(operation: Operation)(implicit errorHandler: IllegalTypeHandler)
+      extends ElementTreeBuilder(operation) {
     override protected def astFromEmition: YNode =
       YDocument(f => emitOperation(operation, f)).node
         .as[YMap]
@@ -392,7 +384,8 @@ class ExtendsResolutionStage(
     override protected val rootKey: String = operation.method.value()
   }
 
-  private def emitOperation(operation: Operation, f: PartBuilder) = {
-    f.obj(Raml10OperationEmitter(operation, SpecOrdering.Lexical, Nil)(new Raml10SpecEmitterContext(errorHandler)).emit)
+  private def emitOperation(operation: Operation, f: PartBuilder): Unit = {
+    f.obj(
+      Raml10OperationEmitter(operation, SpecOrdering.Lexical, Nil)(new Raml10SpecEmitterContext(errorHandler)).emit)
   }
 }

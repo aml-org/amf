@@ -2,7 +2,6 @@ package amf.plugins.domain.webapi.models.templates
 
 import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.metamodel.Obj
-import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.model.domain.{DomainElement, Linkable}
@@ -30,18 +29,16 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
         effectiveLinkTarget().asInstanceOf[Trait].asOperation(unit, profile, errorHandler)
       case _ =>
         Option(dataNode)
-          .map(
-            ExtendsHelper.asOperation(
-              profile,
-              _,
+          .map { dataNode =>
+            val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
+            extendsHelper.asOperation(
+              dataNode,
               unit,
               name.option().getOrElse(""),
               annotations,
-              id,
-              ExtendsHelper.findUnitLocationOfElement(id, unit),
-              keepEditingInfo = false,
-              errorHandler = errorHandler
-            ))
+              id
+            )
+          }
           .getOrElse(Operation())
     }
   }
@@ -51,14 +48,8 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
                                       annotations: Annotations,
                                       profile: ProfileName = RamlProfile,
                                       errorHandler: ErrorHandler = UnhandledErrorHandler): Operation = {
-    ExtendsHelper.entryAsOperation(profile,
-                                   unit,
-                                   name.option().getOrElse(""),
-                                   id,
-                                   keepEditingInfo = false,
-                                   entry,
-                                   annotations = annotations,
-                                   errorHandler = errorHandler)
+    val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
+    extendsHelper.entryAsOperation(unit, name.option().getOrElse(""), id, entry)
   }
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
