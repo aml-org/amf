@@ -55,9 +55,8 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val
     val variable = Parameter(entry).set(ParameterModel.Name, node.string(), Annotations(entry.key))
     variable.adopted(parent)
     variable.set(ParameterModel.Binding, AmfScalar("path"), Annotations.synthesized())
-    variable
-      .withParameterName(entry.key)
-      .withRequired(true) // default value of path parameter to avoid raw validation
+    variable.set(ParameterModel.ParameterName, AmfScalar(node.string()), Annotations.synthesized())
+    variable.set(ParameterModel.Required, AmfScalar(true), Annotations.synthesized())
 
     val map = entry.value.as[YMap]
     parseMap(variable, map)
@@ -68,12 +67,15 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val
   protected def parseMap(variable: Parameter, map: YMap): Unit = {
     ctx.closedShape(variable.id, map, "serverVariable")
 
-    val schema  = variable.withScalarSchema(entry.key).add(Annotations(map)).withDataType(DataType.String)
+    val schema = variable
+      .withScalarSchema(entry.key)
+      .add(Annotations(map))
+      .withDataType(DataType.String, Annotations.synthesized())
     val counter = new IdCounter()
     map.key("enum", ShapeModel.Values in schema using DataNodeParser.parse(Some(schema.id), counter))
     map.key("default", entry => {
       schema.withDefaultStr(entry.value)
-      schema.withDefault(DataNodeParser(entry.value).parse())
+      schema.withDefault(DataNodeParser(entry.value).parse(), Annotations(entry.value))
     })
     map.key("description", ShapeModel.Description in schema)
   }

@@ -55,7 +55,9 @@ case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String,
         callbackEntries.map { entry =>
           val expression = entry.key.as[YScalar].text
           val callback   = Callback().add(Annotations(entry))
-          callback.fields.setWithoutId(CallbackModel.Expression, AmfScalar(expression, Annotations(entry.key)))
+          callback.fields.setWithoutId(CallbackModel.Expression,
+                                       AmfScalar(expression, Annotations(entry.key)),
+                                       Annotations.inferred())
           adopt(callback)
           val collected = ctx.factory.endPointParser(entry, callback.id, List()).parse()
           collected.foreach(e => {

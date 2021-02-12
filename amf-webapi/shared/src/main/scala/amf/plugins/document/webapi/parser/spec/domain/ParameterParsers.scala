@@ -651,14 +651,14 @@ object Oas3ParameterParser {
     map.key("explode") match {
       case Some(entry) =>
         result.fields.setWithoutId(ParameterModel.Explode,
-                                   AmfScalar(entry.value.as[Boolean]),
+                                   AmfScalar(entry.value.as[Boolean], Annotations(entry.value)),
                                    Annotations(entry) += ExplicitField())
       case None =>
         val defValue: Option[Boolean] = result.style.option().map {
           case "form" => true
           case _      => false
         }
-        defValue.foreach(result.set(ParameterModel.Explode, _))
+        defValue.foreach(result.set(ParameterModel.Explode, _, Annotations.synthesized()))
     }
   }
 
@@ -676,7 +676,7 @@ object Oas3ParameterParser {
           case Some("path") | Some("header")  => Some("simple")
           case _                              => None
         }
-        defValue.foreach(result.set(ParameterModel.Style, _))
+        defValue.foreach(result.set(ParameterModel.Style, _, Annotations.synthesized()))
     }
   }
 

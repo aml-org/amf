@@ -173,7 +173,7 @@ case class RamlSingleExampleParser(key: String,
                                     errMsg,
                                     entry.value
                                 )))
-            .map(e => e.link(s).asInstanceOf[Example])
+            .map(e => e.link(s, Annotations(entry.value)).asInstanceOf[Example])
         case Right(node) =>
           node.tagType match {
             case YType.Map =>
@@ -236,7 +236,7 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
 
   private val keyName = ScalarNode(entry.key)
 
-  private def setName(e: Example): Example = e.set(ExampleModel.Name, keyName.string())
+  private def setName(e: Example): Example = e.set(ExampleModel.Name, keyName.string(), Annotations(entry.key))
 
   private def newExample(ast: YPart): Example =
     setName(Example(entry)).adopted(parentId)
@@ -254,7 +254,7 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
               .add(ExternalReferenceUrl(fullRef))
           case None =>
             ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
-            val errorExample = setName(ErrorNamedExample(name, map).link(name)).adopted(parentId)
+            val errorExample = setName(ErrorNamedExample(name, map).link(name, Annotations(map))).adopted(parentId)
             errorExample
         }
       }
@@ -268,7 +268,7 @@ case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleO
     map.key("description", (ExampleModel.Description in example).allowingAnnotations)
     map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
 
-    example.withStrict(options.strictDefault)
+    example.withStrict(options.strictDefault, Annotations.synthesized())
 
     map
       .key("value")

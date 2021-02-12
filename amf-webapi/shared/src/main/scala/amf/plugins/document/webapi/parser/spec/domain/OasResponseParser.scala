@@ -17,7 +17,7 @@ import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import amf.plugins.features.validation.CoreValidations
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YScalar}
 
 import scala.collection.mutable
 
@@ -28,10 +28,16 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
     ctx.link(map) match {
       case Left(url) =>
         val name = OasDefinitions.stripResponsesDefinitionsPrefix(url)
+
+        val annotations = map
+          .key("$ref")
+          .flatMap(v => v.value.asOption[YScalar])
+          .map(Annotations(_))
+          .getOrElse(Annotations.synthesized())
         ctx.declarations
           .findResponse(name, SearchScope.Named)
           .map { res =>
-            val resLink: Response = res.link(name)
+            val resLink: Response = res.link(name, annotations)
             adopted(resLink)
             resLink
           }
@@ -118,7 +124,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
                 .as[YMap]
                 .entries
                 .map(e => OasLinkParser(res.id, e).parse())
-              res.set(ResponseModel.Links, AmfArray(links, Annotations(entry)))
+              res.set(ResponseModel.Links, AmfArray(links, Annotations(entry.value)), Annotations(entry))
             }
           )
         }

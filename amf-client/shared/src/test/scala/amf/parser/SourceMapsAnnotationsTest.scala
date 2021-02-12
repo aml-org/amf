@@ -35,13 +35,16 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     runTest("oas20.yaml", OasYamlHint)
   }
 
-  private def build(file: String, hint: Hint): Future[BaseUnit] = {
+  test("Test oas 3.0 annotations") {
+    runTest("oas30.yaml", OasYamlHint)
+  }
+
+  private def build(file: String, hint: Hint): Future[BaseUnit] =
     Validation(platform).flatMap { _ =>
       RuntimeCompiler(s"file://$directory$file", None, None, Context(platform), Cache())
     }
-  }
 
-  private def runTest(file: String, hint: Hint): Future[Assertion] = {
+  private def runTest(file: String, hint: Hint): Future[Assertion] =
     build(file, hint).map { bu =>
       val strings = checkUnit(bu)
       if (strings.isEmpty) succeed
@@ -49,28 +52,26 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
         fail("Missing annotations over:\n" + strings.mkString("\n"))
       }
     }
-  }
 
   private def checkUnit(u: BaseUnit): Seq[String] = {
     u.fields.filter({ case (f, _) => f == DocumentModel.Encodes || f == DocumentModel.Declares })
     checkElement(u)
   }
 
-  private def checkElement(e: AmfElement): Seq[String] = {
+  private def checkElement(e: AmfElement): Seq[String] =
     e match {
       case o: AmfObject => checkObj(o)
       case a: AmfArray  => a.values.flatMap(checkElement)
       case _            => Seq()
     }
-  }
-  private def checkObj(o: AmfObject) = {
+
+  private def checkObj(o: AmfObject) =
     o.fields
       .fields()
       .flatMap { fe =>
         checkInField(fe, o.meta.`type`.head.iri()) ++ (if (fe.isSynthesized) Nil else checkElement(fe.value.value))
       }
       .toSeq
-  }
 
   implicit class FieldEntryIm(fe: FieldEntry) {
     def isSynthesized: Boolean = fe.value.annotations.contains(classOf[SynthesizedField])

@@ -15,17 +15,20 @@ import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.CoreValidations
-import org.yaml.model.{YMap, YMapEntry}
+import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 case class OasHeaderParametersParser(map: YMap, adopt: Parameter => Unit)(implicit ctx: OasWebApiContext) {
   def parse(): Seq[Parameter] = {
     map.entries
-      .map(entry =>
-        OasHeaderParameterParser(entry.value.as[YMap], { header =>
-          header.add(Annotations(entry))
-          header.set(ParameterModel.Name, ScalarNode(entry.key).string())
-          adopt(header)
-        }).parse())
+      .map(
+        entry =>
+          OasHeaderParameterParser(
+            entry.value.as[YMap], { header =>
+              header.add(Annotations(entry))
+              header.set(ParameterModel.Name, ScalarNode(entry.key).string(), Annotations.inferred())
+              adopt(header)
+            }
+          ).parse())
   }
 }
 
@@ -48,7 +51,9 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
           ctx.declarations
             .findHeader(label, SearchScope.Named)
             .map(header => {
-              val linkHeader: Parameter = header.link(label)
+              val ref: Option[YScalar]  = map.key("$ref").flatMap(v => v.value.asOption[YScalar])
+              val annotations           = ref.map(Annotations(_)).getOrElse(Annotations.synthesized())
+              val linkHeader: Parameter = header.link(label, annotations)
               adopt(linkHeader)
               linkHeader
             })

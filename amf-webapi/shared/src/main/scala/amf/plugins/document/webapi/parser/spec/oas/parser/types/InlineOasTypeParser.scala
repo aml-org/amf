@@ -100,7 +100,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           Seq(
             parsed,
             NilShape().withId(union.id + "_nil")
-          )
+          ),
+          Annotations.synthesized()
         )
         union
       case _ =>
@@ -145,7 +146,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
     val exclusiveProps = YMap(finals, finals.headOption.map(_.sourceName).getOrElse(""))
     var i              = 0
-    val parsedTypes: Seq[AmfElement] = map.key("type").get.value.as[YSequence].nodes map { node =>
+    val sequence       = map.key("type").get.value.as[YSequence]
+    val parsedTypes: Seq[AmfElement] = sequence.nodes map { node =>
       i += 1
       if (node.tagType == YType.Str) {
         node.as[String] match {
@@ -184,7 +186,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       }
     } collect { case Some(t: AmfElement) => t }
 
-    if (parsedTypes.nonEmpty) union.setArrayWithoutId(UnionShapeModel.AnyOf, parsedTypes)
+    if (parsedTypes.nonEmpty) union.setArrayWithoutId(UnionShapeModel.AnyOf, parsedTypes, Annotations(sequence))
 
     union
   }

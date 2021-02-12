@@ -173,7 +173,8 @@ case class Oas30OperationParser(entry: YMapEntry, parentId: String)(override imp
     map.key(
       "requestBody",
       entry => {
-        operation.withRequest(Oas30RequestParser(entry.value.as[YMap], operation.id, entry).parse())
+        operation.withRequest(Oas30RequestParser(entry.value.as[YMap], operation.id, entry).parse(),
+                              Annotations(entry))
       }
     )
 
@@ -195,7 +196,7 @@ case class Oas30OperationParser(entry: YMapEntry, parentId: String)(override imp
                                 callbackEntry)
               .parse()
           }
-        operation.withCallbacks(callbacks)
+        operation.withCallbacks(callbacks, Annotations(entry))
       }
     )
 

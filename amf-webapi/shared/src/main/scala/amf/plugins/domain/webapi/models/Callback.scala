@@ -17,8 +17,9 @@ case class Callback(fields: Fields, annotations: Annotations) extends NamedDomai
   def expression: StrField = fields.field(Expression)
   def endpoint: EndPoint   = fields.field(Endpoint)
 
-  def withExpression(expression: String): this.type = set(Expression, expression)
-  def withEndpoint(endpoint: EndPoint): this.type   = set(Endpoint, endpoint)
+  def withExpression(expression: String, annotations: Annotations = Annotations()): this.type =
+    set(Expression, expression, annotations)
+  def withEndpoint(endpoint: EndPoint): this.type = set(Endpoint, endpoint)
 
   def withEndpoint(path: String): EndPoint = {
     val result = EndPoint().withPath(path)
@@ -37,7 +38,7 @@ case class Callback(fields: Fields, annotations: Annotations) extends NamedDomai
   override def linkCopy(): Linkable = {
     val callback = Callback().withId(id)
     name.option().foreach(callback.withName(_))
-    expression.option().foreach(callback.withExpression)
+    expression.option().foreach(callback.withExpression(_, Annotations.synthesized()))
     callback
   }
 
