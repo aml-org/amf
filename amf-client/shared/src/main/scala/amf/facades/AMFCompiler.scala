@@ -30,7 +30,8 @@ class AMFCompiler private (
   }
 
   // This will be a parameter in the AMFCompiler, cannot break interface until mayor version
-  private val parsingPlugins: List[AmfParsePlugin] = AMFPluginsRegistry.obtainStaticEnv().registry.plugins.parsePlugins
+  private val parsingPlugins: List[AmfParsePlugin] =
+    AMFPluginsRegistry.obtainStaticEnv().registry.plugins.parsePlugins.sortBy(_.priority.priority)
 
   def build(): Future[BaseUnit] = {
 

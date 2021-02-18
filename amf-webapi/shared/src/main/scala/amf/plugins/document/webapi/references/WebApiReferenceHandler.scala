@@ -10,7 +10,7 @@ import amf.core.parser._
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote._
 import amf.core.utils._
-import amf.plugins.document.webapi.BaseWebApiPlugin
+import amf.plugins.document.webapi.{BaseWebApiPlugin, Raml10Plugin}
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration.LibraryLocationParser
@@ -229,7 +229,7 @@ class WebApiReferenceHandler(vendor: String, plugin: AmfParsePlugin) extends Ref
   }
 
   private def isRamlOrYaml(encodes: ExternalDomainElement) =
-    plugin.supportedMediatypes.contains(encodes.mediaType.value())
+    Raml10Plugin.documentSyntaxes.contains(encodes.mediaType.value())
 
   private def resolveUnitDocument(reference: ParsedReference, ctx: ParserContext): Either[String, YDocument] = {
     reference.unit match {
