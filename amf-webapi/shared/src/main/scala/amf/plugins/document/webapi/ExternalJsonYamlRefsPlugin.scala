@@ -8,7 +8,17 @@ import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
 import amf.core.parser.errorhandler.ParserErrorHandler
-import amf.core.parser.{Annotations, CompilerReferenceCollector, InferredLinkReference, LinkReference, ParsedDocument, ParserContext, ReferenceCollector, ReferenceHandler, SyamlParsedDocument}
+import amf.core.parser.{
+  Annotations,
+  CompilerReferenceCollector,
+  InferredLinkReference,
+  LinkReference,
+  ParsedDocument,
+  ParserContext,
+  ReferenceCollector,
+  ReferenceHandler,
+  SyamlParsedDocument
+}
 import amf.core.remote.Platform
 import amf.core.utils._
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
@@ -97,30 +107,28 @@ class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root,
-                     ctx: ParserContext,
-                     platform: Platform,
-                     options: ParsingOptions): Option[BaseUnit] = document.parsed match {
+  override def parse(document: Root, ctx: ParserContext, options: ParsingOptions): Option[BaseUnit] =
+    document.parsed match {
 
-    case parsed: SyamlParsedDocument =>
-      val result =
-        ExternalDomainElement(Annotations(parsed.document))
-          .withId(document.location + "#/")
-          .withRaw(document.raw)
-          .withMediaType(docMediaType(document))
-      result.parsed = Some(parsed.document.node)
-      val references = document.references.map(_.unit)
-      val fragment = ExternalFragment()
-        .withLocation(document.location)
-        .withId(document.location)
-        .withEncodes(result)
-        .withLocation(document.location)
-      if (references.nonEmpty) fragment.withReferences(references)
-      Some(fragment)
+      case parsed: SyamlParsedDocument =>
+        val result =
+          ExternalDomainElement(Annotations(parsed.document))
+            .withId(document.location + "#/")
+            .withRaw(document.raw)
+            .withMediaType(docMediaType(document))
+        result.parsed = Some(parsed.document.node)
+        val references = document.references.map(_.unit)
+        val fragment = ExternalFragment()
+          .withLocation(document.location)
+          .withId(document.location)
+          .withEncodes(result)
+          .withLocation(document.location)
+        if (references.nonEmpty) fragment.withReferences(references)
+        Some(fragment)
 
-    case _ =>
-      None
-  }
+      case _ =>
+        None
+    }
 
   private def docMediaType(doc: Root) = if (doc.raw.isJson) "application/json" else "application/yaml"
 

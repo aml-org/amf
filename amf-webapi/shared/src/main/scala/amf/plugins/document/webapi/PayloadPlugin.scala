@@ -43,10 +43,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
     "application/payload+yaml"
   )
 
-  override def parse(root: Root,
-                     parentContext: ParserContext,
-                     platform: Platform,
-                     options: ParsingOptions): Option[PayloadFragment] = {
+  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): Option[PayloadFragment] = {
     root.parsed match {
       case parsed: SyamlParsedDocument =>
         implicit val ctx: PayloadContext =

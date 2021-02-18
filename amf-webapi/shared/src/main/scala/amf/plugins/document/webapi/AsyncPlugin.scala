@@ -35,10 +35,7 @@ sealed trait AsyncPlugin extends OasLikePlugin {
               wrapped: ParserContext,
               ds: Option[AsyncWebApiDeclarations] = None): AsyncWebApiContext
 
-  override def parse(document: Root,
-                     parentContext: ParserContext,
-                     platform: Platform,
-                     options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
     implicit val ctx: AsyncWebApiContext = context(document.location, document.references, options, parentContext)
     val parsed = document.referenceKind match {
       case _ => detectAsyncUnit(document)

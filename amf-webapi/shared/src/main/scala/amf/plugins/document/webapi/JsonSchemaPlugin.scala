@@ -16,7 +16,10 @@ import amf.plugins.document.webapi.annotations.JSONSchemaRoot
 import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaWebApiContext, OasWebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, JSONSchemaUnspecifiedVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaUnspecifiedVersion
+}
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaParser
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.AnyShape
@@ -48,10 +51,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root,
-                     parentContext: ParserContext,
-                     platform: Platform,
-                     options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
     val ctx = context(document.location, document.references, options, parentContext)
     new JsonSchemaParser().parse(document, ctx, options)
   }

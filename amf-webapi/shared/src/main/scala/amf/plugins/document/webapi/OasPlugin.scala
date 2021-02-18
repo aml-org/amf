@@ -49,10 +49,7 @@ sealed trait OasPlugin extends OasLikePlugin {
               wrapped: ParserContext,
               ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
 
-  override def parse(document: Root,
-                     parentContext: ParserContext,
-                     platform: Platform,
-                     options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
     implicit val ctx: OasWebApiContext = context(document.location, document.references, options, parentContext)
     val parsed = document.referenceKind match {
       case LibraryReference => Some(OasModuleParser(document).parseModule())
