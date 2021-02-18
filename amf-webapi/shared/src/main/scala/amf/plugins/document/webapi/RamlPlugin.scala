@@ -92,10 +92,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
 
   override def specContext(options: RenderOptions): RamlSpecEmitterContext
 
-  override def parse(root: Root,
-                     parentContext: ParserContext,
-                     platform: Platform,
-                     options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
 
     val updated = context(parentContext, root, options)
     inlineExternalReferences(root, updated)
