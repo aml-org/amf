@@ -143,6 +143,8 @@ declare module 'amf-client-js' {
 
   export class Oas20Resolver extends resolve.Resolver {}
 
+  export class Oas30Resolver extends resolve.Resolver {}
+
   export class Raml08Parser extends parse.Parser {
     constructor()
     constructor(env: client.environment.Environment)
@@ -179,6 +181,12 @@ declare module 'amf-client-js' {
   export class ValidationMode {
     static StrictValidationMode: ValidationMode
     static ScalarRelaxedValidationMode: ValidationMode
+  }
+
+  export class ResolutionPipeline {
+    static readonly DEFAULT_PIPELINE: 'default'
+    static readonly EDITING_PIPELINE: 'editing'
+    static readonly COMPATIBILITY_PIPELINE: 'compatibility'
   }
 
   /* Not exported */
@@ -2154,7 +2162,6 @@ declare module 'amf-client-js' {
     }
   }
 
-  /* Not exported */
   namespace core {
 
     export class Vendor {
@@ -2198,18 +2205,6 @@ declare module 'amf-client-js' {
         static readonly WARNING: 'Warning'
         static readonly INFO: 'Info'
         static readonly VIOLATION: 'Violation'
-      }
-    }
-
-    namespace resolution {
-
-      namespace pipelines {
-
-        export class ResolutionPipeline {
-          static readonly DEFAULT_PIPELINE: 'default'
-          static readonly EDITING_PIPELINE: 'editing'
-          static readonly COMPATIBILITY_PIPELINE: 'compatibility'
-        }
       }
     }
   }
