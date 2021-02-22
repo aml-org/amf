@@ -1,6 +1,7 @@
 package amf.emit
 import amf.ProfileName
 import amf.core.emitter.RenderOptions
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.facades.Validation
@@ -45,13 +46,18 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
       case _                          => "application/json"
     }
 
+    val environment = AMFPluginsRegistry.obtainStaticEnv()
+
     for {
-      unit <- RuntimeCompiler("amf://id#",
-                              Some(mediaType),
-                              Some(hint.vendor.name),
-                              Context(platform),
-                              env = Environment(StringResourceLoader("amf://id#", content)),
-                              cache = Cache())
+      unit <- RuntimeCompiler(
+        "amf://id#",
+        Some(mediaType),
+        Some(hint.vendor.name),
+        Context(platform),
+        env = Environment(StringResourceLoader("amf://id#", content)),
+        cache = Cache(),
+        newEnv = environment
+      )
       _ <- RuntimeValidator(unit, ProfileName(hint.vendor.name))
     } yield unit
   }
