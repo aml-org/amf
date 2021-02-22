@@ -1,20 +1,18 @@
 package amf.plugins.domain.webapi.models.security
 
-import amf.core.metamodel.Obj
-import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.metamodel.{Field, Obj}
+import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.AmfStrings
 import amf.plugins.domain.webapi.metamodel.security.SecurityRequirementModel
 import amf.plugins.domain.webapi.metamodel.security.SecurityRequirementModel._
 import org.yaml.model.YPart
-import amf.core.utils.AmfStrings
 
-case class SecurityRequirement(fields: Fields, annotations: Annotations) extends DomainElement {
+case class SecurityRequirement(fields: Fields, annotations: Annotations) extends NamedDomainElement {
 
-  def name: StrField                           = fields.field(Name)
+  override def nameField: Field                = Name
   def schemes: Seq[ParametrizedSecurityScheme] = fields.field(Schemes)
 
-  def withName(name: String): this.type                                = set(Name, name)
   def withSchemes(schemes: Seq[ParametrizedSecurityScheme]): this.type = setArray(Schemes, schemes)
 
   def withScheme(): ParametrizedSecurityScheme = {
