@@ -1,0 +1,25 @@
+# http://www.graphviz.org/content/cluster
+digraph G {
+    # modules
+    subgraph cluster_0 {
+        "amf-client" [style=dashed]
+	    "amf-webapi"
+	    color=gray
+    }
+    subgraph cluster_1 {
+        "amf-custom-validation"
+    	"amf-aml" [style=dashed]
+	    "amf-validation"
+	    color=gray
+    }
+    
+    subgraph cluster_2 {
+	    "amf-core"
+	    color=gray
+    }
+    
+	# dependencies
+	"amf-client" -> "amf-webapi"
+	"amf-client" -> "amf-custom-validation" -> "amf-aml" -> "amf-validation" -> "amf-core" [label="dependsOn"]
+	"amf-webapi" -> "amf-core" [label="dependsOn"]
+}
