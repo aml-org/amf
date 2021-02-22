@@ -170,5 +170,20 @@ Refer to the usage of the application for additional commands and explanations.
 
 The AML Vocabulary that could be found in this repository under the **vocabularies** directory has been migrated to the [amf metadata repository](https://github.com/aml-org/amf-metadata)
 
+## AMF ecosystem modules
+The following image shows each module in the AMF ecosystem as a dependency graph. 
+
+For AMF adopters it is recommended to use the `amf-client` module which contains transitive dependencies with every
+module in the ecosystem. For AML adopters (with no Web API nor Custom validation features usage) it is recommended to 
+adopt the `amf-aml` module which includes parsing, validation & resolution for AML documents only. For more details on 
+AML visit the [AML repository]("https://github.com/aml-org/amf-aml").
+
+### Legend:
+- **Circle**: module
+- **Dashed circle**: recommended modules for AMF and AML adopters respectively
+- **Light gray box**: modules that share the same version number
+
+![Module graph](./amf-ecosystem-modules.png)
+
 ## Contributing
 If you are interested in contributing to this project, please make sure to read our [contributing guidelines](./CONTRIBUTING.md).
