@@ -1,9 +1,11 @@
 package amf.cycle
 
+import amf.client.`new`.BaseEnvironment
 import amf.core.CompilerContextBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.parser.UnspecifiedReference
 import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.{Amf, OasYamlHint}
 import amf.core.services.RuntimeCompiler
 import amf.facades.Validation
@@ -41,9 +43,10 @@ class OasRecursiveFilesCycleTest extends FunSuiteCycleTests {
         if (config.sourcePath.startsWith("file://")) config.sourcePath else s"file://${config.sourcePath}"
       val compilerContextBuilder = new CompilerContextBuilder(s"$finalPath", platform, UnhandledParserErrorHandler)
 
+      val environment = BaseEnvironment.fromLegacy(AMFPluginsRegistry.obtainStaticEnv(), Environment.apply())
       RuntimeCompiler
         .forContext(
-          compilerContextBuilder.withEnvironment(Environment.apply()).build(),
+          compilerContextBuilder.build(environment),
           None,
           None,
           UnspecifiedReference

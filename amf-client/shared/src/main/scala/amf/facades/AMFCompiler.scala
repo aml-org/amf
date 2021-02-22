@@ -1,6 +1,6 @@
 package amf.facades
 
-import amf.client.`new`.amfcore.AmfParsePlugin
+import amf.client.`new`.BaseEnvironment
 import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
@@ -13,25 +13,20 @@ import amf.plugins.document.vocabularies.plugin.headers.RamlHeaderExtractor
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AMFCompiler private (
-    val url: String,
-    val remote: Platform,
-    val base: Option[Context],
-    hint: Hint,
-    private val cache: Cache,
-    eh: ParserErrorHandler,
-    private val parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext)
+class AMFCompiler private (val url: String,
+                           val remote: Platform,
+                           val base: Option[Context],
+                           hint: Hint,
+                           private val cache: Cache,
+                           eh: ParserErrorHandler,
+                           newEnv: BaseEnvironment)(implicit executionContext: ExecutionContext)
     extends RamlHeaderExtractor {
 
   private val compilerContext: CompilerContext = {
     val builder = new CompilerContextBuilder(url, remote, eh).withCache(cache)
     base.foreach(builder.withFileContext)
-    builder.build()
+    builder.build(newEnv)
   }
-
-  // This will be a parameter in the AMFCompiler, cannot break interface until mayor version
-  private val parsingPlugins: List[AmfParsePlugin] =
-    AMFPluginsRegistry.obtainStaticEnv().registry.plugins.parsePlugins.sortBy(_.priority.priority)
 
   def build(): Future[BaseUnit] = {
 
@@ -44,10 +39,8 @@ class AMFCompiler private (
 
     new ModularCompiler(
       compilerContext,
-      parsingPlugins,
       mediaType,
-      Some(hint.vendor.name),
-      parsingOptions = parsingOptions
+      Some(hint.vendor.name)
     ).build()
   }
 
@@ -62,7 +55,6 @@ class AMFCompiler private (
 
     new ModularCompiler(
       compilerContext,
-      parsingPlugins,
       mediaType,
       Some(hint.vendor.name)
     ).root()
@@ -71,6 +63,7 @@ class AMFCompiler private (
 }
 
 object AMFCompiler {
+  // interface that is used by all testing classes
   def apply(url: String,
             remote: Platform,
             hint: Hint,
@@ -78,8 +71,9 @@ object AMFCompiler {
             cache: Option[Cache] = None,
             ctx: Option[ParserContext] = None,
             eh: ParserErrorHandler,
-            parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext) =
-    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), eh, parsingOptions = parsingOptions)
+            parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext) = {
+    val newEnv = AMFPluginsRegistry.obtainStaticEnv().withParsingOptions(parsingOptions)
+    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), eh, newEnv)
+  }
 
-  val RAML_10 = "#%RAML 1.0\n"
 }
