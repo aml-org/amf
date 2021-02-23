@@ -8,7 +8,15 @@ import amf.core.parser.{Annotations, Fields}
 import amf.core.remote.Vendor
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel.api.BaseApiModel.{License => WebApiLicense, _}
-import amf.plugins.domain.webapi.models.{DocumentedElement, EndPoint, License, Organization, Server, ServerContainer, Tag}
+import amf.plugins.domain.webapi.models.{
+  DocumentedElement,
+  EndPoint,
+  License,
+  Organization,
+  Server,
+  ServerContainer,
+  Tag
+}
 import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import org.yaml.model.{YMap, YNode}
 
@@ -68,7 +76,7 @@ abstract class Api(fields: Fields, annotations: Annotations)
   }
 
   def withSecurity(name: String): SecurityRequirement = {
-    val result = SecurityRequirement().withName(name)
+    val result = SecurityRequirement().withName(name, Annotations() += SynthesizedField())
     add(Security, result)
     result
   }

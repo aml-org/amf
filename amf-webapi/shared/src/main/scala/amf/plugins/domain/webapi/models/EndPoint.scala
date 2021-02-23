@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models
 
+import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain.NamedDomainElement
@@ -76,7 +77,7 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
   }
 
   def withSecurity(name: String): SecurityRequirement = {
-    val result = SecurityRequirement().withName(name)
+    val result = SecurityRequirement().withName(name, Annotations() += SynthesizedField())
     add(Security, result)
     result
   }

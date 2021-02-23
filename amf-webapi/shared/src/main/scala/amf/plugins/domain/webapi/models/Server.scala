@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models
 
+import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
@@ -41,7 +42,7 @@ case class Server(fields: Fields, annotations: Annotations) extends DomainElemen
   }
 
   def withSecurity(name: String): SecurityRequirement = {
-    val result = SecurityRequirement().withName(name)
+    val result = SecurityRequirement().withName(name, Annotations() += SynthesizedField())
     add(Security, result)
     result
   }

@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models
 
+import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.{Field, Obj}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.model.{BoolField, StrField}
@@ -80,7 +81,7 @@ case class Operation(fields: Fields, annotations: Annotations)
   }
 
   def withSecurity(name: String): SecurityRequirement = {
-    val result = SecurityRequirement().withName(name)
+    val result = SecurityRequirement().withName(name, Annotations() += SynthesizedField())
     add(Security, result)
     result
   }
