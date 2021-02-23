@@ -47,6 +47,7 @@ case class OasLikeSecurityRequirementParser(node: YNode,
 
       val name   = schemeEntry.key.as[YScalar].text
       val scheme = producer(name).add(Annotations(schemeEntry))
+      scheme.withName(name, Annotations(schemeEntry.key))
 
       var declaration = parseTarget(name, scheme, schemeEntry)
       declaration = declaration.linkTarget match {

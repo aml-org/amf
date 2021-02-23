@@ -1,24 +1,23 @@
 package amf.plugins.domain.webapi.models.security
 
-import amf.core.metamodel.Obj
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel.{Settings => SettingsField, _}
-import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
-import org.yaml.model.YPart
 import amf.core.utils.AmfStrings
+import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
+import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel.{Settings => SettingsField, _}
+import org.yaml.model.YPart
 
 case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
-    extends DomainElement
+    extends NamedDomainElement
     with WithSettings {
 
-  def name: StrField         = fields.field(Name)
-  def description: StrField  = fields.field(Description)
-  def scheme: SecurityScheme = fields.field(Scheme)
-  def settings: Settings     = fields.field(SettingsField)
+  override protected def nameField: Field = Name
+  def description: StrField               = fields.field(Description)
+  def scheme: SecurityScheme              = fields.field(Scheme)
+  def settings: Settings                  = fields.field(SettingsField)
 
-  def withName(name: String): this.type             = set(Name, name)
   def withDescription(descr: String): this.type     = set(Description, descr)
   def withScheme(scheme: SecurityScheme): this.type = set(Scheme, scheme)
   def withSettings(settings: Settings): this.type   = set(SettingsField, settings)
