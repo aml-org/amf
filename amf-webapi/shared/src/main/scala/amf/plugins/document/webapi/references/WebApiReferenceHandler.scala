@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.references
 
-import amf.client.`new`.amfcore.AmfParsePlugin
+import amf.client.`new`.amfcore.AMFParsePlugin
 import amf.core.CompilerContext
 import amf.core.TaggedReferences._
 import amf.core.annotations.SourceAST
@@ -22,7 +22,7 @@ import org.yaml.parser.YamlParser
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.matching.Regex
 
-class WebApiReferenceHandler(vendor: String, plugin: AmfParsePlugin) extends ReferenceHandler {
+class WebApiReferenceHandler(vendor: String, plugin: AMFParsePlugin) extends ReferenceHandler {
 
   private val references = CompilerReferenceCollector()
 
