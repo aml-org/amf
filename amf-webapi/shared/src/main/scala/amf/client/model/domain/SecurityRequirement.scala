@@ -2,6 +2,8 @@ package amf.client.model.domain
 
 import amf.client.convert.WebApiClientConverters._
 import amf.client.model.StrField
+import amf.core.annotations.SynthesizedField
+import amf.core.parser.Annotations
 import amf.plugins.domain.webapi.models.security.{SecurityRequirement => InternalSecurityRequirement}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -21,7 +23,7 @@ case class SecurityRequirement(override private[amf] val _internal: InternalSecu
 
   /** Set name property of this SecurityRequirement. */
   def withName(name: String): this.type = {
-    _internal.withName(name)
+    _internal.withName(name, Annotations() += SynthesizedField())
     this
   }
 
