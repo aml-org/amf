@@ -18,18 +18,18 @@ import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, Par
   */
 class EndPoint(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
+    with SecuredElement
     with ExtensibleWebApiDomainElement
     with ServerContainer {
 
-  def description: StrField              = fields.field(Description)
-  def summary: StrField                  = fields.field(Summary)
-  def path: StrField                     = fields.field(Path)
-  def operations: Seq[Operation]         = fields.field(Operations)
-  def parameters: Seq[Parameter]         = fields.field(Parameters)
-  def payloads: Seq[Payload]             = fields.field(Payloads)
-  def servers: Seq[Server]               = fields.field(Servers)
-  def security: Seq[SecurityRequirement] = fields.field(Security)
-  def bindings: ChannelBindings          = fields.field(Bindings)
+  def description: StrField      = fields.field(Description)
+  def summary: StrField          = fields.field(Summary)
+  def path: StrField             = fields.field(Path)
+  def operations: Seq[Operation] = fields.field(Operations)
+  def parameters: Seq[Parameter] = fields.field(Parameters)
+  def payloads: Seq[Payload]     = fields.field(Payloads)
+  def servers: Seq[Server]       = fields.field(Servers)
+  def bindings: ChannelBindings  = fields.field(Bindings)
 
   def parent: Option[EndPoint] = annotations.find(classOf[ParentEndPoint]).flatMap(_.parent)
 
@@ -39,15 +39,14 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
 
   def resourceType: Option[ParametrizedResourceType] = extend collectFirst { case r: ParametrizedResourceType => r }
 
-  def withDescription(description: String): this.type             = set(Description, description)
-  def withSummary(summary: String): this.type                     = set(Summary, summary)
-  def withPath(path: String): this.type                           = set(Path, path)
-  def withOperations(operations: Seq[Operation]): this.type       = setArray(Operations, operations)
-  def withParameters(parameters: Seq[Parameter]): this.type       = setArray(Parameters, parameters)
-  def withSecurity(security: Seq[SecurityRequirement]): this.type = setArray(Security, security)
-  def withPayloads(payloads: Seq[Payload]): this.type             = setArray(Payloads, payloads)
-  def withServers(servers: Seq[Server]): this.type                = setArray(Servers, servers)
-  def withBindings(bindings: ChannelBindings): this.type          = set(Bindings, bindings)
+  def withDescription(description: String): this.type       = set(Description, description)
+  def withSummary(summary: String): this.type               = set(Summary, summary)
+  def withPath(path: String): this.type                     = set(Path, path)
+  def withOperations(operations: Seq[Operation]): this.type = setArray(Operations, operations)
+  def withParameters(parameters: Seq[Parameter]): this.type = setArray(Parameters, parameters)
+  def withPayloads(payloads: Seq[Payload]): this.type       = setArray(Payloads, payloads)
+  def withServers(servers: Seq[Server]): this.type          = setArray(Servers, servers)
+  def withBindings(bindings: ChannelBindings): this.type    = set(Bindings, bindings)
 
   override def removeServers(): Unit = fields.removeField(EndPointModel.Servers)
 
@@ -73,12 +72,6 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
   def withServer(url: String): Server = {
     val result = Server().withUrl(url)
     add(Servers, result)
-    result
-  }
-
-  def withSecurity(name: String): SecurityRequirement = {
-    val result = SecurityRequirement().withName(name, Annotations() += SynthesizedField())
-    add(Security, result)
     result
   }
 

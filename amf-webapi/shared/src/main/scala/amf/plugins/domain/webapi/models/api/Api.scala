@@ -13,6 +13,7 @@ import amf.plugins.domain.webapi.models.{
   EndPoint,
   License,
   Organization,
+  SecuredElement,
   Server,
   ServerContainer,
   Tag
@@ -25,6 +26,7 @@ import org.yaml.model.{YMap, YNode}
   */
 abstract class Api(fields: Fields, annotations: Annotations)
     extends NamedDomainElement
+    with SecuredElement
     with ServerContainer
     with DocumentedElement {
 
@@ -40,7 +42,6 @@ abstract class Api(fields: Fields, annotations: Annotations)
   override def documentations: Seq[CreativeWork] = fields.field(Documentations)
   def endPoints: Seq[EndPoint]                   = fields.field(EndPoints)
   def servers: Seq[Server]                       = fields.field(Servers)
-  def security: Seq[SecurityRequirement]         = fields.field(Security)
   def tags: Seq[Tag]                             = fields(Tags)
 
   def withDescription(description: String): this.type                  = set(Description, description)
@@ -55,7 +56,6 @@ abstract class Api(fields: Fields, annotations: Annotations)
   def withLicense(license: License): this.type                         = set(WebApiLicense, license)
   def withDocumentations(documentations: Seq[CreativeWork]): this.type = setArray(Documentations, documentations)
   def withServers(servers: Seq[Server]): this.type                     = setArray(Servers, servers)
-  def withSecurity(security: Seq[SecurityRequirement]): this.type      = setArray(Security, security)
 
   def withTags(tags: Seq[Tag]): this.type = setArray(Tags, tags)
 
@@ -72,12 +72,6 @@ abstract class Api(fields: Fields, annotations: Annotations)
   def withServer(url: String): Server = {
     val result = Server().withUrl(url)
     add(Servers, result)
-    result
-  }
-
-  def withSecurity(name: String): SecurityRequirement = {
-    val result = SecurityRequirement().withName(name, Annotations() += SynthesizedField())
-    add(Security, result)
     result
   }
 
