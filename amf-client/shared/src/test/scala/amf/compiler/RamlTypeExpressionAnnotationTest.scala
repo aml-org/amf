@@ -8,6 +8,7 @@ import amf.core.remote.RamlYamlHint
 import amf.core.traversal.iterator.AmfElementStrategy
 import org.scalatest.{Assertion, AsyncFlatSpec, Matchers}
 
+import scala.annotation.tailrec
 import scala.concurrent.{ExecutionContext, Future}
 
 class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with CompilerTestBuilder {
