@@ -236,5 +236,37 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
     }
   }
 
+  test("Json payload with trailing characters should throw error - Object test") {
+    amf.Core.init().asFuture.flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+      val propertyA = new PropertyShape()
+        .withName("a")
+        .withRange(new ScalarShape().withDataType(DataTypes.String))
+      val propertyB = new PropertyShape()
+        .withName("b")
+        .withRange(new ScalarShape().withDataType(DataTypes.String))
+      val shape = new NodeShape().withProperties(Seq(propertyA._internal, propertyB._internal).asClient)
+      val validator = shape.payloadValidator("application/json").asOption.get
+      validator
+        .syncValidate("application/json", """{"a": "aaaa", "b": "bbb"}asdfgh""").conforms shouldBe false
+    }
+  }
+
+  test("Json payload with trailing characters should throw error - Array test") {
+    amf.Core.init().asFuture.flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+      val propertyA = new PropertyShape()
+        .withName("a")
+        .withRange(new ScalarShape().withDataType(DataTypes.String))
+      val propertyB = new PropertyShape()
+        .withName("b")
+        .withRange(new ScalarShape().withDataType(DataTypes.String))
+      val shape = new NodeShape().withProperties(Seq(propertyA._internal, propertyB._internal).asClient)
+      val validator = shape.payloadValidator("application/json").asOption.get
+      validator
+        .syncValidate("application/json", """["a", "aaaa", "b", "bbb"]asdfgh""").conforms shouldBe false
+    }
+  }
+
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 }
