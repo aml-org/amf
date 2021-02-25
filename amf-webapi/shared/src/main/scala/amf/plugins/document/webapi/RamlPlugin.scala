@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi
 
 import amf._
+import amf.client.`new`.amfcore.plugins.AMFParsePluginAdapter
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.errorhandling.ErrorHandler
@@ -30,6 +31,7 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, R
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
+import amf.plugins.document.webapi.references.RamlReferenceHandler
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{
   Raml08EditingPipeline,
@@ -45,6 +47,8 @@ import org.yaml.model.{YDocument, YNode}
 sealed trait RamlPlugin extends BaseWebApiPlugin {
 
   override val vendors: Seq[String] = Seq(vendor.name, Raml.name)
+
+  override def referenceHandler(eh: ErrorHandler) = new RamlReferenceHandler(ID, AMFParsePluginAdapter(this))
 
   def context(wrapped: ParserContext,
               root: Root,
