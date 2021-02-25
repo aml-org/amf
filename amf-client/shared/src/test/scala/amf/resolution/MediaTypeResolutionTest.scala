@@ -2,7 +2,6 @@ package amf.resolution
 
 import amf.core.emitter.RenderOptions
 import amf.core.remote.{Amf, Oas, OasJsonHint, RamlYamlHint}
-import amf.remote._
 
 class MediaTypeResolutionTest extends ResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/resolution/media-type/"
