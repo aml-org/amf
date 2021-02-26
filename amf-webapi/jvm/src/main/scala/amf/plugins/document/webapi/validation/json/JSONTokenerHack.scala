@@ -7,6 +7,17 @@ import scala.util.matching.Regex
 
 class JSONTokenerHack(text: String) extends JSONTokener(text) {
 
+  def parseAll(): Object = {
+    val parsed = nextValueHack()
+    if (thereIsRemainingInput) throw syntaxError("There is invalid additional input  next to the last } or ]")
+    else parsed
+  }
+
+  private def thereIsRemainingInput = {
+    nextClean() // dump last character
+    !end() && nextClean() != 0
+  }
+
   override def nextValue(): Object = nextValueHack()
 
   /** This is extracted from JSONTokener class to replace the JSONObject.stringToValue method used in the superclass

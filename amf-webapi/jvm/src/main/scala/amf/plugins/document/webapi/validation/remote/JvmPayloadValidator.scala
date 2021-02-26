@@ -51,9 +51,7 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
       element: DomainElement,
       validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
 
-    loadJsonSchema(
-      jsonSchema.toString
-        .replace("x-amf-union", "anyOf")) match {
+    loadJsonSchema(jsonSchema.toString.replace("x-amf-union", "anyOf")) match {
       case schemaNode: JSONObject =>
         schemaNode.remove("x-amf-fragmentType")
 
@@ -111,10 +109,11 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
 
   override protected def loadJson(text: String): Object = {
     withJsonExceptionCatching(() => {
-      shape match {
-        case _: ScalarShape => new ScalarTokenerHack(text).nextValue()
-        case _              => new JSONTokenerHack(text).nextValue()
+      val json = shape match {
+        case _: ScalarShape => new ScalarTokenerHack(text).parseAll()
+        case _              => new JSONTokenerHack(text).parseAll()
       }
+      json
     })
   }
 
