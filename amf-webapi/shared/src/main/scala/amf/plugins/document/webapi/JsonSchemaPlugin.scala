@@ -12,6 +12,7 @@ import amf.core.parser.{ParsedReference, ParserContext, ReferenceHandler, Simple
 import amf.core.remote.{JsonSchema, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
+import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.JSONSchemaRoot
 import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaWebApiContext, OasWebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
@@ -119,6 +120,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     * Does references in this type of documents be recursive?
     */
   override val allowRecursiveReferences: Boolean = true
+
+  override def vendorExtensionsValidations(): Seq[ValidationSpecification] = Nil
 }
 
 object JsonSchemaPlugin extends JsonSchemaPlugin

@@ -11,6 +11,7 @@ import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.{Payload, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.parser.spec.common.PayloadEmitter
@@ -114,4 +115,6 @@ object PayloadPlugin extends AMFDocumentPlugin {
     * Does references in this type of documents be recursive?
     */
   override val allowRecursiveReferences: Boolean = false
+
+  override def vendorExtensionsValidations(): Seq[ValidationSpecification] = Nil
 }
