@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: Orders API
+version: 1.0.0
+mediaType: application/json
+baseUri: http://api.mythical.com/order
+types:
+  User:
+    (anypoint-business-term): 12
+    (test-nested):
+      b:
+        c: world
+        f: hey
+      a: true
+    properties:
+      name:
+        (anypoint-business-term): false
+        type: string
+/users:
+  get:
+    responses:
+      "200":
+        body:
+          type: array
+          items: User

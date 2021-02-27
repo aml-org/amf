@@ -1,0 +1,719 @@
+#%Dialect 1.0
+
+dialect: Rest Connector Descriptor
+version: 1.0
+
+external:
+  restSdk: http://a.ml/vocabularies/rest-sdk#
+  apiContract: http://a.ml/vocabularies.rest.sdk/apiContract#
+  security: http://a.ml/vocabularies.rest.sdk/security#
+  core: http://a.ml/vocabularies.rest.sdk/core#
+  digitalRepository: http://anypoint.com/vocabs/digital-repository#
+  anypoint: http://anypoint.com/vocabs/anypoint#
+  schema-org: http://anypoint.com/vocabs/schema-org#
+
+annotationMappings:
+  ValueResolverExtension:
+    target: apiContract.Parameter
+    propertyTerm: restSdk.valueResolver
+    range: ValueResolver
+
+nodeMappings:
+  ConnectorDescriptor:
+    classTerm: restSdk.ConnectorDescriptor
+    mapping:
+      apiSpec:
+        propertyTerm: restSdk.webAPISpecAsset
+        range: APISpec
+        mandatory: true
+      connectorName:
+        propertyTerm: core.name
+        range: string
+        mandatory: true
+      connectorDescription:
+        propertyTerm: core.description
+        range: string
+      connectorGav:
+        propertyTerm: restSdk.connectorGav
+        range: MavenGav
+        mandatory: true
+      connectorCategory:
+        propertyTerm: restSdk.connectorCategory
+        range: string
+        enum:
+          - community
+          - select
+      extensionXml:
+        propertyTerm: restSdk.extensionXml
+        range: string
+      baseJavaPackage:
+        propertyTerm: restSdk.baseJavaPackage
+        range: string
+      skipOutputTypeValidation:
+        propertyTerm: restSdk.skipOutputTypeValidation
+        range: boolean
+      defaultInputMediaType:
+        propertyTerm: restSdk.defaultInputMediaType
+        range: string
+      defaultOutputMediaType:
+        propertyTerm: restSdk.defaultOutputMediaType
+        range: string
+      baseUri:
+        propertyTerm: restSdk.baseUri
+        range: BaseUri
+      paginations:
+        propertyTerm: restSdk.paginationDeclarations
+        range: PaginationDeclaration
+        mapTermKey: core.name
+      endpoints:
+        propertyTerm: apiContract.endpoint
+        range: EndPoint
+        mapTermKey: apiContract.path
+      security:
+        propertyTerm: restSdk.security
+        range: Security
+        mapTermKey: core.name
+      queryParameterArrayFormat:
+        propertyTerm: restSdk.queryParameterArrayFormat
+        range: string
+        enum:
+          - multimap
+          - comma
+      testConnection:
+        propertyTerm: restSdk.testConnection
+        range: TestConnection
+        mandatory: false
+      triggers:
+        propertyTerm: restSdk.triggers
+        range: Trigger
+        mapTermKey: core.name
+        mandatory: false
+      valueResolvers:
+        propertyTerm: restSdk.valueResolvers
+        range: ValueResolver
+        mapTermKey: core.name
+        mandatory: false
+
+  ValueResolver:
+    classTerm: restSdk.ValueResolver
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+        mandatory: true
+      path:
+        propertyTerm: apiContract.path
+        range: string
+        mandatory: true
+      method:
+        propertyTerm: apiContract.method
+        range: string
+        enum:
+          - get
+          - post
+          - put
+          - patch
+          - delete
+          - head
+          - options
+        mandatory: true
+      items:
+        propertyTerm: restSdk.valueResolverItems
+        range: ValueResolverItems
+        mandatory: true
+      binding:
+        propertyTerm: restSdk.valueResolverBinding
+        range: ValueResolverBinding
+        mandatory: false
+      parameters:
+        propertyTerm: restSdk.valueResolverParameters
+        range: ValueResolverParameter
+        mapTermKey: apiContract.paramName
+        mandatory: false
+
+  ValueResolverItems:
+    classTerm: restSdk.ValueResolverItems
+    mapping:
+      extraction:
+        propertyTerm: restSdk.valueResolverItemExtraction
+        range: Expression
+        mandatory: true
+      value:
+        propertyTerm: restSdk.valueResolverItemValue
+        range: Expression
+        mandatory: true
+      displayName:
+        propertyTerm: restSdk.valueResolverItemDisplayName
+        range: Expression
+        mandatory: false
+
+  ValueResolverBinding:
+    classTerm: restSdk.ValueResolverBinding
+    mapping:
+      uriParameter:
+        propertyTerm: apiContract.uriParameter
+        range: ValueResolverBindingParameter
+        mapTermKey: apiContract.paramName
+        mandatory: false
+      queryParameter:
+        propertyTerm: apiContract.queryParameter
+        range: ValueResolverBindingParameter
+        mapTermKey: apiContract.paramName
+        mandatory: false
+      header:
+        propertyTerm: apiContract.header
+        range: ValueResolverBindingParameter
+        mapTermKey: apiContract.paramName
+        mandatory: false
+
+  ValueResolverBindingParameter:
+    classTerm: restSdk.ValueResolverBindingParameter
+    mapping:
+      name:
+        propertyTerm: apiContract.paramName
+        range: string
+        mandatory: true
+      value:
+        propertyTerm: restSdk.valueResolverBindingParameterValue
+        range: Expression
+        mandatory: true
+
+  ValueResolverParameter:
+    classTerm: restSdk.ValueResolverParameter
+    mapping:
+      name:
+        propertyTerm: apiContract.paramName
+        range: string
+        mandatory: true
+      type:
+        propertyTerm: restSdk.parameterType
+        range: string
+        enum:
+          - integer
+          - number
+          - string
+          - localDateTime
+          - zonedDateTime
+          - boolean
+        mandatory: true
+
+  ValueResolverReference:
+    classTerm: restSdk.ValueResolverReference
+    mapping:
+      id:
+        propertyTerm: restSdk.valueResolverReferenceId
+        range: string
+        mandatory: true
+      arguments:
+        propertyTerm: restSdk.valueResolverReferenceArguments
+        range: ValueResolverArgument
+        mapTermKey: apiContract.paramName
+        mandatory: false
+
+  ValueResolverArgument:
+    classTerm: restSdk.ValueResolverReferenceArgument
+    mapping:
+      name:
+        propertyTerm: apiContract.paramName
+        range: string
+        mandatory: true
+      value:
+        propertyTerm: restSdk.valueResolverArgumentValue
+        range: string
+        mandatory: true
+
+  Trigger:
+    classTerm: restSdk.Trigger
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+        mandatory: true
+      path:
+        propertyTerm: apiContract.path
+        range: string
+        mandatory: true
+      method:
+        propertyTerm: apiContract.method
+        range: string
+        enum:
+          - get
+          - post
+          - put
+          - patch
+          - delete
+          - head
+          - options
+        mandatory: true
+      displayName:
+        propertyTerm: restSdk.friendlyName
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: core.description
+        range: string
+      parameters:
+        propertyTerm: restSdk.triggerParameters
+        range: TriggerParameter
+        mapTermKey: apiContract.paramName
+      binding:
+        propertyTerm: restSdk.triggerParameterBindings
+        range: TriggerParameterBindings
+      items:
+        propertyTerm: restSdk.triggerItems
+        range: TriggerItems
+        mandatory: true
+      watermark:
+        propertyTerm: restSdk.triggerWatermark
+        range: TriggerWatermark
+      identity:
+        propertyTerm: restSdk.triggerIdentity
+        range: TriggerIdentity
+      outputType:
+        propertyTerm: restSdk.outputType
+        range: string
+        mandatory: true
+      outputMediaType:
+        propertyTerm: restSdk.outputMediaType
+        range: string
+      sampleData:
+        propertyTerm: restSdk.sampleData
+        range: SampleDataDeclaration
+
+  TriggerParameter:
+    classTerm: restSdk.TriggerParameter
+    mapping:
+      name:
+        propertyTerm: apiContract.paramName
+        range: string
+        mandatory: true
+      displayName:
+        propertyTerm: restSdk.friendlyName
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: core.description
+        range: string
+      type:
+        propertyTerm: restSdk.parameterType
+        range: string
+        enum:
+          - integer
+          - number
+          - string
+          - localDateTime
+          - zonedDateTime
+          - boolean
+        mandatory: true
+      required:
+        propertyTerm: restSdk.required
+        range: boolean
+
+  TriggerParameterBindings:
+    classTerm: restSdk.TriggerParameterBindings
+    mapping:
+      uriParameter:
+        propertyTerm: apiContract.uriParameter
+        range: TriggerParameterBinding
+        mapTermKey: apiContract.paramName
+      queryParameter:
+        propertyTerm: apiContract.queryParameter
+        range: TriggerParameterBinding
+        mapTermKey: apiContract.paramName
+      header:
+        propertyTerm: apiContract.header
+        range: TriggerParameterBinding
+        mapTermKey: apiContract.paramName
+      body:
+        propertyTerm: restSdk.triggerRequestBodyBinding
+        range: Expression
+
+  TriggerParameterBinding:
+    classTerm: restSdk.TriggerParameterBinding
+    mapping:
+      name:
+        propertyTerm: apiContract.paramName
+        range: string
+        mandatory: true
+      value:
+        propertyTerm: restSdk.expressionContent
+        range: string
+        mandatory: true
+      language:
+        propertyTerm: restSdk.expressionLanguage
+        range: string
+
+  TriggerWatermark:
+    classTerm: restSdk.TriggerWatermark
+    mapping:
+      extraction:
+        propertyTerm: restSdk.triggerWatermarkExtraction
+        range: Expression
+        mandatory: true
+      type:
+        propertyTerm: restSdk.triggerWatermarkType
+        range: string
+        enum:
+          - integer
+          - number
+          - string
+          - localDateTime
+          - zonedDateTime
+
+  TriggerItems:
+    classTerm: restSdk.TriggerItems
+    mapping:
+      extraction:
+        propertyTerm: restSdk.triggerItemsExtraction
+        range: Expression
+        mandatory: true
+
+  TriggerIdentity:
+    classTerm: restSdk.TriggerIdentity
+    mapping:
+      extraction:
+        propertyTerm: restSdk.triggerIdentityExtraction
+        range: Expression
+        mandatory: true
+
+  TestConnection:
+    classTerm: restSdk.TestConnection
+    mapping:
+      path:
+        propertyTerm: restSdk.testConnectionPath
+        range: string
+        mandatory: true
+      method:
+        propertyTerm: restSdk.testConnectionMethod
+        range: string
+        enum:
+          - get
+          - post
+          - put
+          - patch
+          - delete
+          - head
+          - options
+      validStatusCodes:
+        propertyTerm: restSdk.testConnectionValidStatusCodes
+        range: integer
+        allowMultiple: true
+      mediaType:
+        propertyTerm: restSdk.testConnectionMediaType
+        range: string
+      responseValidation:
+        propertyTerm: restSdk.testConnectionResponseValidation
+        range: TestConnectionResponseValidation
+        allowMultiple: true
+
+  TestConnectionResponseValidation:
+    classTerm: restSdk.TestConnectionResponseValidation
+    mapping:
+      validation:
+        propertyTerm: restSdk.testConnectionValidationExpression
+        range: Expression
+      errorTemplate:
+        propertyTerm: restSdk.testConnectionErrorTemplate
+        range: Expression
+
+  APISpec:
+    classTerm: digitalRepository.WebAPISpecAsset
+    union:
+      - APIUrl
+      - MavenGav
+
+  APIUrl:
+    classTerm: digitalRepository.WebAPISpecAsset
+    mapping:
+      url:
+        propertyTerm: restSdk.webAPISpecAssetURL
+        range: string
+        mandatory: true
+
+  MavenGav:
+    classTerm: restSdk.MavenGav
+    mapping:
+      groupId:
+        propertyTerm: anypoint.tenantId
+        range: string
+        mandatory: true
+      artifactId:
+        propertyTerm: digitalRepository.assetId
+        range: string
+        mandatory: true
+      version:
+        propertyTerm: schema-org.version
+        range: string
+        mandatory: true
+
+  BaseUri:
+    classTerm: restSdk.BaseUri
+    mapping:
+      value:
+        propertyTerm: apiContract.url
+        range: string
+      type:
+        propertyTerm: restSdk.baseUriType
+        range: string
+        enum:
+          - fixed
+          - parameter
+          - multiple
+      mapping:
+        propertyTerm: restSdk.multipleBaseUri
+        range: MultipleBaseUri
+        mapTermKey: core.name
+
+  MultipleBaseUri:
+    classTerm: restSdk.MultipleBaseUri
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      value:
+        propertyTerm: apiContract.url
+        range: string
+      default:
+        propertyTerm: restSdk.defaultBaseUri
+        range: boolean
+
+  PaginationDeclaration:
+    classTerm: restSdk.PaginationDeclaration
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      type:
+        propertyTerm: restSdk.paginationType
+        range: string
+        enum:
+          - offset
+          - marker
+          - pageNumber
+      parameters:
+        propertyTerm: restSdk.paginationParameters
+        range: PaginationParameter
+
+  SampleDataDeclaration:
+    classTerm: restSdk.SampleDataDeclaration
+    mapping:
+      type:
+        propertyTerm: restSdk.sampleDataType
+        range: string
+        enum:
+          - same-operation
+  #    TODO lautaro: follow up for future types of sample data
+  #          - hardcoded
+  #      value:
+  #        mandatory: false
+  #        range: string
+
+  PaginationParameter:
+    classTerm: restSdk.PaginationParameter
+    mapping:
+      offsetParamName:
+        propertyTerm: restSdk.offsetParamName
+        range: string
+      initialOffset:
+        propertyTerm: restSdk.initialOffset
+        range: number
+      nextTokenParamName:
+        propertyTerm: restSdk.nextTokenParamName
+        range: string
+      nextToken:
+        propertyTerm: restSdk.nextTokenExpression
+        range: Expression
+      pageNumberParamName:
+        propertyTerm: restSdk.pageNumberParamName
+        range: string
+      initialPageNumber:
+        propertyTerm: restSdk.initialPageNumber
+        range: number
+      pagingResponse:
+        propertyTerm: restSdk.pagingResponseExpression
+        range: Expression
+
+  EndPoint:
+    classTerm: apiContract.EndPoint
+    mapping:
+      path:
+        propertyTerm: apiContract.path
+        range: string
+      operations:
+        propertyTerm: apiContract.supportedOperation
+        range: Operation
+        mapTermKey: apiContract.method
+      ignored:
+        propertyTerm: restSdk.ignore
+        range: boolean
+      baseUri:
+        propertyTerm: restSdk.baseUriReference
+        range: string
+      security:
+        propertyTerm: restSdk.security
+        range: string
+
+  Operation:
+    classTerm: apiContract.Operation
+    mapping:
+      method:
+        propertyTerm: apiContract.method
+        range: string
+        enum:
+          - get
+          - post
+          - put
+          - patch
+          - delete
+          - head
+          - options
+        mandatory: true
+      name:
+        propertyTerm: restSdk.operationName
+        range: string
+      description:
+        propertyTerm: restSdk.operationDescription
+        range: string
+      inputType:
+        propertyTerm: restSdk.inputType
+        range: string
+      inputMediaType:
+        propertyTerm: restSdk.inputMediaType
+        range: string
+      outputType:
+        propertyTerm: restSdk.outputType
+        range: string
+      outputMediaType:
+        propertyTerm: restSdk.outputMediaType
+        range: string
+      expects:
+        propertyTerm: apiContract.expects
+        range: Request
+      ignored:
+        propertyTerm: restSdk.ignore
+        range: boolean
+      baseUri:
+        propertyTerm: restSdk.baseUriReference
+        range: string
+      pagination:
+        propertyTerm: restSdk.paginationReference
+        range: string
+      skipOutputTypeValidation:
+        propertyTerm: restSdk.skipOutputTypeValidation
+        range: boolean
+      voidOperation:
+        propertyTerm: restSdk.voidOperation
+        range: boolean
+      queryParameterArrayFormat:
+        propertyTerm: restSdk.queryParameterArrayFormat
+        range: string
+        enum:
+          - multimap
+          - comma
+      sampleData:
+        propertyTerm: restSdk.sampleData
+        range: SampleDataDeclaration
+
+  Request:
+    classTerm: apiContract.Request
+    mapping:
+      header:
+        propertyTerm: apiContract.header
+        range: Parameter
+        mapTermKey: apiContract.paramName
+      queryParameter:
+        propertyTerm: apiContract.queryString
+        range: Parameter
+        mapTermKey: apiContract.paramName
+      uriParameter:
+        propertyTerm: apiContract.uriParameter
+        range: Parameter
+        mapTermKey: apiContract.paramName
+      part:
+        propertyTerm: restSdk.part
+        range: PartDescriptor
+        mapTermKey: apiContract.paramName
+
+  Parameter:
+    classTerm: apiContract.Parameter
+    mapping:
+      paramName:
+        propertyTerm: apiContract.paramName
+        range: string
+        mandatory: true
+      friendlyName:
+        propertyTerm: restSdk.friendlyName
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      ignored:
+        propertyTerm: restSdk.ignore
+        range: boolean
+      valueResolver:
+        propertyTerm: restSdk.valueResolverReference
+        range: ValueResolverReference
+        mandatory: false
+
+  PartDescriptor:
+    classTerm: restSdk.PartDescriptor
+    mapping:
+      partName:
+        propertyTerm: apiContract.paramName
+        range: string
+        mandatory: true
+      friendlyName:
+        propertyTerm: restSdk.friendlyName
+        range: string
+        mandatory: false
+      description:
+        propertyTerm: core.description
+        range: string
+        mandatory: false
+      contentType:
+        propertyTerm: restSdk.inputMediaType
+        range: string
+      inputType:
+        propertyTerm: restSdk.inputType
+        range: string
+        mandatory: false
+      file:
+        propertyTerm: restSdk.filePart
+        range: boolean
+        mandatory: false
+
+  Expression:
+    classTerm: restSdk.ExtractionExpression
+    mapping:
+      language:
+        propertyTerm: restSdk.expressionLanguage
+        range: string
+      expression:
+        propertyTerm: restSdk.expressionContent
+        range: string
+
+  Security:
+    classTerm: restSdk.Security
+    mapping:
+      headers:
+        propertyTerm: restSdk.securityHeaders
+        range: Parameter
+        mapTermKey: apiContract.paramName
+      queryParameters:
+        propertyTerm: restSdk.securityQueryParameters
+        range: Parameter
+        mapTermKey: apiContract.paramName
+      ignored:
+        propertyTerm: restSdk.ignore
+        range: boolean
+      testConnection:
+        propertyTerm: restSdk.testConnection
+        range: TestConnection
+        mandatory: false
+
+documents:
+  library:
+    declares:
+      value-provider: ValueResolverExtension
+  root:
+    encodes: ConnectorDescriptor
