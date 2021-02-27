@@ -4,6 +4,10 @@ version: 1.0.0
 mediaType: application/json
 baseUri: http://api.mythical.com/order
 types:
+  Other:
+   (anypoint-business-term): "http://test.com/valid"
+   properties:
+     valid: boolean
   User:
     (anypoint-business-term): 12
     (test-nested):
@@ -16,6 +20,7 @@ types:
         (anypoint-business-term): false
         type: string
 /users:
+  (anypoint-business-term): "http://test.com/individual"
   get:
     responses:
       "200":

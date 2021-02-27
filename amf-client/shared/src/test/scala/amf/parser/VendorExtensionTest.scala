@@ -93,6 +93,7 @@ trait VendorExtensionTest extends MultiJsonldAsyncFunSuite with Matchers with Na
       report     <- validation.validate(parsed._internal, Raml10Profile)
     } yield {
       assert(!report.conforms)
+      assert(report.results.size == 5) // @todo do a proper report test
     }
   }
 
