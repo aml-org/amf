@@ -17,7 +17,7 @@ import amf.core.TaggedReferences._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class RamlReferenceHandler(vendor: String, plugin: AMFParsePlugin) extends WebApiReferenceHandler(vendor) {
+class RamlReferenceHandler(vendor: String) extends WebApiReferenceHandler(vendor) {
 
   /** Update parsed reference if needed. */
   override def update(reference: ParsedReference, compilerContext: CompilerContext)(
@@ -33,11 +33,11 @@ class RamlReferenceHandler(vendor: String, plugin: AMFParsePlugin) extends WebAp
       case Right(document) =>
         val parsed = SyamlParsedDocument(document)
 
-        val refs    = new RamlReferenceHandler(vendor, plugin).collect(parsed, compilerContext.parserContext)
+        val refs    = new RamlReferenceHandler(vendor).collect(parsed, compilerContext.parserContext)
         val updated = compilerContext.forReference(reference.unit.id, withNormalizedUri = false)
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, r.refs.map(_.node), allowRecursiveRefs = true, plugin)
+          r.resolve(updated, allowRecursiveRefs = true)
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), updated)
