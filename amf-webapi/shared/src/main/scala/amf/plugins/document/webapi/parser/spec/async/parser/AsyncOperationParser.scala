@@ -95,7 +95,7 @@ private class AsyncOperationTraitParser(entry: YMapEntry, parentId: String)(
     val operation = super.parse()
     operation.set(OperationModel.Name, methodNode, Annotations(entry.key))
     val map = entry.value.as[YMap]
-    operation.withAbstract(true)
+    operation.withAbstract(true, Annotations.synthesized())
     ctx.closedShape(operation.id, map, "operationTrait")
     operation
   }
@@ -121,8 +121,8 @@ case class AsyncOperationRefParser(node: YNode, parentId: String)(implicit val c
     val operation: Operation = ctx.declarations
       .findOperationTrait(label, Named)
       .map { res =>
-        val resLink: Operation = res.link(label)
-        resLink.add(Annotations(node))
+        val resLink: Operation = res.link(label, Annotations(node))
+        resLink
       }
       .getOrElse(remote(url, node))
     operation

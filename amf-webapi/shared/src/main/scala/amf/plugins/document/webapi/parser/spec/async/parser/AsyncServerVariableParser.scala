@@ -1,5 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
+import amf.core.metamodel.domain.ExternalSourceElementModel
+import amf.core.model.domain.AmfScalar
 import amf.core.utils.IdCounter
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
@@ -22,10 +24,10 @@ case class AsyncServerVariableParser(entry: YMapEntry, parent: String)(implicit 
             val idCounter = new IdCounter()
             val examples = examplesEntry.value.as[YSequence].nodes.map { node =>
               Example(node)
-                .withName(idCounter.genId("example"))
-                .withValue(node)
+                .withName(idCounter.genId("example"), Annotations.synthesized())
+                .set(ExternalSourceElementModel.Raw, AmfScalar(node, Annotations(node)), Annotations.inferred())
             }
-            variable.withExamples(examples)
+            variable.withExamples(examples, Annotations(examplesEntry.value))
           case _ =>
             ctx.violation(ParserSideValidations.ExamplesMustBeASeq,
                           variable.id,

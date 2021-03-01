@@ -22,6 +22,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, Exampl
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{Example, NodeShape}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import amf.plugins.domain.webapi.metamodel.MessageModel.IsAbstract
 import amf.plugins.domain.webapi.metamodel.{MessageModel, ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.bindings.MessageBindings
@@ -67,7 +68,7 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
 
   def nameAndAdopt(m: Message, key: Option[YNode]): Message = {
     key foreach { k =>
-      m.set(MessageModel.Name, ScalarNode(k).string())
+      m.set(MessageModel.Name, ScalarNode(k).string(), Annotations(k))
     }
     m.adopted(parent)
   }
@@ -101,7 +102,7 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
     message
       .withId(s"${message.id}/link-$hash")
       .withLinkTarget(effectiveTarget)
-      .withLinkLabel(label)
+      .withLinkLabel(label, extractRefAnnotation(entryLike))
   }
 
 }
@@ -147,8 +148,10 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
     examples.all.foreach { ex =>
       ex.annotations += TrackedElement(message.id)
     }
-    if (examples.payload.nonEmpty) message.set(MessageModel.Examples, AmfArray(examples.payload))
-    if (examples.headers.nonEmpty) message.set(MessageModel.HeaderExamples, AmfArray(examples.headers))
+    if (examples.payload.nonEmpty)
+      message.set(MessageModel.Examples, AmfArray(examples.payload))
+    if (examples.headers.nonEmpty)
+      message.set(MessageModel.HeaderExamples, AmfArray(examples.headers))
 
     map.key(
       "headers",
@@ -181,7 +184,8 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
 
     parseTraits(map, message)
 
-    if (shouldParsePayloadModel(map)) parsePayload(map, message)
+    if (shouldParsePayloadModel(map))
+      parsePayload(map, message)
 
     ctx.closedShape(message.id, map, "message")
     AnnotationParser(message, map).parse()
@@ -189,13 +193,15 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
   }
 
   private def parsePayload(map: YMap, message: Message) = {
-    val payload = Payload(Annotations(VirtualElement())).adopted(message.id)
+    val payload = Payload(Annotations(map)).adopted(message.id)
 
     map.key("contentType", PayloadModel.MediaType in payload)
     map.key("schemaFormat", PayloadModel.SchemaMediaType in payload)
     parseSchema(map, payload)
 
-    message.set(MessageModel.Payloads, AmfArray(Seq(payload)))
+    message.set(MessageModel.Payloads,
+                AmfArray(Seq(payload), Annotations(VirtualElement())),
+                Annotations(VirtualElement()))
   }
 
   private def shouldParsePayloadModel(map: YMap) = {
@@ -249,7 +255,7 @@ case class AsyncMessageTraitPopulator()(implicit ctx: AsyncWebApiContext) extend
 
   override def populate(map: YMap, message: Message): Message = {
     val nextMessage = super.populate(map, message)
-    nextMessage.isAbstract(true)
+    nextMessage.set(IsAbstract, true, Annotations.synthesized())
     ctx.closedShape(nextMessage.id, map, "messageTrait")
     nextMessage
   }

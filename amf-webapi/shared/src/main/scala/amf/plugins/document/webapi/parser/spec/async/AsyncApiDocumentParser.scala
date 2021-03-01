@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.async
 import amf.core.Root
 import amf.core.annotations.{DeclaredElement, SourceVendor}
+import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
@@ -53,7 +54,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
     val api = parseApi(map).add(SourceVendor(ctx.vendor))
     document
-      .withEncodes(api)
+      .set(DocumentModel.Encodes, api, Annotations.inferred())
       .adopted(root.location)
 
     addDeclarationsToModel(document)
@@ -301,7 +302,7 @@ case class IdentifierParser(entry: YMapEntry, webApi: AsyncApi, override implici
     entry.value.tagType match {
       case YType.Str =>
         val id = entry.value.as[String]
-        webApi.set(WebApiModel.Identifier, AmfScalar(id), Annotations(entry))
+        webApi.set(WebApiModel.Identifier, AmfScalar(id, Annotations(entry.value)), Annotations(entry))
       case _ =>
         ctx.eh.violation(InvalidIdentifier, webApi.id, "'id' must be a string", entry.location)
     }

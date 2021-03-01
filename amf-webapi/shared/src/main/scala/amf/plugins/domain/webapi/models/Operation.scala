@@ -61,8 +61,9 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withTags(tags: Seq[Tag]): this.type                         = setArray(Tags, tags)
   def withCallbacks(callbacks: Seq[Callback], annotations: Annotations = Annotations()): this.type =
     setArray(Callbacks, callbacks, annotations)
-  def withServers(servers: Seq[Server]): this.type         = setArray(Servers, servers)
-  def withAbstract(abs: Boolean): this.type                = set(IsAbstract, abs)
+  def withServers(servers: Seq[Server]): this.type = setArray(Servers, servers)
+  def withAbstract(abs: Boolean, annotations: Annotations = Annotations()): this.type =
+    set(IsAbstract, abs, annotations)
   def withBindings(bindings: OperationBindings): this.type = set(Bindings, bindings)
   def withOperationId(operationId: String): this.type      = set(OperationId, operationId)
 

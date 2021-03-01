@@ -24,7 +24,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     extends SpecParserOps {
 
   private def nameAndAdopt(param: Parameter): Parameter = {
-    entryLike.key.foreach(k => param.set(ParameterModel.Name, ScalarNode(k).string()))
+    entryLike.key.foreach(k => param.set(ParameterModel.Name, ScalarNode(k).string(), Annotations(k)))
     param.adopted(parentId).add(entryLike.annotations)
   }
 
@@ -75,7 +75,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "parameters")
     ctx.declarations
       .findParameter(label, SearchScope.Named)
-      .map(param => nameAndAdopt(param.link(label)))
+      .map(param => nameAndAdopt(param.link(label, extractRefAnnotation(entryLike))))
       .getOrElse(remote(fullRef, map))
   }
 

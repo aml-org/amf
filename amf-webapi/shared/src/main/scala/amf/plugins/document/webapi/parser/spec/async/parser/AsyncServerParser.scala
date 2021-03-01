@@ -20,7 +20,7 @@ case class AsyncServersParser(map: YMap, api: AsyncApi)(implicit val ctx: AsyncW
     map.entries.map { entry =>
       AsyncServerParser(api.id, entry)
         .parse()
-        .withName(entry.key)
+        .withName(entry.key, Annotations(entry.key))
     }
   }
 }

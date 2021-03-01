@@ -231,7 +231,7 @@ case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: Li
           val operationParser = ctx.factory.operationParser(entry, endpoint.id)
           operations += operationParser.parse()
         }
-        endpoint.set(EndPointModel.Operations, AmfArray(operations))
+        endpoint.set(EndPointModel.Operations, AmfArray(operations, Annotations(map)), Annotations(map))
       }
     )
 

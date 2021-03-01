@@ -43,6 +43,8 @@ trait DeclarationKeyCollector {
 }
 
 trait SpecParserOps {
+  protected def extractRefAnnotation(entryLike: YMapEntryLike): Annotations =
+    entryLike.asMap.key("$ref").map(_.value).map(Annotations(_)).getOrElse(Annotations.synthesized())
 
   protected def checkBalancedParams(path: String,
                                     value: YNode,

@@ -35,7 +35,8 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "operationBindings")
     ctx.declarations
       .findOperationBindings(label, SearchScope.Named)
-      .map(operationBindings => nameAndAdopt(operationBindings.link(label), entryLike.key))
+      .map(operationBindings =>
+        nameAndAdopt(operationBindings.link(label, extractRefAnnotation(entryLike)), entryLike.key))
       .getOrElse(remote(fullRef, entryLike, parent))
   }
 

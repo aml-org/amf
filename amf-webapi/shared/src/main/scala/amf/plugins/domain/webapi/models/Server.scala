@@ -25,14 +25,14 @@ case class Server(fields: Fields, annotations: Annotations) extends DomainElemen
   def security: Seq[SecurityRequirement] = fields.field(Security)
   def bindings: ServerBindings           = fields.field(Bindings)
 
-  def withName(name: String): this.type                           = set(Name, name)
-  def withUrl(url: String): this.type                             = set(Url, url)
-  def withDescription(description: String): this.type             = set(Description, description)
-  def withVariables(variables: Seq[Parameter]): this.type         = setArray(Variables, variables)
-  def withProtocol(protocol: String): this.type                   = set(Protocol, protocol)
-  def withProtocolVersion(protocolVersion: String): this.type     = set(ProtocolVersion, protocolVersion)
-  def withSecurity(security: Seq[SecurityRequirement]): this.type = setArray(Security, security)
-  def withBindings(bindings: ServerBindings): this.type           = set(Bindings, bindings)
+  def withName(name: String, annotations: Annotations = Annotations()): this.type = set(Name, name, annotations)
+  def withUrl(url: String): this.type                                             = set(Url, url)
+  def withDescription(description: String): this.type                             = set(Description, description)
+  def withVariables(variables: Seq[Parameter]): this.type                         = setArray(Variables, variables)
+  def withProtocol(protocol: String): this.type                                   = set(Protocol, protocol)
+  def withProtocolVersion(protocolVersion: String): this.type                     = set(ProtocolVersion, protocolVersion)
+  def withSecurity(security: Seq[SecurityRequirement]): this.type                 = setArray(Security, security)
+  def withBindings(bindings: ServerBindings): this.type                           = set(Bindings, bindings)
 
   def withVariable(name: String): Parameter = {
     val result = Parameter().withName(name)
