@@ -98,18 +98,14 @@ class RamlParserErrorTest extends ParserErrorTest {
   test("Inline external fragment from non mutable ref") {
     validate(
       "error/inline-non-mutable-ref/api.raml",
-      badInclude1 => {
-        badInclude1.level should be("Violation")
-        badInclude1.message should startWith("Fragments must be imported by using '!include'")
-      },
-      badInclude2 => {
-        badInclude2.level should be("Violation")
-        badInclude2.message should startWith("Fragments must be imported by using '!include'")
-      },
       invalidRef => {
         invalidRef.level should be("Violation")
         invalidRef.message should be("Cannot inline a fragment in a not mutable node")
         invalidRef.position.map(_.range) should be(Some(Range((3, 8), (3, 17))))
+      },
+      badInclude1 => {
+        badInclude1.level should be("Violation")
+        badInclude1.message should startWith("Fragments must be imported by using '!include'")
       },
       invalidModule => {
         invalidModule.level should be("Violation")

@@ -201,6 +201,10 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-reference/api.raml", Some("invalid-reference.report"))
   }
 
+  test("Invalid reference with # defined in library") {
+    validate("invalid-reference/error-in-lib.raml", Some("invalid-reference-defined-in-lib.report"))
+  }
+
   test("Invalid reference from overlay to swagger document") {
     validate("invalid-cross-overlay/invalid-cross-overlay.raml", Some("invalid-cross-overlay.report"))
   }

@@ -35,7 +35,7 @@ class RamlReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends Web
         val updated = compilerContext.forReference(reference.unit.id, withNormalizedUri = false)
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, r.refs.map(_.node), allowRecursiveRefs = true, plugin)
+          r.resolve(updated, allowRecursiveRefs = true)
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), updated)
