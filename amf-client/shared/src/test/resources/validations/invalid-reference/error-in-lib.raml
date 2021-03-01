@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: Covéa Partners Experience API
+
+uses:
+  lib: !include invalid-lib.raml
+
+/claims:
+  /{claim-id}:
+    patch:
+      body:
+        application/json:
+          type: lib.A
