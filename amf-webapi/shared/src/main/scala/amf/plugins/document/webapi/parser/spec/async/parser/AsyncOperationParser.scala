@@ -98,10 +98,10 @@ private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Op
     val node = entry.value
     ctx.link(node) match {
       case Left(url) =>
-        AsyncOperationTraitRefParser(node, adopt).parseLink(url)
+        AsyncOperationTraitRefParser(node, adopt, Some(entryKey.toString)).parseLink(url)
       case Right(_) =>
         val operation = super.parse()
-        operation.set(OperationModel.Name, methodNode, Annotations(entry.key))
+        operation.set(OperationModel.Name, entryKey, Annotations(entry.key))
         operation.withAbstract(true)
         operation
     }
@@ -112,7 +112,7 @@ private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Op
   override protected def parseTraits(map: YMap, operation: Operation): Unit = Unit
 }
 
-case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operation)(
+case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operation, name: Option[String] = None)(
     implicit val ctx: AsyncWebApiContext) {
 
   def parseLinkOrError(): Operation = {
@@ -147,7 +147,7 @@ case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operati
   private def remote(url: String, node: YNode): Operation = {
     ctx.obtainRemoteYNode(url) match {
       case Some(traitNode) =>
-        AsyncOperationParser(YMapEntry(url, traitNode), adopt, isTrait = true)
+        AsyncOperationParser(YMapEntry(name.getOrElse(url), traitNode), adopt, isTrait = true)
           .parse()
       case None => linkError(url, node)
     }
