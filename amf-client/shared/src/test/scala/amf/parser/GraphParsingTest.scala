@@ -11,6 +11,16 @@ class GraphParsingTest extends FunSuiteCycleTests {
     cycle("api.source.jsonld", "api.golden.jsonld", AmfJsonHint, Amf, renderOptions = Some(ro))
   }
 
+  test("Parse api with link target maps") {
+    val ro = RenderOptions().withPrettyPrint.withFlattenedJsonLd
+    cycle("api.source.jsonld",
+          "api.golden.jsonld",
+          AmfJsonHint,
+          Amf,
+          renderOptions = Some(ro),
+          directory = s"${basePath}link-target-map/")
+  }
+
   test("Conserve id values when parsing to maintain consistency with recursive fixpoints - flattened") {
     val ro = RenderOptions().withCompactUris.withPrettyPrint.withFlattenedJsonLd
     cycle("recursive-api.flattened.jsonld",
