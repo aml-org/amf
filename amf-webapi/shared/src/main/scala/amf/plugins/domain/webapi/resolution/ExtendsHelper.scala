@@ -231,14 +231,13 @@ case class ExtendsHelper(profile: ProfileName,
         ctx.declarations += (f.location().getOrElse(f.id), f)
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
-          case (alias, (fullUrl, _)) =>
-            if (m.id == fullUrl) {
-              val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(eh = ctx.eh))
-              m.declares.foreach { declaration =>
-                extractDeclarationToContextWithLocalAndRootName(declaration, m)(nestedCtx)
-              }
-              ctx.declarations.libraries += (alias -> nestedCtx.declarations)
+          case (alias, (fullUrl, _)) if m.id == fullUrl =>
+            val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(eh = ctx.eh))
+            m.declares.foreach { declaration =>
+              extractDeclarationToContextWithLocalAndRootName(declaration, m)(nestedCtx)
             }
+            ctx.declarations.libraries += (alias -> nestedCtx.declarations)
+          case _ => // Ignore
         }
       case _: Fragment => // Trait or RT, nothing to do
       case other =>
@@ -257,22 +256,21 @@ case class ExtendsHelper(profile: ProfileName,
     declaration.annotations.find(classOf[ResolvedNamedEntity]) match {
       case Some(resolvedNamedEntity) =>
         resolvedNamedEntity.vals.foreach {
-          case (_, namedEntities) =>
-            val inContext = namedEntities.find(
-              entity =>
-                entity.isInstanceOf[DomainElement] && entity
-                  .asInstanceOf[DomainElement]
-                  .id
-                  .contains(local.location().getOrElse("")))
+          case (_, localDeclarations) =>
             ctx.declarations += declaration
             declaration match {
               // we recover the local alias we removed when resolving
-              case element: NamedDomainElement if inContext.isDefined =>
-                val localName = inContext.get.name.value()
-                val realName  = element.name.value()
-                element.withName(localName)
-                ctx.declarations += declaration
-                element.withName(realName)
+              case element: NamedDomainElement =>
+                for {
+                  location         <- local.location()
+                  localDeclaration <- localDeclarations.find(e => e.location().contains(location))
+                  localName        <- localDeclaration.name.option()
+                  realName         <- element.name.option()
+                } yield {
+                  element.withName(localName)
+                  ctx.declarations += declaration
+                  element.withName(realName) // This is useless?
+                }
               case _ =>
             }
         }
