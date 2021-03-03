@@ -1,0 +1,12 @@
+#%RAML 1.0 Overlay
+title: Overlay
+extends: ./base.raml
+
+/test-entity:
+  get:
+    queryParameters:
+      q1:
+        required: true
+        examples:
+          myexample1: 'foo'
+

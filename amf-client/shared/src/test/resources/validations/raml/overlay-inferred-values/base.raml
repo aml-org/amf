@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: Test
+
+/test-entity:
+  get:
+    queryParameters:
+      q1:
+        required: false
+        type: string
+    responses:
+      '200':
+        body:
+          application/json:
+            type: object

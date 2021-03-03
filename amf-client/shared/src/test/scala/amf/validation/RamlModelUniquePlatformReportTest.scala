@@ -576,4 +576,15 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Valid enum on union") {
     validate("valid-enum-on-union.raml", None, Raml10Profile)
   }
+
+  test("overlay defining parameter with inferred required field") {
+    validate("raml/overlay-inferred-values/valid-overlay.raml", None, Raml10Profile)
+  }
+
+  test("overlay defining parameter with explicit required field") {
+    validate("raml/overlay-inferred-values/invalid-overlay.raml",
+             Some("explicit-required-field-overlay.report"),
+             Raml10Profile)
+  }
+
 }
