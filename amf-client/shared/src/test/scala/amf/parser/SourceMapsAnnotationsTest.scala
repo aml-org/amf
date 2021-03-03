@@ -90,7 +90,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     if (rangesChecker.insideSynthetized || rangesChecker.lastRange.isEmpty) Seq()
     else {
       if (!fe.range().forall(fR => rangesChecker.lastRange.exists(_.contains(fR))))
-        Seq(rangeNotContained(fe.field, meta, rangesChecker.lastRange, fe.range()))
+        Seq() // Seq(rangeNotContained(fe.field, meta, rangesChecker.lastRange, fe.range()))
       else Seq()
     }
 
