@@ -7,10 +7,28 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.validation.json.{InvalidJSONValueException, JSONObject, JSONTokenerHack, ScalarTokenerHack}
+import amf.plugins.document.webapi.validation.json.{
+  InvalidJSONValueException,
+  JSONObject,
+  JSONTokenerHack,
+  ScalarTokenerHack
+}
 import amf.plugins.domain.shapes.models.ScalarShape
-import amf.validations.PayloadValidations.{ExampleValidationErrorSpecification, SchemaException => InternalSchemaException}
-import org.everit.json.schema.internal.{DateFormatValidator, DateTimeFormatValidator, EmailFormatValidator, HostnameFormatValidator, IPV4Validator, IPV6Validator, RegexFormatValidator, URIFormatValidator, URIV4FormatValidator}
+import amf.validations.PayloadValidations.{
+  ExampleValidationErrorSpecification,
+  SchemaException => InternalSchemaException
+}
+import org.everit.json.schema.internal.{
+  DateFormatValidator,
+  DateTimeFormatValidator,
+  EmailFormatValidator,
+  HostnameFormatValidator,
+  IPV4Validator,
+  IPV6Validator,
+  RegexFormatValidator,
+  URIFormatValidator,
+  URIV4FormatValidator
+}
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
@@ -129,7 +147,9 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
     JvmReportValidationProcessor(profileName, shape)
 }
 
-case class JvmReportValidationProcessor(override val profileName: ProfileName, shape: Shape, override protected var intermediateResults: Seq[AMFValidationResult] = Seq())
+case class JvmReportValidationProcessor(override val profileName: ProfileName,
+                                        shape: Shape,
+                                        override protected var intermediateResults: Seq[AMFValidationResult] = Seq())
     extends ReportValidationProcessor {
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
@@ -216,6 +236,9 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName, s
     val json    = validationException.toJSON
     var pointer = json.getString("pointerToViolation")
     if (pointer.startsWith("#")) pointer = pointer.replaceFirst("#", "")
-    (pointer + " " + json.getString("message")).trim
+    (pointer + " " + adjustMessage(json.getString("message"))).trim
   }
+
+  //  maintains compatibility with older validation messages after updating everit and org.json versions. (APIMF-2929)
+  private def adjustMessage(msg: String): String = msg.replace("BigDecimal", "Double")
 }
