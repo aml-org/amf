@@ -1,5 +1,6 @@
 package amf.compiler
 
+import amf.client.environment.ApiEnvironment
 import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.client.remote.Content
 import amf.core.Root
@@ -167,7 +168,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     }
     amf.core.AMF.registerPlugin(FeaturePlugin)
     FeaturePlugin.init() flatMap { _ =>
-      val env = AMFPluginsRegistry.obtainStaticEnv()
+      val env = ApiEnvironment.raml()
       RuntimeCompiler(url, Some("application/yaml"), Some(Raml10.name), Context(platform), cache = Cache(), env) map {
         _ =>
           val allPhases = Seq("begin_parsing_invocation",
