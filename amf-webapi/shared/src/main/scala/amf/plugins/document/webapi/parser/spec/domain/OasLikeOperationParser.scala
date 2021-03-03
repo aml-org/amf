@@ -29,13 +29,13 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
     implicit val ctx: OasLikeWebApiContext)
     extends SpecParserOps {
 
-  protected def methodNode: AmfScalar = ScalarNode(entry.key).string()
+  protected def entryKey: AmfScalar = ScalarNode(entry.key).string()
 
   protected val closedShapeName = "operation"
 
   def parse(): Operation = {
     val operation: Operation = Operation(Annotations(entry))
-    operation.set(Method, methodNode) // add lexical info
+    operation.set(Method, entryKey) // add lexical info
     adopt(operation)
 
     val map = entry.value.as[YMap]

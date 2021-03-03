@@ -175,6 +175,17 @@ class Async20ResolutionTest extends ResolutionTest {
       )
   }
 
+  multiGoldenTest("Referencing external operation trait", "external-ref-operation-trait.%s") { config =>
+    cycle(
+      "valid-external-ref-operation-trait.yaml",
+      config.golden,
+      AsyncYamlHint,
+      target = AMF,
+      directory = validationsPath + "validations/external-reference/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
+
   override val defaultVendor: Option[Vendor] = Some(AsyncApi20)
   override val defaultPipelineToUse: String  = ResolutionPipeline.EDITING_PIPELINE
 
