@@ -1,5 +1,6 @@
 package amf.emit
 import amf.ProfileName
+import amf.client.environment.ApiEnvironment
 import amf.core.emitter.RenderOptions
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
@@ -46,7 +47,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
       case _                          => "application/json"
     }
 
-    val environment = AMFPluginsRegistry.obtainStaticEnv()
+    val environment = ApiEnvironment.webApi()
 
     for {
       unit <- RuntimeCompiler(
