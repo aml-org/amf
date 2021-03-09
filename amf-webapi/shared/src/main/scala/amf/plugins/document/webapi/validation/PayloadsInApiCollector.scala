@@ -45,18 +45,17 @@ class PayloadsInApiCollector(model: BaseUnit) {
     candidateCollector.flatMap {
       case (id, e) =>
         val shape = shapesCollector(id)
-
-        val enumMemberCandidates = shape.values.map { enumMember =>
-          val fragment = PayloadFragment().withMediaType(ShapesNodesValidator.defaultMediaTypeFor(enumMember))
-          ValidationCandidate(shape, fragment)
-        }
-
-        val examplesCandidates = e.map { encodes =>
-          ValidationCandidate(shape, buildFragment(shape, encodes))
-        }
-
-        enumMemberCandidates ++ examplesCandidates
-
+        if (e.isEmpty) {
+          // this is the case of a shape that only has enums. A single validation candidate is created as all of its values
+          // are then validated in ShapesNodesValidator::validateAll.
+          Seq(
+            ValidationCandidate(
+              shape,
+              PayloadFragment().withMediaType(ShapesNodesValidator.defaultMediaTypeFor(shape.values.head))))
+        } else
+          e.map { encodes =>
+            ValidationCandidate(shape, buildFragment(shape, encodes))
+          }
       case _ => Nil
     }.toSeq
   }
