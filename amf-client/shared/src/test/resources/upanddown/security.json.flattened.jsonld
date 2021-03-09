@@ -257,7 +257,7 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "header",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema"
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -277,7 +277,7 @@
       "http://a.ml/vocabularies/apiContract#required": true,
       "http://a.ml/vocabularies/apiContract#binding": "query",
       "http://a.ml/vocabularies/shapes#schema": {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/access_token/scalar/schema"
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/query/access_token/scalar/schema"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -494,7 +494,7 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(43,4)-(45,5)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -511,7 +511,7 @@
       "http://a.ml/vocabularies/core#description": "Used to send a valid OAuth 2 access token.",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema/source-map"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema/source-map"
         }
       ]
     },
@@ -533,7 +533,7 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/access_token/scalar/schema",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/query/access_token/scalar/schema",
       "@type": [
         "http://a.ml/vocabularies/shapes#ScalarShape",
         "http://a.ml/vocabularies/shapes#AnyShape",
@@ -550,7 +550,7 @@
       "http://a.ml/vocabularies/core#description": "Used to send a valid OAuth 2 access token.",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/access_token/scalar/schema/source-map"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/query/access_token/scalar/schema/source-map"
         }
       ]
     },
@@ -763,24 +763,24 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(56,19)-(61,5)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema/source-map",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema/source-map/type-property-lexical-info/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema/source-map/lexical/element_2"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema/source-map/lexical/element_2"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema/source-map/lexical/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema/source-map/lexical/element_0"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema/source-map/lexical/element_1"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema/source-map/lexical/element_1"
         }
       ]
     },
@@ -800,16 +800,16 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(26,10)-(29,11)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/access_token/scalar/schema/source-map",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/query/access_token/scalar/schema/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/access_token/scalar/schema/source-map/lexical/element_1"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/query/access_token/scalar/schema/source-map/lexical/element_1"
         },
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/access_token/scalar/schema/source-map/lexical/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/query/access_token/scalar/schema/source-map/lexical/element_0"
         }
       ]
     },
@@ -933,32 +933,32 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(59,8)-(59,27)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema/source-map/type-property-lexical-info/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(28,12)-(28,18)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema/source-map/lexical/element_2",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
       "http://a.ml/vocabularies/document-source-maps#value": "[(28,12)-(28,28)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema/source-map/lexical/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,12)-(27,71)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/Authorization/scalar/schema",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/header/Authorization/scalar/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(26,10)-(29,11)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/access_token/scalar/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/access_token/scalar/schema",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/query/access_token/scalar/schema/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/query/access_token/scalar/schema",
       "http://a.ml/vocabularies/document-source-maps#value": "[(32,10)-(34,11)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/default-binding/access_token/scalar/schema/source-map/lexical/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/oauth_2_0/parameter/query/access_token/scalar/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(33,12)-(33,71)]"
     },

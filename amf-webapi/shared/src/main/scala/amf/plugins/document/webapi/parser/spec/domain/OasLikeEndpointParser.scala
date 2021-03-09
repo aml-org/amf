@@ -99,9 +99,8 @@ abstract class OasEndpointParser(entry: YMapEntry, producer: String => EndPoint,
     map.key("uriParameters".asOasExtension).foreach { entry =>
       entries += entry
       val uriParameters =
-        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id))(spec.toRaml(ctx))
+        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id), binding = "path")(spec.toRaml(ctx))
           .parse()
-          .map(_.withBinding("path"))
       parameters = parameters.add(Parameters(path = uriParameters))
     }
     parameters match {

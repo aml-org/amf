@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: something
+/tests/{type}:
+  uriParameters:
+    type:
+      enum: [all,limited]
+  get:
+    displayName: fetchTest
+    queryParameters:
+      type:
+        type: string
+        enum: [all,limited]
+    headers:
+      type:
+        type: integer
+        enum: [1,2]
+    responses:
+      200:
+        body:
+          application/json:
+            type: object

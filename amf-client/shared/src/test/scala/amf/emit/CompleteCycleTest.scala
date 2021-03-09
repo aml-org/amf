@@ -80,11 +80,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   multiGoldenTest("Types dependency oas to amf test", "types-dependency.json.%s") { config =>
-    cycle("types-dependency.json",
-          config.golden,
-          OasJsonHint,
-          target = Amf,
-          renderOptions = Some(config.renderOptions))
+    cycle("types-dependency.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Types all facets oas to jsonld test", "types-facet.json.%s") { config =>
@@ -149,6 +145,15 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("type-facets.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
+  multiGoldenTest("Raml operation param schema duplicate ids", "api.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          Amf,
+          renderOptions = Some(config.renderOptions),
+          directory = baseRaml10Path + "duplicate-id-in-param-types/")
+  }
+
   multiGoldenTest("Parsing oas shape with description oas to amf", "shapes-with-items.%s") { config =>
     cycle("shapes-with-items.json",
           config.golden,
@@ -198,11 +203,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   multiGoldenTest("FormData multiple parameters oas to amf", "form-data-params.%s") { config =>
-    cycle("form-data-params.json",
-          config.golden,
-          OasJsonHint,
-          target = Amf,
-          renderOptions = Some(config.renderOptions))
+    cycle("form-data-params.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Test enums raml to amf", "enums.raml.%s") { config =>
