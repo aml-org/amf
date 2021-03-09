@@ -21,7 +21,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
   val index: DataNodeIndex = {
     val nodes = candidates
       .filter(_.payload.fields.exists(PayloadFragmentModel.Encodes))
-      .map(_.payload.encodes) ++ candidates.flatMap(c => c.shape.values)
+      .map(_.payload.encodes) ++ candidates.map(_.shape).distinct.flatMap(_.values)
     DataNodeIndex(nodes)
   }
 
@@ -40,7 +40,9 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
     val payloadResults = index.aggregate(indexedResults)
     val schemaResults = indexedResults
       .filter {
-        case (_, validations) => validations.exists(v => v.validationId == PayloadValidations.SchemaException.id || v.validationId == PayloadValidations.UntranslatableDraft2019Fields.id)
+        case (_, validations) =>
+          validations.exists(v =>
+            v.validationId == PayloadValidations.SchemaException.id || v.validationId == PayloadValidations.UntranslatableDraft2019Fields.id)
       }
       .flatMap(_._2)
     payloadResults ++ schemaResults
