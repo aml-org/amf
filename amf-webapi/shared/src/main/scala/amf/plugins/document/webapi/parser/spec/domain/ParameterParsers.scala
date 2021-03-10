@@ -41,43 +41,48 @@ import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
 import scala.language.postfixOps
-case class RamlParametersParser(map: YMap, adopted: Parameter => Unit, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext) {
+case class RamlParametersParser(map: YMap,
+                                adopted: Parameter => Unit,
+                                parseOptional: Boolean = false,
+                                binding: String)(implicit ctx: RamlWebApiContext) {
 
   def parse(): Seq[Parameter] =
     map.entries
-      .map(entry => ctx.factory.parameterParser(entry, adopted, parseOptional).parse())
+      .map(entry => ctx.factory.parameterParser(entry, adopted, parseOptional, binding).parse())
 }
 
 object RamlHeaderParser {
   def parse(adopted: Parameter => Unit, parseOptional: Boolean = false)(node: YNode)(
       implicit ctx: RamlWebApiContext): Parameter = {
-    RamlParameterParser.parse(adopted, parseOptional)(node).withBinding("header")
+    RamlParameterParser.parse(adopted, parseOptional, "header")(node)
   }
 }
 
 object RamlQueryParameterParser {
   def parse(adopted: Parameter => Unit, parseOptional: Boolean = false)(node: YNode)(
       implicit ctx: RamlWebApiContext): Parameter = {
-    RamlParameterParser.parse(adopted, parseOptional)(node).withBinding("query")
+    RamlParameterParser.parse(adopted, parseOptional, "query")(node)
   }
 }
 
 object RamlParameterParser {
-  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false)(node: YNode)(
+  def parse(adopted: Parameter => Unit, parseOptional: Boolean = false, binding: String)(node: YNode)(
       implicit ctx: RamlWebApiContext): Parameter = {
     val head = node.as[YMap].entries.head
-    ctx.factory.parameterParser(head, adopted, parseOptional).parse()
+    ctx.factory.parameterParser(head, adopted, parseOptional, binding).parse()
   }
 }
 
-case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext)
+case class Raml10ParameterParser(entry: YMapEntry,
+                                 adopted: Parameter => Unit,
+                                 parseOptional: Boolean = false,
+                                 binding: String)(implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
   override def parse(): Parameter = {
 
     val name      = ScalarNode(entry.key)
     val parameter = Parameter(entry).set(ParameterModel.Name, name.text()).withParameterName(name.text().toString) // TODO parameter id is using a name that is not final.
+    parameter.withBinding(binding)
     adopted(parameter)
 
     val p = entry.value.to[YMap] match {
@@ -85,7 +90,6 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
         map.key("required", (ParameterModel.Required in parameter).explicit.allowingAnnotations)
         map.key("description", (ParameterModel.Description in parameter).allowingAnnotations)
         map.key("binding".asRamlAnnotation, (ParameterModel.Binding in parameter).explicit)
-
         Raml10TypeParser(entry,
                          shape => shape.withName("schema").adopted(parameter.id),
                          TypeInfo(isPropertyOrParameter = true))
@@ -168,13 +172,16 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
   }
 }
 
-case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext)
+case class Raml08ParameterParser(entry: YMapEntry,
+                                 adopted: Parameter => Unit,
+                                 parseOptional: Boolean = false,
+                                 binding: String)(implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
   def parse(): Parameter = {
 
     val name      = ScalarNode(entry.key)
     val parameter = Parameter(entry).set(ParameterModel.Name, name.text()).withParameterName(name.text().toString)
+    parameter.withBinding(binding)
     adopted(parameter)
 
     entry.value.tagType match {

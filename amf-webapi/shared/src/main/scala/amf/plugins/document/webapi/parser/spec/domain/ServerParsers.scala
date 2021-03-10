@@ -107,9 +107,8 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   private def parseExplicitParameters(entry: YMapEntry, server: Server) = {
     entry.value.tagType match {
       case YType.Map =>
-        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))
+        RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id), binding = "path")
           .parse()
-          .map(_.withBinding("path"))
       case YType.Null => Nil
       case _ =>
         ctx.eh.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
@@ -187,9 +186,9 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         "baseUriParameters".asOasExtension,
         entry => {
           val uriParameters =
-            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id))(toRaml(ctx))
+            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id), binding = "path")(
+              toRaml(ctx))
               .parse()
-              .map(_.withBinding("path"))
 
           server.set(ServerModel.Variables, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))
         }
