@@ -167,9 +167,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
           .entries
           .map(entry => {
             val param = ctx.factory
-              .parameterParser(entry, (p: Parameter) => p.adopted(endpoint.id), false)
+              .parameterParser(entry, (p: Parameter) => p.adopted(endpoint.id), false, "path")
               .parse()
-              .withBinding("path")
             param.fields ? [Shape] ParameterModel.Schema foreach (schema => validateSlashsInSchema(schema, entry))
             param
           })

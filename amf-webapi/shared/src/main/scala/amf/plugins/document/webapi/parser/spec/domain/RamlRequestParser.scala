@@ -49,8 +49,8 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
 
   override protected def parseParameter(entry: YMapEntry,
                                         adopt: Parameter => Unit,
-                                        parseOptional: Boolean): Parameter =
-    Raml10ParameterParser(entry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional)
+                                        parseOptional: Boolean, binding: String): Parameter =
+    Raml10ParameterParser(entry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional, binding)
       .parse()
 
   override protected val baseUriParametersKey: String = "baseUriParameters".asRamlAnnotation
@@ -68,8 +68,8 @@ case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional
 
   override protected def parseParameter(entry: YMapEntry,
                                         adopt: Parameter => Unit,
-                                        parseOptional: Boolean): Parameter =
-    Raml08ParameterParser(entry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional)
+                                        parseOptional: Boolean, binding: String): Parameter =
+    Raml08ParameterParser(entry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional, binding)
       .parse()
 
   override protected val defaultType: DefaultType = AnyDefaultType
@@ -85,7 +85,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
   def parse(request: Lazy[Request], target: Target): Unit
   protected val defaultType: DefaultType
 
-  protected def parseParameter(entry: YMapEntry, adopt: Parameter => Unit, parseOptional: Boolean): Parameter
+  protected def parseParameter(entry: YMapEntry, adopt: Parameter => Unit, parseOptional: Boolean, binding: String): Parameter
 
   def parse(): Option[Request] = {
 
@@ -109,8 +109,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
       baseUriParametersKey,
       entry => {
         val parameters = entry.value.as[YMap].entries.map { paramEntry =>
-          parseParameter(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional)
-            .withBinding("path")
+          parseParameter(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional, "path")
         }
 
         request.getOrCreate.set(RequestModel.UriParameters,
