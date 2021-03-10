@@ -16,7 +16,12 @@ import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class ToRdfCycleTest extends AsyncFunSuite with FileAssertionTest with AsyncBeforeAndAfterEach with Matchers with ResolutionCapabilities{
+class ToRdfCycleTest
+    extends AsyncFunSuite
+    with FileAssertionTest
+    with AsyncBeforeAndAfterEach
+    with Matchers
+    with ResolutionCapabilities {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -32,8 +37,14 @@ class ToRdfCycleTest extends AsyncFunSuite with FileAssertionTest with AsyncBefo
 
   private def build(path: String): Future[BaseUnit] = {
     val fullPath = basePath + path
-    val ctx = ParserContext(eh = UnhandledParserErrorHandler, plugins = PluginContext())
-    RuntimeCompiler.apply(fullPath, None, None, Context(platform), Cache(), ctx = Some(ctx), errorHandler = UnhandledParserErrorHandler)
+    val ctx      = ParserContext(eh = UnhandledParserErrorHandler, plugins = PluginContext())
+    RuntimeCompiler.apply(fullPath,
+                          None,
+                          None,
+                          Context(platform),
+                          Cache(),
+                          ctx = Some(ctx),
+                          errorHandler = UnhandledParserErrorHandler)
   }
 
   private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {

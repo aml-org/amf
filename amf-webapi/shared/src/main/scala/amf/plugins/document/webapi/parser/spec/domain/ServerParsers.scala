@@ -186,7 +186,8 @@ case class Oas2ServersParser(map: YMap, api: Api)(implicit override val ctx: Oas
         "baseUriParameters".asOasExtension,
         entry => {
           val uriParameters =
-            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id), binding = "path")(toRaml(ctx))
+            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(server.id), binding = "path")(
+              toRaml(ctx))
               .parse()
 
           server.set(ServerModel.Variables, AmfArray(uriParameters, Annotations(entry.value)), Annotations(entry))

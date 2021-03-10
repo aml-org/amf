@@ -41,8 +41,9 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
         entry => {
           entries += entry
           val queryParameters =
-            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(request.getOrCreate.id), binding = "query")(
-              spec.toRaml(ctx))
+            RamlParametersParser(entry.value.as[YMap],
+                                 (p: Parameter) => p.adopted(request.getOrCreate.id),
+                                 binding = "query")(spec.toRaml(ctx))
               .parse()
           parameters = parameters.add(Parameters(query = queryParameters))
         }
@@ -54,8 +55,9 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
         entry => {
           entries += entry
           val headers =
-            RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(request.getOrCreate.id), binding = "header")(
-              spec.toRaml(ctx))
+            RamlParametersParser(entry.value.as[YMap],
+                                 (p: Parameter) => p.adopted(request.getOrCreate.id),
+                                 binding = "header")(spec.toRaml(ctx))
               .parse()
           parameters = parameters.add(Parameters(header = headers))
         }
@@ -67,7 +69,8 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
       entry => {
         entry.value.as[YMap].entries.headOption.foreach { paramEntry =>
           val parameter =
-            Raml08ParameterParser(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), binding = "path")(spec.toRaml(ctx))
+            Raml08ParameterParser(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), binding = "path")(
+              spec.toRaml(ctx))
               .parse()
           parameters = parameters.add(Parameters(baseUri08 = Seq(parameter)))
         }

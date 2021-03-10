@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.{Async20Plugin, Oas20Plugin, Oas30Plugin, Ram
 
 abstract class ResolutionTest extends FunSuiteCycleTests with ResolutionCapabilities {
 
-  val defaultPipelineToUse: String = ResolutionPipeline.DEFAULT_PIPELINE
+  val defaultPipelineToUse: String  = ResolutionPipeline.DEFAULT_PIPELINE
   val defaultVendor: Option[Vendor] = None
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {

@@ -80,7 +80,11 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   multiGoldenTest("Types dependency oas to amf test", "types-dependency.json.%s") { config =>
-    cycle("types-dependency.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("types-dependency.json",
+          config.golden,
+          OasJsonHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Types all facets oas to jsonld test", "types-facet.json.%s") { config =>
@@ -203,7 +207,11 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   multiGoldenTest("FormData multiple parameters oas to amf", "form-data-params.%s") { config =>
-    cycle("form-data-params.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("form-data-params.json",
+          config.golden,
+          OasJsonHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Test enums raml to amf", "enums.raml.%s") { config =>

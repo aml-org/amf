@@ -41,8 +41,10 @@ import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
 import scala.language.postfixOps
-case class RamlParametersParser(map: YMap, adopted: Parameter => Unit, parseOptional: Boolean = false, binding: String)(
-    implicit ctx: RamlWebApiContext) {
+case class RamlParametersParser(map: YMap,
+                                adopted: Parameter => Unit,
+                                parseOptional: Boolean = false,
+                                binding: String)(implicit ctx: RamlWebApiContext) {
 
   def parse(): Seq[Parameter] =
     map.entries
@@ -71,8 +73,10 @@ object RamlParameterParser {
   }
 }
 
-case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, parseOptional: Boolean = false, binding: String)(
-    implicit ctx: RamlWebApiContext)
+case class Raml10ParameterParser(entry: YMapEntry,
+                                 adopted: Parameter => Unit,
+                                 parseOptional: Boolean = false,
+                                 binding: String)(implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
   override def parse(): Parameter = {
 
@@ -168,8 +172,10 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
   }
 }
 
-case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, parseOptional: Boolean = false, binding: String)(
-    implicit ctx: RamlWebApiContext)
+case class Raml08ParameterParser(entry: YMapEntry,
+                                 adopted: Parameter => Unit,
+                                 parseOptional: Boolean = false,
+                                 binding: String)(implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
   def parse(): Parameter = {
 

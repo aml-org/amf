@@ -49,7 +49,8 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
 
   override protected def parseParameter(entry: YMapEntry,
                                         adopt: Parameter => Unit,
-                                        parseOptional: Boolean, binding: String): Parameter =
+                                        parseOptional: Boolean,
+                                        binding: String): Parameter =
     Raml10ParameterParser(entry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional, binding)
       .parse()
 
@@ -68,7 +69,8 @@ case class Raml08RequestParser(map: YMap, producer: () => Request, parseOptional
 
   override protected def parseParameter(entry: YMapEntry,
                                         adopt: Parameter => Unit,
-                                        parseOptional: Boolean, binding: String): Parameter =
+                                        parseOptional: Boolean,
+                                        binding: String): Parameter =
     Raml08ParameterParser(entry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional, binding)
       .parse()
 
@@ -85,7 +87,10 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
   def parse(request: Lazy[Request], target: Target): Unit
   protected val defaultType: DefaultType
 
-  protected def parseParameter(entry: YMapEntry, adopt: Parameter => Unit, parseOptional: Boolean, binding: String): Parameter
+  protected def parseParameter(entry: YMapEntry,
+                               adopt: Parameter => Unit,
+                               parseOptional: Boolean,
+                               binding: String): Parameter
 
   def parse(): Option[Request] = {
 
