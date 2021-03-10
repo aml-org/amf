@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.client.`new`.BaseEnvironment
+import amf.client.remod.BaseEnvironment
 import amf.client.environment.ApiEnvironment
 import amf.core.CompilerContextBuilder
 import amf.core.model.document.BaseUnit

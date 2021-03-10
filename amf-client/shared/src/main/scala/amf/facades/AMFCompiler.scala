@@ -1,6 +1,6 @@
 package amf.facades
 
-import amf.client.`new`.BaseEnvironment
+import amf.client.remod.BaseEnvironment
 import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext

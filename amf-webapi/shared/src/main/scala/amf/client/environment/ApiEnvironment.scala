@@ -1,6 +1,6 @@
 package amf.client.environment
 
-import amf.client.`new`.AMFEnvironment
+import amf.client.remod.AMFEnvironment
 import amf.plugins.document.graph.AMFGraphParsePlugin
 import amf.plugins.document.webapi._
 
