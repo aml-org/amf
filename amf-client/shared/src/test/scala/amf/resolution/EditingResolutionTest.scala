@@ -994,5 +994,108 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("Merge recursive JSON Schemas RAML 1.0", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath + "merge-recursive-json-schemas-raml10/",
+      transformWith = Some(Raml10),
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
+  multiGoldenTest("Merge recursive JSON Schemas RAML 0.8", "api.%s") { config =>
+    cycle(
+      "api.raml",
+      config.golden,
+      RamlYamlHint,
+      target = Amf,
+      directory = resolutionPath + "merge-recursive-json-schemas-raml08/",
+      transformWith = Some(Raml08),
+      renderOptions = Some(config.renderOptions),
+      eh = Some(UnhandledParserErrorHandler)
+    )
+  }
+
+  // Merged inherit tests - Non ignored tests work
+  {
+    // Fails w/Stack overflow
+    multiGoldenTest("Merge inlined recursive JSON Schemas RAML 1.0", "api.%s", ignored = true) { config =>
+      cycle(
+        "api.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        directory = resolutionPath + "merge-inlined-recursive-json-schemas/",
+        transformWith = Some(Raml10),
+        renderOptions = Some(config.renderOptions),
+        eh = Some(UnhandledParserErrorHandler)
+      )
+    }
+
+    // Fails w/ class cast exception in shape normalization
+    /**
+      * Traversal:
+      *   SomeSchema (@id: ../endpoints/../schema/schema
+      *     property: causes (@id: ../endpoints/../schema/schema/property/causes)
+      *       range: array (@id: ../endpoints/../schema/schema/property/causes/array/causes)
+      *         items: SomeSchema (@id: ...#/definitions/SomeSchema) <- Recursive shape should be detected here!
+      *           property: causes (@id: ../endpoints/../schema/schema/property/causes) <- But instead here
+      */
+    multiGoldenTest("Merge recursive JSON Schema fragments RAML 1.0", "api.%s", ignored = true) { config =>
+      cycle(
+        "api.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        directory = resolutionPath + "merge-recursive-json-schema-fragments/",
+        transformWith = Some(Raml10),
+        renderOptions = Some(config.renderOptions),
+        eh = Some(UnhandledParserErrorHandler)
+      )
+    }
+
+    multiGoldenTest("Merge inherits RAML 1.0", "api.%s") { config =>
+      cycle(
+        "api.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        directory = resolutionPath + "merge-inherits/",
+        transformWith = Some(Raml10),
+        renderOptions = Some(config.renderOptions),
+        eh = Some(UnhandledParserErrorHandler)
+      )
+    }
+
+    multiGoldenTest("Merge recursive inherits RAML 1.0", "api.%s") { config =>
+      cycle(
+        "api.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        directory = resolutionPath + "merge-recursive-inherits/",
+        transformWith = Some(Raml10),
+        renderOptions = Some(config.renderOptions),
+        eh = Some(UnhandledParserErrorHandler)
+      )
+    }
+
+    multiGoldenTest("Merge inherits with JSON Schema fragments in RAML 1.0", "api.%s") { config =>
+      cycle(
+        "api.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        directory = resolutionPath + "merge-inherits-json-schema-fragments/",
+        transformWith = Some(Raml10),
+        renderOptions = Some(config.renderOptions),
+        eh = Some(UnhandledParserErrorHandler)
+      )
+    }
+  }
   override val basePath: String = ""
 }

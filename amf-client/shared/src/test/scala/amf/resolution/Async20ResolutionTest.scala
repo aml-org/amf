@@ -16,8 +16,6 @@ class Async20ResolutionTest extends ResolutionTest {
   override def basePath: String       = "amf-client/shared/src/test/resources/resolution/async20/"
   private val validationsPath: String = "amf-client/shared/src/test/resources/validations/async20/"
 
-
-
   multiGoldenTest("Message examples are propagated to payload and parameter shapes", "message-example-propagation.%s") {
     config =>
       cycle("message-example-propagation.yaml",
@@ -51,22 +49,28 @@ class Async20ResolutionTest extends ResolutionTest {
           renderOptions = Some(config.renderOptions))
   }
 
-  multiGoldenTest("Message traits are merged to message and removed from extends", "message-trait-merging-and-removed.%s") { config =>
-    cycle("message-trait-merging.yaml",
+  multiGoldenTest("Message traits are merged to message and removed from extends",
+                  "message-trait-merging-and-removed.%s") { config =>
+    cycle(
+      "message-trait-merging.yaml",
       config.golden,
       AsyncYamlHint,
       target = AMF,
       renderOptions = Some(config.renderOptions),
-      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE))
+      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE)
+    )
   }
 
-  multiGoldenTest("Operation traits are merged to operation and removed from extends", "operation-trait-merging-and-removed.%s") { config =>
-    cycle("operation-trait-merging.yaml",
+  multiGoldenTest("Operation traits are merged to operation and removed from extends",
+                  "operation-trait-merging-and-removed.%s") { config =>
+    cycle(
+      "operation-trait-merging.yaml",
       config.golden,
       AsyncYamlHint,
       target = AMF,
       renderOptions = Some(config.renderOptions),
-      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE))
+      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE)
+    )
   }
 
   multiGoldenTest("Named parameter with reference to parameter in components", "named-parameter-with-ref.%s") {
@@ -159,9 +163,31 @@ class Async20ResolutionTest extends ResolutionTest {
     )
   }
 
+  multiGoldenTest("Referencing external message trait must have abstract field", "external-ref-message-trait.%s") {
+    config =>
+      cycle(
+        "valid-external-ref-message-trait.yaml",
+        config.golden,
+        AsyncYamlHint,
+        target = AMF,
+        directory = validationsPath + "validations/external-reference/",
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
+  multiGoldenTest("Referencing external operation trait", "external-ref-operation-trait.%s") { config =>
+    cycle(
+      "valid-external-ref-operation-trait.yaml",
+      config.golden,
+      AsyncYamlHint,
+      target = AMF,
+      directory = validationsPath + "validations/external-reference/",
+      renderOptions = Some(config.renderOptions)
+    )
+  }
 
   override val defaultVendor: Option[Vendor] = Some(AsyncApi20)
-  override val defaultPipelineToUse: String = ResolutionPipeline.EDITING_PIPELINE
+  override val defaultPipelineToUse: String  = ResolutionPipeline.EDITING_PIPELINE
 
   override def defaultRenderOptions: RenderOptions =
     RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint

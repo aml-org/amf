@@ -1,0 +1,46 @@
+#%RAML 1.0
+title: API
+version: 1.0
+
+types:
+  RecursiveType:
+    properties:
+      recursiveProperty:
+        type: RecursiveType
+        required: false
+
+traits:
+  myTrait:
+    responses:
+      500:
+        body:
+          application/json:
+            type: [RecursiveType]
+
+resourceTypes:
+  myRt:
+    post:
+      responses:
+        500:
+          body:
+            application/json:
+              type: [RecursiveType]
+
+
+/endpointA:
+  post:
+    is: [myTrait]
+    responses:
+      500:
+        body:
+          application/json:
+            type: [RecursiveType]
+
+/endpointB:
+  type: myRt
+  post:
+    responses:
+      500:
+        body:
+          application/json:
+            type: [RecursiveType]

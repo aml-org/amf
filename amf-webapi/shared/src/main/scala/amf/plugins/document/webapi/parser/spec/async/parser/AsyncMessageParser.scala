@@ -81,7 +81,7 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
   private def remote(fullRef: String): Message = {
     ctx.obtainRemoteYNode(fullRef) match {
       case Some(messageNode) =>
-        val external = AsyncMessageParser(YMapEntryLike(messageNode), parent, messageType).parse()
+        val external = AsyncMessageParser(YMapEntryLike(messageNode), parent, messageType, isTrait).parse()
         nameAndAdopt(generateLink(fullRef, external, entryLike), entryLike.key)
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference,

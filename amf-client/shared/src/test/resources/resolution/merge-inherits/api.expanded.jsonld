@@ -1,0 +1,1865 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#31",
+        "@type": [
+          "apiContract:WebAPI",
+          "apiContract:API",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "API"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "1.0"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#32",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/engineersTraitEndpoint"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#33",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#35",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "500"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "500"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#36",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#37",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [
+                              {
+                                "@id": "#38",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#engineeringSkill"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#9",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "engineeringSkill"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#9": "[(14,6)-(16,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "engineeringSkill"
+                                  }
+                                ],
+                                "smaps": {
+                                  "inheritance-provenance": {
+                                    "#38": "amf://id#7"
+                                  },
+                                  "lexical": {
+                                    "#38": "[(14,6)-(16,0)]"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#39",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#name"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#3",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "name"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#3": "[(8,6)-(9,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "name"
+                                  }
+                                ],
+                                "smaps": {
+                                  "inheritance-provenance": {
+                                    "#39": "amf://id#1"
+                                  },
+                                  "lexical": {
+                                    "#39": "[(8,6)-(9,0)]"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#40",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#employeeId"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#6",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "employeeId"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#6": "[(11,6)-(12,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "employeeId"
+                                  }
+                                ],
+                                "smaps": {
+                                  "inheritance-provenance": {
+                                    "#40": "amf://id#4"
+                                  },
+                                  "lexical": {
+                                    "#40": "[(11,6)-(12,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "Employee"
+                              }
+                            ],
+                            "smaps": {
+                              "inheritance-provenance": {
+                                "shacl:name": "amf://id#4"
+                              },
+                              "auto-generated-name": {
+                                "#37": ""
+                              },
+                              "lexical": {
+                                "#37": "[(40,10)-(43,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#37": "[(41,12)-(41,16)]"
+                              },
+                              "inherited-shapes": {
+                                "#37": "amf://id#41,amf://id#42,amf://id#43"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#36": "[(40,10)-(43,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(39,8)-(43,0)]",
+                        "#35": "[(38,6)-(43,0)]"
+                      }
+                    }
+                  }
+                ],
+                "doc:extends": [
+                  {
+                    "@id": "#34",
+                    "@type": [
+                      "apiContract:ParametrizedTrait",
+                      "doc:ParametrizedDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "employeeTrait"
+                      }
+                    ],
+                    "doc:target": [
+                      {
+                        "@id": "#21",
+                        "@type": [
+                          "apiContract:Trait",
+                          "doc:AbstractDeclaration",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "employeeTrait"
+                          }
+                        ],
+                        "doc:dataNode": [
+                          {
+                            "@id": "#22",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:responses": [
+                              {
+                                "@id": "#23",
+                                "@type": [
+                                  "data:Object",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:500": [
+                                  {
+                                    "@id": "#24",
+                                    "@type": [
+                                      "data:Object",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:body": [
+                                      {
+                                        "@id": "#25",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:application%2Fjson": [
+                                          {
+                                            "@id": "#26",
+                                            "@type": [
+                                              "data:Object",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:type": [
+                                              {
+                                                "@id": "#27",
+                                                "@type": [
+                                                  "data:Array",
+                                                  "rdf:Seq",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "rdfs:member": [
+                                                  {
+                                                    "@id": "#28",
+                                                    "@type": [
+                                                      "data:Scalar",
+                                                      "data:Node",
+                                                      "doc:DomainElement"
+                                                    ],
+                                                    "data:value": [
+                                                      {
+                                                        "@value": "Employee"
+                                                      }
+                                                    ],
+                                                    "shacl:datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                      }
+                                                    ],
+                                                    "core:name": [
+                                                      {
+                                                        "@value": "scalar_7"
+                                                      }
+                                                    ],
+                                                    "smaps": {
+                                                      "lexical": {
+                                                        "#28": "[(22,19)-(22,27)]"
+                                                      }
+                                                    }
+                                                  },
+                                                  {
+                                                    "@id": "#29",
+                                                    "@type": [
+                                                      "data:Scalar",
+                                                      "data:Node",
+                                                      "doc:DomainElement"
+                                                    ],
+                                                    "data:value": [
+                                                      {
+                                                        "@value": "Person"
+                                                      }
+                                                    ],
+                                                    "shacl:datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                      }
+                                                    ],
+                                                    "core:name": [
+                                                      {
+                                                        "@value": "scalar_8"
+                                                      }
+                                                    ],
+                                                    "smaps": {
+                                                      "lexical": {
+                                                        "#29": "[(22,29)-(22,35)]"
+                                                      }
+                                                    }
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "type"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#27": "[(22,18)-(22,36)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "application/json"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "data:type": "[(22,12)-(24,0)]",
+                                                "#26": "[(22,0)-(24,0)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "body"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "data:application%2Fjson": "[(21,10)-(24,0)]",
+                                            "#25": "[(21,0)-(24,0)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "500"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "data:body": "[(20,8)-(24,0)]",
+                                        "#24": "[(20,0)-(24,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "responses"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "data:500": "[(19,6)-(24,0)]",
+                                    "#23": "[(19,0)-(24,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "object_1"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "data:responses": "[(18,4)-(24,0)]",
+                                "#22": "[(18,4)-(24,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "resolved-link-target": {
+                            "#21": "amf://id#21"
+                          },
+                          "declared-element": {
+                            "#21": ""
+                          },
+                          "lexical": {
+                            "doc:dataNode": "[(18,4)-(24,0)]",
+                            "#21": "[(17,2)-(24,0)]"
+                          },
+                          "resolved-link": {
+                            "#21": "amf://id#30"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "core:name": "[(36,9)-(36,22)]",
+                        "#34": "[(36,9)-(36,22)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "doc:extends": "[(36,4)-(37,0)]",
+                    "#33": "[(35,2)-(43,0)]",
+                    "apiContract:returns": "[(37,4)-(43,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#32": "[(34,0)-(43,0)]"
+              }
+            }
+          },
+          {
+            "@id": "#44",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/engineersResourceTypeEndpoint"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#46",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#47",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "500"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "500"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#48",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#49",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [
+                              {
+                                "@id": "#38",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#engineeringSkill"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#9",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "engineeringSkill"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#9": "[(14,6)-(16,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "engineeringSkill"
+                                  }
+                                ],
+                                "smaps": {
+                                  "inheritance-provenance": {
+                                    "#38": "amf://id#7"
+                                  },
+                                  "lexical": {
+                                    "#38": "[(14,6)-(16,0)]"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#39",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#name"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#3",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "name"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#3": "[(8,6)-(9,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "name"
+                                  }
+                                ],
+                                "smaps": {
+                                  "inheritance-provenance": {
+                                    "#39": "amf://id#1"
+                                  },
+                                  "lexical": {
+                                    "#39": "[(8,6)-(9,0)]"
+                                  }
+                                }
+                              },
+                              {
+                                "@id": "#40",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "shacl:path": [
+                                  {
+                                    "@id": "http://a.ml/vocabularies/data#employeeId"
+                                  }
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#6",
+                                    "@type": [
+                                      "raml-shapes:ScalarShape",
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "employeeId"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#6": "[(11,6)-(12,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 1
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "employeeId"
+                                  }
+                                ],
+                                "smaps": {
+                                  "inheritance-provenance": {
+                                    "#40": "amf://id#4"
+                                  },
+                                  "lexical": {
+                                    "#40": "[(11,6)-(12,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "Employee"
+                              }
+                            ],
+                            "smaps": {
+                              "inheritance-provenance": {
+                                "shacl:name": "amf://id#4"
+                              },
+                              "auto-generated-name": {
+                                "#49": ""
+                              },
+                              "lexical": {
+                                "#49": "[(49,10)-(51,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#49": "[(50,12)-(50,16)]"
+                              },
+                              "inherited-shapes": {
+                                "#49": "amf://id#41,amf://id#42,amf://id#43"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#48": "[(49,10)-(51,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(48,8)-(51,0)]",
+                        "#47": "[(47,6)-(51,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:returns": "[(46,4)-(51,0)]",
+                    "#46": "[(45,2)-(51,0)]"
+                  }
+                }
+              }
+            ],
+            "doc:extends": [
+              {
+                "@id": "#45",
+                "@type": [
+                  "apiContract:ParametrizedResourceType",
+                  "doc:ParametrizedDeclaration",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "employeeResourceType"
+                  }
+                ],
+                "doc:target": [
+                  {
+                    "@id": "#10",
+                    "@type": [
+                      "apiContract:ResourceType",
+                      "doc:AbstractDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "employeeResourceType"
+                      }
+                    ],
+                    "doc:dataNode": [
+                      {
+                        "@id": "#11",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:post": [
+                          {
+                            "@id": "#12",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:responses": [
+                              {
+                                "@id": "#13",
+                                "@type": [
+                                  "data:Object",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:500": [
+                                  {
+                                    "@id": "#14",
+                                    "@type": [
+                                      "data:Object",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:body": [
+                                      {
+                                        "@id": "#15",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:application%2Fjson": [
+                                          {
+                                            "@id": "#16",
+                                            "@type": [
+                                              "data:Object",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:type": [
+                                              {
+                                                "@id": "#17",
+                                                "@type": [
+                                                  "data:Array",
+                                                  "rdf:Seq",
+                                                  "data:Node",
+                                                  "doc:DomainElement"
+                                                ],
+                                                "rdfs:member": [
+                                                  {
+                                                    "@id": "#18",
+                                                    "@type": [
+                                                      "data:Scalar",
+                                                      "data:Node",
+                                                      "doc:DomainElement"
+                                                    ],
+                                                    "data:value": [
+                                                      {
+                                                        "@value": "Employee"
+                                                      }
+                                                    ],
+                                                    "shacl:datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                      }
+                                                    ],
+                                                    "core:name": [
+                                                      {
+                                                        "@value": "scalar_8"
+                                                      }
+                                                    ],
+                                                    "smaps": {
+                                                      "lexical": {
+                                                        "#18": "[(31,21)-(31,29)]"
+                                                      }
+                                                    }
+                                                  },
+                                                  {
+                                                    "@id": "#19",
+                                                    "@type": [
+                                                      "data:Scalar",
+                                                      "data:Node",
+                                                      "doc:DomainElement"
+                                                    ],
+                                                    "data:value": [
+                                                      {
+                                                        "@value": "Person"
+                                                      }
+                                                    ],
+                                                    "shacl:datatype": [
+                                                      {
+                                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                                      }
+                                                    ],
+                                                    "core:name": [
+                                                      {
+                                                        "@value": "scalar_9"
+                                                      }
+                                                    ],
+                                                    "smaps": {
+                                                      "lexical": {
+                                                        "#19": "[(31,31)-(31,37)]"
+                                                      }
+                                                    }
+                                                  }
+                                                ],
+                                                "core:name": [
+                                                  {
+                                                    "@value": "type"
+                                                  }
+                                                ],
+                                                "smaps": {
+                                                  "lexical": {
+                                                    "#17": "[(31,20)-(31,38)]"
+                                                  }
+                                                }
+                                              }
+                                            ],
+                                            "core:name": [
+                                              {
+                                                "@value": "application/json"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "data:type": "[(31,14)-(34,0)]",
+                                                "#16": "[(31,0)-(34,0)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "body"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "data:application%2Fjson": "[(30,12)-(34,0)]",
+                                            "#15": "[(30,0)-(34,0)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "500"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "data:body": "[(29,10)-(34,0)]",
+                                        "#14": "[(29,0)-(34,0)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "responses"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "data:500": "[(28,8)-(34,0)]",
+                                    "#13": "[(28,0)-(34,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "post"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "data:responses": "[(27,6)-(34,0)]",
+                                "#12": "[(27,0)-(34,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "object_1"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "data:post": "[(26,4)-(34,0)]",
+                            "#11": "[(26,4)-(34,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "resolved-link-target": {
+                        "#10": "amf://id#10"
+                      },
+                      "declared-element": {
+                        "#10": ""
+                      },
+                      "lexical": {
+                        "doc:dataNode": "[(26,4)-(34,0)]",
+                        "#10": "[(25,2)-(34,0)]"
+                      },
+                      "resolved-link": {
+                        "#10": "amf://id#20"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "core:name": "[(44,8)-(44,28)]",
+                    "#45": "[(44,8)-(44,28)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#44": "[(43,0)-(51,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#31": "RAML 1.0"
+          },
+          "lexical": {
+            "core:version": "[(3,0)-(5,0)]",
+            "#31": "[(2,0)-(51,0)]",
+            "core:name": "[(2,0)-(3,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "3.0.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#2",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#name"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "name"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#3": "[(8,6)-(9,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "name"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#2": "[(8,6)-(9,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Person"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#1": ""
+          },
+          "lexical": {
+            "shacl:name": "[(6,2)-(6,8)]",
+            "#1": "[(6,2)-(9,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#4",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#5",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#employeeId"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#6",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "employeeId"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#6": "[(11,6)-(12,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "employeeId"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#5": "[(11,6)-(12,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Employee"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#4": ""
+          },
+          "lexical": {
+            "shacl:name": "[(9,2)-(9,10)]",
+            "#4": "[(9,2)-(12,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#7",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#8",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#engineeringSkill"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#9",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "engineeringSkill"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#9": "[(14,6)-(16,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "engineeringSkill"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#8": "[(14,6)-(16,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Engineer"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#7": ""
+          },
+          "lexical": {
+            "shacl:name": "[(12,2)-(12,10)]",
+            "#7": "[(12,2)-(16,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#10",
+        "@type": [
+          "apiContract:ResourceType",
+          "doc:AbstractDeclaration",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "employeeResourceType"
+          }
+        ],
+        "doc:dataNode": [
+          {
+            "@id": "#11",
+            "@type": [
+              "data:Object",
+              "data:Node",
+              "doc:DomainElement"
+            ],
+            "data:post": [
+              {
+                "@id": "#12",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:responses": [
+                  {
+                    "@id": "#13",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:500": [
+                      {
+                        "@id": "#14",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:body": [
+                          {
+                            "@id": "#15",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:application%2Fjson": [
+                              {
+                                "@id": "#16",
+                                "@type": [
+                                  "data:Object",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:type": [
+                                  {
+                                    "@id": "#17",
+                                    "@type": [
+                                      "data:Array",
+                                      "rdf:Seq",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "rdfs:member": [
+                                      {
+                                        "@id": "#18",
+                                        "@type": [
+                                          "data:Scalar",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:value": [
+                                          {
+                                            "@value": "Employee"
+                                          }
+                                        ],
+                                        "shacl:datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "scalar_8"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "#18": "[(31,21)-(31,29)]"
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "@id": "#19",
+                                        "@type": [
+                                          "data:Scalar",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:value": [
+                                          {
+                                            "@value": "Person"
+                                          }
+                                        ],
+                                        "shacl:datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "core:name": [
+                                          {
+                                            "@value": "scalar_9"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "#19": "[(31,31)-(31,37)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "type"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#17": "[(31,20)-(31,38)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "application/json"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "data:type": "[(31,14)-(34,0)]",
+                                    "#16": "[(31,0)-(34,0)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "body"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "data:application%2Fjson": "[(30,12)-(34,0)]",
+                                "#15": "[(30,0)-(34,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "500"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "data:body": "[(29,10)-(34,0)]",
+                            "#14": "[(29,0)-(34,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "responses"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:500": "[(28,8)-(34,0)]",
+                        "#13": "[(28,0)-(34,0)]"
+                      }
+                    }
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "data:responses": "[(27,6)-(34,0)]",
+                    "#12": "[(27,0)-(34,0)]"
+                  }
+                }
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "object_1"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "data:post": "[(26,4)-(34,0)]",
+                "#11": "[(26,4)-(34,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#10": "amf://id#10"
+          },
+          "declared-element": {
+            "#10": ""
+          },
+          "lexical": {
+            "doc:dataNode": "[(26,4)-(34,0)]",
+            "#10": "[(25,2)-(34,0)]"
+          },
+          "resolved-link": {
+            "#10": "amf://id#20"
+          }
+        }
+      },
+      {
+        "@id": "#21",
+        "@type": [
+          "apiContract:Trait",
+          "doc:AbstractDeclaration",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "employeeTrait"
+          }
+        ],
+        "doc:dataNode": [
+          {
+            "@id": "#22",
+            "@type": [
+              "data:Object",
+              "data:Node",
+              "doc:DomainElement"
+            ],
+            "data:responses": [
+              {
+                "@id": "#23",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:500": [
+                  {
+                    "@id": "#24",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:body": [
+                      {
+                        "@id": "#25",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:application%2Fjson": [
+                          {
+                            "@id": "#26",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:type": [
+                              {
+                                "@id": "#27",
+                                "@type": [
+                                  "data:Array",
+                                  "rdf:Seq",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "rdfs:member": [
+                                  {
+                                    "@id": "#28",
+                                    "@type": [
+                                      "data:Scalar",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:value": [
+                                      {
+                                        "@value": "Employee"
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "scalar_7"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#28": "[(22,19)-(22,27)]"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "@id": "#29",
+                                    "@type": [
+                                      "data:Scalar",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:value": [
+                                      {
+                                        "@value": "Person"
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "scalar_8"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#29": "[(22,29)-(22,35)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "core:name": [
+                                  {
+                                    "@value": "type"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "#27": "[(22,18)-(22,36)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "core:name": [
+                              {
+                                "@value": "application/json"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "data:type": "[(22,12)-(24,0)]",
+                                "#26": "[(22,0)-(24,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "body"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "data:application%2Fjson": "[(21,10)-(24,0)]",
+                            "#25": "[(21,0)-(24,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "500"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:body": "[(20,8)-(24,0)]",
+                        "#24": "[(20,0)-(24,0)]"
+                      }
+                    }
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "responses"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "data:500": "[(19,6)-(24,0)]",
+                    "#23": "[(19,0)-(24,0)]"
+                  }
+                }
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "object_1"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "data:responses": "[(18,4)-(24,0)]",
+                "#22": "[(18,4)-(24,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#21": "amf://id#21"
+          },
+          "declared-element": {
+            "#21": ""
+          },
+          "lexical": {
+            "doc:dataNode": "[(18,4)-(24,0)]",
+            "#21": "[(17,2)-(24,0)]"
+          },
+          "resolved-link": {
+            "#21": "amf://id#30"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    }
+  }
+]

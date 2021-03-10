@@ -153,10 +153,13 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
     }
 
     if (p.fields.entry(ParameterModel.Required).isEmpty) {
-      val stringName = name.text().toString
-      val required   = !stringName.endsWith("?")
-      val paramName  = if (required) stringName else stringName.stripSuffix("?")
-      p.set(ParameterModel.Required, required)
+      val stringName    = name.text().toString
+      val optionalParam = stringName.endsWith("?")
+
+      val requiredAnnot = if (optionalParam) Annotations() else Annotations() += Inferred()
+      p.set(ParameterModel.Required, AmfScalar(!optionalParam), requiredAnnot)
+
+      val paramName = if (optionalParam) stringName.stripSuffix("?") else stringName
       p.set(ParameterModel.Name, AmfScalar(paramName, name.text().annotations))
         .set(ParameterModel.ParameterName, paramName)
     }

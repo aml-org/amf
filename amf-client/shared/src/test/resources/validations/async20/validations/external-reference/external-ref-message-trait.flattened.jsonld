@@ -1,0 +1,387 @@
+{
+  "@graph": [
+    {
+      "@id": "#10",
+      "@type": [
+        "apiContract:AsyncAPI",
+        "apiContract:API",
+        "doc:RootDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "Signup service example (internal)",
+      "core:version": "0.1.0",
+      "apiContract:endpoint": [
+        {
+          "@id": "#11"
+        }
+      ],
+      "smaps": {
+        "source-vendor": {
+          "#10": "ASYNC 2.0"
+        },
+        "lexical": {
+          "apiContract:endpoint": "[(7,0)-(18,0)]",
+          "core:name": "[(4,2)-(5,0)]",
+          "#10": "[(1,0)-(22,0)]",
+          "core:version": "[(5,2)-(7,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#11",
+      "@type": [
+        "apiContract:EndPoint",
+        "doc:DomainElement"
+      ],
+      "apiContract:path": "/user/signedup",
+      "apiContract:supportedOperation": [
+        {
+          "@id": "#12"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#11": "[(8,2)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#12",
+      "@type": [
+        "apiContract:Operation",
+        "doc:DomainElement"
+      ],
+      "apiContract:method": "subscribe",
+      "apiContract:returns": [
+        {
+          "@id": "#13"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "apiContract:returns": "[(10,6)-(18,0)]",
+          "#12": "[(9,4)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#13",
+      "@type": [
+        "apiContract:Response",
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "apiContract:payload": [
+        {
+          "@id": "#14"
+        }
+      ],
+      "smaps": {
+        "lexical": {
+          "#13": "[(11,0)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#14",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "raml-shapes:schema": {
+        "@id": "#15"
+      },
+      "smaps": {
+        "lexical": {
+          "raml-shapes:schema": "[(11,8)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#15",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#16"
+        }
+      ],
+      "shacl:name": "schema",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#15": "[(12,10)-(12,14)]"
+        },
+        "lexical": {
+          "#15": "[(11,8)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#16",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#email"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#17"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "email",
+      "smaps": {
+        "lexical": {
+          "#16": "[(14,12)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#17",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "raml-shapes:format": "email",
+      "shacl:name": "email",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#17": "[(15,14)-(15,18)]"
+        },
+        "lexical": {
+          "raml-shapes:format": "[(16,14)-(18,0)]",
+          "#17": "[(14,12)-(18,0)]",
+          "shacl:datatype": "[(15,14)-(16,0)]"
+        }
+      }
+    },
+    {
+      "@id": "",
+      "doc:references": [
+        {
+          "@id": "#1"
+        }
+      ],
+      "doc:declares": [
+        {
+          "@id": "#3"
+        }
+      ],
+      "@type": [
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#10"
+      },
+      "doc:version": "3.0.0",
+      "doc:root": true
+    },
+    {
+      "@id": "#1",
+      "@type": [
+        "doc:ExternalFragment",
+        "doc:Fragment",
+        "doc:Unit"
+      ],
+      "doc:encodes": {
+        "@id": "#2"
+      },
+      "doc:version": "3.0.0",
+      "doc:root": false
+    },
+    {
+      "@id": "#3",
+      "@type": [
+        "apiContract:Message",
+        "doc:DomainElement"
+      ],
+      "core:name": "myMessageTrait",
+      "core:description": "A longer description",
+      "apiContract:payload": [
+        {
+          "@id": "#8"
+        }
+      ],
+      "core:correlationId": {
+        "@id": "#7"
+      },
+      "core:displayName": "UserSignup",
+      "core:title": "User signup",
+      "core:summary": "Action to sign a user up.",
+      "apiContract:isAbstract": true,
+      "apiContract:headerSchema": {
+        "@id": "#4"
+      },
+      "smaps": {
+        "declared-element": {
+          "#3": ""
+        },
+        "resolved-link": {
+          "#3": "amf://id#3"
+        },
+        "lexical": {
+          "apiContract:headerSchema": "[(14,2)-(20,0)]",
+          "core:title": "[(6,2)-(7,0)]",
+          "core:correlationId": "[(11,2)-(14,0)]",
+          "#3": "[(5,0)-(20,0)]",
+          "core:description": "[(8,2)-(9,0)]",
+          "core:displayName": "[(5,2)-(6,0)]",
+          "core:summary": "[(7,2)-(8,0)]"
+        },
+        "resolved-link-target": {
+          "#3": "amf://id#9"
+        }
+      }
+    },
+    {
+      "@id": "#2",
+      "@type": [
+        "doc:ExternalDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:raw": "myOperationTrait:\n  description: user signed up to load some data\n\nmyMessageTrait:\n  name: UserSignup\n  title: User signup\n  summary: Action to sign a user up.\n  description: A longer description\n  contentType: application/json\n  schemaFormat: application/vnd.oai.openapi;version=3.0.0\n  correlationId:\n    description: Default Correlation ID\n    location: $message.header#/correlationId\n  headers:\n    type: object\n    properties:\n      applicationInstanceId:\n        description: Unique identifier\n        type: string\n",
+      "core:mediaType": "application/yaml",
+      "smaps": {
+        "lexical": {
+          "#2": "[(1,0)-(20,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#8",
+      "@type": [
+        "apiContract:Payload",
+        "doc:DomainElement"
+      ],
+      "core:mediaType": "application/json",
+      "apiContract:schemaMediaType": "application/vnd.oai.openapi;version=3.0.0",
+      "smaps": {
+        "lexical": {
+          "apiContract:schemaMediaType": "[(10,2)-(11,0)]",
+          "core:mediaType": "[(9,2)-(10,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#7",
+      "@type": [
+        "core:CorrelationId",
+        "doc:DomainElement"
+      ],
+      "core:description": "Default Correlation ID",
+      "core:location": "$message.header#/correlationId",
+      "smaps": {
+        "lexical": {
+          "core:location": "[(13,4)-(14,0)]",
+          "#7": "[(12,0)-(14,0)]",
+          "core:description": "[(12,4)-(13,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#4",
+      "@type": [
+        "shacl:NodeShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:closed": false,
+      "shacl:property": [
+        {
+          "@id": "#5"
+        }
+      ],
+      "shacl:name": "schema",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#4": "[(15,4)-(15,8)]"
+        },
+        "lexical": {
+          "#4": "[(14,2)-(20,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#5",
+      "@type": [
+        "shacl:PropertyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#applicationInstanceId"
+        }
+      ],
+      "raml-shapes:range": {
+        "@id": "#6"
+      },
+      "shacl:minCount": 0,
+      "shacl:name": "applicationInstanceId",
+      "smaps": {
+        "lexical": {
+          "#5": "[(17,6)-(20,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#6",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "applicationInstanceId",
+      "core:description": "Unique identifier",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#6": "[(19,8)-(19,12)]"
+        },
+        "lexical": {
+          "core:description": "[(18,8)-(19,0)]",
+          "#6": "[(17,6)-(20,0)]",
+          "shacl:datatype": "[(19,8)-(20,0)]"
+        }
+      }
+    }
+  ],
+  "@context": {
+    "@base": "amf://id",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "raml-shapes": "http://a.ml/vocabularies/shapes#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "apiContract": "http://a.ml/vocabularies/apiContract#",
+    "core": "http://a.ml/vocabularies/core#"
+  }
+}

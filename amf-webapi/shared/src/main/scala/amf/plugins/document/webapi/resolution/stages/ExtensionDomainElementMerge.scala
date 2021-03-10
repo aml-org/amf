@@ -18,7 +18,6 @@ import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
 class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
-                                  keepEditingInfo: Boolean,
                                   domainElemdomainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,
                                   extensionId: String,
                                   extensionLocation: Option[String],
@@ -77,7 +76,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
             )
         }
       case Some(existing) => // cannot be override
-        if (!isSameValue(existing, entry))
+        if (!isInferred(value) && !isSameValue(existing, entry))
           errorHandler.violation(
             ResolutionValidation,
             field.toString,

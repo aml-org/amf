@@ -4,15 +4,17 @@ import amf.core.annotations.{DeclaredElement, DefaultNode, ExplicitField}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
+import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.DataType
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
-import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{FieldEntry, Value}
+import amf.core.utils.EqInstances._
+import amf.core.utils.EqSyntax._
+import amf.plugins.domain.webapi.utils.AnnotationSyntax._
 import amf.core.utils.TemplateUri
-import amf.plugins.document.webapi.annotations.{EmptyPayload, Inferred}
+import amf.plugins.document.webapi.annotations.{EmptyPayload, Inferred, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
@@ -23,6 +25,7 @@ import amf.plugins.domain.webapi.models._
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations.UnusedBaseUriParameter
 import amf.validations.ResolutionSideValidations.UnequalMediaTypeDefinitionsInExtendsPayloads
+import org.yaml.model.YNode
 
 import scala.collection.mutable
 
@@ -179,7 +182,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     }
 
     // Case 3
-    if (shouldMerge && mainValue != otherValue) { // avoid merging of identical objects
+    if (shouldMerge && mainValue != otherValue && !areSameJsonSchema(mainValue.value, otherValue.value)) { // avoid merging of identical objects
       otherField.`type` match {
         case Type.Scalar(_) =>
         // Do nothing (3.a)
@@ -195,6 +198,18 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       }
     }
     shouldMerge
+  }
+
+  // We need this because the same JSON schema references do not produce identical objects
+  private def areSameJsonSchema[T <: AmfElement](main: T, other: T): Boolean = {
+    (main, other) match {
+      case (m: ExternalSourceElement, o: ExternalSourceElement) =>
+        val bothAreSchemas          = m.isJsonSchema && o.isJsonSchema
+        val bothHaveReferenceId     = !m.referenceId.isNull && !o.referenceId.isNull
+        val bothHaveSameReferenceId = m.referenceId === o.referenceId
+        bothAreSchemas && bothHaveReferenceId && bothHaveSameReferenceId
+      case _ => false
+    }
   }
 
   protected case class Adopted() {
@@ -342,12 +357,15 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       val otherObj = o.asInstanceOf[DomainElement]
       otherObj.fields.entry(key.key) match {
         case Some(value) if !existing.contains(None) =>
-          if (existing.contains(value.scalar.value)) {
+          val mainObjOption = existing.get(value.scalar.value)
+          if (mainObjOption.isDefined) {
             if (field == EndPointModel.Operations) {
               ctx.mergeOperationContext(otherObj.id)
             }
-            val adopted = adoptInner(target.id, otherObj).asInstanceOf[DomainElement]
-            merge(existing(value.scalar.value), adopted)
+            if (!areSameJsonSchema(mainObjOption.get, otherObj)) {
+              val adopted = adoptInner(target.id, otherObj).asInstanceOf[DomainElement]
+              merge(existing(value.scalar.value), adopted)
+            }
           } else if (!isOptional(element, otherObj)) { // Case (2) -> If node is undefined in 'main' but is optional in 'other'.
             if (field == EndPointModel.Operations) {
               ctx.mergeOperationContext(otherObj.id)

@@ -199,7 +199,6 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
             new ExtensionDomainElementMerge(
               restrictions,
-              keepEditingInfo,
               domainElementArrayMergeStrategy,
               extension.id,
               ExtendsHelper.findUnitLocationOfElement(extension.id, model),
@@ -238,7 +237,6 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
         case Some(equivalent) =>
           new ExtensionDomainElementMerge(
             restrictions,
-            keepEditingInfo,
             domainElementArrayMergeStrategy,
             extensionId,
             extensionLocation,

@@ -14,8 +14,8 @@ object ServerBindingsModel extends DomainElementModel with NameFieldSchema {
 
   val Bindings = Field(
     Array(ServerBindingModel),
-    ApiBinding + "binding",
-    ModelDoc(ModelVocabularies.ApiBinding, "binding", "List of server bindings")
+    ApiBinding + "bindings",
+    ModelDoc(ModelVocabularies.ApiBinding, "bindings", "List of server bindings")
   )
 
   override def fields: List[Field] =

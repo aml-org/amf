@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution
 
-import amf.client.parse.{DefaultParserErrorHandler, IgnoringErrorHandler}
+import amf.client.parse.IgnoringErrorHandler
 import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.ErrorHandler
@@ -9,9 +9,13 @@ import amf.core.model.domain._
 import amf.core.parser.{Annotations, FragmentRef, ParserContext}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.resolution.stages.helpers.ResolvedNamedEntity
-import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.contexts.parser.raml.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  RamlWebApiContextType
+}
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
@@ -19,59 +23,43 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ResolutionSideValidations.ParseResourceTypeFail
 import amf.{ProfileName, Raml08Profile}
-import org.mulesoft.lexer.SourceLocation
 import org.yaml.model._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-object ExtendsHelper {
+case class ExtendsHelper(profile: ProfileName,
+                         keepEditingInfo: Boolean,
+                         errorHandler: ErrorHandler,
+                         context: Option[RamlWebApiContext] = None) {
   def custom(profile: ProfileName): RamlWebApiContext = profile match {
     case Raml08Profile => new CustomRaml08WebApiContext()
     case _             => new CustomRaml10WebApiContext()
   }
 
-  def asOperation[T <: BaseUnit](profile: ProfileName,
-                                 node: DataNode,
+  def asOperation[T <: BaseUnit](node: DataNode,
                                  unit: T,
                                  name: String,
                                  trAnnotations: Annotations,
-                                 extensionId: String,
-                                 extensionLocation: Option[String],
-                                 keepEditingInfo: Boolean,
-                                 context: Option[RamlWebApiContext] = None,
-                                 errorHandler: ErrorHandler): Operation = {
+                                 extensionId: String): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
-    val entry = emitDataNode(node, trAnnotations, name, referencesCollector)(ctx)
+    val entry               = emitDataNode(node, trAnnotations, name, referencesCollector)(ctx)
 
-    entryAsOperation(profile,
-                     unit,
-                     name,
-                     extensionId,
-                     keepEditingInfo,
-                     entry,
-                     node.annotations,
-                     referencesCollector,
-                     context,
-                     errorHandler)
+    context.map(_.nodeRefIds ++= ctx.nodeRefIds)
+    entryAsOperation(unit, name, extensionId, entry, referencesCollector)
   }
 
-  def entryAsOperation[T <: BaseUnit](profile: ProfileName,
-                                      unit: T,
+  def entryAsOperation[T <: BaseUnit](unit: T,
                                       name: String,
                                       extensionId: String,
-                                      keepEditingInfo: Boolean,
                                       entry: YMapEntry,
-                                      annotations: Annotations,
                                       referencesCollector: mutable.Map[String, DomainElement] =
-                                        mutable.Map[String, DomainElement](),
-                                      context: Option[RamlWebApiContext] = None,
-                                      errorHandler: ErrorHandler): Operation = {
+                                        mutable.Map[String, DomainElement]()): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
-    addDeclarations(ctx, unit, entry.value.sourceName)
+    extractContextDeclarationsFrom(unit, entry.value.sourceName)(ctx)
     referencesCollector.foreach {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
@@ -82,6 +70,7 @@ object ExtendsHelper {
         (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
           ctx.declarations += e._2
         }
+        ctxForTrait.nodeRefIds ++= ctx.nodeRefIds
         ctxForTrait.contextType = RamlWebApiContextType.TRAIT
         val operation = ctxForTrait.factory
           .operationParser(entry, _ => Operation().withId(extensionId + "/applied"), true)
@@ -93,36 +82,26 @@ object ExtendsHelper {
   }
 
   def asEndpoint[T <: BaseUnit](unit: T,
-                                profile: ProfileName,
                                 node: DataNode,
                                 rtAnnotations: Annotations,
                                 name: String,
-                                extensionId: String,
-                                extensionLocation: Option[String],
-                                keepEditingInfo: Boolean,
-                                context: Option[RamlWebApiContext] = None,
-                                errorHandler: ErrorHandler): EndPoint = {
+                                extensionId: String): EndPoint = {
 
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
-    val entry: YMapEntry = emitDataNode(node, rtAnnotations, name, referencesCollector)(ctx)
+    val entry: YMapEntry    = emitDataNode(node, rtAnnotations, name, referencesCollector)(ctx)
 
-    entryAsEndpoint(profile,
-                    unit,
-                    node,
-                    name,
-                    extensionId,
-                    keepEditingInfo,
-                    entry,
-                    node.annotations,
-                    errorHandler,
-                    extensionLocation,
-                    referencesCollector,
-                    context)
+    context.map(_.nodeRefIds ++= ctx.nodeRefIds)
+    entryAsEndpoint(unit, node, name, extensionId, entry, referencesCollector)
   }
 
-  private def emitDataNode[T <: BaseUnit](node: DataNode, rtAnnotations: Annotations, name: String, referencesCollector: mutable.Map[String, DomainElement])(implicit ctx: WebApiContext) = {
+  private def emitDataNode[T <: BaseUnit](
+      node: DataNode,
+      rtAnnotations: Annotations,
+      name: String,
+      referencesCollector: mutable.Map[String, DomainElement])(implicit ctx: WebApiContext) = {
+    val refIds: mutable.Map[YNode, String] = mutable.Map.empty
     val document = YDocument(
       {
         _.obj {
@@ -140,12 +119,13 @@ object ExtendsHelper {
               ),
               YType.Str
             ),
-            DataNodeEmitter(node, getSpecOrderingFrom(rtAnnotations), referencesCollector)(ctx.eh).emit(_)
+            DataNodeEmitter(node, getSpecOrderingFrom(rtAnnotations), referencesCollector)(ctx.eh, refIds).emit(_)
           )
         }
       },
       node.location().getOrElse("")
     )
+    ctx.nodeRefIds ++= refIds
     document.as[YMap].entries.head
   }
 
@@ -154,23 +134,17 @@ object ExtendsHelper {
     else SpecOrdering.Default
   }
 
-  def entryAsEndpoint[T <: BaseUnit](profile: ProfileName,
-                                     unit: T,
+  def entryAsEndpoint[T <: BaseUnit](unit: T,
                                      node: DataNode,
                                      name: String,
                                      extensionId: String,
-                                     keepEditingInfo: Boolean,
                                      entry: YMapEntry,
-                                     annotations: Annotations,
-                                     errorHandler: ErrorHandler,
-                                     extensionLocation: Option[String],
                                      referencesCollector: mutable.Map[String, DomainElement] =
-                                       mutable.Map[String, DomainElement](),
-                                     context: Option[RamlWebApiContext] = None): EndPoint = {
+                                       mutable.Map[String, DomainElement]()): EndPoint = {
     val ctx       = context.getOrElse(custom(profile))
     val collector = ListBuffer[EndPoint]()
 
-    addDeclarations(ctx, unit, entry.sourceName)
+    extractContextDeclarationsFrom(unit, entry.sourceName)(ctx)
     referencesCollector.foreach {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
@@ -179,6 +153,7 @@ object ExtendsHelper {
       (ctxForResourceType.declarations.resourceTypes ++ ctxForResourceType.declarations.traits).foreach { e =>
         ctx.declarations += e._2
       }
+      ctxForResourceType.nodeRefIds ++= ctx.nodeRefIds
       ctxForResourceType.contextType = RamlWebApiContextType.RESOURCE_TYPE
       ctxForResourceType.factory
         .endPointParser(entry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true)
@@ -200,14 +175,6 @@ object ExtendsHelper {
         )
         ErrorEndPoint(node.id, entry)
     }
-  }
-
-  def findUnitLocationOfElement(elementId: String, unit: BaseUnit): Option[String] = {
-
-    unit.references.collectFirst({
-      case l: Module if l.declares.exists(_.id == elementId) => l.location().getOrElse(l.id)
-      case f: Fragment if f.encodes.id == elementId          => f.location().getOrElse(f.id)
-    })
   }
 
   private def getDeclaringUnit(refs: List[BaseUnit], sourceName: String): Option[BaseUnit] = refs match {
@@ -235,7 +202,13 @@ object ExtendsHelper {
     }
   }
 
-  private def addDeclarations(ctx: RamlWebApiContext, root: BaseUnit, sourceName: String): Unit = {
+  /** Extract declarations with root and local names from the root API base unit and the base unit declaring the
+    *  RT/Trait, identified by its source name.
+    * @param root root API base unit
+    * @param sourceName source name of the base unit declaring the RT/Trait
+    * @param ctx context to populate with declarations
+    */
+  private def extractContextDeclarationsFrom(root: BaseUnit, sourceName: String)(ctx: RamlWebApiContext): Unit = {
     val declaringUnit     = getDeclaringUnit(root.references.toList, sourceName).getOrElse(root)
     val libraries         = extractFilteredDeclarations(declaringUnit, _.isInstanceOf[Module]).map((_, declaringUnit))
     val otherDeclarations = extractFilteredDeclarations(root, !_.isInstanceOf[Module]).map((_, root))
@@ -243,29 +216,28 @@ object ExtendsHelper {
     libraries ++ otherDeclarations foreach {
       case (declaration, unit) =>
         ctx.declarations += declaration
-        processDeclaration(declaration, ctx, unit)
+        extractDeclarationToContextWithLocalAndRootName(declaration, unit)(ctx)
     }
 
     // gives priority to references of fragments or modules over those in root file, this order can be adjusted
-    if (declaringUnit != root) processRefsToDeclarations(ctx, root)
-    processRefsToDeclarations(ctx, declaringUnit)
+    if (declaringUnit != root) extractContextDeclarationsFromReferencesIn(root)(ctx)
+    extractContextDeclarationsFromReferencesIn(declaringUnit)(ctx)
   }
 
-  private def processRefsToDeclarations(ctx: RamlWebApiContext, model: BaseUnit): Unit = {
+  private def extractContextDeclarationsFromReferencesIn(model: BaseUnit)(ctx: RamlWebApiContext): Unit = {
     model.references.foreach {
       // Declarations of traits and resourceTypes are contextual, so should skip it
       case f: Fragment if !f.isInstanceOf[ResourceTypeFragment] && !f.isInstanceOf[TraitFragment] =>
         ctx.declarations += (f.location().getOrElse(f.id), f)
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
-          case (alias, (fullUrl, _)) =>
-            if (m.id == fullUrl) {
-              val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(eh = ctx.eh))
-              m.declares.foreach { declaration =>
-                processDeclaration(declaration, nestedCtx, m)
-              }
-              ctx.declarations.libraries += (alias -> nestedCtx.declarations)
+          case (alias, (fullUrl, _)) if m.id == fullUrl =>
+            val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(eh = ctx.eh))
+            m.declares.foreach { declaration =>
+              extractDeclarationToContextWithLocalAndRootName(declaration, m)(nestedCtx)
             }
+            ctx.declarations.libraries += (alias -> nestedCtx.declarations)
+          case _ => // Ignore
         }
       case _: Fragment => // Trait or RT, nothing to do
       case other =>
@@ -279,35 +251,42 @@ object ExtendsHelper {
     }
   }
 
-  private def processDeclaration(declaration: DomainElement, nestedCtx: RamlWebApiContext, model: BaseUnit): Unit = {
+  private def extractDeclarationToContextWithLocalAndRootName(declaration: DomainElement, local: BaseUnit)(
+      ctx: RamlWebApiContext): Unit = {
     declaration.annotations.find(classOf[ResolvedNamedEntity]) match {
       case Some(resolvedNamedEntity) =>
         resolvedNamedEntity.vals.foreach {
-          case (_, namedEntities) =>
-            val inContext = namedEntities.find(
-              entity =>
-                entity.isInstanceOf[DomainElement] && entity
-                  .asInstanceOf[DomainElement]
-                  .id
-                  .contains(model.location().getOrElse("")))
-            nestedCtx.declarations += declaration
+          case (_, localDeclarations) =>
+            ctx.declarations += declaration
             declaration match {
               // we recover the local alias we removed when resolving
-              case element: NamedDomainElement if inContext.isDefined =>
-                val localName = inContext.get.name.value()
-                val realName  = element.name.value()
-                element.withName(localName)
-                nestedCtx.declarations += declaration
-                element.withName(realName)
+              case element: NamedDomainElement =>
+                for {
+                  location         <- local.location()
+                  localDeclaration <- localDeclarations.find(e => e.location().contains(location))
+                  localName        <- localDeclaration.name.option()
+                  realName         <- element.name.option()
+                } yield {
+                  element.withName(localName)
+                  ctx.declarations += declaration
+                  element.withName(realName) // This is useless?
+                }
               case _ =>
             }
         }
-      case _ => nestedCtx.declarations += declaration
+      case _ => ctx.declarations += declaration
     }
   }
 }
 
-class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext(eh = IgnoringErrorHandler())) { // generating a new id???? cannot be ok
+object ExtendsHelper {
+  def findUnitLocationOfElement(elementId: String, unit: BaseUnit): Option[String] = {
+    unit.references.collectFirst({
+      case l: Module if l.declares.exists(_.id == elementId) => l.location().getOrElse(l.id)
+      case f: Fragment if f.encodes.id == elementId          => f.location().getOrElse(f.id)
+    })
+  }
 }
 
-class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext(eh = IgnoringErrorHandler())) {}
+class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext(eh = IgnoringErrorHandler()))
+class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext(eh = IgnoringErrorHandler()))

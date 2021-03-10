@@ -43,7 +43,8 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
-    "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
+    "org.scalatest"     %%% "scalatest" % "3.0.5" % Test,
+    "org.mule.common" %%% "scala-common-test" % "0.0.4" % Test
   ),
   logBuffered in Test := false
 )

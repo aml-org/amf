@@ -43,29 +43,39 @@ abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite with JsonLdSeriali
   }
 
   // Single source, multiple JSON-LD outputs
-  def multiGoldenTest(testText: String, goldenNamePattern: String)(
+  def multiGoldenTest(testText: String, goldenNamePattern: String, ignored: Boolean = false)(
       testFn: MultiGoldenTestConfig => Future[Assertion]): Unit = {
     testedForms.foreach { form =>
       validatePattern(goldenNamePattern, "goldenNamePattern")
       val golden = goldenNamePattern.format(form.extension)
       val config = MultiGoldenTestConfig(golden, renderOptionsFor(form))
-      test(s"$testText for ${form.name} JSON-LD golden")(testFn(config))
+      if (ignored) {
+        ignore(s"$testText for ${form.name} JSON-LD golden")(testFn(config))
+      } else {
+        test(s"$testText for ${form.name} JSON-LD golden")(testFn(config))
+      }
+
     }
   }
 
   // Multiple JSON-LD sources, single output
-  def multiSourceTest(testText: String, sourceNamePattern: String)(
+  def multiSourceTest(testText: String, sourceNamePattern: String, ignored: Boolean = false)(
       testFn: MultiSourceTestConfig => Future[Assertion]): Unit = {
     testedForms.foreach { form =>
       validatePattern(sourceNamePattern, "sourceNamePattern")
       val source = sourceNamePattern.format(form.extension)
       val config = MultiSourceTestConfig(source)
-      test(s"$testText for ${form.name} JSON-LD source")(testFn(config))
+      if (ignored) {
+        ignore(s"$testText for ${form.name} JSON-LD source")(testFn(config))
+      } else {
+        test(s"$testText for ${form.name} JSON-LD source")(testFn(config))
+      }
+
     }
   }
 
   // Multiple JSON-LD sources, multiple JSON-LD outputs. Each source matches exactly one output
-  def multiTest(testText: String, sourceNamePattern: String, goldenNamePattern: String)(
+  def multiTest(testText: String, sourceNamePattern: String, goldenNamePattern: String, ignored: Boolean = false)(
       testFn: MultiTestConfig => Future[Assertion]): Unit = {
     testedForms.foreach { form =>
       validatePattern(sourceNamePattern, "sourceNamePattern")
@@ -73,7 +83,12 @@ abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite with JsonLdSeriali
       val source = sourceNamePattern.format(form.extension)
       val golden = goldenNamePattern.format(form.extension)
       val config = MultiTestConfig(source, golden, renderOptionsFor(form))
-      test(s"$testText for ${form.name} JSON-LD")(testFn(config))
+      if (ignored) {
+        ignore(s"$testText for ${form.name} JSON-LD")(testFn(config))
+      } else {
+        test(s"$testText for ${form.name} JSON-LD")(testFn(config))
+      }
+
     }
   }
 }

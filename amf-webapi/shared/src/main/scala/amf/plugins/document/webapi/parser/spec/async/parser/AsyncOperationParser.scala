@@ -81,8 +81,7 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation =>
       "traits",
       traitEntry => {
         val traits = traitEntry.value.as[YSequence].nodes.map { node =>
-          AsyncOperationRefParser(node, adopt).parse()
-
+          AsyncOperationTraitRefParser(node, adopt).parseLinkOrError()
         }
         operation.setArray(OperationModel.Extends, traits, Annotations(traitEntry))
       }
@@ -96,10 +95,16 @@ private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Op
   override protected val closedShapeName: String = "operationTrait"
 
   override def parse(): Operation = {
-    val operation = super.parse()
-    operation.set(OperationModel.Name, methodNode, Annotations(entry.key))
-    operation.withAbstract(true)
-    operation
+    val node = entry.value
+    ctx.link(node) match {
+      case Left(url) =>
+        AsyncOperationTraitRefParser(node, adopt, Some(entryKey.toString)).parseLink(url)
+      case Right(_) =>
+        val operation = super.parse()
+        operation.set(OperationModel.Name, entryKey, Annotations(entry.key))
+        operation.withAbstract(true)
+        operation
+    }
   }
 
   override protected def parseMessages(map: YMap, operation: Operation): Unit = Unit
@@ -107,18 +112,17 @@ private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Op
   override protected def parseTraits(map: YMap, operation: Operation): Unit = Unit
 }
 
-case class AsyncOperationRefParser(node: YNode, adopt: Operation => Operation)(implicit val ctx: AsyncWebApiContext) {
+case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operation, name: Option[String] = None)(
+    implicit val ctx: AsyncWebApiContext) {
 
-  def parse(): Operation = {
+  def parseLinkOrError(): Operation = {
     ctx.link(node) match {
-      case Left(url) =>
-        val operation = parseLink(url, node)
-        operation
+      case Left(url)  => parseLink(url)
       case Right(url) => expectedRef(node, url)
     }
   }
 
-  private def parseLink(url: String, node: YNode): Operation = {
+  def parseLink(url: String): Operation = {
     val label = OasDefinitions.stripOas3ComponentsPrefix(url, "operationTraits")
     val operation: Operation = ctx.declarations
       .findOperationTrait(label, Named)
@@ -142,8 +146,8 @@ case class AsyncOperationRefParser(node: YNode, adopt: Operation => Operation)(i
 
   private def remote(url: String, node: YNode): Operation = {
     ctx.obtainRemoteYNode(url) match {
-      case Some(correlationIdNode) =>
-        AsyncOperationParser(YMapEntry(url, correlationIdNode), adopt, isTrait = true)
+      case Some(traitNode) =>
+        AsyncOperationParser(YMapEntry(name.getOrElse(url), traitNode), adopt, isTrait = true)
           .parse()
       case None => linkError(url, node)
     }
