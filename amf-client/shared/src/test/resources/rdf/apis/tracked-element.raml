@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: TrackedElement API
+/endpoint:
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            type: A
+            example: 5
+types:
+  A:
+    type: integer
+    minimum: 4
