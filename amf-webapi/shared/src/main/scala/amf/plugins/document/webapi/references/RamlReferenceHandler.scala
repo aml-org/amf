@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.references
 
-import amf.client.`new`.amfcore.AMFParsePlugin
+import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.core.CompilerContext
 import amf.core.annotations.SourceAST
 import amf.core.model.document.{BaseUnit, ExternalFragment}

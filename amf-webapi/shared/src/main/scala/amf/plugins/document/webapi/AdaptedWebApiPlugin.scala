@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi
 
-import amf.client.`new`.amfcore.plugins.AMFParsePluginAdapter
+import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 
 object Async20ParsePlugin              extends AMFParsePluginAdapter(Async20Plugin)
 object Oas20ParsePlugin                extends AMFParsePluginAdapter(Oas20Plugin)

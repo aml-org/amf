@@ -1,6 +1,6 @@
 package amf.client.commands
 
-import amf.client.`new`.BaseEnvironment
+import amf.client.remod.BaseEnvironment
 import amf.client.convert.WebApiRegister
 import amf.core.client.ParserConfig
 import amf.core.emitter.RenderOptions
