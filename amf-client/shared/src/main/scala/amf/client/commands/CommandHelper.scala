@@ -1,31 +1,17 @@
 package amf.client.commands
 
-import amf.client.remod.BaseEnvironment
 import amf.client.convert.WebApiRegister
 import amf.core.client.ParserConfig
 import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.{RuntimeCompiler, RuntimeResolver, RuntimeSerializer}
 import amf.plugins.document.vocabularies.{AMLParsePlugin, AMLPlugin}
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
-import amf.plugins.document.webapi.{
-  Async20ParsePlugin,
-  Async20Plugin,
-  ExternalJsonYamlRefsParsePlugin,
-  Oas20ParsePlugin,
-  Oas20Plugin,
-  Oas30ParsePlugin,
-  Oas30Plugin,
-  Raml08ParsePlugin,
-  Raml08Plugin,
-  Raml10ParsePlugin,
-  Raml10Plugin
-}
+import amf.plugins.document.webapi.{Async20Plugin, Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -42,19 +28,10 @@ trait CommandHelper {
     amf.core.AMF.registerPlugin(Oas20Plugin)
     amf.core.AMF.registerPlugin(Oas30Plugin)
     amf.core.AMF.registerPlugin(Async20Plugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(Raml10ParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(Raml08ParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(Oas20ParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(Oas30ParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(Async20ParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(ExternalJsonYamlRefsParsePlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     amf.core.AMF.init()
   }
-
-  val env: BaseEnvironment = AMFPluginsRegistry.obtainStaticEnv() // We should create WebApiEnv here
 
   def ensureUrl(inputFile: String): String =
     if (inputFile.startsWith("file:") || inputFile.startsWith("http:") || inputFile.startsWith("https:")) inputFile
@@ -73,8 +50,7 @@ trait CommandHelper {
       Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
       config.inputFormat,
       Context(platform),
-      cache = Cache(),
-      newEnv = env
+      cache = Cache()
     )
     val vendor = effectiveVendor(config.inputFormat)
     if (config.resolve)
@@ -92,8 +68,7 @@ trait CommandHelper {
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
         config.inputFormat,
         Context(platform),
-        cache = Cache(),
-        newEnv = env
+        cache = Cache()
       )
       parsed map { parsed =>
         RuntimeResolver.resolve(vendor, parsed, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)

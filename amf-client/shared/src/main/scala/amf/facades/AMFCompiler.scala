@@ -1,6 +1,7 @@
 package amf.facades
 
 import amf.client.remod.BaseEnvironment
+import amf.client.remod.amfcore.config.ParsingOptionsConverter
 import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
@@ -25,7 +26,7 @@ class AMFCompiler private (val url: String,
   private val compilerContext: CompilerContext = {
     val builder = new CompilerContextBuilder(url, remote, eh).withCache(cache)
     base.foreach(builder.withFileContext)
-    builder.build(newEnv)
+    builder.withBaseEnvironment(newEnv).build()
   }
 
   def build(): Future[BaseUnit] = {
@@ -72,7 +73,8 @@ object AMFCompiler {
             ctx: Option[ParserContext] = None,
             eh: ParserErrorHandler,
             parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext) = {
-    val newEnv = AMFPluginsRegistry.obtainStaticEnv().withParsingOptions(parsingOptions)
+    val newEnv =
+      AMFPluginsRegistry.obtainStaticEnv().withParsingOptions(ParsingOptionsConverter.fromLegacy(parsingOptions))
     new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), eh, newEnv)
   }
 

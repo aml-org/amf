@@ -3,14 +3,13 @@ package amf.facades
 import amf.client.execution.BaseExecutionEnvironment
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.internal.environment.Environment
-import amf.plugins.document.graph.{AMFGraphParsePlugin, AMFGraphPlugin}
-import amf.plugins.document.vocabularies.{AMLParsePlugin, AMLPlugin}
+import amf.plugins.document.graph.AMFGraphPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
@@ -38,16 +37,6 @@ class Validation(platform: Platform) {
 
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerNewInterfacePlugin(Raml10ParsePlugin)
-    amf.core.registries.AMFPluginsRegistry.registerNewInterfacePlugin(Raml08ParsePlugin)
-    amf.core.registries.AMFPluginsRegistry.registerNewInterfacePlugin(Oas20ParsePlugin)
-    amf.core.registries.AMFPluginsRegistry.registerNewInterfacePlugin(Oas30ParsePlugin)
-    amf.core.registries.AMFPluginsRegistry.registerNewInterfacePlugin(Async20ParsePlugin)
-    amf.core.registries.AMFPluginsRegistry.registerNewInterfacePlugin(PayloadParsePlugin)
-    amf.core.registries.AMFPluginsRegistry.registerNewInterfacePlugin(AMFGraphParsePlugin)
-    amf.core.registries.AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
-    amf.core.registries.AMFPluginsRegistry.registerNewInterfacePlugin(JsonSchemaParsePlugin)
-    amf.core.registries.AMFPluginsRegistry.registerNewInterfacePlugin(ExternalJsonYamlRefsParsePlugin)
     amf.core.AMF.init().map { _ =>
       amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)

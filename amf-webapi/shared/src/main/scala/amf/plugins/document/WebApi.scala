@@ -2,7 +2,6 @@ package amf.plugins.document
 
 import amf.client.convert.WebApiRegister
 import amf.client.execution.BaseExecutionEnvironment
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi._
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
@@ -31,14 +30,6 @@ object WebApi extends PlatformSecrets {
     amf.Core.registerPlugin(Raml08Plugin)
     amf.Core.registerPlugin(PayloadPlugin)
     amf.Core.registerPlugin(JsonSchemaPlugin)
-
-    AMFPluginsRegistry.registerNewInterfacePlugin(Oas20ParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(Oas30ParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(Async20ParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(Raml10ParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(Raml08ParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(PayloadParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(JsonSchemaParsePlugin)
 
   }
 

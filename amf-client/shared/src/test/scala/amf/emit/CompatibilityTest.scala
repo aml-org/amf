@@ -1,8 +1,6 @@
 package amf.emit
 import amf.ProfileName
-import amf.client.environment.ApiEnvironment
 import amf.core.emitter.RenderOptions
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.facades.Validation
@@ -47,8 +45,6 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
       case _                          => "application/json"
     }
 
-    val environment = ApiEnvironment.webApi()
-
     for {
       unit <- RuntimeCompiler(
         "amf://id#",
@@ -56,8 +52,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
         Some(hint.vendor.name),
         Context(platform),
         env = Environment(StringResourceLoader("amf://id#", content)),
-        cache = Cache(),
-        newEnv = environment
+        cache = Cache()
       )
       _ <- RuntimeValidator(unit, ProfileName(hint.vendor.name))
     } yield unit

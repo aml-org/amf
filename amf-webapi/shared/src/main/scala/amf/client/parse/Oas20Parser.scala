@@ -3,7 +3,7 @@ package amf.client.parse
 import amf.client.environment.Environment
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Oas20
-import amf.plugins.document.webapi.{Async20ParsePlugin, ExternalJsonYamlRefsParsePlugin, Oas20ParsePlugin, Oas20Plugin}
+import amf.plugins.document.webapi.Oas20Plugin
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 
@@ -18,7 +18,5 @@ class Oas20Parser private (private val env: Option[Environment]) extends Parser(
   def this(environment: Environment) = this(Some(environment))
 
   AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
-  AMFPluginsRegistry.registerNewInterfacePlugin(Oas20ParsePlugin)
-  AMFPluginsRegistry.registerNewInterfacePlugin(ExternalJsonYamlRefsParsePlugin)
 
 }
