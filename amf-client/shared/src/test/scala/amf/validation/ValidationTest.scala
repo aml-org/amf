@@ -154,7 +154,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       resolved <- Future {
         Raml10Plugin.resolve(doc, eh)
       }
-      generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      generated <- AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, RamlProfile)
     } yield {
       assert(!report.conforms)
@@ -174,7 +174,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       resolved <- Future {
         Raml10Plugin.resolve(doc, doc.errorHandler())
       }
-      generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      generated <- AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, RamlProfile)
     } yield {
       assert(!report.conforms)
@@ -192,7 +192,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       resolved <- Future {
         Raml10Plugin.resolve(doc, eh)
       }
-      generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
+      generated <- AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, RamlProfile)
     } yield {
       assert(report.conforms)
@@ -208,7 +208,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       resolved <- Future {
         Raml10Plugin.resolve(doc, eh)
       }
-      generated <- new AMFSerializer(resolved, "application/ld+json", Amf.name, RenderOptions().withoutSourceMaps).renderToString
+      generated <- AMFSerializer(resolved, "application/ld+json", Amf.name, RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, OasProfile)
     } yield {
       assert(!report.conforms)

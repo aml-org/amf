@@ -150,7 +150,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
       case _       => ""
     }
 
-    new AMFSerializer(document, mediaType, vendor.name, RenderOptions())
+    AMFSerializer(document, mediaType, vendor.name, RenderOptions())
       .renderAsYDocument()
       .document
       .node

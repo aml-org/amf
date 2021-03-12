@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.errorhandling.ErrorHandler

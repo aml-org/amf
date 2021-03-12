@@ -15,7 +15,7 @@ class JsOutputBuilderTest extends DocBuilderTest {
 
   override def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
     val builder: JsOutputBuilder = new JsOutputBuilder()
-    val renderer                 = new AMFSerializer(unit, "application/ld+json", "AMF Graph", options)
+    val renderer                 = AMFSerializer(unit, "application/ld+json", "AMF Graph", options)
     renderer
       .renderToBuilder(builder)
       .map(_ => {

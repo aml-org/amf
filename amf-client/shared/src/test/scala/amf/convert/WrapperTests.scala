@@ -499,7 +499,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
     for {
       _      <- AMF.init().asFuture
-      render <- amf.Core.generator("RAML Vocabulary", "application/yaml").generateString(vocab).asFuture
+      render <- amf.Core.generator(Vendor.AML.name, "application/yaml").generateString(vocab).asFuture
     } yield {
       render should be(
         """#%Vocabulary 1.0

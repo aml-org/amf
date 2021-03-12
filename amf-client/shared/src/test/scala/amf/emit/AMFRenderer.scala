@@ -52,7 +52,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
       case _    => "application/yaml"
     })
 
-    new AMFSerializer(unit, mediaType, vendor.name, options).renderToString
+    AMFSerializer(unit, mediaType, vendor.name, options).renderToString
   }
 }
 
