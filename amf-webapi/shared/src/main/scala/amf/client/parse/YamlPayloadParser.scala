@@ -4,7 +4,6 @@ import amf.client.environment.Environment
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Payload
 import amf.plugins.document.webapi.PayloadPlugin
-
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 /**

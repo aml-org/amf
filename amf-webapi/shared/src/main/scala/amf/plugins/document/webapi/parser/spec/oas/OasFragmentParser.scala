@@ -47,7 +47,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       case Oas20SecurityScheme            => Some(SecuritySchemeFragmentParser(map).parse())
       case Oas20NamedExample              => Some(NamedExampleFragmentParser(map).parse())
       case Oas20Header | Oas30Header =>
-        new ExternalJsonYamlRefsPlugin().parse(root, ctx, platform, ParsingOptions())
+        new ExternalJsonYamlRefsPlugin().parse(root, ctx, ParsingOptions())
       case _ => None
     }).getOrElse {
       val fragment = ExternalFragment()

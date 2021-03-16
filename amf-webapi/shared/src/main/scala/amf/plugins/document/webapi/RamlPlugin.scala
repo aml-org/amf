@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi
 
 import amf._
+import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.errorhandling.ErrorHandler
@@ -10,9 +11,11 @@ import amf.core.parser.{
   EmptyFutureDeclarations,
   LibraryReference,
   LinkReference,
+  ParsedReference,
   ParserContext,
   RefContainer,
-  ReferenceKind
+  ReferenceKind,
+  UnspecifiedReference
 }
 import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -30,6 +33,7 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, R
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
+import amf.plugins.document.webapi.references.RamlReferenceHandler
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{
   Raml08EditingPipeline,
@@ -46,6 +50,8 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
 
   override val vendors: Seq[String] = Seq(vendor.name, Raml.name)
 
+  override def referenceHandler(eh: ErrorHandler) = new RamlReferenceHandler(ID)
+
   def context(wrapped: ParserContext,
               root: Root,
               options: ParsingOptions,
@@ -60,47 +66,15 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
     clean
   }
 
-  override def verifyValidFragment(refVendor: Option[Vendor], refs: Seq[RefContainer], ctx: CompilerContext): Unit =
-    refVendor match {
-      case Some(v) if v.isRaml =>
-        refs.foreach(
-          r =>
-            if (r.fragment.isDefined)
-              ctx.violation(InvalidFragmentRef, "Cannot use reference with # in a RAML fragment", r.node))
-      case _ => // Nothing to do
-    }
-
-  override def verifyReferenceKind(unit: BaseUnit,
-                                   definedKind: ReferenceKind,
-                                   allKinds: Seq[ReferenceKind],
-                                   nodes: Seq[YNode],
-                                   ctx: ParserContext): Unit = {
-    unit match {
-      case _: Module => // if is a library, kind should be LibraryReference
-        if (allKinds.contains(LibraryReference) && allKinds.contains(LinkReference))
-          nodes.foreach(
-            ctx.eh
-              .violation(ExpectedModule, unit.id, "The !include tag must be avoided when referencing a library", _))
-        else if (!LibraryReference.eq(definedKind))
-          nodes.foreach(ctx.eh.violation(ExpectedModule, unit.id, "Libraries must be applied by using 'uses'", _))
-      case _ =>
-        // if is not a library, kind should not be LibraryReference
-        if (LibraryReference.eq(definedKind))
-          nodes.foreach(ctx.eh.violation(InvalidInclude, unit.id, "Fragments must be imported by using '!include'", _))
-    }
-  }
-
   override def specContext(options: RenderOptions): RamlSpecEmitterContext
 
-  override def parse(root: Root,
-                     parentContext: ParserContext,
-                     platform: Platform,
-                     options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
 
     val updated = context(parentContext, root, options)
     inlineExternalReferences(root, updated)
     val clean = cleanContext(parentContext, root, options)
 
+    validateReferences(root.references, parentContext)
     RamlHeader(root) flatMap { // todo review this, should we use the raml web api context for get the version parser?
 
       // Partial raml0.8 fragment with RAML header but linked through !include
@@ -114,6 +88,47 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
       case Raml10Library   => Some(RamlModuleParser(root)(clean).parseModule())
       case f: RamlFragment => RamlFragmentParser(root, f)(updated).parseFragment()
       case _               => None
+    }
+  }
+
+  def validateReferences(references: Seq[ParsedReference], ctx: ParserContext): Unit = references.foreach { ref =>
+    validateJsonPointersToFragments(ref, ctx)
+    validateReferencesToLibraries(ref, ctx)
+  }
+
+  private def validateJsonPointersToFragments(reference: ParsedReference, ctx: ParserContext): Unit = {
+    reference.unit.sourceVendor match {
+      case Some(v) if v.isRaml =>
+        reference.origin.refs.foreach(
+          r =>
+            if (r.fragment.isDefined)
+              ctx.eh.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.node))
+      case _ => // Nothing to do
+    }
+  }
+
+  private def validateReferencesToLibraries(reference: ParsedReference, ctx: ParserContext): Unit = {
+    val refs: Seq[RefContainer] = reference.origin.refs
+    val allKinds                = refs.map(_.linkType)
+    val definedKind             = if (allKinds.size > 1) UnspecifiedReference else allKinds.head
+    val nodes                   = refs.map(_.node)
+    reference.unit match {
+      case _: Module => // if is a library, kind should be LibraryReference
+        if (allKinds.contains(LibraryReference) && allKinds.contains(LinkReference))
+          nodes.foreach(
+            ctx.eh
+              .violation(ExpectedModule,
+                         reference.unit.id,
+                         "The !include tag must be avoided when referencing a library",
+                         _))
+        else if (!LibraryReference.eq(definedKind))
+          nodes.foreach(
+            ctx.eh.violation(ExpectedModule, reference.unit.id, "Libraries must be applied by using 'uses'", _))
+      case _ =>
+        // if is not a library, kind should not be LibraryReference
+        if (LibraryReference.eq(definedKind))
+          nodes.foreach(
+            ctx.eh.violation(InvalidInclude, reference.unit.id, "Fragments must be imported by using '!include'", _))
     }
   }
 

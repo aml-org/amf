@@ -32,7 +32,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
 
   override val ID: String = vendor.name
 
-  override def referenceHandler(eh: ErrorHandler) = new WebApiReferenceHandler(ID, this)
+  override def referenceHandler(eh: ErrorHandler) = new WebApiReferenceHandler(ID)
 
   override def dependencies(): Seq[AMFPlugin] = Seq(
     APIDomainPlugin,
