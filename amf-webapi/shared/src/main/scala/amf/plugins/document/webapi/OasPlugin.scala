@@ -32,7 +32,7 @@ import amf.plugins.document.webapi.resolution.pipelines.{
 import amf.plugins.domain.webapi.models.api.Api
 import org.yaml.model.{YDocument, YNode}
 
-sealed trait OasPlugin extends OasLikePlugin {
+sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
 
   override val vendors: Seq[String] = Seq(vendor.name, Oas.name)
 
@@ -51,6 +51,7 @@ sealed trait OasPlugin extends OasLikePlugin {
 
   override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
     implicit val ctx: OasWebApiContext = context(document.location, document.references, options, parentContext)
+    restrictCrossSpecReferences(document, ctx)
     val parsed = document.referenceKind match {
       case LibraryReference => Some(OasModuleParser(document).parseModule())
       case LinkReference    => Some(OasFragmentParser(document).parseFragment())
