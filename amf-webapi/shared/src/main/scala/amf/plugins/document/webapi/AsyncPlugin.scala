@@ -21,7 +21,7 @@ import amf.plugins.domain.webapi.models.api.Api
 import amf.{Async20Profile, AsyncProfile, ProfileName}
 import org.yaml.model.YDocument
 
-sealed trait AsyncPlugin extends OasLikePlugin {
+sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
 
   override val vendors: Seq[String] = Seq(vendor.name, AsyncApi.name)
 
@@ -37,6 +37,7 @@ sealed trait AsyncPlugin extends OasLikePlugin {
 
   override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
     implicit val ctx: AsyncWebApiContext = context(document.location, document.references, options, parentContext)
+    restrictCrossSpecReferences(document, ctx)
     val parsed = document.referenceKind match {
       case _ => detectAsyncUnit(document)
     }

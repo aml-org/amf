@@ -46,7 +46,7 @@ import amf.plugins.features.validation.CoreValidations.{ExpectedModule, InvalidF
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 
-sealed trait RamlPlugin extends BaseWebApiPlugin {
+sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
 
   override val vendors: Seq[String] = Seq(vendor.name, Raml.name)
 
@@ -71,6 +71,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
   override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
 
     val updated = context(parentContext, root, options)
+    restrictCrossSpecReferences(root, updated)
     inlineExternalReferences(root, updated)
     val clean = cleanContext(parentContext, root, options)
 
@@ -91,18 +92,18 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
     }
   }
 
-  def validateReferences(references: Seq[ParsedReference], ctx: ParserContext): Unit = references.foreach { ref =>
-    validateJsonPointersToFragments(ref, ctx)
-    validateReferencesToLibraries(ref, ctx)
+  private def validateReferences(references: Seq[ParsedReference], ctx: ParserContext): Unit = references.foreach {
+    ref =>
+      validateJsonPointersToFragments(ref, ctx)
+      validateReferencesToLibraries(ref, ctx)
   }
 
   private def validateJsonPointersToFragments(reference: ParsedReference, ctx: ParserContext): Unit = {
     reference.unit.sourceVendor match {
       case Some(v) if v.isRaml =>
-        reference.origin.refs.foreach(
-          r =>
-            if (r.fragment.isDefined)
-              ctx.eh.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.node))
+        reference.origin.refs.filter(_.uriFragment.isDefined).foreach { r =>
+          ctx.eh.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.node)
+        }
       case _ => // Nothing to do
     }
   }
