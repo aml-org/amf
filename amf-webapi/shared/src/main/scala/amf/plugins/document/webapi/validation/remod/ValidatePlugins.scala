@@ -19,7 +19,6 @@ object ModelValidatePlugin extends AMFValidatePlugin {
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     val context = ValidationContext(unit,
                                     options.profileName,
-                                    platform,
                                     messageStyle = options.profileName.messageStyle,
                                     validations = options.validations,
                                     env = options.environment)
@@ -33,13 +32,12 @@ object ModelValidatePlugin extends AMFValidatePlugin {
   override def priority: PluginPriority = HighPriority
 }
 
-object ExampleValidatePlugin extends AMFValidatePlugin {
+object PayloadValidatePlugin extends AMFValidatePlugin {
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     val context = ValidationContext(unit,
                                     options.profileName,
-                                    platform,
                                     messageStyle = options.profileName.messageStyle,
                                     validations = options.validations,
                                     env = options.environment)
@@ -59,7 +57,6 @@ object ParserValidatePlugin extends AMFValidatePlugin {
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     val context = ValidationContext(unit,
                                     options.profileName,
-                                    platform,
                                     messageStyle = options.profileName.messageStyle,
                                     validations = options.validations,
                                     env = options.environment)
