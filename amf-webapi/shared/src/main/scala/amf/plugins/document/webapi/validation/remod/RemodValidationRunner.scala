@@ -1,4 +1,4 @@
-package amf.plugins.document.webapi.validation
+package amf.plugins.document.webapi.validation.remod
 
 import amf.ProfileName
 import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions}
@@ -12,7 +12,7 @@ trait RemodValidationRunner {
 
   def run(unit: BaseUnit)(implicit executionContext: ExecutionContext): Future[AMFValidationReport]
 
-  protected def emptyReport(unit: BaseUnit, profile: ProfileName) = AMFValidationReport.empty(unit.id, profile)
+  protected def emptyReport(unit: BaseUnit, profile: ProfileName): AMFValidationReport = AMFValidationReport.empty(unit.id, profile)
 }
 
 object RemodValidationRunnerFactory {

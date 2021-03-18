@@ -15,14 +15,18 @@ import scala.concurrent.{ExecutionContext, Future}
 case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
 
   val candidates: Seq[ValidationCandidate] = PayloadsInApiCollector(baseUnit) ++
-    ShapeFacetsCandidatesCollector(baseUnit, platform) ++
-    ExtensionsCandidatesCollector(baseUnit, platform)
+    ShapeFacetsCandidatesCollector(baseUnit) ++
+    ExtensionsCandidatesCollector(baseUnit)
 
   val index: DataNodeIndex = {
-    val nodes = candidates
+    val nodes = getCandidateNodes
+    DataNodeIndex(nodes)
+  }
+
+  private def getCandidateNodes = {
+    candidates
       .filter(_.payload.fields.exists(PayloadFragmentModel.Encodes))
       .map(_.payload.encodes) ++ candidates.map(_.shape).distinct.flatMap(_.values)
-    DataNodeIndex(nodes)
   }
 
   def validate(env: Environment)(implicit executionContext: ExecutionContext): Future[Seq[AMFValidationResult]] = {

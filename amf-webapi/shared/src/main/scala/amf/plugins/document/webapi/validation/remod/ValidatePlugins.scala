@@ -1,10 +1,10 @@
-package amf.plugins.document.webapi.validation
+package amf.plugins.document.webapi.validation.remod
 
-import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
 import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions}
+import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
 import amf.core.model.document.BaseUnit
 import amf.core.validation.AMFValidationReport
-import amf.plugins.document.webapi.validation.runner.{EmptyResultContainer, ValidationContext}
+import amf.plugins.document.webapi.validation.runner.ValidationContext
 import amf.plugins.document.webapi.validation.runner.steps.{
   ExamplesValidationStep,
   ModelValidationStep,
@@ -23,9 +23,7 @@ object ModelValidatePlugin extends AMFValidatePlugin {
                                     messageStyle = options.profileName.messageStyle,
                                     validations = options.validations,
                                     env = options.environment)
-    ModelValidationStep(context).run(EmptyResultContainer).map { container =>
-      AMFValidationReport(container.valid, context.baseUnit.id, context.profile, container.results)
-    }
+    ModelValidationStep(context).run
   }
 
   override val id: String = "somethingAnother"
@@ -45,9 +43,7 @@ object ExampleValidatePlugin extends AMFValidatePlugin {
                                     messageStyle = options.profileName.messageStyle,
                                     validations = options.validations,
                                     env = options.environment)
-    ExamplesValidationStep(context).run(EmptyResultContainer).map { container =>
-      AMFValidationReport(container.valid, context.baseUnit.id, context.profile, container.results)
-    }
+    ExamplesValidationStep(context).run
   }
 
   override val id: String = "somethingElse"
@@ -67,9 +63,7 @@ object ParserValidatePlugin extends AMFValidatePlugin {
                                     messageStyle = options.profileName.messageStyle,
                                     validations = options.validations,
                                     env = options.environment)
-    ParserValidationStep(context).run(EmptyResultContainer).map { container =>
-      AMFValidationReport(container.valid, context.baseUnit.id, context.profile, container.results)
-    }
+    ParserValidationStep(context).run
   }
 
   override val id: String = "something" // TODO: change
