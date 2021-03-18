@@ -1,6 +1,7 @@
 package amf.client.commands
 
 import amf.client.convert.WebApiRegister
+import amf.client.remod.AMFConfiguration
 import amf.core.client.ParserConfig
 import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler

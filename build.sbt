@@ -98,11 +98,12 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .disablePlugins(SonarPlugin)
 
 lazy val webapiJVM =
-  webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(coreJVMRef, coreLibJVM)
+  webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(coreJVMRef, coreLibJVM).sourceDependency(customValidationJVMRef, customValidationLibJVM)
 lazy val webapiJS =
   webapi.js
     .in(file("./amf-webapi/js"))
     .sourceDependency(coreJSRef, coreLibJS)
+    .sourceDependency(customValidationJSRef, customValidationLibJS)
     .disablePlugins(SonarPlugin)
 
 /** **********************************************
@@ -153,8 +154,8 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
   .disablePlugins(SonarPlugin)
 
 lazy val clientJVM =
-  client.jvm.in(file("./amf-client/jvm")).sourceDependency(customValidationJVMRef, customValidationLibJVM)
-lazy val clientJS = client.js.in(file("./amf-client/js")).sourceDependency(customValidationJSRef, customValidationLibJS)
+  client.jvm.in(file("./amf-client/jvm"))
+lazy val clientJS = client.js.in(file("./amf-client/js"))
 
 // Tasks
 

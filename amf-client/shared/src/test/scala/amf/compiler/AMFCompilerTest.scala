@@ -1,5 +1,6 @@
 package amf.compiler
 
+import amf.client.environment.{APIConfiguration, RAMLConfiguration}
 import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.client.remote.Content
 import amf.core.Root

@@ -1,5 +1,7 @@
 package amf.cycle
 
+import amf.client.environment.WebAPIConfiguration
+import amf.client.remod.AMFConfiguration
 import amf.core.CompilerContextBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.parser.UnspecifiedReference
