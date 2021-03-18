@@ -108,10 +108,19 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
       executionEnv: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
 
     // Before validating we need to resolve to get all the model information
+    validate(baseUnit, profile, validations, env, resolved)(executionEnv.executionContext)
+  }
+
+  private def validate(baseUnit: BaseUnit,
+                       profile: ProfileName,
+                       validations: EffectiveValidations,
+                       env: Environment,
+                       resolved: Boolean)(implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+    // Before validating we need to resolve to get all the model information
     val plugins = Seq(ParserValidatePlugin, ModelValidatePlugin, ExampleValidatePlugin)
     RemodValidationRunnerFactory
       .build(plugins, new ValidationOptions(profile, env, validations))
-      .run(baseUnit)(executionEnv.executionContext)
+      .run(baseUnit)
   }
 
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
