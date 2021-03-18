@@ -3,7 +3,7 @@ package amf.plugins.document.webapi
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document._
@@ -66,17 +66,18 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     new JsonSchemaWebApiContext(loc, refs, wrapped, ds, options, JSONSchemaUnspecifiedVersion)
   }
 
-  override protected def unparseAsYDocument(
-      unit: BaseUnit,
-      renderOptions: RenderOptions,
-      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
+  override protected def unparseAsYDocument(unit: BaseUnit,
+                                            renderOptions: RenderOptions,
+                                            errorHandler: ErrorHandler): Option[YDocument] =
     unit match {
       case d: DeclaresModel =>
         // The root element of the JSON Schema must be identified with the annotation [[JSONSchemaRoot]]
         val root = d.declares.find(d => d.annotations.contains(classOf[JSONSchemaRoot]) && d.isInstanceOf[AnyShape])
         root match {
           case Some(r: AnyShape) =>
-            Some(JsonSchemaEmitter(r, d.declares, options = shapeRenderOptions).emitDocument())
+            Some(
+              JsonSchemaEmitter(r, d.declares, options = renderOptions.shapeRenderOptions, errorHandler = errorHandler)
+                .emitDocument())
           case _ => None
         }
       case _ => None

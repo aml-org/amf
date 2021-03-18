@@ -1,7 +1,8 @@
 package amf.plugins.document.webapi.contexts.emitter.async
 
 import amf.core.emitter.BaseEmitters.MapEntryEmitter
-import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, ShapeRenderOptions, SpecOrdering}
+import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
+import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit

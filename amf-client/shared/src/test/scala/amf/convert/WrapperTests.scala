@@ -13,13 +13,16 @@ import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
 import amf.client.resolve._
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
-import amf.core.errorhandling.StaticErrorCollector
+import amf.core.AMFSerializer
+import amf.core.errorhandling.{ErrorHandler, StaticErrorCollector}
 import amf.core.exception.UnsupportedVendorException
 import amf.core.model.document.{Document => InternalDocument}
+import amf.plugins.domain.webapi.models.api.{WebApi => InternalWebApi}
 import amf.core.model.domain.{
   ArrayNode => InternalArrayNode,
   ObjectNode => InternalObjectNode,
-  ScalarNode => InternalScalarNode
+  ScalarNode => InternalScalarNode,
+  Shape => InternalShape
 }
 import amf.core.parser.Range
 import amf.core.remote._
@@ -36,6 +39,8 @@ import amf.plugins.domain.webapi.models.{CorrelationId => InternalCorrelationId}
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.mulesoft.common.test.Diff
 import org.yaml.builder.JsonOutputBuilder
+import amf.core.emitter.{RenderOptions => InternalRenderOptions, ShapeRenderOptions => InternalShapeRenderOptions}
+import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -2395,6 +2400,34 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     } yield {
       assert(!report.conforms)
       assert(report.results.asSeq.size == 1)
+    }
+  }
+
+  test("Error handler provided in render options works correctly") {
+    case class CustomShape() extends InternalShape {
+      override def cloneShape(recursionErrorHandler: Option[ErrorHandler],
+                              recursionBase: Option[String],
+                              traversed: amf.core.traversal.ModelTraversalRegistry,
+                              cloneExample: Boolean): amf.core.model.domain.Shape = this
+      override def meta: amf.core.metamodel.Obj                                   = NodeShapeModel
+      override def linkCopy(): amf.core.model.domain.Linkable                     = this
+      override def componentId: String                                            = ""
+      override val fields: amf.core.parser.Fields                                 = amf.core.parser.Fields()
+      override val annotations: amf.core.parser.Annotations                       = amf.core.parser.Annotations()
+      override protected def classConstructor
+        : (amf.core.parser.Fields,
+           amf.core.parser.Annotations) => amf.core.model.domain.Linkable with amf.core.model.domain.DomainElement =
+        (_, _) => CustomShape()
+    }
+    val eh = DefaultErrorHandler()
+    val unit: InternalDocument = InternalDocument()
+      .withEncodes(InternalWebApi())
+      .withDeclares(Seq(CustomShape()))
+    for {
+      _ <- AMF.init().asFuture
+      _ <- AMFSerializer(unit, "application/yaml", Raml10.name, new InternalRenderOptions().withErrorHandler(eh)).renderToString
+    } yield {
+      assert(eh.getErrors.head.message == "Cannot emit non WebApi shape")
     }
   }
 

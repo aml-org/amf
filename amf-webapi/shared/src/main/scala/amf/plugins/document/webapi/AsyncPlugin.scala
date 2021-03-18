@@ -2,7 +2,7 @@ package amf.plugins.document.webapi
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
@@ -27,7 +27,7 @@ sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
 
   override val validVendorsToReference: Seq[Vendor] = Seq(Raml10)
 
-  override def specContext(options: RenderOptions): AsyncSpecEmitterContext
+  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): AsyncSpecEmitterContext
 
   def context(loc: String,
               refs: Seq[ParsedReference],
@@ -76,8 +76,8 @@ sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
 
 object Async20Plugin extends AsyncPlugin {
 
-  override def specContext(options: RenderOptions): AsyncSpecEmitterContext =
-    new Async20SpecEmitterContext(options.errorHandler)
+  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): AsyncSpecEmitterContext =
+    new Async20SpecEmitterContext(errorHandler)
 
   override protected def vendor: Vendor = AsyncApi20
 
@@ -102,14 +102,15 @@ object Async20Plugin extends AsyncPlugin {
     case _           => false
   }
 
-  override protected def unparseAsYDocument(
-      unit: BaseUnit,
-      renderOptions: RenderOptions,
-      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] = unit match {
+  override protected def unparseAsYDocument(unit: BaseUnit,
+                                            renderOptions: RenderOptions,
+                                            errorHandler: ErrorHandler): Option[YDocument] =
+    unit match {
 
-    case document: Document => Some(new AsyncApi20DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
-    case _                  => None
-  }
+      case document: Document =>
+        Some(new AsyncApi20DocumentEmitter(document)(specContext(renderOptions, errorHandler)).emitDocument())
+      case _ => None
+    }
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document

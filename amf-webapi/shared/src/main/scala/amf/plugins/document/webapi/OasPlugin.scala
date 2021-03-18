@@ -3,7 +3,7 @@ package amf.plugins.document.webapi
 import amf._
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
@@ -36,7 +36,7 @@ sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
 
   override val vendors: Seq[String] = Seq(vendor.name, Oas.name)
 
-  override def specContext(options: RenderOptions): OasSpecEmitterContext
+  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): OasSpecEmitterContext
 
   /**
     * Does references in this type of documents be recursive?
@@ -94,8 +94,8 @@ sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
 
 object Oas20Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions): OasSpecEmitterContext =
-    new Oas2SpecEmitterContext(options.errorHandler, compactEmission = options.isWithCompactedEmission)
+  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): OasSpecEmitterContext =
+    new Oas2SpecEmitterContext(errorHandler, compactEmission = options.isWithCompactedEmission)
 
   override protected def vendor: Vendor = Oas20
 
@@ -122,16 +122,17 @@ object Oas20Plugin extends OasPlugin {
     case _           => false
   }
 
-  override protected def unparseAsYDocument(
-      unit: BaseUnit,
-      renderOptions: RenderOptions,
-      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
+  override protected def unparseAsYDocument(unit: BaseUnit,
+                                            renderOptions: RenderOptions,
+                                            errorHandler: ErrorHandler): Option[YDocument] =
     unit match {
-      case module: Module             => Some(Oas20ModuleEmitter(module)(specContext(renderOptions)).emitModule())
-      case document: Document         => Some(Oas2DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
+      case module: Module => Some(Oas20ModuleEmitter(module)(specContext(renderOptions, errorHandler)).emitModule())
+      case document: Document =>
+        Some(Oas2DocumentEmitter(document)(specContext(renderOptions, errorHandler)).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
-      case _                          => None
+      case fragment: Fragment =>
+        Some(new OasFragmentEmitter(fragment)(specContext(renderOptions, errorHandler)).emitFragment())
+      case _ => None
     }
 
   /**
@@ -159,8 +160,8 @@ object Oas20Plugin extends OasPlugin {
 
 object Oas30Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions): Oas3SpecEmitterContext =
-    new Oas3SpecEmitterContext(options.errorHandler, compactEmission = options.isWithCompactedEmission)
+  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): Oas3SpecEmitterContext =
+    new Oas3SpecEmitterContext(errorHandler, compactEmission = options.isWithCompactedEmission)
 
   override protected def vendor: Vendor = Oas30
 
@@ -187,16 +188,17 @@ object Oas30Plugin extends OasPlugin {
     case _           => false
   }
 
-  override protected def unparseAsYDocument(
-      unit: BaseUnit,
-      renderOptions: RenderOptions,
-      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
+  override protected def unparseAsYDocument(unit: BaseUnit,
+                                            renderOptions: RenderOptions,
+                                            errorHandler: ErrorHandler): Option[YDocument] =
     unit match {
-      case module: Module             => Some(Oas30ModuleEmitter(module)(specContext(renderOptions)).emitModule())
-      case document: Document         => Some(Oas3DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
+      case module: Module => Some(Oas30ModuleEmitter(module)(specContext(renderOptions, errorHandler)).emitModule())
+      case document: Document =>
+        Some(Oas3DocumentEmitter(document)(specContext(renderOptions, errorHandler)).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
-      case _                          => None
+      case fragment: Fragment =>
+        Some(new OasFragmentEmitter(fragment)(specContext(renderOptions, errorHandler)).emitFragment())
+      case _ => None
     }
 
   /**
