@@ -12,7 +12,7 @@ import amf.validations.PayloadValidations
 
 import scala.concurrent.{ExecutionContext, Future}
 
-case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
+case class UnitPayloadsValidation(baseUnit: BaseUnit) {
 
   val candidates: Seq[ValidationCandidate] = PayloadsInApiCollector(baseUnit) ++
     ShapeFacetsCandidatesCollector(baseUnit) ++

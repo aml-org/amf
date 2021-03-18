@@ -11,7 +11,5 @@ trait ValidationStep {
 
   final def run()(implicit executionContext: ExecutionContext): Future[AMFValidationReport] = validate()
 
-  protected def validate(): Future[AMFValidationReport]
-
-  def endStep: Boolean
+  protected def validate()(implicit executionContext: ExecutionContext): Future[AMFValidationReport]
 }

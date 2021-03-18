@@ -11,12 +11,11 @@ import amf.core.benchmark.ExecutionLog.log
 
 import scala.concurrent.{ExecutionContext, Future}
 
-case class ModelValidationStep(override val validationContext: ValidationContext)(
-    implicit executionContext: ExecutionContext)
+case class ModelValidationStep(override val validationContext: ValidationContext)
     extends ValidationStep
     with ShaclReportAdaptation {
 
-  override protected def validate(): Future[AMFValidationReport] = {
+  override protected def validate()(implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     val baseOptions                = FilterDataNodeOptions().withMessageStyle(validationContext.messageStyle)
     val options: ValidationOptions = computeValidationExtent(baseOptions)
     log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
@@ -43,11 +42,5 @@ case class ModelValidationStep(override val validationContext: ValidationContext
         baseOptions.withFullValidation()
     }
     options
-  }
-
-  override def endStep: Boolean = true
-
-  private def buildValidationResult(r: ValidationResult): Option[AMFValidationResult] = {
-    adaptToAmfResult(validationContext.baseUnit, r, validationContext.messageStyle, validationContext.validations)
   }
 }
