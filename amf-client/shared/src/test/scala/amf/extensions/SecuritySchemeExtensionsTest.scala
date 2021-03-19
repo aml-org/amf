@@ -105,7 +105,7 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
   }
 
   private def renderToString(unit: BaseUnit, vendor: String): Future[String] =
-    AMFSerializer(unit, "application/json", vendor, RenderOptions()).renderToString
+    new AMFSerializer(unit, "application/json", vendor, RenderOptions()).renderToString
 
   private def parse(url: String, vendor: String, hint: Hint): Future[BaseUnit] = {
     AMFCompiler(url,

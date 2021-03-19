@@ -49,7 +49,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
 
     for {
       _ <- Validation(platform) // in order to initialize
-      s <- AMFSerializer(fragment, "application/amf+yaml", Payload.name, RenderOptions()).renderToString
+      s <- new AMFSerializer(fragment, "application/amf+yaml", Payload.name, RenderOptions()).renderToString
     } yield {
       s should be("1\n") // without cuotes
     }
@@ -68,7 +68,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
         |   format: int""".stripMargin
     for {
       _ <- Validation(platform) // in order to initialize
-      s <- AMFSerializer(m, "application/raml+yaml", Raml.name, RenderOptions()).renderToString
+      s <- new AMFSerializer(m, "application/raml+yaml", Raml.name, RenderOptions()).renderToString
     } yield {
       val diffs = Diff.ignoreAllSpace.diff(s, e)
       if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")

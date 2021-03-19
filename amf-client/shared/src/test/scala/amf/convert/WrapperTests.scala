@@ -2425,7 +2425,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       .withDeclares(Seq(CustomShape()))
     for {
       _ <- AMF.init().asFuture
-      _ <- AMFSerializer(unit, "application/yaml", Raml10.name, new InternalRenderOptions().withErrorHandler(eh)).renderToString
+      _ <- new AMFSerializer(unit, "application/yaml", Raml10.name, new InternalRenderOptions().withErrorHandler(eh)).renderToString
     } yield {
       assert(eh.getErrors.head.message == "Cannot emit non WebApi shape")
     }

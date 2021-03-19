@@ -46,7 +46,7 @@ class YDocumentBuilderTest extends DocBuilderTest {
 
   override def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
     val builder: YDocumentBuilder = new YDocumentBuilder()
-    val renderer                  = AMFSerializer(unit, "application/ld+json", "AMF Graph", options)
+    val renderer                  = new AMFSerializer(unit, "application/ld+json", "AMF Graph", options)
     renderer
       .renderToBuilder(builder)
       .map(_ => {
