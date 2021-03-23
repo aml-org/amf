@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: Something
+/tests/{str1}/{str2}:
+  uriParameters:
+    str1: string?
+    str2: string | nil
+  get:
+    displayName: fetchTest
+    responses:
+      200:
+        body:
+          type: string
+/tests:
+  get:
+    displayName: fetchTest
+    queryParameters:
+      str1: string?
+      str2: string | nil
+    responses:
+      200:
+        body:
+          type: string
+
+/tests2:
+  get:
+    displayName: fetchTest
+    headers:
+      str1: string?
+      str2: string | nil
+    responses:
+      200:
+        body:
+          type: string
