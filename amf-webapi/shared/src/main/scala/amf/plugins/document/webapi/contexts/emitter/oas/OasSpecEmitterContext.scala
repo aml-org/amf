@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.contexts.emitter.oas
 import amf.core.emitter.BaseEmitters.MapEntryEmitter
 import amf.core.emitter._
+import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
@@ -13,7 +14,12 @@ import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, 
 import amf.plugins.document.webapi.contexts.{RefEmitter, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationTypeEmitter, FacetsInstanceEmitter, OasAnnotationTypeEmitter, OasFacetsInstanceEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
+  AnnotationTypeEmitter,
+  FacetsInstanceEmitter,
+  OasAnnotationTypeEmitter,
+  OasFacetsInstanceEmitter
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.emitters._

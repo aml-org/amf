@@ -4,7 +4,7 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.client.render.JsonSchemaDraft7
 import amf.core.client.ParsingOptions
-import amf.core.emitter.ShapeRenderOptions
+import amf.client.remod.amfcore.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
@@ -145,13 +145,13 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
   private def generateSchemaString(dataType: DataTypeFragment,
                                    validationProcessor: ValidationProcessor): Option[CharSequence] = {
     val errorHandler = DefaultParserErrorHandler.withRun()
-    val renderOptions = new ShapeRenderOptions().withoutDocumentation.withCompactedEmission
+    val renderOptions = ShapeRenderOptions().withoutDocumentation.withCompactedEmission
       .withSchemaVersion(JsonSchemaDraft7)
-      .withErrorHandler(errorHandler)
       .withEmitWarningForUnsupportedValidationFacets(true)
     val declarations = List(dataType.encodes)
-    val emitter      = JsonSchemaEmitter(dataType.encodes, declarations, options = renderOptions)
-    val document     = SyamlParsedDocument(document = emitter.emitDocument())
+    val emitter =
+      JsonSchemaEmitter(dataType.encodes, declarations, options = renderOptions, errorHandler = errorHandler)
+    val document = SyamlParsedDocument(document = emitter.emitDocument())
     validationProcessor.keepResults(errorHandler.getErrors)
     SYamlSyntaxPlugin.unparse("application/json", document)
   }

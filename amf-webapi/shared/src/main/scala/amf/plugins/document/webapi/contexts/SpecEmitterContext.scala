@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.contexts
 
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
+import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}

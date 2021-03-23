@@ -32,7 +32,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val expectedFile             = "validation_profile_example_gold.yaml"
     val exampleFile              = "validation_profile_example.yaml"
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
-    cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
+    cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
   test("prefixes can be loaded") {
@@ -50,7 +50,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val exampleFile              = "validation_profile_prefixes.yaml.jsonld"
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
     val validation               = Validation(platform)
-    cycle(exampleFile, AmfJsonHint, Yaml, Raml).zip(expected).map(checkDiff)
+    cycle(exampleFile, AmfJsonHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with inplace definition of encodes") {
@@ -58,7 +58,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val exampleFile              = "validation_profile_example.yaml"
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
     val validation               = Validation(platform)
-    cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
+    cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with inplace definition of range") {
@@ -66,7 +66,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val exampleFile              = "validation_profile_example.yaml"
     val validation               = Validation(platform)
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
-    cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
+    cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
   test("Loading and serializing validations with union type") {
@@ -74,7 +74,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     val exampleFile              = "validation_profile_example.yaml"
     val validation               = Validation(platform)
     val expected: Future[String] = platform.resolve(basePath + expectedFile).map(_.stream.toString)
-    cycle(exampleFile, VocabularyYamlHint, Yaml, Raml).zip(expected).map(checkDiff)
+    cycle(exampleFile, VocabularyYamlHint, Yaml, Aml).zip(expected).map(checkDiff)
   }
 
 }
