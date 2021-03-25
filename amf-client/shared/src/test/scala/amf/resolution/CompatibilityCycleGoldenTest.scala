@@ -152,4 +152,24 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     )
   }
 
+  test("Base accepts and content-type are propagated to payloads") {
+    cycle(
+      "oas20/propagate-base-produces-and-consumes.json",
+      "cycled-apis/raml/propagate-base-produces-and-consumes.raml",
+      OasYamlHint,
+      Raml,
+      transformWith = Some(Raml10)
+    )
+  }
+
+  test("Accepts and content-type are propagated to payloads with override") {
+    cycle(
+      "oas20/propagate-produces-and-consumes-with-overrides.json",
+      "cycled-apis/raml/propagate-produces-and-consumes-with-overrides.raml",
+      OasYamlHint,
+      Raml,
+      transformWith = Some(Raml10)
+    )
+  }
+
 }
