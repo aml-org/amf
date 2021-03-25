@@ -49,6 +49,6 @@ object ShapesNodesValidator {
 
   def defaultMediaTypeFor(dataNode: DataNode): String = dataNode match {
     case s: ScalarNode if s.value.option().exists(_.isXml) => "application/xml"
-    case other                                             => "application/json"
+    case _                                                 => "application/json"
   }
 }

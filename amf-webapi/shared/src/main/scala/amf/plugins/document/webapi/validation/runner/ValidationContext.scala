@@ -8,7 +8,6 @@ import amf.{MessageStyle, ProfileName}
 
 case class ValidationContext(baseUnit: BaseUnit,
                              profile: ProfileName,
-                             platform: Platform,
                              messageStyle: MessageStyle,
                              validations: EffectiveValidations,
                              env: Environment)

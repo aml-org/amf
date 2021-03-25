@@ -21,7 +21,7 @@ class PayloadsInApiCollector(model: BaseUnit) {
     findCandidates()
   }
 
-  private def anyShapeRestrictions =
+  private val anyShapeRestrictions =
     Seq(AnyShapeModel.Values,
         AnyShapeModel.Inherits,
         AnyShapeModel.Or,
@@ -34,7 +34,7 @@ class PayloadsInApiCollector(model: BaseUnit) {
     val shapesCollector    = mutable.Map[String, Shape]()
 
     model.iterator().foreach {
-      case shape: AnyShape if shape.meta == AnyShapeModel && !anyShapeRestrictions.exists(shape.fields.exists) => // ignore any shape without logical restrictions, any payload it's valid
+      case shape: AnyShape if isStrictAnyShape(shape) && !anyShapeRestrictions.exists(shape.fields.exists) => // ignore any shape without logical restrictions, any payload it's valid
       case shape: AnyShape if candidateCollector.keys.exists(_.equals(shape.id)) =>
         collectFromExistingShape(candidateCollector, shape)
       case shape: AnyShape =>
@@ -59,6 +59,8 @@ class PayloadsInApiCollector(model: BaseUnit) {
       case _ => Nil
     }.toSeq
   }
+
+  private def isStrictAnyShape(shape: AnyShape) = shape.meta == AnyShapeModel
 
   private def collectFromNewShape(results: mutable.Map[String, Seq[CollectedElement]],
                                   shapes: mutable.Map[String, Shape],

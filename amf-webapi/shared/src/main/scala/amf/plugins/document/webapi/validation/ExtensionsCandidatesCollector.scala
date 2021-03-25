@@ -8,7 +8,7 @@ import amf.core.model.domain.extensions.{DomainExtension, Extension, ShapeExtens
 import amf.core.remote.Platform
 import amf.core.validation.ValidationCandidate
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.resolveAnnotation
-class ExtensionsCandidatesCollector(model: BaseUnit, platform: Platform) {
+class ExtensionsCandidatesCollector(model: BaseUnit) {
 
   def collect(): Seq[ValidationCandidate] = {
     val domainExtensionsWithTypes = findExtensionsWithTypes()
@@ -43,6 +43,6 @@ class ExtensionsCandidatesCollector(model: BaseUnit, platform: Platform) {
 }
 
 object ExtensionsCandidatesCollector {
-  def apply(model: BaseUnit, platform: Platform): Seq[ValidationCandidate] =
-    new ExtensionsCandidatesCollector(model, platform).collect()
+  def apply(model: BaseUnit): Seq[ValidationCandidate] =
+    new ExtensionsCandidatesCollector(model).collect()
 }
