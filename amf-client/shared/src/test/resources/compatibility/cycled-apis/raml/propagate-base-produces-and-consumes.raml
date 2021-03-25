@@ -78,50 +78,23 @@ annotationTypes:
     type: any
   amf-and:
     type: any
-securitySchemes:
-  basic:
-    type: Basic Authentication
-    description: Basic HTTP Authentication
-  apiKey:
-    type: x-apiKey
-    description: API Key
-    describedBy:
-      headers:
-        default?:
-          type: any
-  oauth2Scheme:
-    type: OAuth 2.0
-    settings:
-      authorizationUri: http://swagger.io/api/oauth/dialog
-      accessTokenUri: ""
-      scopes:
-        - write:pets
-        - read:pets
-      authorizationGrants:
-        - implicit
-title: Secured API
-baseUri: secured.api.com/
-version: v1
+title: test API
+mediaType:
+  - application/vnd.api+json
+  - application/yaml
+version: "1.0"
 protocols:
   - HTTPS
-/ping:
+/test:
   get:
-    displayName: ping
-    (amf-summary): Checks if service is capable of responding to requests
-    (amf-tags):
-      - ping
-    (amf-consumes): []
-    (amf-produces):
-      - application/json
-      - application/xml
+    body:
+      application/vnd.api+json:
+        type: string
     responses:
       "200":
-        description: OK
+        description: Successfully returned a collection of quotes
         body:
-          application/json:
-            type: object
-          application/xml:
-            type: object
-securedBy:
-  - basic
-  - apiKey
+          application/vnd.api+json:
+            type: integer
+          application/yaml:
+            type: integer

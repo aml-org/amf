@@ -6,6 +6,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.raml._
 import amf.plugins.domain.webapi.resolution.stages.{
   AnnotationRemovalStage,
+  MediaTypeResolutionStage,
   RamlCompatiblePayloadAndParameterResolutionStage
 }
 import amf.{ProfileName, RamlProfile}
@@ -15,6 +16,7 @@ class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends Resolutio
   override val steps: Seq[ResolutionStage] = Seq(
     new MandatoryDocumentationTitle(),
     new MandatoryAnnotationType(),
+    new MediaTypeResolutionStage(RamlProfile, keepEditingInfo = true),
     new DefaultPayloadMediaType(),
     new MandatoryCreativeWorkFields(),
     new DefaultToNumericDefaultResponse(),
