@@ -116,35 +116,26 @@ case class Raml10ParameterParser(entry: YMapEntry,
             parameter
           case _ => // we have a property type
             entry.value.to[YScalar] match {
-              case Right(ref) if ctx.declarations.findParameter(ref.text, scope).isDefined =>
+              case Right(ref) if referencesDeclaredParameter(scope, ref) =>
                 ctx.declarations
                   .findParameter(ref.text, scope)
                   .get
                   .link(ref.text, Annotations(entry))
                   .asInstanceOf[Parameter]
                   .set(ParameterModel.Name, name.text())
-              case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
-                val shape: Shape = ctx.declarations
-                  .findType(ref.text,
-                            scope,
-                            Some((s: String) => ctx.eh.violation(InvalidFragmentType, parameter.id, s, entry.value)))
-                  .get
-                  .link[Shape](ref.text, Annotations(entry))
-                parameter.withSchema(shape.withName("schema").adopted(parameter.id))
-              case Right(ref) if wellKnownType(ref.text, isRef = true) =>
-                val shape: Shape = parseWellKnownTypeRef(ref.text)
-                val schema       = shape.withName("schema").adopted(parameter.id)
-                parameter.withSchema(schema)
-
-              case Right(ref) if isTypeExpression(ref.text) =>
-                RamlExpressionParser.parse(shape => shape.withName("schema").adopted(parameter.id),
-                                           expression = ref.text,
-                                           part = ref) match {
-                  case Some(schema) => parameter.withSchema(schema)
-                  case _ =>
+              case Right(_) =>
+                Raml10TypeParser(
+                  entry,
+                  shape => shape.withName("schema", Annotations(SynthesizedField())).adopted(parameter.id),
+                  TypeInfo(isPropertyOrParameter = true),
+                  StringDefaultType)
+                  .parse() match {
+                  case Some(schema) =>
+                    parameter.set(ParameterModel.Schema, tracking(schema, parameter.id), Annotations(entry))
+                  case None =>
                     ctx.eh.violation(UnresolvedReference,
                                      parameter.id,
-                                     s"Cannot parse type expression for unresolved parameter '${parameter.name}'",
+                                     "Cannot declare unresolved parameter",
                                      entry.value)
                     parameter
                 }
@@ -169,6 +160,14 @@ case class Raml10ParameterParser(entry: YMapEntry,
     }
 
     p
+  }
+
+  private def referencesDeclaredType(scope: SearchScope.Scope, ref: YScalar) = {
+    ctx.declarations.findType(ref.text, scope).isDefined
+  }
+
+  private def referencesDeclaredParameter(scope: SearchScope.Scope, ref: YScalar) = {
+    ctx.declarations.findParameter(ref.text, scope).isDefined
   }
 }
 
