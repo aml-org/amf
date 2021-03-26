@@ -1,5 +1,5 @@
 package amf.plugins.domain.webapi.models.bindings.kafka
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
@@ -14,7 +14,7 @@ class KafkaMessageBinding(override val fields: Fields, override val annotations:
     with Key {
 
   override protected def bindingVersionField: Field = BindingVersion
-  override def meta: Obj                            = KafkaMessageBindingModel
+  override def meta: KafkaMessageBindingModel.type  = KafkaMessageBindingModel
 
   def messageKey: Shape              = fields.field(MessageKey)
   def withKey(key: Shape): this.type = set(MessageKey, key)

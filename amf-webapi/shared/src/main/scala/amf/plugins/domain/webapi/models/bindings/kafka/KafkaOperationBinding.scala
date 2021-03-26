@@ -1,5 +1,5 @@
 package amf.plugins.domain.webapi.models.bindings.kafka
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
@@ -16,7 +16,7 @@ class KafkaOperationBinding(override val fields: Fields, override val annotation
   def groupId: Shape  = fields.field(GroupId)
   def clientId: Shape = fields.field(ClientId)
 
-  override def meta: Obj = KafkaOperationBindingModel
+  override def meta: KafkaOperationBindingModel.type = KafkaOperationBindingModel
 
   override def componentId: String = "/kafka-operation"
 

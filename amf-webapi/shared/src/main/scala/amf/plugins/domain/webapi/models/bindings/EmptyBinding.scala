@@ -1,5 +1,4 @@
 package amf.plugins.domain.webapi.models.bindings
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
@@ -16,7 +15,7 @@ class EmptyBinding(override val fields: Fields, override val annotations: Annota
     with MessageBinding
     with Key {
 
-  override def meta: Obj = EmptyBindingModel
+  override def meta: EmptyBindingModel.type = EmptyBindingModel
 
   def `type`: StrField = fields.field(Type)
 

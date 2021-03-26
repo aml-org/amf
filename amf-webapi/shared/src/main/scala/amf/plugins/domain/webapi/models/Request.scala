@@ -51,7 +51,7 @@ class Request(override val fields: Fields, override val annotations: Annotations
     result
   }
 
-  override def meta: Obj = RequestModel
+  override def meta: RequestModel.type = RequestModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/" + name.option().getOrElse("request").urlComponentEncoded

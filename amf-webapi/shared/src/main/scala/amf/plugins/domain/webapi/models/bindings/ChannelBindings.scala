@@ -13,7 +13,7 @@ case class ChannelBindings(fields: Fields, annotations: Annotations) extends Nam
   def bindings: Seq[ChannelBinding]                          = fields.field(Bindings)
   def withBindings(bindings: Seq[ChannelBinding]): this.type = setArray(Bindings, bindings)
 
-  override def meta: Obj = ChannelBindingsModel
+  override def meta: ChannelBindingsModel.type = ChannelBindingsModel
 
   override def nameField: Field = Name
 

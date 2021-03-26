@@ -1,5 +1,5 @@
 package amf.plugins.domain.webapi.models.bindings.mqtt
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.parser.{Annotations, Fields}
@@ -14,7 +14,7 @@ class MqttServerBinding(override val fields: Fields, override val annotations: A
     with BindingVersion
     with Key {
   override protected def bindingVersionField: Field = BindingVersion
-  override def meta: Obj                            = MqttServerBindingModel
+  override def meta: MqttServerBindingModel.type    = MqttServerBindingModel
 
   def clientId: StrField           = fields.field(ClientId)
   def cleanSession: BoolField      = fields.field(CleanSession)
@@ -45,7 +45,7 @@ object MqttServerBinding {
 }
 
 class MqttServerLastWill(override val fields: Fields, override val annotations: Annotations) extends DomainElement {
-  override def meta: Obj = MqttServerLastWillModel
+  override def meta: MqttServerLastWillModel.type = MqttServerLastWillModel
 
   def topic: StrField   = fields.field(Topic)
   def qos: IntField     = fields.field(Qos)

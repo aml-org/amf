@@ -13,10 +13,10 @@ class Amqp091MessageBinding(override val fields: Fields, override val annotation
     with BindingVersion
     with Key {
 
-  def contentEncoding: StrField                     = fields.field(ContentEncoding)
-  def messageType: StrField                         = fields.field(MessageType)
-  override protected def bindingVersionField: Field = BindingVersion
-  override def meta: Obj                            = Amqp091MessageBindingModel
+  def contentEncoding: StrField                      = fields.field(ContentEncoding)
+  def messageType: StrField                          = fields.field(MessageType)
+  override protected def bindingVersionField: Field  = BindingVersion
+  override def meta: Amqp091MessageBindingModel.type = Amqp091MessageBindingModel
 
   override def key: StrField = fields.field(Amqp091MessageBindingModel.key)
 

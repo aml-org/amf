@@ -51,7 +51,7 @@ class Message(override val fields: Fields, override val annotations: Annotations
     result
   }
 
-  override def meta: Obj = MessageModel
+  override def meta: MessageModel = MessageModel
 
   override def linkCopy(): Message = Message().withId(id)
 

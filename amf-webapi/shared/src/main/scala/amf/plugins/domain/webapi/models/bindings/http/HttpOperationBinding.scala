@@ -1,5 +1,5 @@
 package amf.plugins.domain.webapi.models.bindings.http
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
@@ -20,7 +20,7 @@ class HttpOperationBinding(override val fields: Fields, override val annotations
   def operationType: StrField = fields.field(OperationType)
 
   override protected def bindingVersionField: Field = BindingVersion
-  override def meta: Obj                            = HttpOperationBindingModel
+  override def meta: HttpOperationBindingModel.type = HttpOperationBindingModel
 
   def withOperationType(`type`: String): this.type = set(OperationType, `type`)
   def withMethod(method: String): this.type        = set(Method, method)

@@ -1,5 +1,5 @@
 package amf.plugins.domain.webapi.models.bindings.http
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
@@ -12,7 +12,7 @@ class HttpMessageBinding(override val fields: Fields, override val annotations: 
     extends MessageBinding
     with BindingVersion
     with Key {
-  override def meta: Obj = HttpMessageBindingModel
+  override def meta: HttpMessageBindingModel.type = HttpMessageBindingModel
 
   def headers: Shape = fields.field(Headers)
 
