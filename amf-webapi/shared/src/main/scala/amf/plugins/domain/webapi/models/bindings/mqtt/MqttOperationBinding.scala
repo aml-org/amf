@@ -1,5 +1,5 @@
 package amf.plugins.domain.webapi.models.bindings.mqtt
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.parser.{Annotations, Fields}
@@ -13,7 +13,7 @@ class MqttOperationBinding(override val fields: Fields, override val annotations
     with BindingVersion
     with Key {
   override protected def bindingVersionField: Field = BindingVersion
-  override def meta: Obj                            = MqttOperationBindingModel
+  override def meta: MqttOperationBindingModel.type = MqttOperationBindingModel
 
   def qos: IntField     = fields.field(Qos)
   def retain: BoolField = fields.field(Retain)

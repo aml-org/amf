@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models.security
 
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
@@ -64,7 +64,7 @@ case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
     settings
   }
 
-  override def meta: Obj = ParametrizedSecuritySchemeModel
+  override def meta: ParametrizedSecuritySchemeModel.type = ParametrizedSecuritySchemeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/" + name.option().getOrElse("default-parametrized").urlComponentEncoded

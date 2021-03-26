@@ -12,10 +12,10 @@ import org.yaml.model.YMapEntry
   */
 case class SchemaDependencies(fields: Fields, annotations: Annotations) extends Dependencies {
 
-  def schemaTarget: Shape = fields.field(SchemaTarget)
+  def schemaTarget: Shape                       = fields.field(SchemaTarget)
   def withSchemaTarget(shape: Shape): this.type = set(SchemaTarget, shape)
 
-  override def meta: Obj = SchemaDependenciesModel
+  override def meta: SchemaDependenciesModel.type = SchemaDependenciesModel
 
   /** Call after object has been adopted by specified parent. */
   override def adopted(parent: String, cycle: Seq[String]): SchemaDependencies.this.type = {

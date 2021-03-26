@@ -1,19 +1,19 @@
 package amf.plugins.domain.webapi.models.bindings
 
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.AmfStrings
 import amf.plugins.domain.webapi.metamodel.bindings.OperationBindingsModel
 import amf.plugins.domain.webapi.metamodel.bindings.OperationBindingsModel.{Bindings, Name}
 import org.yaml.model.YMap
-import amf.core.utils.AmfStrings
 
 case class OperationBindings(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 
   def bindings: Seq[OperationBinding]                          = fields.field(Bindings)
   def withBindings(bindings: Seq[OperationBinding]): this.type = setArray(Bindings, bindings)
 
-  override def meta: Obj = OperationBindingsModel
+  override def meta: OperationBindingsModel.type = OperationBindingsModel
 
   override def nameField: Field = Name
 

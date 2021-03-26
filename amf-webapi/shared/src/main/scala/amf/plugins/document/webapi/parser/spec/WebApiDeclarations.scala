@@ -2,8 +2,6 @@ package amf.plugins.document.webapi.parser.spec
 
 import amf.core.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
 import amf.core.errorhandling.ErrorHandler
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.metamodel.{ModelDefaultBuilder, Obj}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
@@ -27,19 +25,9 @@ import amf.plugins.domain.webapi.metamodel.bindings.{
   OperationBindingsModel,
   ServerBindingsModel
 }
-import amf.plugins.domain.webapi.metamodel.{
-  CallbackModel,
-  CorrelationIdModel,
-  EndPointModel,
-  MessageModel,
-  OperationModel,
-  ParameterModel,
-  RequestModel,
-  ResponseModel,
-  TemplatedLinkModel
-}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
+import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
@@ -437,182 +425,192 @@ object WebApiDeclarations {
     result
   }
 
-  case class ErrorTrait(idPart: String, ast: YPart) extends Trait(Fields(), Annotations(ast)) with ErrorDeclaration {
+  case class ErrorTrait(idPart: String, ast: YPart)
+      extends Trait(Fields(), Annotations(ast))
+      with ErrorDeclaration[TraitModel.type] {
     override val namespace: String = "http://amferror.com/#errorTrait/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = ErrorTrait(idPart, ast)
-
-    override protected def originalMeta: DomainElementModel = TraitModel
+    override protected def newErrorInstance: ErrorDeclaration[TraitModel.type] = ErrorTrait(idPart, ast)
+    override val model: TraitModel.type                                        = TraitModel
   }
 
   case class ErrorResourceType(idPart: String, ast: YPart)
       extends ResourceType(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[ResourceTypeModel.type] {
     override val namespace: String = "http://amferror.com/#errorResourceType/"
     withId(idPart)
 
     override def dataNode: DataNode = ObjectNode()
 
-    override protected def newErrorInstance: ErrorDeclaration = ErrorResourceType(idPart, ast)
-
-    override protected def originalMeta: DomainElementModel = ResourceTypeModel
+    override protected def newErrorInstance: ErrorDeclaration[ResourceTypeModel.type] = ErrorResourceType(idPart, ast)
+    override val model: ResourceTypeModel.type                                        = ResourceTypeModel
   }
 
   case class ErrorEndPoint(idPart: String, ast: YPart)
       extends EndPoint(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[EndPointModel.type] {
     override val namespace: String = "http://amferror.com/#errorEndPoint/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = ErrorEndPoint(idPart, ast)
-
-    override protected def originalMeta: DomainElementModel = EndPointModel
+    override protected def newErrorInstance: ErrorDeclaration[EndPointModel.type] = ErrorEndPoint(idPart, ast)
+    override val model: EndPointModel.type                                        = EndPointModel
   }
 
   case class ErrorSecurityScheme(idPart: String, ast: YPart)
       extends SecurityScheme(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[SecuritySchemeModel.type] {
     override val namespace: String = "http://amferror.com/#errorSecurityScheme/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = ErrorSecurityScheme(idPart, ast)
-
-    override protected def originalMeta: DomainElementModel = SecuritySchemeModel
+    override protected def newErrorInstance: ErrorDeclaration[SecuritySchemeModel.type] =
+      ErrorSecurityScheme(idPart, ast)
+    override val model: SecuritySchemeModel.type = SecuritySchemeModel
   }
   case class ErrorNamedExample(idPart: String, ast: YPart)
       extends Example(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[ExampleModel.type] {
     override val namespace: String = "http://amferror.com/#errorNamedExample/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = ErrorNamedExample(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = ExampleModel
+    override protected def newErrorInstance: ErrorDeclaration[ExampleModel.type] = ErrorNamedExample(idPart, ast)
+    override val model: ExampleModel.type                                        = ExampleModel
   }
   case class ErrorCreativeWork(idPart: String, ast: YPart)
       extends CreativeWork(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[CreativeWorkModel.type] {
     override val namespace: String = "http://amferror.com/#errorCrativeWork/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = ErrorCreativeWork(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = CreativeWorkModel
+    override protected def newErrorInstance: ErrorDeclaration[CreativeWorkModel.type] = ErrorCreativeWork(idPart, ast)
+    override val model: CreativeWorkModel.type                                        = CreativeWorkModel
   }
   case class ErrorParameter(idPart: String, ast: YPart)
       extends Parameter(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[ParameterModel.type] {
     override val namespace: String = "http://amferror.com/#errorParameter/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = ErrorParameter(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = ParameterModel
+    override protected def newErrorInstance: ErrorDeclaration[ParameterModel.type] = ErrorParameter(idPart, ast)
+    override val model: ParameterModel.type                                        = ParameterModel
   }
 
-  class ErrorLink(idPart: String, ast: YPart) extends TemplatedLink(Fields(), Annotations(ast)) with ErrorDeclaration {
+  class ErrorLink(idPart: String, ast: YPart)
+      extends TemplatedLink(Fields(), Annotations(ast))
+      with ErrorDeclaration[TemplatedLinkModel.type] {
     override val namespace: String = "http://amferror.com/#errorTemplateLink/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = new ErrorLink(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = TemplatedLinkModel
+    override protected def newErrorInstance: ErrorDeclaration[TemplatedLinkModel.type] = new ErrorLink(idPart, ast)
+    override val model: TemplatedLinkModel.type                                        = TemplatedLinkModel
   }
 
   class ErrorCorrelationId(idPart: String, ast: YPart)
       extends CorrelationId(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[CorrelationIdModel.type] {
     override val namespace: String = "http://amferror.com/#errorCorrelationId/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = new ErrorCorrelationId(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = CorrelationIdModel
+    override protected def newErrorInstance: ErrorDeclaration[CorrelationIdModel.type] =
+      new ErrorCorrelationId(idPart, ast)
+    override val model: CorrelationIdModel.type = CorrelationIdModel
   }
 
   class ErrorMessage(idPart: String, ast: YPart, isAbstract: Boolean = false)
       extends Message(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[MessageModel.type] {
     override val namespace: String = "http://amferror.com/#errorMessage/"
     withId(idPart)
     isAbstract(isAbstract)
 
-    override protected def newErrorInstance: ErrorDeclaration = new ErrorMessage(idPart, ast, isAbstract)
-    override protected def originalMeta: DomainElementModel   = MessageModel
+    override protected def newErrorInstance: ErrorDeclaration[MessageModel.type] =
+      new ErrorMessage(idPart, ast, isAbstract)
+    override val model: MessageModel.type = MessageModel
   }
 
   class ErrorServerBindings(idPart: String, ast: YPart)
       extends ServerBindings(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[ServerBindingsModel.type] {
     override val namespace: String = "http://amferror.com/#serverBindings/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = new ErrorServerBindings(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = ServerBindingsModel
+    override protected def newErrorInstance: ErrorDeclaration[ServerBindingsModel.type] =
+      new ErrorServerBindings(idPart, ast)
+    override val model: ServerBindingsModel.type = ServerBindingsModel
   }
 
   class ErrorOperationBindings(idPart: String, ast: YPart)
       extends OperationBindings(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[OperationBindingsModel.type] {
     override val namespace: String = "http://amferror.com/#operationBindings/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = new ErrorOperationBindings(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = OperationBindingsModel
+    override protected def newErrorInstance: ErrorDeclaration[OperationBindingsModel.type] =
+      new ErrorOperationBindings(idPart, ast)
+    override val model: OperationBindingsModel.type = OperationBindingsModel
   }
 
   class ErrorChannelBindings(idPart: String, ast: YPart)
       extends ChannelBindings(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[ChannelBindingsModel.type] {
     override val namespace: String = "http://amferror.com/#channelBindings/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = new ErrorChannelBindings(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = ChannelBindingsModel
+    override protected def newErrorInstance: ErrorDeclaration[ChannelBindingsModel.type] =
+      new ErrorChannelBindings(idPart, ast)
+    override val model: ChannelBindingsModel.type = ChannelBindingsModel
   }
 
   class ErrorMessageBindings(idPart: String, ast: YPart)
       extends MessageBindings(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[MessageBindingsModel.type] {
     override val namespace: String = "http://amferror.com/#messageBindings/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = new ErrorMessageBindings(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = MessageBindingsModel
+    override protected def newErrorInstance: ErrorDeclaration[MessageBindingsModel.type] =
+      new ErrorMessageBindings(idPart, ast)
+    override val model: MessageBindingsModel.type = MessageBindingsModel
   }
 
   class ErrorOperationTrait(idPart: String, ast: YPart)
       extends Operation(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[OperationModel.type] {
     override val namespace: String = "http://amferror.com/#operationTraits/"
     withId(idPart)
     withAbstract(true)
 
-    override protected def newErrorInstance: ErrorDeclaration = new ErrorOperationTrait(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = OperationModel
+    override protected def newErrorInstance: ErrorDeclaration[OperationModel.type] =
+      new ErrorOperationTrait(idPart, ast)
+    override val model: OperationModel.type = OperationModel
   }
 
-  class ErrorCallback(idPart: String, ast: YPart) extends Callback(Fields(), Annotations(ast)) with ErrorDeclaration {
+  class ErrorCallback(idPart: String, ast: YPart)
+      extends Callback(Fields(), Annotations(ast))
+      with ErrorDeclaration[CallbackModel.type] {
     override val namespace: String = "http://amferror.com/#errorCallback/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = new ErrorCallback(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = CallbackModel
+    override protected def newErrorInstance: ErrorDeclaration[CallbackModel.type] = new ErrorCallback(idPart, ast)
+    override val model: CallbackModel.type                                        = CallbackModel
   }
   case class ErrorResponse(idPart: String, ast: YPart)
       extends Response(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[ResponseModel.type] {
     override val namespace: String = "http://amferror.com/#errorResponse/"
     withId(idPart).withStatusCode("200")
 
-    override protected def newErrorInstance: ErrorDeclaration = ErrorResponse(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = ResponseModel
+    override protected def newErrorInstance: ErrorDeclaration[ResponseModel.type] = ErrorResponse(idPart, ast)
+    override val model: ResponseModel.type                                        = ResponseModel
   }
 
   case class ErrorRequest(idPart: String, ast: YPart)
       extends Request(Fields(), Annotations(ast))
-      with ErrorDeclaration {
+      with ErrorDeclaration[RequestModel.type] {
     override val namespace: String = "http://amferror.com/#errorRequest/"
     withId(idPart)
 
-    override protected def newErrorInstance: ErrorDeclaration = ErrorRequest(idPart, ast)
-    override protected def originalMeta: DomainElementModel   = RequestModel
+    override protected def newErrorInstance: ErrorDeclaration[RequestModel.type] = ErrorRequest(idPart, ast)
+    override val model: RequestModel.type                                        = RequestModel
   }
 }
 

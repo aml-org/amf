@@ -17,7 +17,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
 
   override def linkCopy(): ResourceType = ResourceType().withId(id)
 
-  override def meta: Obj = ResourceTypeModel
+  override def meta: ResourceTypeModel.type = ResourceTypeModel
 
   def asEndpoint[T <: BaseUnit](unit: T,
                                 profile: ProfileName = RamlProfile,

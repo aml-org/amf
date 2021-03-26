@@ -1,17 +1,17 @@
 package amf.plugins.domain.shapes.models
 
 import amf.client.execution.BaseExecutionEnvironment
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.domain._
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.metamodel.ExampleModel._
-import org.yaml.model.YPart
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.parser.spec.common.PayloadSerializer
+import amf.plugins.domain.shapes.metamodel.ExampleModel
+import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import amf.plugins.domain.webapi.models.Key
+import org.yaml.model.YPart
 
 /**
   *
@@ -38,7 +38,7 @@ class Example(override val fields: Fields, override val annotations: Annotations
 
   override def linkCopy(): Example = Example().withId(id)
 
-  override def meta: Obj = ExampleModel
+  override def meta: ExampleModel.type = ExampleModel
 
   override def key: StrField = fields.field(ExampleModel.key)
 

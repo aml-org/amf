@@ -272,7 +272,7 @@ class ExtendsResolutionStage(
       val local = context.add(parameterized.variables)
 
       Option(parameterized.target) match {
-        case Some(_: ErrorDeclaration) => Some(TraitBranch(key, Operation(), Seq()))
+        case Some(_: ErrorDeclaration[_]) => Some(TraitBranch(key, Operation(), Seq()))
         case Some(potentialTrait: Trait) =>
           potentialTrait.effectiveLinkTarget() match {
             case err: ErrorTrait =>

@@ -26,8 +26,8 @@ case class TemplatedLink(fields: Fields, annotations: Annotations) extends Named
   def withRequestBody(requestBody: String): this.type          = set(RequestBody, requestBody)
   def withServer(server: Server): this.type                    = set(TemplatedLinkModel.Server, server)
 
-  override def meta: Obj            = TemplatedLinkModel
-  override def linkCopy(): Linkable = TemplatedLink().withId(id)
+  override def meta: TemplatedLinkModel.type = TemplatedLinkModel
+  override def linkCopy(): Linkable          = TemplatedLink().withId(id)
 
   def withIriMapping(variable: String, annotations: Option[Annotations] = None): IriTemplateMapping = {
     val result = annotations.map(a => IriTemplateMapping(a)).getOrElse(IriTemplateMapping())
