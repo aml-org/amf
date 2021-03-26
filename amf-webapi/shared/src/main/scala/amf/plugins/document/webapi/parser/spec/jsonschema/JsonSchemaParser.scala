@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.jsonschema
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
+import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.model.document.{EncodesModel, Fragment}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{EmptyFutureDeclarations, ParserContext, SyamlParsedDocument}
@@ -25,15 +26,17 @@ class JsonSchemaParser {
     val doc: Root     = createRootFrom(inputFragment, pointer, ctx.eh)
     val parsingResult = parse(doc, ctx, new ParsingOptions())
 
-    parsingResult.collect {
-      case encoded: EncodesModel if encoded.encodes.isInstanceOf[AnyShape] => encoded.encodes.asInstanceOf[AnyShape]
+    parsingResult match {
+      case encoded: EncodesModel if encoded.encodes.isInstanceOf[AnyShape] =>
+        Some(encoded.encodes.asInstanceOf[AnyShape])
+      case _ => None
     }
   }
 
   def parse(document: Root,
             parentContext: WebApiContext,
             options: ParsingOptions,
-            optionalVersion: Option[JSONSchemaVersion] = None): Option[DataTypeFragment] = {
+            optionalVersion: Option[JSONSchemaVersion] = None): DataTypeFragment = {
 
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
@@ -54,8 +57,8 @@ class JsonSchemaParser {
               SchemaShape().withId(shapeId).withMediaType("application/json").withRaw(document.raw)
           }
         val unit = wrapInDataTypeFragment(document, parsed)
-        Some(unit)
-      case _ => None
+        unit
+      case _ => throw UnsupportedParsedDocumentException
     }
   }
 

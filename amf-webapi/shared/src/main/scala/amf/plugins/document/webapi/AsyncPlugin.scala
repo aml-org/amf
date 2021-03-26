@@ -4,6 +4,7 @@ import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
+import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{EmptyFutureDeclarations, ParsedReference, ParserContext}
@@ -35,22 +36,19 @@ sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
               wrapped: ParserContext,
               ds: Option[AsyncWebApiDeclarations] = None): AsyncWebApiContext
 
-  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
     implicit val ctx: AsyncWebApiContext = context(document.location, document.references, options, parentContext)
     restrictCrossSpecReferences(document, ctx)
-    val parsed = document.referenceKind match {
-      case _ => detectAsyncUnit(document)
-    }
-    parsed map { unit =>
-      promoteFragments(unit, ctx)
-    }
+    val parsed = parseAsyncUnit(document)
+    promoteFragments(parsed, ctx)
   }
 
-  private def detectAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): Option[BaseUnit] = {
-    AsyncHeader(root) flatMap {
-      case Async20Header => Some(AsyncApi20DocumentParser(root).parseDocument())
+  private def parseAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): BaseUnit = {
+    AsyncHeader(root) match {
+      case Some(Async20Header) => AsyncApi20DocumentParser(root).parseDocument()
 //    case f             => AsyncFragmentParser(root, Some(f)).parseFragment()
-      case _ => None
+      case _ => // unreachable as it is covered in canParse()
+        throw new InvalidDocumentHeaderException(vendor.name)
     }
   }
 

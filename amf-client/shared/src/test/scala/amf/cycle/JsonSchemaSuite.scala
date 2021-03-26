@@ -12,10 +12,13 @@ import org.yaml.parser.JsonParser
 
 trait JsonSchemaSuite {
 
-  protected def parseSchema(platform: Platform, path: String, mediatype: String, eh: ParserErrorHandler = UnhandledParserErrorHandler) = {
-    val content = platform.fs.syncFile(path).read().toString
+  protected def parseSchema(platform: Platform,
+                            path: String,
+                            mediatype: String,
+                            eh: ParserErrorHandler = UnhandledParserErrorHandler) = {
+    val content  = platform.fs.syncFile(path).read().toString
     val document = JsonParser.withSource(content, path).document()
-    val root =  Root(
+    val root = Root(
       SyamlParsedDocument(document),
       path,
       mediatype,
@@ -24,10 +27,11 @@ trait JsonSchemaSuite {
       content
     )
     val options = ParsingOptions()
-    val fragment = new JsonSchemaParser().parse(root, getBogusParserCtx(path, options, eh), options, None).get
-    fragment
+    new JsonSchemaParser().parse(root, getBogusParserCtx(path, options, eh), options, None)
   }
 
-  private def getBogusParserCtx(location: String, options: ParsingOptions, eh: ParserErrorHandler): JsonSchemaWebApiContext =
+  private def getBogusParserCtx(location: String,
+                                options: ParsingOptions,
+                                eh: ParserErrorHandler): JsonSchemaWebApiContext =
     new JsonSchemaWebApiContext(location, Seq(), ParserContext(eh = eh), None, options, JSONSchemaDraft7SchemaVersion)
 }

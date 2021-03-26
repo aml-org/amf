@@ -4,6 +4,7 @@ import amf._
 import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
+import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{
@@ -67,7 +68,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
 
   override def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext
 
-  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
 
     val updated = context(parentContext, root, options)
     restrictCrossSpecReferences(root, updated)
@@ -75,19 +76,15 @@ sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
     val clean = cleanContext(parentContext, root, options)
 
     validateReferences(root.references, parentContext)
-    RamlHeader(root) flatMap { // todo review this, should we use the raml web api context for get the version parser?
-
-      // Partial raml0.8 fragment with RAML header but linked through !include
-      // we need to generate an external fragment and inline it in the parent document
-      case Raml08 if root.referenceKind == LinkReference => None
-
-      case Raml08          => Some(Raml08DocumentParser(root)(updated).parseDocument())
-      case Raml10          => Some(Raml10DocumentParser(root)(updated).parseDocument())
-      case Raml10Overlay   => Some(ExtensionLikeParser.apply(root, updated).parseOverlay())
-      case Raml10Extension => Some(ExtensionLikeParser.apply(root, updated).parseExtension())
-      case Raml10Library   => Some(RamlModuleParser(root)(clean).parseModule())
-      case f: RamlFragment => RamlFragmentParser(root, f)(updated).parseFragment()
-      case _               => None
+    RamlHeader(root) match { // todo review this, should we use the raml web api context for get the version parser?
+      case Some(Raml08)          => Raml08DocumentParser(root)(updated).parseDocument()
+      case Some(Raml10)          => Raml10DocumentParser(root)(updated).parseDocument()
+      case Some(Raml10Overlay)   => ExtensionLikeParser.apply(root, updated).parseOverlay()
+      case Some(Raml10Extension) => ExtensionLikeParser.apply(root, updated).parseExtension()
+      case Some(Raml10Library)   => RamlModuleParser(root)(clean).parseModule()
+      case Some(f: RamlFragment) => RamlFragmentParser(root, f)(updated).parseFragment()
+      case _ => // unreachable as it is covered in canParse()
+        throw new InvalidDocumentHeaderException(vendor.name)
     }
   }
 
@@ -184,9 +181,11 @@ object Raml08Plugin extends RamlPlugin {
 
   def canParse(root: Root): Boolean = {
     RamlHeader(root) exists {
-      case Raml08          => true
-      case _: RamlFragment => true
-      case _               => false
+      // Partial raml0.8 fragment with RAML header but linked through !include
+      // we need to generate an external fragment and inline it in the parent document
+      case Raml08 if root.referenceKind != LinkReference => true
+      case _: RamlFragment                               => true
+      case _                                             => false
     }
   }
 

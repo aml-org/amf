@@ -23,7 +23,7 @@ import amf.core.remote.Platform
 import amf.core.utils._
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import org.yaml.model._
-
+import amf.core.exception.UnsupportedParsedDocumentException
 import scala.concurrent.{ExecutionContext, Future}
 
 class JsonRefsReferenceHandler extends ReferenceHandler {
@@ -107,9 +107,8 @@ class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, ctx: ParserContext, options: ParsingOptions): Option[BaseUnit] =
+  override def parse(document: Root, ctx: ParserContext, options: ParsingOptions): BaseUnit =
     document.parsed match {
-
       case parsed: SyamlParsedDocument =>
         val result =
           ExternalDomainElement(Annotations(parsed.document))
@@ -124,10 +123,8 @@ class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
           .withEncodes(result)
           .withLocation(document.location)
         if (references.nonEmpty) fragment.withReferences(references)
-        Some(fragment)
-
-      case _ =>
-        None
+        fragment
+      case _ => throw UnsupportedParsedDocumentException
     }
 
   private def docMediaType(doc: Root) = if (doc.raw.isJson) "application/json" else "application/yaml"

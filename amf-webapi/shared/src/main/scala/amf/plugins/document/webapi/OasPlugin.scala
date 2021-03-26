@@ -5,6 +5,7 @@ import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
+import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
@@ -49,26 +50,26 @@ sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
               wrapped: ParserContext,
               ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
 
-  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
     implicit val ctx: OasWebApiContext = context(document.location, document.references, options, parentContext)
     restrictCrossSpecReferences(document, ctx)
     val parsed = document.referenceKind match {
-      case LibraryReference => Some(OasModuleParser(document).parseModule())
-      case LinkReference    => Some(OasFragmentParser(document).parseFragment())
+      case LibraryReference => OasModuleParser(document).parseModule()
+      case LinkReference    => OasFragmentParser(document).parseFragment()
       case _                => detectOasUnit(document)
     }
-    parsed map { unit =>
-      promoteFragments(unit, ctx)
-    }
+    promoteFragments(parsed, ctx)
   }
 
-  private def detectOasUnit(root: Root)(implicit ctx: OasWebApiContext): Option[BaseUnit] = {
-    OasHeader(root) map {
-      case Oas20Overlay   => Oas2DocumentParser(root).parseOverlay()
-      case Oas20Extension => Oas2DocumentParser(root).parseExtension()
-      case Oas20Header    => Oas2DocumentParser(root).parseDocument()
-      case Oas30Header    => Oas3DocumentParser(root).parseDocument()
-      case f              => OasFragmentParser(root, Some(f)).parseFragment()
+  private def detectOasUnit(root: Root)(implicit ctx: OasWebApiContext): BaseUnit = {
+    OasHeader(root) match {
+      case Some(Oas20Overlay)   => Oas2DocumentParser(root).parseOverlay()
+      case Some(Oas20Extension) => Oas2DocumentParser(root).parseExtension()
+      case Some(Oas20Header)    => Oas2DocumentParser(root).parseDocument()
+      case Some(Oas30Header)    => Oas3DocumentParser(root).parseDocument()
+      case Some(f)              => OasFragmentParser(root, Some(f)).parseFragment()
+      case _ => // unreachable as it is covered in canParse()
+        throw new InvalidDocumentHeaderException(vendor.name)
     }
   }
 
