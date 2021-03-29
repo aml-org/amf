@@ -6,6 +6,7 @@ import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
+import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.{Payload, Platform}
@@ -43,14 +44,13 @@ object PayloadPlugin extends AMFDocumentPlugin {
     "application/payload+yaml"
   )
 
-  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): Option[PayloadFragment] = {
+  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): PayloadFragment = {
     root.parsed match {
       case parsed: SyamlParsedDocument =>
         implicit val ctx: PayloadContext =
           new PayloadContext(root.location, parentContext.refs, parentContext, options = options)
-        Some(PayloadParser(parsed.document, root.location, root.mediatype).parseUnit())
-      case _ =>
-        None
+        PayloadParser(parsed.document, root.location, root.mediatype).parseUnit()
+      case _ => throw UnsupportedParsedDocumentException
     }
   }
 

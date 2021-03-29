@@ -51,7 +51,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
     val ctx = context(document.location, document.references, options, parentContext)
     new JsonSchemaParser().parse(document, ctx, options)
   }
