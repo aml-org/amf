@@ -17,7 +17,7 @@ import amf.core.TaggedReferences._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class RamlReferenceHandler(vendor: String) extends WebApiReferenceHandler(vendor) {
+class RamlReferenceHandler(plugin: AMFParsePlugin) extends WebApiReferenceHandler(plugin.id) {
 
   /** Update parsed reference if needed. */
   override def update(reference: ParsedReference, compilerContext: CompilerContext)(
@@ -33,11 +33,11 @@ class RamlReferenceHandler(vendor: String) extends WebApiReferenceHandler(vendor
       case Right(document) =>
         val parsed = SyamlParsedDocument(document)
 
-        val refs    = new RamlReferenceHandler(vendor).collect(parsed, compilerContext.parserContext)
-        val updated = compilerContext.forReference(reference.origin.url, withNormalizedUri = false)
-
+        val refs              = new RamlReferenceHandler(plugin).collect(parsed, compilerContext.parserContext)
+        val updated           = compilerContext.forReference(reference.origin.url, withNormalizedUri = false)
+        val allowedMediaTypes = plugin.validMediaTypesToReference ++ plugin.mediaTypes
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, allowRecursiveRefs = true)
+          r.resolve(updated, allowedMediaTypes, allowRecursiveRefs = true) // why would this always allow recursions?
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), updated)

@@ -3,6 +3,7 @@ package amf.plugins.document.webapi
 import amf._
 import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 import amf.core.errorhandling.ErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -50,7 +51,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
 
   override val vendors: Seq[String] = Seq(vendor.name, Raml.name)
 
-  override def referenceHandler(eh: ErrorHandler) = new RamlReferenceHandler(ID)
+  override def referenceHandler(eh: ErrorHandler) = new RamlReferenceHandler(AMFParsePluginAdapter(this))
 
   def context(wrapped: ParserContext,
               root: Root,
@@ -184,7 +185,7 @@ object Raml08Plugin extends RamlPlugin {
       // Partial raml0.8 fragment with RAML header but linked through !include
       // we need to generate an external fragment and inline it in the parent document
       case Raml08 if root.referenceKind != LinkReference => true
-      case _: RamlFragment                               => true
+      case _: RamlFragment                               => true // this is incorrect, should be removed
       case _                                             => false
     }
   }

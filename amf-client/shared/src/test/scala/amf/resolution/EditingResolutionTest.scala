@@ -822,6 +822,17 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  test("Reduced KG Service API resolution") {
+    cycle(
+      "knowledge-graph-reduced/api.raml",
+      "knowledge-graph-reduced/api.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = productionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
   test("Example1 resolution to Raml") {
     cycle("example1.yaml", "example1.resolved.yaml", OasYamlHint, Oas20, resolutionPath, syntax = Some(Yaml))
   }

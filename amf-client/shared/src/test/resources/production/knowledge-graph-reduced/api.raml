@@ -1,0 +1,18 @@
+#%RAML 1.0
+baseUri: http://ang-service.kqa.msap.io/v1
+#baseUri: https://mocksvc.mulesoft.com/mocks/515b37d9-b7af-4c6a-9a3c-052bced57e5b #
+title: ANG Service
+version: v1
+
+/vocabulary:
+  post:
+    description: Stores the triples for the parsed, and validated Vocabulary and returns the URI for the newly created graph
+    responses:
+      200:
+        body:
+          application/json:
+            type: string
+    body:
+      application/ld+json:
+        example: !include ../knowledge-graph-service-api-1.0.13-raml/examples/post/dialect.yaml
+

@@ -111,6 +111,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   override def dependencies(): Seq[AMFPlugin] = Nil
 
+  override val validVendorsToReference: Seq[String] = Nil
+
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
 
   /**
