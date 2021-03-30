@@ -36,30 +36,21 @@ trait ImportUtils {
 
 object DefaultAMFValidations extends ImportUtils {
 
+  private val SHACL_PATH_IRI              = "http://www.w3.org/ns/shacl#path"
+  private val SHACL_TARGET_OBJECTS_OF_IRI = "http://www.w3.org/ns/shacl#targetObjectsOf"
+
   def profiles(): List[ValidationProfile] =
     AMFRawValidations.map.map {
       case (profile, validationsInGroup) =>
-        val violationValidations = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
-        val infoValidations      = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
-        val warningValidations   = parseValidation(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
+        val violationValidations =
+          parseRawValidations(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
+        val infoValidations    = parseRawValidations(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
+        val warningValidations = parseRawValidations(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
 
         // sorting parser side validation for this profile
-        val violationParserSideValidations = Validations.validations
-          .filter { v =>
-            Validations
-              .level(v.id, profile) == SeverityLevels.VIOLATION
-          }
-          .map(_.name)
-        val infoParserSideValidations = Validations.validations
-          .filter { v =>
-            Validations.level(v.id, profile) == SeverityLevels.INFO
-          }
-          .map(_.name)
-        val warningParserSideValidations = Validations.validations
-          .filter { v =>
-            Validations.level(v.id, profile) == SeverityLevels.WARNING
-          }
-          .map(_.name)
+        val violationParserSideValidations = getValidationsWithSeverity(profile, SeverityLevels.VIOLATION)
+        val infoParserSideValidations      = getValidationsWithSeverity(profile, SeverityLevels.INFO)
+        val warningParserSideValidations   = getValidationsWithSeverity(profile, SeverityLevels.WARNING)
 
         val severityMapping = SeverityMapping()
           .set(infoParserSideValidations ++ infoValidations.map(_.name), SeverityLevels.INFO)
@@ -74,47 +65,57 @@ object DefaultAMFValidations extends ImportUtils {
         )
     }.toList
 
-  private def parseValidation(validations: Seq[AMFValidation]): Seq[ValidationSpecification] = {
-    validations.flatMap { validation =>
-      val uri = validation.uri match {
-        case Some(s) => s.trim
-        case _       => validationId(validation)
+  private def getValidationsWithSeverity(profile: ProfileName, severity: String) = {
+    Validations.validations
+      .filter { v =>
+        Validations.level(v.id, profile) == severity
       }
+      .map(_.name)
+  }
 
-      val spec = ValidationSpecification(
-        name = uri,
-        message = validation.message.getOrElse(""),
-        ramlMessage = Some(validation.ramlErrorMessage),
-        oasMessage = Some(validation.openApiErrorMessage),
-        targetClass = Seq(validation.owlClass)
-      )
+  private def parseRawValidations(validations: Seq[AMFValidation]): Seq[ValidationSpecification] = {
+    validations.flatMap { parseValidation }
+  }
 
-      Namespace.staticAliases.expand(validation.target.trim).iri() match {
-        case "http://www.w3.org/ns/shacl#path" =>
-          val valueType = if (validation.constraint.trim.contains("#")) {
-            val strings = validation.constraint.trim.split("#")
-            ValueType(Namespace.find(strings.head).get, strings.last)
-          } else Namespace.staticAliases.expand(validation.constraint)
-          valueType match {
-            case sh @ ValueType(Namespace.Shacl, _) =>
-              Seq(spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation, sh))))
-            case sh @ ValueType(Namespace.Shapes, _) =>
-              findComplexShaclConstraint(sh) match {
-                case Some(specs) => specs
-                case _           => Seq(spec.copy(functionConstraint = Option(parseFunctionConstraint(validation, sh))))
-              }
+  private def parseValidation(validation: AMFValidation) = {
+    val uri = validation.uri match {
+      case Some(s) => s.trim
+      case _       => validationId(validation)
+    }
 
-            case _ => Seq(spec)
-          }
+    val spec = ValidationSpecification(
+      name = uri,
+      message = validation.message.getOrElse(""),
+      ramlMessage = Some(validation.ramlErrorMessage),
+      oasMessage = Some(validation.openApiErrorMessage),
+      targetClass = Seq(validation.owlClass)
+    )
 
-        case "http://www.w3.org/ns/shacl#targetObjectsOf" =>
-          Seq(
-            spec.copy(
-              targetObject = Seq(validation.owlProperty),
-              nodeConstraints = Seq(NodeConstraint(validation.constraint, validation.value))
-            ))
-        case _ => throw new Exception(s"Unknown validation target ${validation.target}")
-      }
+    Namespace.staticAliases.expand(validation.target.trim).iri() match {
+      case SHACL_PATH_IRI =>
+        val valueType = if (validation.constraint.trim.contains("#")) {
+          val strings = validation.constraint.trim.split("#")
+          ValueType(Namespace.find(strings.head).get, strings.last)
+        } else Namespace.staticAliases.expand(validation.constraint)
+        valueType match {
+          case sh @ ValueType(Namespace.Shacl, _) =>
+            Seq(spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation, sh))))
+          case sh @ ValueType(Namespace.Shapes, _) =>
+            findComplexShaclConstraint(sh) match {
+              case Some(specs) => specs
+              case _           => Seq(spec.copy(functionConstraint = Option(parseFunctionConstraint(validation, sh))))
+            }
+
+          case _ => Seq(spec)
+        }
+
+      case SHACL_TARGET_OBJECTS_OF_IRI =>
+        Seq(
+          spec.copy(
+            targetObject = Seq(validation.owlProperty),
+            nodeConstraints = Seq(NodeConstraint(validation.constraint, validation.value))
+          ))
+      case _ => throw new Exception(s"Unknown validation target ${validation.target}")
     }
   }
 
