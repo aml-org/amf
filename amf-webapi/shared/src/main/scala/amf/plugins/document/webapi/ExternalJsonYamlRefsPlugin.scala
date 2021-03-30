@@ -24,6 +24,7 @@ import amf.core.utils._
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import org.yaml.model._
 import amf.core.exception.UnsupportedParsedDocumentException
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class JsonRefsReferenceHandler extends ReferenceHandler {
@@ -134,6 +135,8 @@ class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
   override def referenceHandler(eh: ErrorHandler): ReferenceHandler = new JsonRefsReferenceHandler()
 
   override def dependencies(): Seq[AMFPlugin] = Nil
+
+  override val validVendorsToReference: Seq[String] = Nil
 
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
 

@@ -197,7 +197,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
       s should include("libraries")
     })
 
-    libraries.entries.length should be(references.count(!_.isInstanceOf[ExternalFragment]))
+    libraries.entries.length should be(references.size)
   }
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {
