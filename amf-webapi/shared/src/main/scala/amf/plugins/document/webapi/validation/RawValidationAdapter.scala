@@ -1,12 +1,7 @@
 package amf.plugins.document.webapi.validation
 
-import amf.core.validation.core.{
-  FunctionConstraint,
-  NodeConstraint,
-  PropertyConstraint,
-  ShaclSeverityUris,
-  ValidationSpecification
-}
+import amf.core.validation.core.ShaclSeverityUris._
+import amf.core.validation.core.{FunctionConstraint, NodeConstraint, PropertyConstraint, ValidationSpecification}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 
@@ -18,34 +13,19 @@ object RawValidationAdapter extends ImportUtils {
   def apply(validation: AMFValidation): Seq[ValidationSpecification] = parseValidation(validation)
 
   private def parseValidation(validation: AMFValidation) = {
-    val uri = validation.uri match {
-      case Some(s) => s.trim
-      case _       => validationId(validation)
-    }
+    val spec = createSpecificationFrom(validation)
 
-    val spec = ValidationSpecification(
-      name = uri,
-      message = validation.message.getOrElse(""),
-      severity = ShaclSeverityUris.shaclSeverity(validation.severity),
-      ramlMessage = Some(validation.ramlErrorMessage),
-      oasMessage = Some(validation.openApiErrorMessage),
-      targetClass = Seq(validation.owlClass)
-    )
-
-    Namespace.staticAliases.expand(validation.target.trim).iri() match {
+    expandValidationTargetIri(validation) match {
       case SHACL_PATH_IRI =>
-        val valueType = if (validation.constraint.trim.contains("#")) {
-          val strings = validation.constraint.trim.split("#")
-          ValueType(Namespace.find(strings.head).get, strings.last)
-        } else Namespace.staticAliases.expand(validation.constraint)
+        val valueType = buildValueType(validation)
         valueType match {
           case sh @ ValueType(Namespace.Shacl, _) =>
-            Seq(spec.copy(propertyConstraints = Seq(parsePropertyConstraint(s"$uri/prop", validation, sh))))
+            Seq(spec.copy(propertyConstraints = Seq(parsePropertyConstraint(spec, validation, sh))))
           case sh @ ValueType(Namespace.Shapes, _) =>
-            findComplexShaclConstraint(sh) match {
-              case Some(specs) => specs
-              case _           => Seq(spec.copy(functionConstraint = Option(parseFunctionConstraint(validation, sh))))
-            }
+            findComplexShaclConstraint(sh)
+              .getOrElse(
+                Seq(specWithFunctionConstraint(validation, spec, sh))
+              )
 
           case _ => Seq(spec)
         }
@@ -60,12 +40,47 @@ object RawValidationAdapter extends ImportUtils {
     }
   }
 
-  private def parsePropertyConstraint(constraintUri: String,
+  private def createSpecificationFrom(validation: AMFValidation): ValidationSpecification =
+    ValidationSpecification(
+      name = computeValidationId(validation),
+      message = validation.message.getOrElse(""),
+      severity = amfToShaclSeverity(validation.severity),
+      ramlMessage = Some(validation.ramlErrorMessage),
+      oasMessage = Some(validation.openApiErrorMessage),
+      targetClass = Seq(validation.owlClass)
+    )
+
+  private def specWithFunctionConstraint(validation: AMFValidation, spec: ValidationSpecification, sh: ValueType) = {
+    spec.copy(functionConstraint = Option(parseFunctionConstraint(validation, sh)))
+  }
+
+  private def buildValueType(validation: AMFValidation) = {
+    if (constraintHasUriFragment(validation)) {
+      val strings = validation.constraint.trim.split("#")
+      ValueType(Namespace.find(strings.head).get, strings.last)
+    } else Namespace.staticAliases.expand(validation.constraint)
+  }
+
+  private def constraintHasUriFragment(validation: AMFValidation) = validation.constraint.trim.contains("#")
+
+  private def expandValidationTargetIri(validation: AMFValidation) = {
+    Namespace.staticAliases.expand(validation.target.trim).iri()
+  }
+
+  private def computeValidationId(validation: AMFValidation) = {
+    validation.uri match {
+      case Some(s) => s.trim
+      case _       => validationId(validation)
+    }
+  }
+
+  private def parsePropertyConstraint(spec: ValidationSpecification,
                                       validation: AMFValidation,
                                       sh: ValueType): PropertyConstraint = {
+
     val constraint = PropertyConstraint(
       ramlPropertyId = validation.owlProperty,
-      name = constraintUri,
+      name = s"${spec.name}/prop",
       message = validation.message
     )
     sh.iri() match {

@@ -3,11 +3,9 @@ package amf.plugins.document.webapi.validation
 import amf._
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core._
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 import amf.plugins.features.validation.Validations
-
-import scala.collection.mutable.ArrayBuffer
 
 trait ImportUtils {
   protected def validationId(validation: AMFValidation): String =
@@ -68,7 +66,7 @@ object DefaultAMFValidations extends ImportUtils {
         Validations.level(v.id, profile) == severity
       }
       .map {
-        _.copy(severity = ShaclSeverityUris.shaclSeverity(severity))
+        _.copy(severity = ShaclSeverityUris.amfToShaclSeverity(severity))
       }
       .map(_.name)
   }
