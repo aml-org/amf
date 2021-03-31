@@ -35,7 +35,7 @@ trait ImportUtils {
 object DefaultAMFValidations extends ImportUtils {
 
   def profiles(): List[ValidationProfile] =
-    AMFRawValidations.map.map {
+    AMFRawValidations.profileToValidationMap.map {
       case (profile, validationsInGroup) =>
         val violationValidations =
           parseRawValidations(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
@@ -63,7 +63,7 @@ object DefaultAMFValidations extends ImportUtils {
   private def getValidationsWithSeverity(profile: ProfileName, severity: String) = {
     Validations.validations
       .filter { v =>
-        Validations.level(v.id, profile) == severity
+        Validations.severityLevelOf(v.id, profile) == severity
       }
       .map {
         _.copy(severity = ShaclSeverityUris.amfToShaclSeverity(severity))
