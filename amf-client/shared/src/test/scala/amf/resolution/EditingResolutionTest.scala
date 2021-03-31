@@ -585,16 +585,17 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
-  multiGoldenTest("raml with declared element link of link of link", "link-of-link/link-of-link-of-link.%s") { config =>
-    cycle(
-      "link-of-link/link-of-link-of-link.raml",
-      config.golden,
-      RamlYamlHint,
-      target = Amf,
-      directory = resolutionPath,
-      transformWith = Some(Raml10),
-      renderOptions = Some(config.renderOptions)
-    )
+  multiGoldenTest("raml with declared element link of link of link", "link-of-link/link-of-link-of-link.%s") {
+    config =>
+      cycle(
+        "link-of-link/link-of-link-of-link.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        directory = resolutionPath,
+        transformWith = Some(Raml10),
+        renderOptions = Some(config.renderOptions)
+      )
   }
 
   multiGoldenTest("raml with declared element link of link in api", "link-of-link/in-api/link-of-link-in-api.%s") {
@@ -660,16 +661,17 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
-  multiGoldenTest("Shared request body references in OAS 3.0", "shared-request-body-reference/oas30/api.%s") { config =>
-    cycle(
-      "shared-request-body-reference/oas30/api.yaml",
-      config.golden,
-      OasYamlHint,
-      target = Amf,
-      directory = resolutionPath,
-      transformWith = Some(Oas30),
-      renderOptions = Some(config.renderOptions)
-    )
+  multiGoldenTest("Shared request body references in OAS 3.0", "shared-request-body-reference/oas30/api.%s") {
+    config =>
+      cycle(
+        "shared-request-body-reference/oas30/api.yaml",
+        config.golden,
+        OasYamlHint,
+        target = Amf,
+        directory = resolutionPath,
+        transformWith = Some(Oas30),
+        renderOptions = Some(config.renderOptions)
+      )
   }
 
   multiGoldenTest("Shared examples in OAS 3.0", "shared-oas-30-examples/api.%s") { config =>
@@ -1091,6 +1093,19 @@ class EditingResolutionTest extends ResolutionTest {
         RamlYamlHint,
         target = Amf,
         directory = resolutionPath + "merge-inherits-json-schema-fragments/",
+        transformWith = Some(Raml10),
+        renderOptions = Some(config.renderOptions),
+        eh = Some(UnhandledParserErrorHandler)
+      )
+    }
+
+    multiGoldenTest("RecursiveShape in nested library has correct fixpoint using UrlShortening", "api.%s") { config =>
+      cycle(
+        "api.raml",
+        config.golden,
+        RamlYamlHint,
+        target = Amf,
+        directory = resolutionPath + "nested-library-with-recursive-shape/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
         eh = Some(UnhandledParserErrorHandler)
