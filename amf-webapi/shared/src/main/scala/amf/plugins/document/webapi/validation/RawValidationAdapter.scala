@@ -1,6 +1,12 @@
 package amf.plugins.document.webapi.validation
 
-import amf.core.validation.core.{FunctionConstraint, NodeConstraint, PropertyConstraint, ValidationSpecification}
+import amf.core.validation.core.{
+  FunctionConstraint,
+  NodeConstraint,
+  PropertyConstraint,
+  ShaclSeverityUris,
+  ValidationSpecification
+}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 
@@ -20,6 +26,7 @@ object RawValidationAdapter extends ImportUtils {
     val spec = ValidationSpecification(
       name = uri,
       message = validation.message.getOrElse(""),
+      severity = ShaclSeverityUris.shaclSeverity(validation.severity),
       ramlMessage = Some(validation.ramlErrorMessage),
       oasMessage = Some(validation.openApiErrorMessage),
       targetClass = Seq(validation.owlClass)

@@ -36,9 +36,6 @@ trait ImportUtils {
 
 object DefaultAMFValidations extends ImportUtils {
 
-  private val SHACL_PATH_IRI              = "http://www.w3.org/ns/shacl#path"
-  private val SHACL_TARGET_OBJECTS_OF_IRI = "http://www.w3.org/ns/shacl#targetObjectsOf"
-
   def profiles(): List[ValidationProfile] =
     AMFRawValidations.map.map {
       case (profile, validationsInGroup) =>
@@ -69,6 +66,9 @@ object DefaultAMFValidations extends ImportUtils {
     Validations.validations
       .filter { v =>
         Validations.level(v.id, profile) == severity
+      }
+      .map {
+        _.copy(severity = ShaclSeverityUris.shaclSeverity(severity))
       }
       .map(_.name)
   }
