@@ -1,9 +1,9 @@
-package amf.plugins.document.webapi.validation
+package amf.plugins.document.webapi.validation.collector
 
-import amf.core.model.document.{BaseUnit, DeclaresModel, PayloadFragment}
+import amf.core.metamodel.domain.ShapeModel
+import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
-import amf.core.remote.Platform
+import amf.core.model.domain._
 import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.models.{NodeShape, UnionShape}
@@ -13,20 +13,21 @@ import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 
 // RAML centric as it collects custom facets from the RAML "facets" node.
-class ShapeFacetsCandidatesCollector(model: BaseUnit) {
+object ShapeFacetsCollector extends ValidationCandidateCollector {
 
   private val typesWithShapes = Set(
     PayloadModel.`type`.head.iri(),
     ParameterModel.`type`.head.iri(),
     RequestModel.`type`.head.iri(),
     SecuritySchemeModel.`type`.head.iri(),
-    (Namespace.Document + "DomainProperty").iri()
+    (Namespace.Document + "DomainProperty").iri(),
+    ShapeModel.`type`.head.iri()
   )
 
-  def collect(): Seq[ValidationCandidate] = {
-    val shapesWithFacets = findShapesWithFacets()
-    shapesWithFacets map {
-      case (shape: Shape, facetDefinitions: Seq[Shape#FacetsMap]) =>
+  override def collect(element: AmfElement): Seq[ValidationCandidate] = {
+    val shapeWithFacets: Option[(Shape, Seq[Shape#FacetsMap])] = findShapeWithFacets(element)
+    shapeWithFacets match {
+      case Some((shape: Shape, facetDefinitions: Seq[Shape#FacetsMap])) =>
         // TODO: we can think that reference resolution should already have run by now.
         val effectiveShape = shape match {
           case _ if shape.isLink && shape.linkTarget.isDefined => shape.linkTarget.get.asInstanceOf[Shape]
@@ -35,20 +36,23 @@ class ShapeFacetsCandidatesCollector(model: BaseUnit) {
         val facetsPayload = toFacetsPayload(effectiveShape)
         val facetsShape   = toFacetsDefinitionShape(effectiveShape, facetDefinitions)
         val fragment      = PayloadFragment(facetsPayload, "application/yaml")
-        ValidationCandidate(facetsShape, fragment)
-    }
-    // Finally we collect all the results
-  }
-
-  protected def findShapesWithFacets(): Seq[(Shape, Seq[Shape#FacetsMap])] = {
-    val elements = getShapesInEncodesWith(typesWithShapes) ++ getDeclaredShapes
-    collectCustomFacetsFromShapes(elements).filter {
-      case (_: Shape, facetDefinitions: Seq[Shape#FacetsMap]) => facetDefinitions.exists(_.nonEmpty)
+        List(ValidationCandidate(facetsShape, fragment))
+      case None => Nil
     }
   }
 
-  private def collectCustomFacetsFromShapes(elements: Seq[DomainElement]): Seq[(Shape, Seq[Shape#FacetsMap])] = {
-    elements.flatMap {
+  protected def findShapeWithFacets(element: AmfElement): Option[(Shape, Seq[Shape#FacetsMap])] = {
+    element match {
+      case e: DomainElement if e.graph.types().exists(typesWithShapes.contains) =>
+        collectCustomFacetsFromShape(e).filter {
+          case (_: Shape, facetDefinitions: Seq[Shape#FacetsMap]) => facetDefinitions.exists(_.nonEmpty)
+        }
+      case _ => None
+    }
+  }
+
+  private def collectCustomFacetsFromShape(element: DomainElement): Option[(Shape, Seq[Shape#FacetsMap])] = {
+    element match {
       case payload: Payload =>
         Option(payload.schema) match {
           case Some(shape) =>
@@ -94,18 +98,6 @@ class ShapeFacetsCandidatesCollector(model: BaseUnit) {
     }
   }
 
-  private def getDeclaredShapes = {
-    model match {
-      case withDeclarations: DeclaresModel =>
-        withDeclarations.declares.filter(_.isInstanceOf[Shape]).map(_.asInstanceOf[Shape])
-      case _ => Seq.empty
-    }
-  }
-
-  private def getShapesInEncodesWith(typeIris: Set[String]): Seq[DomainElement] = {
-    model.iterator().collect { case e: DomainElement if e.graph.types().exists(typeIris.contains) => e }.toSeq
-  }
-
   // We collect the facet instances and build a data node with them
   protected def toFacetsPayload(shape: Shape): DataNode = {
     val payload = ObjectNode(shape.annotations).withId(shape.id)
@@ -132,9 +124,4 @@ class ShapeFacetsCandidatesCollector(model: BaseUnit) {
       facetsShape.withAnyOf(anyOfShapes)
     }
   }
-}
-
-object ShapeFacetsCandidatesCollector {
-  def apply(model: BaseUnit): Seq[ValidationCandidate] =
-    new ShapeFacetsCandidatesCollector(model).collect()
 }
