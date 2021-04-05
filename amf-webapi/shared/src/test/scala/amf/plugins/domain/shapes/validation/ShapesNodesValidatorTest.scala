@@ -1,6 +1,7 @@
 package amf.plugins.domain.shapes.validation
 
 import amf.core.model.domain.ScalarNode
+import amf.plugins.document.webapi.validation.EnumCandidateExtraction
 import amf.plugins.domain.shapes.models.NodeShape
 import org.scalatest.{FunSuite, Matchers}
 
@@ -10,7 +11,7 @@ class ShapesNodesValidatorTest extends FunSuite with Matchers {
     val shape = NodeShape().withId("id")
     shape.withValues(List(ScalarNode("value 1", None), ScalarNode("value 1", None)))
 
-    val candidates = ShapesNodesValidator.shapeEnumCandidates(shape)
+    val candidates = EnumCandidateExtraction.shapeEnumCandidates(shape)
 
     val candidateShape = candidates.head.shape
 
