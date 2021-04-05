@@ -7,7 +7,7 @@ import amf.core.model.domain.{ArrayNode, DataNode, ObjectNode}
 import amf.core.remote.Platform
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels, ValidationCandidate}
 import amf.internal.environment.Environment
-import amf.plugins.domain.shapes.validation.ShapesNodesValidator
+import amf.plugins.domain.shapes.validation.{PayloadValidationPluginsHandler}
 import amf.validations.PayloadValidations
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -31,7 +31,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit) {
 
   def validate(env: Environment)(implicit executionContext: ExecutionContext): Future[Seq[AMFValidationResult]] = {
     ExecutionLog.log(s"UnitPayloadsValidation#validate: Validating all candidates ${candidates.size}")
-    ShapesNodesValidator.validateAll(candidates, SeverityLevels.WARNING, env).map(groupResults)
+    PayloadValidationPluginsHandler.validateAll(candidates, SeverityLevels.WARNING, env).map(groupResults)
   }
 
   private def groupResults(report: AMFValidationReport): Seq[AMFValidationResult] = {

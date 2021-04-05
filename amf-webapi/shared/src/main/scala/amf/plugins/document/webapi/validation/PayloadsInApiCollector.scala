@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.validation
 
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.{BaseUnit, DeclaresModel, PayloadFragment}
 import amf.core.model.domain.{DataNode, ScalarNode, Shape}
 import amf.core.parser.Annotations
@@ -8,9 +9,7 @@ import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape, UnionShape}
-import amf.plugins.domain.shapes.validation.ShapesNodesValidator
-
-import scala.collection.mutable
+import scala.collection.{GenTraversableOnce, mutable}
 
 class PayloadsInApiCollector(model: BaseUnit) {
 
@@ -45,17 +44,10 @@ class PayloadsInApiCollector(model: BaseUnit) {
     candidateCollector.flatMap {
       case (id, e) =>
         val shape = shapesCollector(id)
-        if (e.isEmpty) {
-          // this is the case of a shape that only has enums. A single validation candidate is created as all of its values
-          // are then validated in ShapesNodesValidator::validateAll.
-          Seq(
-            ValidationCandidate(
-              shape,
-              PayloadFragment().withMediaType(ShapesNodesValidator.defaultMediaTypeFor(shape.values.head))))
-        } else
-          e.map { encodes =>
-            ValidationCandidate(shape, buildFragment(shape, encodes))
-          }
+        val exampleCandidates = e.map { encodes =>
+          ValidationCandidate(shape, buildFragment(shape, encodes))
+        }
+        exampleCandidates ++ EnumCandidateExtraction.shapeEnumCandidates(shape)
       case _ => Nil
     }.toSeq
   }
@@ -148,6 +140,20 @@ class PayloadsInApiCollector(model: BaseUnit) {
     fragment
   }
 
+}
+
+object EnumCandidateExtraction {
+  def shapeEnumCandidates(shape: Shape): Seq[ValidationCandidate] = {
+    val enums       = shape.values
+    val shallowCopy = shape.copyShape()
+    shallowCopy.fields.removeField(ShapeModel.Values) // remove enum values from shape as is in not necessary when validating each enum value.
+    enums.map(v => ValidationCandidate(shallowCopy, PayloadFragment(v, defaultMediaTypeFor(v))))
+  }
+
+  private def defaultMediaTypeFor(dataNode: DataNode): String = dataNode match {
+    case s: ScalarNode if s.value.option().exists(_.isXml) => "application/xml"
+    case _                                                 => "application/json"
+  }
 }
 
 object PayloadsInApiCollector {
