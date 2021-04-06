@@ -9,7 +9,6 @@ import amf.plugins.domain.webapi.APIDomainPlugin
 
 import scala.scalajs.js.annotation.JSExportAll
 
-@JSExportAll
 object WebApi extends PlatformSecrets {
 
   def register(): Unit = this.register(platform.defaultExecutionEnvironment)
