@@ -26,7 +26,8 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-abstract class OasLikeOperationParser(entry: YMapEntry, parentId: String)(implicit val ctx: OasLikeWebApiContext)
+abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
+    implicit val ctx: OasLikeWebApiContext)
     extends SpecParserOps {
 
   protected def entryKey: AmfScalar = ScalarNode(entry.key).string()
@@ -35,8 +36,8 @@ abstract class OasLikeOperationParser(entry: YMapEntry, parentId: String)(implic
 
   def parse(): Operation = {
     val operation: Operation = Operation(Annotations(entry))
-    operation.set(Method, methodNode, Annotations.inferred()) // entryKey
-    operation.adopted(parentId) // adopt(operation) ?
+    operation.set(Method, entryKey, Annotations.inferred())
+    adopt(operation)
 
     val map = entry.value.as[YMap]
 
@@ -67,8 +68,9 @@ abstract class OasLikeOperationParser(entry: YMapEntry, parentId: String)(implic
   }
 }
 
-abstract class OasOperationParser(entry: YMapEntry, parentId: String)(override implicit val ctx: OasWebApiContext)
-    extends OasLikeOperationParser(entry, parentId) {
+abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
+    override implicit val ctx: OasWebApiContext)
+    extends OasLikeOperationParser(entry, adopt) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
@@ -153,8 +155,9 @@ abstract class OasOperationParser(entry: YMapEntry, parentId: String)(override i
   }
 }
 
-case class Oas20OperationParser(entry: YMapEntry, parentId: String)(override implicit val ctx: OasWebApiContext)
-    extends OasOperationParser(entry, parentId) {
+case class Oas20OperationParser(entry: YMapEntry, adopt: Operation => Operation)(
+    override implicit val ctx: OasWebApiContext)
+    extends OasOperationParser(entry, adopt) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]
@@ -170,8 +173,9 @@ case class Oas20OperationParser(entry: YMapEntry, parentId: String)(override imp
   }
 }
 
-case class Oas30OperationParser(entry: YMapEntry, parentId: String)(override implicit val ctx: OasWebApiContext)
-    extends OasOperationParser(entry, parentId) {
+case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)(
+    override implicit val ctx: OasWebApiContext)
+    extends OasOperationParser(entry, adopt) {
   override def parse(): Operation = {
     val operation = super.parse()
     val map       = entry.value.as[YMap]

@@ -1,12 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
 
-import amf.core.annotations.{Inferred, SynthesizedField}
 import amf.core.emitter.BaseEmitters.{MapEntryEmitter, RawValueEmitter, ValueEmitter, pos}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.NumberTypeToYTypeConverter
 import amf.plugins.document.webapi.parser.{
@@ -19,7 +19,6 @@ import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping}
 import org.yaml.model.YType
-import amf.core.utils.AmfStrings
 
 import scala.collection.mutable.ListBuffer
 

@@ -1,12 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.metamodel.domain.templates.{ParametrizedDeclarationModel, VariableValueModel}
-import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
-import amf.plugins.domain.webapi.models.ExtensibleWebApiDomainElement
 import amf.validations.ParserSideValidations.InvalidAbstractDeclarationType
 import org.yaml.model._
 

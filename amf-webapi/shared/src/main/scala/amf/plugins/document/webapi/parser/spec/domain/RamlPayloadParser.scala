@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{ExplicitField, SynthesizedField, VirtualElement}
+import amf.core.annotations.ExplicitField
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
@@ -82,7 +83,8 @@ case class Raml08PayloadParser(entry: YMapEntry, parentId: String, parseOptional
         } else {
           Raml08TypeParser(entry, (shape: Shape) => shape.adopted(payload.id), isAnnotation = false, AnyDefaultType)
             .parse()
-            .foreach(s => payload.withSchema(tracking(s, payload.id)))
+            .foreach(s => payload.set(PayloadModel.Schema, tracking(s, payload.id), s.annotations))
+
         }
 
       case _ =>

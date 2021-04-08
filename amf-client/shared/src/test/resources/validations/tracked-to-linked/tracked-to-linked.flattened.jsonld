@@ -21,11 +21,9 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:endpoint": "true"
-        },
-        "source-vendor": {
-          "#19": "RAML 1.0"
+        "single-value-array": {
+          "apiContract:contentType": "",
+          "apiContract:accepts": ""
         },
         "lexical": {
           "apiContract:contentType": "[(4,0)-(6,0)]",
@@ -33,9 +31,8 @@
           "#19": "[(2,0)-(28,47)]",
           "apiContract:accepts": "[(4,0)-(6,0)]"
         },
-        "single-value-array": {
-          "apiContract:contentType": "",
-          "apiContract:accepts": ""
+        "source-vendor": {
+          "#19": "RAML 1.0"
         }
       }
     },
@@ -61,9 +58,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
-        },
         "lexical": {
           "apiContract:path": "[(9,0)-(9,10)]",
           "#20": "[(9,0)-(28,47)]"
@@ -83,9 +77,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "#21": "[(10,2)-(15,0)]"
         }
@@ -104,9 +95,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "#33": "[(15,2)-(20,0)]"
         }
@@ -125,9 +113,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "#35": "[(20,2)-(25,0)]"
         }
@@ -146,9 +131,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "#37": "[(25,2)-(28,47)]"
         }
@@ -165,12 +147,7 @@
         {
           "@id": "#23"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#22": "[(11,0)-(15,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#34",
@@ -183,12 +160,7 @@
         {
           "@id": "#16"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#34": "[(16,0)-(20,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#36",
@@ -201,12 +173,7 @@
         {
           "@id": "#17"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#36": "[(21,0)-(25,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#38",
@@ -219,12 +186,7 @@
         {
           "@id": "#18"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#38": "[(26,0)-(28,47)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#23",

@@ -43,9 +43,9 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
         {
-          "@id": "amf://id#12/source-map/synthesized-field/element_0"
+          "@id": "amf://id#12/source-map/source-vendor/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -54,11 +54,6 @@
         },
         {
           "@id": "amf://id#12/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "amf://id#12/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -85,11 +80,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "amf://id#13/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "amf://id#13/source-map/lexical/element_1"
@@ -100,9 +90,9 @@
       ]
     },
     {
-      "@id": "amf://id#12/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
+      "@id": "amf://id#12/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#12",
+      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "amf://id#12/source-map/lexical/element_1",
@@ -113,11 +103,6 @@
       "@id": "amf://id#12/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(5,0)]"
-    },
-    {
-      "@id": "amf://id#12/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#12",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "amf://id#15",
@@ -142,21 +127,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "amf://id#14/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "amf://id#14/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "amf://id#13/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#supportedOperation",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "amf://id#13/source-map/lexical/element_1",
@@ -191,17 +166,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "amf://id#15/source-map/lexical/element_1"
-        },
-        {
           "@id": "amf://id#15/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "amf://id#14/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "amf://id#14/source-map/lexical/element_0",
@@ -243,11 +210,6 @@
           "@id": "amf://id#16/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "amf://id#15/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#15",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(19,0)-(21,15)]"
     },
     {
       "@id": "amf://id#15/source-map/lexical/element_0",

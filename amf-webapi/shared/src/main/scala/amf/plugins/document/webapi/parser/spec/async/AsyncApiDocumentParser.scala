@@ -162,7 +162,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       entry => {
         addDeclarationKey(DeclarationKey(entry, isAbstract = true))
         entry.value.as[YMap].entries.foreach { entry =>
-          val operation = AsyncOperationParser(entry, parent, isTrait = true).parse()
+          val adopt     = (o: Operation) => o.adopted(parent)
+          val operation = AsyncOperationParser(entry, adopt, isTrait = true).parse()
           operation.add(DeclaredElement())
           ctx.declarations += operation
         }

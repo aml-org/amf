@@ -24,11 +24,9 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:endpoint": "true"
-        },
-        "source-vendor": {
-          "#19": "RAML 1.0"
+        "single-value-array": {
+          "apiContract:contentType": "",
+          "apiContract:accepts": ""
         },
         "lexical": {
           "apiContract:contentType": "[(4,0)-(6,0)]",
@@ -36,9 +34,8 @@
           "#19": "[(2,0)-(31,13)]",
           "apiContract:accepts": "[(4,0)-(6,0)]"
         },
-        "single-value-array": {
-          "apiContract:contentType": "",
-          "apiContract:accepts": ""
+        "source-vendor": {
+          "#19": "RAML 1.0"
         }
       }
     },
@@ -55,9 +52,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
-        },
         "lexical": {
           "apiContract:path": "[(11,0)-(11,4)]",
           "#20": "[(11,0)-(22,0)]"
@@ -77,9 +71,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
-        },
         "lexical": {
           "apiContract:path": "[(22,0)-(22,4)]",
           "#23": "[(22,0)-(31,13)]"
@@ -99,9 +90,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "#21": "[(12,2)-(22,0)]"
         }
@@ -120,9 +108,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "#24": "[(23,2)-(31,13)]"
         }
@@ -139,12 +124,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#22": "[(13,0)-(22,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#25",
@@ -157,12 +137,7 @@
         {
           "@id": "#10"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#25": "[(24,0)-(31,13)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#9",

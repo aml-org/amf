@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#29",
+        "@id": "#30",
         "@type": [
           "apiContract:WebAPI",
           "apiContract:API",
@@ -23,7 +23,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#30",
+            "@id": "#31",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -35,7 +35,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#31",
+                "@id": "#32",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -47,14 +47,14 @@
                 ],
                 "security:security": [
                   {
-                    "@id": "#32",
+                    "@id": "#33",
                     "@type": [
                       "security:SecurityRequirement",
                       "doc:DomainElement"
                     ],
                     "security:schemes": [
                       {
-                        "@id": "#33",
+                        "@id": "#34",
                         "@type": [
                           "security:ParametrizedSecurityScheme",
                           "doc:DomainElement"
@@ -66,7 +66,7 @@
                         ],
                         "security:scheme": [
                           {
-                            "@id": "#27",
+                            "@id": "#28",
                             "@type": [
                               "security:SecurityScheme",
                               "doc:DomainElement"
@@ -184,6 +184,10 @@
                                               }
                                             ],
                                             "smaps": {
+                                              "synthesized-field": {
+                                                "core:name": "true",
+                                                "shacl:datatype": "true"
+                                              },
                                               "lexical": {
                                                 "#6": "[(14,15)-(14,38)]"
                                               }
@@ -205,7 +209,7 @@
                                             "doc:structuredValue": "[(14,15)-(14,38)]"
                                           },
                                           "tracked-element": {
-                                            "#5": "amf://id#3"
+                                            "#5": "amf://id#7"
                                           }
                                         }
                                       }
@@ -224,6 +228,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "apiContract:binding": "true"
+                                  },
                                   "lexical": {
                                     "raml-shapes:schema": "[(12,4)-(17,0)]",
                                     "core:description": "[(15,6)-(16,0)]",
@@ -235,7 +242,7 @@
                             ],
                             "apiContract:parameter": [
                               {
-                                "@id": "#7",
+                                "@id": "#8",
                                 "@type": [
                                   "apiContract:Parameter",
                                   "doc:DomainElement"
@@ -267,7 +274,7 @@
                                 ],
                                 "raml-shapes:schema": [
                                   {
-                                    "@id": "#8",
+                                    "@id": "#9",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "raml-shapes:AnyShape",
@@ -292,21 +299,24 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#8": "[(8,6)-(8,10)]"
+                                        "#9": "[(8,6)-(8,10)]"
                                       },
                                       "lexical": {
                                         "core:description": "[(9,6)-(10,0)]",
-                                        "#8": "[(7,4)-(11,0)]",
+                                        "#9": "[(7,4)-(11,0)]",
                                         "shacl:datatype": "[(8,6)-(9,0)]"
                                       }
                                     }
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "apiContract:binding": "true"
+                                  },
                                   "lexical": {
                                     "raml-shapes:schema": "[(7,4)-(11,0)]",
                                     "core:description": "[(9,6)-(10,0)]",
-                                    "#7": "[(7,4)-(11,0)]",
+                                    "#8": "[(7,4)-(11,0)]",
                                     "apiContract:required": "[(10,6)-(11,0)]"
                                   }
                                 }
@@ -314,7 +324,7 @@
                             ],
                             "apiContract:response": [
                               {
-                                "@id": "#9",
+                                "@id": "#10",
                                 "@type": [
                                   "apiContract:Response",
                                   "apiContract:Message",
@@ -337,7 +347,7 @@
                                 ],
                                 "apiContract:payload": [
                                   {
-                                    "@id": "#10",
+                                    "@id": "#11",
                                     "@type": [
                                       "apiContract:Payload",
                                       "doc:DomainElement"
@@ -349,7 +359,7 @@
                                     ],
                                     "raml-shapes:schema": [
                                       {
-                                        "@id": "#11",
+                                        "@id": "#12",
                                         "@type": [
                                           "raml-shapes:AnyShape",
                                           "shacl:Shape",
@@ -363,17 +373,17 @@
                                         ],
                                         "smaps": {
                                           "auto-generated-name": {
-                                            "#11": ""
+                                            "#12": ""
                                           },
                                           "lexical": {
-                                            "#11": "[(21,8)-(22,0)]"
+                                            "#12": "[(21,8)-(22,0)]"
                                           }
                                         }
                                       }
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#10": "[(21,8)-(22,0)]"
+                                        "#11": "[(21,8)-(22,0)]"
                                       }
                                     }
                                   }
@@ -381,13 +391,13 @@
                                 "smaps": {
                                   "lexical": {
                                     "apiContract:payload": "[(20,6)-(22,0)]",
-                                    "#9": "[(18,4)-(22,0)]",
+                                    "#10": "[(18,4)-(22,0)]",
                                     "core:description": "[(19,6)-(20,0)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#12",
+                                "@id": "#13",
                                 "@type": [
                                   "apiContract:Response",
                                   "apiContract:Message",
@@ -410,7 +420,7 @@
                                 ],
                                 "apiContract:payload": [
                                   {
-                                    "@id": "#13",
+                                    "@id": "#14",
                                     "@type": [
                                       "apiContract:Payload",
                                       "doc:DomainElement"
@@ -422,7 +432,7 @@
                                     ],
                                     "raml-shapes:schema": [
                                       {
-                                        "@id": "#14",
+                                        "@id": "#15",
                                         "@type": [
                                           "raml-shapes:AnyShape",
                                           "shacl:Shape",
@@ -436,17 +446,17 @@
                                         ],
                                         "smaps": {
                                           "auto-generated-name": {
-                                            "#14": ""
+                                            "#15": ""
                                           },
                                           "lexical": {
-                                            "#14": "[(25,8)-(26,0)]"
+                                            "#15": "[(25,8)-(26,0)]"
                                           }
                                         }
                                       }
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "#13": "[(25,8)-(26,0)]"
+                                        "#14": "[(25,8)-(26,0)]"
                                       }
                                     }
                                   }
@@ -454,7 +464,7 @@
                                 "smaps": {
                                   "lexical": {
                                     "apiContract:payload": "[(24,6)-(26,0)]",
-                                    "#12": "[(22,4)-(26,0)]",
+                                    "#13": "[(22,4)-(26,0)]",
                                     "core:description": "[(23,6)-(24,0)]"
                                   }
                                 }
@@ -462,7 +472,7 @@
                             ],
                             "security:settings": [
                               {
-                                "@id": "#15",
+                                "@id": "#16",
                                 "@type": [
                                   "security:OAuth2Settings",
                                   "security:Settings",
@@ -481,7 +491,7 @@
                                 ],
                                 "security:flows": [
                                   {
-                                    "@id": "#16",
+                                    "@id": "#17",
                                     "@type": [
                                       "security:OAuth2Flow",
                                       "doc:DomainElement"
@@ -498,7 +508,7 @@
                                     ],
                                     "security:scope": [
                                       {
-                                        "@id": "#17",
+                                        "@id": "#18",
                                         "@type": [
                                           "security:Scope",
                                           "doc:DomainElement"
@@ -510,7 +520,7 @@
                                         ]
                                       },
                                       {
-                                        "@id": "#18",
+                                        "@id": "#19",
                                         "@type": [
                                           "security:Scope",
                                           "doc:DomainElement"
@@ -526,7 +536,7 @@
                                       "lexical": {
                                         "security:scope": "[(30,2)-(31,0)]",
                                         "security:authorizationUri": "[(28,2)-(29,0)]",
-                                        "#16": "[(27,0)-(31,0)]",
+                                        "#17": "[(27,0)-(31,0)]",
                                         "security:accessTokenUri": "[(27,2)-(28,0)]"
                                       }
                                     }
@@ -538,59 +548,59 @@
                                   },
                                   "lexical": {
                                     "security:authorizationGrant": "[(29,2)-(30,0)]",
-                                    "#15": "[(26,9)-(31,0)]"
+                                    "#16": "[(26,9)-(31,0)]"
                                   }
                                 }
                               }
                             ],
                             "smaps": {
                               "declared-element": {
-                                "#27": ""
+                                "#28": ""
                               },
                               "resolved-link": {
-                                "#27": "amf://id#27"
+                                "#28": "amf://id#28"
                               },
                               "lexical": {
                                 "security:settings": "[(26,0)-(31,0)]",
                                 "apiContract:parameter": "[(6,2)-(11,0)]",
                                 "core:description": "[(3,0)-(4,0)]",
                                 "security:type": "[(2,0)-(3,0)]",
-                                "#27": "[(2,0)-(31,0)]",
+                                "#28": "[(2,0)-(31,0)]",
                                 "core:displayName": "[(4,0)-(5,0)]",
                                 "apiContract:header": "[(11,2)-(17,0)]",
                                 "apiContract:response": "[(17,2)-(26,0)]"
                               },
                               "source-vendor": {
-                                "#27": "RAML 1.0"
+                                "#28": "RAML 1.0"
                               },
                               "resolved-link-target": {
-                                "#27": "amf://id#2"
+                                "#28": "amf://id#2"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#33": "[(6,12)-(6,21)]"
+                            "#34": "[(6,12)-(6,21)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#32": "[(6,12)-(6,21)]"
+                        "#33": "[(6,12)-(6,21)]"
                       }
                     }
                   },
                   {
-                    "@id": "#34",
+                    "@id": "#35",
                     "@type": [
                       "security:SecurityRequirement",
                       "doc:DomainElement"
                     ],
                     "security:schemes": [
                       {
-                        "@id": "#35",
+                        "@id": "#36",
                         "@type": [
                           "security:ParametrizedSecurityScheme",
                           "doc:DomainElement"
@@ -602,7 +612,7 @@
                         ],
                         "security:scheme": [
                           {
-                            "@id": "#28",
+                            "@id": "#29",
                             "@type": [
                               "security:SecurityScheme",
                               "doc:DomainElement"
@@ -624,7 +634,7 @@
                             ],
                             "apiContract:header": [
                               {
-                                "@id": "#21",
+                                "@id": "#22",
                                 "@type": [
                                   "apiContract:Parameter",
                                   "doc:DomainElement"
@@ -656,7 +666,7 @@
                                 ],
                                 "raml-shapes:schema": [
                                   {
-                                    "@id": "#22",
+                                    "@id": "#23",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "raml-shapes:AnyShape",
@@ -681,20 +691,23 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#22": "[(20,6)-(20,10)]"
+                                        "#23": "[(20,6)-(20,10)]"
                                       },
                                       "lexical": {
                                         "core:description": "[(21,6)-(25,0)]",
-                                        "#22": "[(19,4)-(25,0)]",
+                                        "#23": "[(19,4)-(25,0)]",
                                         "shacl:datatype": "[(20,6)-(21,0)]"
                                       }
                                     }
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "apiContract:binding": "true"
+                                  },
                                   "lexical": {
                                     "raml-shapes:schema": "[(19,4)-(25,0)]",
-                                    "#21": "[(19,4)-(25,0)]",
+                                    "#22": "[(19,4)-(25,0)]",
                                     "core:description": "[(21,6)-(25,0)]"
                                   }
                                 }
@@ -702,7 +715,7 @@
                             ],
                             "apiContract:parameter": [
                               {
-                                "@id": "#23",
+                                "@id": "#24",
                                 "@type": [
                                   "apiContract:Parameter",
                                   "doc:DomainElement"
@@ -734,7 +747,7 @@
                                 ],
                                 "raml-shapes:schema": [
                                   {
-                                    "@id": "#24",
+                                    "@id": "#25",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "raml-shapes:AnyShape",
@@ -759,20 +772,23 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#24": "[(13,6)-(13,10)]"
+                                        "#25": "[(13,6)-(13,10)]"
                                       },
                                       "lexical": {
                                         "core:description": "[(14,6)-(18,0)]",
-                                        "#24": "[(12,4)-(18,0)]",
+                                        "#25": "[(12,4)-(18,0)]",
                                         "shacl:datatype": "[(13,6)-(14,0)]"
                                       }
                                     }
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "apiContract:binding": "true"
+                                  },
                                   "lexical": {
                                     "raml-shapes:schema": "[(12,4)-(18,0)]",
-                                    "#23": "[(12,4)-(18,0)]",
+                                    "#24": "[(12,4)-(18,0)]",
                                     "core:description": "[(14,6)-(18,0)]"
                                   }
                                 }
@@ -780,7 +796,7 @@
                             ],
                             "apiContract:response": [
                               {
-                                "@id": "#25",
+                                "@id": "#26",
                                 "@type": [
                                   "apiContract:Response",
                                   "apiContract:Message",
@@ -804,14 +820,14 @@
                                 "smaps": {
                                   "lexical": {
                                     "core:description": "[(27,6)-(28,0)]",
-                                    "#25": "[(26,4)-(28,0)]"
+                                    "#26": "[(26,4)-(28,0)]"
                                   }
                                 }
                               }
                             ],
                             "security:settings": [
                               {
-                                "@id": "#26",
+                                "@id": "#27",
                                 "@type": [
                                   "security:OAuth1Settings",
                                   "security:Settings",
@@ -844,7 +860,7 @@
                                   "lexical": {
                                     "security:signature": "[(9,2)-(10,0)]",
                                     "security:authorizationUri": "[(7,2)-(8,0)]",
-                                    "#26": "[(5,9)-(10,0)]",
+                                    "#27": "[(5,9)-(10,0)]",
                                     "security:requestTokenUri": "[(6,2)-(7,0)]",
                                     "security:tokenCredentialsUri": "[(8,2)-(9,0)]"
                                   }
@@ -853,64 +869,65 @@
                             ],
                             "smaps": {
                               "declared-element": {
-                                "#28": ""
+                                "#29": ""
                               },
                               "resolved-link": {
-                                "#28": "amf://id#28"
+                                "#29": "amf://id#29"
                               },
                               "lexical": {
                                 "security:settings": "[(5,0)-(10,0)]",
                                 "apiContract:parameter": "[(11,2)-(18,0)]",
                                 "core:description": "[(4,0)-(5,0)]",
-                                "#28": "[(3,0)-(28,0)]",
+                                "#29": "[(3,0)-(28,0)]",
                                 "security:type": "[(3,0)-(4,0)]",
                                 "apiContract:header": "[(18,2)-(25,0)]",
                                 "apiContract:response": "[(25,2)-(28,0)]"
                               },
                               "source-vendor": {
-                                "#28": "RAML 1.0"
+                                "#29": "RAML 1.0"
                               },
                               "resolved-link-target": {
-                                "#28": "amf://id#20"
+                                "#29": "amf://id#21"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#35": "[(6,23)-(6,32)]"
+                            "#36": "[(6,23)-(6,32)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#34": "[(6,23)-(6,32)]"
+                        "#35": "[(6,23)-(6,32)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#31": "[(8,2)-(8,6)]"
+                    "#32": "[(8,2)-(8,6)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#30": "[(7,0)-(8,6)]"
+                "apiContract:path": "[(7,0)-(7,5)]",
+                "#31": "[(7,0)-(8,6)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#29": "RAML 1.0"
+            "#30": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
-            "#29": "[(2,0)-(8,6)]"
+            "#30": "[(2,0)-(8,6)]"
           }
         }
       }
@@ -1048,6 +1065,10 @@
                               }
                             ],
                             "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true",
+                                "shacl:datatype": "true"
+                              },
                               "lexical": {
                                 "#6": "[(14,15)-(14,38)]"
                               }
@@ -1069,7 +1090,7 @@
                             "doc:structuredValue": "[(14,15)-(14,38)]"
                           },
                           "tracked-element": {
-                            "#5": "amf://id#3"
+                            "#5": "amf://id#7"
                           }
                         }
                       }
@@ -1088,6 +1109,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "apiContract:binding": "true"
+                  },
                   "lexical": {
                     "raml-shapes:schema": "[(12,4)-(17,0)]",
                     "core:description": "[(15,6)-(16,0)]",
@@ -1099,7 +1123,7 @@
             ],
             "apiContract:parameter": [
               {
-                "@id": "#7",
+                "@id": "#8",
                 "@type": [
                   "apiContract:Parameter",
                   "doc:DomainElement"
@@ -1131,7 +1155,7 @@
                 ],
                 "raml-shapes:schema": [
                   {
-                    "@id": "#8",
+                    "@id": "#9",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -1156,21 +1180,24 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#8": "[(8,6)-(8,10)]"
+                        "#9": "[(8,6)-(8,10)]"
                       },
                       "lexical": {
                         "core:description": "[(9,6)-(10,0)]",
-                        "#8": "[(7,4)-(11,0)]",
+                        "#9": "[(7,4)-(11,0)]",
                         "shacl:datatype": "[(8,6)-(9,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "apiContract:binding": "true"
+                  },
                   "lexical": {
                     "raml-shapes:schema": "[(7,4)-(11,0)]",
                     "core:description": "[(9,6)-(10,0)]",
-                    "#7": "[(7,4)-(11,0)]",
+                    "#8": "[(7,4)-(11,0)]",
                     "apiContract:required": "[(10,6)-(11,0)]"
                   }
                 }
@@ -1178,7 +1205,7 @@
             ],
             "apiContract:response": [
               {
-                "@id": "#9",
+                "@id": "#10",
                 "@type": [
                   "apiContract:Response",
                   "apiContract:Message",
@@ -1201,7 +1228,7 @@
                 ],
                 "apiContract:payload": [
                   {
-                    "@id": "#10",
+                    "@id": "#11",
                     "@type": [
                       "apiContract:Payload",
                       "doc:DomainElement"
@@ -1213,7 +1240,7 @@
                     ],
                     "raml-shapes:schema": [
                       {
-                        "@id": "#11",
+                        "@id": "#12",
                         "@type": [
                           "raml-shapes:AnyShape",
                           "shacl:Shape",
@@ -1227,17 +1254,17 @@
                         ],
                         "smaps": {
                           "auto-generated-name": {
-                            "#11": ""
+                            "#12": ""
                           },
                           "lexical": {
-                            "#11": "[(21,8)-(22,0)]"
+                            "#12": "[(21,8)-(22,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#10": "[(21,8)-(22,0)]"
+                        "#11": "[(21,8)-(22,0)]"
                       }
                     }
                   }
@@ -1245,13 +1272,13 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:payload": "[(20,6)-(22,0)]",
-                    "#9": "[(18,4)-(22,0)]",
+                    "#10": "[(18,4)-(22,0)]",
                     "core:description": "[(19,6)-(20,0)]"
                   }
                 }
               },
               {
-                "@id": "#12",
+                "@id": "#13",
                 "@type": [
                   "apiContract:Response",
                   "apiContract:Message",
@@ -1274,7 +1301,7 @@
                 ],
                 "apiContract:payload": [
                   {
-                    "@id": "#13",
+                    "@id": "#14",
                     "@type": [
                       "apiContract:Payload",
                       "doc:DomainElement"
@@ -1286,7 +1313,7 @@
                     ],
                     "raml-shapes:schema": [
                       {
-                        "@id": "#14",
+                        "@id": "#15",
                         "@type": [
                           "raml-shapes:AnyShape",
                           "shacl:Shape",
@@ -1300,17 +1327,17 @@
                         ],
                         "smaps": {
                           "auto-generated-name": {
-                            "#14": ""
+                            "#15": ""
                           },
                           "lexical": {
-                            "#14": "[(25,8)-(26,0)]"
+                            "#15": "[(25,8)-(26,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#13": "[(25,8)-(26,0)]"
+                        "#14": "[(25,8)-(26,0)]"
                       }
                     }
                   }
@@ -1318,7 +1345,7 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:payload": "[(24,6)-(26,0)]",
-                    "#12": "[(22,4)-(26,0)]",
+                    "#13": "[(22,4)-(26,0)]",
                     "core:description": "[(23,6)-(24,0)]"
                   }
                 }
@@ -1326,7 +1353,7 @@
             ],
             "security:settings": [
               {
-                "@id": "#15",
+                "@id": "#16",
                 "@type": [
                   "security:OAuth2Settings",
                   "security:Settings",
@@ -1345,7 +1372,7 @@
                 ],
                 "security:flows": [
                   {
-                    "@id": "#16",
+                    "@id": "#17",
                     "@type": [
                       "security:OAuth2Flow",
                       "doc:DomainElement"
@@ -1362,7 +1389,7 @@
                     ],
                     "security:scope": [
                       {
-                        "@id": "#17",
+                        "@id": "#18",
                         "@type": [
                           "security:Scope",
                           "doc:DomainElement"
@@ -1374,7 +1401,7 @@
                         ]
                       },
                       {
-                        "@id": "#18",
+                        "@id": "#19",
                         "@type": [
                           "security:Scope",
                           "doc:DomainElement"
@@ -1390,7 +1417,7 @@
                       "lexical": {
                         "security:scope": "[(30,2)-(31,0)]",
                         "security:authorizationUri": "[(28,2)-(29,0)]",
-                        "#16": "[(27,0)-(31,0)]",
+                        "#17": "[(27,0)-(31,0)]",
                         "security:accessTokenUri": "[(27,2)-(28,0)]"
                       }
                     }
@@ -1402,7 +1429,7 @@
                   },
                   "lexical": {
                     "security:authorizationGrant": "[(29,2)-(30,0)]",
-                    "#15": "[(26,9)-(31,0)]"
+                    "#16": "[(26,9)-(31,0)]"
                   }
                 }
               }
@@ -1441,7 +1468,7 @@
         }
       },
       {
-        "@id": "#19",
+        "@id": "#20",
         "@type": [
           "security:SecuritySchemeFragment",
           "doc:Fragment",
@@ -1449,7 +1476,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#20",
+            "@id": "#21",
             "@type": [
               "security:SecurityScheme",
               "doc:DomainElement"
@@ -1466,7 +1493,7 @@
             ],
             "apiContract:header": [
               {
-                "@id": "#21",
+                "@id": "#22",
                 "@type": [
                   "apiContract:Parameter",
                   "doc:DomainElement"
@@ -1498,7 +1525,7 @@
                 ],
                 "raml-shapes:schema": [
                   {
-                    "@id": "#22",
+                    "@id": "#23",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -1523,20 +1550,23 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#22": "[(20,6)-(20,10)]"
+                        "#23": "[(20,6)-(20,10)]"
                       },
                       "lexical": {
                         "core:description": "[(21,6)-(25,0)]",
-                        "#22": "[(19,4)-(25,0)]",
+                        "#23": "[(19,4)-(25,0)]",
                         "shacl:datatype": "[(20,6)-(21,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "apiContract:binding": "true"
+                  },
                   "lexical": {
                     "raml-shapes:schema": "[(19,4)-(25,0)]",
-                    "#21": "[(19,4)-(25,0)]",
+                    "#22": "[(19,4)-(25,0)]",
                     "core:description": "[(21,6)-(25,0)]"
                   }
                 }
@@ -1544,7 +1574,7 @@
             ],
             "apiContract:parameter": [
               {
-                "@id": "#23",
+                "@id": "#24",
                 "@type": [
                   "apiContract:Parameter",
                   "doc:DomainElement"
@@ -1576,7 +1606,7 @@
                 ],
                 "raml-shapes:schema": [
                   {
-                    "@id": "#24",
+                    "@id": "#25",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -1601,20 +1631,23 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#24": "[(13,6)-(13,10)]"
+                        "#25": "[(13,6)-(13,10)]"
                       },
                       "lexical": {
                         "core:description": "[(14,6)-(18,0)]",
-                        "#24": "[(12,4)-(18,0)]",
+                        "#25": "[(12,4)-(18,0)]",
                         "shacl:datatype": "[(13,6)-(14,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "apiContract:binding": "true"
+                  },
                   "lexical": {
                     "raml-shapes:schema": "[(12,4)-(18,0)]",
-                    "#23": "[(12,4)-(18,0)]",
+                    "#24": "[(12,4)-(18,0)]",
                     "core:description": "[(14,6)-(18,0)]"
                   }
                 }
@@ -1622,7 +1655,7 @@
             ],
             "apiContract:response": [
               {
-                "@id": "#25",
+                "@id": "#26",
                 "@type": [
                   "apiContract:Response",
                   "apiContract:Message",
@@ -1646,14 +1679,14 @@
                 "smaps": {
                   "lexical": {
                     "core:description": "[(27,6)-(28,0)]",
-                    "#25": "[(26,4)-(28,0)]"
+                    "#26": "[(26,4)-(28,0)]"
                   }
                 }
               }
             ],
             "security:settings": [
               {
-                "@id": "#26",
+                "@id": "#27",
                 "@type": [
                   "security:OAuth1Settings",
                   "security:Settings",
@@ -1686,7 +1719,7 @@
                   "lexical": {
                     "security:signature": "[(9,2)-(10,0)]",
                     "security:authorizationUri": "[(7,2)-(8,0)]",
-                    "#26": "[(5,9)-(10,0)]",
+                    "#27": "[(5,9)-(10,0)]",
                     "security:requestTokenUri": "[(6,2)-(7,0)]",
                     "security:tokenCredentialsUri": "[(8,2)-(9,0)]"
                   }
@@ -1695,13 +1728,13 @@
             ],
             "smaps": {
               "source-vendor": {
-                "#20": "RAML 1.0"
+                "#21": "RAML 1.0"
               },
               "lexical": {
                 "security:settings": "[(5,0)-(10,0)]",
                 "apiContract:parameter": "[(11,2)-(18,0)]",
                 "core:description": "[(4,0)-(5,0)]",
-                "#20": "[(3,0)-(28,0)]",
+                "#21": "[(3,0)-(28,0)]",
                 "security:type": "[(3,0)-(4,0)]",
                 "apiContract:header": "[(18,2)-(25,0)]",
                 "apiContract:response": "[(25,2)-(28,0)]"
@@ -1721,14 +1754,14 @@
         ],
         "smaps": {
           "lexical": {
-            "#19": "[(2,0)-(28,0)]"
+            "#20": "[(2,0)-(28,0)]"
           }
         }
       }
     ],
     "doc:declares": [
       {
-        "@id": "#27",
+        "@id": "#28",
         "@type": [
           "security:SecurityScheme",
           "doc:DomainElement"
@@ -1846,6 +1879,10 @@
                           }
                         ],
                         "smaps": {
+                          "synthesized-field": {
+                            "core:name": "true",
+                            "shacl:datatype": "true"
+                          },
                           "lexical": {
                             "#6": "[(14,15)-(14,38)]"
                           }
@@ -1867,7 +1904,7 @@
                         "doc:structuredValue": "[(14,15)-(14,38)]"
                       },
                       "tracked-element": {
-                        "#5": "amf://id#3"
+                        "#5": "amf://id#7"
                       }
                     }
                   }
@@ -1886,6 +1923,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:binding": "true"
+              },
               "lexical": {
                 "raml-shapes:schema": "[(12,4)-(17,0)]",
                 "core:description": "[(15,6)-(16,0)]",
@@ -1897,7 +1937,7 @@
         ],
         "apiContract:parameter": [
           {
-            "@id": "#7",
+            "@id": "#8",
             "@type": [
               "apiContract:Parameter",
               "doc:DomainElement"
@@ -1929,7 +1969,7 @@
             ],
             "raml-shapes:schema": [
               {
-                "@id": "#8",
+                "@id": "#9",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -1954,21 +1994,24 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#8": "[(8,6)-(8,10)]"
+                    "#9": "[(8,6)-(8,10)]"
                   },
                   "lexical": {
                     "core:description": "[(9,6)-(10,0)]",
-                    "#8": "[(7,4)-(11,0)]",
+                    "#9": "[(7,4)-(11,0)]",
                     "shacl:datatype": "[(8,6)-(9,0)]"
                   }
                 }
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:binding": "true"
+              },
               "lexical": {
                 "raml-shapes:schema": "[(7,4)-(11,0)]",
                 "core:description": "[(9,6)-(10,0)]",
-                "#7": "[(7,4)-(11,0)]",
+                "#8": "[(7,4)-(11,0)]",
                 "apiContract:required": "[(10,6)-(11,0)]"
               }
             }
@@ -1976,7 +2019,7 @@
         ],
         "apiContract:response": [
           {
-            "@id": "#9",
+            "@id": "#10",
             "@type": [
               "apiContract:Response",
               "apiContract:Message",
@@ -1999,7 +2042,7 @@
             ],
             "apiContract:payload": [
               {
-                "@id": "#10",
+                "@id": "#11",
                 "@type": [
                   "apiContract:Payload",
                   "doc:DomainElement"
@@ -2011,7 +2054,7 @@
                 ],
                 "raml-shapes:schema": [
                   {
-                    "@id": "#11",
+                    "@id": "#12",
                     "@type": [
                       "raml-shapes:AnyShape",
                       "shacl:Shape",
@@ -2025,17 +2068,17 @@
                     ],
                     "smaps": {
                       "auto-generated-name": {
-                        "#11": ""
+                        "#12": ""
                       },
                       "lexical": {
-                        "#11": "[(21,8)-(22,0)]"
+                        "#12": "[(21,8)-(22,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#10": "[(21,8)-(22,0)]"
+                    "#11": "[(21,8)-(22,0)]"
                   }
                 }
               }
@@ -2043,13 +2086,13 @@
             "smaps": {
               "lexical": {
                 "apiContract:payload": "[(20,6)-(22,0)]",
-                "#9": "[(18,4)-(22,0)]",
+                "#10": "[(18,4)-(22,0)]",
                 "core:description": "[(19,6)-(20,0)]"
               }
             }
           },
           {
-            "@id": "#12",
+            "@id": "#13",
             "@type": [
               "apiContract:Response",
               "apiContract:Message",
@@ -2072,7 +2115,7 @@
             ],
             "apiContract:payload": [
               {
-                "@id": "#13",
+                "@id": "#14",
                 "@type": [
                   "apiContract:Payload",
                   "doc:DomainElement"
@@ -2084,7 +2127,7 @@
                 ],
                 "raml-shapes:schema": [
                   {
-                    "@id": "#14",
+                    "@id": "#15",
                     "@type": [
                       "raml-shapes:AnyShape",
                       "shacl:Shape",
@@ -2098,17 +2141,17 @@
                     ],
                     "smaps": {
                       "auto-generated-name": {
-                        "#14": ""
+                        "#15": ""
                       },
                       "lexical": {
-                        "#14": "[(25,8)-(26,0)]"
+                        "#15": "[(25,8)-(26,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#13": "[(25,8)-(26,0)]"
+                    "#14": "[(25,8)-(26,0)]"
                   }
                 }
               }
@@ -2116,7 +2159,7 @@
             "smaps": {
               "lexical": {
                 "apiContract:payload": "[(24,6)-(26,0)]",
-                "#12": "[(22,4)-(26,0)]",
+                "#13": "[(22,4)-(26,0)]",
                 "core:description": "[(23,6)-(24,0)]"
               }
             }
@@ -2124,7 +2167,7 @@
         ],
         "security:settings": [
           {
-            "@id": "#15",
+            "@id": "#16",
             "@type": [
               "security:OAuth2Settings",
               "security:Settings",
@@ -2143,7 +2186,7 @@
             ],
             "security:flows": [
               {
-                "@id": "#16",
+                "@id": "#17",
                 "@type": [
                   "security:OAuth2Flow",
                   "doc:DomainElement"
@@ -2160,7 +2203,7 @@
                 ],
                 "security:scope": [
                   {
-                    "@id": "#17",
+                    "@id": "#18",
                     "@type": [
                       "security:Scope",
                       "doc:DomainElement"
@@ -2172,7 +2215,7 @@
                     ]
                   },
                   {
-                    "@id": "#18",
+                    "@id": "#19",
                     "@type": [
                       "security:Scope",
                       "doc:DomainElement"
@@ -2188,7 +2231,7 @@
                   "lexical": {
                     "security:scope": "[(30,2)-(31,0)]",
                     "security:authorizationUri": "[(28,2)-(29,0)]",
-                    "#16": "[(27,0)-(31,0)]",
+                    "#17": "[(27,0)-(31,0)]",
                     "security:accessTokenUri": "[(27,2)-(28,0)]"
                   }
                 }
@@ -2200,38 +2243,38 @@
               },
               "lexical": {
                 "security:authorizationGrant": "[(29,2)-(30,0)]",
-                "#15": "[(26,9)-(31,0)]"
+                "#16": "[(26,9)-(31,0)]"
               }
             }
           }
         ],
         "smaps": {
           "declared-element": {
-            "#27": ""
+            "#28": ""
           },
           "resolved-link": {
-            "#27": "amf://id#27"
+            "#28": "amf://id#28"
           },
           "lexical": {
             "security:settings": "[(26,0)-(31,0)]",
             "apiContract:parameter": "[(6,2)-(11,0)]",
             "core:description": "[(3,0)-(4,0)]",
             "security:type": "[(2,0)-(3,0)]",
-            "#27": "[(2,0)-(31,0)]",
+            "#28": "[(2,0)-(31,0)]",
             "core:displayName": "[(4,0)-(5,0)]",
             "apiContract:header": "[(11,2)-(17,0)]",
             "apiContract:response": "[(17,2)-(26,0)]"
           },
           "source-vendor": {
-            "#27": "RAML 1.0"
+            "#28": "RAML 1.0"
           },
           "resolved-link-target": {
-            "#27": "amf://id#2"
+            "#28": "amf://id#2"
           }
         }
       },
       {
-        "@id": "#28",
+        "@id": "#29",
         "@type": [
           "security:SecurityScheme",
           "doc:DomainElement"
@@ -2253,7 +2296,7 @@
         ],
         "apiContract:header": [
           {
-            "@id": "#21",
+            "@id": "#22",
             "@type": [
               "apiContract:Parameter",
               "doc:DomainElement"
@@ -2285,7 +2328,7 @@
             ],
             "raml-shapes:schema": [
               {
-                "@id": "#22",
+                "@id": "#23",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -2310,20 +2353,23 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#22": "[(20,6)-(20,10)]"
+                    "#23": "[(20,6)-(20,10)]"
                   },
                   "lexical": {
                     "core:description": "[(21,6)-(25,0)]",
-                    "#22": "[(19,4)-(25,0)]",
+                    "#23": "[(19,4)-(25,0)]",
                     "shacl:datatype": "[(20,6)-(21,0)]"
                   }
                 }
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:binding": "true"
+              },
               "lexical": {
                 "raml-shapes:schema": "[(19,4)-(25,0)]",
-                "#21": "[(19,4)-(25,0)]",
+                "#22": "[(19,4)-(25,0)]",
                 "core:description": "[(21,6)-(25,0)]"
               }
             }
@@ -2331,7 +2377,7 @@
         ],
         "apiContract:parameter": [
           {
-            "@id": "#23",
+            "@id": "#24",
             "@type": [
               "apiContract:Parameter",
               "doc:DomainElement"
@@ -2363,7 +2409,7 @@
             ],
             "raml-shapes:schema": [
               {
-                "@id": "#24",
+                "@id": "#25",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -2388,20 +2434,23 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#24": "[(13,6)-(13,10)]"
+                    "#25": "[(13,6)-(13,10)]"
                   },
                   "lexical": {
                     "core:description": "[(14,6)-(18,0)]",
-                    "#24": "[(12,4)-(18,0)]",
+                    "#25": "[(12,4)-(18,0)]",
                     "shacl:datatype": "[(13,6)-(14,0)]"
                   }
                 }
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "apiContract:binding": "true"
+              },
               "lexical": {
                 "raml-shapes:schema": "[(12,4)-(18,0)]",
-                "#23": "[(12,4)-(18,0)]",
+                "#24": "[(12,4)-(18,0)]",
                 "core:description": "[(14,6)-(18,0)]"
               }
             }
@@ -2409,7 +2458,7 @@
         ],
         "apiContract:response": [
           {
-            "@id": "#25",
+            "@id": "#26",
             "@type": [
               "apiContract:Response",
               "apiContract:Message",
@@ -2433,14 +2482,14 @@
             "smaps": {
               "lexical": {
                 "core:description": "[(27,6)-(28,0)]",
-                "#25": "[(26,4)-(28,0)]"
+                "#26": "[(26,4)-(28,0)]"
               }
             }
           }
         ],
         "security:settings": [
           {
-            "@id": "#26",
+            "@id": "#27",
             "@type": [
               "security:OAuth1Settings",
               "security:Settings",
@@ -2473,7 +2522,7 @@
               "lexical": {
                 "security:signature": "[(9,2)-(10,0)]",
                 "security:authorizationUri": "[(7,2)-(8,0)]",
-                "#26": "[(5,9)-(10,0)]",
+                "#27": "[(5,9)-(10,0)]",
                 "security:requestTokenUri": "[(6,2)-(7,0)]",
                 "security:tokenCredentialsUri": "[(8,2)-(9,0)]"
               }
@@ -2482,25 +2531,25 @@
         ],
         "smaps": {
           "declared-element": {
-            "#28": ""
+            "#29": ""
           },
           "resolved-link": {
-            "#28": "amf://id#28"
+            "#29": "amf://id#29"
           },
           "lexical": {
             "security:settings": "[(5,0)-(10,0)]",
             "apiContract:parameter": "[(11,2)-(18,0)]",
             "core:description": "[(4,0)-(5,0)]",
-            "#28": "[(3,0)-(28,0)]",
+            "#29": "[(3,0)-(28,0)]",
             "security:type": "[(3,0)-(4,0)]",
             "apiContract:header": "[(18,2)-(25,0)]",
             "apiContract:response": "[(25,2)-(28,0)]"
           },
           "source-vendor": {
-            "#28": "RAML 1.0"
+            "#29": "RAML 1.0"
           },
           "resolved-link-target": {
-            "#28": "amf://id#20"
+            "#29": "amf://id#21"
           }
         }
       }

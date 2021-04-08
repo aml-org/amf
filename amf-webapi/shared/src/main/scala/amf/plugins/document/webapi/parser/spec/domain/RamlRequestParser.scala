@@ -115,7 +115,6 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
       entry => {
         val parameters = entry.value.as[YMap].entries.map { paramEntry =>
           parseParameter(paramEntry, (p: Parameter) => p.adopted(request.getOrCreate.id), parseOptional, "path")
-            .synthesizedBinding("path")
         }
 
         request.getOrCreate.set(RequestModel.UriParameters,

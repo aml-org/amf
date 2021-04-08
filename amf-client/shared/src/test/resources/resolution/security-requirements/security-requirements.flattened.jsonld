@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "#29",
+      "@id": "#30",
       "@type": [
         "apiContract:WebAPI",
         "apiContract:API",
@@ -11,21 +11,21 @@
       "core:name": "Security Demo",
       "apiContract:endpoint": [
         {
-          "@id": "#30"
+          "@id": "#31"
         }
       ],
       "smaps": {
         "source-vendor": {
-          "#29": "RAML 1.0"
+          "#30": "RAML 1.0"
         },
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
-          "#29": "[(2,0)-(8,6)]"
+          "#30": "[(2,0)-(8,6)]"
         }
       }
     },
     {
-      "@id": "#30",
+      "@id": "#31",
       "@type": [
         "apiContract:EndPoint",
         "doc:DomainElement"
@@ -33,17 +33,18 @@
       "apiContract:path": "/test",
       "apiContract:supportedOperation": [
         {
-          "@id": "#31"
+          "@id": "#32"
         }
       ],
       "smaps": {
         "lexical": {
-          "#30": "[(7,0)-(8,6)]"
+          "apiContract:path": "[(7,0)-(7,5)]",
+          "#31": "[(7,0)-(8,6)]"
         }
       }
     },
     {
-      "@id": "#31",
+      "@id": "#32",
       "@type": [
         "apiContract:Operation",
         "doc:DomainElement"
@@ -51,62 +52,29 @@
       "apiContract:method": "get",
       "security:security": [
         {
-          "@id": "#32"
-        },
-        {
-          "@id": "#34"
-        }
-      ],
-      "smaps": {
-        "lexical": {
-          "#31": "[(8,2)-(8,6)]"
-        }
-      }
-    },
-    {
-      "@id": "#32",
-      "@type": [
-        "security:SecurityRequirement",
-        "doc:DomainElement"
-      ],
-      "security:schemes": [
-        {
           "@id": "#33"
-        }
-      ],
-      "smaps": {
-        "lexical": {
-          "#32": "[(6,12)-(6,21)]"
-        }
-      }
-    },
-    {
-      "@id": "#34",
-      "@type": [
-        "security:SecurityRequirement",
-        "doc:DomainElement"
-      ],
-      "security:schemes": [
+        },
         {
           "@id": "#35"
         }
       ],
       "smaps": {
         "lexical": {
-          "#34": "[(6,23)-(6,32)]"
+          "#32": "[(8,2)-(8,6)]"
         }
       }
     },
     {
       "@id": "#33",
       "@type": [
-        "security:ParametrizedSecurityScheme",
+        "security:SecurityRequirement",
         "doc:DomainElement"
       ],
-      "core:name": "oauth_2_0",
-      "security:scheme": {
-        "@id": "#27"
-      },
+      "security:schemes": [
+        {
+          "@id": "#34"
+        }
+      ],
       "smaps": {
         "lexical": {
           "#33": "[(6,12)-(6,21)]"
@@ -116,13 +84,14 @@
     {
       "@id": "#35",
       "@type": [
-        "security:ParametrizedSecurityScheme",
+        "security:SecurityRequirement",
         "doc:DomainElement"
       ],
-      "core:name": "oauth_1_0",
-      "security:scheme": {
-        "@id": "#28"
-      },
+      "security:schemes": [
+        {
+          "@id": "#36"
+        }
+      ],
       "smaps": {
         "lexical": {
           "#35": "[(6,23)-(6,32)]"
@@ -130,7 +99,39 @@
       }
     },
     {
-      "@id": "#27",
+      "@id": "#34",
+      "@type": [
+        "security:ParametrizedSecurityScheme",
+        "doc:DomainElement"
+      ],
+      "core:name": "oauth_2_0",
+      "security:scheme": {
+        "@id": "#28"
+      },
+      "smaps": {
+        "lexical": {
+          "#34": "[(6,12)-(6,21)]"
+        }
+      }
+    },
+    {
+      "@id": "#36",
+      "@type": [
+        "security:ParametrizedSecurityScheme",
+        "doc:DomainElement"
+      ],
+      "core:name": "oauth_1_0",
+      "security:scheme": {
+        "@id": "#29"
+      },
+      "smaps": {
+        "lexical": {
+          "#36": "[(6,23)-(6,32)]"
+        }
+      }
+    },
+    {
+      "@id": "#28",
       "@type": [
         "security:SecurityScheme",
         "doc:DomainElement"
@@ -146,71 +147,19 @@
       ],
       "apiContract:parameter": [
         {
-          "@id": "#7"
+          "@id": "#8"
         }
       ],
       "apiContract:response": [
         {
-          "@id": "#9"
+          "@id": "#10"
         },
         {
-          "@id": "#12"
+          "@id": "#13"
         }
       ],
       "security:settings": {
-        "@id": "#15"
-      },
-      "smaps": {
-        "declared-element": {
-          "#27": ""
-        },
-        "resolved-link": {
-          "#27": "amf://id#27"
-        },
-        "lexical": {
-          "security:settings": "[(26,0)-(31,0)]",
-          "apiContract:parameter": "[(6,2)-(11,0)]",
-          "core:description": "[(3,0)-(4,0)]",
-          "security:type": "[(2,0)-(3,0)]",
-          "#27": "[(2,0)-(31,0)]",
-          "core:displayName": "[(4,0)-(5,0)]",
-          "apiContract:header": "[(11,2)-(17,0)]",
-          "apiContract:response": "[(17,2)-(26,0)]"
-        },
-        "source-vendor": {
-          "#27": "RAML 1.0"
-        },
-        "resolved-link-target": {
-          "#27": "amf://id#2"
-        }
-      }
-    },
-    {
-      "@id": "#28",
-      "@type": [
-        "security:SecurityScheme",
-        "doc:DomainElement"
-      ],
-      "core:name": "oauth_1_0",
-      "security:type": "OAuth 1.0",
-      "core:description": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.",
-      "apiContract:header": [
-        {
-          "@id": "#21"
-        }
-      ],
-      "apiContract:parameter": [
-        {
-          "@id": "#23"
-        }
-      ],
-      "apiContract:response": [
-        {
-          "@id": "#25"
-        }
-      ],
-      "security:settings": {
-        "@id": "#26"
+        "@id": "#16"
       },
       "smaps": {
         "declared-element": {
@@ -220,19 +169,71 @@
           "#28": "amf://id#28"
         },
         "lexical": {
-          "security:settings": "[(5,0)-(10,0)]",
-          "apiContract:parameter": "[(11,2)-(18,0)]",
-          "core:description": "[(4,0)-(5,0)]",
-          "#28": "[(3,0)-(28,0)]",
-          "security:type": "[(3,0)-(4,0)]",
-          "apiContract:header": "[(18,2)-(25,0)]",
-          "apiContract:response": "[(25,2)-(28,0)]"
+          "security:settings": "[(26,0)-(31,0)]",
+          "apiContract:parameter": "[(6,2)-(11,0)]",
+          "core:description": "[(3,0)-(4,0)]",
+          "security:type": "[(2,0)-(3,0)]",
+          "#28": "[(2,0)-(31,0)]",
+          "core:displayName": "[(4,0)-(5,0)]",
+          "apiContract:header": "[(11,2)-(17,0)]",
+          "apiContract:response": "[(17,2)-(26,0)]"
         },
         "source-vendor": {
           "#28": "RAML 1.0"
         },
         "resolved-link-target": {
-          "#28": "amf://id#20"
+          "#28": "amf://id#2"
+        }
+      }
+    },
+    {
+      "@id": "#29",
+      "@type": [
+        "security:SecurityScheme",
+        "doc:DomainElement"
+      ],
+      "core:name": "oauth_1_0",
+      "security:type": "OAuth 1.0",
+      "core:description": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.",
+      "apiContract:header": [
+        {
+          "@id": "#22"
+        }
+      ],
+      "apiContract:parameter": [
+        {
+          "@id": "#24"
+        }
+      ],
+      "apiContract:response": [
+        {
+          "@id": "#26"
+        }
+      ],
+      "security:settings": {
+        "@id": "#27"
+      },
+      "smaps": {
+        "declared-element": {
+          "#29": ""
+        },
+        "resolved-link": {
+          "#29": "amf://id#29"
+        },
+        "lexical": {
+          "security:settings": "[(5,0)-(10,0)]",
+          "apiContract:parameter": "[(11,2)-(18,0)]",
+          "core:description": "[(4,0)-(5,0)]",
+          "#29": "[(3,0)-(28,0)]",
+          "security:type": "[(3,0)-(4,0)]",
+          "apiContract:header": "[(18,2)-(25,0)]",
+          "apiContract:response": "[(25,2)-(28,0)]"
+        },
+        "source-vendor": {
+          "#29": "RAML 1.0"
+        },
+        "resolved-link-target": {
+          "#29": "amf://id#21"
         }
       }
     },
@@ -251,6 +252,9 @@
         "@id": "#4"
       },
       "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true"
+        },
         "lexical": {
           "raml-shapes:schema": "[(12,4)-(17,0)]",
           "core:description": "[(15,6)-(16,0)]",
@@ -260,7 +264,7 @@
       }
     },
     {
-      "@id": "#7",
+      "@id": "#8",
       "@type": [
         "apiContract:Parameter",
         "doc:DomainElement"
@@ -271,19 +275,22 @@
       "apiContract:required": false,
       "apiContract:binding": "query",
       "raml-shapes:schema": {
-        "@id": "#8"
+        "@id": "#9"
       },
       "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true"
+        },
         "lexical": {
           "raml-shapes:schema": "[(7,4)-(11,0)]",
           "core:description": "[(9,6)-(10,0)]",
-          "#7": "[(7,4)-(11,0)]",
+          "#8": "[(7,4)-(11,0)]",
           "apiContract:required": "[(10,6)-(11,0)]"
         }
       }
     },
     {
-      "@id": "#9",
+      "@id": "#10",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -294,19 +301,19 @@
       "core:description": "Bad or expired token. This can happen if the user or the service revoked or expired an access token. To fix, re-authenticate the user.",
       "apiContract:payload": [
         {
-          "@id": "#10"
+          "@id": "#11"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(20,6)-(22,0)]",
-          "#9": "[(18,4)-(22,0)]",
+          "#10": "[(18,4)-(22,0)]",
           "core:description": "[(19,6)-(20,0)]"
         }
       }
     },
     {
-      "@id": "#12",
+      "@id": "#13",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -317,19 +324,19 @@
       "core:description": "Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...). Unfortunately, re-authenticating the user won't help here.",
       "apiContract:payload": [
         {
-          "@id": "#13"
+          "@id": "#14"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(24,6)-(26,0)]",
-          "#12": "[(22,4)-(26,0)]",
+          "#13": "[(22,4)-(26,0)]",
           "core:description": "[(23,6)-(24,0)]"
         }
       }
     },
     {
-      "@id": "#15",
+      "@id": "#16",
       "@type": [
         "security:OAuth2Settings",
         "security:Settings",
@@ -342,7 +349,7 @@
       ],
       "security:flows": [
         {
-          "@id": "#16"
+          "@id": "#17"
         }
       ],
       "smaps": {
@@ -351,12 +358,12 @@
         },
         "lexical": {
           "security:authorizationGrant": "[(29,2)-(30,0)]",
-          "#15": "[(26,9)-(31,0)]"
+          "#16": "[(26,9)-(31,0)]"
         }
       }
     },
     {
-      "@id": "#21",
+      "@id": "#22",
       "@type": [
         "apiContract:Parameter",
         "doc:DomainElement"
@@ -367,18 +374,21 @@
       "apiContract:required": true,
       "apiContract:binding": "header",
       "raml-shapes:schema": {
-        "@id": "#22"
+        "@id": "#23"
       },
       "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true"
+        },
         "lexical": {
           "raml-shapes:schema": "[(19,4)-(25,0)]",
-          "#21": "[(19,4)-(25,0)]",
+          "#22": "[(19,4)-(25,0)]",
           "core:description": "[(21,6)-(25,0)]"
         }
       }
     },
     {
-      "@id": "#23",
+      "@id": "#24",
       "@type": [
         "apiContract:Parameter",
         "doc:DomainElement"
@@ -389,18 +399,21 @@
       "apiContract:required": true,
       "apiContract:binding": "query",
       "raml-shapes:schema": {
-        "@id": "#24"
+        "@id": "#25"
       },
       "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true"
+        },
         "lexical": {
           "raml-shapes:schema": "[(12,4)-(18,0)]",
-          "#23": "[(12,4)-(18,0)]",
+          "#24": "[(12,4)-(18,0)]",
           "core:description": "[(14,6)-(18,0)]"
         }
       }
     },
     {
-      "@id": "#25",
+      "@id": "#26",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -412,12 +425,12 @@
       "smaps": {
         "lexical": {
           "core:description": "[(27,6)-(28,0)]",
-          "#25": "[(26,4)-(28,0)]"
+          "#26": "[(26,4)-(28,0)]"
         }
       }
     },
     {
-      "@id": "#26",
+      "@id": "#27",
       "@type": [
         "security:OAuth1Settings",
         "security:Settings",
@@ -434,7 +447,7 @@
         "lexical": {
           "security:signature": "[(9,2)-(10,0)]",
           "security:authorizationUri": "[(7,2)-(8,0)]",
-          "#26": "[(5,9)-(10,0)]",
+          "#27": "[(5,9)-(10,0)]",
           "security:requestTokenUri": "[(6,2)-(7,0)]",
           "security:tokenCredentialsUri": "[(8,2)-(9,0)]"
         }
@@ -474,7 +487,7 @@
       }
     },
     {
-      "@id": "#8",
+      "@id": "#9",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -491,49 +504,49 @@
       "core:description": "Used to send a valid OAuth 2 access token. Do not use with the \"Authorization\" header.",
       "smaps": {
         "type-property-lexical-info": {
-          "#8": "[(8,6)-(8,10)]"
+          "#9": "[(8,6)-(8,10)]"
         },
         "lexical": {
           "core:description": "[(9,6)-(10,0)]",
-          "#8": "[(7,4)-(11,0)]",
+          "#9": "[(7,4)-(11,0)]",
           "shacl:datatype": "[(8,6)-(9,0)]"
         }
       }
     },
     {
-      "@id": "#10",
+      "@id": "#11",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#11"
+        "@id": "#12"
       },
       "smaps": {
         "lexical": {
-          "#10": "[(21,8)-(22,0)]"
+          "#11": "[(21,8)-(22,0)]"
         }
       }
     },
     {
-      "@id": "#13",
+      "@id": "#14",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#14"
+        "@id": "#15"
       },
       "smaps": {
         "lexical": {
-          "#13": "[(25,8)-(26,0)]"
+          "#14": "[(25,8)-(26,0)]"
         }
       }
     },
     {
-      "@id": "#16",
+      "@id": "#17",
       "@type": [
         "security:OAuth2Flow",
         "doc:DomainElement"
@@ -542,23 +555,23 @@
       "security:accessTokenUri": "http://api.domain.com/oauth2/token",
       "security:scope": [
         {
-          "@id": "#17"
+          "@id": "#18"
         },
         {
-          "@id": "#18"
+          "@id": "#19"
         }
       ],
       "smaps": {
         "lexical": {
           "security:scope": "[(30,2)-(31,0)]",
           "security:authorizationUri": "[(28,2)-(29,0)]",
-          "#16": "[(27,0)-(31,0)]",
+          "#17": "[(27,0)-(31,0)]",
           "security:accessTokenUri": "[(27,2)-(28,0)]"
         }
       }
     },
     {
-      "@id": "#22",
+      "@id": "#23",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -575,17 +588,17 @@
       "core:description": "Received Access Token.\n\nDo not mix with query parameters.\n",
       "smaps": {
         "type-property-lexical-info": {
-          "#22": "[(20,6)-(20,10)]"
+          "#23": "[(20,6)-(20,10)]"
         },
         "lexical": {
           "core:description": "[(21,6)-(25,0)]",
-          "#22": "[(19,4)-(25,0)]",
+          "#23": "[(19,4)-(25,0)]",
           "shacl:datatype": "[(20,6)-(21,0)]"
         }
       }
     },
     {
-      "@id": "#24",
+      "@id": "#25",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -602,11 +615,11 @@
       "core:description": "Received Access Token.\n\nDo not mix with headers\n",
       "smaps": {
         "type-property-lexical-info": {
-          "#24": "[(13,6)-(13,10)]"
+          "#25": "[(13,6)-(13,10)]"
         },
         "lexical": {
           "core:description": "[(14,6)-(18,0)]",
-          "#24": "[(12,4)-(18,0)]",
+          "#25": "[(12,4)-(18,0)]",
           "shacl:datatype": "[(13,6)-(14,0)]"
         }
       }
@@ -632,12 +645,12 @@
           "doc:structuredValue": "[(14,15)-(14,38)]"
         },
         "tracked-element": {
-          "#5": "amf://id#3"
+          "#5": "amf://id#7"
         }
       }
     },
     {
-      "@id": "#11",
+      "@id": "#12",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -647,15 +660,15 @@
       "shacl:name": "schema",
       "smaps": {
         "auto-generated-name": {
-          "#11": ""
+          "#12": ""
         },
         "lexical": {
-          "#11": "[(21,8)-(22,0)]"
+          "#12": "[(21,8)-(22,0)]"
         }
       }
     },
     {
-      "@id": "#14",
+      "@id": "#15",
       "@type": [
         "raml-shapes:AnyShape",
         "shacl:Shape",
@@ -665,15 +678,15 @@
       "shacl:name": "schema",
       "smaps": {
         "auto-generated-name": {
-          "#14": ""
+          "#15": ""
         },
         "lexical": {
-          "#14": "[(25,8)-(26,0)]"
+          "#15": "[(25,8)-(26,0)]"
         }
       }
     },
     {
-      "@id": "#17",
+      "@id": "#18",
       "@type": [
         "security:Scope",
         "doc:DomainElement"
@@ -681,7 +694,7 @@
       "core:name": "profile"
     },
     {
-      "@id": "#18",
+      "@id": "#19",
       "@type": [
         "security:Scope",
         "doc:DomainElement"
@@ -703,6 +716,10 @@
       ],
       "core:name": "scalar_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#6": "[(14,15)-(14,38)]"
         }
@@ -715,15 +732,15 @@
           "@id": "#1"
         },
         {
-          "@id": "#19"
+          "@id": "#20"
         }
       ],
       "doc:declares": [
         {
-          "@id": "#27"
+          "@id": "#28"
         },
         {
-          "@id": "#28"
+          "@id": "#29"
         }
       ],
       "@type": [
@@ -733,7 +750,7 @@
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#29"
+        "@id": "#30"
       },
       "doc:version": "3.0.0",
       "doc:root": true
@@ -757,20 +774,20 @@
       }
     },
     {
-      "@id": "#19",
+      "@id": "#20",
       "@type": [
         "security:SecuritySchemeFragment",
         "doc:Fragment",
         "doc:Unit"
       ],
       "doc:encodes": {
-        "@id": "#20"
+        "@id": "#21"
       },
       "doc:version": "3.0.0",
       "doc:root": false,
       "smaps": {
         "lexical": {
-          "#19": "[(2,0)-(28,0)]"
+          "#20": "[(2,0)-(28,0)]"
         }
       }
     },
@@ -790,19 +807,19 @@
       ],
       "apiContract:parameter": [
         {
-          "@id": "#7"
+          "@id": "#8"
         }
       ],
       "apiContract:response": [
         {
-          "@id": "#9"
+          "@id": "#10"
         },
         {
-          "@id": "#12"
+          "@id": "#13"
         }
       ],
       "security:settings": {
-        "@id": "#15"
+        "@id": "#16"
       },
       "smaps": {
         "source-vendor": {
@@ -821,7 +838,7 @@
       }
     },
     {
-      "@id": "#20",
+      "@id": "#21",
       "@type": [
         "security:SecurityScheme",
         "doc:DomainElement"
@@ -830,31 +847,31 @@
       "core:description": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.",
       "apiContract:header": [
         {
-          "@id": "#21"
+          "@id": "#22"
         }
       ],
       "apiContract:parameter": [
         {
-          "@id": "#23"
+          "@id": "#24"
         }
       ],
       "apiContract:response": [
         {
-          "@id": "#25"
+          "@id": "#26"
         }
       ],
       "security:settings": {
-        "@id": "#26"
+        "@id": "#27"
       },
       "smaps": {
         "source-vendor": {
-          "#20": "RAML 1.0"
+          "#21": "RAML 1.0"
         },
         "lexical": {
           "security:settings": "[(5,0)-(10,0)]",
           "apiContract:parameter": "[(11,2)-(18,0)]",
           "core:description": "[(4,0)-(5,0)]",
-          "#20": "[(3,0)-(28,0)]",
+          "#21": "[(3,0)-(28,0)]",
           "security:type": "[(3,0)-(4,0)]",
           "apiContract:header": "[(18,2)-(25,0)]",
           "apiContract:response": "[(25,2)-(28,0)]"

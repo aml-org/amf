@@ -110,7 +110,6 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                                        (p: Parameter) => p.adopted(scheme.id),
                                        binding = "header") // todo replace in separation
                     .parse()
-                    .map(_.synthesizedBinding("header"))
                 scheme.set(SecuritySchemeModel.Headers,
                            AmfArray(parameters, Annotations(entry.value)),
                            Annotations(entry))
@@ -132,7 +131,6 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                 val parameters: Seq[Parameter] =
                   RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(scheme.id), binding = "query") // todo replace in separation
                     .parse()
-                    .map(_.synthesizedBinding("query"))
                 scheme.set(SecuritySchemeModel.QueryParameters,
                            AmfArray(parameters, Annotations(entry.value)),
                            Annotations(entry))

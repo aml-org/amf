@@ -103,18 +103,10 @@
                           }
                         }
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#11": "[(14,0)-(16,0)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "smaps": {
-                  "synthesized-field": {
-                    "apiContract:expects": "true"
-                  },
                   "lexical": {
                     "#10": "[(13,2)-(16,0)]"
                   }
@@ -122,9 +114,6 @@
               }
             ],
             "smaps": {
-              "synthesized-field": {
-                "apiContract:supportedOperation": "true"
-              },
               "lexical": {
                 "apiContract:path": "[(12,0)-(12,11)]",
                 "#9": "[(12,0)-(16,0)]"
@@ -202,18 +191,10 @@
                           }
                         }
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#15": "[(18,0)-(19,30)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "smaps": {
-                  "synthesized-field": {
-                    "apiContract:expects": "true"
-                  },
                   "lexical": {
                     "#14": "[(17,2)-(19,30)]"
                   }
@@ -221,9 +202,6 @@
               }
             ],
             "smaps": {
-              "synthesized-field": {
-                "apiContract:supportedOperation": "true"
-              },
               "lexical": {
                 "apiContract:path": "[(16,0)-(16,13)]",
                 "#13": "[(16,0)-(19,30)]"
@@ -232,11 +210,9 @@
           }
         ],
         "smaps": {
-          "synthesized-field": {
-            "apiContract:endpoint": "true"
-          },
-          "source-vendor": {
-            "#8": "RAML 1.0"
+          "single-value-array": {
+            "apiContract:contentType": "",
+            "apiContract:accepts": ""
           },
           "lexical": {
             "apiContract:contentType": "[(4,0)-(6,0)]",
@@ -244,9 +220,8 @@
             "#8": "[(2,0)-(19,30)]",
             "apiContract:accepts": "[(4,0)-(6,0)]"
           },
-          "single-value-array": {
-            "apiContract:contentType": "",
-            "apiContract:accepts": ""
+          "source-vendor": {
+            "#8": "RAML 1.0"
           }
         }
       }

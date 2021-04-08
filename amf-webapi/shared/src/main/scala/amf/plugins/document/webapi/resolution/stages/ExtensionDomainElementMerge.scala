@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.{SynthesizedField, VirtualNode}
+import amf.core.annotations.{Inferred, SynthesizedField, VirtualNode}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel.Sources
@@ -9,7 +9,7 @@ import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, FieldEntry}
+import amf.core.parser.{Annotations, FieldEntry, Value}
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
@@ -113,6 +113,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       annotations
     )
   }
+  private def isInferred(value: Value) = value.annotations.contains(classOf[Inferred])
 
   private def isSameValue(existing: FieldEntry, master: FieldEntry): Boolean =
     existing.value.toString == master.value.toString

@@ -2,7 +2,6 @@ package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
 import amf.core.annotations.SourceVendor
-import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.metamodel.document.FragmentModel
 import amf.core.model.document.{ExternalFragment, Fragment}
 import amf.core.model.domain.extensions.CustomDomainProperty

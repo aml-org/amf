@@ -173,8 +173,7 @@
                     "apiContract:payload": [],
                     "smaps": {
                       "lexical": {
-                        "apiContract:uriParameter": "[(13,4)-(18,0)]",
-                        "#4": "[(11,0)-(21,0)]"
+                        "apiContract:uriParameter": "[(13,4)-(18,0)]"
                       }
                     }
                   }
@@ -212,9 +211,6 @@
                   }
                 ],
                 "smaps": {
-                  "synthesized-field": {
-                    "apiContract:expects": "true"
-                  },
                   "lexical": {
                     "apiContract:returns": "[(18,4)-(21,0)]",
                     "core:name": "[(11,4)-(12,0)]",
@@ -337,8 +333,7 @@
                     "apiContract:payload": [],
                     "smaps": {
                       "lexical": {
-                        "apiContract:uriParameter": "[(24,4)-(29,0)]",
-                        "#9": "[(22,0)-(33,0)]"
+                        "apiContract:uriParameter": "[(24,4)-(29,0)]"
                       }
                     }
                   }
@@ -376,9 +371,6 @@
                   }
                 ],
                 "smaps": {
-                  "synthesized-field": {
-                    "apiContract:expects": "true"
-                  },
                   "lexical": {
                     "apiContract:returns": "[(29,4)-(33,0)]",
                     "core:name": "[(22,4)-(23,0)]",
@@ -389,9 +381,6 @@
               }
             ],
             "smaps": {
-              "synthesized-field": {
-                "apiContract:supportedOperation": "true"
-              },
               "lexical": {
                 "apiContract:path": "[(9,0)-(9,37)]",
                 "#2": "[(9,0)-(33,0)]"
@@ -544,8 +533,7 @@
                 ],
                 "smaps": {
                   "synthesized-field": {
-                    "apiContract:binding": "true",
-                    "apiContract:required": "true"
+                    "apiContract:binding": "true"
                   },
                   "lexical": {
                     "raml-shapes:schema": "[(41,4)-(44,0)]",
@@ -556,9 +544,6 @@
               }
             ],
             "smaps": {
-              "synthesized-field": {
-                "apiContract:supportedOperation": "true"
-              },
               "lexical": {
                 "apiContract:parameter": "[(40,16)-(44,0)]",
                 "#13": "[(33,0)-(44,0)]",
@@ -568,8 +553,8 @@
           }
         ],
         "smaps": {
-          "synthesized-field": {
-            "apiContract:endpoint": "true"
+          "source-vendor": {
+            "#1": "RAML 1.0"
           },
           "lexical": {
             "core:version": "[(6,0)-(7,0)]",
@@ -579,9 +564,6 @@
             "core:name": "[(2,0)-(3,0)]",
             "apiContract:accepts": "[(4,0)-(6,0)]",
             "apiContract:scheme": "[(7,0)-(9,0)]"
-          },
-          "source-vendor": {
-            "#1": "RAML 1.0"
           }
         }
       }

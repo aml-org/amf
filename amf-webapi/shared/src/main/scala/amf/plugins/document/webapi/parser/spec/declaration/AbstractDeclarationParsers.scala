@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.annotations.{DeclaredElement, ExternalFragmentRef}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.AmfArray
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.annotations.DeclarationKey
