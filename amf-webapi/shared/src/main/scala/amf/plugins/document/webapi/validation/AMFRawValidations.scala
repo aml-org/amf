@@ -1553,7 +1553,7 @@ object AMFRawValidations {
       )
   }
 
-  val map: Map[ProfileName, Seq[AMFValidation]] = Map(
+  val profileToValidationMap: Map[ProfileName, Seq[AMFValidation]] = Map(
     AmfProfile     -> forProfile(AmfProfile),
     Raml10Profile  -> forProfile(Raml10Profile),
     Raml08Profile  -> forProfile(Raml08Profile),

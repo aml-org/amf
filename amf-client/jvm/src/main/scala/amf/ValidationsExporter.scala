@@ -11,7 +11,7 @@ object ValidationsExporter extends ImportUtils {
 
     AMF.init() // Needed to load all the validations in the platform
 
-    val parserSideVals = Validations.allLevels.foldLeft(Map[String, Map[String, String]]()) {
+    val parserSideVals = Validations.severityLevelsOfConstraints.foldLeft(Map[String, Map[String, String]]()) {
       case (accMap, (id, levels)) =>
         accMap.updated(id, levels.foldLeft(Map[String, String]()) {
           case (acc, (p, v)) =>
@@ -29,7 +29,7 @@ object ValidationsExporter extends ImportUtils {
     var validationsAcc                           = Map[String, AMFValidation]()
     var levels: Map[String, Map[String, String]] = Map()
 
-    AMFRawValidations.map.foreach {
+    AMFRawValidations.profileToValidationMap.foreach {
       case (profile, validations) =>
         validations.foreach { validation =>
           val id = uri(validation)
