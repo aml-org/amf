@@ -1,12 +1,9 @@
 #%RAML 1.0
 title: test
 version: "1.0"
-mediaType: application/json
 baseUri: falsedomain.com/apis
 /customers:
   /{customer_id}:
-    uriParameters:
-      customer_id: {}
     get:
       description: Returns Customer data
       responses:
@@ -38,3 +35,6 @@ baseUri: falsedomain.com/apis
           body:
             application/json:
               type: string
+    uriParameters:
+      customer_id: {}
+mediaType: application/json

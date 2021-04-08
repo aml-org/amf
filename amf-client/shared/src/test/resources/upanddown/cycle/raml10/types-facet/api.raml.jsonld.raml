@@ -2,13 +2,13 @@
 types:
   ScalarTest:
     type: string
-    enum:
-      - a1
-      - a2
     pattern: blabla.+
     minLength: 1
     default: defaultValue
     maxLength: 20
+    enum:
+      - a1
+      - a2
   IntegerTest:
     type: number
     minimum: 2
@@ -25,12 +25,6 @@ types:
     (amf-externalDocs):
       url: externalDocsUrl
       description: externalDocsDescription
-    properties:
-      name:
-        type: string
-        (amf-readOnly): false
-      ddd:
-        type: string
     minProperties: 1
     maxProperties: 5
     discriminator: ddd
@@ -38,4 +32,10 @@ types:
     xml:
       namespace: namespacetest
       prefix: blabla
+    properties:
+      name:
+        type: string
+        (amf-readOnly): false
+      ddd:
+        type: string
 title: test title

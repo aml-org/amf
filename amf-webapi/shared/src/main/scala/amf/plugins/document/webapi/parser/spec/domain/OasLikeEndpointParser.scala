@@ -219,7 +219,10 @@ case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: Li
       "parameters",
       entry => {
         val parameters = AsyncParametersParser(endpoint.id, entry.value.as[YMap]).parse()
-        endpoint.setArray(EndPointModel.Parameters, parameters, Annotations(entry.value))
+        endpoint.fields.set(endpoint.id,
+                            EndPointModel.Parameters,
+                            AmfArray(parameters, Annotations(entry.value)),
+                            Annotations(entry))
       }
     )
 

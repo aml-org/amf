@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser._
 import amf.core.parser.Annotations
 import amf.core.utils.IdCounter
@@ -20,7 +20,9 @@ case class AsyncServersParser(map: YMap, api: AsyncApi)(implicit val ctx: AsyncW
     map.entries.map { entry =>
       AsyncServerParser(api.id, entry)
         .parse()
-        .withName(entry.key, Annotations(entry.key))
+        .set(ServerModel.Name,
+             AmfScalar(entry.key.asScalar.map(_.text).getOrElse(entry.key.toString), Annotations(entry.key)),
+             Annotations.inferred())
     }
   }
 }

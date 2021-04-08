@@ -2,14 +2,14 @@
 title: API with Examples
 types:
   User:
+    example:
+      name: Bob
+      lastname: Marley
     properties:
       name:
         type: string
       lastname:
         type: string
-    example:
-      name: Bob
-      lastname: Marley
   Org:
     properties:
       name:
@@ -27,18 +27,17 @@ types:
         example: SWED-123
     body:
       application/json:
-        type: Org
         example:
           value:
             name: Doe Enterprise
             value: Silver
+        type: Org
   get:
     description: Returns an organization entity.
     responses:
       "201":
         body:
           application/json:
-            type: Org
             examples:
               acme:
                 name: Acme
@@ -47,3 +46,4 @@ types:
                   name: Software Corp
                   address: 35 Central Street
                   value: Gold
+            type: Org

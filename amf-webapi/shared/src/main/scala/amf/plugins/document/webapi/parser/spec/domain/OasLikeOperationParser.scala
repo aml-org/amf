@@ -183,13 +183,18 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
     map.key(
       "requestBody",
       entry => {
-        operation.withRequest(Oas30RequestParser(entry.value.as[YMap], operation.id, entry).parse(),
-                              Annotations(entry))
+        operation.fields.set(
+          operation.id,
+          OperationModel.Request,
+          AmfArray(Seq(Oas30RequestParser(entry.value.as[YMap], operation.id, entry).parse()),
+                   Annotations(entry.value)),
+          Annotations(entry)
+        )
       }
     )
 
     // parameters defined in endpoint are stored in the request
-    Oas30ParametersParser(map, Option(operation.request).map(() => _).getOrElse(operation.withRequest))
+    Oas30ParametersParser(map, Option(operation.request).map(() => _).getOrElse(operation.withInferredRequest))
       .parseParameters()
 
     map.key(
@@ -206,7 +211,10 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
                                 callbackEntry)
               .parse()
           }
-        operation.withCallbacks(callbacks, Annotations(entry))
+        operation.fields.set(operation.id,
+                             OperationModel.Callbacks,
+                             AmfArray(callbacks, Annotations(entry.value)),
+                             Annotations(entry))
       }
     )
 
@@ -215,5 +223,4 @@ case class Oas30OperationParser(entry: YMapEntry, adopt: Operation => Operation)
 
     operation
   }
-
 }

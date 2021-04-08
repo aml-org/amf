@@ -2,13 +2,13 @@
 title: Headers Test
 version: v2
 baseUri: https://app.zencoder.com/api/{version}/{year}
-baseUriParameters:
-  version:
-    description: some description
-    type: string
 /required:
   post:
     headers:
       Zencoder-Api-Key:
         displayName: ZEncoder API Key
         type: string
+baseUriParameters:
+  version:
+    description: some description
+    type: string

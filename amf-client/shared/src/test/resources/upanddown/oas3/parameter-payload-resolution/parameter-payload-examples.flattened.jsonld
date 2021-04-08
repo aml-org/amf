@@ -152,6 +152,7 @@
       "doc:raw": "Example defined in payload",
       "smaps": {
         "synthesized-field": {
+          "core:mediaType": "true",
           "doc:strict": "true"
         },
         "lexical": {
@@ -226,7 +227,8 @@
       "smaps": {
         "synthesized-field": {
           "apiContract:explode": "true",
-          "apiContract:required": "true"
+          "apiContract:required": "true",
+          "apiContract:style": "true"
         },
         "lexical": {
           "raml-shapes:schema": "[(13,8)-(16,9)]",

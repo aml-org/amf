@@ -31,6 +31,9 @@
                   },
                   "b": {
                     "contentType": "image/png, image/jpeg",
+                    "style": "simple",
+                    "explode": false,
+                    "allowReserved": false,
                     "headers": {
                       "X-Rate-Limit-Limit": {
                         "description": "The number of allowed requests in the current period",
@@ -38,10 +41,7 @@
                           "type": "integer"
                         }
                       }
-                    },
-                    "style": "simple",
-                    "explode": false,
-                    "allowReserved": false
+                    }
                   }
                 }
               }

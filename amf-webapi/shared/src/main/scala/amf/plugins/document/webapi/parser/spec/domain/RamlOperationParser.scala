@@ -88,7 +88,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     )
 
     ctx.factory
-      .requestParser(map, () => operation.withRequest(), parseOptional)
+      .requestParser(map, () => operation.withInferredRequest(), parseOptional)
       .parse()
       .foreach(req =>
         operation.set(OperationModel.Request, AmfArray(List(req), Annotations.virtual()), Annotations.inferred()))

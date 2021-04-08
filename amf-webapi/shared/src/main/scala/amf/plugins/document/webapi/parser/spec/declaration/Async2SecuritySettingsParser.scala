@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
@@ -82,7 +83,10 @@ class Async2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit c
   private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit = {
     val flows = entry.value.as[YMap].entries.map(parseFlow(settings, _))
     flows.foreach(OAuth2FlowValidations.validateFlowFields(_, ctx.eh, entry))
-    settings.setArray(OAuth2SettingsModel.Flows, flows, Annotations(entry.value))
+    settings.fields.set(settings.id,
+                        OAuth2SettingsModel.Flows,
+                        AmfArray(flows, Annotations(entry.value)),
+                        Annotations(entry.value))
   }
 
   private def parseFlow(settings: OAuth2Settings, flowEntry: YMapEntry) = {

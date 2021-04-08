@@ -40,8 +40,8 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def withStyle(style: String): this.type                      = set(Style, style)
   def withExplode(explode: Boolean): this.type                 = set(Explode, explode)
   def withAllowReserved(allowReserved: Boolean): this.type     = set(AllowReserved, allowReserved)
-  def withBinding(binding: String, annotations: Annotations = Annotations()): this.type =
-    set(Binding, binding, annotations)
+  def withBinding(binding: String): this.type =
+    set(Binding, binding)
   def synthesizedBinding(binding: String): this.type =
     set(Binding, AmfScalar(binding), Annotations.synthesized())
   def withSchema(schema: Shape): this.type            = set(Schema, schema)
@@ -79,7 +79,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
 
   override def linkCopy(): Parameter = {
     val copy = Parameter().withId(id)
-    binding.option().foreach(copy.withBinding(_, Annotations.synthesized()))
+    binding.option().foreach(copy.set(ParameterModel.Binding, _, Annotations.synthesized()))
     copy
   }
 
