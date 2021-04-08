@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.declaration.external.raml
 
 import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, Range, ReferenceFragmentPartition}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
@@ -63,7 +63,7 @@ case class RamlXmlSchemaExpression(key: YNode,
 
   private def buildSchemaShapeFrom(scalar: YScalar) = {
     val shape = SchemaShape()
-      .set(ExternalSourceElementModel.Raw, scalar.text, Annotations(scalar))
+      .set(ExternalSourceElementModel.Raw, AmfScalar(scalar.text, Annotations(scalar)), Annotations.inferred())
       .set(SchemaShapeModel.MediaType, "application/xml", Annotations.synthesized())
     shape.withName(key.as[String])
     adopt(shape)
@@ -87,8 +87,13 @@ case class RamlXmlSchemaExpression(key: YNode,
   }
 
   private def buildSchemaShapeFrom(typeEntry: YMapEntry) = {
-    val shape = SchemaShape().withRaw(typeEntry.value.toString).withMediaType("application/xml")
-    shape.withName(key.as[String])
+    val shape = SchemaShape()
+    shape
+      .set(ExternalSourceElementModel.Raw,
+           AmfScalar(typeEntry.value.toString, Annotations(typeEntry.value)),
+           Annotations.inferred())
+      .set(SchemaShapeModel.MediaType, "application/xml", Annotations.synthesized())
+    shape.withName(key.as[String], Annotations(key))
     adopt(shape)
     shape
   }

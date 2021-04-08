@@ -6,13 +6,13 @@ securitySchemes:
     settings:
       authorizationUri: https://example.com/oauth/authorize
       accessTokenUri: https://example.com/oauth/token
+      scopes:
+        - profile
+        - history
       authorizationGrants:
         - authorization_code
         - implicit
         - urn:ietf:params:oauth:grant-type:saml2-bearer
-      scopes:
-        - profile
-        - history
     describedBy:
       headers:
         Authorization:

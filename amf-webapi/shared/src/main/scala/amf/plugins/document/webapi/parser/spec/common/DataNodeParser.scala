@@ -1,8 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.core.annotations.ReferenceId
+import amf.core.annotations.{ReferenceId, ScalarType}
+import amf.core.metamodel.domain.ScalarNodeModel
 import amf.core.model.DataType
 import amf.core.model.document.{EncodesModel, ExternalFragment}
+import amf.core.model.domain.ScalarNode.forDataType
 import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
@@ -91,10 +93,19 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
                             parent: Option[String] = None,
                             idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
 
+  private def newScalarNode(value: amf.core.parser.ScalarNode,
+                            dataType: String,
+                            annotations: Annotations): ScalarNode = {
+    val scalar = new ScalarNode(Fields(), annotations)
+    annotations += ScalarType(dataType)
+    scalar.set(ScalarNodeModel.DataType, forDataType(dataType), Annotations.synthesized())
+    scalar.set(ScalarNodeModel.Value, value.text(), Annotations.inferred())
+  }
+
   protected def parseScalar(node: YNode, dataType: String): DataNode = {
-    val finalDataType = Some(DataType(dataType))
+    val finalDataType = DataType(dataType)
     val scalarNode    = amf.core.parser.ScalarNode(node)
-    val dataNode = ScalarNode(scalarNode, finalDataType, Annotations(node))
+    val dataNode = newScalarNode(scalarNode, finalDataType, Annotations(node))
       .withSynthesizeName(idCounter.genId("scalar"))
     parent.foreach(p => dataNode.adopted(p))
     parameters.parseVariables(scalarNode.text().toString)

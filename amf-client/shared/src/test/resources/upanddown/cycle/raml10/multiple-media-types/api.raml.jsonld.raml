@@ -1,7 +1,6 @@
 #%RAML 1.0
 title: Rest Test 3
 version: v1.0
-mediaType: application/json
 baseUri: http://localhost:8081/api
 types:
   jsonSchema: |
@@ -61,7 +60,6 @@ documentation:
       application/json:
         type: jsonSchema
       text/xml:
-        type: xmlSchema
         example: |
           <saasTxn>
           <tenant>100</tenant>
@@ -69,8 +67,10 @@ documentation:
           <objectKey>12345</objectKey>
           <txnType>Update</txnType>
           </saasTxn>
+        type: xmlSchema
     responses:
       "201":
         description: A new transaction was created on the queue.
         body:
           type: any
+mediaType: application/json

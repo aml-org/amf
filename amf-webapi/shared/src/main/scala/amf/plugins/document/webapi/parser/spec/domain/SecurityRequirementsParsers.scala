@@ -64,10 +64,13 @@ case class OasLikeSecurityRequirementParser(node: YNode, adopted: SecurityRequir
       if (declaration.`type`.is("OAuth 2.0")) {
         val settings = OAuth2Settings(Annotations(schemeEntry)).adopted(scheme.id)
         val scopes   = getScopes(schemeEntry)
-        val flows = Seq(
-          OAuth2Flow(Annotations.virtual())
-            .adopted(settings.id)
-            .setArray(OAuth2FlowModel.Scopes, scopes, Annotations(schemeEntry.value)))
+        val flow: OAuth2Flow = OAuth2Flow(Annotations.virtual())
+          .adopted(settings.id)
+        flow.fields.set(flow.id,
+                        OAuth2FlowModel.Scopes,
+                        AmfArray(scopes, Annotations(schemeEntry.value)),
+                        Annotations(schemeEntry))
+        val flows = Seq(flow)
 
         scheme.scheme.settings match {
           case se: OAuth2Settings =>

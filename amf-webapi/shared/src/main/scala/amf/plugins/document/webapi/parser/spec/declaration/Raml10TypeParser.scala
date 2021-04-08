@@ -1052,13 +1052,18 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
       map.key("fileTypes") match {
         case Some(entry) if entry.value.tagType == YType.Seq =>
-          shape.setArray(FileShapeModel.FileTypes, entry.value.as[YSequence].nodes.map { n: YNode =>
-            AmfScalar(n.as[YScalar].text)
-          }, Annotations(entry.value))
+          val fileTypes = entry.value.as[YSequence].nodes.map { n: YNode =>
+            AmfScalar(n.as[YScalar])
+          }
+          shape.fields.set(shape.id,
+                           FileShapeModel.FileTypes,
+                           AmfArray(fileTypes, Annotations(entry.value)),
+                           Annotations(entry))
         case Some(entry) if entry.value.tagType == YType.Str =>
-          shape.setArray(FileShapeModel.FileTypes,
-                         Seq(AmfScalar(entry.value.as[YScalar].text)),
-                         Annotations(entry.value))
+          shape.fields.set(shape.id,
+                           FileShapeModel.FileTypes,
+                           AmfArray(Seq(AmfScalar(entry.value.as[YScalar])), Annotations(entry.value)),
+                           Annotations(entry))
         case Some(entry) =>
           ctx.eh.violation(
             UnexpectedFileTypesSyntax,

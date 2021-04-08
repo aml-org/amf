@@ -4,12 +4,12 @@ info:
   title: Swagger Sample API
 host: my.api.com
 basePath: /v1
-schemes:
-  - https
 consumes:
   - application/json
 produces:
   - application/json
+schemes:
+  - https
 paths:
   /pets/{id}:
     get:

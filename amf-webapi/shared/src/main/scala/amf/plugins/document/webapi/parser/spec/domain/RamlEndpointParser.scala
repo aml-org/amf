@@ -274,7 +274,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
         .withSynthesizeName(variable)
         .set(ParameterModel.ParameterName, variable, Annotations.synthesized())
         .synthesizedBinding("path")
-        .set(ParameterModel.Required, true, Annotations.synthesized())
+        .set(ParameterModel.Required, AmfScalar(true), Annotations.synthesized())
       endpoint.add(EndPointModel.Parameters, parameter)
 
       pathParam.withScalarSchema(variable).withDataType(DataType.String)

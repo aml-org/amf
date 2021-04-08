@@ -188,7 +188,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#fileType": [
-        "*/*"
+        "\"*/*\""
       ],
       "http://www.w3.org/ns/shacl#name": "schema",
       "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -258,7 +258,7 @@
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/file-detection/api.raml#/web-api/end-points/%2Fsome/get/request/parameter/default-binding/myHeader/schema/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#fileType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,18)-(10,17)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(9,8)-(10,17)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/file-detection/api.raml",

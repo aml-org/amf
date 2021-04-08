@@ -2,7 +2,6 @@
 baseUri: https://mocksvc.mulesoft.com/mocks/e5686b9d-885a-4be9-b95f-f3cf607eb467
 title: Location API
 version: "1.0"
-mediaType: application/json
 /locations:
   get:
     description: Returns a collection of location.Locations
@@ -57,3 +56,4 @@ mediaType: application/json
         body: location.arr
 uses:
   location: exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml
+mediaType: application/json

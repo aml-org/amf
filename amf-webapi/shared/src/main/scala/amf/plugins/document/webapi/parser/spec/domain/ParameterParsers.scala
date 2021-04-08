@@ -658,7 +658,7 @@ object Oas3ParameterParser {
           case "form" => true
           case _      => false
         }
-        defValue.foreach(result.set(ParameterModel.Explode, _, Annotations.synthesized()))
+        defValue.foreach(d => result.set(ParameterModel.Explode, AmfScalar(d), Annotations.synthesized()))
     }
   }
 
