@@ -13,7 +13,7 @@ case class RamlHeader(text: String) {
   def asRegExp(): Regex = ("\\s*" + text.replaceAll(" ", "\\\\s*") + "\\s*").r
 }
 
-trait RamlFragment
+sealed trait RamlFragment
 
 object RamlHeader {
 

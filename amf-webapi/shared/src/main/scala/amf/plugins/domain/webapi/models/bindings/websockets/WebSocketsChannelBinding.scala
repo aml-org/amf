@@ -12,8 +12,8 @@ class WebSocketsChannelBinding(override val fields: Fields, override val annotat
     extends ChannelBinding
     with BindingVersion
     with Key {
-  override protected def bindingVersionField: Field = BindingVersion
-  override def meta: Obj                            = WebSocketsChannelBindingModel
+  override protected def bindingVersionField: Field     = BindingVersion
+  override def meta: WebSocketsChannelBindingModel.type = WebSocketsChannelBindingModel
 
   def method: StrField = fields.field(Method)
   def query: Shape     = fields.field(Query)

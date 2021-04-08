@@ -30,6 +30,7 @@ object WebApi extends PlatformSecrets {
     amf.Core.registerPlugin(Raml08Plugin)
     amf.Core.registerPlugin(PayloadPlugin)
     amf.Core.registerPlugin(JsonSchemaPlugin)
+
   }
 
 }

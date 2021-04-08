@@ -1,5 +1,5 @@
 package amf.validation
-import amf.ProfileName
+import amf.{ProfileName, RAMLStyle}
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class CustomValidationTest extends UniquePlatformReportGenTest {
@@ -18,7 +18,7 @@ class CustomValidationTest extends UniquePlatformReportGenTest {
   test("Additional raml validations") {
     validate("amf_extended.raml",
              Some("amf_extended.report"),
-             ProfileName("amf_extended"),
+             ProfileName("amf_extended", RAMLStyle),
              Some("profiles/amf_extended.yaml"))
   }
 

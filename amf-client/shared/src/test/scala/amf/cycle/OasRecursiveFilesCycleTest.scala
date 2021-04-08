@@ -7,7 +7,6 @@ import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHan
 import amf.core.remote.{Amf, OasYamlHint}
 import amf.core.services.RuntimeCompiler
 import amf.facades.Validation
-import amf.internal.environment.Environment
 import amf.io.FunSuiteCycleTests
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -43,7 +42,7 @@ class OasRecursiveFilesCycleTest extends FunSuiteCycleTests {
 
       RuntimeCompiler
         .forContext(
-          compilerContextBuilder.withEnvironment(Environment.apply()).build(),
+          compilerContextBuilder.build(),
           None,
           None,
           UnspecifiedReference

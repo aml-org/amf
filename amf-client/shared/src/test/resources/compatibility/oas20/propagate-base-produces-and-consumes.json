@@ -1,0 +1,40 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "test API"
+  },
+  "schemes": [
+      "https"
+  ],
+  "consumes": [
+      "application/vnd.api+json"
+  ],
+  "produces": [
+      "application/vnd.api+json",
+      "application/yaml"
+  ],
+  "paths": {
+    "/test": {
+      "get": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "something",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully returned a collection of quotes",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

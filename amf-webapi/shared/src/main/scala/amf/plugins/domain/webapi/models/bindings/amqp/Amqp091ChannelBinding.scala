@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models.bindings.amqp
 
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
@@ -18,7 +18,7 @@ class Amqp091ChannelBinding(override val fields: Fields, override val annotation
     with BindingVersion
     with Key {
 
-  override def meta: Obj = Amqp091ChannelBindingModel
+  override def meta: Amqp091ChannelBindingModel.type = Amqp091ChannelBindingModel
 
   override def componentId: String = "/amqp091-channel"
 
@@ -52,7 +52,7 @@ object Amqp091ChannelBinding {
 class Amqp091ChannelExchange(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
     with NamedDomainElement {
-  override def meta: Obj = ChannelExchange
+  override def meta: ChannelExchange.type = ChannelExchange
 
   override def nameField: Field = ChannelExchange.Name
   def `type`: StrField          = fields.field(ChannelExchange.Type)
@@ -81,7 +81,7 @@ object Amqp091ChannelExchange {
 class Amqp091Queue(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
     with NamedDomainElement {
-  override def meta: Obj = QueueModel
+  override def meta: QueueModel.type = QueueModel
 
   override def nameField: Field = QueueModel.Name
 

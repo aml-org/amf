@@ -1,12 +1,11 @@
 package amf.plugins.domain.webapi.models.api
 
-import amf.core.metamodel.Obj
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import org.yaml.model.{YMap, YNode}
 
 case class WebApi(fields: Fields, annotations: Annotations) extends Api(fields: Fields, annotations: Annotations) {
-  override def meta: Obj = WebApiModel
+  override def meta: WebApiModel.type = WebApiModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "#/web-api"

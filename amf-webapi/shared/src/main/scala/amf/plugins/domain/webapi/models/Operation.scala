@@ -1,7 +1,6 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.annotations.SynthesizedField
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
@@ -10,7 +9,6 @@ import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.{Request => OperationRequest, _}
 import amf.plugins.domain.webapi.models.bindings.OperationBindings
-import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import amf.plugins.domain.webapi.models.templates.ParametrizedTrait
 
 /**
@@ -93,7 +91,7 @@ case class Operation(fields: Fields, annotations: Annotations)
 
   override def linkCopy(): Operation = Operation().withId(id)
 
-  override def meta: Obj = OperationModel
+  override def meta: OperationModel.type = OperationModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/" + method.option().getOrElse("default-operation").urlComponentEncoded

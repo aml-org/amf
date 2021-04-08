@@ -5,14 +5,13 @@ import amf.core.client.ParserConfig
 import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.{RuntimeCompiler, RuntimeResolver, RuntimeSerializer}
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.{AMLParsePlugin, AMLPlugin}
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
-import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
+import amf.plugins.document.webapi.{Async20Plugin, Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -28,6 +27,7 @@ trait CommandHelper {
     amf.core.AMF.registerPlugin(Raml08Plugin)
     amf.core.AMF.registerPlugin(Oas20Plugin)
     amf.core.AMF.registerPlugin(Oas30Plugin)
+    amf.core.AMF.registerPlugin(Async20Plugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     amf.core.AMF.init()

@@ -63,7 +63,7 @@ class Response(override val fields: Fields, override val annotations: Annotation
     cloned.asInstanceOf[this.type]
   }
 
-  override def meta: Obj = ResponseModel
+  override def meta: ResponseModel.type = ResponseModel
 
   override def linkCopy(): Response = Response().withId(id)
 

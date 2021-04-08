@@ -80,24 +80,17 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
                        mediaType: String,
                        env: Environment,
                        validationMode: ValidationMode): Option[PayloadValidator] =
-    searchPlugin(mediaType, shape, env, SeverityLevels.VIOLATION).map(_.validator(shape, env, validationMode))
+    searchPlugin(mediaType, shape, env).map(_.validator(shape, env, validationMode))
 
   private def plugin(mediaType: String,
                      shape: Shape,
                      env: Environment,
                      defaultSeverity: String): AMFPayloadValidationPlugin =
-    searchPlugin(mediaType, shape, env, defaultSeverity)
+    searchPlugin(mediaType, shape, env)
       .getOrElse(AnyMatchPayloadPlugin(defaultSeverity))
 
-  private def searchPlugin(mediaType: String,
-                           shape: Shape,
-                           env: Environment,
-                           defaultSeverity: String): Option[AMFPayloadValidationPlugin] =
-    AMFPluginsRegistry
-      .dataNodeValidatorPluginForMediaType(mediaType)
-      .find { plugin =>
-        plugin.canValidate(shape, env)
-      }
+  private def searchPlugin(mediaType: String, shape: Shape, env: Environment): Option[AMFPayloadValidationPlugin] =
+    AMFPluginsRegistry.dataNodeValidatorPluginForMediaType(mediaType).find(_.canValidate(shape, env))
 
   private case class AnyMatchPayloadPlugin(defaultSeverity: String) extends AMFPayloadValidationPlugin {
 

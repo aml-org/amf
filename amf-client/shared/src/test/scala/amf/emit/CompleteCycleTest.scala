@@ -149,6 +149,15 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("type-facets.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
+  multiGoldenTest("Raml operation param schema duplicate ids", "api.%s") { config =>
+    cycle("api.raml",
+          config.golden,
+          RamlYamlHint,
+          Amf,
+          renderOptions = Some(config.renderOptions),
+          directory = baseRaml10Path + "duplicate-id-in-param-types/")
+  }
+
   multiGoldenTest("Parsing oas shape with description oas to amf", "shapes-with-items.%s") { config =>
     cycle("shapes-with-items.json",
           config.golden,

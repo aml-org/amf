@@ -1,7 +1,6 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.annotations.SynthesizedField
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
@@ -9,8 +8,7 @@ import amf.core.utils.AmfStrings
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
-import amf.plugins.domain.webapi.models.bindings.{ChannelBinding, ChannelBindings}
-import amf.plugins.domain.webapi.models.security.SecurityRequirement
+import amf.plugins.domain.webapi.models.bindings.ChannelBindings
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 
 /**
@@ -75,7 +73,7 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
     result
   }
 
-  override def meta: Obj = EndPointModel
+  override def meta: EndPointModel.type = EndPointModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/end-points/" + path.value().urlComponentEncoded

@@ -12,8 +12,8 @@ class Amqp091OperationBinding(override val fields: Fields, override val annotati
     extends OperationBinding
     with BindingVersion
     with Key {
-  override protected def bindingVersionField: Field = BindingVersion
-  override def meta: Obj                            = Amqp091OperationBindingModel
+  override protected def bindingVersionField: Field    = BindingVersion
+  override def meta: Amqp091OperationBindingModel.type = Amqp091OperationBindingModel
 
   override def componentId: String = "/amqp091-operation"
   def expiration: IntField         = fields.field(Expiration)

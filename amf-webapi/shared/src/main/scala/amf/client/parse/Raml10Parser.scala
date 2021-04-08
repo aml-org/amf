@@ -19,4 +19,5 @@ class Raml10Parser private (private val env: Option[Environment])
   def this(environment: Environment) = this(Some(environment))
 
   AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
+
 }

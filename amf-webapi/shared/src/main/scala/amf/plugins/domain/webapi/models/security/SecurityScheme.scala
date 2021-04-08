@@ -157,7 +157,7 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
 
   override def linkCopy(): SecurityScheme = SecurityScheme().withId(id)
 
-  override def meta: Obj = SecuritySchemeModel
+  override def meta: SecuritySchemeModel.type = SecuritySchemeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = name.option().getOrElse("fragment").urlComponentEncoded

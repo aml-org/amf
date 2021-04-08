@@ -118,7 +118,9 @@ protocols:
       "200":
         description: OK
         body:
-          "*/*":
+          application/json:
+            type: object
+          application/xml:
             type: object
 securedBy:
   - basic

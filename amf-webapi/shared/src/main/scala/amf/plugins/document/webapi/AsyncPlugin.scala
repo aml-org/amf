@@ -2,8 +2,9 @@ package amf.plugins.document.webapi
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
+import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{EmptyFutureDeclarations, ParsedReference, ParserContext}
@@ -21,13 +22,13 @@ import amf.plugins.domain.webapi.models.api.Api
 import amf.{Async20Profile, AsyncProfile, ProfileName}
 import org.yaml.model.YDocument
 
-sealed trait AsyncPlugin extends OasLikePlugin {
+sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
 
   override val vendors: Seq[String] = Seq(vendor.name, AsyncApi.name)
 
   override val validVendorsToReference: Seq[Vendor] = Seq(Raml10)
 
-  override def specContext(options: RenderOptions): AsyncSpecEmitterContext
+  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): AsyncSpecEmitterContext
 
   def context(loc: String,
               refs: Seq[ParsedReference],
@@ -35,24 +36,19 @@ sealed trait AsyncPlugin extends OasLikePlugin {
               wrapped: ParserContext,
               ds: Option[AsyncWebApiDeclarations] = None): AsyncWebApiContext
 
-  override def parse(document: Root,
-                     parentContext: ParserContext,
-                     platform: Platform,
-                     options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
     implicit val ctx: AsyncWebApiContext = context(document.location, document.references, options, parentContext)
-    val parsed = document.referenceKind match {
-      case _ => detectAsyncUnit(document)
-    }
-    parsed map { unit =>
-      promoteFragments(unit, ctx)
-    }
+    restrictCrossSpecReferences(document, ctx)
+    val parsed = parseAsyncUnit(document)
+    promoteFragments(parsed, ctx)
   }
 
-  private def detectAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): Option[BaseUnit] = {
-    AsyncHeader(root) flatMap {
-      case Async20Header => Some(AsyncApi20DocumentParser(root).parseDocument())
+  private def parseAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): BaseUnit = {
+    AsyncHeader(root) match {
+      case Some(Async20Header) => AsyncApi20DocumentParser(root).parseDocument()
 //    case f             => AsyncFragmentParser(root, Some(f)).parseFragment()
-      case _ => None
+      case _ => // unreachable as it is covered in canParse()
+        throw new InvalidDocumentHeaderException(vendor.name)
     }
   }
 
@@ -78,8 +74,8 @@ sealed trait AsyncPlugin extends OasLikePlugin {
 
 object Async20Plugin extends AsyncPlugin {
 
-  override def specContext(options: RenderOptions): AsyncSpecEmitterContext =
-    new Async20SpecEmitterContext(options.errorHandler)
+  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): AsyncSpecEmitterContext =
+    new Async20SpecEmitterContext(errorHandler)
 
   override protected def vendor: Vendor = AsyncApi20
 
@@ -104,14 +100,15 @@ object Async20Plugin extends AsyncPlugin {
     case _           => false
   }
 
-  override protected def unparseAsYDocument(
-      unit: BaseUnit,
-      renderOptions: RenderOptions,
-      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] = unit match {
+  override protected def unparseAsYDocument(unit: BaseUnit,
+                                            renderOptions: RenderOptions,
+                                            errorHandler: ErrorHandler): Option[YDocument] =
+    unit match {
 
-    case document: Document => Some(new AsyncApi20DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
-    case _                  => None
-  }
+      case document: Document =>
+        Some(new AsyncApi20DocumentEmitter(document)(specContext(renderOptions, errorHandler)).emitDocument())
+      case _ => None
+    }
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document

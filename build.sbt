@@ -43,8 +43,8 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
-    "org.scalatest"     %%% "scalatest" % "3.0.5" % Test,
-    "org.mule.common" %%% "scala-common-test" % "0.0.4" % Test
+    "org.scalatest"   %%% "scalatest"         % "3.0.5" % Test,
+    "org.mule.common" %%% "scala-common-test" % "0.0.6" % Test
   ),
   logBuffered in Test := false
 )
@@ -84,9 +84,9 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .in(file("./amf-webapi"))
   .settings(commonSettings)
   .jvmSettings(
-    libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema"  % "1.12.2",
-    libraryDependencies += "org.json" % "json" % "20201115",
+    libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
+    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2",
+    libraryDependencies += "org.json"                          % "json"                   % "20201115",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar",
     mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions"
   )
@@ -118,10 +118,10 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "com.github.scopt" %%% "scopt" % "3.7.0"
   )
   .jvmSettings(
-    libraryDependencies += "org.scala-js"               %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "org.reflections"            % "reflections"             % "0.9.12",
+    libraryDependencies += "org.scala-js"           %% "scalajs-stubs"      % scalaJSVersion % "provided",
+    libraryDependencies += "org.reflections"        % "reflections"         % "0.9.12",
     libraryDependencies += "org.scala-lang.modules" %% "scala-java8-compat" % "0.8.0",
-    libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.18",
+    libraryDependencies += "org.apache.commons"     % "commons-compress"    % "1.18",
     mainClass in Compile := Some("amf.Main"),
     packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
     mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions",

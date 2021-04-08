@@ -3,12 +3,12 @@ package amf.plugins.domain.webapi.metamodel
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies, ShapeModel}
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.shapes.metamodel.{ExampleModel, NodeShapeModel}
 import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
+import amf.plugins.domain.shapes.metamodel.{ExampleModel, NodeShapeModel}
 import amf.plugins.domain.webapi.metamodel.bindings.MessageBindingsModel
 import amf.plugins.domain.webapi.models.Message
 
@@ -22,11 +22,11 @@ trait MessageModel
     with LinkableElementModel
     with DomainElementModel
     with ParametersFieldModel {
-  val Payloads = Field(Array(PayloadModel),
-                       ApiContract + "payload",
-                       ModelDoc(ModelVocabularies.ApiContract, "payload", "Payload for a Request/Response"))
+  val Payloads: Field = Field(Array(PayloadModel),
+                              ApiContract + "payload",
+                              ModelDoc(ModelVocabularies.ApiContract, "payload", "Payload for a Request/Response"))
 
-  val CorrelationId = Field(
+  val CorrelationId: Field = Field(
     CorrelationIdModel,
     Core + "correlationId",
     ModelDoc(ModelVocabularies.Core,
@@ -34,27 +34,27 @@ trait MessageModel
              "An identifier that can be used for message tracing and correlation")
   )
 
-  val DisplayName = Field(Str,
-                          Core + "displayName",
-                          ModelDoc(ModelVocabularies.Core, "displayName", "Human readable name for the term"))
+  val DisplayName: Field = Field(Str,
+                                 Core + "displayName",
+                                 ModelDoc(ModelVocabularies.Core, "displayName", "Human readable name for the term"))
 
-  val Title = Field(Str, Core + "title", ModelDoc(ModelVocabularies.Core, "title", "Title of the item"))
+  val Title: Field = Field(Str, Core + "title", ModelDoc(ModelVocabularies.Core, "title", "Title of the item"))
 
-  val Summary = Field(
+  val Summary: Field = Field(
     Str,
     Core + "summary",
     ModelDoc(ModelVocabularies.Core, "summary", "Human readable short description of the request/response"))
 
-  val Bindings = Field(MessageBindingsModel,
-                       ApiBinding + "binding",
-                       ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this request/response"))
+  val Bindings: Field = Field(MessageBindingsModel,
+                              ApiBinding + "binding",
+                              ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this request/response"))
 
-  val HeaderExamples = Field(
+  val HeaderExamples: Field = Field(
     Array(ExampleModel),
     ApiContract + "headerExamples",
     ModelDoc(ModelVocabularies.ApiContract, "headerExamples", "Examples for a header definition"))
 
-  val HeaderSchema = Field(
+  val HeaderSchema: Field = Field(
     NodeShapeModel,
     ApiContract + "headerSchema",
     ModelDoc(ModelVocabularies.ApiContract,

@@ -1,26 +1,23 @@
 package amf.plugins.document.webapi.validation.runner.steps
 
-import amf.core.validation.AMFValidationResult
+import amf.core.validation.{AMFValidationReport, AMFValidationResult, ShaclReportAdaptation}
 import amf.plugins.document.webapi.validation.UnitPayloadsValidation
 import amf.plugins.document.webapi.validation.runner.ValidationContext
 
 import scala.concurrent.{ExecutionContext, Future}
 
-case class ExamplesValidationStep(override val validationContext: ValidationContext)(
-    implicit executionContext: ExecutionContext)
-    extends ValidationStep {
+case class ExamplesValidationStep(override val validationContext: ValidationContext)
+    extends ValidationStep
+    with ShaclReportAdaptation {
 
-  override protected def validate(): Future[Seq[AMFValidationResult]] = {
-    UnitPayloadsValidation(validationContext.baseUnit, validationContext.platform)
+  override protected def validate()(implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+    UnitPayloadsValidation(validationContext.baseUnit)
       .validate(validationContext.env)
       .map { results =>
-        results.flatMap {
-          buildValidationWithCustomLevelForProfile
-        }
+        val mappedSeverityResults = results.flatMap { buildValidationWithCustomLevelForProfile }
+        AMFValidationReport(validationContext.baseUnit.id, validationContext.profile, mappedSeverityResults)
       }
   }
-
-  override def endStep: Boolean = true
 
   private def buildValidationWithCustomLevelForProfile(result: AMFValidationResult): Option[AMFValidationResult] = {
     Some(result.copy(level = findLevel(result.validationId, validationContext.validations)))

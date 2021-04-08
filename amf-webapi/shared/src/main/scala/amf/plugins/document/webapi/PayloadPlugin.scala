@@ -4,8 +4,9 @@ import amf.AmfProfile
 import amf.client.plugins.{AMFDocumentPlugin, AMFDomainPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
+import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.{Payload, Platform}
@@ -43,17 +44,13 @@ object PayloadPlugin extends AMFDocumentPlugin {
     "application/payload+yaml"
   )
 
-  override def parse(root: Root,
-                     parentContext: ParserContext,
-                     platform: Platform,
-                     options: ParsingOptions): Option[PayloadFragment] = {
+  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): PayloadFragment = {
     root.parsed match {
       case parsed: SyamlParsedDocument =>
         implicit val ctx: PayloadContext =
           new PayloadContext(root.location, parentContext.refs, parentContext, options = options)
-        Some(PayloadParser(parsed.document, root.location, root.mediatype).parseUnit())
-      case _ =>
-        None
+        PayloadParser(parsed.document, root.location, root.mediatype).parseUnit()
+      case _ => throw UnsupportedParsedDocumentException
     }
   }
 
@@ -80,21 +77,20 @@ object PayloadPlugin extends AMFDocumentPlugin {
   override def emit[T](unit: BaseUnit,
                        builder: DocBuilder[T],
                        renderOptions: RenderOptions,
-                       shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Boolean =
+                       errorHandler: ErrorHandler): Boolean =
     (builder, unit) match {
       case (sb: YDocumentBuilder, p: PayloadFragment) =>
-        sb.document = PayloadEmitter(p.encodes)(renderOptions.errorHandler).emitDocument()
+        sb.document = PayloadEmitter(p.encodes)(errorHandler).emitDocument()
         true
       case _ => false
     }
 
-  override protected def unparseAsYDocument(
-      unit: BaseUnit,
-      renderOptions: RenderOptions,
-      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
+  override protected def unparseAsYDocument(unit: BaseUnit,
+                                            renderOptions: RenderOptions,
+                                            errorHandler: ErrorHandler): Option[YDocument] =
     unit match {
       case p: PayloadFragment =>
-        Some(PayloadEmitter(p.encodes)(renderOptions.errorHandler).emitDocument())
+        Some(PayloadEmitter(p.encodes)(errorHandler).emitDocument())
       case _ => None
     }
 

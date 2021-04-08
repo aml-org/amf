@@ -4,7 +4,7 @@ import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Document, Module, PayloadFragment}
 import amf.core.model.domain.ScalarNode
-import amf.core.remote.Raml
+import amf.core.remote.{Payload, Raml}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.facades.Validation
@@ -49,7 +49,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
 
     for {
       _ <- Validation(platform) // in order to initialize
-      s <- new AMFSerializer(fragment, "application/amf+yaml", "YAML Payload", RenderOptions()).renderToString
+      s <- new AMFSerializer(fragment, "application/amf+yaml", Payload.name, RenderOptions()).renderToString
     } yield {
       s should be("1\n") // without cuotes
     }

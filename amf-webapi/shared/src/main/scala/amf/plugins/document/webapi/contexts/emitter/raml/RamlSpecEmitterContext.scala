@@ -3,6 +3,7 @@ import amf.core.annotations.DomainExtensionAnnotation
 import amf.core.emitter.BaseEmitters.{BaseValueEmitter, ValueEmitter, pos, sourceOr}
 import amf.core.emitter.SpecOrdering.Default
 import amf.core.emitter._
+import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document}

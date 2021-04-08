@@ -13,7 +13,7 @@ case class ServerBindings(fields: Fields, annotations: Annotations) extends Name
   def bindings: Seq[ServerBinding]                          = fields.field(Bindings)
   def withBindings(bindings: Seq[ServerBinding]): this.type = setArray(Bindings, bindings)
 
-  override def meta: Obj = ServerBindingsModel
+  override def meta: ServerBindingsModel.type = ServerBindingsModel
 
   override def nameField: Field = Name
 

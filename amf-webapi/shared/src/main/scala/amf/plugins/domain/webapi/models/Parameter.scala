@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Field
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
@@ -96,7 +96,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
     cloned.asInstanceOf[this.type]
   }
 
-  override def meta: Obj = ParameterModel
+  override def meta: ParameterModel.type = ParameterModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String =

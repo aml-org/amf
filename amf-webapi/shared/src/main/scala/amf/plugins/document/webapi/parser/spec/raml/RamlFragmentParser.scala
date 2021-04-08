@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
 import amf.core.annotations.SourceVendor
+import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.metamodel.document.FragmentModel
 import amf.core.model.document.{ExternalFragment, Fragment}
 import amf.core.model.domain.extensions.CustomDomainProperty
@@ -24,7 +25,7 @@ import org.yaml.model.{YMap, YScalar}
 case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit val ctx: RamlWebApiContext)
     extends RamlSpecParser {
 
-  def parseFragment(): Option[Fragment] = {
+  def parseFragment(): Fragment = {
     // first i must identify the type of fragment
 
     val rootMap: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.to[YMap] match {
@@ -46,36 +47,30 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       rootMap.entries.filter(e => e.key.as[YScalar].text != "usage" && e.key.as[YScalar].text != "uses"),
       root.location)
 
-    val optionFragment = fragmentType match {
-      case Raml10DocumentationItem         => Some(DocumentationItemFragmentParser(encodedMap).parse())
-      case Raml10DataType                  => Some(DataTypeFragmentParser(encodedMap).parse())
-      case Raml10ResourceType              => Some(ResourceTypeFragmentParser(encodedMap).parse())
-      case Raml10Trait                     => Some(TraitFragmentParser(encodedMap).parse())
-      case Raml10AnnotationTypeDeclaration => Some(AnnotationFragmentParser(encodedMap).parse())
-      case Raml10SecurityScheme            => Some(SecuritySchemeFragmentParser(encodedMap).parse())
-      case Raml10NamedExample              => Some(NamedExampleFragmentParser(encodedMap).parse())
-      case _                               => None
+    val fragment = fragmentType match {
+      case Raml10DocumentationItem         => DocumentationItemFragmentParser(encodedMap).parse()
+      case Raml10DataType                  => DataTypeFragmentParser(encodedMap).parse()
+      case Raml10ResourceType              => ResourceTypeFragmentParser(encodedMap).parse()
+      case Raml10Trait                     => TraitFragmentParser(encodedMap).parse()
+      case Raml10AnnotationTypeDeclaration => AnnotationFragmentParser(encodedMap).parse()
+      case Raml10SecurityScheme            => SecuritySchemeFragmentParser(encodedMap).parse()
+      case Raml10NamedExample              => NamedExampleFragmentParser(encodedMap).parse()
     }
 
-    optionFragment match {
-      case Some(fragment) =>
-        rootMap.key("usage", usage => {
-          fragment.set(
-            FragmentModel.Usage,
-            AmfScalar(usage.value.as[String], Annotations(usage.value)),
-            Annotations(usage.value)
-          )
-        })
-        fragment.withLocation(root.location)
-        UsageParser(rootMap, fragment).parse()
-        fragment.add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
-        if (aliases.isDefined) fragment.annotations += aliases.get
-        fragment.encodes.add(SourceVendor(Raml10))
-        if (references.nonEmpty) fragment.withReferences(references.baseUnitReferences())
-        Some(fragment)
-      case _ =>
-        None
-    }
+    rootMap.key("usage", usage => {
+      fragment.set(
+        FragmentModel.Usage,
+        AmfScalar(usage.value.as[String], Annotations(usage.value)),
+        Annotations(usage.value)
+      )
+    })
+    fragment.withLocation(root.location)
+    UsageParser(rootMap, fragment).parse()
+    fragment.add(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
+    if (aliases.isDefined) fragment.annotations += aliases.get
+    fragment.encodes.add(SourceVendor(Raml10))
+    if (references.nonEmpty) fragment.withReferences(references.baseUnitReferences())
+    fragment
   }
 
   private def buildExternalFragment(): ExternalFragment = {

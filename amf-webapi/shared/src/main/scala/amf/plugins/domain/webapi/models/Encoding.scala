@@ -1,13 +1,12 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.Obj
-import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.DomainElement
+import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.AmfStrings
 import amf.plugins.domain.webapi.metamodel.EncodingModel
 import amf.plugins.domain.webapi.metamodel.EncodingModel._
 import org.yaml.model.YMap
-import amf.core.utils.AmfStrings
 
 /**
   * Encoding internal model
@@ -34,7 +33,7 @@ case class Encoding(fields: Fields, annotations: Annotations) extends DomainElem
     result
   }
 
-  override def meta: Obj = EncodingModel
+  override def meta: EncodingModel.type = EncodingModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/" + propertyName.option().getOrElse("default-encoding").urlComponentEncoded

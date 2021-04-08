@@ -46,12 +46,14 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
     }
 
     for {
-      unit <- RuntimeCompiler("amf://id#",
-                              Some(mediaType),
-                              Some(hint.vendor.name),
-                              Context(platform),
-                              env = Environment(StringResourceLoader("amf://id#", content)),
-                              cache = Cache())
+      unit <- RuntimeCompiler(
+        "amf://id#",
+        Some(mediaType),
+        Some(hint.vendor.name),
+        Context(platform),
+        env = Environment(StringResourceLoader("amf://id#", content)),
+        cache = Cache()
+      )
       _ <- RuntimeValidator(unit, ProfileName(hint.vendor.name))
     } yield unit
   }
