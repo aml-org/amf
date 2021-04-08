@@ -87,6 +87,10 @@
   "definitions": {
     "User": {
       "type": "object",
+      "example": {
+        "name": "Bob",
+        "lastname": "Marley"
+      },
       "properties": {
         "name": {
           "type": "string"
@@ -94,14 +98,14 @@
         "lastname": {
           "type": "string"
         }
-      },
-      "example": {
-        "name": "Bob",
-        "lastname": "Marley"
       }
     },
     "Org": {
       "type": "object",
+      "example": {
+        "name": "Bob",
+        "lastname": "Marley"
+      },
       "properties": {
         "name": {
           "type": "string"
@@ -112,10 +116,6 @@
         "value": {
           "type": "string"
         }
-      },
-      "example": {
-        "name": "Bob",
-        "lastname": "Marley"
       }
     }
   }

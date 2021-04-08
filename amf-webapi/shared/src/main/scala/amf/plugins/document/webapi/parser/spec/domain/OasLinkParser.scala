@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
@@ -89,8 +90,10 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
             .set(IriTemplateMappingModel.TemplateVariable, variable, Annotations(entry.key))
             .set(IriTemplateMappingModel.LinkExpression, expression, Annotations(entry.value))
         }
-        templatedLink.setArray(TemplatedLinkModel.Mapping, parameters, Annotations(entry.value))
-
+        templatedLink.fields.set(templatedLink.id,
+                                 TemplatedLinkModel.Mapping,
+                                 AmfArray(parameters, Annotations(entry.value)),
+                                 Annotations(entry))
       }
     )
 

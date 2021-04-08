@@ -14,7 +14,6 @@ documentation:
       value: Documentation content
       (AnnotationInDocumentationContent): sjf
     (AnnotationInDocumentationRoot): sjf
-mediaType: application/json
 baseUri: falsedomain.com/apis
 /customers:
   displayName:
@@ -24,10 +23,6 @@ baseUri: falsedomain.com/apis
     value: EndPoint description
     (AnnotationInEndPointDescription): sjf
   /{customer_id}:
-    uriParameters:
-      customer_id:
-        type: string
-        (AnnotationInParameter): sjf
     get:
       description:
         value: Returns Customer data
@@ -41,6 +36,11 @@ baseUri: falsedomain.com/apis
             application/json:
               type: any
       (AnnotationInOperation): sjf
+    uriParameters:
+      customer_id:
+        type: string
+        (AnnotationInParameter): sjf
   (AnnotationInEndPointAlpha): alpha
   (AnnotationInEndPointBeta): beta
+mediaType: application/json
 (AnnotationInRoot): sjf

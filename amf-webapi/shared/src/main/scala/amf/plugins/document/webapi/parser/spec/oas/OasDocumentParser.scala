@@ -290,7 +290,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     )
 
     if (documentations.nonEmpty)
-      api.setArray(WebApiModel.Documentations, documentations.map(_._1), Annotations(documentations.map(_._2).head))
+      api.fields.set(api.id,
+                     WebApiModel.Documentations,
+                     AmfArray(documentations.map(_._1), Annotations.virtual()),
+                     Annotations.virtual())
 
     map.key("paths") match {
       case Some(entry) => parseEndpoints(api, entry)

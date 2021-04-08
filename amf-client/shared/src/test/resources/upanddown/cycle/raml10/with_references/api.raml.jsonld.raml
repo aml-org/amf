@@ -17,8 +17,6 @@ securitySchemes:
   oauth20: !include ../../../../references/fragments/security-scheme.raml
 /test:
   get:
-    securedBy:
-      - oauth20
     responses:
       "200":
         body:
@@ -26,6 +24,8 @@ securitySchemes:
             properties:
               a: A
               b: B
+    securedBy:
+      - oauth20
     (annotA): foo
     (annotB): bar
 /test2:

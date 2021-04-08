@@ -2,13 +2,8 @@
 title: test title
 baseUri: api.example.com/path
 description: test description
-mediaType:
-  - application/yaml
 version: "1.1"
 (amf-termsOfService): terms of service
-protocols:
-  - http
-  - https
 /levelzero:
   displayName: Name
 /levelzero/level-one:
@@ -24,3 +19,8 @@ protocols:
             type: integer
       "404":
         description: Not found!
+mediaType:
+  - application/yaml
+protocols:
+  - http
+  - https

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.SearchScope.Named
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, YMapEnt
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeTagsParser
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncOperationBindingsParser
 import amf.plugins.document.webapi.parser.spec.domain.OasLikeOperationParser
-import amf.plugins.domain.webapi.metamodel.OperationModel
+import amf.plugins.domain.webapi.metamodel.{AbstractModel, OperationModel}
 import amf.plugins.domain.webapi.models.{Message, Operation}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations
@@ -72,7 +72,9 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation =>
     messageEntry =>
       AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
         val messages = AsyncMultipleMessageParser(messageEntry.value.as[YMap], operation.id, msgType).parse()
-        operation.setArrayWithoutId(msgType.field, messages, Annotations(messageEntry))
+        operation.fields.setWithoutId(msgType.field,
+                                      AmfArray(messages, Annotations(messageEntry.value)),
+                                      Annotations(messageEntry))
     }
   )
 
@@ -83,7 +85,10 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation =>
         val traits = traitEntry.value.as[YSequence].nodes.map { node =>
           AsyncOperationTraitRefParser(node, adopt).parseLinkOrError()
         }
-        operation.setArray(OperationModel.Extends, traits, Annotations(traitEntry))
+        operation.fields.set(operation.id,
+                             OperationModel.Extends,
+                             AmfArray(traits, Annotations(traitEntry.value)),
+                             Annotations(traitEntry))
       }
     )
 }
@@ -102,7 +107,7 @@ private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Op
       case Right(_) =>
         val operation = super.parse()
         operation.set(OperationModel.Name, entryKey, Annotations(entry.key))
-        operation.withAbstract(true, Annotations.synthesized())
+        operation.set(AbstractModel.IsAbstract, AmfScalar(true), Annotations.synthesized())
         operation
     }
   }

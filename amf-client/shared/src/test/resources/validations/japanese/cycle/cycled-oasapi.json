@@ -58,6 +58,11 @@
   "definitions": {
     "車両": {
       "type": "object",
+      "example": {
+        "約マイル": "約マイル",
+        "シティ": "シティ",
+        "推定値": 7
+      },
       "properties": {
         "約マイル": {
           "type": "string"
@@ -72,15 +77,14 @@
         "車両詳細": {
           "$ref": "#/definitions/車両詳細"
         }
-      },
-      "example": {
-        "約マイル": "約マイル",
-        "シティ": "シティ",
-        "推定値": 7
       }
     },
     "車両詳細": {
       "type": "object",
+      "example": {
+        "id": "id",
+        "ビーデン": "ビーデン"
+      },
       "properties": {
         "id": {
           "type": "string"
@@ -88,10 +92,6 @@
         "ビーデン": {
           "type": "string"
         }
-      },
-      "example": {
-        "id": "id",
-        "ビーデン": "ビーデン"
       }
     }
   }

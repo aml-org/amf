@@ -394,7 +394,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArrayWithoutId(ShapeModel.Or, unionNodes, Annotations(entry.value))
+              shape.fields.setWithoutId(ShapeModel.Or,
+                                        AmfArray(unionNodes, Annotations(entry.value)),
+                                        Annotations(entry))
             case _ =>
               ctx.eh.violation(InvalidOrType,
                                shape.id,
@@ -423,7 +425,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArrayWithoutId(ShapeModel.Xone, nodes, Annotations(entry.value))
+              shape.fields.setWithoutId(ShapeModel.Xone, AmfArray(nodes, Annotations(entry.value)), Annotations(entry))
             case _ =>
               ctx.eh.violation(InvalidXoneType,
                                shape.id,
@@ -619,7 +621,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         .map { entry =>
           val sequence = entry.value.as[YSequence]
           val examples = ExamplesDataParser(sequence, options, shape.id).parse()
-          shape.setArrayWithoutId(AnyShapeModel.Examples, examples, Annotations(entry))
+          shape.fields.setWithoutId(AnyShapeModel.Examples,
+                                    AmfArray(examples, Annotations(entry.value)),
+                                    Annotations(entry))
         }
   }
 
@@ -799,7 +803,10 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         mapping.set(TemplateVariable, element, Annotations(entry.key))
         mapping.set(LinkExpression, variable, Annotations(entry.value))
       })
-      shape.setArray(NodeShapeModel.DiscriminatorMapping, mappings, Annotations(mappingEntry))
+      shape.fields.set(shape.id,
+                       NodeShapeModel.DiscriminatorMapping,
+                       AmfArray(mappings, Annotations(mappingEntry.value)),
+                       Annotations(mappingEntry))
     }
   }
 

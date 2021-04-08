@@ -3,9 +3,10 @@ package amf.plugins.document.webapi.parser.spec.jsonschema
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.exception.UnsupportedParsedDocumentException
+import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.document.{EncodesModel, Fragment}
 import amf.core.parser.errorhandler.ParserErrorHandler
-import amf.core.parser.{EmptyFutureDeclarations, ParserContext, SyamlParsedDocument}
+import amf.core.parser.{Annotations, EmptyFutureDeclarations, ParserContext, SyamlParsedDocument}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.JsonSchemaWebApiContext
@@ -16,6 +17,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, O
 import amf.plugins.document.webapi.parser.spec.jsonschema.AstFinder.getPointedAstOrNode
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaRootCreator.createRootFrom
 import amf.plugins.document.webapi.parser.spec.toOasDeclarations
+import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 
@@ -54,7 +56,10 @@ class JsonSchemaParser {
             case Some(shape) => shape
             case None =>
               throwUnparsableJsonSchemaError(document, shapeId, jsonSchemaContext, rootAst)
-              SchemaShape().withId(shapeId).withMediaType("application/json").withRaw(document.raw)
+              SchemaShape()
+                .withId(shapeId)
+                .set(ExternalSourceElementModel.Raw, document.raw, Annotations.synthesized())
+                .set(SchemaShapeModel.MediaType, "application/json", Annotations.synthesized())
           }
         val unit = wrapInDataTypeFragment(document, parsed)
         unit
