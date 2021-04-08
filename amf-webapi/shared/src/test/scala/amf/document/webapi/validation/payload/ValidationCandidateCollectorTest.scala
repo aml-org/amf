@@ -1,16 +1,17 @@
-package amf.plugins.domain.shapes.validation
+package amf.document.webapi.validation.payload
 
 import amf.core.model.domain.ScalarNode
+import amf.plugins.document.webapi.validation.collector.EnumInShapesCollector
 import amf.plugins.domain.shapes.models.NodeShape
 import org.scalatest.{FunSuite, Matchers}
 
-class ShapesNodesValidatorTest extends FunSuite with Matchers {
+class ValidationCandidateCollectorTest extends FunSuite with Matchers {
 
   test("generation of validation candidates for enums in shape") {
     val shape = NodeShape().withId("id")
     shape.withValues(List(ScalarNode("value 1", None), ScalarNode("value 1", None)))
 
-    val candidates = ShapesNodesValidator.shapeEnumCandidates(shape)
+    val candidates = EnumInShapesCollector.collect(shape)
 
     val candidateShape = candidates.head.shape
 
