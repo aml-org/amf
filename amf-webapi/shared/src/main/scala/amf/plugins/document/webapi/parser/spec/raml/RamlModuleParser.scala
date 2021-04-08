@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.Root
-import amf.core.annotations.{SourceVendor, SynthesizedField}
-import amf.core.metamodel.document.{DocumentModel, ModuleModel}
+import amf.core.annotations.SourceVendor
+import amf.core.metamodel.document.ModuleModel
 import amf.core.model.document.Module
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}

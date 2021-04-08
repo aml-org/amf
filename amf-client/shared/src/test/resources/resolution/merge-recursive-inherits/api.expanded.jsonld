@@ -354,9 +354,6 @@
               }
             ],
             "smaps": {
-              "synthesized-field": {
-                "apiContract:supportedOperation": "true"
-              },
               "lexical": {
                 "apiContract:path": "[(30,0)-(30,10)]",
                 "#25": "[(30,0)-(39,0)]"
@@ -713,9 +710,6 @@
               }
             ],
             "smaps": {
-              "synthesized-field": {
-                "apiContract:supportedOperation": "true"
-              },
               "lexical": {
                 "doc:extends": "[(40,2)-(41,0)]",
                 "#30": "[(39,0)-(47,0)]",
@@ -725,16 +719,13 @@
           }
         ],
         "smaps": {
-          "synthesized-field": {
-            "apiContract:endpoint": "true"
+          "source-vendor": {
+            "#24": "RAML 1.0"
           },
           "lexical": {
             "core:version": "[(3,0)-(5,0)]",
             "#24": "[(2,0)-(47,0)]",
             "core:name": "[(2,0)-(3,0)]"
-          },
-          "source-vendor": {
-            "#24": "RAML 1.0"
           }
         }
       }

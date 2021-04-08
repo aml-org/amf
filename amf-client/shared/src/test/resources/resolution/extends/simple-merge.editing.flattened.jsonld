@@ -15,15 +15,12 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:endpoint": "true"
+        "source-vendor": {
+          "#8": "RAML 1.0"
         },
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
           "#8": "[(2,0)-(16,27)]"
-        },
-        "source-vendor": {
-          "#8": "RAML 1.0"
         }
       }
     },
@@ -45,9 +42,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
-        },
         "lexical": {
           "doc:extends": "[(10,2)-(11,0)]",
           "#9": "[(9,0)-(16,27)]",
@@ -113,8 +107,7 @@
       ],
       "smaps": {
         "lexical": {
-          "apiContract:header": "[(7,6)-(8,15)]",
-          "#15": "[(6,6)-(8,15)]"
+          "apiContract:header": "[(7,6)-(8,15)]"
         }
       }
     },
@@ -182,8 +175,7 @@
       },
       "smaps": {
         "synthesized-field": {
-          "apiContract:binding": "true",
-          "apiContract:required": "true"
+          "apiContract:binding": "true"
         },
         "lexical": {
           "raml-shapes:schema": "[(8,8)-(8,15)]",

@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
@@ -11,11 +10,11 @@ import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRaml
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas30CallbackParser
+import amf.plugins.document.webapi.parser.spec.toOas
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
-import amf.plugins.domain.webapi.models.{Operation, Response, Tag}
-import amf.plugins.document.webapi.parser.spec.toOas
+import amf.plugins.domain.webapi.models.{Operation, Response}
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
 

@@ -5,3 +5,6 @@ title: hola
     description: some description
   /{id}:
     put: {}
+    uriParameters:
+      id:
+        type: string

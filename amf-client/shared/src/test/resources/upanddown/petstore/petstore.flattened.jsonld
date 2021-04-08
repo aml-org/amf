@@ -667,12 +667,10 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/name/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/name/source-map/lexical/element_1"
+        },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/name/source-map/lexical/element_0"
         }
@@ -704,12 +702,10 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/date/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/date/source-map/lexical/element_1"
+        },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/date/source-map/lexical/element_0"
         }
@@ -738,12 +734,10 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/destination/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/destination/source-map/lexical/element_1"
+        },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/destination/source-map/lexical/element_0"
         }
@@ -789,14 +783,14 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/name/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/name/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(16,10)-(18,11)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/name/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,10)-(18,11)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(11,10)-(11,16)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/date/scalar/date/source-map",
@@ -818,14 +812,14 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/date/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/date/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/date",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(19,10)-(21,11)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/date/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/date",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(19,10)-(21,11)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(12,10)-(12,16)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/destination/any/destination/list",
@@ -855,14 +849,14 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/destination/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/destination/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/destination",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(22,10)-(28,11)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/destination/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/destination",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(22,10)-(28,11)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(13,10)-(13,23)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json#/array/root/items/items/property/name/scalar/name/source-map/type-property-lexical-info/element_0",

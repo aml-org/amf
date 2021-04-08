@@ -17,7 +17,7 @@ import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import amf.plugins.features.validation.CoreValidations
-import org.yaml.model.{YMap, YScalar}
+import org.yaml.model.YMap
 
 import scala.collection.mutable
 

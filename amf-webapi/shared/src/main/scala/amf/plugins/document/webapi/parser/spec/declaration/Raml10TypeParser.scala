@@ -202,10 +202,10 @@ case class Raml08TypeParser(entryOrNode: YMapEntryLike,
         maybeShape.map { s =>
           if (map.key("example").isDefined) {
 
-            val inherits: AnyShape = s.meta.modelInstance.withName("inherits", Annotations())
+            val inherits: AnyShape = s.meta.modelInstance.withName("inherits", Annotations.synthesized())
             adopt(inherits)
             Raml08ExampleParser(inherits, map).parse()
-            inherits.set(ShapeModel.Inherits, AmfArray(Seq(s)))
+            inherits.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations.virtual()), Annotations.inferred())
             inherits
           } else s
         }
@@ -257,8 +257,10 @@ case class Raml08TypeParser(entryOrNode: YMapEntryLike,
             .map(s => s.add(SourceAST(value)).add(SourceLocation(value.sourceName)))
         case _ =>
           value.as[YScalar].text match {
-            case XMLSchema(_)  => Option(RamlXmlSchemaExpression(key, value, adopt).parse())
-            case JSONSchema(_) => Option(RamlJsonSchemaExpression(key, value, adopt).parse())
+            case XMLSchema(_) =>
+              Option(RamlXmlSchemaExpression(key, value, adopt).parse())
+            case JSONSchema(_) =>
+              Option(RamlJsonSchemaExpression(key, value, adopt).parse())
             case t if RamlTypeDefMatcher.match08Type(t).isDefined =>
               Option(
                 SimpleTypeParser(name, adopt, YMap.empty, defaultType = RamlTypeDefMatcher.match08Type(t).get).parse())
@@ -274,7 +276,8 @@ case class Raml08TypeParser(entryOrNode: YMapEntryLike,
         e.value.tagType match {
           case YType.Map | YType.Seq =>
             Raml08TypeParser(e, adopt, isAnnotation = false, StringDefaultType).parse()
-          case _ => Raml08TextParser(e.value, adopt, "schema", defaultType).parse()
+          case _ =>
+            Raml08TextParser(e.value, adopt, "schema", defaultType).parse()
         }
       }
     }

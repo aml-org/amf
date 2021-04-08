@@ -67,7 +67,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
 
   def withScalarSchema(name: String): ScalarShape = {
     val scalar = ScalarShape().withName(name)
-    set(ParameterModel.Schema, scalar, Annotations.inferred())
+    set(ParameterModel.Schema, scalar, Annotations.synthesized())
     scalar
   }
 
