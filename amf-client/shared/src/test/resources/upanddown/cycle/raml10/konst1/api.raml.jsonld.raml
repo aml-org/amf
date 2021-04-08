@@ -5,17 +5,17 @@ annotationTypes:
     type: string
 types:
   MyType:
+    (a): stringvalue1
     properties:
       p1:
         (a): stringValue2
-    (a): stringvalue1
 /resource:
   get:
     body:
       application/json:
+        (a): stringValue5
         properties:
           p2:
             (a): stringValue6
-        (a): stringValue5
     (a): stringValue4
   (a): stringValue3

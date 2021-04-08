@@ -18,7 +18,7 @@ types:
   File:
     type: file
     fileTypes:
-      - "*/*"
+      - "\"*/*\""
       - 画像/png
       - 画像/jpeg
       - 画像/gif
@@ -27,11 +27,11 @@ types:
     example: ジョン.ドウ
   ユーザーアカウント:
     type: string
+    example: 個人的な
     enum:
       - 個人的な
       - 会社
       - グルパル
-    example: 個人的な
   ユーザー:
     example:
       画像:
@@ -44,7 +44,7 @@ types:
         items:
           type: file
           fileTypes:
-            - "*/*"
+            - "\"*/*\""
             - 画像/png
             - 画像/jpeg
             - 画像/gif
@@ -53,11 +53,11 @@ types:
         anyOf:
           -
             type: string
+            example: 個人的な
             enum:
               - 個人的な
               - 会社
               - グルパル
-            example: 個人的な
           -
             type: object
             (amf-recursive): amf://id#14
@@ -89,7 +89,7 @@ securitySchemes:
             items:
               type: file
               fileTypes:
-                - "*/*"
+                - "\"*/*\""
                 - 画像/png
                 - 画像/jpeg
                 - 画像/gif
@@ -98,11 +98,11 @@ securitySchemes:
             anyOf:
               -
                 type: string
+                example: 個人的な
                 enum:
                   - 個人的な
                   - 会社
                   - グルパル
-                example: 個人的な
               -
                 type: object
                 (amf-recursive): amf://id#14
@@ -111,6 +111,11 @@ securitySchemes:
       - 基本的な
 /ユーザー/{ユーザーID}:
   get:
+    (amf-baseUriParameters):
+      ユーザーID?:
+        default: ジョン.ドウ
+        type: string
+        example: ジョン.ドウ
     responses:
       "201":
         body:
@@ -126,7 +131,7 @@ securitySchemes:
                 items:
                   type: file
                   fileTypes:
-                    - "*/*"
+                    - "\"*/*\""
                     - 画像/png
                     - 画像/jpeg
                     - 画像/gif
@@ -135,19 +140,14 @@ securitySchemes:
                 anyOf:
                   -
                     type: string
+                    example: 個人的な
                     enum:
                       - 個人的な
                       - 会社
                       - グルパル
-                    example: 個人的な
                   -
                     type: object
                     (amf-recursive): amf://id#14
                 required: true
-    (amf-baseUriParameters):
-      ユーザーID?:
-        default: ジョン.ドウ
-        type: string
-        example: ジョン.ドウ
     securedBy:
       - 基本的な

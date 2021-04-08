@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
 import amf.core.metamodel.domain.ExternalSourceElementModel
-import amf.core.model.domain.AmfScalar
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.utils.IdCounter
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.domain.OasLikeServerVariableParser
+import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.Parameter
 import amf.validations.ParserSideValidations
@@ -29,7 +30,10 @@ case class AsyncServerVariableParser(entry: YMapEntry, parent: String)(implicit 
                      AmfScalar(node.asScalar.map(_.text).getOrElse(node.toString), Annotations(node)),
                      Annotations.inferred())
             }
-            variable.withExamples(examples, Annotations(examplesEntry.value))
+            variable.fields.set(variable.id,
+                                ExamplesField.Examples,
+                                AmfArray(examples, Annotations(examplesEntry.value)),
+                                Annotations(examplesEntry))
           case _ =>
             ctx.violation(ParserSideValidations.ExamplesMustBeASeq,
                           variable.id,

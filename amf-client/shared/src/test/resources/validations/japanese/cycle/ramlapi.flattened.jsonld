@@ -1554,7 +1554,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/shapes#fileType": [
-        "*/*",
+        "\"*/*\"",
         "\u753B\u50CF/png",
         "\u753B\u50CF/jpeg",
         "\u753B\u50CF/gif"
@@ -1891,7 +1891,7 @@
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/File/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#fileType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(20,14)-(25,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(20,4)-(25,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/File/source-map/lexical/element_0",

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.LexicalInformation
-import amf.core.model.domain.{AmfArray, Annotation, DataNode, ExternalDomainElement}
+import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DataNode, ExternalDomainElement}
 import amf.core.parser.errorhandler.{JsonErrorHandler, ParserErrorHandler, WarningOnlyHandler}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ParsedJSONExample}
@@ -268,7 +268,7 @@ case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleO
     map.key("description", (ExampleModel.Description in example).allowingAnnotations)
     map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
 
-    example.withStrict(options.strictDefault, Annotations.synthesized())
+    example.set(ExampleModel.StructuredValue, AmfScalar(options.strictDefault), Annotations.synthesized())
 
     map
       .key("value")

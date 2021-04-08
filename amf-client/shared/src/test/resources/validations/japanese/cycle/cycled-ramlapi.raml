@@ -18,7 +18,7 @@ types:
   File:
     type: file
     fileTypes:
-      - "*/*"
+      - "\"*/*\""
       - 画像/png
       - 画像/jpeg
       - 画像/gif
@@ -27,21 +27,21 @@ types:
     example: ジョン.ドウ
   ユーザーアカウント:
     type: string
+    example: 個人的な
     enum:
       - 個人的な
       - 会社
       - グルパル
-    example: 個人的な
   ユーザー:
+    example:
+      画像:
+        - ファイル名
+      メンバーシップ: 個人的な
     properties:
       画像:
         items: File
       メンバーシップ:
         type: ユーザー | ユーザーアカウント
-    example:
-      画像:
-        - ファイル名
-      メンバーシップ: 個人的な
 securitySchemes:
   基本的な:
     description: このAPIは基本認証をサポートしています。
@@ -50,8 +50,6 @@ securitySchemes:
       requestTokenUri: https://api.dropbox.com/1/oauth/request_token
       authorizationUri: https://www.dropbox.com/1/oauth/authorize
       tokenCredentialsUri: https://www.dropbox.com/1/oauth/authorize
-securedBy:
-  - 基本的な
 /ユーザー:
   post:
     headers:
@@ -71,5 +69,7 @@ securedBy:
   uriParameters:
     ユーザーID?:
       default: ジョン.ドウ
-      type: ユーザーID
       example: ジョン.ドウ
+      type: ユーザーID
+securedBy:
+  - 基本的な

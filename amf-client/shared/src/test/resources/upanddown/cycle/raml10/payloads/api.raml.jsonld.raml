@@ -6,6 +6,9 @@ title: API
     description: and this description!
     get:
       displayName: Some title
+      body:
+        application/json:
+          type: string
       responses:
         "200":
           description: 200 descr
@@ -19,7 +22,4 @@ title: API
               type: any
             application/xml:
               type: any
-      body:
-        application/json:
-          type: string
 baseUri: /some/uri

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
 import amf.core.annotations.{TrackedElement, VirtualElement}
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.annotations.ExampleIndex
@@ -20,7 +20,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, Oas3Ex
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{Example, NodeShape}
 import amf.plugins.domain.webapi.metamodel.MessageModel.IsAbstract
-import amf.plugins.domain.webapi.metamodel.{MessageModel, PayloadModel}
+import amf.plugins.domain.webapi.metamodel.{MessageModel, OperationModel, PayloadModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.bindings.MessageBindings
 import amf.plugins.features.validation.CoreValidations
@@ -252,7 +252,7 @@ case class AsyncMessageTraitPopulator()(implicit ctx: AsyncWebApiContext) extend
 
   override def populate(map: YMap, message: Message): Message = {
     val nextMessage = super.populate(map, message)
-    nextMessage.set(IsAbstract, true, Annotations.synthesized())
+    nextMessage.set(IsAbstract, AmfScalar(true), Annotations.synthesized())
     ctx.closedShape(nextMessage.id, map, "messageTrait")
     nextMessage
   }
@@ -268,7 +268,8 @@ case class AsyncConcreteMessagePopulator(parentId: String)(implicit ctx: AsyncWe
         val traits = entry.value.as[YSequence].nodes.map { node =>
           AsyncMessageParser(YMapEntryLike(node), parentId, None, isTrait = true).parse()
         }
-        message.setArray(MessageModel.Extends, traits, Annotations(entry))
+        message.fields
+          .set(message.id, OperationModel.Extends, AmfArray(traits, Annotations(entry.value)), Annotations(entry))
       })
   }
 

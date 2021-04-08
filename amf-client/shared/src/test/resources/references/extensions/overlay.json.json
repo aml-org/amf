@@ -1,13 +1,13 @@
 {
   "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
   "paths": {
     "/books": {
       "x-amf-description": "La colección de libros de la biblioteca"
     }
-  },
-  "info": {
-    "title": "API",
-    "version": "1.0"
   },
   "x-amf-extends": {
     "$ref": "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml"
