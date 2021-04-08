@@ -7,3 +7,6 @@ get:
           type: object
           examples:
             promotionGetResponse: !include Examples/get-promotion-response.raml
+uriParameters:
+  organizationId:
+    type: string

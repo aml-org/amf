@@ -67,10 +67,6 @@ object RamlExpressionParser {
     shape
   }
 
-  private def getLexical(part: YPart) = {
-    LexicalInformation(part.range.lineFrom, part.range.columnFrom, part.range.lineTo, part.range.columnTo)
-  }
-
   private def getValue(ast: YPart): YValue = ast match {
     case e: YMapEntry => e.value.value
     case n: YNode     => n.value

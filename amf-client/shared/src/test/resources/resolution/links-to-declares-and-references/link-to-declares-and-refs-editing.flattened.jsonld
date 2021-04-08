@@ -24,15 +24,12 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:endpoint": "true"
+        "source-vendor": {
+          "#29": "RAML 1.0"
         },
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
           "#29": "[(2,0)-(44,43)]"
-        },
-        "source-vendor": {
-          "#29": "RAML 1.0"
         }
       }
     },
@@ -49,9 +46,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
-        },
         "lexical": {
           "apiContract:path": "[(15,0)-(15,19)]",
           "#30": "[(15,0)-(22,0)]"
@@ -71,9 +65,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
-        },
         "lexical": {
           "apiContract:path": "[(22,0)-(22,14)]",
           "#36": "[(22,0)-(30,0)]"
@@ -93,9 +84,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
-        },
         "lexical": {
           "apiContract:path": "[(30,0)-(30,13)]",
           "#40": "[(30,0)-(38,0)]"
@@ -115,9 +103,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
-        },
         "lexical": {
           "apiContract:path": "[(38,0)-(38,18)]",
           "#44": "[(38,0)-(44,43)]"
@@ -726,10 +711,8 @@
       "shacl:minCount": 1,
       "shacl:name": "status",
       "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
         "lexical": {
+          "shacl:minCount": "[(13,4)-(13,12)]",
           "#49": "[(5,4)-(7,5)]"
         }
       }
@@ -753,10 +736,8 @@
       "shacl:minCount": 1,
       "shacl:name": "message",
       "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
         "lexical": {
+          "shacl:minCount": "[(14,4)-(14,13)]",
           "#51": "[(8,4)-(10,5)]"
         }
       }
@@ -1091,8 +1072,7 @@
       },
       "smaps": {
         "synthesized-field": {
-          "apiContract:binding": "true",
-          "apiContract:required": "true"
+          "apiContract:binding": "true"
         },
         "lexical": {
           "raml-shapes:schema": "[(13,4)-(15,0)]",
@@ -1115,8 +1095,7 @@
       },
       "smaps": {
         "synthesized-field": {
-          "apiContract:binding": "true",
-          "apiContract:required": "true"
+          "apiContract:binding": "true"
         },
         "lexical": {
           "raml-shapes:schema": "[(10,4)-(12,0)]",

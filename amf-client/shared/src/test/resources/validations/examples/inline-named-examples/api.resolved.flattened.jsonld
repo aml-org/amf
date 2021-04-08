@@ -18,15 +18,12 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:endpoint": "true"
+        "source-vendor": {
+          "#29": "RAML 1.0"
         },
         "lexical": {
           "core:name": "[(3,0)-(6,0)]",
           "#29": "[(3,0)-(37,3)]"
-        },
-        "source-vendor": {
-          "#29": "RAML 1.0"
         }
       }
     },
@@ -46,9 +43,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
-        },
         "lexical": {
           "apiContract:path": "[(9,0)-(9,14)]",
           "#30": "[(9,0)-(37,3)]"
@@ -68,15 +62,12 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
+        "parent-end-point": {
+          "#63": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations"
         },
         "lexical": {
           "apiContract:path": "[(24,2)-(24,20)]",
           "#63": "[(24,2)-(37,3)]"
-        },
-        "parent-end-point": {
-          "#63": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations"
         }
       }
     },
@@ -93,9 +84,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "#31": "[(10,2)-(15,0)]"
         }
@@ -162,8 +150,7 @@
       ],
       "smaps": {
         "lexical": {
-          "apiContract:payload": "[(11,4)-(15,0)]",
-          "#32": "[(11,0)-(15,0)]"
+          "apiContract:payload": "[(11,4)-(15,0)]"
         }
       }
     },
@@ -270,8 +257,7 @@
       },
       "smaps": {
         "synthesized-field": {
-          "apiContract:binding": "true",
-          "apiContract:required": "true"
+          "apiContract:binding": "true"
         },
         "lexical": {
           "raml-shapes:schema": "[(26,6)-(29,0)]",

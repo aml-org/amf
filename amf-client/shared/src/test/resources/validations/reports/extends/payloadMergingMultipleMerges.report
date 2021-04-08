@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/validations/extends/merging-payloads/multiple-merges/multipleMerges.raml
 Profile: RAML 1.0
 Conforms? false
-Number of results: 3
+Number of results: 1
 
 Level: Violation
 
@@ -10,21 +10,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/merging-payloads/multiple-merges/multipleMerges.raml#/web-api/end-points/%2Ferr1/get/request
   Property: 
-  Position: Some(LexicalInformation([(44,0)-(48,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/extends/merging-payloads/multiple-merges/multipleMerges.raml
-
-- Source: http://a.ml/vocabularies/amf/resolution#unequal-media-type-definitions-in-extends-payloads
-  Message: Cannot merge payloads with explicit and implicit media types
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/extends/merging-payloads/multiple-merges/multipleMerges.raml#/web-api/end-points/%2Ferr2/get/request
-  Property: 
-  Position: Some(LexicalInformation([(51,0)-(56,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/extends/merging-payloads/multiple-merges/multipleMerges.raml
-
-- Source: http://a.ml/vocabularies/amf/resolution#unequal-media-type-definitions-in-extends-payloads
-  Message: Cannot merge payloads with explicit and implicit media types
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/extends/merging-payloads/multiple-merges/multipleMerges.raml#/web-api/end-points/%2Ferr3/get/request
-  Property: 
-  Position: Some(LexicalInformation([(59,0)-(62,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/extends/merging-payloads/multiple-merges/multipleMerges.raml
+  Position: None
+  Location: 

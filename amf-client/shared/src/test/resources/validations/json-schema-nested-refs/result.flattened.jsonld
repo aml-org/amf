@@ -286,14 +286,12 @@
       "shacl:minCount": 1,
       "shacl:name": "merchant",
       "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#34": "[(6,4)-(8,5)]"
-        },
         "inheritance-provenance": {
           "#34": "amf://id#17"
+        },
+        "lexical": {
+          "shacl:minCount": "[(21,4)-(21,14)]",
+          "#34": "[(6,4)-(8,5)]"
         }
       }
     },
@@ -316,14 +314,12 @@
       "shacl:minCount": 1,
       "shacl:name": "operator",
       "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#36": "[(9,4)-(11,5)]"
-        },
         "inheritance-provenance": {
           "#36": "amf://id#17"
+        },
+        "lexical": {
+          "shacl:minCount": "[(22,4)-(22,14)]",
+          "#36": "[(9,4)-(11,5)]"
         }
       }
     },

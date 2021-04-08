@@ -18,14 +18,15 @@ import amf.validations.ParserSideValidations
 import org.yaml.model._
 
 object AsyncOperationParser {
-  def apply(entry: YMapEntry, parentId: String, isTrait: Boolean = false)(
+  def apply(entry: YMapEntry, adopt: Operation => Operation, isTrait: Boolean = false)(
       implicit ctx: AsyncWebApiContext): AsyncOperationParser =
-    if (isTrait) new AsyncOperationTraitParser(entry, parentId)
-    else new AsyncConcreteOperationParser(entry, parentId)
+    if (isTrait) new AsyncOperationTraitParser(entry, adopt)
+    else new AsyncConcreteOperationParser(entry, adopt)
 }
 
-abstract class AsyncOperationParser(entry: YMapEntry, parentId: String)(override implicit val ctx: AsyncWebApiContext)
-    extends OasLikeOperationParser(entry, parentId) {
+abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
+    override implicit val ctx: AsyncWebApiContext)
+    extends OasLikeOperationParser(entry, adopt) {
 
   override def parse(): Operation = {
     val operation = super.parse()
@@ -62,8 +63,9 @@ abstract class AsyncOperationParser(entry: YMapEntry, parentId: String)(override
   protected def parseTraits(map: YMap, operation: Operation)
 }
 
-private class AsyncConcreteOperationParser(entry: YMapEntry, parentId: String)(implicit ctx: AsyncWebApiContext)
-    extends AsyncOperationParser(entry, parentId) {
+private class AsyncConcreteOperationParser(entry: YMapEntry, adopt: Operation => Operation)(
+    implicit ctx: AsyncWebApiContext)
+    extends AsyncOperationParser(entry, adopt) {
 
   override protected def parseMessages(map: YMap, operation: Operation): Unit = map.key(
     "message",
@@ -79,16 +81,16 @@ private class AsyncConcreteOperationParser(entry: YMapEntry, parentId: String)(i
       "traits",
       traitEntry => {
         val traits = traitEntry.value.as[YSequence].nodes.map { node =>
-          AsyncOperationTraitRefParser(node, parentId).parseLinkOrError()
+          AsyncOperationTraitRefParser(node, adopt).parseLinkOrError()
         }
         operation.setArray(OperationModel.Extends, traits, Annotations(traitEntry))
       }
     )
 }
 
-private class AsyncOperationTraitParser(entry: YMapEntry, parentId: String)(
+private class AsyncOperationTraitParser(entry: YMapEntry, adopt: Operation => Operation)(
     override implicit val ctx: AsyncWebApiContext)
-    extends AsyncOperationParser(entry, parentId) {
+    extends AsyncOperationParser(entry, adopt) {
 
   override protected val closedShapeName: String = "operationTrait"
 
@@ -110,7 +112,8 @@ private class AsyncOperationTraitParser(entry: YMapEntry, parentId: String)(
   override protected def parseTraits(map: YMap, operation: Operation): Unit = Unit
 }
 
-case class AsyncOperationRefParser(node: YNode, parentId: String, adopt: Operation => Operation, name: Option[String] = None)(implicit val ctx: AsyncWebApiContext) {
+case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operation, name: Option[String] = None)(
+    implicit val ctx: AsyncWebApiContext) {
 
   def parseLinkOrError(): Operation = {
     ctx.link(node) match {
@@ -144,7 +147,7 @@ case class AsyncOperationRefParser(node: YNode, parentId: String, adopt: Operati
   private def remote(url: String, node: YNode): Operation = {
     ctx.obtainRemoteYNode(url) match {
       case Some(traitNode) =>
-        AsyncOperationParser(YMapEntry(name.getOrElse(url), traitNode), parentId, isTrait = true)
+        AsyncOperationParser(YMapEntry(name.getOrElse(url), traitNode), adopt, isTrait = true)
           .parse()
       case None => linkError(url, node)
     }
