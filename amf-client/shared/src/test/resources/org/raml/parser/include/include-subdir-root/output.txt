@@ -5,6 +5,9 @@ title: hola
     description: description
   /{id}:
     put: {}
+    uriParameters:
+      id:
+        type: string
 /down:
   get:
     queryParameters:

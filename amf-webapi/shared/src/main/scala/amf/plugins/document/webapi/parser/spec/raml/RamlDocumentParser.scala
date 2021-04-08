@@ -12,7 +12,6 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.document.webapi.annotations.DeclarationKey
-import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.contexts.parser.raml.{
   ExtensionLikeWebApiContext,
   RamlWebApiContext,
@@ -27,7 +26,6 @@ import amf.plugins.document.webapi.parser.spec.raml.RamlAnnotationTargets.target
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.webapi.metamodel.ResponseModel
 import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
@@ -216,7 +214,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       entries => {
         val endpoints = mutable.ListBuffer[EndPoint]()
         entries.foreach(entry => ctx.factory.endPointParser(entry, api.withEndPoint, None, endpoints, false).parse())
-        api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations.inferred())
+        api.set(WebApiModel.EndPoints, AmfArray(endpoints, Annotations.virtual()), Annotations.inferred())
         ctx.mergeAllOperationContexts()
       }
     )

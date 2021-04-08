@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField, VirtualElement}
+import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, VirtualElement}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
@@ -17,7 +17,7 @@ import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, toRaml}
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.metamodel.ServerModel
-import amf.plugins.domain.webapi.metamodel.api.{BaseApiModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.api.Api
 import org.yaml.model.YDocument

@@ -24,17 +24,14 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:endpoint": "true"
+        "source-vendor": {
+          "#19": "RAML 1.0"
         },
         "lexical": {
           "core:version": "[(3,0)-(4,0)]",
           "core:name": "[(2,0)-(3,0)]",
           "#19": "[(2,0)-(27,21)]",
           "apiContract:server": "[(4,0)-(6,0)]"
-        },
-        "source-vendor": {
-          "#19": "RAML 1.0"
         }
       }
     },
@@ -83,15 +80,12 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:supportedOperation": "true"
+        "parent-end-point": {
+          "#21": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/web-api/end-points/%2Fcustomers"
         },
         "lexical": {
           "apiContract:path": "[(20,2)-(20,12)]",
           "#21": "[(20,2)-(27,21)]"
-        },
-        "parent-end-point": {
-          "#21": "file://amf-client/shared/src/test/resources/resolution/extends/data.raml#/web-api/end-points/%2Fcustomers"
         }
       }
     },
@@ -109,9 +103,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "core:description": "[(22,6)-(23,0)]",
           "#22": "[(21,4)-(27,21)]"
@@ -132,8 +123,7 @@
       ],
       "smaps": {
         "lexical": {
-          "apiContract:payload": "[(23,6)-(27,21)]",
-          "#23": "[(22,0)-(27,21)]"
+          "apiContract:payload": "[(23,6)-(27,21)]"
         }
       }
     },

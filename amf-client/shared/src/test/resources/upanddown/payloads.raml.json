@@ -34,9 +34,11 @@
           "404": {
             "description": "Not found!",
             "x-amf-mediaType": "application/json",
+            "schema": {},
             "x-amf-responsePayloads": [
               {
-                "mediaType": "application/xml"
+                "mediaType": "application/xml",
+                "schema": {}
               }
             ]
           }

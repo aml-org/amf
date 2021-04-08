@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{IdCounter, TemplateUri, _}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
@@ -102,7 +102,6 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
         RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id), binding = "path")(
           spec.toRaml(ctx))
           .parse()
-          .map(_.synthesizedBinding("path"))
       parameters = parameters.add(Parameters(path = uriParameters))
     }
     parameters match {
@@ -155,7 +154,7 @@ abstract class OasEndpointParser(entry: YMapEntry, parentId: String, collector: 
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, endpoint.id)
+          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o.adopted(endpoint.id))
           operations += operationParser.parse()
         }
         endpoint.set(EndPointModel.Operations, AmfArray(operations, Annotations.inferred()), Annotations.inferred())
@@ -229,7 +228,7 @@ case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: Li
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach { entry =>
-          val operationParser = ctx.factory.operationParser(entry, endpoint.id)
+          val operationParser = ctx.factory.operationParser(entry, (o: Operation) => o.adopted(endpoint.id))
           operations += operationParser.parse()
         }
         endpoint.set(EndPointModel.Operations, AmfArray(operations, Annotations(map)), Annotations(map))

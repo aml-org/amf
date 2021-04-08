@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
-import amf.core.annotations.{SynthesizedField, TrackedElement, VirtualElement}
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.annotations.{TrackedElement, VirtualElement}
+import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.annotations.ExampleIndex
@@ -17,13 +17,10 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 }
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncMessageBindingsParser
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, Oas3ExampleOptions}
-import amf.plugins.domain.shapes.models.Example
-import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, ExamplesDataParser, Oas3ExampleOptions}
-import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.{Example, NodeShape}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import amf.plugins.domain.shapes.models.{Example, NodeShape}
 import amf.plugins.domain.webapi.metamodel.MessageModel.IsAbstract
-import amf.plugins.domain.webapi.metamodel.{MessageModel, ParameterModel, PayloadModel}
+import amf.plugins.domain.webapi.metamodel.{MessageModel, PayloadModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.bindings.MessageBindings
 import amf.plugins.features.validation.CoreValidations

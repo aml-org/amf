@@ -211,6 +211,9 @@ types:
               description: Deletes a reply.
             patch:
               description: Updates an existing reply. This method supports patch semantics.
+        uriParameters:
+          commentId:
+            type: string
     /realtime:
       get:
         description: Exports the contents of the Realtime API data model associated with this file as JSON.
@@ -237,6 +240,9 @@ types:
         put: {}
         delete: {}
         patch: {}
+    uriParameters:
+      fileId:
+        type: string
   /trash:
     delete:
       description: Permanently deletes all of the user's trashed files.
@@ -250,6 +256,12 @@ types:
         description: Removes a child from a folder.
       get:
         description: Gets a specific child reference.
+      uriParameters:
+        childId:
+          type: string
+    uriParameters:
+      folderId:
+        type: string
 /about:
   displayName: About
   get:

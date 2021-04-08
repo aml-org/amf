@@ -136,8 +136,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "apiContract:payload": "[(22,2)-(25,0)]",
-                        "#24": "[(22,0)-(27,0)]"
+                        "apiContract:payload": "[(22,2)-(25,0)]"
                       }
                     }
                   }
@@ -168,9 +167,6 @@
                   }
                 ],
                 "smaps": {
-                  "synthesized-field": {
-                    "apiContract:expects": "true"
-                  },
                   "lexical": {
                     "apiContract:returns": "[(25,2)-(27,0)]",
                     "#23": "[(21,1)-(27,0)]"
@@ -179,9 +175,6 @@
               }
             ],
             "smaps": {
-              "synthesized-field": {
-                "apiContract:supportedOperation": "true"
-              },
               "lexical": {
                 "apiContract:path": "[(20,0)-(20,9)]",
                 "#22": "[(20,0)-(27,0)]"
@@ -262,8 +255,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "apiContract:payload": "[(29,2)-(32,0)]",
-                        "#30": "[(29,0)-(33,8)]"
+                        "apiContract:payload": "[(29,2)-(32,0)]"
                       }
                     }
                   }
@@ -294,9 +286,6 @@
                   }
                 ],
                 "smaps": {
-                  "synthesized-field": {
-                    "apiContract:expects": "true"
-                  },
                   "lexical": {
                     "apiContract:returns": "[(32,2)-(33,8)]",
                     "#29": "[(28,1)-(33,8)]"
@@ -305,9 +294,6 @@
               }
             ],
             "smaps": {
-              "synthesized-field": {
-                "apiContract:supportedOperation": "true"
-              },
               "lexical": {
                 "apiContract:path": "[(27,0)-(27,9)]",
                 "#28": "[(27,0)-(33,8)]"
@@ -316,15 +302,12 @@
           }
         ],
         "smaps": {
-          "synthesized-field": {
-            "apiContract:endpoint": "true"
+          "source-vendor": {
+            "#21": "RAML 1.0"
           },
           "lexical": {
             "core:name": "[(2,0)-(3,0)]",
             "#21": "[(2,0)-(33,8)]"
-          },
-          "source-vendor": {
-            "#21": "RAML 1.0"
           }
         }
       }

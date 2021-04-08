@@ -821,10 +821,14 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       val name     = entry.key.as[YScalar].text
       val required = requiredFields.contains(name)
+      val requiredAnnotations =
+        requiredFields.get(name).map(node => Annotations(node)).getOrElse(Annotations.synthesized())
 
       val property = producer(name)
         .add(Annotations(entry))
-        .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), Annotations.synthesized())
+        .set(PropertyShapeModel.MinCount,
+             AmfScalar(if (required) 1 else 0, Annotations.synthesized()),
+             requiredAnnotations += ExplicitField())
 
       property.set(
         PropertyShapeModel.Path,
@@ -850,9 +854,11 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                                  entry)
                 }
                 val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
-                property.set(PropertyShapeModel.MinCount,
-                             AmfScalar(if (required) 1 else 0),
-                             Annotations(entry) += ExplicitField())
+                property.set(
+                  PropertyShapeModel.MinCount,
+                  AmfScalar(if (required) 1 else 0, Annotations.synthesized()), // does this annotation make sense? should parent not be `synthetized`?
+                  Annotations(entry) += ExplicitField()
+                )
               }
             }
           )

@@ -17,9 +17,8 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
-import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
-import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ResourceType}
+import amf.plugins.domain.webapi.models.templates.ParametrizedResourceType
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import amf.validations.ParserSideValidations.{
   DuplicatedEndpointPath,
@@ -70,7 +69,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     parent.map(p => endpoint.add(ParentEndPoint(p)))
 
     checkBalancedParams(path, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
-    endpoint.set(Path, AmfScalar(path, Annotations(entry.key)), Annotations(entry.key))
+    endpoint.set(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)), Annotations(entry.key))
 
     if (!TemplateUri.isValid(path))
       ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
@@ -174,7 +173,6 @@ abstract class RamlEndpointParser(entry: YMapEntry,
             val param = ctx.factory
               .parameterParser(entry, (p: Parameter) => p.adopted(endpoint.id), false, "path")
               .parse()
-              .synthesizedBinding("path")
             param.fields ? [Shape] ParameterModel.Schema foreach (schema => validateSlashsInSchema(schema, entry))
             param
           })
@@ -271,9 +269,16 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
     if (operationsDefineParam) None
     else {
-      val pathParam = endpoint.withParameter(variable).synthesizedBinding("path").withRequired(true)
+      val parameter = Parameter()
+      val pathParam = Parameter()
+        .withSynthesizeName(variable)
+        .set(ParameterModel.ParameterName, variable, Annotations.synthesized())
+        .synthesizedBinding("path")
+        .set(ParameterModel.Required, true, Annotations.synthesized())
+      endpoint.add(EndPointModel.Parameters, parameter)
+
       pathParam.withScalarSchema(variable).withDataType(DataType.String)
-      pathParam.annotations += SynthesizedField()
+      pathParam.annotations ++= Annotations.virtual()
       Some(pathParam)
     }
   }

@@ -65,9 +65,9 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/source-map/synthesized-field/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/source-map/source-vendor/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -82,11 +82,6 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/source-map/lexical/element_2"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -147,11 +142,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/source-map/lexical/element_1"
@@ -162,9 +152,9 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api",
+      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/source-map/lexical/element_3",
@@ -185,11 +175,6 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(26,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/http%3A%2F%2Flocalhost%2Fapi/source-map/lexical/element_0",
@@ -258,21 +243,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#supportedOperation",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/source-map/lexical/element_1",
@@ -347,17 +322,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/request/source-map/lexical/element_1"
-        },
-        {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/request/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/source-map/lexical/element_0",
@@ -439,11 +406,6 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/request/application%2Fjson/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/request/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/request",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(23,0)-(26,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/request/source-map/lexical/element_0",

@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{SynthesizedField, VirtualElement}
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, SearchScope}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
