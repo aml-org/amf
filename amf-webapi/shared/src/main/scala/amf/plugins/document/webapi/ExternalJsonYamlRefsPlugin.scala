@@ -95,11 +95,6 @@ class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
 
   /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit, errorHandler: ErrorHandler, pipelineId: String): BaseUnit = unit
-
-  /**
     * List of media types used to encode serialisations of
     * this domain
     */

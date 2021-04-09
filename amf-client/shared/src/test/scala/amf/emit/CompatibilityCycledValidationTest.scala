@@ -1,6 +1,7 @@
 package amf.emit
 
 import amf.client.parse.DefaultParserErrorHandler
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
@@ -78,7 +79,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
       }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    CompatibilityPipeline.unhandled(profile(config.target)).resolve(unit)
+    new CompatibilityPipeline(profile(config.target)).transform(unit, UnhandledErrorHandler)
 
   private def profile(vendor: Vendor): ProfileName = vendor match {
     case Raml | Raml08 | Raml10 => RamlProfile

@@ -17,21 +17,21 @@ import amf.plugins.domain.webapi.resolution.stages.async.{
 }
 import amf.{Async20Profile, ProfileName}
 
-class Async20ResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
-  override def profileName: ProfileName = Async20Profile
-  def references                        = new WebApiReferenceResolutionStage()
+class Async20ResolutionPipeline() extends ResolutionPipeline() {
+  def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage()
 
-  override val steps: Seq[ResolutionStage] = Seq(
-    references,
-    new ExternalSourceRemovalStage,
-    new ShapeNormalizationStage(profileName, keepEditingInfo = false),
-    new JsonMergePatchStage(isEditing = false),
-    new AsyncContentTypeResolutionStage(),
-    new AsyncExamplePropagationResolutionStage(),
-    new ServerVariableExampleResolutionStage(),
-    new PathDescriptionNormalizationStage(profileName),
-    new CleanReferencesStage(),
-    new DeclarationsRemovalStage(),
-    new AnnotationRemovalStage()
-  )
+  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+    Seq(
+      references,
+      new ExternalSourceRemovalStage,
+      new ShapeNormalizationStage(Async20Profile, keepEditingInfo = false),
+      new JsonMergePatchStage(isEditing = false),
+      new AsyncContentTypeResolutionStage(),
+      new AsyncExamplePropagationResolutionStage(),
+      new ServerVariableExampleResolutionStage(),
+      new PathDescriptionNormalizationStage(Async20Profile),
+      new CleanReferencesStage(),
+      new DeclarationsRemovalStage(),
+      new AnnotationRemovalStage()
+    )
 }

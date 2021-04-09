@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Module}
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.RamlYamlHint
@@ -69,7 +70,7 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
                              RamlYamlHint,
                              eh = UnhandledParserErrorHandler).build()
       validator <- Future {
-        val resolved = AmfResolutionPipeline.unhandled.resolve(library)
+        val resolved = new AmfResolutionPipeline().transform(library, UnhandledErrorHandler)
         val shape    = findShape(resolved, "D")
         shape.payloadValidator("application/json").get
       }
@@ -87,7 +88,7 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
                              RamlYamlHint,
                              eh = UnhandledParserErrorHandler).build()
       validator <- Future {
-        val resolved = AmfResolutionPipeline.unhandled.resolve(library)
+        val resolved = new AmfResolutionPipeline().transform(library, UnhandledErrorHandler)
         val shape    = findShape(resolved, "D")
         shape.payloadValidator("application/json", Environment()).get
       }

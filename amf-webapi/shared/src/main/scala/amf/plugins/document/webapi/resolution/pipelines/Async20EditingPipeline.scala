@@ -11,23 +11,23 @@ import amf.plugins.domain.webapi.resolution.stages.async.{
 }
 import amf.{Async20Profile, ProfileName}
 
-class Async20EditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean = true)
-    extends AmfEditingPipeline(eh, urlShortening) {
+class Async20EditingPipeline(urlShortening: Boolean = true) extends AmfEditingPipeline(urlShortening) {
   override def profileName: ProfileName = Async20Profile
 
-  override def references = new WebApiReferenceResolutionStage(true)
+  override def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage(true)
 
-  override protected def parameterNormalizationStage: ParametersNormalizationStage =
+  override protected def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage =
     new OpenApiParametersNormalizationStage()
 
-  override val steps: Seq[ResolutionStage] = Seq(
-    references,
-    new ShapeNormalizationStage(profileName, keepEditingInfo = true),
-    new JsonMergePatchStage(isEditing = true),
-    new AsyncContentTypeResolutionStage(),
-    new AsyncExamplePropagationResolutionStage(),
-    new ServerVariableExampleResolutionStage(),
-    new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
-    new AnnotationRemovalStage()
-  ) ++ url
+  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+    Seq(
+      references,
+      new ShapeNormalizationStage(profileName, keepEditingInfo = true),
+      new JsonMergePatchStage(isEditing = true),
+      new AsyncContentTypeResolutionStage(),
+      new AsyncExamplePropagationResolutionStage(),
+      new ServerVariableExampleResolutionStage(),
+      new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
+      new AnnotationRemovalStage()
+    ) ++ url
 }

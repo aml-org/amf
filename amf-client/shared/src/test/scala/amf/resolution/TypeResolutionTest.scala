@@ -5,7 +5,9 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.remote.{Raml, RamlYamlHint}
+import amf.core.remote.{Raml, RamlYamlHint, Vendor}
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.services.RuntimeResolver
 import amf.core.vocabulary.Namespace
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
@@ -211,7 +213,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    Raml10Plugin.resolve(unit, unit.errorHandler())
+    RuntimeResolver.resolve(Vendor.RAML10.name, unit, ResolutionPipeline.DEFAULT_PIPELINE, unit.errorHandler())
   }
 
   val errorExamples = Seq(

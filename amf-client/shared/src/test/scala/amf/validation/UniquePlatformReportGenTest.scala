@@ -92,7 +92,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
       validation <- Validation(platform)
       model      <- AMFCompiler(basePath + api, platform, profileToHint(profile), eh = errorHandler).build()
       report <- {
-        new ValidationResolutionPipeline(profile, errorHandler).resolve(model)
+        new ValidationResolutionPipeline(profile).transform(model, errorHandler)
         val results = errorHandler.getErrors
         val report  = new AmfReportBuilder(model, profile).buildReport(results)
         handleReport(report, golden)

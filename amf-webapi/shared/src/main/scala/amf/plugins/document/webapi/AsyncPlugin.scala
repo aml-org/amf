@@ -3,6 +3,7 @@ package amf.plugins.document.webapi
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.resolution.{PipelineInfo, PipelineName}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -110,20 +111,11 @@ object Async20Plugin extends AsyncPlugin {
       case _ => None
     }
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
-    pipelineId match {
-      case ResolutionPipeline.DEFAULT_PIPELINE => new Async20ResolutionPipeline(errorHandler).resolve(unit)
-      case ResolutionPipeline.EDITING_PIPELINE => new Async20EditingPipeline(errorHandler).resolve(unit)
-      // case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler, OasProfile).resolve(unit)
-      case ResolutionPipeline.CACHE_PIPELINE => new Async20EditingPipeline(errorHandler, false).resolve(unit)
-      case _                                 => super.resolve(unit, errorHandler, pipelineId)
-    }
-  }
+  override val pipelines: Map[String, ResolutionPipeline] = Map(
+    PipelineName.from(vendor.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new Async20ResolutionPipeline(),
+    PipelineName.from(vendor.name, ResolutionPipeline.EDITING_PIPELINE) -> new Async20EditingPipeline(),
+    PipelineName.from(vendor.name, ResolutionPipeline.CACHE_PIPELINE)   -> new Async20EditingPipeline(false)
+  )
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],

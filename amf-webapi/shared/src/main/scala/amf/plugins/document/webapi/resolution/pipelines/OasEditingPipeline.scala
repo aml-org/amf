@@ -3,10 +3,10 @@ import amf.core.errorhandling.ErrorHandler
 import amf.plugins.domain.webapi.resolution.stages.{OpenApiParametersNormalizationStage, ParametersNormalizationStage}
 import amf.{OasProfile, ProfileName}
 
-class OasEditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean = true)
-    extends AmfEditingPipeline(eh, urlShortening) {
-  override def profileName: ProfileName = OasProfile
-  override def references               = new WebApiReferenceResolutionStage(true)
+class OasEditingPipeline(urlShortening: Boolean = true) extends AmfEditingPipeline(urlShortening) {
+  override def profileName: ProfileName              = OasProfile
+  override def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage(true)
 
-  override def parameterNormalizationStage: ParametersNormalizationStage = new OpenApiParametersNormalizationStage()
+  override def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage =
+    new OpenApiParametersNormalizationStage()
 }

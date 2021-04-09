@@ -6,22 +6,15 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
-class CompatibilityPipeline(override val eh: ErrorHandler, targetProfile: ProfileName = RamlProfile)
-    extends ResolutionPipeline(eh) {
+class CompatibilityPipeline(targetProfile: ProfileName = RamlProfile) extends ResolutionPipeline() {
 
-  override val steps: Seq[ResolutionStage] = profileName match {
-    case RamlProfile | Raml10Profile | Raml08Profile => new RamlCompatibilityPipeline(eh).steps
-    case Oas30Profile                                => new Oas3CompatibilityPipeline(eh).steps
-    case OasProfile | Oas20Profile                   => new OasCompatibilityPipeline(eh).steps
+  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] = targetProfile match {
+    case RamlProfile | Raml10Profile | Raml08Profile => new RamlCompatibilityPipeline().steps
+    case Oas30Profile                                => new Oas3CompatibilityPipeline().steps
+    case OasProfile | Oas20Profile                   => new OasCompatibilityPipeline().steps
     case _ =>
       eh.violation(ResolutionValidation, "", "No compatibility pipeline registered to target profile")
       Nil
   }
 
-  override def profileName: ProfileName = targetProfile
-}
-
-object CompatibilityPipeline {
-  def unhandled()                     = new CompatibilityPipeline(UnhandledErrorHandler)
-  def unhandled(profile: ProfileName) = new CompatibilityPipeline(UnhandledErrorHandler, profile)
 }

@@ -98,14 +98,6 @@ object PayloadPlugin extends AMFDocumentPlugin {
 
   override def canUnparse(unit: BaseUnit): Boolean = unit.isInstanceOf[PayloadFragment]
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    new ValidationResolutionPipeline(AmfProfile, errorHandler).resolve(unit)
-
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = {
     Future { this }
   }
