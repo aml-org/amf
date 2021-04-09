@@ -383,7 +383,7 @@ abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiB
       ctx.declarations
         .findAnnotation(scalar.text, SearchScope.All)
         .map { a =>
-          val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
+          val copied: CustomDomainProperty = a.link(AmfScalar(scalar.text), Annotations(ast), Annotations(scalar))
           copied.id = null // we reset the ID so ti can be adopted, there's an extra rule where the id is not set
           // because the way they are inserted in the mode later in the parsing
           adopt(copied.withName(annotationName))
@@ -468,7 +468,8 @@ abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiB
           case YType.Str =>
             val text = n.as[YScalar].text
             ctx.declarations.findDocumentations(text, SearchScope.All) match {
-              case Some(doc) => doc.link(text, Annotations(n)).asInstanceOf[CreativeWork]
+              case Some(doc) =>
+                doc.link(AmfScalar(text), Annotations(n), Annotations.synthesized()).asInstanceOf[CreativeWork]
               case _ =>
                 val documentation = RamlCreativeWorkParser(YNode(YMap.empty)).parse()
                 ctx.eh.violation(DeclarationNotFound,

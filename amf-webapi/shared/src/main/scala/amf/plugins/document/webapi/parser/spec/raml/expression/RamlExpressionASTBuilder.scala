@@ -130,7 +130,7 @@ private[expression] class RamlExpressionASTBuilder(
   private def lookupInDeclarations(token: Token, annotations: Annotations): Option[Shape] = {
     val typeName = token.value
     declarationFinder.find(typeName).map { shape =>
-      val newShape = shape.link(typeName, annotations).asInstanceOf[Shape]
+      val newShape = shape.link(AmfScalar(typeName), annotations, Annotations.synthesized()).asInstanceOf[Shape]
       newShape
     }
   }

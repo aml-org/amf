@@ -112,7 +112,9 @@ case class RamlMultipleExampleParser(key: String,
     map.key(key).foreach { entry =>
       ctx.link(entry.value) match {
         case Left(s) =>
-          examples += ctx.declarations.findNamedExampleOrError(entry.value)(s).link(s)
+          examples += ctx.declarations
+            .findNamedExampleOrError(entry.value)(s)
+            .link(ScalarNode(entry.value), Annotations(entry))
 
         case Right(node) =>
           node.tagType match {
@@ -146,7 +148,7 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
       case Left(s) =>
         ctx.declarations
           .findNamedExample(s)
-          .map(e => e.link(s).asInstanceOf[Example])
+          .map(e => e.link(ScalarNode(entry.value), Annotations(entry)).asInstanceOf[Example])
           .getOrElse(RamlSingleExampleValueParser(entry, simpleProducer, options).parse())
       case Right(_) => RamlSingleExampleValueParser(entry, simpleProducer, options).parse()
     }
@@ -173,7 +175,7 @@ case class RamlSingleExampleParser(key: String,
                                     errMsg,
                                     entry.value
                                 )))
-            .map(e => e.link(s, Annotations(entry.value)).asInstanceOf[Example])
+            .map(e => e.link(ScalarNode(entry.value), Annotations(entry)).asInstanceOf[Example])
         case Right(node) =>
           node.tagType match {
             case YType.Map =>
@@ -245,7 +247,7 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
     val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
     ctx.declarations
       .findExample(name, SearchScope.All)
-      .map(found => setName(found.link(name)))
+      .map(found => setName(found.link(AmfScalar(name), Annotations(map), Annotations.synthesized())))
       .getOrElse {
         ctx.obtainRemoteYNode(fullRef) match {
           case Some(exampleNode) =>
@@ -254,7 +256,9 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
               .add(ExternalReferenceUrl(fullRef))
           case None =>
             ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
-            val errorExample = setName(ErrorNamedExample(name, map).link(name, Annotations(map))).adopted(parentId)
+            val errorExample =
+              setName(ErrorNamedExample(name, map).link(AmfScalar(name), Annotations(map), Annotations.synthesized()))
+                .adopted(parentId)
             errorExample
         }
       }
