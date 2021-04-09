@@ -3,7 +3,9 @@ package amf.emit
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.remote.OasJsonHint
+import amf.core.remote.{OasJsonHint, Vendor}
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.services.RuntimeResolver
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.Oas20Plugin
@@ -66,7 +68,11 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
       sourceUnit <- AMFCompiler(basePath + sourceFile, platform, OasJsonHint, eh = DefaultParserErrorHandler.withRun())
         .build()
     } yield {
-      findShapeFunc(Oas20Plugin.resolve(sourceUnit, UnhandledErrorHandler)).map(_.toRamlDatatype()).getOrElse("")
+      findShapeFunc(
+        RuntimeResolver.resolve(Vendor.OAS20.name,
+                                sourceUnit,
+                                ResolutionPipeline.DEFAULT_PIPELINE,
+                                UnhandledErrorHandler)).map(_.toRamlDatatype()).getOrElse("")
     }
     ramlDatatype.flatMap { writeTemporaryFile(goldenFile) }.flatMap(assertDifferences(_, goldenPath + goldenFile))
   }

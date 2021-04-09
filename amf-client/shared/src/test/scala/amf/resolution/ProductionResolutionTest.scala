@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.Document
 import amf.core.remote._
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
@@ -40,7 +41,8 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   // TODO: diff of final result is too slow
-  multiGoldenTest("Resolves googleapis.compredictionv1.2swagger.raml to jsonld", "googleapis.compredictionv1.2swagger.raml.resolved.%s") { config =>
+  multiGoldenTest("Resolves googleapis.compredictionv1.2swagger.raml to jsonld",
+                  "googleapis.compredictionv1.2swagger.raml.resolved.%s") { config =>
     cycle("googleapis.compredictionv1.2swagger.raml",
           config.golden,
           RamlYamlHint,
@@ -180,11 +182,13 @@ class ProductionResolutionTest extends RamlResolutionTest {
     val useAmfJsonldSerialization = true
 
     for {
-      simpleModel <- build(config, validation, useAmfJsonldSerialization).map(AmfEditingPipeline.unhandled.resolve(_))
-      a           <- render(simpleModel, config, useAmfJsonldSerialization)
-      doubleModel <- build(config, validation, useAmfJsonldSerialization).map(AmfEditingPipeline.unhandled.resolve(_))
-      _           <- render(doubleModel, config, useAmfJsonldSerialization)
-      b           <- render(doubleModel, config, useAmfJsonldSerialization)
+      simpleModel <- build(config, validation, useAmfJsonldSerialization).map(
+        new AmfEditingPipeline().transform(_, hint.vendor.name, UnhandledErrorHandler))
+      a <- render(simpleModel, config, useAmfJsonldSerialization)
+      doubleModel <- build(config, validation, useAmfJsonldSerialization).map(
+        new AmfEditingPipeline().transform(_, hint.vendor.name, UnhandledErrorHandler))
+      _ <- render(doubleModel, config, useAmfJsonldSerialization)
+      b <- render(doubleModel, config, useAmfJsonldSerialization)
     } yield {
       val simpleDeclares =
         simpleModel.asInstanceOf[Document].declares

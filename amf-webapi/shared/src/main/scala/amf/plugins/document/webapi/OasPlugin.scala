@@ -4,6 +4,7 @@ import amf._
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.resolution.TransformationPipeline
 import amf.core.errorhandling.ErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -23,12 +24,9 @@ import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay, Oas30Header}
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.oas._
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
-import amf.plugins.document.webapi.resolution.pipelines.{
-  Oas30EditingPipeline,
-  Oas30ResolutionPipeline,
-  OasEditingPipeline,
-  OasResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
+  Oas3CompatibilityPipeline,
+  OasCompatibilityPipeline
 }
 import amf.plugins.domain.webapi.models.api.Api
 import org.yaml.model.{YDocument, YNode}
@@ -136,18 +134,8 @@ object Oas20Plugin extends OasPlugin {
       case _ => None
     }
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
-    case ResolutionPipeline.DEFAULT_PIPELINE       => new OasResolutionPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.EDITING_PIPELINE       => new OasEditingPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler, OasProfile).resolve(unit)
-    case ResolutionPipeline.CACHE_PIPELINE         => new OasEditingPipeline(errorHandler, false).resolve(unit)
-    case _                                         => super.resolve(unit, errorHandler, pipelineId)
-  }
+  override val pipelines
+    : Map[String, ResolutionPipeline] = super.pipelines + (TransformationPipeline.RAML_TO_OAS20 -> new OasCompatibilityPipeline())
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],
@@ -221,19 +209,8 @@ object Oas30Plugin extends OasPlugin {
     "application/swagger"
   )
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
-    case ResolutionPipeline.DEFAULT_PIPELINE => new Oas30ResolutionPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.EDITING_PIPELINE => new Oas30EditingPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.COMPATIBILITY_PIPELINE =>
-      new CompatibilityPipeline(errorHandler, Oas30Profile).resolve(unit)
-    case ResolutionPipeline.CACHE_PIPELINE => new Oas30EditingPipeline(errorHandler, false).resolve(unit)
-    case _                                 => super.resolve(unit, errorHandler, pipelineId)
-  }
+  override val pipelines
+    : Map[String, ResolutionPipeline] = super.pipelines + (TransformationPipeline.RAML_TO_OAS30 -> new Oas3CompatibilityPipeline())
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],

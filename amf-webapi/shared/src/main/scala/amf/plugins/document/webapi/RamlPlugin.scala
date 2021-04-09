@@ -1,8 +1,10 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.resolution.TransformationPipeline
+import amf.core.Root
+import amf.core.client.ParsingOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -14,13 +16,11 @@ import amf.core.parser.{
   ParsedReference,
   ParserContext,
   RefContainer,
-  ReferenceKind,
   UnspecifiedReference
 }
 import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
-import amf.core.{CompilerContext, Root}
 import amf.plugins.document.webapi.contexts.emitter.raml.{
   Raml08SpecEmitterContext,
   Raml10SpecEmitterContext,
@@ -34,7 +34,7 @@ import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFr
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.RamlReferenceHandler
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.RamlCompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{
   Raml08EditingPipeline,
   Raml08ResolutionPipeline,
@@ -230,18 +230,6 @@ object Raml08Plugin extends RamlPlugin {
   def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
     new Raml08SpecEmitterContext(errorHandler)
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit, errorHandler: ErrorHandler, pipelineId: String = "default"): BaseUnit = {
-    pipelineId match {
-      case ResolutionPipeline.DEFAULT_PIPELINE => new Raml08ResolutionPipeline(errorHandler).resolve(unit)
-      case ResolutionPipeline.EDITING_PIPELINE => new Raml08EditingPipeline(errorHandler).resolve(unit)
-      case ResolutionPipeline.CACHE_PIPELINE   => new Raml08EditingPipeline(errorHandler, false).resolve(unit)
-      case _                                   => super.resolve(unit, errorHandler, pipelineId)
-    }
-  }
-
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     defaultValidationProfiles.filterKeys(_ == validationProfile.p)
 }
@@ -302,18 +290,8 @@ object Raml10Plugin extends RamlPlugin {
   def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
     new Raml10SpecEmitterContext(errorHandler)
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
-    case ResolutionPipeline.DEFAULT_PIPELINE => new Raml10ResolutionPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.EDITING_PIPELINE => new Raml10EditingPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.COMPATIBILITY_PIPELINE =>
-      new CompatibilityPipeline(errorHandler, RamlProfile).resolve(unit)
-    case ResolutionPipeline.CACHE_PIPELINE => new Raml10EditingPipeline(errorHandler, false).resolve(unit)
-    case _                                 => super.resolve(unit, errorHandler, pipelineId)
+  override val pipelines: Map[String, ResolutionPipeline] = {
+    super.pipelines + (TransformationPipeline.OAS_TO_RAML10 -> new RamlCompatibilityPipeline())
   }
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =

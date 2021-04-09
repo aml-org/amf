@@ -62,13 +62,6 @@ lazy val customValidationJSRef  = ProjectRef(workspaceDirectory / "amf-aml", "cu
 lazy val customValidationLibJVM = "com.github.amlorg" %% "amf-custom-validation" % customValidationVersion
 lazy val customValidationLibJS  = "com.github.amlorg" %% "amf-custom-validation_sjs0.6" % customValidationVersion
 
-val coreVersion = versions("amf.core")
-
-lazy val coreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
-lazy val coreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
-lazy val coreLibJVM = "com.github.amlorg" %% "amf-core" % coreVersion
-lazy val coreLibJS  = "com.github.amlorg" %% "amf-core_sjs0.6" % coreVersion
-
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
   "Generates the validation dialect documents for the standard profiles")
@@ -98,11 +91,10 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .disablePlugins(SonarPlugin)
 
 lazy val webapiJVM =
-  webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(coreJVMRef, coreLibJVM).sourceDependency(customValidationJVMRef, customValidationLibJVM)
+  webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(customValidationJVMRef, customValidationLibJVM)
 lazy val webapiJS =
   webapi.js
     .in(file("./amf-webapi/js"))
-    .sourceDependency(coreJSRef, coreLibJS)
     .sourceDependency(customValidationJSRef, customValidationLibJS)
     .disablePlugins(SonarPlugin)
 

@@ -5,6 +5,7 @@ import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.services.RuntimeResolver
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
@@ -48,11 +49,9 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {
-      case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
-      case Raml | Raml10 => Raml10Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
-      case Oas30         => Oas30Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
-      case Oas | Oas20   => Oas20Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
-      case Amf           => AmfEditingPipeline.unhandled.resolve(unit)
-      case target        => throw new Exception(s"Cannot resolve $target")
+      case Raml | Raml08 | Raml10 | Oas | Oas20 | Oas30 =>
+        RuntimeResolver.resolve(config.target.name, unit, ResolutionPipeline.EDITING_PIPELINE, UnhandledErrorHandler)
+      case Amf    => new AmfEditingPipeline().transform(unit, config.target.name, UnhandledErrorHandler)
+      case target => throw new Exception(s"Cannot resolve $target")
     }
 }

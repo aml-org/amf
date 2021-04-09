@@ -9,7 +9,6 @@ import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.async.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
@@ -17,7 +16,6 @@ import amf.plugins.document.webapi.parser.AsyncHeader
 import amf.plugins.document.webapi.parser.AsyncHeader.Async20Header
 import amf.plugins.document.webapi.parser.spec.AsyncWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.async.{AsyncApi20DocumentEmitter, AsyncApi20DocumentParser}
-import amf.plugins.document.webapi.resolution.pipelines.{Async20EditingPipeline, Async20ResolutionPipeline}
 import amf.plugins.domain.webapi.models.api.Api
 import amf.{Async20Profile, AsyncProfile, ProfileName}
 import org.yaml.model.YDocument
@@ -109,21 +107,6 @@ object Async20Plugin extends AsyncPlugin {
         Some(new AsyncApi20DocumentEmitter(document)(specContext(renderOptions, errorHandler)).emitDocument())
       case _ => None
     }
-
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
-    pipelineId match {
-      case ResolutionPipeline.DEFAULT_PIPELINE => new Async20ResolutionPipeline(errorHandler).resolve(unit)
-      case ResolutionPipeline.EDITING_PIPELINE => new Async20EditingPipeline(errorHandler).resolve(unit)
-      // case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler, OasProfile).resolve(unit)
-      case ResolutionPipeline.CACHE_PIPELINE => new Async20EditingPipeline(errorHandler, false).resolve(unit)
-      case _                                 => super.resolve(unit, errorHandler, pipelineId)
-    }
-  }
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],

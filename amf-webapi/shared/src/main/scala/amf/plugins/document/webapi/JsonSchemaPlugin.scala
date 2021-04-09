@@ -35,14 +35,6 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
 
   /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    new OasResolutionPipeline(errorHandler).resolve(unit)
-
-  /**
     * List of media types used to encode serialisations of
     * this domain
     */

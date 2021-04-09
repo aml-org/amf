@@ -14,32 +14,30 @@ import amf.plugins.domain.webapi.resolution.stages.{
   ResponseExamplesResolutionStage
 }
 
-class ValidationResolutionPipeline(profile: ProfileName, override val eh: ErrorHandler)
-    extends ResolutionPipeline(eh) {
+class ValidationResolutionPipeline(profile: ProfileName) extends ResolutionPipeline() {
 
-  protected lazy val baseSteps = Seq(
-    new ReferenceResolutionStage(keepEditingInfo = false),
-    new ExternalSourceRemovalStage,
-    new ExtensionsResolutionStage(profile, keepEditingInfo = false),
-    new ShapeNormalizationStage(profile, keepEditingInfo = false),
-    new MediaTypeResolutionStage(profile, isValidation = true),
-    new ResponseExamplesResolutionStage(),
-    new PayloadAndParameterResolutionStage(profile),
-    new AnnotationRemovalStage()
-  )
+  override def steps(model: BaseUnit, sourceVendor: String)(
+      implicit errorHandler: ErrorHandler): Seq[ResolutionStage] =
+    Seq(
+      new ReferenceResolutionStage(keepEditingInfo = false),
+      new ExternalSourceRemovalStage,
+      new ExtensionsResolutionStage(profile, keepEditingInfo = false),
+      new ShapeNormalizationStage(profile, keepEditingInfo = false),
+      new MediaTypeResolutionStage(profile, isValidation = true),
+      new ResponseExamplesResolutionStage(),
+      new PayloadAndParameterResolutionStage(profile),
+      new AnnotationRemovalStage()
+    )
 
-  override val steps: Seq[ResolutionStage] = baseSteps
-
-  override def profileName: ProfileName = profile
 }
 
 object ValidationResolutionPipeline {
   def apply(profile: ProfileName, unit: BaseUnit): BaseUnit = {
     val pipeline = profile match {
-      case Oas30Profile   => new Oas30ValidationResolutionPipeline(unit.errorHandler())
-      case Async20Profile => new Async20EditingPipeline(unit.errorHandler(), urlShortening = false)
-      case _              => new ValidationResolutionPipeline(profile, unit.errorHandler())
+      case Oas30Profile   => new Oas30ValidationResolutionPipeline()
+      case Async20Profile => new Async20EditingPipeline(urlShortening = false)
+      case _              => new ValidationResolutionPipeline(profile)
     }
-    pipeline.resolve(unit)
+    pipeline.transform(unit, profile.p, unit.errorHandler())
   }
 }

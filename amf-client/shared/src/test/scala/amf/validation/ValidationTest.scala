@@ -6,6 +6,8 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.remote._
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.services.RuntimeResolver
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
@@ -58,7 +60,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc        <- AMFCompiler(productionPath + "recursive.raml", platform, RamlYamlHint, eh = eh).build()
     } yield {
-      val resolved = Raml10Plugin.resolve(doc, eh)
+      val resolved = RuntimeResolver.resolve(Raml10.name, doc, ResolutionPipeline.DEFAULT_PIPELINE, eh)
       assert(Option(resolved).isDefined)
     }
   }
@@ -152,7 +154,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc <- AMFCompiler(validationsPath + "/security-schemes/security1.raml", platform, RamlYamlHint, eh = eh)
         .build()
       resolved <- Future {
-        Raml10Plugin.resolve(doc, eh)
+        RuntimeResolver.resolve(Raml10.name, doc, ResolutionPipeline.DEFAULT_PIPELINE, eh)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, RamlProfile)
@@ -172,7 +174,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                          eh = DefaultParserErrorHandler.withRun())
         .build()
       resolved <- Future {
-        Raml10Plugin.resolve(doc, doc.errorHandler())
+        RuntimeResolver.resolve(Raml10.name, doc, ResolutionPipeline.DEFAULT_PIPELINE, doc.errorHandler())
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, RamlProfile)
@@ -190,7 +192,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, RamlYamlHint, eh = eh)
         .build()
       resolved <- Future {
-        Raml10Plugin.resolve(doc, eh)
+        RuntimeResolver.resolve(Raml10.name, doc, ResolutionPipeline.DEFAULT_PIPELINE, eh)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, RamlProfile)
@@ -206,7 +208,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, RamlYamlHint, eh = eh)
         .build()
       resolved <- Future {
-        Raml10Plugin.resolve(doc, eh)
+        RuntimeResolver.resolve(Raml10.name, doc, ResolutionPipeline.DEFAULT_PIPELINE, eh)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", Amf.name, RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, OasProfile)

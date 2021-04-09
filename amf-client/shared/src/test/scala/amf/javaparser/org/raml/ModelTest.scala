@@ -6,9 +6,11 @@ import amf._
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.annotations.SourceVendor
 import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline.EDITING_PIPELINE
+import amf.core.services.RuntimeResolver
 import amf.core.validation.AMFValidationReport
 import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
@@ -106,13 +108,10 @@ trait ModelResolutionTest extends ModelValidationTest {
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.target match {
-      case Raml08 =>
-        Raml08Plugin.resolve(unit, unit.errorHandler(), EDITING_PIPELINE) // use edition pipeline to avoid remove declarations
-      case Raml | Raml10 => Raml10Plugin.resolve(unit, unit.errorHandler(), EDITING_PIPELINE)
-      case Oas30         => Oas30Plugin.resolve(unit, unit.errorHandler(), EDITING_PIPELINE)
-      case Oas | Oas20   => Oas20Plugin.resolve(unit, unit.errorHandler(), EDITING_PIPELINE)
-      case Amf           => AmfEditingPipeline.unhandled.resolve(unit)
-      case target        => throw new Exception(s"Cannot resolve $target")
+      case Raml | Raml08 | Raml10 | Oas | Oas20 | Oas30 =>
+        RuntimeResolver.resolve(config.target.name, unit, EDITING_PIPELINE, unit.errorHandler())
+      case Amf    => new AmfEditingPipeline().transform(unit, config.target.name, UnhandledErrorHandler)
+      case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }
     res
