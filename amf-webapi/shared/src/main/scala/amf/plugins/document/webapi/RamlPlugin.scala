@@ -1,9 +1,11 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.resolution.{PipelineInfo, PipelineName}
 import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
+import amf.core.Root
+import amf.core.client.ParsingOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -15,13 +17,11 @@ import amf.core.parser.{
   ParsedReference,
   ParserContext,
   RefContainer,
-  ReferenceKind,
   UnspecifiedReference
 }
 import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
-import amf.core.{CompilerContext, Root}
 import amf.plugins.document.webapi.contexts.emitter.raml.{
   Raml08SpecEmitterContext,
   Raml10SpecEmitterContext,
@@ -231,17 +231,11 @@ object Raml08Plugin extends RamlPlugin {
   def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
     new Raml08SpecEmitterContext(errorHandler)
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit, errorHandler: ErrorHandler, pipelineId: String = "default"): BaseUnit = {
-    pipelineId match {
-      case ResolutionPipeline.DEFAULT_PIPELINE => new Raml08ResolutionPipeline(errorHandler).resolve(unit)
-      case ResolutionPipeline.EDITING_PIPELINE => new Raml08EditingPipeline(errorHandler).resolve(unit)
-      case ResolutionPipeline.CACHE_PIPELINE   => new Raml08EditingPipeline(errorHandler, false).resolve(unit)
-      case _                                   => super.resolve(unit, errorHandler, pipelineId)
-    }
-  }
+  override val pipelines: Map[String, ResolutionPipeline] = Map(
+    PipelineName.from(vendor.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new Raml08ResolutionPipeline(),
+    PipelineName.from(vendor.name, ResolutionPipeline.EDITING_PIPELINE) -> new Raml08EditingPipeline(),
+    PipelineName.from(vendor.name, ResolutionPipeline.CACHE_PIPELINE)   -> new Raml08EditingPipeline(false)
+  )
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     defaultValidationProfiles.filterKeys(_ == validationProfile.p)
@@ -303,19 +297,15 @@ object Raml10Plugin extends RamlPlugin {
   def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
     new Raml10SpecEmitterContext(errorHandler)
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
-    case ResolutionPipeline.DEFAULT_PIPELINE => new Raml10ResolutionPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.EDITING_PIPELINE => new Raml10EditingPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.COMPATIBILITY_PIPELINE =>
-      new CompatibilityPipeline(errorHandler, RamlProfile).resolve(unit)
-    case ResolutionPipeline.CACHE_PIPELINE => new Raml10EditingPipeline(errorHandler, false).resolve(unit)
-    case _                                 => super.resolve(unit, errorHandler, pipelineId)
-  }
+  override val pipelines: Map[String, ResolutionPipeline] =
+    pipelinesForVendor(amf.core.remote.Raml.name) ++ pipelinesForVendor(amf.core.remote.Raml10.name)
+
+  def pipelinesForVendor(vendor: String): Map[String, ResolutionPipeline] = Map(
+    PipelineName.from(vendor, ResolutionPipeline.DEFAULT_PIPELINE)       -> new Raml10ResolutionPipeline(),
+    PipelineName.from(vendor, ResolutionPipeline.EDITING_PIPELINE)       -> new Raml10EditingPipeline(),
+    PipelineName.from(vendor, ResolutionPipeline.COMPATIBILITY_PIPELINE) -> new CompatibilityPipeline(RamlProfile),
+    PipelineName.from(vendor, ResolutionPipeline.CACHE_PIPELINE)         -> new Raml10EditingPipeline(false)
+  )
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     super

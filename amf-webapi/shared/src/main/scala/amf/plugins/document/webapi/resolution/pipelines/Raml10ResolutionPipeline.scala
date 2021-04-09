@@ -4,10 +4,10 @@ import amf.core.errorhandling.ErrorHandler
 import amf.plugins.domain.webapi.resolution.stages._
 import amf.{ProfileName, RamlProfile}
 
-class Raml10ResolutionPipeline(override val eh: ErrorHandler) extends AmfResolutionPipeline(eh) {
-  override def profileName: ProfileName = RamlProfile
-  override def references               = new WebApiReferenceResolutionStage()
+class Raml10ResolutionPipeline() extends AmfResolutionPipeline() {
+  override def profileName: ProfileName              = RamlProfile
+  override def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage()
 
-  override protected def parameterNormalizationStage: ParametersNormalizationStage =
-    new Raml10ParametersNormalizationStage()
+  override protected def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage =
+    new Raml10ParametersNormalizationStage()(eh)
 }

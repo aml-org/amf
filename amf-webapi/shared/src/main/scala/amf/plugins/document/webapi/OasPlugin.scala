@@ -4,6 +4,7 @@ import amf._
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.resolution.{PipelineInfo, PipelineName}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -136,18 +137,15 @@ object Oas20Plugin extends OasPlugin {
       case _ => None
     }
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
-    case ResolutionPipeline.DEFAULT_PIPELINE       => new OasResolutionPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.EDITING_PIPELINE       => new OasEditingPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler, OasProfile).resolve(unit)
-    case ResolutionPipeline.CACHE_PIPELINE         => new OasEditingPipeline(errorHandler, false).resolve(unit)
-    case _                                         => super.resolve(unit, errorHandler, pipelineId)
-  }
+  override val pipelines: Map[String, ResolutionPipeline] =
+    pipelinesForVendor(Oas.name) ++ pipelinesForVendor(Oas20.name)
+
+  def pipelinesForVendor(vendor: String): Map[String, ResolutionPipeline] = Map(
+    PipelineName.from(vendor, ResolutionPipeline.DEFAULT_PIPELINE)       -> new OasResolutionPipeline(),
+    PipelineName.from(vendor, ResolutionPipeline.EDITING_PIPELINE)       -> new OasEditingPipeline(),
+    PipelineName.from(vendor, ResolutionPipeline.COMPATIBILITY_PIPELINE) -> new CompatibilityPipeline(OasProfile),
+    PipelineName.from(vendor, ResolutionPipeline.CACHE_PIPELINE)         -> new OasEditingPipeline(false)
+  )
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],
@@ -221,19 +219,13 @@ object Oas30Plugin extends OasPlugin {
     "application/swagger"
   )
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
-    case ResolutionPipeline.DEFAULT_PIPELINE => new Oas30ResolutionPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.EDITING_PIPELINE => new Oas30EditingPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.COMPATIBILITY_PIPELINE =>
-      new CompatibilityPipeline(errorHandler, Oas30Profile).resolve(unit)
-    case ResolutionPipeline.CACHE_PIPELINE => new Oas30EditingPipeline(errorHandler, false).resolve(unit)
-    case _                                 => super.resolve(unit, errorHandler, pipelineId)
-  }
+  override val pipelines: Map[String, ResolutionPipeline] = Map(
+    PipelineName.from(vendor.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new Oas30ResolutionPipeline(),
+    PipelineName.from(vendor.name, ResolutionPipeline.EDITING_PIPELINE) -> new Oas30EditingPipeline(),
+    PipelineName.from(vendor.name, ResolutionPipeline.COMPATIBILITY_PIPELINE) -> new CompatibilityPipeline(
+      Oas30Profile),
+    PipelineName.from(vendor.name, ResolutionPipeline.CACHE_PIPELINE) -> new Oas30EditingPipeline(false)
+  )
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],

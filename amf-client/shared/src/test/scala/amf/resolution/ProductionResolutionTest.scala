@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.Document
 import amf.core.remote._
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
@@ -181,11 +182,13 @@ class ProductionResolutionTest extends RamlResolutionTest {
     val useAmfJsonldSerialization = true
 
     for {
-      simpleModel <- build(config, validation, useAmfJsonldSerialization).map(AmfEditingPipeline.unhandled.resolve(_))
-      a           <- render(simpleModel, config, useAmfJsonldSerialization)
-      doubleModel <- build(config, validation, useAmfJsonldSerialization).map(AmfEditingPipeline.unhandled.resolve(_))
-      _           <- render(doubleModel, config, useAmfJsonldSerialization)
-      b           <- render(doubleModel, config, useAmfJsonldSerialization)
+      simpleModel <- build(config, validation, useAmfJsonldSerialization).map(
+        new AmfEditingPipeline().transform(_, UnhandledErrorHandler))
+      a <- render(simpleModel, config, useAmfJsonldSerialization)
+      doubleModel <- build(config, validation, useAmfJsonldSerialization).map(
+        new AmfEditingPipeline().transform(_, UnhandledErrorHandler))
+      _ <- render(doubleModel, config, useAmfJsonldSerialization)
+      b <- render(doubleModel, config, useAmfJsonldSerialization)
     } yield {
       val simpleDeclares =
         simpleModel.asInstanceOf[Document].declares

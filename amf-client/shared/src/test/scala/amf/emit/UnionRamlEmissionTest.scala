@@ -3,7 +3,9 @@ package amf.emit
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.pipelines.ResolutionPipeline._
+import amf.core.services.RuntimeResolver
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.Raml10Plugin
 
@@ -14,7 +16,7 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.pipeline match {
-      case Some(pipeline) => Raml10Plugin.resolve(unit, UnhandledErrorHandler, pipeline)
+      case Some(pipeline) => RuntimeResolver.resolve(Vendor.RAML10.name, unit, pipeline, UnhandledErrorHandler)
       case None           => unit
     }
     res

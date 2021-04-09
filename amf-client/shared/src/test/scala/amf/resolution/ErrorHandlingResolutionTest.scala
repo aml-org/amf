@@ -6,6 +6,8 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote._
+import amf.core.resolution.pipelines.ResolutionPipeline.DEFAULT_PIPELINE
+import amf.core.services.RuntimeResolver
 import amf.core.validation.SeverityLevels
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
@@ -91,12 +93,10 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
 
   private def transform(unit: BaseUnit, config: CycleConfig, eh: ErrorHandler): BaseUnit = {
     config.target match {
-      case Raml08        => Raml08Plugin.resolve(unit, eh)
-      case Raml | Raml10 => Raml10Plugin.resolve(unit, eh)
-      case Oas30         => Oas30Plugin.resolve(unit, eh)
-      case Oas | Oas20   => Oas20Plugin.resolve(unit, eh)
-      case Amf           => new AmfResolutionPipeline(eh).resolve(unit)
-      case target        => throw new Exception(s"Cannot resolve $target")
+      case Raml | Raml08 | Raml10 | Oas | Oas20 | Oas30 =>
+        RuntimeResolver.resolve(config.target.name, unit, DEFAULT_PIPELINE, eh)
+      case Amf    => new AmfResolutionPipeline().transform(unit, eh)
+      case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }
   }

@@ -11,35 +11,31 @@ import amf.plugins.domain.webapi.resolution.stages.{
 }
 import amf.{ProfileName, RamlProfile}
 
-class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
+class RamlCompatibilityPipeline() extends ResolutionPipeline() {
 
-  override val steps: Seq[ResolutionStage] = Seq(
-    new MandatoryDocumentationTitle(),
-    new MandatoryAnnotationType(),
-    new MediaTypeResolutionStage(RamlProfile, keepEditingInfo = true),
-    new DefaultPayloadMediaType(),
-    new MandatoryCreativeWorkFields(),
-    new DefaultToNumericDefaultResponse(),
-    new MakeExamplesOptional(),
-    new CapitalizeSchemes(),
-    new SecuritySettingsMapper(),
-    new ShapeFormatAdjuster(),
-    new CustomAnnotationDeclaration(),
-    new PushSingleOperationPathParams(),
-    new UnionsAsTypeExpressions(),
-    new EscapeTypeNames(),
-    new MakeRequiredFieldImplicitForOptionalProperties(),
-    new ResolveRamlCompatibleDeclarations(),
-    new ResolveLinksWithNonDeclaredTargets(),
-    new RamlCompatiblePayloadAndParameterResolutionStage(profileName),
-    new SanitizeCustomTypeNames(),
-    new RecursionDetection(),
-    new AnnotationRemovalStage()
-  )
+  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+    Seq(
+      new MandatoryDocumentationTitle(),
+      new MandatoryAnnotationType(),
+      new MediaTypeResolutionStage(RamlProfile, keepEditingInfo = true),
+      new DefaultPayloadMediaType(),
+      new MandatoryCreativeWorkFields(),
+      new DefaultToNumericDefaultResponse(),
+      new MakeExamplesOptional(),
+      new CapitalizeSchemes(),
+      new SecuritySettingsMapper(),
+      new ShapeFormatAdjuster(),
+      new CustomAnnotationDeclaration(),
+      new PushSingleOperationPathParams(),
+      new UnionsAsTypeExpressions(),
+      new EscapeTypeNames(),
+      new MakeRequiredFieldImplicitForOptionalProperties(),
+      new ResolveRamlCompatibleDeclarations(),
+      new ResolveLinksWithNonDeclaredTargets(),
+      new RamlCompatiblePayloadAndParameterResolutionStage(RamlProfile),
+      new SanitizeCustomTypeNames(),
+      new RecursionDetection(),
+      new AnnotationRemovalStage()
+    )
 
-  override def profileName: ProfileName = RamlProfile
-}
-
-object RamlCompatibilityPipeline {
-  def unhandled = new RamlCompatibilityPipeline(UnhandledErrorHandler)
 }

@@ -8,25 +8,21 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.oas._
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.oas3.CleanRepeatedOperationIds
 import amf.{OasProfile, ProfileName}
 
-class OasCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
+class OasCompatibilityPipeline() extends ResolutionPipeline() {
 
-  private val resolution = new OasResolutionPipeline(eh)
+  private val resolution = new OasResolutionPipeline()
 
-  override val steps: Seq[ResolutionStage] = resolution.steps ++ Seq(
-    new LowercaseSchemes(),
-    new Oas20SecuritySettingsMapper(),
-    new MandatoryDocumentationUrl(),
-    new MandatoryResponses(),
-    new MandatoryPathParameters(),
-    new CleanNullSecurity(),
-    new CleanParameterExamples(),
-    new CleanIdenticalExamples(),
-    new CleanRepeatedOperationIds()
-  )
+  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+    resolution.steps(eh) ++ Seq(
+      new LowercaseSchemes(),
+      new Oas20SecuritySettingsMapper(),
+      new MandatoryDocumentationUrl(),
+      new MandatoryResponses(),
+      new MandatoryPathParameters(),
+      new CleanNullSecurity(),
+      new CleanParameterExamples(),
+      new CleanIdenticalExamples(),
+      new CleanRepeatedOperationIds()
+    )
 
-  override def profileName: ProfileName = OasProfile
-}
-
-object OasCompatibilityPipeline {
-  def unhandled = new OasCompatibilityPipeline(UnhandledErrorHandler)
 }
