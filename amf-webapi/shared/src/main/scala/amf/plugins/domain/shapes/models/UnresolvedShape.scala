@@ -30,7 +30,8 @@ case class UnresolvedShape(override val fields: Fields,
     this
   }
    */
-  override def link[T](label: String, annotations: Annotations): T = this.asInstanceOf[T]
+  override private[amf] def link[T](label: AmfScalar, annotations: Annotations, fieldAnn: Annotations): T =
+    this.asInstanceOf[T]
 
   /** Resolve [[UnresolvedShape]] as link to specified target. */
   def resolve(target: Shape): Shape =
