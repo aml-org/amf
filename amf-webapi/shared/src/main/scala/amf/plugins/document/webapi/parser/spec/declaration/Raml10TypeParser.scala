@@ -202,7 +202,7 @@ case class Raml08TypeParser(entryOrNode: YMapEntryLike,
         maybeShape.map { s =>
           if (map.key("example").isDefined) {
 
-            val inherits: AnyShape = s.meta.modelInstance.withName("inherits", Annotations.synthesized())
+            val inherits: AnyShape = s.meta.modelInstance.withSynthesizeName("inherits")
             adopt(inherits)
             Raml08ExampleParser(inherits, map).parse()
             inherits.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations.virtual()), Annotations.inferred())

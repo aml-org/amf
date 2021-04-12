@@ -114,7 +114,8 @@ case class RamlMultipleExampleParser(key: String,
         case Left(s) =>
           examples += ctx.declarations
             .findNamedExampleOrError(entry.value)(s)
-            .link(ScalarNode(entry.value), Annotations(entry))
+            .link(s)
+        // .link(ScalarNode(entry.value), Annotations(entry))
 
         case Right(node) =>
           node.tagType match {
