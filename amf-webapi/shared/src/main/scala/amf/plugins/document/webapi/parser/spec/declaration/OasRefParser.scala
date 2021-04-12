@@ -79,7 +79,7 @@ class OasRefParser(map: YMap,
         val copied =
           s.link(AmfScalar(ref), annots, Annotations.synthesized())
             .asInstanceOf[AnyShape]
-            .withName(name, Annotations())
+            .withName(name, nameAnnotations) // Annotations())
             .withSupportsRecursion(true)
         Some(copied)
       // Local reference
