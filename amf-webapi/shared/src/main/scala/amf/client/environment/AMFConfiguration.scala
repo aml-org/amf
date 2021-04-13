@@ -16,6 +16,15 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
   Raml08CompatibilityPipeline,
   Raml10CompatibilityPipeline
 }
+import amf.plugins.document.webapi.validation.ApiValidationProfiles
+import amf.plugins.document.webapi.validation.ApiValidationProfiles.{
+  AMF_PROFILE,
+  ASYNC_20_PROFILE,
+  OAS_20_PROFILE,
+  OAS_30_PROFILE,
+  RAML_08_PROFILE,
+  RAML_10_PROFILE
+}
 
 sealed trait APIConfigurationBuilder {
 
@@ -35,6 +44,8 @@ object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML10(): AMFConfiguration =
     common()
       .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin))
+      .withValidationProfile(RAML_10_PROFILE)
+      .withValidationProfile(AMF_PROFILE)
       .withTransformationPipelines(
         List(
           Raml10ResolutionPipeline(),
@@ -45,6 +56,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML08(): AMFConfiguration =
     common()
       .withPlugins(List(Raml08ParsePlugin, Raml08RenderPlugin))
+      .withValidationProfile(RAML_08_PROFILE)
       .withTransformationPipelines(
         List(
           Raml08ResolutionPipeline(),
@@ -60,6 +72,7 @@ object OASConfiguration extends APIConfigurationBuilder {
   def OAS20(): AMFConfiguration =
     common()
       .withPlugins(List(Oas20ParsePlugin, Oas20RenderPlugin))
+      .withValidationProfile(OAS_20_PROFILE)
       .withTransformationPipelines(
         List(
           Oas20ResolutionPipeline(),
@@ -70,6 +83,7 @@ object OASConfiguration extends APIConfigurationBuilder {
   def OAS30(): AMFConfiguration =
     common()
       .withPlugins(List(Oas30ParsePlugin, Oas30RenderPlugin))
+      .withValidationProfile(OAS_30_PROFILE)
       .withTransformationPipelines(
         List(
           Oas30ResolutionPipeline(),
@@ -88,6 +102,7 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
   def Async20(): AMFGraphConfiguration =
     common()
       .withPlugins(List(Async20ParsePlugin, Async20RenderPlugin))
+      .withValidationProfile(ASYNC_20_PROFILE)
       .withTransformationPipelines(
         List(
           Async20ResolutionPipeline(),

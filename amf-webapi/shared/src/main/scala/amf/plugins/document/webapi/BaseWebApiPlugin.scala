@@ -25,7 +25,7 @@ import amf.validations.ResolutionSideValidations.UnsupportedPipeline
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with WebApiValidations with PlatformSecrets {
+trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with PlatformSecrets {
 
   protected def vendor: Vendor
 
@@ -79,9 +79,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
   /**
     * Validation profiles supported by this plugin by default
     */
-  // todo: compute again each map for each web api vendor plug in (ej raml 10 oas 20 etc). Filter each one by vendor? compute only one time the map? the problem its how to add custom validations.
-  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
-    defaultValidationProfiles
+  override def domainValidationProfiles: Seq[ValidationProfile]
 
   override protected[amf] def getRemodValidatePlugins(): Seq[AMFValidatePlugin] =
     Seq(PARSER_PLUGIN, MODEL_PLUGIN, PAYLOAD_PLUGIN)
