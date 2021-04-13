@@ -75,82 +75,14 @@ object DefaultAMFValidations extends ImportUtils {
     validations.flatMap { RawValidationAdapter(_) }
   }
 }
-
+// TODO: erase this. This is kept for legacy reasons as we no longer use JS functions for shacl validations. JS function behaviour is hardcoded in
+// several places and that change is out of the scope of this issue.
 object JsCustomValidations {
-  val functions: Map[String, String] = Map(
-    "patternValidation" ->
-      """|function(shape) {
-         |  var pattern = shape["shacl:pattern"];
-         |  try {
-         |    if(pattern) new RegExp(pattern);
-         |    return true;
-         |  } catch(e) {
-         |    return false;
-         |  }
-         |}
-      """.stripMargin,
-    "nonEmptyListOfProtocols" ->
-      """
-        |function(shape) {
-        |  var protocolsArray = shape["apiContract:scheme"];
-        |  return !Array.isArray(protocolsArray) || protocolsArray.length > 0;
-        |}
-      """.stripMargin,
-    "requiredFlowsInOAuth2" ->
-      """
-        |function(shape) {
-        |  return true;
-        |}
-      """.stripMargin, // TODO pending JS implementation
-    "requiredOpenIdConnectUrl" ->
-      """
-        |function(shape) {
-        |  return true;
-        |}
-      """.stripMargin,
-    "validCallbackExpression" ->
-      """
-        |function(shape) {
-        |  return true;
-        |}
-      """.stripMargin,
-    "validLinkRequestBody" ->
-      """
-        |function(shape) {
-        |  return true;
-        |}
-      """.stripMargin,
-    "validLinkParameterExpressions" ->
-      """
-        |function(shape) {
-        |  return true;
-        |}
-      """.stripMargin,
-    "headerParamNameMustBeAscii" ->
-      """
-        |function(shape) {
-        |  return true;
-        |}
-      """.stripMargin,
-    "mandatoryHeadersObjectNode" ->
-      """
-        |function(shape) {
-        |  return true;
-        |}
-      """.stripMargin,
-    "mandatoryHeaderNamePattern" ->
-      """
-        |function(shape) {
-        |  return true;
-        |}
-      """.stripMargin,
-    "mandatoryHeaderBindingNamePattern" ->
-      """
-        |function(shape) {
-        |  return true;
-        |}
+  def apply(name: String): String = {
+    """
+      |function(shape) {
+      |  return true;
+      |}
       """.stripMargin
-  )
-
-  def apply(name: String): Option[String] = functions.get(name)
+  }
 }

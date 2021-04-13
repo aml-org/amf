@@ -4,6 +4,7 @@ import amf.core.validation.core.{PropertyConstraint, ValidationSpecification}
 
 import scala.collection.mutable.ArrayBuffer
 
+// TODO: only useful if you want to validate Api specs with pure shacl. They are directly related to the FromJsonLDPayloadValidationTest. Migrating them to be part of the test suite is a hard task
 object ComplexShaclCustomValidations {
 
   val xmlWrappedScalar = List(
@@ -268,7 +269,7 @@ object ComplexShaclCustomValidations {
       oasMessage = Some("Path parameters must have the required property set to true"),
       targetClass = List("http://a.ml/vocabularies/apiContract#Parameter"),
       unionConstraints = List("http://a.ml/vocabularies/amf/parser#path-parameter-required_or_0",
-                              "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_1"),
+        "http://a.ml/vocabularies/amf/parser#path-parameter-required_or_1"),
       replacesFunctionConstraint = Some("pathParameterRequiredProperty")
     ),
     ValidationSpecification(
@@ -357,8 +358,8 @@ object ComplexShaclCustomValidations {
       targetClass = List("http://a.ml/vocabularies/shapes#ArrayShape"),
       propertyConstraints = ArrayBuffer(
         PropertyConstraint(ramlPropertyId = "http://www.w3.org/ns/shacl#minCount",
-                           name = "shacl.minCount",
-                           lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxCount"))),
+          name = "shacl.minCount",
+          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxCount"))),
       replacesFunctionConstraint = Some("minMaxItemsValidation")
     ))
   val minMaxLengthValidation = List(
@@ -370,8 +371,8 @@ object ComplexShaclCustomValidations {
       targetClass = List("http://a.ml/vocabularies/shapes#Shape"),
       propertyConstraints = ArrayBuffer(
         PropertyConstraint(ramlPropertyId = "http://www.w3.org/ns/shacl#minLength",
-                           name = "shacl.minLength",
-                           lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxLength"))),
+          name = "shacl.minLength",
+          lessThanOrEqualsToProperty = Some("http://www.w3.org/ns/shacl#maxLength"))),
       replacesFunctionConstraint = Some("minMaxLengthValidation")
     ))
   val minMaxPropertiesValidation = List(
