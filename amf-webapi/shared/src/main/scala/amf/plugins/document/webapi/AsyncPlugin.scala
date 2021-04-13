@@ -22,8 +22,10 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   Async20EditingPipeline,
   Async20TransformationPipeline
 }
+import amf.plugins.document.webapi.validation.ApiValidationProfiles
+import amf.plugins.document.webapi.validation.ApiValidationProfiles.Async20ValidationProfile
 import amf.plugins.domain.webapi.models.api.Api
-import amf.{Async20Profile, AsyncProfile, ProfileName}
+import amf.{Async20Profile, AsyncProfile, Oas30Profile, ProfileName}
 import org.yaml.model.YDocument
 
 sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
@@ -131,6 +133,6 @@ object Async20Plugin extends AsyncPlugin {
     new Async20WebApiContext(loc, refs, cleanContext, ds, options = options)
   }
 
-  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
-    super.domainValidationProfiles(platform).filterKeys(k => k == Async20Profile.p || k == AsyncProfile.p)
+  // TODO: Temporary, should be erased until synchronous validation profile building for dialects is implemented
+  override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Async20ValidationProfile)
 }

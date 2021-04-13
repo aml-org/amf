@@ -29,7 +29,7 @@ object ValidationsExporter extends ImportUtils {
     var validationsAcc                           = Map[String, AMFValidation]()
     var levels: Map[String, Map[String, String]] = Map()
 
-    AMFRawValidations.profileToValidationMap.foreach {
+    AMFRawValidations.profileToValidationMap.mapValues(_.validations()).foreach {
       case (profile, validations) =>
         validations.foreach { validation =>
           val id = uri(validation)

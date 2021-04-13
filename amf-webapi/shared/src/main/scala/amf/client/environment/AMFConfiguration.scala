@@ -16,6 +16,15 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
   Raml08CompatibilityPipeline,
   Raml10CompatibilityPipeline
 }
+import amf.plugins.document.webapi.validation.ApiValidationProfiles
+import amf.plugins.document.webapi.validation.ApiValidationProfiles.{
+  AmfValidationProfile,
+  Async20ValidationProfile,
+  Oas20ValidationProfile,
+  Oas30ValidationProfile,
+  Raml08ValidationProfile,
+  Raml10ValidationProfile
+}
 
 sealed trait APIConfigurationBuilder {
 
@@ -35,6 +44,8 @@ object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML10(): AMFConfiguration =
     common()
       .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin))
+      .withValidationProfile(Raml10ValidationProfile)
+      .withValidationProfile(AmfValidationProfile)
       .withTransformationPipelines(
         List(
           Raml10TransformationPipeline(),
@@ -45,6 +56,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML08(): AMFConfiguration =
     common()
       .withPlugins(List(Raml08ParsePlugin, Raml08RenderPlugin))
+      .withValidationProfile(Raml08ValidationProfile)
       .withTransformationPipelines(
         List(
           Raml08TransformationPipeline(),
@@ -60,6 +72,7 @@ object OASConfiguration extends APIConfigurationBuilder {
   def OAS20(): AMFConfiguration =
     common()
       .withPlugins(List(Oas20ParsePlugin, Oas20RenderPlugin))
+      .withValidationProfile(Oas20ValidationProfile)
       .withTransformationPipelines(
         List(
           Oas20TransformationPipeline(),
@@ -70,6 +83,7 @@ object OASConfiguration extends APIConfigurationBuilder {
   def OAS30(): AMFConfiguration =
     common()
       .withPlugins(List(Oas30ParsePlugin, Oas30RenderPlugin))
+      .withValidationProfile(Oas30ValidationProfile)
       .withTransformationPipelines(
         List(
           Oas30TransformationPipeline(),
@@ -88,6 +102,7 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
   def Async20(): AMFGraphConfiguration =
     common()
       .withPlugins(List(Async20ParsePlugin, Async20RenderPlugin))
+      .withValidationProfile(Async20ValidationProfile)
       .withTransformationPipelines(
         List(
           Async20TransformationPipeline(),

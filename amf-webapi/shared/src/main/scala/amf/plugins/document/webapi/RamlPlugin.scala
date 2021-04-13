@@ -34,8 +34,16 @@ import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFr
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.RamlReferenceHandler
-import amf.plugins.document.webapi.resolution.pipelines._
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.Raml10CompatibilityPipeline
+import amf.plugins.document.webapi.resolution.pipelines.{
+  Raml08EditingPipeline,
+  Raml08ResolutionPipeline,
+  Raml10CachePipeline,
+  Raml10EditingPipeline,
+  Raml10ResolutionPipeline
+}
+import amf.plugins.document.webapi.validation.ApiValidationProfiles
+import amf.plugins.document.webapi.validation.ApiValidationProfiles._
 import amf.plugins.domain.webapi.models.api.{Api, WebApi}
 import amf.plugins.features.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
 import org.yaml.model.YNode.MutRef
@@ -228,8 +236,7 @@ object Raml08Plugin extends RamlPlugin {
     Raml08EditingPipeline.name        -> Raml08EditingPipeline()
   )
 
-  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
-    defaultValidationProfiles.filterKeys(_ == validationProfile.p)
+  override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Raml08ValidationProfile)
 
   override val vendors: Seq[String] = Seq(vendor.name)
 }
@@ -297,10 +304,7 @@ object Raml10Plugin extends RamlPlugin {
     Raml10CachePipeline.name          -> Raml10CachePipeline()
   )
 
-  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
-    super
-      .domainValidationProfiles(platform)
-      .filterKeys(k => k == Raml10Profile.p || k == AmfProfile.p)
+  override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Raml10ValidationProfile, AmfValidationProfile)
 
   override val vendors: Seq[String] = Seq(vendor.name)
 }
