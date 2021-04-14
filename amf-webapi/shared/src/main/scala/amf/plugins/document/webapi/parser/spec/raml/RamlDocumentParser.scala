@@ -505,7 +505,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
               SearchScope.Fragments,
               Some((s: String) => ctx.eh.violation(InvalidFragmentType, "", s, scalar))) match {
               case Some(doc) =>
-                results += doc.link(scalar.text, Annotations()).asInstanceOf[CreativeWork]
+                results += doc.link(ScalarNode(n), Annotations.inferred()).asInstanceOf[CreativeWork]
               case _ =>
                 ctx.eh.violation(DeclarationNotFound,
                                  parent,
@@ -540,7 +540,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
 
           ctx.declarations.findAnnotation(scalar.text, SearchScope.All) match {
             case Some(a) =>
-              val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
+              val copied: CustomDomainProperty = a.link(ScalarNode(ast.value), Annotations(ast))
               copied.id = null // we reset the ID so it can be adopted, there's an extra rule where the id is not set
               // because the way they are inserted in the mode later in the parsing
               adopt(copied.withName(key))

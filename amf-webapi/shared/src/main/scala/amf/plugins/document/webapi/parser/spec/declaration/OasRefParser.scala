@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations.ExternalFragmentRef
 import amf.core.metamodel.domain.LinkableElementModel
-import amf.core.model.domain.{Linkable, Shape}
+import amf.core.model.domain.{AmfScalar, Linkable, Shape}
 import amf.core.parser._
 import amf.core.utils.UriUtils
 import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
@@ -58,7 +58,7 @@ class OasRefParser(map: YMap,
 
   private def createLinkToDeclaration(label: String, s: AnyShape) = {
     val link =
-      s.link(label, Annotations(ast))
+      s.link(AmfScalar(label), Annotations(ast), Annotations.synthesized())
         .asInstanceOf[AnyShape]
         .withName(name, nameAnnotations)
         .withSupportsRecursion(true)
@@ -77,7 +77,10 @@ class OasRefParser(map: YMap,
       case Some(s) =>
         val annots = Annotations(ast)
         val copied =
-          s.link(ref, annots).asInstanceOf[AnyShape].withName(name, Annotations()).withSupportsRecursion(true)
+          s.link(AmfScalar(ref), annots, Annotations.synthesized())
+            .asInstanceOf[AnyShape]
+            .withName(name, nameAnnotations) // Annotations())
+            .withSupportsRecursion(true)
         Some(copied)
       // Local reference
       case None if isOasLikeContext && isDeclaration(ref) && ctx.isMainFileContext =>
@@ -106,7 +109,8 @@ class OasRefParser(map: YMap,
                 ctx.futureDeclarations.resolveRef(text, shape)
                 ctx.registerJsonSchema(ref, shape)
                 if (ctx.linkTypes || ref.equals("#")) {
-                  val link = shape.link(text, Annotations(ast)).asInstanceOf[AnyShape]
+                  val link =
+                    shape.link(AmfScalar(text), Annotations(ast), Annotations.synthesized()).asInstanceOf[AnyShape]
                   val (nextName, annotations) = entryLike.key match {
                     case Some(keyNode) =>
                       val key = keyNode.asScalar.map(_.text).getOrElse(name)
@@ -192,7 +196,11 @@ class OasRefParser(map: YMap,
   private def createLinkToParsedShape(ref: String, shape: AnyShape) = {
     val annots = Annotations(ast)
     val copied =
-      shape.link(ref, annots).asInstanceOf[AnyShape].withName(name, nameAnnotations).withSupportsRecursion(true)
+      shape
+        .link(AmfScalar(ref), annots, Annotations.synthesized())
+        .asInstanceOf[AnyShape]
+        .withName(name, nameAnnotations)
+        .withSupportsRecursion(true)
     adopt(copied)
     Some(copied)
   }
@@ -204,7 +212,7 @@ class OasRefParser(map: YMap,
     val promotedShape = ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
     Some(
       promotedShape
-        .link(text, Annotations(ast) += ExternalFragmentRef(ref))
+        .link(AmfScalar(text), Annotations(ast) += ExternalFragmentRef(ref), Annotations.synthesized())
         .asInstanceOf[AnyShape]
         .withName(name, nameAnnotations)
         .withSupportsRecursion(true))

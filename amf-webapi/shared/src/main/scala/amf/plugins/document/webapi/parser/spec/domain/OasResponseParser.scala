@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.TrackedElement
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, _}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.annotations.{DefaultPayload, ExternalReferenceUrl}
@@ -37,7 +37,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
         ctx.declarations
           .findResponse(name, SearchScope.Named)
           .map { res =>
-            val resLink: Response = res.link(name, annotations)
+            val resLink: Response = res.link(AmfScalar(name), annotations, Annotations.synthesized())
             adopted(resLink)
             resLink
           }

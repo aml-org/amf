@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations.LexicalInformation
+import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
@@ -102,7 +103,8 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
     ctx.declarations
       .findSecurityScheme(parsedUrl, SearchScope.Fragments)
       .map(securityScheme => {
-        val scheme: SecurityScheme = securityScheme.link(parsedUrl, Annotations(node))
+        val scheme: SecurityScheme =
+          securityScheme.link(AmfScalar(parsedUrl), Annotations(node), Annotations.synthesized())
         adopt(scheme)
         scheme
       })
