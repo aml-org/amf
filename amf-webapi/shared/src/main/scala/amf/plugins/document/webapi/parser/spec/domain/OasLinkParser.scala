@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
@@ -35,7 +35,8 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
           .getOrElse(Annotations.synthesized())
         ctx.declarations
           .findTemplatedLink(label, SearchScope.Named)
-          .map(templatedLink => nameAndAdopt(templatedLink.link(label, annotations)))
+          .map(templatedLink =>
+            nameAndAdopt(templatedLink.link(AmfScalar(label), annotations, Annotations.synthesized())))
           .getOrElse(remote(fullRef, map))
 
       case Right(_) => buildAndPopulate(map)

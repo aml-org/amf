@@ -53,7 +53,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
             .map(header => {
               val ref: Option[YScalar]  = map.key("$ref").flatMap(v => v.value.asOption[YScalar])
               val annotations           = ref.map(Annotations(_)).getOrElse(Annotations.synthesized())
-              val linkHeader: Parameter = header.link(label, annotations)
+              val linkHeader: Parameter = header.link(AmfScalar(label), annotations, Annotations.synthesized())
               adopt(linkHeader)
               linkHeader
             })

@@ -25,7 +25,7 @@ case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String,
           .findCallbackInDeclarations(label)
           .map { callbacks =>
             callbacks.map { callback =>
-              val linkCallback: Callback = callback.link(label, Annotations(map))
+              val linkCallback: Callback = callback.link(AmfScalar(label), Annotations(map), Annotations.synthesized())
               adopt(linkCallback)
               linkCallback
             }
