@@ -172,6 +172,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
+          "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/synthesized-field/element_1"
+        },
+        {
           "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/synthesized-field/element_0"
         }
       ],
@@ -241,6 +244,11 @@
       "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/references/fragments/person.json",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(13,0)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/synthesized-field/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/declarations/types/person/source-map/synthesized-field/element_0",

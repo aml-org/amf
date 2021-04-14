@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain.binding
 
 import amf.core.metamodel.Field
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -37,7 +37,9 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "messageBindings")
     ctx.declarations
       .findMessageBindings(label, SearchScope.Named)
-      .map(messageBindings => nameAndAdopt(messageBindings.link(label), entryLike.key))
+      .map(messageBindings =>
+        nameAndAdopt(messageBindings.link(AmfScalar(label), entryLike.annotations, Annotations.synthesized()),
+                     entryLike.key))
       .getOrElse(remote(fullRef, entryLike, parent))
   }
 

@@ -132,7 +132,7 @@ case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operati
     val operation: Operation = ctx.declarations
       .findOperationTrait(label, Named)
       .map { res =>
-        val resLink: Operation = res.link(label, Annotations(node))
+        val resLink: Operation = res.link(AmfScalar(label), Annotations(node), Annotations.synthesized())
         resLink
       }
       .getOrElse(remote(url, node))
