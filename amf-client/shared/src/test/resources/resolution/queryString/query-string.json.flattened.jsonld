@@ -130,12 +130,10 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/source-map/lexical/element_1"
+        },
         {
           "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/source-map/lexical/element_0"
         }
@@ -182,14 +180,14 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
+      "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(37,6)-(44,7)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(37,6)-(44,7)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(37,13)-(44,7)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_0",

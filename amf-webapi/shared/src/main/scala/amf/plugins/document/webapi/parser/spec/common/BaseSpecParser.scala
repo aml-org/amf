@@ -32,7 +32,7 @@ trait DeclarationKeyCollector {
 
   protected def addDeclarationsToModel(model: DeclaresModel)(implicit ctx: WebApiContext): Unit = {
 
-    val ann        = Annotations(DeclarationKeys(declarationKeys)) += Inferred() // component key isn't inferred?
+    val ann        = Annotations(DeclarationKeys(declarationKeys)) ++= Annotations.virtual()
     val declarable = ctx.declarations.declarables()
 
     // check declaration key to use as source maps for field and value
@@ -44,7 +44,11 @@ trait DeclarationKeyCollector {
 
 trait SpecParserOps {
   protected def extractRefAnnotation(entryLike: YMapEntryLike): Annotations =
-    entryLike.asMap.key("$ref").map(_.value).map(Annotations(_)).getOrElse(Annotations()) // Annotations.synthesized())
+    entryLike.asMap
+      .key("$ref")
+      .map(_.value)
+      .map(Annotations(_))
+      .getOrElse(Annotations.synthesized())
 
   protected def checkBalancedParams(path: String,
                                     value: YNode,

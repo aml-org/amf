@@ -163,7 +163,7 @@ case class Oas20OperationParser(entry: YMapEntry, adopt: Operation => Operation)
     val map       = entry.value.as[YMap]
     Oas20RequestParser(map, (r: Request) => r.adopted(operation.id))
       .parse()
-      .map(r => operation.set(OperationModel.Request, AmfArray(Seq(r)), Annotations(map)))
+      .map(r => operation.set(OperationModel.Request, AmfArray(Seq(r), Annotations.virtual()), Annotations(map)))
 
     map.key("schemes", OperationModel.Schemes in operation)
     map.key("consumes", OperationModel.Accepts in operation)
