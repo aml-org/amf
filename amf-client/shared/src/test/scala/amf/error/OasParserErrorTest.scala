@@ -13,7 +13,7 @@ class OasParserErrorTest extends ParserErrorTest {
     validate(
       "/error/empty-type-ref.yaml",
       violation => {
-        violation.level should be("Violation")
+        violation.severityLevel should be("Violation")
         violation.message should be("Unexpected $ref with $ref: ")
         violation.position.map(_.range) should be(Some(Range((14, 9), (14, 9))))
       }
@@ -24,12 +24,12 @@ class OasParserErrorTest extends ParserErrorTest {
     validate(
       "/error/invalid-parameter-binding.json",
       violation => {
-        violation.level should be("Violation")
+        violation.severityLevel should be("Violation")
         violation.message should be("Invalid parameter binding 'bo'")
         violation.position.map(_.range) should be(Some(Range((13, 18), (13, 22))))
       },
       refViolation => {
-        refViolation.level should be("Violation")
+        refViolation.severityLevel should be("Violation")
         refViolation.message should be("Invalid parameter binding 'qu'")
         refViolation.position.map(_.range) should be(Some(Range((25, 18), (25, 22))))
       }
@@ -40,7 +40,7 @@ class OasParserErrorTest extends ParserErrorTest {
     validate(
       "/error/invalid-body-parameter.json",
       violation => {
-        violation.level should be("Violation")
+        violation.severityLevel should be("Violation")
         violation.message should be("Cannot declare more than one 'body' parameter for a request or a resource")
         violation.position.map(_.range) should be(Some(Range((22, 13), (33, 11))))
       }

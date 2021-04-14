@@ -16,9 +16,9 @@ object BooleanValidationProcessor extends ValidationProcessor {
 
   override type Return = Boolean
   override def processResults(r: Seq[AMFValidationResult]): Return =
-    !r.exists(_.level == SeverityLevels.VIOLATION)
+    !r.exists(_.severityLevel == SeverityLevels.VIOLATION)
   override def processException(r: Throwable, element: Option[DomainElement]): Return = false
-  override def keepResults(r: Seq[AMFValidationResult]): Unit = Unit
+  override def keepResults(r: Seq[AMFValidationResult]): Unit                         = Unit
 }
 
 trait ReportValidationProcessor extends ValidationProcessor {
@@ -27,7 +27,7 @@ trait ReportValidationProcessor extends ValidationProcessor {
   override type Return = AMFValidationReport
   override def processResults(r: Seq[AMFValidationResult]): AMFValidationReport = {
     val results = r ++ intermediateResults
-    AMFValidationReport(!results.exists(_.level == SeverityLevels.VIOLATION),
+    AMFValidationReport(!results.exists(_.severityLevel == SeverityLevels.VIOLATION),
                         "http://test.com/payload#validations",
                         profileName,
                         results)

@@ -64,7 +64,7 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
         Some(
           AMFValidationResult(
             sonsToString(sonsResults).getOrElse(""),
-            if (sonsResults.exists(_.level == SeverityLevels.VIOLATION)) SeverityLevels.VIOLATION
+            if (sonsResults.exists(_.severityLevel == SeverityLevels.VIOLATION)) SeverityLevels.VIOLATION
             else SeverityLevels.WARNING,
             d.id,
             sonsResults.head.targetProperty,
@@ -87,7 +87,7 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
       case rootResult :: Nil => rootResult
       case _ :: _ =>
         val severity =
-          if (sortedResults.exists(_.level == SeverityLevels.VIOLATION)) SeverityLevels.VIOLATION
+          if (sortedResults.exists(_.severityLevel == SeverityLevels.VIOLATION)) SeverityLevels.VIOLATION
           else SeverityLevels.WARNING
         var messages = ""
         sortedResults.map(_.message).distinct.foreach { r =>

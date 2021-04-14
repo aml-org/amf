@@ -25,7 +25,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
     validate(
       basePath + "forward-references-types-error.raml",
       undefined => {
-        undefined.level should be("Violation")
+        undefined.severityLevel should be("Violation")
         undefined.message should be("Unresolved reference 'UndefinedType'")
         undefined.location should be(
           Some("file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error.raml"))
@@ -38,7 +38,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
     validate(
       basePath + "forward-references-types-error-expression.raml",
       undefined => {
-        undefined.level should be("Violation")
+        undefined.severityLevel should be("Violation")
         undefined.message should be("Unresolved reference 'UndefinedType'")
         undefined.location should be(
           Some("file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error-expression.raml"))
@@ -51,7 +51,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
     validate(
       basePath + "forward-references-types-error-array.raml",
       undefined => {
-        undefined.level should be("Violation")
+        undefined.severityLevel should be("Violation")
         undefined.message should be("Unresolved reference 'UndefinedType'")
         undefined.location should be(
           Some("file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error-array.raml"))
@@ -64,13 +64,13 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
     validate(
       referencesPath + "contexts/api.raml",
       a => {
-        a.level should be("Violation")
+        a.severityLevel should be("Violation")
         a.message should be("Unresolved reference 'A'")
         a.location should be(Some("file://amf-client/shared/src/test/resources/references/contexts/library.raml"))
         a.position.map(_.range) should be(Some(Range((4, 5), (4, 6))))
       },
       c => {
-        c.level should be("Violation")
+        c.severityLevel should be("Violation")
         c.message should be("Unresolved reference 'C'")
         c.location should be(Some("file://amf-client/shared/src/test/resources/references/contexts/nested.raml"))
         c.position.map(_.range) should be(Some(Range((6, 5), (6, 6))))

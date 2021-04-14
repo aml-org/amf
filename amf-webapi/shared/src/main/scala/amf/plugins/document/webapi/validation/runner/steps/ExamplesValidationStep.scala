@@ -27,6 +27,6 @@ case class ExamplesValidationStep(override val validationContext: ValidationCont
   }
 
   private def buildValidationWithCustomLevelForProfile(result: AMFValidationResult): Option[AMFValidationResult] = {
-    Some(result.copy(level = findLevel(result.validationId, validationContext.validations)))
+    Some(result.copy(severityLevel = findLevel(result.validationId, validationContext.validations)))
   }
 }

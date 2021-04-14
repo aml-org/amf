@@ -53,7 +53,7 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
             .map({
               case (result, fResult) =>
                 assert(result.message.equals(fResult.message))
-                assert(result.level.equals(fResult.level))
+                assert(result.severityLevel.equals(fResult.level))
             })
             .exists(_ != succeed))
       }

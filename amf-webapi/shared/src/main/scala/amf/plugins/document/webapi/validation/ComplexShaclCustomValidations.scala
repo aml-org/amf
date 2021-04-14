@@ -4,7 +4,8 @@ import amf.core.validation.core.{PropertyConstraint, ValidationSpecification}
 
 import scala.collection.mutable.ArrayBuffer
 
-// TODO: only useful if you want to validate Api specs with pure shacl. They are directly related to the FromJsonLDPayloadValidationTest. Migrating them to be part of the test suite is a hard task
+// TODO: only useful if you want to validate Api specs with pure shacl. They are directly related to the FromJsonLDPayloadValidationTest. Migrating them to be part of the test suite is a hard task.
+// These custom shacl validations replace now unused JS functions
 object ComplexShaclCustomValidations {
 
   val xmlWrappedScalar = List(

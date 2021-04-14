@@ -37,7 +37,7 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
       val seq = f.flatMap { report =>
         report.results.sorted
       }
-      AMFValidationReport(!seq.exists(_.level == SeverityLevels.VIOLATION), "", ProfileName(""), seq)
+      AMFValidationReport(!seq.exists(_.severityLevel == SeverityLevels.VIOLATION), "", ProfileName(""), seq)
     }
   }
 
