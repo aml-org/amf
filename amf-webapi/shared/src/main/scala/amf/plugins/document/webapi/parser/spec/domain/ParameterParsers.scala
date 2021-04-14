@@ -108,7 +108,7 @@ case class Raml10ParameterParser(entry: YMapEntry,
                 ctx.declarations
                   .findParameter(ref.text, scope)
                   .get
-                  .link(ref.text, Annotations(entry))
+                  .link(ScalarNode(entry.value), Annotations(entry))
                   .asInstanceOf[Parameter]
                   .set(ParameterModel.Name, nameNode.text())
               case Right(_) =>
@@ -522,13 +522,15 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
     val refUrl = OasDefinitions.stripParameterDefinitionsPrefix(ref.value)
     ctx.declarations.findParameter(refUrl, SearchScope.All) match {
       case Some(param) =>
-        val parameter: Parameter = param.link(refUrl, Annotations(map))
+        val parameter: Parameter = param.link(AmfScalar(refUrl), Annotations(map), Annotations.synthesized())
         parameter.withName(refUrl).adopted(parentId)
         OasParameter(parameter, Some(ref))
       case None =>
         ctx.declarations.findPayload(refUrl, SearchScope.All) match {
           case Some(payload) =>
-            OasParameter(payload.link(refUrl, Annotations(map)).asInstanceOf[Payload], Some(ref))
+            OasParameter(
+              payload.link(AmfScalar(refUrl), Annotations(map), Annotations.synthesized()).asInstanceOf[Payload],
+              Some(ref))
           case None =>
             val fullRef = UriUtils.resolveRelativeTo(ctx.rootContextDocument, refUrl)
             ctx.parseRemoteOasParameter(fullRef, parentId)(toOas(ctx)) match {
@@ -542,7 +544,8 @@ case class Oas2ParameterParser(entryOrNode: YMapEntryLike,
                 oasParameter.domainElement.add(ExternalReferenceUrl(refUrl))
                 oasParameter
               case _ =>
-                val parameter: Parameter = ErrorParameter(refUrl, ref).link(refUrl, Annotations(ref))
+                val parameter: Parameter =
+                  ErrorParameter(refUrl, ref).link(AmfScalar(refUrl), Annotations(ref), Annotations.synthesized())
                 setName(parameter)
                 parameter.adopted(parentId)
                 ctx.eh.violation(UnresolvedParameter,

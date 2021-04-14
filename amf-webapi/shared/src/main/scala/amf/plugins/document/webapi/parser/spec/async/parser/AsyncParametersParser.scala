@@ -75,7 +75,8 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "parameters")
     ctx.declarations
       .findParameter(label, SearchScope.Named)
-      .map(param => nameAndAdopt(param.link(label, extractRefAnnotation(entryLike))))
+      .map(param =>
+        nameAndAdopt(param.link(AmfScalar(label), extractRefAnnotation(entryLike), Annotations.synthesized())))
       .getOrElse(remote(fullRef, map))
   }
 
@@ -83,7 +84,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     ctx.obtainRemoteYNode(fullRef) match {
       case Some(paramNode) =>
         val external = AsyncParameterParser(parentId, YMapEntryLike(paramNode)).parse()
-        nameAndAdopt(external.link(fullRef))
+        nameAndAdopt(external.link(AmfScalar(fullRef), Annotations(map), Annotations.synthesized()))
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
         nameAndAdopt(ErrorParameter(fullRef, map).link(fullRef, annotations = Annotations(map)))

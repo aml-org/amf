@@ -554,6 +554,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/query-string.json#/declarations/types/lat-long/link-729119164/source-map/synthesized-field/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/query-string.json#/declarations/types/lat-long/link-729119164/source-map/lexical/element_0"
@@ -564,6 +569,11 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/query-string.json#/declarations/types/loc/link--2094401608/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/query-string.json#/declarations/types/loc/link--2094401608/source-map/synthesized-field/element_0"
+        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -640,9 +650,19 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(46,8)-(48,9)]"
     },
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/query-string.json#/declarations/types/lat-long/link-729119164/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/query-string.json#/declarations/types/lat-long/link-729119164/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/query-string.json#/declarations/types/lat-long/link-729119164",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,12)-(13,20)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/query-string.json#/declarations/types/loc/link--2094401608/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/query-string.json#/declarations/types/loc/link--2094401608/source-map/lexical/element_0",

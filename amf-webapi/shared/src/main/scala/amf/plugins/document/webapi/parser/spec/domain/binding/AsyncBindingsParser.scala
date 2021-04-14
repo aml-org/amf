@@ -62,7 +62,8 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
     ctx.obtainRemoteYNode(fullRef) match {
       case Some(bindingsNode) =>
         val external = createParser(YMapEntryLike(bindingsNode)).parse()
-        nameAndAdopt(external.link(fullRef), entryLike.key)
+        nameAndAdopt(external.link(AmfScalar(fullRef), entryLike.annotations, Annotations.synthesized()),
+                     entryLike.key) // check if this link should be trimmed to just the label
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference,
                          "",

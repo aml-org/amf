@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ModelDoc
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.model.domain.{AmfScalar, DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields, UnresolvedReference}
 import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
@@ -30,10 +30,15 @@ case class UnresolvedShape(override val fields: Fields,
     this
   }
    */
-  override def link[T](label: String, annotations: Annotations): T = this.asInstanceOf[T]
+  override private[amf] def link[T](label: AmfScalar, annotations: Annotations, fieldAnn: Annotations): T =
+    this.asInstanceOf[T]
 
   /** Resolve [[UnresolvedShape]] as link to specified target. */
-  def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name.value())
+  def resolve(target: Shape): Shape =
+    target
+      .link(AmfScalar(reference), annotations, Annotations.synthesized())
+      .asInstanceOf[Shape]
+      .withName(name.value())
 
   override val meta: AnyShapeModel = new AnyShapeModel {
     override def fields: List[Field] = AnyShapeModel.fields

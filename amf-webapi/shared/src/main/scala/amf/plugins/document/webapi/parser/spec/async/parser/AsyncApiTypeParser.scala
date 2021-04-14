@@ -2,8 +2,8 @@ package amf.plugins.document.webapi.parser.spec.async.parser
 
 import amf.core.annotations.{DefinedByVendor, SourceVendor}
 import amf.core.errorhandling.ErrorHandler
-import amf.core.model.domain.Shape
-import amf.core.parser.SearchScope
+import amf.core.model.domain.{AmfScalar, Shape}
+import amf.core.parser.{Annotations, SearchScope}
 import amf.core.remote.Raml10
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
@@ -109,7 +109,7 @@ case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)
   }
 
   private def linkAndAdopt(s: Shape, label: String): Shape = {
-    val link = s.link(label, entry.annotations).asInstanceOf[Shape]
+    val link = s.link(AmfScalar(label), entry.annotations, Annotations.synthesized()).asInstanceOf[Shape]
     adopt(link)
     link
   }

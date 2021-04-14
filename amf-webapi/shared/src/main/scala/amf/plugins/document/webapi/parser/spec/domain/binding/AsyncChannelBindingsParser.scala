@@ -36,7 +36,9 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "channelBindings")
     ctx.declarations
       .findChannelBindings(label, SearchScope.Named)
-      .map(channelBindings => nameAndAdopt(channelBindings.link(label), entryLike.key))
+      .map(channelBindings =>
+        nameAndAdopt(channelBindings.link(AmfScalar(label), entryLike.annotations, Annotations.synthesized()),
+                     entryLike.key))
       .getOrElse(remote(fullRef, entryLike, parent))
   }
 
