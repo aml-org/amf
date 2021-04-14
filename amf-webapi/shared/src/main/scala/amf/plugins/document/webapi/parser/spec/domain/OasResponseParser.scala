@@ -76,16 +76,6 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
 
         val payloads = mutable.ListBuffer[Payload]()
 
-        // RAML 1.0 extensions
-        map.key(
-          "responsePayloads".asOasExtension, { entry =>
-            entry.value
-              .as[Seq[YMap]]
-              .map(value => payloads += OasPayloadParser(value, res.withPayload).parse())
-            res.set(ResponseModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
-          }
-        )
-
         // OAS 2.0
         if (ctx.syntax == Oas2Syntax) {
 
@@ -106,6 +96,16 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
 
           ctx.closedShape(res.id, map, "response")
         }
+
+        // RAML 1.0 extensions
+        map.key(
+          "responsePayloads".asOasExtension, { entry =>
+            entry.value
+              .as[Seq[YMap]]
+              .map(value => payloads += OasPayloadParser(value, res.withPayload).parse())
+            res.set(ResponseModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
+          }
+        )
 
         // OAS 3.0.0
         var payloadAnn: Option[Annotations] = None
@@ -128,6 +128,9 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
             }
           )
         }
+
+        if (payloads.nonEmpty || payloadAnn.isDefined)
+          res.set(ResponseModel.Payloads, AmfArray(payloads), payloadAnn.getOrElse(Annotations.empty))
 
         AnnotationParser(res, map).parse()
 

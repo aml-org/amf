@@ -148,7 +148,7 @@ case class Raml10ParameterParser(entry: YMapEntry,
       p.set(ParameterModel.Name, AmfScalar(paramName, nameNode.text().annotations), Annotations.inferred())
         .set(ParameterModel.ParameterName, AmfScalar(paramName, nameNode.text().annotations), Annotations.inferred())
     }
-    p.synthesizedBinding(binding)
+    p.syntheticBinding(binding)
     p
   }
 
@@ -163,7 +163,7 @@ case class Raml08ParameterParser(entry: YMapEntry,
                                  binding: String)(implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
   def parse(): Parameter = {
-    parameter.synthesizedBinding(binding)
+    parameter.syntheticBinding(binding)
     adopted(parameter)
 
     entry.value.tagType match {

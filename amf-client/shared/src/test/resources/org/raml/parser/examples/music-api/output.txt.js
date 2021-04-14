@@ -25,4 +25,3 @@ Level: Warning
   Property: http://a.ml/vocabularies/document#value
   Position: Some(LexicalInformation([(37,23)-(37,50)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/music-api/input.raml
-s

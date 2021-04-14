@@ -273,7 +273,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       val pathParam = Parameter()
         .withSynthesizeName(variable)
         .set(ParameterModel.ParameterName, variable, Annotations.synthesized())
-        .synthesizedBinding("path")
+        .syntheticBinding("path")
         .set(ParameterModel.Required, AmfScalar(true), Annotations.synthesized())
       endpoint.add(EndPointModel.Parameters, parameter)
 
