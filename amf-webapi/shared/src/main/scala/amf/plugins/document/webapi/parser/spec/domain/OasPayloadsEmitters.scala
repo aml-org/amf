@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{LexicalInformation, SynthesizedField}
+import amf.core.annotations.{LexicalInformation, SynthesizedField, VirtualNode}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
@@ -55,7 +55,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         }
 
         fs.entry(PayloadModel.Schema).map { f =>
-          if (!f.value.annotations.contains(classOf[SynthesizedField])) {
+          if (!f.value.annotations.contains(classOf[VirtualNode])) {
             result += oas.OasSchemaEmitter(f, ordering, references)
           }
         }

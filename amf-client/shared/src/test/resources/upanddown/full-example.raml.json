@@ -102,17 +102,10 @@
         ],
         "x-amf-requestPayloads": [
           {
-            "mediaType": "application/xml",
-            "schema": {
-              "type": "number"
-            }
+            "mediaType": "application/xml"
           },
           {
-            "mediaType": "application/pdf",
-            "schema": {
-              "type": "string",
-              "format": "byte"
-            }
+            "mediaType": "application/pdf"
           }
         ],
         "responses": {
@@ -130,8 +123,7 @@
             },
             "x-amf-responsePayloads": [
               {
-                "mediaType": "application/x-www-form-urlencoded; charset=UTF-8",
-                "schema": {}
+                "mediaType": "application/x-www-form-urlencoded; charset=UTF-8"
               }
             ]
           },
