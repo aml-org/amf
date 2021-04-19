@@ -1,6 +1,6 @@
 package amf.facades
 
-import amf.client.remod.AMFConfiguration
+import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.config.ParsingOptionsConverter
 import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
@@ -20,7 +20,7 @@ class AMFCompiler private (val url: String,
                            hint: Hint,
                            private val cache: Cache,
                            eh: ParserErrorHandler,
-                           newConfiguration: AMFConfiguration)(implicit executionContext: ExecutionContext)
+                           newConfiguration: AMFGraphConfiguration)(implicit executionContext: ExecutionContext)
     extends RamlHeaderExtractor {
 
   private val compilerContext: CompilerContext = {
