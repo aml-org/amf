@@ -112,8 +112,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
           ctx.declarations.findResourceTypeOrError(entry.value))
           .parse()
         endpoint.set(EndPointModel.Extends,
-                     AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(entry.value)),
-                     Annotations(entry))
+                     AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(Annotations.virtual())),
+                     Annotations(Annotations.virtual()))
       }
     )
 

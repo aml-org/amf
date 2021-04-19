@@ -1,6 +1,8 @@
 #%RAML 1.0
 title: test title
 description: test description
+protocols:
+  - HTTP
 baseUri: api.example.com/path
 securitySchemes:
   oauth_2_0:
@@ -28,16 +30,18 @@ traits:
   descr:
     description: Some requests require authentication.
 /top:
-  is:
-    - descr
   type:
     searchableCollection:
       queryParamName: title
+  securedBy:
+    - oauth_2_0
+  is:
+    - descr
   get:
-    protocols:
-      - HTTPS
     is:
       - secured
+    protocols:
+      - HTTPS
     securedBy:
       - oauth_2_0
   post:
@@ -45,7 +49,3 @@ traits:
       -
         parameterized:
           tokenName: access_token
-  securedBy:
-    - oauth_2_0
-protocols:
-  - HTTP

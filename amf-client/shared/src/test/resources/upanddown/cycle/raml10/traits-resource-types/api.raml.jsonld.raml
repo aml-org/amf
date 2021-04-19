@@ -23,12 +23,12 @@ traits:
   descr:
     description: Some requests require authentication.
 /books:
-  is:
-    - descr
   type:
     searchableCollection:
       queryParamName: title
       fallbackParamName: digest_all_fields
+  is:
+    - descr
   get:
     is:
       -

@@ -224,10 +224,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200/source-map/lexical/element_1"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200/source-map/lexical/element_2"
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200/source-map/lexical/element_1"
         }
       ]
     },
@@ -279,14 +282,19 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,10)-(17,11)]"
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(12,10)-(12,15)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,12)-(13,57)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(12,10)-(17,11)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/property/a1",

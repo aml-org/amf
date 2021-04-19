@@ -119,7 +119,7 @@ abstract class OasOperationParser(entry: YMapEntry, adopt: Operation => Operatio
               responses += OasResponseParser(
                 entry.value.as[YMap], {
                   r =>
-                    r.withName(node)
+                    r.set(ResponseModel.Name, node.text(), Annotations(entry.key))
                       .adopted(operation.id)
                       .set(ResponseModel.StatusCode, node.text(), Annotations.inferred())
                     if (!r.annotations.contains(classOf[SourceAST]))
