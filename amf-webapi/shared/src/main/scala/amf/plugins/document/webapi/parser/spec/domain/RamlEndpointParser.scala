@@ -113,7 +113,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
           .parse()
         endpoint.set(EndPointModel.Extends,
                      AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(Annotations.virtual())),
-                     Annotations(Annotations.virtual()))
+                     Annotations(Annotations.inferred()))
       }
     )
 
