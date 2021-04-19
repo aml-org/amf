@@ -1055,7 +1055,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
       map.key("fileTypes") match {
         case Some(entry) if entry.value.tagType == YType.Seq =>
           val fileTypes = entry.value.as[YSequence].nodes.map { n: YNode =>
-            AmfScalar(n.as[YScalar])
+            AmfScalar(n.as[YScalar].text)
           }
           shape.fields.set(shape.id,
                            FileShapeModel.FileTypes,
@@ -1064,7 +1064,7 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         case Some(entry) if entry.value.tagType == YType.Str =>
           shape.fields.set(shape.id,
                            FileShapeModel.FileTypes,
-                           AmfArray(Seq(AmfScalar(entry.value.as[YScalar])), Annotations(entry.value)),
+                           AmfArray(Seq(AmfScalar(entry.value.as[YScalar].text)), Annotations(entry.value)),
                            Annotations(entry))
         case Some(entry) =>
           ctx.eh.violation(
