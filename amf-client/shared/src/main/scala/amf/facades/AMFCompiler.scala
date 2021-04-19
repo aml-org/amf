@@ -1,6 +1,6 @@
 package amf.facades
 
-import amf.client.remod.BaseEnvironment
+import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.config.ParsingOptionsConverter
 import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
@@ -20,13 +20,13 @@ class AMFCompiler private (val url: String,
                            hint: Hint,
                            private val cache: Cache,
                            eh: ParserErrorHandler,
-                           newEnv: BaseEnvironment)(implicit executionContext: ExecutionContext)
+                           newConfiguration: AMFGraphConfiguration)(implicit executionContext: ExecutionContext)
     extends RamlHeaderExtractor {
 
   private val compilerContext: CompilerContext = {
     val builder = new CompilerContextBuilder(url, remote, eh).withCache(cache)
     base.foreach(builder.withFileContext)
-    builder.withBaseEnvironment(newEnv).build()
+    builder.withBaseEnvironment(newConfiguration).build()
   }
 
   def build(): Future[BaseUnit] = {
@@ -74,7 +74,7 @@ object AMFCompiler {
             eh: ParserErrorHandler,
             parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext) = {
     val newEnv =
-      AMFPluginsRegistry.obtainStaticEnv().withParsingOptions(ParsingOptionsConverter.fromLegacy(parsingOptions))
+      AMFPluginsRegistry.obtainStaticConfig().withParsingOptions(ParsingOptionsConverter.fromLegacy(parsingOptions))
     new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), eh, newEnv)
   }
 

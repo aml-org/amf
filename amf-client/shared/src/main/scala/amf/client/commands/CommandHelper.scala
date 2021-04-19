@@ -9,9 +9,9 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.{RuntimeCompiler, RuntimeResolver, RuntimeSerializer}
-import amf.plugins.document.vocabularies.{AMLParsePlugin, AMLPlugin}
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
-import amf.plugins.document.webapi.{Async20Plugin, Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
+import amf.plugins.document.webapi._
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 
 import scala.concurrent.{ExecutionContext, Future}

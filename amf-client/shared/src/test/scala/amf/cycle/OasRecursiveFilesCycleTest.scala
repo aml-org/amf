@@ -1,5 +1,6 @@
 package amf.cycle
 
+import amf.client.remod.AMFGraphConfiguration
 import amf.core.CompilerContextBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.parser.UnspecifiedReference

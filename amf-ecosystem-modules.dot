@@ -1,5 +1,8 @@
 # http://www.graphviz.org/content/cluster
+# to generate image run: dot -Tpng amf-ecosystem-modules.dot > amf-ecosystem-modules.png
+
 digraph G {
+    graph [ dpi = 300 ];
     # modules
     subgraph cluster_0 {
         "amf-client" [style=dashed]
@@ -20,6 +23,5 @@ digraph G {
     
 	# dependencies
 	"amf-client" -> "amf-webapi"
-	"amf-client" -> "amf-custom-validation" -> "amf-aml" -> "amf-validation" -> "amf-core" [label="dependsOn"]
-	"amf-webapi" -> "amf-core" [label="dependsOn"]
+	"amf-webapi" -> "amf-custom-validation" -> "amf-aml" -> "amf-validation" -> "amf-core" [label="dependsOn"]
 }
