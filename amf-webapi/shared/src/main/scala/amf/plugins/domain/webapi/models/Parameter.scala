@@ -95,7 +95,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
           case o        => o
         }
 
-        cloned.set(f, clonedValue, v.annotations)
+        cloned.set(f, clonedValue, Annotations() ++= v.annotations)
     }
 
     cloned.asInstanceOf[this.type]

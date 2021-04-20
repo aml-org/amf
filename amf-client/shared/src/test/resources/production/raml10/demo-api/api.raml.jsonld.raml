@@ -137,6 +137,8 @@ types:
           parentId:
             type: string
             description: The ID of the parent.
+          fileId:
+            type: string
         get:
           description: Gets a specific parent reference.
         delete:
@@ -154,6 +156,8 @@ types:
           permissionId:
             type: string
             description: The ID for the permission.
+          fileId:
+            type: string
         get:
           description: Gets a permission by ID.
         put:
@@ -180,6 +184,8 @@ types:
           revisionId:
             type: string
             description: The ID of the revision.
+          fileId:
+            type: string
         get: {}
         put: {}
         delete: {}
@@ -203,6 +209,10 @@ types:
               replyId:
                 type: string
                 description: The ID of the reply.
+              fileId:
+                type: string
+              commentId:
+                type: string
             get:
               description: Gets a reply.
             put:
@@ -211,9 +221,6 @@ types:
               description: Deletes a reply.
             patch:
               description: Updates an existing reply. This method supports patch semantics.
-        uriParameters:
-          commentId:
-            type: string
     /realtime:
       get:
         description: Exports the contents of the Realtime API data model associated with this file as JSON.
@@ -236,13 +243,12 @@ types:
           propertyKey:
             type: string
             description: The key of the property.
+          fileId:
+            type: string
         get: {}
         put: {}
         delete: {}
         patch: {}
-    uriParameters:
-      fileId:
-        type: string
   /trash:
     delete:
       description: Permanently deletes all of the user's trashed files.
@@ -256,12 +262,6 @@ types:
         description: Removes a child from a folder.
       get:
         description: Gets a specific child reference.
-      uriParameters:
-        childId:
-          type: string
-    uriParameters:
-      folderId:
-        type: string
 /about:
   displayName: About
   get:
