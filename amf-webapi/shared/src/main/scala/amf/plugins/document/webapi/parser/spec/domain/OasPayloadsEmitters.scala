@@ -1,12 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{LexicalInformation, SynthesizedField}
+import amf.core.annotations.{Inferred, LexicalInformation, SourceAST, SynthesizedField, VirtualElement, VirtualNode}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
-import amf.core.parser.Position
+import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
+import amf.core.parser.{FieldEntry, Position}
 import amf.core.parser.Position.ZERO
-import amf.plugins.document.webapi.annotations.ParameterNameForPayload
+import amf.plugins.document.webapi.annotations.{InlineDefinition, ParameterNameForPayload}
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterFactory,
   Oas3SpecEmitterFactory,
@@ -55,9 +56,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         }
 
         fs.entry(PayloadModel.Schema).map { f =>
-          if (!f.value.annotations.contains(classOf[SynthesizedField])) {
-            result += oas.OasSchemaEmitter(f, ordering, references)
-          }
+          result += oas.OasSchemaEmitter(f, ordering, references)
         }
 
         result ++= AnnotationsEmitter(payload, ordering).emitters

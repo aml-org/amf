@@ -48,5 +48,5 @@ private case class TextKeyYMapEntryLike(artificialKey: String, n: YNode)(implici
   override def asMap: YMap              = n.as[YMap]
   override def asSequence: YSequence    = n.as[YSequence]
   override def ast: YPart               = n
-  override def annotations: Annotations = Annotations(n.value) // should be inferred?
+  override def annotations: Annotations = Annotations(n.value)
 }

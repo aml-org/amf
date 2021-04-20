@@ -99,7 +99,7 @@ class AsyncMessageParser(entryLike: YMapEntryLike,
     message
       .withId(s"${message.id}/link-$hash")
       .withLinkTarget(effectiveTarget)
-      .withLinkLabel(label, extractRefAnnotation(entryLike))
+      .withLinkLabel(label, Annotations(entryLike.value))
   }
 
 }

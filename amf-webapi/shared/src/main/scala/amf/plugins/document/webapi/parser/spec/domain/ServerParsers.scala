@@ -117,7 +117,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   }
 
   private def buildParamFromVar(v: String, serverId: String) = {
-    val param = Parameter().withName(v).synthesizedBinding("path").withRequired(true)
+    val param = Parameter().withName(v).syntheticBinding("path").withRequired(true)
     param.adopted(serverId)
     param.withScalarSchema(v).withDataType(DataType.String)
     param.annotations += SynthesizedField()

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{ExplicitField, SynthesizedField}
+import amf.core.annotations.{ExplicitField, SynthesizedField, VirtualNode}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
@@ -62,7 +62,7 @@ case class RamlParametersEmitter(key: String, f: FieldEntry, ordering: SpecOrder
   private def parameters(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
     val result = mutable.ListBuffer[EntryEmitter]()
     f.array.values
-      .filter(!_.annotations.contains(classOf[SynthesizedField]))
+      .filterNot(_.annotations.contains(classOf[VirtualNode]))
       .foreach(e => result += spec.factory.headerEmitter(e.asInstanceOf[Parameter], ordering, references))
 
     ordering.sorted(result)

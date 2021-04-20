@@ -4156,15 +4156,15 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/web-api/end-points/%2Forganization/get/201/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/web-api/end-points/%2Forganization/get/201/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/oas-example.json#/web-api/end-points/%2Forganization/get/201"
+                                "@value": "http://a.ml/vocabularies/core#name"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(33,10)-(71,11)]"
+                                "@value": "[(33,10)-(33,15)]"
                               }
                             ]
                           },
@@ -4178,6 +4178,19 @@
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(70,12)-(70,29)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/web-api/end-points/%2Forganization/get/201/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/oas-example.json#/web-api/end-points/%2Forganization/get/201"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(33,10)-(71,11)]"
                               }
                             ]
                           }

@@ -76,7 +76,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     ctx.declarations
       .findParameter(label, SearchScope.Named)
       .map(param =>
-        nameAndAdopt(param.link(AmfScalar(label), extractRefAnnotation(entryLike), Annotations.synthesized())))
+        nameAndAdopt(param.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized())))
       .getOrElse(remote(fullRef, map))
   }
 
