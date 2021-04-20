@@ -43,8 +43,8 @@ case class Raml10EndPointEmitter(endpoint: EndPoint,
 
           result ++= OasParametersEmitter("parameters".asRamlAnnotation, other, ordering, references = references)(
             amf.plugins.document.webapi.parser.spec.toOas(spec)).ramlEndpointEmitters()
-          val explicitParams =
-            path.filter(p => !p.fields.getValueAsOption(ParameterModel.Name).exists(_.isSynthesized))
+
+          val explicitParams = getExplicitParams(path)
           if (explicitParams.nonEmpty) {
             // TODO just emit other params in other way
             val entry = FieldEntry(EndPointModel.Parameters,
@@ -86,7 +86,8 @@ case class Raml08EndPointEmitter(endpoint: EndPoint,
 
           result += RamlParametersEmitter("uriParameters",
                                           FieldEntry(EndPointModel.Parameters,
-                                                     Value(AmfArray(pathParameters), f.value.annotations)),
+                                                     Value(AmfArray(getExplicitParams(pathParameters)),
+                                                           f.value.annotations)),
                                           ordering,
                                           references)
           result += RamlParametersEmitter("baseUriParameters",
@@ -110,6 +111,9 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
   def endpoint: EndPoint
 
   protected def keyParameter: String
+
+  protected def getExplicitParams(params: Seq[Parameter]): Seq[Parameter] =
+    params.filter(p => !p.fields.getValueAsOption(ParameterModel.Name).exists(_.isSynthesized))
 
   override def emit(b: EntryBuilder): Unit = {
     val fs = endpoint.fields
