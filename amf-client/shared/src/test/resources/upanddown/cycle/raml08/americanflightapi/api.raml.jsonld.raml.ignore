@@ -54,12 +54,12 @@ schemas:
   get:
     queryParameters:
       code:
-        type: string
         enum:
           - SFO
           - LAX
           - PDX
           - CLE
+        type: string
     responses:
       "200":
         body:

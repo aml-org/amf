@@ -1,11 +1,14 @@
 #%RAML 1.0
 title: ACME Banking HTTP API
 version: "1.0"
+mediaType: application/json
 baseUri: acme-banking.com/apis
 securitySchemes:
   oauth2_0: !include securitySchemes/oauth2_0.raml
 traits:
   contentCacheable: !include traits/content-cacheable.raml
+securedBy:
+  - oauth2_0
 types:
   CustomerMemberResponse:
     type: shapes.OrganizationData | shapes.PersonData
@@ -20,10 +23,13 @@ types:
       description: Customer data created correctly for a Person
       body: shapes.NewPersonData
   /{customer_id}:
+    uriParameters:
+      customer_id:
+        type: string
     get:
-      description: Returns Customer data
       is:
         - traits.partial
+      description: Returns Customer data
       responses:
         "200":
           body:
@@ -31,10 +37,10 @@ types:
               type: CustomerMemberResponse
     /accounts:
       get:
-        description: Returns a collection accounts
         is:
           - traits.pageable
           - traits.sortable
+        description: Returns a collection accounts
         responses:
           "200":
             body:
@@ -46,10 +52,13 @@ types:
           application/json:
             type: shapes.NewBankAccountRequestData
       /{account_id}:
+        uriParameters:
+          account_id:
+            type: string
         get:
-          description: Returns BankAccount data
           is:
             - traits.partial
+          description: Returns BankAccount data
           responses:
             "200":
               body:
@@ -57,16 +66,13 @@ types:
                   type: shapes.BankAccountData
         delete:
           description: Removes a BankAccount from the system
-        uriParameters:
-          account_id:
-            type: string
     /loans:
       get:
-        description: Returns a collection accounts
         is:
           - traits.pageable
           - traits.sortable
           - contentCacheable
+        description: Returns a collection accounts
         responses:
           "200":
             body:
@@ -78,18 +84,18 @@ types:
           application/json:
             type: shapes.NewLoanRequestData
       /{loan_id}:
+        uriParameters:
+          loan_id:
+            type: string
         get:
-          description: Returns Loan data
           is:
             - traits.partial
+          description: Returns Loan data
           responses:
             "200":
               body:
                 application/json:
                   type: shapes.LoanData
-        uriParameters:
-          loan_id:
-            type: string
       /schedule:
         get:
           description: Returns the repayments schedule for a Loan
@@ -99,10 +105,10 @@ types:
     /cards:
       /debit:
         get:
-          description: Returns a collection of cards
           is:
             - traits.pageable
             - traits.sortable
+          description: Returns a collection of cards
           responses:
             "200":
               body:
@@ -114,10 +120,13 @@ types:
             application/json:
               type: shapes.NewDebitCardRequestData
         /{card_id}:
+          uriParameters:
+            card_id:
+              type: string
           get:
-            description: Returns DebitCard data
             is:
               - traits.partial
+            description: Returns DebitCard data
             responses:
               "200":
                 body:
@@ -125,16 +134,13 @@ types:
                     type: shapes.DebitCardData
           delete:
             description: Removes a DebitCard from the system
-          uriParameters:
-            card_id:
-              type: string
       /credit:
         get:
-          description: Returns a collection accounts
           is:
             - traits.pageable
             - traits.sortable
             - contentCacheable
+          description: Returns a collection accounts
           responses:
             "200":
               body:
@@ -146,10 +152,13 @@ types:
             application/json:
               type: shapes.NewCreditCardRequestData
         /{card_id}:
+          uriParameters:
+            card_id:
+              type: string
           get:
-            description: Returns DebitCard data
             is:
               - traits.partial
+            description: Returns DebitCard data
             responses:
               "200":
                 body:
@@ -157,15 +166,6 @@ types:
                     type: shapes.CreditCardData
           delete:
             description: Removes a CreditCard from the system
-          uriParameters:
-            card_id:
-              type: string
-    uriParameters:
-      customer_id:
-        type: string
 uses:
   shapes: ./dataTypes/shapes.raml
   traits: ./traits/traits.raml
-mediaType: application/json
-securedBy:
-  - oauth2_0

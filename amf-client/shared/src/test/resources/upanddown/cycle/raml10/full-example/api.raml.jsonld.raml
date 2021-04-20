@@ -6,6 +6,11 @@ version: "1.1"
 (amf-license):
   url: licenseUrl
   name: licenseName
+mediaType:
+  - application/yaml
+protocols:
+  - http
+  - https
 baseUri: api.example.com/path
 (amf-contact):
   url: contactUrl
@@ -20,11 +25,20 @@ documentation:
     title: Home another documentation
     (amf-url): externalDocsUrl2
     content: externalDocsDescription2
+baseUriParameters:
+  uriParameter1?:
+    description: testUriDisplay
+  uriParameter2?:
+    description: testUriDisplay2
 /levelzero:
   displayName: Name
 /levelzero/{two}/level-one/{three}:
   displayName: One display name
   description: and this description!
+  uriParameters:
+    two?: {}
+    three:
+      description: endpoint uri parameter
   get:
     displayName: Some title
     queryParameters:
@@ -56,17 +70,3 @@ documentation:
             type: any
       "404":
         description: Not found!
-  uriParameters:
-    two?: {}
-    three:
-      description: endpoint uri parameter
-baseUriParameters:
-  uriParameter1?:
-    description: testUriDisplay
-  uriParameter2?:
-    description: testUriDisplay2
-mediaType:
-  - application/yaml
-protocols:
-  - http
-  - https

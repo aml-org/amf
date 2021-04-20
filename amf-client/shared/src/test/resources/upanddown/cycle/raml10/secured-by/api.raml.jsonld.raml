@@ -1,5 +1,7 @@
 #%RAML 1.0
 title: test
+securedBy:
+  - oauth_2_0
 securitySchemes:
   oauth_2_0: !include ../../../../references/fragments/security-scheme.raml
   oauth_1_0:
@@ -44,5 +46,3 @@ securitySchemes:
   uriParameters:
     userid:
       type: string
-securedBy:
-  - oauth_2_0

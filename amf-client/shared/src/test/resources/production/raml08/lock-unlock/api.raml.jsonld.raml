@@ -1,13 +1,14 @@
 #%RAML 0.8
 title: test api
 version: 1.0.0
+protocols:
+  - HTTP
+mediaType: application/json
 /stores:
   get:
     queryParameters:
       period:
         displayName: Period
-        default: 30 minutes
-        type: string
         enum:
           - 30 minutes
           - 1 hour
@@ -16,6 +17,8 @@ version: 1.0.0
           - hour
           - 4 hour
           - 5 hour
+        default: 30 minutes
+        type: string
     responses:
       "200":
         body:
@@ -25,8 +28,6 @@ version: 1.0.0
       queryParameters:
         period:
           displayName: Period
-          default: 30 minutes
-          type: string
           enum:
             - 30 minutes
             - 1 hour
@@ -35,6 +36,8 @@ version: 1.0.0
             - hour
             - 4 hour
             - 5 hour
+          default: 30 minutes
+          type: string
     uriParameters:
       storeNumber:
         type: string
@@ -52,6 +55,3 @@ version: 1.0.0
           default: current time
           type: date
     displayName: Store Count
-mediaType: application/json
-protocols:
-  - HTTP

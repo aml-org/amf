@@ -2,6 +2,7 @@
 title: test
 version: "0.2"
 baseUri: https://domain.test.com/
+mediaType: application/json
 schemas:
   someSchema: |-
     {
@@ -26,4 +27,3 @@ schemas:
       "200":
         body:
           application/json: someSchema
-mediaType: application/json

@@ -6,12 +6,12 @@ securitySchemes:
     settings:
       authorizationUri: https://https://oauth.net/2/
       accessTokenUri: ""
+      authorizationGrants:
+        - implicit
       scopes:
         - https://oauth.net/2.full_control
         - https://oauth.net/2.read_only
         - https://oauth.net/2.read_write
-      authorizationGrants:
-        - implicit
     description: Oauth 2.0 authentication
 /training:
   post:

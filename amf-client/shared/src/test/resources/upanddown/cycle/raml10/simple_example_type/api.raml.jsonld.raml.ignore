@@ -1,6 +1,8 @@
 #%RAML 1.0
 title: test title
 description: test description
+protocols:
+  - HTTP
 baseUri: api.example.com/path
 types:
   AppPerson: !include app-person.raml
@@ -11,5 +13,3 @@ types:
     body:
       application/json:
         type: AppPerson
-protocols:
-  - HTTP
