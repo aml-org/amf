@@ -17,10 +17,6 @@
   },
   "host": "api.example.com",
   "basePath": "/path",
-  "externalDocs": {
-    "url": "externalDocsUrl",
-    "description": "externalDocsDescription"
-  },
   "consumes": [
     "application/yaml"
   ],
@@ -31,6 +27,10 @@
     "http",
     "https"
   ],
+  "externalDocs": {
+    "url": "externalDocsUrl",
+    "description": "externalDocsDescription"
+  },
   "paths": {
     "/level-zero": {
       "x-amf-displayName": "Name"
