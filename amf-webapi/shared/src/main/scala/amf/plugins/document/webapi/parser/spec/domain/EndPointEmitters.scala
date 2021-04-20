@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
+import amf.core.annotations.{SynthesizedField, VirtualElement}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
@@ -10,7 +10,7 @@ import amf.core.utils._
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.ExtendsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
-import amf.plugins.domain.webapi.metamodel.EndPointModel
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
@@ -43,8 +43,9 @@ case class Raml10EndPointEmitter(endpoint: EndPoint,
 
           result ++= OasParametersEmitter("parameters".asRamlAnnotation, other, ordering, references = references)(
             amf.plugins.document.webapi.parser.spec.toOas(spec)).ramlEndpointEmitters()
-
-          if (path.nonEmpty) {
+          val explicitParams =
+            path.filter(p => !p.fields.getValueAsOption(ParameterModel.Name).exists(_.isSynthesized))
+          if (explicitParams.nonEmpty) {
             // TODO just emit other params in other way
             val entry = FieldEntry(EndPointModel.Parameters,
                                    Value(AmfArray(path, f.value.value.annotations), f.value.annotations))
