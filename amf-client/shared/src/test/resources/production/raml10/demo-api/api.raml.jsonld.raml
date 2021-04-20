@@ -2,6 +2,7 @@
 title: Navigation demo API
 version: v2
 baseUri: https://api.mulesoft.com/{version}
+mediaType: application/json
 securitySchemes:
   basic:
     type: Basic Authentication
@@ -95,6 +96,8 @@ types:
       - Upload URI, for media upload requests: `POST https://www.googleapis.com/upload/drive/v2/files`
       - Metadata URI, for metadata-only requests: `POST https://www.googleapis.com/drive/v2/files`
   get:
+    securedBy:
+      - basic
     displayName: list
     description: |
       Lists the user's files. Try it now or see an example.
@@ -102,8 +105,6 @@ types:
       Requests with `files.list` accept the `q` parameter, which is a search query combining one or more search terms. For more information, see Search for files.
 
       Note: Note: This method returns all files by default. This includes files with trashed=true in the results. Use the trashed=false query parameter to filter these from the results.
-    securedBy:
-      - basic
   /{fileId}:
     displayName: Get file
     get:
@@ -132,14 +133,14 @@ types:
       post:
         description: Adds a parent folder for a file.
       /{parentId}:
-        get:
-          description: Gets a specific parent reference.
-        delete:
-          description: Removes a parent from a file.
         uriParameters:
           parentId:
             type: string
             description: The ID of the parent.
+        get:
+          description: Gets a specific parent reference.
+        delete:
+          description: Removes a parent from a file.
     /permissions:
       get:
         description: Lists a file's permissions.
@@ -149,6 +150,10 @@ types:
 
           Warning: Concurrent permissions operations on the same file are not supported; only the last update is applied.
       /{permissionId}:
+        uriParameters:
+          permissionId:
+            type: string
+            description: The ID for the permission.
         get:
           description: Gets a permission by ID.
         put:
@@ -168,21 +173,17 @@ types:
             Updates a permission. This method supports patch semantics.
 
             **Warning**: Concurrent permissions operations on the same file are not supported; only the last update is applied.
-        uriParameters:
-          permissionId:
-            type: string
-            description: The ID for the permission.
     /revisions:
       get: {}
       /{revisionId}:
-        get: {}
-        put: {}
-        delete: {}
-        patch: {}
         uriParameters:
           revisionId:
             type: string
             description: The ID of the revision.
+        get: {}
+        put: {}
+        delete: {}
+        patch: {}
     /comments:
       get: {}
       post:
@@ -198,6 +199,10 @@ types:
           get: {}
           post: {}
           /{replyId}:
+            uriParameters:
+              replyId:
+                type: string
+                description: The ID of the reply.
             get:
               description: Gets a reply.
             put:
@@ -206,10 +211,6 @@ types:
               description: Deletes a reply.
             patch:
               description: Updates an existing reply. This method supports patch semantics.
-            uriParameters:
-              replyId:
-                type: string
-                description: The ID of the reply.
         uriParameters:
           commentId:
             type: string
@@ -231,14 +232,14 @@ types:
       post:
         description: Adds a property to a file.
       /{propertyKey}:
-        get: {}
-        put: {}
-        delete: {}
-        patch: {}
         uriParameters:
           propertyKey:
             type: string
             description: The key of the property.
+        get: {}
+        put: {}
+        delete: {}
+        patch: {}
     uriParameters:
       fileId:
         type: string
@@ -269,15 +270,14 @@ types:
   displayName: Changes
   get: {}
   /{changeId}:
-    get:
-      description: Gets a specific change.
     uriParameters:
       changeId:
         type: string
         description: The ID of the change.
+    get:
+      description: Gets a specific change.
   /watch:
     post:
-      description: Watch for all changes to a user's Drive.
       queryParameters:
         spaces?:
           type: string
@@ -287,24 +287,25 @@ types:
             - **drive**
             - **appDataFolder**
             - **photos**
+      description: Watch for all changes to a user's Drive.
 /permissionIds/{email}:
-  get:
-    description: Returns the permission ID for an email address.
   uriParameters:
     email:
       type: string
       description: The email address for which to return a permission ID
+  get:
+    description: Returns the permission ID for an email address.
 /apps:
   displayName: Apps
   get:
     description: Lists a user's installed apps.
   /{appId}:
-    get:
-      description: Gets a specific app.
     uriParameters:
       appId:
         type: string
         description: The ID of the app.
+    get:
+      description: Gets a specific app.
 /channels/stop:
   post:
     description: |
@@ -319,6 +320,9 @@ types:
     displayName: list
     description: Lists the user's Team Drives.
   /{teamDriveId}:
+    uriParameters:
+      teamDriveId:
+        description: The ID of the Team Drive
     delete:
       description: |
         Permanently deletes a Team Drive for which the user is an organizer. The Team Drive cannot contain any untrashed items.
@@ -326,7 +330,3 @@ types:
       description: Gets a Team Drive's metadata by ID.
     put:
       description: Updates a Team Drive's metadata
-    uriParameters:
-      teamDriveId:
-        description: The ID of the Team Drive
-mediaType: application/json

@@ -3,13 +3,13 @@ title: Library API
 baseUri: http://localhost/library
 /authors:
   /{authorId}:
+    uriParameters:
+      authorId:
+        type: integer
+        description: The ID of the author.
     /books:
       /{bookId}:
         get: {}
         uriParameters:
           bookId:
             type: string
-    uriParameters:
-      authorId:
-        type: integer
-        description: The ID of the author.

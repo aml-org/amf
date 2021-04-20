@@ -27,11 +27,11 @@ types:
     example: ジョン.ドウ
   ユーザーアカウント:
     type: string
-    example: 個人的な
     enum:
       - 個人的な
       - 会社
       - グルパル
+    example: 個人的な
   ユーザー:
     example:
       画像:
@@ -53,11 +53,11 @@ types:
         anyOf:
           -
             type: string
-            example: 個人的な
             enum:
               - 個人的な
               - 会社
               - グルパル
+            example: 個人的な
           -
             type: object
             (amf-recursive): amf://id#14
@@ -98,11 +98,11 @@ securitySchemes:
             anyOf:
               -
                 type: string
-                example: 個人的な
                 enum:
                   - 個人的な
                   - 会社
                   - グルパル
+                example: 個人的な
               -
                 type: object
                 (amf-recursive): amf://id#14
@@ -111,11 +111,6 @@ securitySchemes:
       - 基本的な
 /ユーザー/{ユーザーID}:
   get:
-    (amf-baseUriParameters):
-      ユーザーID?:
-        default: ジョン.ドウ
-        type: string
-        example: ジョン.ドウ
     responses:
       "201":
         body:
@@ -140,14 +135,19 @@ securitySchemes:
                 anyOf:
                   -
                     type: string
-                    example: 個人的な
                     enum:
                       - 個人的な
                       - 会社
                       - グルパル
+                    example: 個人的な
                   -
                     type: object
                     (amf-recursive): amf://id#14
                 required: true
+    (amf-baseUriParameters):
+      ユーザーID?:
+        default: ジョン.ドウ
+        type: string
+        example: ジョン.ドウ
     securedBy:
       - 基本的な

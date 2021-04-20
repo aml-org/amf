@@ -1,5 +1,6 @@
 #%RAML 1.0
 title: Example of request bodies
+mediaType: application/json
 /groups:
   post:
     body:
@@ -11,4 +12,3 @@ title: Example of request bodies
       text/xml: <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>
       application/json:
         type: "{ \"type\": \"object\", \"properties\": { \"a\": {\"type\": \"string\"} } }"
-mediaType: application/json
