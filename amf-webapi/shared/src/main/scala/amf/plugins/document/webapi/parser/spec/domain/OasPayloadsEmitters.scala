@@ -7,7 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
 import amf.core.parser.{FieldEntry, Position}
 import amf.core.parser.Position.ZERO
-import amf.plugins.document.webapi.annotations.ParameterNameForPayload
+import amf.plugins.document.webapi.annotations.{InlineDefinition, ParameterNameForPayload}
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterFactory,
   Oas3SpecEmitterFactory,
@@ -56,9 +56,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         }
 
         fs.entry(PayloadModel.Schema).map { f =>
-          if (shouldEmit(f)) {
-            result += oas.OasSchemaEmitter(f, ordering, references)
-          }
+          result += oas.OasSchemaEmitter(f, ordering, references)
         }
 
         result ++= AnnotationsEmitter(payload, ordering).emitters
@@ -67,23 +65,6 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
       }
     )
   }
-
-  private def shouldEmit(f: FieldEntry) =
-    !(f.value.annotations.contains(classOf[SynthesizedField]) ||
-      ((f.value.annotations.contains(classOf[Inferred]) || f.value.annotations.contains(classOf[VirtualElement])) &&
-        childrenDefined(f.value.value)))
-
-  private def childrenDefined(e: AmfElement): Boolean =
-    e match {
-      case AmfArray(values, annotations) =>
-        annotations.contains(classOf[SourceAST]) || values.exists(childrenDefined)
-      case amfObject: AmfObject =>
-        amfObject.annotations.contains(classOf[SourceAST]) || amfObject.fields
-          .fields()
-          .exists(fe => childrenDefined(fe.value.value))
-      case AmfScalar(_, annotations) => annotations.contains(classOf[SourceAST])
-      case _                         => false
-    }
 
   override def position(): Position = pos(payload.annotations)
 }

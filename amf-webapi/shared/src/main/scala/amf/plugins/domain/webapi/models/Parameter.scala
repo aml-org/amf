@@ -32,7 +32,8 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def schema: Shape              = fields.field(Schema)
   def payloads: Seq[Payload]     = fields.field(Payloads)
 
-  def withParameterName(name: String): this.type               = set(ParameterName, name)
+  def withParameterName(name: String, annots: Annotations = Annotations()): this.type =
+    set(ParameterName, name, annots)
   def withDescription(description: String): this.type          = set(Description, description)
   def withRequired(required: Boolean): this.type               = set(Required, required)
   def withDeprecated(deprecated: Boolean): this.type           = set(Deprecated, deprecated)

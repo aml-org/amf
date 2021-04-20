@@ -17,10 +17,6 @@
   },
   "host": "api.example.com",
   "basePath": "/path",
-  "externalDocs": {
-    "url": "externalDocsUrl",
-    "description": "externalDocsDescription"
-  },
   "consumes": [
     "application/yaml"
   ],
@@ -31,19 +27,10 @@
     "http",
     "https"
   ],
-  "paths": {
-    "/level-zero": {
-      "x-amf-displayName": "Name"
-    },
-    "/level-zero/level-one": {
-      "x-amf-displayName": "One display name",
-      "x-amf-description": "and this description!"
-    },
-    "/level-zero/another-level-one": {
-      "x-amf-displayName": "some other display name"
-    },
-    "/another-level-zero": {
-      "x-amf-displayName": "Root name"
-    }
-  }
+  "externalDocs": {
+    "url": "externalDocsUrl",
+    "description": "externalDocsDescription",
+    "x-amf-title": "Home documentation"
+  },
+  "paths": {}
 }
