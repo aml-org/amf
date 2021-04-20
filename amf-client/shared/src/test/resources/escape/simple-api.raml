@@ -6,14 +6,14 @@ baseUri: localhost/escape
 /v1:
   /{uri%Par$am}:
     uriParameters:
-      uri%Par$am?:
+      uri%Par$am:
         type: string
         description: A URI param with problematic characters.
     post:
       headers:
-        head#$%$#er1?:
+        head#$%$#er1:
           type: string
-        he@a$d@er^^@2#?:
+        he@a$d@er^^@2#:
           type: integer
       queryParameters:
         queryParam<1>:
