@@ -5,7 +5,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Yaml
-import amf.core.remote.Vendor.AMF
+import amf.core.remote.Vendor.{AMF, ASYNC20, OAS20}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
@@ -1107,6 +1107,33 @@ class EditingResolutionTest extends ResolutionTest {
         target = Amf,
         directory = resolutionPath + "nested-library-with-recursive-shape/",
         transformWith = Some(Raml10),
+        renderOptions = Some(config.renderOptions),
+        eh = Some(UnhandledParserErrorHandler)
+      )
+    }
+
+    multiGoldenTest("RecursiveShape referenced by additionalProperties facet has correct fixpoint", "api.%s") {
+      config =>
+        cycle(
+          "api.yaml",
+          config.golden,
+          OasYamlHint,
+          target = Amf,
+          directory = resolutionPath + "additional-prop-recursive-shape/",
+          transformWith = Some(OAS20),
+          renderOptions = Some(config.renderOptions),
+          eh = Some(UnhandledParserErrorHandler)
+        )
+    }
+
+    multiGoldenTest("RecursiveShape referenced by not facet has correct fixpoint", "api.%s") { config =>
+      cycle(
+        "api.yaml",
+        config.golden,
+        AsyncYamlHint,
+        target = Amf,
+        directory = resolutionPath + "not-facet-recursive-shape/",
+        transformWith = Some(ASYNC20),
         renderOptions = Some(config.renderOptions),
         eh = Some(UnhandledParserErrorHandler)
       )

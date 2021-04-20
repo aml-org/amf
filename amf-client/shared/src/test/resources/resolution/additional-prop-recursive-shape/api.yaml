@@ -1,0 +1,25 @@
+swagger: '2.0'
+info:
+  description: some description.
+  title: title
+  version: v1
+
+paths: {}
+definitions:
+
+  Document:
+    additionalProperties:
+      $ref: '#/definitions/StructuralElement'
+    type: object
+
+  StructuralElement:
+    properties:
+      tableOfContents:
+        $ref: '#/definitions/TableOfContents'
+    type: object
+
+  TableOfContents:
+    properties:
+      content:
+        $ref: '#/definitions/StructuralElement'
+    type: object

@@ -122,7 +122,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     val notConstraint = shape.fields.getValue(ShapeModel.Not)
     if (Option(notConstraint).isDefined) {
       val constraint = recursiveNormalization(shape.not)
-      shape.set(ShapeModel.Not, constraint, notConstraint.annotations)
+      shape.setWithoutId(ShapeModel.Not, constraint, notConstraint.annotations)
     }
   }
 
@@ -191,7 +191,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     }
     Option(node.additionalPropertiesSchema).foreach(x => {
       val resultantShape = traverseOptionalShapeFacet(x, node)
-      node.set(NodeShapeModel.AdditionalPropertiesSchema, resultantShape)
+      node.setWithoutId(NodeShapeModel.AdditionalPropertiesSchema, resultantShape)
     })
 
     expandInherits(node)
