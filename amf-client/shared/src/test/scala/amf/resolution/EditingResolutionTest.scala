@@ -1099,45 +1099,6 @@ class EditingResolutionTest extends ResolutionTest {
       )
     }
 
-    multiGoldenTest("RecursiveShape in nested library has correct fixpoint using UrlShortening", "api.%s") { config =>
-      cycle(
-        "api.raml",
-        config.golden,
-        RamlYamlHint,
-        target = Amf,
-        directory = resolutionPath + "nested-library-with-recursive-shape/",
-        transformWith = Some(Raml10),
-        renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledParserErrorHandler)
-      )
-    }
-
-    multiGoldenTest("RecursiveShape referenced by additionalProperties facet has correct fixpoint", "api.%s") {
-      config =>
-        cycle(
-          "api.yaml",
-          config.golden,
-          OasYamlHint,
-          target = Amf,
-          directory = resolutionPath + "additional-prop-recursive-shape/",
-          transformWith = Some(OAS20),
-          renderOptions = Some(config.renderOptions),
-          eh = Some(UnhandledParserErrorHandler)
-        )
-    }
-
-    multiGoldenTest("RecursiveShape referenced by not facet has correct fixpoint", "api.%s") { config =>
-      cycle(
-        "api.yaml",
-        config.golden,
-        AsyncYamlHint,
-        target = Amf,
-        directory = resolutionPath + "not-facet-recursive-shape/",
-        transformWith = Some(ASYNC20),
-        renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledParserErrorHandler)
-      )
-    }
   }
   override val basePath: String = ""
 }
