@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.core.annotations.{DeclaredElement, DefaultNode, ExplicitField, Inferred}
+import amf.core.annotations.{DeclaredElement, DefaultNode, ExplicitField, Inferred, LexicalInformation, SourceLocation}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
@@ -19,7 +19,7 @@ import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, ScalarShapeModel, Un
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.MessageModel.Examples
-import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, RequestModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.utils.AnnotationSyntax._
 import amf.plugins.features.validation.CoreValidations
@@ -511,13 +511,15 @@ object MergingValidator {
       }
 
       if (mainPayloadsDefineMediaType != otherPayloadsDefineMediaType) {
-
-        errorHandler.violation(UnequalMediaTypeDefinitionsInExtendsPayloads,
-                               main.id,
-                               None,
-                               UnequalMediaTypeDefinitionsInExtendsPayloads.message,
-                               main.position(),
-                               main.location())
+        val fieldAnnotations = main.fields.getValueAsOption(RequestModel.Payloads).map(_.annotations)
+        errorHandler.violation(
+          UnequalMediaTypeDefinitionsInExtendsPayloads,
+          main.id,
+          None,
+          UnequalMediaTypeDefinitionsInExtendsPayloads.message,
+          fieldAnnotations.flatMap(_.find(classOf[LexicalInformation])),
+          fieldAnnotations.flatMap(_.find(classOf[SourceLocation]).map(_.location))
+        )
       }
     }
   }
