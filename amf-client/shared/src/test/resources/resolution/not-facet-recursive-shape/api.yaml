@@ -1,0 +1,26 @@
+asyncapi: '2.0.0'
+info:
+  title: components
+  version: '1.0.0'
+
+components:
+
+  schemas:
+    Document:
+      not:
+        $ref: '#/components/schemas/StructuralElement'
+      type: object
+
+    StructuralElement:
+      properties:
+        tableOfContents:
+          $ref: '#/components/schemas/TableOfContents'
+      type: object
+
+    TableOfContents:
+      properties:
+        content:
+          $ref: '#/components/schemas/StructuralElement'
+      type: object
+
+channels: {}

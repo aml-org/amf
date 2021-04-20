@@ -80,7 +80,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     val notConstraint = shape.fields.getValue(ShapeModel.Not)
     if (Option(notConstraint).isDefined) {
       val newLogicalConstraint = normalize(shape.not)
-      shape.set(ShapeModel.Not, newLogicalConstraint, notConstraint.annotations)
+      shape.setWithoutId(ShapeModel.Not, newLogicalConstraint, notConstraint.annotations)
     }
   }
 
