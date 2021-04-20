@@ -56,10 +56,6 @@
     "schemas": {
       "VehicleDetails": {
         "type": "object",
-        "example": {
-          "ビーデン": "ビーデン",
-          "id": "id"
-        },
         "properties": {
           "id": {
             "type": "string"
@@ -67,16 +63,14 @@
           "ビーデン": {
             "type": "string"
           }
+        },
+        "example": {
+          "ビーデン": "ビーデン",
+          "id": "id"
         }
       },
       "Branch": {
         "type": "object",
-        "example": {
-          "シティ": "シティ",
-          "状態": "状態",
-          "通り状態": "通り状態",
-          "zipCode": "zipCode"
-        },
         "properties": {
           "シティ": {
             "type": "string"
@@ -90,21 +84,16 @@
           "zipCode": {
             "type": "string"
           }
+        },
+        "example": {
+          "シティ": "シティ",
+          "状態": "状態",
+          "通り状態": "通り状態",
+          "zipCode": "zipCode"
         }
       },
       "Application": {
         "type": "object",
-        "example": {
-          "Application状態": "Application状態",
-          "Branch": {
-            "zipCode": "zipCode",
-            "シティ": "シティ",
-            "通り状態": "通り状態",
-            "状態": "状態"
-          },
-          "ApplicationStatus": "ApplicationStatus",
-          "ApplicationId": "ApplicationId"
-        },
         "properties": {
           "ApplicationId": {
             "type": "string"
@@ -118,6 +107,17 @@
           "Branch": {
             "$ref": "#/components/schemas/Branch"
           }
+        },
+        "example": {
+          "Application状態": "Application状態",
+          "Branch": {
+            "zipCode": "zipCode",
+            "シティ": "シティ",
+            "通り状態": "通り状態",
+            "状態": "状態"
+          },
+          "ApplicationStatus": "ApplicationStatus",
+          "ApplicationId": "ApplicationId"
         }
       }
     }

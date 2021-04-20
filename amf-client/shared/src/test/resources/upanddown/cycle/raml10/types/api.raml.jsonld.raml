@@ -20,8 +20,13 @@ types:
             type: string
 title: test title
 description: test description
+mediaType:
+  - application/yaml
 version: "1.1"
 (amf-termsOfService): terms of service
+protocols:
+  - http
+  - https
 /level-zero:
   displayName: One display name
   description: and this description!
@@ -72,8 +77,3 @@ version: "1.1"
         body:
           type: integer
 baseUri: api.example.com/path
-mediaType:
-  - application/yaml
-protocols:
-  - http
-  - https

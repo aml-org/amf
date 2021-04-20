@@ -1,6 +1,8 @@
 #%RAML 1.0
 title: file type
 version: "1.0"
+protocols:
+  - HTTP
 baseUri: myApi.com
 types:
   wrappedFile:
@@ -20,5 +22,3 @@ types:
         body:
           application/json:
             type: wrappedFile
-protocols:
-  - HTTP

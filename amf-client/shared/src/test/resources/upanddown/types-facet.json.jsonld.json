@@ -8,14 +8,14 @@
   "definitions": {
     "ScalarTest": {
       "type": "string",
-      "pattern": "blabla.+",
-      "minLength": 1,
-      "default": "defaultValue",
-      "maxLength": 20,
       "enum": [
         "a1",
         "a2"
-      ]
+      ],
+      "pattern": "blabla.+",
+      "minLength": 1,
+      "default": "defaultValue",
+      "maxLength": 20
     },
     "IntegerTest": {
       "type": "integer",
@@ -37,6 +37,12 @@
         "url": "externalDocsUrl",
         "description": "externalDocsDescription"
       },
+      "properties": {
+        "name": {
+          "type": "string",
+          "readOnly": false
+        }
+      },
       "minProperties": 1,
       "maxProperties": 5,
       "discriminator": "ddd",
@@ -44,12 +50,6 @@
       "xml": {
         "namespace": "namespacetest",
         "prefix": "blabla"
-      },
-      "properties": {
-        "name": {
-          "type": "string",
-          "readOnly": false
-        }
       }
     }
   }

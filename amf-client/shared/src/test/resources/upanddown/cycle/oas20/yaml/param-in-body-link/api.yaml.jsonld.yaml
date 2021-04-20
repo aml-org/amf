@@ -1,7 +1,4 @@
 swagger: "2.0"
-info:
-  title: API
-  version: "1.0"
 consumes:
   - application/json
 produces:
@@ -14,6 +11,9 @@ paths:
         -
           $ref: "#/parameters/bp"
       responses: {}
+info:
+  title: API
+  version: "1.0"
 parameters:
   bp:
     in: body

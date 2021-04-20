@@ -1,5 +1,6 @@
 #%RAML 1.0
 title: Tato Bores
+mediaType: application/json
 /ok0:
   post:
     body:
@@ -23,4 +24,3 @@ title: Tato Bores
             },
             "required": ["firstName", "lastName"]
         }
-mediaType: application/json
