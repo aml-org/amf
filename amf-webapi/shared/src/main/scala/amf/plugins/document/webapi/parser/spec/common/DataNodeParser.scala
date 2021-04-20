@@ -76,17 +76,20 @@ class DataNodeParser private (node: YNode,
   protected def parseObject(value: YMap): DataNode = {
     val node = DataObjectNode(Annotations(value)).withSynthesizeName(idCounter.genId("object"))
     parent.foreach(p => node.adopted(p))
-    value.entries.map { ast =>
-      parameters.parseVariables(ast.key)
-      val value               = ast.value
-      val propertyAnnotations = Annotations(ast)
+    value.entries.map { entry =>
+      parameters.parseVariables(entry.key)
+      val value               = entry.value
+      val propertyAnnotations = Annotations(entry)
 
       val propertyNode =
         new DataNodeParser(value, refsCounter, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addProperty(ast.key.as[YScalar].text, propertyNode, propertyAnnotations)
+      node.addProperty(keyFor(entry), propertyNode, propertyAnnotations)
     }
     node
   }
+
+  private def keyFor(ast: YMapEntry) =
+    ast.key.as[YScalar].text
 }
 
 case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),

@@ -33,7 +33,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
     ctx.declarations
       .findServerBindings(label, SearchScope.Named)
       .map(serverBindings =>
-        nameAndAdopt(serverBindings.link(AmfScalar(label), extractRefAnnotation(entryLike), Annotations.synthesized()),
+        nameAndAdopt(serverBindings.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized()),
                      entryLike.key))
       .getOrElse(remote(fullRef, entryLike, parent))
   }

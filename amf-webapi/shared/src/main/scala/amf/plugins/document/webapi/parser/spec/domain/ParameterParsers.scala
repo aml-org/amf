@@ -72,7 +72,12 @@ case class Raml10ParameterParser(entry: YMapEntry,
     extends RamlParameterParser(entry, adopted) {
 
   override def parse(): Parameter = {
-
+    val nameNode = ScalarNode(entry.key)
+    val parameter = Parameter(entry)
+      .withName(nameNode)
+      .set(ParameterModel.ParameterName, nameNode.text(), Annotations.inferred()) // TODO parameter id is using a name that is not final.
+    parameter.syntheticBinding(binding)
+    adopted(parameter)
     val p = entry.value.to[YMap] match {
       case Right(map) =>
         map.key("required", (ParameterModel.Required in parameter).explicit.allowingAnnotations)
@@ -148,7 +153,7 @@ case class Raml10ParameterParser(entry: YMapEntry,
       p.set(ParameterModel.Name, AmfScalar(paramName, nameNode.text().annotations), Annotations.inferred())
         .set(ParameterModel.ParameterName, AmfScalar(paramName, nameNode.text().annotations), Annotations.inferred())
     }
-    p.synthesizedBinding(binding)
+    p.syntheticBinding(binding)
     p
   }
 
@@ -163,7 +168,11 @@ case class Raml08ParameterParser(entry: YMapEntry,
                                  binding: String)(implicit ctx: RamlWebApiContext)
     extends RamlParameterParser(entry, adopted) {
   def parse(): Parameter = {
-    parameter.synthesizedBinding(binding)
+    val nameNode = ScalarNode(entry.key)
+    val parameter = Parameter(entry)
+      .withName(nameNode)
+      .set(ParameterModel.ParameterName, nameNode.text(), Annotations.inferred()) // TODO parameter id is using a name that is not final.
+    parameter.syntheticBinding(binding)
     adopted(parameter)
 
     entry.value.tagType match {
@@ -211,15 +220,6 @@ case class Raml08ParameterParser(entry: YMapEntry,
 abstract class RamlParameterParser(entry: YMapEntry, adopted: Parameter => Unit)(implicit val ctx: RamlWebApiContext)
     extends RamlTypeSyntax
     with SpecParserOps {
-
-  protected val nameNode = ScalarNode(entry.key)
-  protected val parameter: Parameter = {
-    val parameter = Parameter(entry)
-      .withName(nameNode)
-      .set(ParameterModel.ParameterName, nameNode.text(), Annotations.inferred()) // TODO parameter id is using a name that is not final.
-    adopted(parameter)
-    parameter
-  }
 
   def parse(): Parameter
 }

@@ -28,8 +28,6 @@ traits:
   descr:
     description: Some requests require authentication.
 /top:
-  is:
-    - descr
   type:
     searchableCollection:
       queryParamName: title
@@ -45,6 +43,8 @@ traits:
       -
         parameterized:
           tokenName: access_token
+  is:
+    - descr
   securedBy:
     - oauth_2_0
 protocols:

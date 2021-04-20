@@ -39,14 +39,15 @@ class ProductionResolutionTest extends RamlResolutionTest {
           Raml)
   }
 
-//  multiGoldenTest("Resolves googleapis.compredictionv1.2swagger.raml to jsonld",
-//                  "googleapis.compredictionv1.2swagger.raml.resolved.%s") { config =>
-//    cycle("googleapis.compredictionv1.2swagger.raml",
-//          config.golden,
-//          RamlYamlHint,
-//          renderOptions = Some(config.renderOptions),
-//          target = Amf)
-//  }
+  // TODO: diff of final result is too slow
+  multiGoldenTest("Resolves googleapis.compredictionv1.2swagger.raml to jsonld",
+                  "googleapis.compredictionv1.2swagger.raml.resolved.%s") { config =>
+    cycle("googleapis.compredictionv1.2swagger.raml",
+          config.golden,
+          RamlYamlHint,
+          renderOptions = Some(config.renderOptions),
+          target = Amf)
+  }
 
   multiGoldenTest("azure_blob_service raml to jsonld", "microsoft_azure_blob_service.raml.resolved.%s") { config =>
     cycle("microsoft_azure_blob_service.raml",

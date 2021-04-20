@@ -179,6 +179,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200/source-map/lexical/element_1"
+        },
+        {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200/source-map/lexical/element_0"
         }
       ]
@@ -199,9 +202,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200/source-map/lexical/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,16)-(11,32)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/200/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(10,13)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas_response_declaration.yaml",

@@ -1,12 +1,14 @@
 package amf.maker
 
 import amf.core.model.document.Document
+import amf.core.model.domain.AmfArray
 import amf.core.parser.errorhandler.{AmfParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote._
 import amf.core.validation.AMFValidationResult
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.domain.shapes.models.DomainExtensions._
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.{Assertion, Succeeded}
 
@@ -26,6 +28,9 @@ class DocumentMakerTest extends WebApiMakerTest {
   test("Oas declared types ") {
     val doc = documentWithTypes(Oas)
       .withLocation("file://amf-client/shared/src/test/resources/maker/declared-types.json")
+
+    doc.encodes.set(WebApiModel.EndPoints, AmfArray(Seq()))
+
     assertFixture(doc, "declared-types.json", OasJsonHint)
   }
 
