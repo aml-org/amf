@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{LexicalInformation, SynthesizedField}
+import amf.core.annotations.{LexicalInformation, SynthesizedField, VirtualElement}
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.parser.{Annotations, _}
@@ -270,7 +270,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     if (operationsDefineParam) None
     else {
       val parameter = Parameter()
-      val pathParam = Parameter()
+      val pathParam = Parameter(Annotations.virtual())
         .withSynthesizeName(variable)
         .set(ParameterModel.ParameterName, variable, Annotations.synthesized())
         .syntheticBinding("path")
@@ -278,7 +278,6 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       endpoint.add(EndPointModel.Parameters, parameter)
 
       pathParam.withScalarSchema(variable).withDataType(DataType.String)
-      pathParam.annotations ++= Annotations.virtual()
       Some(pathParam)
     }
   }
@@ -305,7 +304,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
         parentParams.get(variable) match {
           case Some(param) =>
             val pathParam = param.cloneParameter(endpoint.id)
-            pathParam.annotations += SynthesizedField()
+            param.name.option().foreach(n => pathParam.withSynthesizeName(n))
+            pathParam.annotations += VirtualElement()
             Some(pathParam)
           case None =>
             explicitParams.find(p => p.name.value().equals(variable) && p.binding.value().equals("path")) match {
