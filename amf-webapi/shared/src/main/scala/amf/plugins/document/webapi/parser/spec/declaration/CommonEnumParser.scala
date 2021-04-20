@@ -15,7 +15,7 @@ object CommonEnumParser {
 
   def apply(parentId: String, enumType: String = EnumParsing.UNKNOWN_ENUM)(
       implicit ctx: WebApiContext): YNode => DataNode = {
-    val enumParentId = s"${parentId}/enum"
+    val enumParentId = s"$parentId/enum"
     enumType match {
       case EnumParsing.SCALAR_ENUM => ScalarNodeParser(parent = Some(enumParentId)).parse
       case _                       => DataNodeParser.parse(parent = Some(enumParentId), idCounter = new IdCounter())

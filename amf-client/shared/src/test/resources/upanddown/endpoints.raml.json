@@ -1,0 +1,49 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "description": "test description",
+    "termsOfService": "terms of service",
+    "version": "1.1",
+    "license": {
+      "url": "licenseUrl",
+      "name": "licenseName"
+    },
+    "contact": {
+      "url": "contactUrl",
+      "name": "contactName",
+      "email": "contactEmail"
+    }
+  },
+  "host": "api.example.com",
+  "basePath": "/path",
+  "consumes": [
+    "application/yaml"
+  ],
+  "produces": [
+    "application/yaml"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "externalDocs": {
+    "url": "externalDocsUrl",
+    "description": "externalDocsDescription"
+  },
+  "paths": {
+    "/level-zero": {
+      "x-amf-displayName": "Name"
+    },
+    "/level-zero/level-one": {
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!"
+    },
+    "/level-zero/another-level-one": {
+      "x-amf-displayName": "some other display name"
+    },
+    "/another-level-zero": {
+      "x-amf-displayName": "Root name"
+    }
+  }
+}

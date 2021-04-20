@@ -112,8 +112,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
           ctx.declarations.findResourceTypeOrError(entry.value))
           .parse()
         endpoint.set(EndPointModel.Extends,
-                     AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(entry.value)),
-                     Annotations(entry))
+                     AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(Annotations.virtual())),
+                     Annotations(Annotations.inferred()))
       }
     )
 
@@ -273,7 +273,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       val pathParam = Parameter()
         .withSynthesizeName(variable)
         .set(ParameterModel.ParameterName, variable, Annotations.synthesized())
-        .synthesizedBinding("path")
+        .syntheticBinding("path")
         .set(ParameterModel.Required, AmfScalar(true), Annotations.synthesized())
       endpoint.add(EndPointModel.Parameters, parameter)
 

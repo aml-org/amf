@@ -54,10 +54,6 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("complete.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
-  multiGoldenTest("Endpoints oas to amf test", "endpoints.json.%s") { config =>
-    cycle("endpoints.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
-  }
-
   multiGoldenTest("Complete with formData parameter references oas to amf test", "formDataParameters.%s") { config =>
     cycle("formDataParameters.json",
           config.golden,
@@ -326,7 +322,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Complete raml to oas test") {
-    cycle("complete.raml", "complete.json", RamlYamlHint, target = Oas)
+    cycle("complete.raml", "complete.raml.json", RamlYamlHint, target = Oas)
   }
 
   test("Complete oas to raml test") {
@@ -346,7 +342,11 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Endpoints raml to oas test") {
-    cycle("endpoints.raml", "endpoints.json", RamlYamlHint, target = Oas)
+    cycle("endpoints.raml", "endpoints.raml.json", RamlYamlHint, target = Oas)
+  }
+
+  multiGoldenTest("Endpoints oas to amf test", "endpoints.json.%s") { config =>
+    cycle("endpoints.json", config.golden, OasJsonHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
   test("Endpoints oas to raml test") {

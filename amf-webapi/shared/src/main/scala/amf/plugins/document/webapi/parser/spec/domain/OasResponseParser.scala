@@ -108,7 +108,6 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
         }
 
         // OAS 3.0.0
-        var payloadAnn: Option[Annotations] = None
         if (ctx.syntax == Oas3Syntax) {
           map.key(
             "content", { entry =>

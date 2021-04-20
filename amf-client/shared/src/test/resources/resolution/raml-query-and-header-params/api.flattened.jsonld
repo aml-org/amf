@@ -11,7 +11,7 @@
       "core:name": "aq-1463",
       "apiContract:server": [
         {
-          "@id": "#12"
+          "@id": "#13"
         }
       ],
       "core:version": "1.0",
@@ -36,7 +36,7 @@
       }
     },
     {
-      "@id": "#12",
+      "@id": "#13",
       "@type": [
         "apiContract:Server",
         "doc:DomainElement"
@@ -47,7 +47,7 @@
           "core:urlTemplate": "[(5,0)-(7,0)]"
         },
         "synthesized-field": {
-          "#12": "true"
+          "#13": "true"
         }
       }
     },
@@ -102,7 +102,7 @@
       ],
       "apiContract:returns": [
         {
-          "@id": "#9"
+          "@id": "#10"
         }
       ],
       "smaps": {
@@ -138,7 +138,7 @@
       }
     },
     {
-      "@id": "#9",
+      "@id": "#10",
       "@type": [
         "apiContract:Response",
         "apiContract:Message",
@@ -148,13 +148,13 @@
       "core:name": "200",
       "apiContract:payload": [
         {
-          "@id": "#10"
+          "@id": "#11"
         }
       ],
       "smaps": {
         "lexical": {
           "apiContract:payload": "[(21,10)-(24,0)]",
-          "#9": "[(20,8)-(24,0)]"
+          "#10": "[(20,8)-(24,0)]"
         }
       }
     },
@@ -193,7 +193,7 @@
       "apiContract:required": false,
       "apiContract:binding": "header",
       "raml-shapes:schema": {
-        "@id": "#7"
+        "@id": "#9"
       },
       "smaps": {
         "synthesized-field": {
@@ -207,18 +207,18 @@
       }
     },
     {
-      "@id": "#10",
+      "@id": "#11",
       "@type": [
         "apiContract:Payload",
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
-        "@id": "#11"
+        "@id": "#12"
       },
       "smaps": {
         "lexical": {
-          "#10": "[(22,12)-(24,0)]"
+          "#11": "[(22,12)-(24,0)]"
         }
       }
     },
@@ -248,7 +248,32 @@
       }
     },
     {
-      "@id": "#11",
+      "@id": "#9",
+      "@type": [
+        "raml-shapes:ScalarShape",
+        "raml-shapes:AnyShape",
+        "shacl:Shape",
+        "raml-shapes:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:name": "schema",
+      "smaps": {
+        "type-property-lexical-info": {
+          "#9": "[(17,10)-(17,14)]"
+        },
+        "lexical": {
+          "shacl:datatype": "[(17,10)-(18,0)]",
+          "#9": "[(15,8)-(18,0)]"
+        }
+      }
+    },
+    {
+      "@id": "#12",
       "@type": [
         "raml-shapes:ScalarShape",
         "raml-shapes:AnyShape",
@@ -264,14 +289,14 @@
       "shacl:name": "schema",
       "smaps": {
         "auto-generated-name": {
-          "#11": ""
+          "#12": ""
         },
         "lexical": {
           "shacl:datatype": "[(23,14)-(24,0)]",
-          "#11": "[(22,12)-(24,0)]"
+          "#12": "[(22,12)-(24,0)]"
         },
         "type-property-lexical-info": {
-          "#11": "[(23,14)-(23,18)]"
+          "#12": "[(23,14)-(23,18)]"
         }
       }
     },

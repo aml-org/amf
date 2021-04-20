@@ -23,8 +23,6 @@ traits:
   descr:
     description: Some requests require authentication.
 /books:
-  is:
-    - descr
   type:
     searchableCollection:
       queryParamName: title
@@ -37,3 +35,5 @@ traits:
       -
         paged:
           maxPages: 10
+  is:
+    - descr
