@@ -106,8 +106,8 @@ case class ApiKeySettings(override private[amf] val _internal: InternalApiKeySet
   }
 
   /** Set in property of this ApiKeySettings] */
-  def withIn(in: String): this.type = {
-    _internal.withIn(in)
+  def withIn(inVal: String): this.type = {
+    _internal.withIn(inVal)
     this
   }
 }
@@ -129,8 +129,8 @@ case class HttpApiKeySettings(override private[amf] val _internal: InternalHttpA
   }
 
   /** Set in property of this HttpApiKeySettings] */
-  def withIn(in: String): this.type = {
-    _internal.withIn(in)
+  def withIn(inVal: String): this.type = {
+    _internal.withIn(inVal)
     this
   }
 }

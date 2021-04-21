@@ -63,7 +63,7 @@ abstract class Api[A](override private[amf] val _internal: InternalApi)
     */
   def withDefaultServer(url: String): Server = _internal.withDefaultServer(url)
 
-  def sourceVendor: Option[Vendor] = _internal.sourceVendor
+  def sourceVendor: ClientOption[Vendor] = _internal.sourceVendor.asClient
 
 }
 
