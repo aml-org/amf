@@ -4,7 +4,7 @@ import amf.core.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
+import amf.core.model.domain.{AmfScalar, DataNode, DomainElement, ObjectNode, Shape}
 import amf.core.parser.{
   Annotations,
   Declarations,
@@ -523,6 +523,8 @@ object WebApiDeclarations {
     withId(idPart)
     isAbstract(isAbstract)
 
+    override def linkCopy(): Message = new ErrorMessage(idPart, ast, isAbstract)
+
     override protected def newErrorInstance: ErrorDeclaration[MessageModel.type] =
       new ErrorMessage(idPart, ast, isAbstract)
     override val model: MessageModel.type = MessageModel
@@ -579,6 +581,7 @@ object WebApiDeclarations {
     withId(idPart)
     withAbstract(true)
 
+    override def linkCopy(): ErrorOperationTrait = new ErrorOperationTrait(idPart, ast).withAbstract(true)
     override protected def newErrorInstance: ErrorDeclaration[OperationModel.type] =
       new ErrorOperationTrait(idPart, ast)
     override val model: OperationModel.type = OperationModel

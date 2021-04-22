@@ -173,11 +173,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#8"
-      },
-      "smaps": {
-        "lexical": {
-          "#7": "[(17,12)-(19,13)]"
-        }
       }
     },
     {
@@ -189,11 +184,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#21"
-      },
-      "smaps": {
-        "lexical": {
-          "#20": "[(33,12)-(35,13)]"
-        }
       }
     },
     {
@@ -275,12 +265,11 @@
       "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
       "smaps": {
         "synthesized-field": {
+          "doc:raw": "true",
           "doc:strict": "true"
         },
         "lexical": {
-          "doc:raw": "[(5,17)-(14,7)]",
-          "#9": "[(5,6)-(14,7)]",
-          "doc:structuredValue": "[(5,17)-(14,7)]"
+          "#9": "[(5,6)-(14,7)]"
         },
         "tracked-element": {
           "#9": "amf://id#7"
@@ -300,12 +289,11 @@
       "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
       "smaps": {
         "synthesized-field": {
+          "doc:raw": "true",
           "doc:strict": "true"
         },
         "lexical": {
-          "doc:raw": "[(5,17)-(14,7)]",
-          "#22": "[(5,6)-(14,7)]",
-          "doc:structuredValue": "[(5,17)-(14,7)]"
+          "#22": "[(5,6)-(14,7)]"
         },
         "tracked-element": {
           "#22": "amf://id#20"

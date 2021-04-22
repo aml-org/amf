@@ -152,7 +152,6 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
             tracking(s, payload.id)
           }
         payload.set(PayloadModel.Schema, shape.getOrElse(AnyShape(entry.value)), Annotations(entry))
-        payload.annotations ++= Annotations(entry)
       }
     )
 

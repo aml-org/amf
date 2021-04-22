@@ -14,7 +14,8 @@ import amf.plugins.document.webapi.parser.spec.common.{
   AnnotationParser,
   DataNodeParser,
   ExternalFragmentHelper,
-  SpecParserOps
+  SpecParserOps,
+  YMapEntryLike
 }
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
@@ -60,7 +61,7 @@ case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDom
 
   private def parseExample(yNode: YNode) = {
     val example = Example(yNode).adopted(exemplifiedDomainElement.id)
-    ExampleDataParser(yNode, example, Oas3ExampleOptions).parse()
+    ExampleDataParser(YMapEntryLike(yNode), example, Oas3ExampleOptions).parse()
   }
 }
 
@@ -153,7 +154,7 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
           .getOrElse(RamlSingleExampleValueParser(entry, simpleProducer, options).parse())
       case Right(_) => RamlSingleExampleValueParser(entry, simpleProducer, options).parse()
     }
-    example.set(ExampleModel.Name, name.text(), Annotations(entry))
+    example.set(ExampleModel.Name, name.text(), Annotations.inferred())
   }
 }
 
@@ -184,7 +185,7 @@ case class RamlSingleExampleParser(key: String,
             case YType.Null => None
             case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
               Option(
-                ExampleDataParser(node, newProducer().add(Annotations(entry.value)), options)
+                ExampleDataParser(YMapEntryLike(node), newProducer().add(Annotations(entry.value)), options)
                   .parse())
           }
       }
@@ -210,15 +211,15 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
           map
             .key("value")
             .foreach { entry =>
-              ExampleDataParser(entry.value, example, options).parse()
+              ExampleDataParser(YMapEntryLike(entry), example, options).parse()
             }
 
           AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
 
           if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
-        } else ExampleDataParser(entry.value, example, options).parse()
+        } else ExampleDataParser(YMapEntryLike(entry.value), example, options).parse()
       case YType.Null => // ignore
-      case _          => ExampleDataParser(entry.value, example, options).parse()
+      case _          => ExampleDataParser(YMapEntryLike(entry.value), example, options).parse()
     }
 
     example
@@ -278,7 +279,7 @@ case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleO
     map
       .key("value")
       .foreach { entry =>
-        ExampleDataParser(entry.value, example, options).parse()
+        ExampleDataParser(YMapEntryLike(entry), example, options).parse()
       }
 
     AnnotationParser(example, map, List(VocabularyMappings.example)).parse()

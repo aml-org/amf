@@ -237,11 +237,13 @@
       },
       "doc:raw": "address:\n  street: 12 Oxford St.\n  city: London\nid: 1299\nname: Example",
       "smaps": {
+        "synthesized-field": {
+          "doc:raw": "true"
+        },
         "lexical": {
-          "doc:raw": "[(20,0)-(25,0)]",
-          "doc:strict": "[(18,14)-(19,0)]",
+          "doc:structuredValue": "[(19,14)-(25,0)]",
           "#7": "[(17,12)-(25,0)]",
-          "doc:structuredValue": "[(19,20)-(25,0)]"
+          "doc:strict": "[(18,14)-(19,0)]"
         },
         "tracked-element": {
           "#7": "amf://id#5"
@@ -598,12 +600,11 @@
       "doc:raw": "12 Oxford St.",
       "smaps": {
         "synthesized-field": {
+          "doc:raw": "true",
           "doc:strict": "true"
         },
         "lexical": {
-          "doc:raw": "[(40,29)-(40,42)]",
-          "#18": "[(40,29)-(40,42)]",
-          "doc:structuredValue": "[(40,29)-(40,42)]"
+          "#18": "[(40,29)-(40,42)]"
         }
       }
     },

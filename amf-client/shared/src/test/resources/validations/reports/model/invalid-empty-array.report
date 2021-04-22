@@ -10,7 +10,7 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/protocols/empty-protocols-root-and-method.raml#/web-api
   Property: http://a.ml/vocabularies/apiContract#scheme
-  Position: Some(LexicalInformation([(4,0)-(5,0)]))
+  Position: Some(LexicalInformation([(4,11)-(4,13)]))
   Location: file://amf-client/shared/src/test/resources/validations/protocols/empty-protocols-root-and-method.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#raml-operation-schemes-non-empty-array
@@ -18,5 +18,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/protocols/empty-protocols-root-and-method.raml#/web-api/end-points/%2FinvalidEmptyProtocolInOperation/post
   Property: http://a.ml/vocabularies/apiContract#scheme
-  Position: Some(LexicalInformation([(7,4)-(8,0)]))
+  Position: Some(LexicalInformation([(7,15)-(7,17)]))
   Location: file://amf-client/shared/src/test/resources/validations/protocols/empty-protocols-root-and-method.raml
