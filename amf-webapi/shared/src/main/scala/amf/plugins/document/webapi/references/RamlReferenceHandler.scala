@@ -8,7 +8,7 @@ import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{ParsedReference, ParserContext, Reference, ReferenceResolutionResult, SyamlParsedDocument}
 import amf.core.remote.{Raml, Raml08, Raml10}
 import amf.plugins.document.webapi.{BaseWebApiPlugin, Raml10Plugin}
-import amf.plugins.features.validation.CoreValidations.InvalidFragmentRef
+import amf.plugins.features.validation.CoreValidations.{InvalidFragmentRef, UnresolvedReference}
 import amf.validations.ParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.model.YNode.MutRef
@@ -34,7 +34,7 @@ class RamlReferenceHandler(vendor: String) extends WebApiReferenceHandler(vendor
         val parsed = SyamlParsedDocument(document)
 
         val refs    = new RamlReferenceHandler(vendor).collect(parsed, compilerContext.parserContext)
-        val updated = compilerContext.forReference(reference.unit.id, withNormalizedUri = false)
+        val updated = compilerContext.forReference(reference.origin.url, withNormalizedUri = false)
 
         val externals = refs.toReferences.map((r: Reference) => {
           r.resolve(updated, allowRecursiveRefs = true)
@@ -57,8 +57,10 @@ class RamlReferenceHandler(vendor: String) extends WebApiReferenceHandler(vendor
                   // not meaning, only for collect all futures, not matter the type
                   }
                 })
-              case ReferenceResolutionResult(Some(_), _) => Future(Nil)
-              case _                                     => Future(Nil)
+              case ReferenceResolutionResult(Some(e), None) =>
+                evaluateUnresolvedReference(compilerContext, r, e)
+                Future(Nil)
+              case _ => Future(Nil)
             }
         })
 
@@ -68,6 +70,13 @@ class RamlReferenceHandler(vendor: String) extends WebApiReferenceHandler(vendor
           reference.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
           reference.copy(ast = Some(YNode(raw, reference.unit.location().getOrElse(""))))
         }
+    }
+  }
+
+  private def evaluateUnresolvedReference(compilerContext: CompilerContext, r: Reference, e: Throwable) = {
+    if (!r.isInferred) {
+      val nodes = r.refs.map(_.node)
+      nodes.foreach(compilerContext.violation(UnresolvedReference, r.url, e.getMessage, _))
     }
   }
 

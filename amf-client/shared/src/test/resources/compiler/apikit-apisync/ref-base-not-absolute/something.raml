@@ -1,0 +1,14 @@
+#%RAML 1.0 Fragment
+
+displayName: Something
+
+/{something}:
+  uriParameters:
+    something:
+      type: string
+  type:
+    Resources.Member:
+      getSampleResponse: !include examples/something/get-something-response.raml
+      putSampleRequest: !include examples/something/put-something-request.raml
+      putSampleResponse: !include examples/common/async-response.raml
+
