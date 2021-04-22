@@ -196,7 +196,6 @@ class AnyShape(val fields: Fields, val annotations: Annotations = Annotations())
     * an empty (or only with example) payload, an not an explicit type def */
   def isDefaultEmpty: Boolean =
     meta.`type`.equals(AnyShapeModel.`type`) &&
-      fields.filter(fe => fe._1 != AnyShapeModel.Examples).nonEmpty &&
       annotations.find(classOf[TypePropertyLexicalInfo]).isEmpty
 
   def inlined: Boolean = annotations.find(classOf[InlineDefinition]).isDefined

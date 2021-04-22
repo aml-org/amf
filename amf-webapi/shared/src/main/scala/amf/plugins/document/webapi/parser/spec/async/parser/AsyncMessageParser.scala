@@ -146,9 +146,11 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       ex.annotations += TrackedElement(message.id)
     }
     if (examples.payload.nonEmpty)
-      message.set(MessageModel.Examples, AmfArray(examples.payload))
+      message.set(MessageModel.Examples, AmfArray(examples.payload, Annotations.virtual()), Annotations.inferred())
     if (examples.headers.nonEmpty)
-      message.set(MessageModel.HeaderExamples, AmfArray(examples.headers))
+      message.set(MessageModel.HeaderExamples,
+                  AmfArray(examples.headers, Annotations.virtual()),
+                  Annotations.inferred())
 
     map.key(
       "headers",

@@ -153,7 +153,7 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
           .getOrElse(RamlSingleExampleValueParser(entry, simpleProducer, options).parse())
       case Right(_) => RamlSingleExampleValueParser(entry, simpleProducer, options).parse()
     }
-    example.set(ExampleModel.Name, name.text(), Annotations(entry))
+    example.set(ExampleModel.Name, name.text(), Annotations.inferred())
   }
 }
 

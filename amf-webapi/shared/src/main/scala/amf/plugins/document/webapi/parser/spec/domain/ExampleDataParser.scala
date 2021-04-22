@@ -38,14 +38,11 @@ case class ExampleDataParser(node: YNode, example: Example, options: ExampleOpti
 
     node.toOption[YScalar] match {
       case Some(_) if node.tagType == YType.Null =>
-        example.set(ExampleModel.Raw, AmfScalar("null", Annotations.valueNode(node)), Annotations.valueNode(node))
+        example.set(ExampleModel.Raw, AmfScalar("null"), Annotations.synthesized())
       case Some(scalar) =>
-        example.set(ExampleModel.Raw, AmfScalar(scalar.text, Annotations.valueNode(node)), Annotations.valueNode(node))
+        example.set(ExampleModel.Raw, AmfScalar(scalar.text), Annotations.synthesized())
       case _ =>
-        example.set(ExampleModel.Raw,
-                    AmfScalar(YamlRender.render(targetNode), Annotations.valueNode(node)),
-                    Annotations.valueNode(node))
-
+        example.set(ExampleModel.Raw, AmfScalar(YamlRender.render(targetNode)), Annotations.synthesized())
     }
 
     val result = NodeDataNodeParser(targetNode, example.id, options.quiet, mutTarget, options.isScalar).parse()
