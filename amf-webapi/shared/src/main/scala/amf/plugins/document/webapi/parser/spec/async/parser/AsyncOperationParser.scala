@@ -146,7 +146,9 @@ case class AsyncOperationTraitRefParser(node: YNode, adopt: Operation => Operati
 
   private def linkError(url: String, node: YNode): Operation = {
     ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find operation trait reference $url", node)
-    new ErrorOperationTrait(url, node).link(url, Annotations(node))
+    val t: ErrorOperationTrait = new ErrorOperationTrait(url, node).link(url, Annotations(node))
+    t
+
   }
 
   private def remote(url: String, node: YNode): Operation = {

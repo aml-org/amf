@@ -18,6 +18,12 @@ sealed trait YMapEntryLike {
   def asMap: YMap
   def asSequence: YSequence
   def annotations: Annotations
+
+  /**
+    * Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
+    * @return
+    */
+  def fieldAnnotations: Annotations
 }
 
 private case class RealYMapEntryLike(e: YMapEntry)(implicit errorHandler: IllegalTypeHandler) extends YMapEntryLike {
@@ -28,6 +34,13 @@ private case class RealYMapEntryLike(e: YMapEntry)(implicit errorHandler: Illega
   override def asSequence: YSequence    = e.value.as[YSequence]
   override def ast: YPart               = e
   override def annotations: Annotations = Annotations(e)
+
+  /**
+    * Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
+    *
+    * @return
+    */
+  override def fieldAnnotations: Annotations = annotations
 }
 
 private case class YNodeYMapEntryLike(n: YNode)(implicit errorHandler: IllegalTypeHandler) extends YMapEntryLike {
@@ -38,6 +51,13 @@ private case class YNodeYMapEntryLike(n: YNode)(implicit errorHandler: IllegalTy
   override def asSequence: YSequence    = n.as[YSequence]
   override def ast: YPart               = n
   override def annotations: Annotations = Annotations(n.value)
+
+  /**
+    * Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
+    *
+    * @return
+    */
+  override def fieldAnnotations: Annotations = Annotations.inferred()
 }
 
 private case class TextKeyYMapEntryLike(artificialKey: String, n: YNode)(implicit errorHandler: IllegalTypeHandler)
@@ -49,4 +69,11 @@ private case class TextKeyYMapEntryLike(artificialKey: String, n: YNode)(implici
   override def asSequence: YSequence    = n.as[YSequence]
   override def ast: YPart               = n
   override def annotations: Annotations = Annotations(n.value)
+
+  /**
+    * Annotations for explicit fields. If YMapEntry then Annotations(ast) if other then Annotations.Inferred
+    *
+    * @return
+    */
+  override def fieldAnnotations: Annotations = Annotations.inferred()
 }

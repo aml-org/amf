@@ -79,11 +79,13 @@ case class Raml08PayloadParser(entry: YMapEntry, parentId: String, parseOptional
 
       case YType.Map =>
         if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(mediaType)) {
-          Raml08WebFormParser(entry.value.as[YMap], payload.id).parse().foreach(payload.withSchema)
+          Raml08WebFormParser(entry.value.as[YMap], payload.id)
+            .parse()
+            .foreach(s => payload.set(PayloadModel.Schema, s, Annotations.inferred()))
         } else {
           Raml08TypeParser(entry, (shape: Shape) => shape.adopted(payload.id), isAnnotation = false, AnyDefaultType)
             .parse()
-            .foreach(s => payload.set(PayloadModel.Schema, tracking(s, payload.id), s.annotations))
+            .foreach(s => payload.set(PayloadModel.Schema, tracking(s, payload.id), Annotations.inferred()))
 
         }
 

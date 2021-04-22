@@ -17,6 +17,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 }
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncMessageBindingsParser
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataParser, Oas3ExampleOptions}
+import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{Example, NodeShape}
 import amf.plugins.domain.webapi.metamodel.MessageModel.IsAbstract
@@ -146,9 +147,11 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       ex.annotations += TrackedElement(message.id)
     }
     if (examples.payload.nonEmpty)
-      message.set(MessageModel.Examples, AmfArray(examples.payload))
+      message.set(MessageModel.Examples, AmfArray(examples.payload, Annotations.virtual()), Annotations.inferred())
     if (examples.headers.nonEmpty)
-      message.set(MessageModel.HeaderExamples, AmfArray(examples.headers))
+      message.set(MessageModel.HeaderExamples,
+                  AmfArray(examples.headers, Annotations.virtual()),
+                  Annotations.inferred())
 
     map.key(
       "headers",
@@ -159,7 +162,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
             case n: NodeShape =>
               message.set(MessageModel.HeaderSchema, n, Annotations(entry))
             case _ =>
-              message.set(MessageModel.HeaderSchema, NodeShape(Annotations.virtual()), Annotations(entry))
+              message.set(MessageModel.HeaderSchema, NodeShape(entry.value), Annotations(entry))
 
               ctx.eh.violation(ParserSideValidations.HeaderMustBeObject,
                                message.id,
@@ -240,7 +243,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
     val node = n.value
     val exa  = Example(node).withName(name)
     exa.adopted(parentId)
-    ExampleDataParser(node, exa, Oas3ExampleOptions).parse()
+    ExampleDataParser(YMapEntryLike(node), exa, Oas3ExampleOptions).parse()
   }
 }
 

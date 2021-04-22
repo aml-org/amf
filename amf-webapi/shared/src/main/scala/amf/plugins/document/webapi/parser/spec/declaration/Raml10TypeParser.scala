@@ -624,12 +624,15 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                     Annotations(entry))
           shape
         case _ =>
-          val fieldAnnotations =
-            if (node.isNull) Annotations.inferred()
-            else Annotations(node)
-          shape.set(ScalarShapeModel.DataType,
-                    AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node.value)),
-                    fieldAnnotations)
+          if (node.isNull || node.isEmpty)
+            shape.set(ScalarShapeModel.DataType,
+                      AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations.virtual()),
+                      Annotations.inferred())
+          else
+            shape.set(ScalarShapeModel.DataType,
+                      AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node.value)),
+                      Annotations(node))
+
       }
     }
   }

@@ -51,12 +51,12 @@ case class ExtendsHelper(profile: ProfileName,
     entryAsOperation(unit, name, extensionId, entry, referencesCollector)
   }
 
-  def entryAsOperation[T <: BaseUnit](unit: T,
-                                      name: String,
-                                      extensionId: String,
-                                      entry: YMapEntry,
-                                      referencesCollector: mutable.Map[String, DomainElement] =
-                                        mutable.Map[String, DomainElement]()): Operation = {
+  def parseOperation[T <: BaseUnit](unit: T,
+                                    name: String,
+                                    extensionId: String,
+                                    entry: YMapEntry,
+                                    referencesCollector: mutable.Map[String, DomainElement] =
+                                      mutable.Map[String, DomainElement]()): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
     extractContextDeclarationsFrom(unit, entry.value.sourceName)(ctx)
@@ -64,7 +64,7 @@ case class ExtendsHelper(profile: ProfileName,
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
 
-    val operation: Operation =
+    val operation: Operation = {
       // we don't emit validation here, final result will be validated after merging
       ctx.adapt(name) { ctxForTrait =>
         (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
@@ -77,7 +77,18 @@ case class ExtendsHelper(profile: ProfileName,
           .parse()
         operation
       }
+    }
+    operation
+  }
 
+  def entryAsOperation[T <: BaseUnit](unit: T,
+                                      name: String,
+                                      extensionId: String,
+                                      entry: YMapEntry,
+                                      referencesCollector: mutable.Map[String, DomainElement] =
+                                        mutable.Map[String, DomainElement]()): Operation = {
+
+    val operation = parseOperation(unit, name, extensionId, entry, referencesCollector)
     new ReferenceResolutionStage(keepEditingInfo)(errorHandler).resolveDomainElement(operation)
   }
 

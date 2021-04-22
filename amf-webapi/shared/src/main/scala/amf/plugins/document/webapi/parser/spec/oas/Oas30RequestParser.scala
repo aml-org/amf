@@ -47,7 +47,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
                              s"Request body must have a 'content' field defined",
                              map)
         }
-        request.set(ResponseModel.Payloads, AmfArray(payloads, Annotations.inferred()), Annotations.inferred())
+        request.set(ResponseModel.Payloads, AmfArray(payloads, Annotations.virtual()), Annotations.inferred())
 
         AnnotationParser(request, map).parse()
         ctx.closedShape(request.id, map, "request")
