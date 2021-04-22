@@ -38,6 +38,13 @@ class CustomValidationTest extends UniquePlatformReportGenTest {
     validate("logical.raml", Some("logical.report"), ProfileName("logical"), Some("profiles/logical.yaml"))
   }
 
+  test("Defining raml validation as warning") {
+    validate("banking-api-error.raml",
+             Some("banking.report"),
+             ProfileName("Banking"),
+             Some("profiles/validation-profile.yaml"))
+  }
+
   if (platform.name == "jvm") { // not supported in JS yet
     test("Query constraints") {
       validate("query.raml", Some("query.report"), ProfileName("query"), Some("profiles/query.yaml"))
