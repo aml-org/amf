@@ -33,6 +33,7 @@ AMF Model Documentation
 * [DialectInstanceLibrary](#dialectinstancelibrary)
 * [DialectInstancePatch](#dialectinstancepatch)
 * [DialectLibrary](#dialectlibrary)
+* [DiscriminatorValueMapping](#discriminatorvaluemapping)
 * [Document](#document)
 * [DocumentMapping](#documentmapping)
 * [DocumentationItemFragment](#documentationitemfragment)
@@ -604,6 +605,15 @@ Library of AML mappings that can be reused in different AML dialects
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+
+## DiscriminatorValueMapping
+Mapping that relates a certain discriminator value to a certain shape
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | discriminatorValue | string | Value given to a discriminator that identifies a target Shape | http://a.ml/vocabularies/shapes#discriminatorValue |
+ | discriminatorValueTarget | [Shape](#shape) | Target shape for a certain discriminator value | http://a.ml/vocabularies/shapes#discriminatorValueTarget |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## Document
 A Document is a parsing Unit that encodes a stand-alone DomainElement and can include references to other DomainElements that reference from the encoded DomainElement.
@@ -1185,7 +1195,8 @@ Shape that validates a record of fields, like a JS object
  | additionalPropertiesSchema | [Shape](#shape) | Additional properties schema | http://www.w3.org/ns/shacl#additionalPropertiesSchema |
  | discriminator | string | Discriminator property | http://a.ml/vocabularies/shapes#discriminator |
  | discriminatorValue | string | Values for the discriminator property | http://a.ml/vocabularies/shapes#discriminatorValue |
- | discriminatorMapping | [[IriTemplateMapping](#iritemplatemapping)] | Mappping of acceptable values for the node discriminator | http://a.ml/vocabularies/shapes#discriminatorMapping |
+ | discriminatorMapping | [[DiscriminatorValueMapping](#discriminatorvaluemapping)] | Mapping of acceptable values for the node discriminator | http://a.ml/vocabularies/shapes#discriminatorMapping |
+ | discriminatorValueMapping | [[DiscriminatorValueMapping](#discriminatorvaluemapping)] | Mapping of acceptable values for the node discriminator | http://a.ml/vocabularies/shapes#discriminatorValueMapping |
  | property | [[PropertyShape](#propertyshape)] | Properties associated to this node | http://www.w3.org/ns/shacl#property |
  | propertyNames | [Shape](#shape) | Property names schema | http://www.w3.org/ns/shacl#propertyNames |
  | dependencies | [[PropertyDependencies](#propertydependencies)] | Dependent properties constraint | http://a.ml/vocabularies/shapes#dependencies |

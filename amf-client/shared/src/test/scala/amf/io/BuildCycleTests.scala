@@ -191,16 +191,18 @@ trait BuildCycleTests extends BuildCycleTestCommon {
     val config                 = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
     val amfJsonLdSerialization = renderOptions.map(_.isAmfJsonLdSerilization).getOrElse(useAmfJsonldSerialization)
 
-    build(config, eh.orElse(Some(DefaultParserErrorHandler.withRun())), amfJsonLdSerialization)
-      .map(transform(_, config))
-      .flatMap {
-        renderOptions match {
-          case Some(options) => render(_, config, options)
-          case None          => render(_, config, useAmfJsonldSerialization)
-        }
+    for {
+      parsed   <- build(config, eh.orElse(Some(DefaultParserErrorHandler.withRun())), amfJsonLdSerialization)
+      resolved <- Future.successful(transform(parsed, config))
+      actualString <- renderOptions match {
+        case Some(options) => render(resolved, config, options)
+        case None          => render(resolved, config, useAmfJsonldSerialization)
       }
-      .flatMap(writeTemporaryFile(golden))
-      .flatMap(assertDifferences(_, config.goldenPath))
+      actualFile <- writeTemporaryFile(golden)(actualString)
+      assertion  <- assertDifferences(actualFile, config.goldenPath)
+    } yield {
+      assertion
+    }
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
