@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel._
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel}
-import amf.plugins.domain.webapi.models.IriTemplateMapping
+import amf.plugins.domain.webapi.models.{DiscriminatorValueMapping, IriTemplateMapping}
 import org.yaml.model.YPart
 
 /**
@@ -22,13 +22,15 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   def discriminator: StrField                       = fields.field(Discriminator)
   def discriminatorValue: StrField                  = fields.field(DiscriminatorValue)
   def discriminatorMapping: Seq[IriTemplateMapping] = fields.field(DiscriminatorMapping)
-  def properties: Seq[PropertyShape]                = fields.field(Properties)
-  def dependencies: Seq[PropertyDependencies]       = fields.field(Dependencies)
-  def schemaDependencies: Seq[SchemaDependencies]   = fields.field(NodeShapeModel.SchemaDependencies)
-  def additionalPropertiesSchema: Shape             = fields.field(AdditionalPropertiesSchema)
-  def propertyNames: Shape                          = fields.field(PropertyNames)
-  def unevaluatedProperties: Boolean                = fields.field(UnevaluatedProperties)
-  def unevaluatedPropertiesSchema: Shape            = fields.field(UnevaluatedPropertiesSchema)
+  def discriminatorValueMapping: Seq[DiscriminatorValueMapping] =
+    fields.field(NodeShapeModel.DiscriminatorValueMapping)
+  def properties: Seq[PropertyShape]              = fields.field(Properties)
+  def dependencies: Seq[PropertyDependencies]     = fields.field(Dependencies)
+  def schemaDependencies: Seq[SchemaDependencies] = fields.field(NodeShapeModel.SchemaDependencies)
+  def additionalPropertiesSchema: Shape           = fields.field(AdditionalPropertiesSchema)
+  def propertyNames: Shape                        = fields.field(PropertyNames)
+  def unevaluatedProperties: Boolean              = fields.field(UnevaluatedProperties)
+  def unevaluatedPropertiesSchema: Shape          = fields.field(UnevaluatedPropertiesSchema)
 
   def withMinProperties(min: Int): this.type                                 = set(MinProperties, min)
   def withUnevaluatedProperties(value: Boolean): this.type                   = set(UnevaluatedProperties, value)
@@ -38,8 +40,10 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   def withDiscriminator(discriminator: String): this.type                    = set(Discriminator, discriminator)
   def withDiscriminatorValue(value: String): this.type                       = set(DiscriminatorValue, value)
   def withDiscriminatorMapping(mappings: Seq[IriTemplateMapping]): this.type = setArray(DiscriminatorMapping, mappings)
-  def withProperties(properties: Seq[PropertyShape]): this.type              = setArray(Properties, properties)
-  def withDependencies(dependencies: Seq[PropertyDependencies]): this.type   = setArray(Dependencies, dependencies)
+  def discriminatorValueMapping(mappings: Seq[DiscriminatorValueMapping]): NodeShape.this.type =
+    setArray(NodeShapeModel.DiscriminatorValueMapping, mappings)
+  def withProperties(properties: Seq[PropertyShape]): this.type            = setArray(Properties, properties)
+  def withDependencies(dependencies: Seq[PropertyDependencies]): this.type = setArray(Dependencies, dependencies)
   def withSchemaDependencies(dependencies: Seq[SchemaDependencies]): this.type =
     setArray(NodeShapeModel.SchemaDependencies, dependencies)
   def withPropertyNames(shape: Shape): this.type              = set(PropertyNames, shape)
