@@ -19,7 +19,7 @@ class AsyncParserErrorTest extends ParserErrorTest {
     validate(
       "/error/invalid-single-parameter-parse.yaml",
       violation => {
-        violation.level should be("Violation")
+        violation.severityLevel should be("Violation")
         violation.message should be("YAML map expected")
         violation.position.map(_.range) should be(Some(Range((8, 14), (8, 27))))
       }
@@ -30,7 +30,7 @@ class AsyncParserErrorTest extends ParserErrorTest {
     validate(
       "/error/invalid-empty-parameters.yaml",
       violation => {
-        violation.level should be("Violation")
+        violation.severityLevel should be("Violation")
         violation.message should be("YAML map expected")
         violation.position.map(_.range) should be(Some(Range((7, 15), (7, 15))))
       }
