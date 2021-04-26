@@ -33,7 +33,10 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 }
 import amf.plugins.document.webapi.parser.spec.jsonschema.parser.{ContentParser, UnevaluatedParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
-import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel.{DiscriminatorValue, DiscriminatorValueTarget}
+import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel.{
+  DiscriminatorValue,
+  DiscriminatorValueTarget
+}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
@@ -492,7 +495,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
   }
 
-  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
+  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit)
+      extends DataArrangementShapeParser() {
 
     override def parse(): AnyShape = {
       adopt(shape)
@@ -546,7 +550,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
+  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit)
+      extends DataArrangementShapeParser() {
     override def parse(): AnyShape = {
       checkJsonIdentity(shape, map, adopt, ctx.declarations.futureDeclarations)
       super.parse()
@@ -775,7 +780,10 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     required
       .foreach {
         case (name, nodes) if nodes.size > 1 =>
-          ctx.eh.violation(DuplicateRequiredItem, shape.id, s"'$name' is duplicated in 'required' property", nodes.last)
+          ctx.eh.violation(DuplicateRequiredItem,
+                           shape.id,
+                           s"'$name' is duplicated in 'required' property",
+                           nodes.last)
         case _ => // ignore
       }
 
@@ -792,8 +800,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       ctx.closedShape(shape.id, map, "discriminator")
     }
 
-    private def parseMappings(mappingEntry: YMapEntry): Unit = {
-      val map = mappingEntry.value.as[YMap]
+    private def parseMappings(mappingsEntry: YMapEntry): Unit = {
+      val map = mappingsEntry.value.as[YMap]
       val mappings = map.entries.map(entry => {
         val mapping  = IriTemplateMapping(Annotations(entry))
         val element  = ScalarNode(entry.key).string()
@@ -803,43 +811,45 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       })
       shape.fields.set(shape.id,
                        NodeShapeModel.DiscriminatorMapping,
-                       AmfArray(mappings, Annotations(mappingEntry.value)),
-                       Annotations(mappingEntry))
+                       AmfArray(mappings, Annotations(mappingsEntry.value)),
+                       Annotations(mappingsEntry))
 
       val discriminatorValueMapping = map.entries.map { entry =>
-        val discriminatorValue = ScalarNode(entry.key).string()
+        val key: YNode         = entry.key
+        val discriminatorValue = ScalarNode(key).string()
         val targetShape = {
           val rawRef: String = entry.value
           val definitionName = OasDefinitions.stripDefinitionsPrefix(rawRef)
           ctx.declarations
             .findType(definitionName, SearchScope.All) match {
             case Some(s) =>
-              s.link(entry.key, Annotations(ast))
+              s.link(AmfScalar(key.toString), Annotations(ast), Annotations.synthesized())
                 .asInstanceOf[AnyShape]
                 .withName(name, nameAnnotations)
                 .withSupportsRecursion(true)
             case _ =>
-              val shape = AnyShape(ast).withName(entry.key, Annotations(entry.key))
+              val shape = AnyShape(ast).withName(key, Annotations(key))
               val tmpShape = UnresolvedShape(Fields(),
                                              Annotations(entry.value),
                                              entry.value,
                                              None,
                                              Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
                                              shouldLink = false)
-                .withName(entry.key, Annotations())
+                .withName(key, Annotations())
                 .withSupportsRecursion(true)
               tmpShape.unresolved(definitionName, entry.value, "warning")(ctx)
               tmpShape.withContext(ctx)
-              shape.withLinkTarget(tmpShape).withLinkLabel(entry.key)
+              shape.withLinkTarget(tmpShape).withLinkLabel(key)
           }
         }
 
         val discriminatorMapping = models.DiscriminatorValueMapping(Annotations(entry))
-        discriminatorMapping.set(DiscriminatorValue, discriminatorValue, Annotations(entry.key))
+        discriminatorMapping.set(DiscriminatorValue, discriminatorValue, Annotations(key))
         discriminatorMapping.set(DiscriminatorValueTarget, targetShape, Annotations(entry.value))
       }
 
-      shape.setArray(NodeShapeModel.DiscriminatorValueMapping, discriminatorValueMapping, Annotations(mappingEntry))
+      val fieldValue = AmfArray(discriminatorValueMapping, Annotations(mappingsEntry.value))
+      shape.set(NodeShapeModel.DiscriminatorValueMapping, fieldValue, Annotations(mappingsEntry))
     }
   }
 
@@ -955,7 +965,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       )
 
       map.key("enum", ShapeModel.Values in shape using enumParser)
-      map.key("externalDocs", AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
+      map.key("externalDocs",
+              AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 
       map.key(
