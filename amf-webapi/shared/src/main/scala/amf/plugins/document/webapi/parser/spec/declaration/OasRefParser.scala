@@ -39,17 +39,23 @@ class OasRefParser(map: YMap,
   }
 
   private def findDeclarationAndParse(e: YMapEntry) = {
-    val ref: String       = e.value
-    val strippedPrefixRef = OasDefinitions.stripDefinitionsPrefix(ref)
-
+    val rawRef: String = e.value
+    val definitionName = OasDefinitions.stripDefinitionsPrefix(rawRef)
     ctx.declarations
-      .findType(strippedPrefixRef, SearchScope.All) match { // normal declaration to be used from raml or oas
-      case Some(s) => createLinkToDeclaration(strippedPrefixRef, s)
-      case _       => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
-        // now we work with canonical JSON schema pointers, not local refs
-        val referencedShape = ctx.findLocalJSONPath(ref) match {
-          case Some(_) => searchLocalJsonSchema(ref, if (ctx.linkTypes) strippedPrefixRef else ref, e)
-          case _       => searchRemoteJsonSchema(ref, if (ctx.linkTypes) strippedPrefixRef else ref, e)
+      .findType(definitionName, SearchScope.All) match {
+      case Some(s) =>
+        // normal declaration to be used from raml or oas
+        val link = createLinkToDeclaration(definitionName, s)
+        adopt(link)
+        Some(link)
+      case _ =>
+        /**
+          *  Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
+          *  now we work with canonical JSON schema pointers, not local refs
+          */
+        val referencedShape = ctx.findLocalJSONPath(rawRef) match {
+          case Some(_) => searchLocalJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, e)
+          case _       => searchRemoteJsonSchema(rawRef, if (ctx.linkTypes) definitionName else rawRef, e)
         }
         referencedShape.foreach(safeAdoption)
         referencedShape
@@ -57,70 +63,75 @@ class OasRefParser(map: YMap,
   }
 
   private def createLinkToDeclaration(label: String, s: AnyShape) = {
-    val link =
-      s.link(label, Annotations(ast))
-        .asInstanceOf[AnyShape]
-        .withName(name, nameAnnotations)
-        .withSupportsRecursion(true)
-    adopt(link)
-    Some(link)
+    s.link(label, Annotations(ast))
+      .asInstanceOf[AnyShape]
+      .withName(name, nameAnnotations)
+      .withSupportsRecursion(true)
   }
 
   private def searchLocalJsonSchema(r: String, t: String, e: YMapEntry): Option[AnyShape] = {
-    val (ref, text) =
+    val (rawOrResolvedRef, declarationNameOrResolvedRef) =
       if (ctx.linkTypes) (r, t)
       else {
-        val fullref = UriUtils.resolveRelativeTo(ctx.rootContextDocument, r)
-        (fullref, fullref)
+        val resolvedRef = UriUtils.resolveRelativeTo(ctx.rootContextDocument, r)
+        (resolvedRef, resolvedRef)
       }
-    ctx.findJsonSchema(ref) match {
+    ctx.findJsonSchema(rawOrResolvedRef) match {
       case Some(s) =>
-        val annots = Annotations(ast)
-        val copied =
-          s.link(ref, annots).asInstanceOf[AnyShape].withName(name, Annotations()).withSupportsRecursion(true)
-        Some(copied)
-      // Local reference
-      case None if isOasLikeContext && isDeclaration(ref) && ctx.isMainFileContext =>
-        val shape = AnyShape(ast).withName(name, nameAnnotations)
-        val tmpShape = UnresolvedShape(Fields(),
-                                       Annotations(map),
-                                       ref,
-                                       None,
-                                       Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
-                                       shouldLink = false).withName(text, Annotations()).withSupportsRecursion(true)
-        tmpShape.unresolved(text, e, "warning")(ctx)
-        tmpShape.withContext(ctx)
-        adopt(tmpShape)
-        shape.withLinkTarget(tmpShape).withLinkLabel(text)
-        adopt(shape)
-        Some(shape)
+        Some(createLinkToDeclaration(rawOrResolvedRef, s))
+      case None if isOasLikeContext && isDeclaration(rawOrResolvedRef) && ctx.isMainFileContext =>
+        handleNotFoundOas(e, rawOrResolvedRef, declarationNameOrResolvedRef)
       case None =>
-        val tmpShape: UnresolvedShape = createAndRegisterUnresolvedShape(e, ref, text)
-        ctx.registerJsonSchema(ref, tmpShape)
-        ctx.findLocalJSONPath(r) match {
-          case Some(entryLike) =>
-            val definitiveName = entryLike.key.map(_.as[String]) getOrElse (name)
-            OasTypeParser(entryLike, definitiveName, adopt, version)
-              .parse()
-              .map { shape =>
-                ctx.futureDeclarations.resolveRef(text, shape)
-                ctx.registerJsonSchema(ref, shape)
-                if (ctx.linkTypes || ref.equals("#")) {
-                  val link = shape.link(text, Annotations(ast)).asInstanceOf[AnyShape]
-                  val (nextName, annotations) = entryLike.key match {
-                    case Some(keyNode) =>
-                      val key = keyNode.asScalar.map(_.text).getOrElse(name)
-                      (key, Annotations(keyNode))
-                    case None => (name, Annotations())
-                  }
-                  link.withName(nextName, annotations)
-                } else shape
-              } orElse { Some(tmpShape) }
-
-          case None => Some(tmpShape)
-        }
-
+        handleNotFoundJsonSchema(r, e, rawOrResolvedRef, declarationNameOrResolvedRef)
     }
+  }
+
+  private def handleNotFoundJsonSchema(r: String,
+                                       e: YMapEntry,
+                                       rawOrResolvedRef: String,
+                                       declarationNameOrResolvedRef: String) = {
+    val tmpShape: UnresolvedShape =
+      createAndRegisterUnresolvedShape(e, rawOrResolvedRef, declarationNameOrResolvedRef)
+    ctx.registerJsonSchema(rawOrResolvedRef, tmpShape)
+    ctx.findLocalJSONPath(r) match {
+      case Some(entryLike) =>
+        val definitiveName = entryLike.key.map(_.as[String]) getOrElse (name)
+        OasTypeParser(entryLike, definitiveName, adopt, version)
+          .parse()
+          .map { shape =>
+            ctx.futureDeclarations.resolveRef(declarationNameOrResolvedRef, shape)
+            ctx.registerJsonSchema(rawOrResolvedRef, shape)
+            if (ctx.linkTypes || rawOrResolvedRef.equals("#")) {
+              val link = shape.link(declarationNameOrResolvedRef, Annotations(ast)).asInstanceOf[AnyShape]
+              val (nextName, annotations) = entryLike.key match {
+                case Some(keyNode) =>
+                  val key = keyNode.asScalar.map(_.text).getOrElse(name)
+                  (key, Annotations(keyNode))
+                case None => (name, Annotations())
+              }
+              link.withName(nextName, annotations)
+            } else shape
+          } orElse { Some(tmpShape) }
+
+      case None => Some(tmpShape)
+    }
+  }
+
+  private def handleNotFoundOas(e: YMapEntry, rawOrResolvedRef: String, declarationNameOrResolvedRef: String) = {
+    val shape = AnyShape(ast).withName(name, nameAnnotations)
+    val tmpShape = UnresolvedShape(
+      Fields(),
+      Annotations(map),
+      rawOrResolvedRef,
+      None,
+      Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
+      shouldLink = false).withName(declarationNameOrResolvedRef, Annotations()).withSupportsRecursion(true)
+    tmpShape.unresolved(declarationNameOrResolvedRef, e, "warning")(ctx)
+    tmpShape.withContext(ctx)
+    adopt(tmpShape)
+    shape.withLinkTarget(tmpShape).withLinkLabel(declarationNameOrResolvedRef)
+    adopt(shape)
+    Some(shape)
   }
 
   private def createAndRegisterUnresolvedShape(e: YMapEntry, ref: String, text: String) = {

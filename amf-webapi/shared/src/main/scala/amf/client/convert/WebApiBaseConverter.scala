@@ -19,7 +19,8 @@ import amf.client.model.domain.{
   HttpMessageBinding => ClientHttpMessageBinding,
   HttpOperationBinding => ClientHttpOperationBinding,
   HttpSettings => ClientHttpSettings,
-  IriTemplateMapping => ClientIriTemplatedMaping,
+  IriTemplateMapping => ClientIriTemplateMapping,
+  DiscriminatorValueMapping => ClientDiscriminatorValueMapping,
   KafkaMessageBinding => ClientKafkaMessageBinding,
   KafkaOperationBinding => ClientKafkaOperationBinding,
   License => ClientLicense,
@@ -89,6 +90,7 @@ trait WebApiBaseConverter
     with ScopeConverter
     with ServerConverter
     with IriTemplateMappingConverter
+    with DiscriminatorValueMappingConverter
     with TemplatedLinkConverter
     with CallbackConverter
     with EncodingConverter
@@ -533,10 +535,20 @@ trait ScopeConverter extends PlatformSecrets {
 trait IriTemplateMappingConverter extends PlatformSecrets {
 
   implicit object IriTemplateMappingConverter
-      extends BidirectionalMatcher[IriTemplateMapping, ClientIriTemplatedMaping] {
-    override def asClient(from: IriTemplateMapping): ClientIriTemplatedMaping =
-      platform.wrap[ClientIriTemplatedMaping](from)
-    override def asInternal(from: ClientIriTemplatedMaping): IriTemplateMapping = from._internal
+      extends BidirectionalMatcher[IriTemplateMapping, ClientIriTemplateMapping] {
+    override def asClient(from: IriTemplateMapping): ClientIriTemplateMapping =
+      platform.wrap[ClientIriTemplateMapping](from)
+    override def asInternal(from: ClientIriTemplateMapping): IriTemplateMapping = from._internal
+  }
+}
+
+trait DiscriminatorValueMappingConverter extends PlatformSecrets {
+
+  implicit object DiscriminatorValueMappingConverter
+      extends BidirectionalMatcher[DiscriminatorValueMapping, ClientDiscriminatorValueMapping] {
+    override def asClient(from: DiscriminatorValueMapping): ClientDiscriminatorValueMapping =
+      platform.wrap[ClientDiscriminatorValueMapping](from)
+    override def asInternal(from: ClientDiscriminatorValueMapping): DiscriminatorValueMapping = from._internal
   }
 }
 
