@@ -4930,6 +4930,8 @@ declare module 'amf-client-js' {
     }
     namespace remote {
       export class Content      {
+        url: string
+
         constructor(stream: string, url: string)
         constructor(stream: string, url: string, mime: string)
 
