@@ -53,23 +53,17 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   logBuffered in Test := false
 )
 
-lazy val workspaceDirectory: File =
-  sys.props.get("sbt.mulesoft") match {
-    case Some(x) => file(x)
-    case _       => Path.userHome / "mulesoft"
-  }
-
 val customValidationVersion = versions("amf.custom.validations")
 
-lazy val customValidationJVMRef = ProjectRef(workspaceDirectory / "amf-aml", "customValidationJVM")
-lazy val customValidationJSRef  = ProjectRef(workspaceDirectory / "amf-aml", "customValidationJS")
+lazy val customValidationJVMRef = ProjectRef(Common.workspaceDirectory / "amf-aml", "customValidationJVM")
+lazy val customValidationJSRef  = ProjectRef(Common.workspaceDirectory / "amf-aml", "customValidationJS")
 lazy val customValidationLibJVM = "com.github.amlorg" %% "amf-custom-validation" % customValidationVersion
 lazy val customValidationLibJS  = "com.github.amlorg" %% "amf-custom-validation_sjs0.6" % customValidationVersion
 
 val coreVersion = versions("amf.core")
 
-lazy val coreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
-lazy val coreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
+lazy val coreJVMRef = ProjectRef(Common.workspaceDirectory / "amf-core", "coreJVM")
+lazy val coreJSRef  = ProjectRef(Common.workspaceDirectory / "amf-core", "coreJS")
 lazy val coreLibJVM = "com.github.amlorg" %% "amf-core" % coreVersion
 lazy val coreLibJS  = "com.github.amlorg" %% "amf-core_sjs0.6" % coreVersion
 

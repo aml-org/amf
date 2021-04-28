@@ -1,7 +1,13 @@
 import sbt.Keys.{scalacOptions, _}
-import sbt.{Def, _}
+import sbt.{Def, File, Path, _}
 
 object Common {
+
+  lazy val workspaceDirectory: File =
+    sys.props.get("sbt.mulesoft") match {
+      case Some(x) => file(x)
+      case _       => Path.userHome / "mulesoft"
+    }
 
   private val nexus = "https://repository-master.mulesoft.org/nexus/content/repositories"
 
