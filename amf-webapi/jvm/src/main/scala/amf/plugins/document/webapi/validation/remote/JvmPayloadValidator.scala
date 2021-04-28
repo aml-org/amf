@@ -34,6 +34,7 @@ import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
 import org.json.JSONException
 
+import java.util.regex.PatternSyntaxException
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 import scala.collection.mutable.ArrayBuffer
 
@@ -97,7 +98,7 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
           val loader = new SchemaLoader(schemaBuilder)
           Right(Some(loader.load().build()))
         } catch {
-          case e: SchemaException =>
+          case e if e.isInstanceOf[SchemaException] || e.isInstanceOf[PatternSyntaxException] =>
             Left(validationProcessor.processException(e, Some(element)))
         }
 
@@ -160,17 +161,10 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName,
         iterateValidations(validationException, element)
 
       case e: SchemaException =>
-        Seq(
-          AMFValidationResult(
-            message = e.getMessage,
-            level = SeverityLevels.VIOLATION,
-            targetNode = element.map(_.id).getOrElse(""),
-            targetProperty = None,
-            validationId = InternalSchemaException.id,
-            position = element.flatMap(_.position()),
-            location = element.flatMap(_.location()),
-            source = e
-          ))
+        Seq(invalidSchemaValidation(e.getMessage, element, e))
+
+      case e: PatternSyntaxException =>
+        Seq(invalidSchemaValidation("Regex defined in schema could not be processed", element, e))
 
       case e: InvalidJsonValue if shape.isInstanceOf[ScalarShape] =>
         Seq(
@@ -187,7 +181,7 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName,
     processResults(results)
   }
 
-  private def invalidJsonValidation(message: String, element: Option[DomainElement], e: RuntimeException) = {
+  private def invalidJsonValidation(message: String, element: Option[DomainElement], e: RuntimeException) =
     AMFValidationResult(
       message = message,
       level = SeverityLevels.VIOLATION,
@@ -198,7 +192,18 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName,
       location = element.flatMap(_.location()),
       source = e
     )
-  }
+
+  private def invalidSchemaValidation(message: String, element: Option[DomainElement], e: RuntimeException) =
+    AMFValidationResult(
+      message = message,
+      level = SeverityLevels.VIOLATION,
+      targetNode = element.map(_.id).getOrElse(""),
+      targetProperty = None,
+      validationId = InternalSchemaException.id,
+      position = element.flatMap(_.position()),
+      location = element.flatMap(_.location()),
+      source = e
+    )
 
   private def formattedDatatype(scalarShape: ScalarShape): String =
     scalarShape.dataType.value().split("#").last.capitalize
