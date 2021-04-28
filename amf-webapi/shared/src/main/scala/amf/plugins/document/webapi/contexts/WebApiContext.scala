@@ -6,9 +6,8 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.UriUtils.resolve
-import amf.core.utils.{Absolute, AliasCounter, IdCounter, RelativeToIncludedFile}
-import amf.plugins.document.webapi.annotations.DeclarationKey
+import amf.core.utils.{AliasCounter, IdCounter}
+import amf.plugins.document.vocabularies.parser.common.DeclarationContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
@@ -32,6 +31,7 @@ abstract class WebApiContext(val loc: String,
                              declarationsOption: Option[WebApiDeclarations] = None,
                              val nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
     extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
+    with DeclarationContext
     with SpecAwareContext
     with PlatformSecrets
     with JsonSchemaInference {
