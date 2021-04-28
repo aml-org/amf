@@ -2,19 +2,20 @@ package amf.plugins.document.webapi.parser.spec.oas.parser.types
 
 import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
-import amf.core.metamodel.domain.ShapeModel
+import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.DataType
-import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain._
+import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.errorhandler.ParserErrorHandler
-import amf.core.parser.{Annotations, FutureDeclarations, Range, ScalarNode, YMapOps, YNodeLikeOps}
+import amf.core.parser.{Annotations, Fields, FutureDeclarations, Range, ScalarNode, SearchScope, YMapOps, YNodeLikeOps}
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{
   AnnotationParser,
   DataNodeParser,
@@ -22,8 +23,8 @@ import amf.plugins.document.webapi.parser.spec.common.{
   TextKeyYMapEntryLike,
   YMapEntryLike
 }
-import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector
 import amf.plugins.document.webapi.parser.spec.domain.{
   ExampleOptions,
   ExamplesDataParser,
@@ -32,12 +33,17 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 }
 import amf.plugins.document.webapi.parser.spec.jsonschema.parser.{ContentParser, UnevaluatedParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
+import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel.{
+  DiscriminatorValue,
+  DiscriminatorValueTarget
+}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
+import amf.plugins.domain.webapi.models
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
@@ -794,8 +800,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       ctx.closedShape(shape.id, map, "discriminator")
     }
 
-    private def parseMappings(mappingEntry: YMapEntry): Unit = {
-      val map = mappingEntry.value.as[YMap]
+    private def parseMappings(mappingsEntry: YMapEntry): Unit = {
+      val map = mappingsEntry.value.as[YMap]
       val mappings = map.entries.map(entry => {
         val mapping  = IriTemplateMapping(Annotations(entry))
         val element  = ScalarNode(entry.key).string()
@@ -805,8 +811,45 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       })
       shape.fields.set(shape.id,
                        NodeShapeModel.DiscriminatorMapping,
-                       AmfArray(mappings, Annotations(mappingEntry.value)),
-                       Annotations(mappingEntry))
+                       AmfArray(mappings, Annotations(mappingsEntry.value)),
+                       Annotations(mappingsEntry))
+
+      val discriminatorValueMapping = map.entries.map { entry =>
+        val key: YNode         = entry.key
+        val discriminatorValue = ScalarNode(key).string()
+        val targetShape = {
+          val rawRef: String = entry.value
+          val definitionName = OasDefinitions.stripDefinitionsPrefix(rawRef)
+          ctx.declarations
+            .findType(definitionName, SearchScope.All) match {
+            case Some(s) =>
+              s.link(AmfScalar(key.toString), Annotations(ast), Annotations.synthesized())
+                .asInstanceOf[AnyShape]
+                .withName(name, nameAnnotations)
+                .withSupportsRecursion(true)
+            case _ =>
+              val shape = AnyShape(ast).withName(key, Annotations(key))
+              val tmpShape = UnresolvedShape(Fields(),
+                                             Annotations(entry.value),
+                                             entry.value,
+                                             None,
+                                             Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
+                                             shouldLink = false)
+                .withName(key, Annotations())
+                .withSupportsRecursion(true)
+              tmpShape.unresolved(definitionName, entry.value, "warning")(ctx)
+              tmpShape.withContext(ctx)
+              shape.withLinkTarget(tmpShape).withLinkLabel(key)
+          }
+        }
+
+        val discriminatorMapping = models.DiscriminatorValueMapping(Annotations(entry))
+        discriminatorMapping.set(DiscriminatorValue, discriminatorValue, Annotations(key))
+        discriminatorMapping.set(DiscriminatorValueTarget, targetShape, Annotations(entry.value))
+      }
+
+      val fieldValue = AmfArray(discriminatorValueMapping, Annotations(mappingsEntry.value))
+      shape.set(NodeShapeModel.DiscriminatorValueMapping, fieldValue, Annotations(mappingsEntry))
     }
   }
 

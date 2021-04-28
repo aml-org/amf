@@ -5,7 +5,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Yaml
-import amf.core.remote.Vendor.{AMF, ASYNC20, OAS20}
+import amf.core.remote.Vendor.{AMF, ASYNC20, OAS20, OAS30}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
@@ -1110,6 +1110,19 @@ class EditingResolutionTest extends ResolutionTest {
       )
     }
 
+    multiGoldenTest("OAS 3.0 discriminators", "api.%s") { config =>
+      cycle(
+        "api.yaml",
+        config.golden,
+        OasYamlHint,
+        target = Amf,
+        directory = resolutionPath + "oas30-discriminator/",
+        transformWith = Some(Oas30),
+        renderOptions = Some(config.renderOptions),
+        eh = Some(UnhandledParserErrorHandler)
+      )
+    }
   }
+
   override val basePath: String = ""
 }
