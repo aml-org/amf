@@ -25,35 +25,32 @@ sealed trait APIConfigurationBuilder {
       .predefined()
       .withPlugins(List(ExternalJsonYamlRefsParsePlugin, PayloadParsePlugin, JsonSchemaParsePlugin))
 }
-// TODO: ARM remove private[amf]
-private[amf] object RAMLConfiguration extends APIConfigurationBuilder {
+object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML10(): AMFGraphConfiguration = common().withPlugin(Raml10ParsePlugin)
   def RAML08(): AMFGraphConfiguration = common().withPlugin(Raml08ParsePlugin)
   def RAML(): AMFGraphConfiguration   = RAML08().merge(RAML10())
 }
 
-// TODO: ARM remove private[amf]
-private[amf] object OASConfiguration extends APIConfigurationBuilder {
+object OASConfiguration extends APIConfigurationBuilder {
   def OAS20(): AMFGraphConfiguration = common().withPlugin(Oas20ParsePlugin)
   def OAS30(): AMFGraphConfiguration = common().withPlugin(Oas30ParsePlugin)
   def OAS(): AMFGraphConfiguration   = OAS20().merge(OAS30())
 }
 
-// TODO: ARM remove private[amf]
-private[amf] object WebAPIConfiguration {
+object WebAPIConfiguration {
   def WebAPI(): AMFGraphConfiguration = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
 }
 
-private[amf] object AsyncAPIConfiguration extends APIConfigurationBuilder {
+object AsyncAPIConfiguration extends APIConfigurationBuilder {
   def Async20(): AMFGraphConfiguration = common().withPlugin(Async20ParsePlugin)
 }
 
-class AMFConfiguration private[amf](override private[amf] val resolvers: AMFResolvers,
-                                    override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
-                                    override private[amf] val registry: AMFRegistry,
-                                    override private[amf] val logger: AMFLogger,
-                                    override private[amf] val listeners: Set[AMFEventListener],
-                                    override private[amf] val options: AMFOptions)
+class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
+                                     override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
+                                     override private[amf] val registry: AMFRegistry,
+                                     override private[amf] val logger: AMFLogger,
+                                     override private[amf] val listeners: Set[AMFEventListener],
+                                     override private[amf] val options: AMFOptions)
     extends AMLConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
 
   override def createClient(): AMFClient = new AMFClient(this)
