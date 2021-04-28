@@ -12,6 +12,7 @@ import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
 import amf.plugins.document.webapi.parser.spec.raml.RamlAnnotationTargets.targetsFor
 import org.yaml.model._
+import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 
 /**
   *

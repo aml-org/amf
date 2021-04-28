@@ -1,14 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.core.annotations.{DomainExtensionAnnotation, ExplicitField, Inferred, SingleValueArray}
+import amf.core.annotations.{DomainExtensionAnnotation, ExplicitField, SingleValueArray}
 import amf.core.metamodel.Type.ArrayLike
-import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.{Field, Obj, Type}
-import amf.core.model.document.DeclaresModel
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{ArrayNode => _, ScalarNode => _, _}
 import amf.core.parser._
-import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys}
+import amf.plugins.document.vocabularies.parser.common.DeclarationKeyCollector
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.validations.ParserSideValidations.{
@@ -21,26 +19,6 @@ import org.yaml.model._
 import scala.collection.mutable.ListBuffer
 
 trait WebApiBaseSpecParser extends BaseSpecParser with SpecParserOps with DeclarationKeyCollector
-
-trait DeclarationKeyCollector {
-
-  private var declarationKeys: List[DeclarationKey] = List.empty
-
-  def addDeclarationKey(key: DeclarationKey): Unit = {
-    declarationKeys = key :: declarationKeys
-  }
-
-  protected def addDeclarationsToModel(model: DeclaresModel)(implicit ctx: WebApiContext): Unit = {
-
-    val ann        = Annotations(DeclarationKeys(declarationKeys)) ++= Annotations.virtual()
-    val declarable = ctx.declarations.declarables()
-
-    // check declaration key to use as source maps for field and value
-    if (declarable.nonEmpty || declarationKeys.nonEmpty)
-      model.setWithoutId(DocumentModel.Declares, AmfArray(declarable, Annotations.virtual()), ann)
-
-  }
-}
 
 trait SpecParserOps {
   protected def checkBalancedParams(path: String,

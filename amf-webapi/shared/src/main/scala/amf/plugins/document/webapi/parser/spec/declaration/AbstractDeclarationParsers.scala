@@ -3,17 +3,12 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.annotations.{DeclaredElement, ExternalFragmentRef}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
-import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.annotations.DeclarationKey
+import amf.plugins.document.vocabularies.parser.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{
-  AbstractVariables,
-  DataNodeParser,
-  DeclarationKeyCollector,
-  YMapEntryLike
-}
+import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser, YMapEntryLike}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.validations.ParserSideValidations.{InvalidAbstractDeclarationType, NullAbstractDeclaration}
 import org.yaml.model._
