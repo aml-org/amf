@@ -187,6 +187,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
       .withTypeFilter("^.*$", "Option")
       .withTypeFilter("^.*$", "Long")
       .withTypeFilter("^.*$", "Seq")
+      .withTypeFilter("^.*$", "CharStream")
   )
   .disablePlugins(SonarPlugin)
 

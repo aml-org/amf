@@ -2028,6 +2028,7 @@ declare module 'amf-client-js' {
         discriminator: StrField
         discriminatorValue: StrField
         discriminatorMapping: Array<IriTemplateMapping>
+        discriminatorValueMapping: Array<DiscriminatorValueMapping>
         properties: Array<PropertyShape>
         additionalPropertiesSchema: Shape
         dependencies: Array<PropertyDependencies>
@@ -2776,6 +2777,33 @@ declare module 'amf-client-js' {
         withLinkTarget(target: undefined): this
 
         withType(type: string): this
+
+        withId(id: string): this
+
+
+      }
+      export class DiscriminatorValueMapping implements DomainElement      {
+        customDomainProperties: Array<DomainExtension>
+        targetShape: Shape
+        isExternalLink: BoolField
+        id: string
+        position: core.parser.Range
+        extendsNode: Array<DomainElement>
+        value: StrField
+
+        constructor()
+
+        withTargetShape(shape: Shape): this
+
+        graph(): Graph
+
+        withIsExternalLink(isExternalLink: boolean): DomainElement
+
+        withExtendsNode(extension: Array<ParametrizedDeclaration>): this
+
+        withCustomDomainProperties(extensions: Array<DomainExtension>): this
+
+        withValue(value: string): this
 
         withId(id: string): this
 
@@ -4930,6 +4958,9 @@ declare module 'amf-client-js' {
     }
     namespace remote {
       export class Content      {
+        toString: string
+        url: string
+
         constructor(stream: string, url: string)
         constructor(stream: string, url: string, mime: string)
 
