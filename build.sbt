@@ -154,7 +154,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js",
-    moduleName := "amf-client-js",
+    typingModuleName := "amf-client-js",
     customMappings := MappingFactory()
       .map("ClientList").to("Array")
       .map("ClientFuture").to("Promise")
