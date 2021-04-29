@@ -34,7 +34,7 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends WebApiReferenceHandle
         val parsed = SyamlParsedDocument(document)
 
         val refs              = new RamlReferenceHandler(plugin).collect(parsed, compilerContext.parserContext)
-        val updated           = compilerContext.forReference(reference.origin.url, withNormalizedUri = false)
+        val updated           = compilerContext.forReference(reference.origin.url)
         val allowedMediaTypes = plugin.validMediaTypesToReference ++ plugin.mediaTypes
         val externals = refs.toReferences.map((r: Reference) => {
           r.resolve(updated, allowedMediaTypes, allowRecursiveRefs = true) // why would this always allow recursions?
