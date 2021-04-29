@@ -13,6 +13,7 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
+import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.plugins.features.validation.custom.model.ValidationDialectText
@@ -37,6 +38,8 @@ class Validation(platform: Platform) {
 
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
+    // Remod registering
+    VocabulariesRegister.register(platform)
     amf.core.AMF.init().map { _ =>
       amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)

@@ -40,6 +40,7 @@ import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.mulesoft.common.test.Diff
 import org.yaml.builder.JsonOutputBuilder
 import amf.core.emitter.{RenderOptions => InternalRenderOptions, ShapeRenderOptions => InternalShapeRenderOptions}
+import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -505,7 +506,10 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     vocab.withDeclaredElement(classTerm).withDeclaredElement(propertyTerm)
 
     for {
-      _      <- AMF.init().asFuture
+      _ <- {
+        VocabulariesRegister.register(platform)
+        AMF.init().asFuture
+      }
       render <- amf.Core.generator(Vendor.AML.name, "application/yaml").generateString(vocab).asFuture
     } yield {
       render should be(

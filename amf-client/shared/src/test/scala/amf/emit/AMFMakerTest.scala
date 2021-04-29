@@ -9,6 +9,7 @@ import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi._
+import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -129,6 +130,8 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   private def ast(document: Document, vendor: Vendor): YMap = {
 
     Core.init()
+    // Remod registering
+    VocabulariesRegister.register(platform)
     amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
     amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
