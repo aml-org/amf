@@ -237,7 +237,10 @@ object RamlExampleValuesEmitter {
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
     val explicitMetaFields =
-      List(ExampleModel.Strict, ExampleModel.Description, ExampleModel.DisplayName, ExampleModel.CustomDomainProperties)
+      List(ExampleModel.Strict,
+           ExampleModel.Description,
+           ExampleModel.DisplayName,
+           ExampleModel.CustomDomainProperties)
         .filter { f =>
           fs.entry(f) match {
             case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])

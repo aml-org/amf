@@ -79,7 +79,8 @@ abstract class OasShapeEmitter(shape: Shape,
 
     fs.entry(ShapeModel.ReadOnly).map(fe => result += ValueEmitter("readOnly", fe))
 
-    if (spec.schemaVersion.isInstanceOf[OAS30SchemaVersion] || spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion)) {
+    if (spec.schemaVersion.isInstanceOf[OAS30SchemaVersion] || spec.schemaVersion.isBiggerThanOrEqualTo(
+          JSONSchemaDraft7SchemaVersion)) {
       fs.entry(ShapeModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
       fs.entry(ShapeModel.WriteOnly).map(fe => result += ValueEmitter("writeOnly", fe))
     }

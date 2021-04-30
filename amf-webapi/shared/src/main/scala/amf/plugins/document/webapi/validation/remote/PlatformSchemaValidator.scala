@@ -16,6 +16,7 @@ import amf.plugins.document.webapi.PayloadPlugin
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, JsonSchemaEmitter}
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models._
@@ -227,9 +228,11 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
       case _                  => YamlParser(payload)(errorHandler)
     }
     val node = parser.document().node
-    PayloadFragment(if (node.isNull) ScalarNode(payload, None).withDataType(DataType.Nil)
-                    else DataNodeParser(node)(defaultCtx).parse(),
-                    mediaType)
+    PayloadFragment(
+      if (node.isNull) ScalarNode(payload, None).withDataType(DataType.Nil)
+      else DataNodeParser(node)(WebApiShapeParserContextAdapter(defaultCtx)).parse(),
+      mediaType
+    )
   }
 
   protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {

@@ -130,7 +130,8 @@ case class ExtendsHelper(profile: ProfileName,
               ),
               YType.Str
             ),
-            DataNodeEmitter(node, getSpecOrderingFrom(rtAnnotations), referencesCollector)(ctx.eh, refIds).emit(_)
+            DataNodeEmitter(node, getSpecOrderingFrom(rtAnnotations), referencesCollector)(ctx.eh, refIds)
+              .emit(_)
           )
         }
       },

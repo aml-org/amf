@@ -5,6 +5,7 @@ import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclara
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.validations.ParserSideValidations.InvalidAbstractDeclarationType
 import org.yaml.model._
@@ -42,7 +43,8 @@ case class ParametrizedDeclarationParser(
               .zipWithIndex
               .map {
                 case (variableEntry, index) =>
-                  val node = DataNodeParser(variableEntry.value, parent = Some(s"${declaration.id}_$index")).parse()
+                  val node = DataNodeParser(variableEntry.value, parent = Some(s"${declaration.id}_$index"))(
+                    WebApiShapeParserContextAdapter(ctx)).parse()
                   VariableValue(variableEntry)
                     .withName(variableEntry.key)
                     .set(VariableValueModel.Value, node, Annotations(variableEntry.value))

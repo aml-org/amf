@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.model.domain.DataNode
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, ScalarNodeParser}
 import org.yaml.model.YNode
 
@@ -17,8 +18,12 @@ object CommonEnumParser {
       implicit ctx: WebApiContext): YNode => DataNode = {
     val enumParentId = s"$parentId/enum"
     enumType match {
-      case EnumParsing.SCALAR_ENUM => ScalarNodeParser(parent = Some(enumParentId)).parse
-      case _                       => DataNodeParser.parse(parent = Some(enumParentId), idCounter = new IdCounter())
+      case EnumParsing.SCALAR_ENUM =>
+        ScalarNodeParser(parent = Some(enumParentId))(WebApiShapeParserContextAdapter(ctx)).parse
+      case _ =>
+        node =>
+          DataNodeParser.parse(parent = Some(enumParentId), idCounter = new IdCounter())(node)(
+            WebApiShapeParserContextAdapter(ctx))
     }
   }
 }

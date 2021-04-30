@@ -20,7 +20,7 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
-import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
+import amf.validations.ShapeParserSideValidations.ExceededMaxYamlReferences
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model._
@@ -336,7 +336,7 @@ class ExtendsResolutionStage(
     private def withRefCounterGuard(node: YNode)(thunk: => Seq[ElementTree]) = {
       if (refsCounter.exceedsThreshold(node)) {
         errorHandler.violation(
-          ExeededMaxYamlReferences,
+          ExceededMaxYamlReferences,
           "",
           "Exceeded maximum yaml references threshold"
         )

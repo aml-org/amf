@@ -5,7 +5,7 @@ import amf.core.model.domain.{AmfArray, DomainElement, Linkable, NamedDomainElem
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
-import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.{Request => OperationRequest, _}
 import amf.plugins.domain.webapi.models.bindings.OperationBindings

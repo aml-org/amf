@@ -8,6 +8,7 @@ import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, ServerModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server}
 
@@ -71,7 +72,8 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val
       .withScalarSchema(entry.key)
       .add(Annotations(map))
       .withDataType(DataType.String, Annotations.synthesized())
-    val counter = new IdCounter()
+    val counter: IdCounter                                 = new IdCounter();
+    implicit val shapeCtx: WebApiShapeParserContextAdapter = WebApiShapeParserContextAdapter(ctx)
     map.key("enum", ShapeModel.Values in schema using DataNodeParser.parse(Some(schema.id), counter))
     map.key("default", entry => {
       schema.withDefaultStr(entry.value)
