@@ -15,6 +15,7 @@ import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONS
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{
   AnnotationParser,
@@ -312,8 +313,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       extends AnyShapeParser()
       with CommonScalarParsingLogic {
 
-    override lazy val dataNodeParser: YNode => DataNode = ScalarNodeParser(parent = Some(shape.id)).parse
-    override lazy val enumParser: YNode => DataNode     = CommonEnumParser(shape.id, enumType = EnumParsing.SCALAR_ENUM)
+    override lazy val dataNodeParser: YNode => DataNode =
+      ScalarNodeParser(parent = Some(shape.id))(WebApiShapeParserContextAdapter(ctx)).parse
+    override lazy val enumParser: YNode => DataNode = CommonEnumParser(shape.id, enumType = EnumParsing.SCALAR_ENUM)
 
     override def parse(): ScalarShape = {
       super.parse()
@@ -945,8 +947,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     val shape: Shape
     val map: YMap
 
-    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), new IdCounter())
-    lazy val enumParser: YNode => DataNode     = CommonEnumParser(shape.id)
+    lazy val dataNodeParser: YNode => DataNode = node =>
+      DataNodeParser.parse(Some(shape.id), new IdCounter())(node)(WebApiShapeParserContextAdapter(ctx))
+    lazy val enumParser: YNode => DataNode = CommonEnumParser(shape.id)
 
     def parse(): Shape = {
 

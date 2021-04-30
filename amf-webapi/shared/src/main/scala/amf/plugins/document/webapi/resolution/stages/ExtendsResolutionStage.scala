@@ -20,7 +20,7 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
-import amf.validations.ParserSideValidations.ExceededMaxYamlReferences
+import amf.validations.ShapeParserSideValidations.ExceededMaxYamlReferences
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model._

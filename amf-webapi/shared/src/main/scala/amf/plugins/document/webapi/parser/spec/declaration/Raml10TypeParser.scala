@@ -25,7 +25,7 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.spec.toOas
-import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, TypeName}
+import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, TypeName, WebApiShapeParserContextAdapter}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -434,7 +434,12 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
     map.key("description", ShapeModel.Description in shape)
 
     val counter = new IdCounter
-    map.key("enum", ShapeModel.Values in shape using DataNodeParser.parse(Some(s"${shape.id}/list"), counter))
+
+    val parseDataNode: YNode => DataNode = node => {
+      implicit val shapeCtx: WebApiShapeParserContextAdapter = WebApiShapeParserContextAdapter(ctx)
+      DataNodeParser.parse(Some(s"${shape.id}/list"), counter)(node)
+    }
+    map.key("enum", ShapeModel.Values in shape using parseDataNode)
 
     map.key(
       "pattern",
@@ -586,8 +591,9 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
   // The shape definitions are parsed in the common parser of all shapes, not here.
   private def parseCustomShapeFacetInstances(shapeResult: Option[Shape]): Unit = {
     node.value match {
-      case map: YMap if shapeResult.isDefined => ShapeExtensionParser(shapeResult.get, map, ctx, typeInfo).parse()
-      case _                                  => // ignore if it is not a map or we haven't been able to parse a shape
+      case map: YMap if shapeResult.isDefined =>
+        ShapeExtensionParser(shapeResult.get, map, (WebApiShapeParserContextAdapter(ctx)), typeInfo).parse()
+      case _ => // ignore if it is not a map or we haven't been able to parse a shape
     }
   }
 
@@ -818,8 +824,9 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
       extends AnyShapeParser
       with CommonScalarParsingLogic {
 
-    override lazy val dataNodeParser: YNode => DataNode = ScalarNodeParser(parent = Some(shape.id)).parse
-    override lazy val enumParser: YNode => DataNode     = CommonEnumParser(shape.id, enumType = EnumParsing.SCALAR_ENUM)
+    override lazy val dataNodeParser: YNode => DataNode =
+      ScalarNodeParser(parent = Some(shape.id))(WebApiShapeParserContextAdapter(ctx)).parse
+    override lazy val enumParser: YNode => DataNode = CommonEnumParser(shape.id, enumType = EnumParsing.SCALAR_ENUM)
 
     override def parse(): ScalarShape = {
       super.parse()
@@ -1433,9 +1440,14 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
         Fields(),
         Annotations(node),
         reference,
-        fatherMap.map(m =>
-          (resolvedKey: Option[String]) =>
-            ShapeExtensionParser(shape, m, ctx, typeInfo, overrideSyntax = resolvedKey)),
+        fatherMap.map(
+          m =>
+            (resolvedKey: Option[String]) =>
+              ShapeExtensionParser(shape,
+                                   m,
+                                   (WebApiShapeParserContextAdapter(ctx)),
+                                   typeInfo,
+                                   overrideSyntax = resolvedKey)),
         Some((k: String) =>
           if (shape.fields.exists(LinkableElementModel.TargetId)) shape.set(LinkableElementModel.TargetId, k))
       )
@@ -1667,8 +1679,10 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
 
     val shape: Shape
     val map: YMap
-    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), new IdCounter)
-    lazy val enumParser: YNode => DataNode     = CommonEnumParser(shape.id)
+
+    lazy val dataNodeParser: YNode => DataNode = node =>
+      DataNodeParser.parse(Some(shape.id), new IdCounter)(node)(WebApiShapeParserContextAdapter(ctx))
+    lazy val enumParser: YNode => DataNode = CommonEnumParser(shape.id)
 
     def parse(): Shape = {
 

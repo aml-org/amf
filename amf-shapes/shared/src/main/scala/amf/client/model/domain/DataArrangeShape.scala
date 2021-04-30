@@ -1,6 +1,6 @@
 package amf.client.model.domain
 
-import amf.client.convert.WebApiClientConverters._
+import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.client.model.{BoolField, IntField}
 import amf.plugins.domain.shapes.models.DataArrangementShape
 

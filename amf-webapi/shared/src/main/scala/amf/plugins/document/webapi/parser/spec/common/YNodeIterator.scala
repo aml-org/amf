@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.validations.ParserSideValidations.ExceededMaxYamlReferences
+import amf.validations.ShapeParserSideValidations.ExceededMaxYamlReferences
 import org.yaml.model.{YMap, YNode, YSequence, YType}
 
 /**

@@ -7,6 +7,7 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{FieldEntry, ParserContext, Value}
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.shapes.models.{Example, ScalarShape}

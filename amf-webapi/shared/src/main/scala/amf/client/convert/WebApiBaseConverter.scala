@@ -1,5 +1,6 @@
 package amf.client.convert
 
+import amf.client.convert.shapeconverters.ShapesBaseConverter
 import amf.client.model.domain.{
   Amqp091ChannelBinding => ClientAmqp091ChannelBinding,
   Amqp091ChannelExchange => ClientAmqp091ChannelExchange,
@@ -11,7 +12,6 @@ import amf.client.model.domain.{
   ChannelBinding => ClientChannelBinding,
   ChannelBindings => ClientChannelBindings,
   CorrelationId => ClientCorrelationId,
-  CreativeWork => ClientCreativeWork,
   EmptyBinding => ClientEmptyBinding,
   Encoding => ClientEncoding,
   EndPoint => ClientEndPoint,
@@ -19,8 +19,6 @@ import amf.client.model.domain.{
   HttpMessageBinding => ClientHttpMessageBinding,
   HttpOperationBinding => ClientHttpOperationBinding,
   HttpSettings => ClientHttpSettings,
-  IriTemplateMapping => ClientIriTemplateMapping,
-  DiscriminatorValueMapping => ClientDiscriminatorValueMapping,
   KafkaMessageBinding => ClientKafkaMessageBinding,
   KafkaOperationBinding => ClientKafkaOperationBinding,
   License => ClientLicense,
@@ -57,28 +55,25 @@ import amf.client.model.domain.{
   Trait => ClientTrait,
   WebSocketsChannelBinding => ClientWebSocketsChannelBinding
 }
-import amf.client.validate.{PayloadValidator => ClientInternalPayloadValidator}
-import amf.core.validation.PayloadValidator
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.bindings._
 import amf.plugins.domain.webapi.models.bindings.amqp._
 import amf.plugins.domain.webapi.models.bindings.http._
 import amf.plugins.domain.webapi.models.bindings.kafka._
 import amf.plugins.domain.webapi.models.bindings.mqtt._
 import amf.plugins.domain.webapi.models.bindings.websockets._
-import amf.plugins.domain.webapi.models.bindings._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 
 trait WebApiBaseConverter
     extends CoreBaseConverter
+    with ShapesBaseConverter
     with EndPointConverter
     with ResourceTypeConverter
     with TraitConverter
     with OrganizationConverter
     with LicenseConverter
-    with CreativeWorkConverter
     with MessageConverter
     with OperationConverter
     with TagConverter
@@ -89,8 +84,6 @@ trait WebApiBaseConverter
     with SettingsConverter
     with ScopeConverter
     with ServerConverter
-    with IriTemplateMappingConverter
-    with DiscriminatorValueMappingConverter
     with TemplatedLinkConverter
     with CallbackConverter
     with EncodingConverter
@@ -430,14 +423,6 @@ trait MessageConverter extends PlatformSecrets {
   }
 }
 
-trait CreativeWorkConverter extends PlatformSecrets {
-
-  implicit object CreativeWorkMatcher extends BidirectionalMatcher[CreativeWork, ClientCreativeWork] {
-    override def asClient(from: CreativeWork): ClientCreativeWork   = platform.wrap[ClientCreativeWork](from)
-    override def asInternal(from: ClientCreativeWork): CreativeWork = from._internal
-  }
-}
-
 trait ParametrizedSecuritySchemeConverter extends PlatformSecrets {
 
   implicit object ParametrizedSecuritySchemeMatcher
@@ -529,26 +514,6 @@ trait ScopeConverter extends PlatformSecrets {
   implicit object ScopeMatcher extends BidirectionalMatcher[Scope, ClientScope] {
     override def asClient(from: Scope): ClientScope   = platform.wrap[ClientScope](from)
     override def asInternal(from: ClientScope): Scope = from._internal
-  }
-}
-
-trait IriTemplateMappingConverter extends PlatformSecrets {
-
-  implicit object IriTemplateMappingConverter
-      extends BidirectionalMatcher[IriTemplateMapping, ClientIriTemplateMapping] {
-    override def asClient(from: IriTemplateMapping): ClientIriTemplateMapping =
-      platform.wrap[ClientIriTemplateMapping](from)
-    override def asInternal(from: ClientIriTemplateMapping): IriTemplateMapping = from._internal
-  }
-}
-
-trait DiscriminatorValueMappingConverter extends PlatformSecrets {
-
-  implicit object DiscriminatorValueMappingConverter
-      extends BidirectionalMatcher[DiscriminatorValueMapping, ClientDiscriminatorValueMapping] {
-    override def asClient(from: DiscriminatorValueMapping): ClientDiscriminatorValueMapping =
-      platform.wrap[ClientDiscriminatorValueMapping](from)
-    override def asInternal(from: ClientDiscriminatorValueMapping): DiscriminatorValueMapping = from._internal
   }
 }
 

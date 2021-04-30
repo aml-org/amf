@@ -8,6 +8,7 @@ import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ParsedJSON
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorNamedExample
 import amf.plugins.document.webapi.parser.spec.common.{
@@ -330,7 +331,7 @@ case class NodeDataNodeParser(node: YNode,
 
   private def parseDataNode(exampleNode: Option[YNode], ann: Seq[Annotation] = Seq()) = {
     val dataNode = exampleNode.map { ex =>
-      val dataNode = DataNodeParser(ex, parent = Some(parentId)).parse()
+      val dataNode = DataNodeParser(ex, parent = Some(parentId))(WebApiShapeParserContextAdapter(ctx)).parse()
       dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
       dataNode.annotations += LexicalInformation(Range(ex.value.range))
       ann.foreach { a =>

@@ -7,6 +7,7 @@ import amf.core.model.domain.{AmfArray, AmfObject}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser.parseExtensions
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.resolveAnnotation
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -63,7 +64,7 @@ private case class ExtensionParser(annotation: String, parent: String, entry: YM
     val id              = s"$parent/extension/$annotation"
     val propertyId      = s"$parent/$annotation"
     val domainExtension = DomainExtension(Annotations(entry)).withId(id)
-    val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId)).parse()
+    val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId))(WebApiShapeParserContextAdapter(ctx)).parse()
     // TODO
     // throw a parser-side warning validation error if no annotation can be found
     val customDomainProperty = ctx.declarations

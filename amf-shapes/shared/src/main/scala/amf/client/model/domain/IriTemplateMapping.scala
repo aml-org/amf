@@ -1,7 +1,7 @@
 package amf.client.model.domain
 
 import amf.client.model.StrField
-import amf.client.convert.WebApiClientConverters._
+import amf.client.convert.shapeconverters.ShapeClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.plugins.domain.webapi.models.{IriTemplateMapping => InternalIriTemplateMapping}
 

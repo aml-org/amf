@@ -5,6 +5,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.{AmfArray, DataNode}
 import amf.core.parser.{Position, Value}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
 case class EnumValuesEmitter(key: String, value: Value, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)

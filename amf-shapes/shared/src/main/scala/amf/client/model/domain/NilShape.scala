@@ -1,6 +1,6 @@
 package amf.client.model.domain
 
-import amf.client.convert.WebApiClientConverters._
+import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.plugins.domain.shapes.models.{NilShape => InternalNilShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

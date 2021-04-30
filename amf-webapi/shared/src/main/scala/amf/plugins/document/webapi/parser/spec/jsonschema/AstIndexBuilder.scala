@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
 import java.net.URI
-
 import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
@@ -14,7 +13,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaVersion,
   SchemaVersion
 }
-import amf.validations.ParserSideValidations.ExceededMaxYamlReferences
+import amf.validations.ShapeParserSideValidations.ExceededMaxYamlReferences
 import org.yaml.model._
 
 import scala.collection.mutable

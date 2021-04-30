@@ -1,7 +1,7 @@
 package amf.client.model.domain
 
 import amf.client.convert.CoreClientConverters.ClientOption
-import amf.client.convert.WebApiClientConverters._
+import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.client.model.StrField
 import amf.plugins.domain.shapes.models.{SchemaShape => InternalSchemaShape}
 

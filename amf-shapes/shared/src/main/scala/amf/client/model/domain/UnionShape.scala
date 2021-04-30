@@ -1,7 +1,7 @@
 package amf.client.model.domain
 
 import amf.plugins.domain.shapes.models.{UnionShape => InternalUnionShape}
-import amf.client.convert.WebApiClientConverters._
+import amf.client.convert.shapeconverters.ShapeClientConverters._
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll

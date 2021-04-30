@@ -18,6 +18,7 @@ import amf.plugins.document.webapi.contexts.parser.raml.{
 }
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ResolutionSideValidations.ParseResourceTypeFail
@@ -129,8 +130,7 @@ case class ExtendsHelper(profile: ProfileName,
               ),
               YType.Str
             ),
-            amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations
-              .DataNodeEmitter(node, getSpecOrderingFrom(rtAnnotations), referencesCollector)(ctx.eh, refIds)
+            DataNodeEmitter(node, getSpecOrderingFrom(rtAnnotations), referencesCollector)(ctx.eh, refIds)
               .emit(_)
           )
         }
