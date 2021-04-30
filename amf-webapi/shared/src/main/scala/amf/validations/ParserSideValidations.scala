@@ -313,11 +313,6 @@ object ParserSideValidations extends Validations {
     "Invalid type for declaration node"
   )
 
-  val UnableToParseShapeExtensions = validation(
-    "unable-to-parse-shape-extensions",
-    "Unable to parse shape extensions"
-  )
-
   val InvalidJsonSchemaVersion = validation(
     "invalid-json-schema-version",
     "Invalid Json Schema version"
@@ -611,11 +606,6 @@ object ParserSideValidations extends Validations {
     "Field name in components must match the following expression: ^[a-zA-Z0-9\\.\\-_]+$"
   )
 
-  val MissingRequiredUserDefinedFacet = validation(
-    "missing-user-defined-facet",
-    "Type is missing required user defined facet"
-  )
-
   val ParameterMissingSchemaOrContent = validation(
     "parameter-missing-schema-or-content",
     "Parameter must define a 'schema' or 'content' field, but not both"
@@ -626,17 +616,7 @@ object ParserSideValidations extends Validations {
     "Server variable must define a 'default' field"
   )
 
-  val UserDefinedFacetMatchesBuiltInFacets = validation(
-    "user-defined-facets-matches-built-in",
-    "User defined facet name matches built in facet of type"
-  )
-
   val InvalidEndpointDeclaration = validation("invalid-endpoint-declaration", "Invalid endpoint declaration")
-
-  val UserDefinedFacetMatchesAncestorsTypeFacets = validation(
-    "user-defined-facets-matches-ancestor",
-    "User defined facet name matches ancestor type facet"
-  )
 
   val SlashInUriParameterValues = validation(
     "slash-in-uri-parameter-value",
@@ -663,11 +643,6 @@ object ParserSideValidations extends Validations {
   val InvalidIdentifier = validation(
     "invalid-identifier",
     "'id' must be a string"
-  )
-
-  val ExeededMaxYamlReferences = validation(
-    "max-yaml-references",
-    "Exceeded maximum yaml references threshold"
   )
 
   val MissingParameterType = validation(
@@ -770,7 +745,6 @@ object ParserSideValidations extends Validations {
     OasInvalidParameterBinding,
     UnableToParseJsonSchema,
     UnexpectedRamlScalarKey,
-    UnableToParseShapeExtensions,
     InvalidAbstractDeclarationType,
     NullAbstractDeclaration,
     UnexpectedVendor,
@@ -839,7 +813,6 @@ object ParserSideValidations extends Validations {
     InvalidValueInPropertiesFacet,
     InvalidUserDefinedFacetName,
     InvalidFieldNameInComponents,
-    MissingRequiredUserDefinedFacet,
     ParameterMissingSchemaOrContent,
     ServerVariableMissingDefault,
     SlashInUriParameterValues,
@@ -848,7 +821,6 @@ object ParserSideValidations extends Validations {
     InvalidTagType,
     InvalidIdentifier,
     InvalidComponents,
-    ExeededMaxYamlReferences,
     InvalidStatusCode,
     InvalidUnevaluatedPropertiesType,
     InvalidUnevaluatedItemsType,

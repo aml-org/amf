@@ -4,7 +4,7 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
-import amf.validations.ResolutionSideValidations.InvalidTypeInheritanceWarningSpecification
+import amf.validations.ShapeResolutionSideValidations.InvalidTypeInheritanceWarningSpecification
 import amf.{ProfileName, Raml08Profile}
 
 private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler,

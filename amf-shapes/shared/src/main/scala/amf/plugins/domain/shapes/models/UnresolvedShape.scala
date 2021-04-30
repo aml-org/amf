@@ -8,8 +8,6 @@ import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import org.yaml.model.{YNode, YPart}
 
-import scala.collection.mutable
-
 /**
   * Unresolved shape: intended to be resolved after parsing (exception is thrown if shape is not resolved).
   */

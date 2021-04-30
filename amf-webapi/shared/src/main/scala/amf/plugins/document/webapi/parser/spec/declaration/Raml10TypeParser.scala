@@ -484,8 +484,6 @@ case class SimpleTypeParser(name: String, adopt: Shape => Unit, map: YMap, defau
   }
 }
 
-case class TypeInfo(isAnnotation: Boolean = false, isPropertyOrParameter: Boolean = false)
-
 sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                                      key: YNode,
                                      adopt: Shape => Unit,

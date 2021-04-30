@@ -4,9 +4,9 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
-import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
 import amf.plugins.domain.webapi.models.api.Api
-import amf.plugins.domain.webapi.models.{DocumentedElement, Tag}
+import amf.plugins.domain.webapi.models.Tag
 
 class MandatoryDocumentationTitle()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
 

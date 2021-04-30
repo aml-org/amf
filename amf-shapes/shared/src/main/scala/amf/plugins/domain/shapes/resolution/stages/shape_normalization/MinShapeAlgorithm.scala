@@ -15,10 +15,7 @@ import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.validations.ResolutionSideValidations.{
-  InvalidTypeInheritanceErrorSpecification,
-  InvalidTypeInheritanceWarningSpecification
-}
+import amf.validations.ShapeResolutionSideValidations.{InvalidTypeInheritanceErrorSpecification, InvalidTypeInheritanceWarningSpecification}
 import org.yaml.model.YError
 
 import scala.collection.mutable

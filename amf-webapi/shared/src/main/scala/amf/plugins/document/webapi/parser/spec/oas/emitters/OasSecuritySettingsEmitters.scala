@@ -11,7 +11,6 @@ import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
   AnnotationsEmitter,
-  DataNodeEmitter,
   OrphanAnnotationsEmitter
 }
 import amf.plugins.document.webapi.parser.spec.raml.emitters.{RamlApiKeySettingsEmitters, RamlOAuth1SettingsEmitters}

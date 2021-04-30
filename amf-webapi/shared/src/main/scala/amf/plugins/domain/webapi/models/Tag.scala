@@ -5,7 +5,7 @@ import amf.core.model.StrField
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
-import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
 import amf.plugins.domain.webapi.metamodel.TagModel
 import amf.plugins.domain.webapi.metamodel.TagModel._
 import org.yaml.model.YNode

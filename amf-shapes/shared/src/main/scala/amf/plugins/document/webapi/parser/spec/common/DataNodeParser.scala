@@ -6,11 +6,12 @@ import amf.core.model.DataType
 import amf.core.model.document.{EncodesModel, ExternalFragment}
 import amf.core.model.domain.ScalarNode.forDataType
 import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.{ErrorHandlingContext, ShapeParserContext}
 import amf.plugins.features.validation.CoreValidations.SyamlError
-import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
+import amf.validations.ShapeParserSideValidations.ExceededMaxYamlReferences
 import org.mulesoft.common.time.SimpleDateTime
 import org.mulesoft.lexer.InputRange
 import org.yaml.model.YNode.MutRef
@@ -27,12 +28,12 @@ class DataNodeParser private (node: YNode,
                               refsCounter: AliasCounter,
                               parameters: AbstractVariables = AbstractVariables(),
                               parent: Option[String] = None,
-                              idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
+                              idCounter: IdCounter = new IdCounter)(implicit ctx: ShapeParserContext) {
 
   def parse(): DataNode = {
     if (refsCounter.exceedsThreshold(node)) {
       ctx.violation(
-        ExeededMaxYamlReferences,
+        ExceededMaxYamlReferences,
         parent.getOrElse(""),
         "Exceeded maximum yaml references threshold"
       )
@@ -94,7 +95,7 @@ class DataNodeParser private (node: YNode,
 
 case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
                             parent: Option[String] = None,
-                            idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
+                            idCounter: IdCounter = new IdCounter)(implicit ctx: ShapeParserContext) {
 
   private def newScalarNode(value: amf.core.parser.ScalarNode,
                             dataType: String,
@@ -160,7 +161,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
           case Some(ref) if ref.unit.isInstanceOf[EncodesModel] =>
             parseLink(reference.text).withLinkedDomainElement(ref.unit.asInstanceOf[EncodesModel].encodes)
           case _ =>
-            ctx.declarations.fragments.get(reference.text).map(_.encoded) match {
+            ctx.fragments.get(reference.text).map(_.encoded) match {
               case Some(domainElement) =>
                 parseLink(reference.text).withLinkedDomainElement(domainElement)
               case _ =>
@@ -229,22 +230,22 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
 }
 
 object DataNodeParser {
-  def parse(parent: Option[String], idCounter: IdCounter)(node: YNode)(implicit ctx: WebApiContext): DataNode =
+  def parse(parent: Option[String], idCounter: IdCounter)(node: YNode)(implicit ctx: ShapeParserContext): DataNode =
     new DataNodeParser(node,
-                       refsCounter = AliasCounter(ctx.options.getMaxYamlReferences),
+                       refsCounter = AliasCounter(ctx.getMaxYamlReferences),
                        parent = parent,
                        idCounter = idCounter).parse()
 
   def apply(node: YNode, parameters: AbstractVariables = AbstractVariables(), parent: Option[String] = None)(
-      implicit ctx: WebApiContext): DataNodeParser = {
+      implicit ctx: ShapeParserContext): DataNodeParser = {
     new DataNodeParser(node = node,
-                       refsCounter = AliasCounter(ctx.options.getMaxYamlReferences),
+                       refsCounter = AliasCounter(ctx.getMaxYamlReferences),
                        parameters = parameters,
                        parent = parent)
   }
 
   def apply(node: YNode, parameters: AbstractVariables, parent: Option[String], idCounter: IdCounter)(
-      implicit ctx: WebApiContext): DataNodeParser = {
-    new DataNodeParser(node, AliasCounter(ctx.options.getMaxYamlReferences), parameters, parent, idCounter)
+      implicit ctx: ShapeParserContext): DataNodeParser = {
+    new DataNodeParser(node, AliasCounter(ctx.getMaxYamlReferences), parameters, parent, idCounter)
   }
 }

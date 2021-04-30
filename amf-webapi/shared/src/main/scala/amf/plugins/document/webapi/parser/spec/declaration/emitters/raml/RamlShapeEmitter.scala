@@ -9,11 +9,7 @@ import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
-  AnnotationsEmitter,
-  DataNodeEmitter,
-  FacetsEmitter
-}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, FacetsEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{EnumValuesEmitter, XMLSerializerEmitter}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.CreativeWork

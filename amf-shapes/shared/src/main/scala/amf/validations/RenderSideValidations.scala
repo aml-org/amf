@@ -10,7 +10,7 @@ import amf.plugins.features.validation.Validations
 // noinspection TypeAnnotation
 object RenderSideValidations extends Validations {
   override val specification: String = RENDER_SIDE_VALIDATION
-  override val namespace: Namespace  = AmfRender
+  override val namespace: Namespace = AmfRender
 
   val RenderValidation = validation(
     "render-validation",

@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.Oas3SpecEmitterFactory
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, DataNodeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter._
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
@@ -237,7 +237,10 @@ object RamlExampleValuesEmitter {
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
     val explicitMetaFields =
-      List(ExampleModel.Strict, ExampleModel.Description, ExampleModel.DisplayName, ExampleModel.CustomDomainProperties)
+      List(ExampleModel.Strict,
+           ExampleModel.Description,
+           ExampleModel.DisplayName,
+           ExampleModel.CustomDomainProperties)
         .filter { f =>
           fs.entry(f) match {
             case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])

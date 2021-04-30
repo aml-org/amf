@@ -5,10 +5,7 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel
-import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel.{
-  DiscriminatorValue,
-  DiscriminatorValueTarget
-}
+import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel.{DiscriminatorValue, DiscriminatorValueTarget}
 
 case class DiscriminatorValueMapping(fields: Fields, annotations: Annotations) extends DomainElement {
 
