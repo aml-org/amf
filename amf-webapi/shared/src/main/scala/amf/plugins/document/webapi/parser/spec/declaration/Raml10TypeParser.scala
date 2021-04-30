@@ -1526,7 +1526,9 @@ sealed abstract class RamlTypeParser(entryOrNode: YMapEntryLike,
                     )
                   }
                 })
-              shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
+              shape.set(NodeShapeModel.Properties,
+                        AmfArray(properties, Annotations(entry.value)),
+                        Annotations(entry.value))
             case YType.Null =>
             case _ =>
               ctx.eh.violation(

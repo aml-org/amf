@@ -2,8 +2,8 @@ package amf.plugins.document.webapi.parser.spec.oas.parser.types
 
 import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
-import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.model.DataType
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
@@ -20,7 +20,6 @@ import amf.plugins.document.webapi.parser.spec.common.{
   AnnotationParser,
   DataNodeParser,
   ScalarNodeParser,
-  TextKeyYMapEntryLike,
   YMapEntryLike
 }
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -700,16 +699,16 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           case _ => // Empty properties node.
         }
       })
-      val (entryAnnotations, valueAnnotations) = properEntry.map { pe =>
-        Annotations(pe.value) -> Annotations(pe)
+      val valueAnnotations = properEntry.map { pe =>
+        Annotations(pe.value)
       } orElse {
         patternPropEntry.map { pp =>
-          Annotations(pp.value) -> Annotations(pp)
+          Annotations(pp.value)
         }
-      } getOrElse { Annotations() -> Annotations() }
+      } getOrElse { Annotations() }
 
       if (properties.nonEmpty)
-        shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, entryAnnotations), valueAnnotations)
+        shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, valueAnnotations), valueAnnotations)
       shape.properties.foreach(p => properties += (p.name.value() -> p))
 
       parseShapeDependencies(shape)
