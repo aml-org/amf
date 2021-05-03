@@ -21,6 +21,10 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{
 }
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasSchemaEmitter, OasTypeEmitter}
@@ -108,6 +112,8 @@ case class Raml10ParameterPartEmitter(parameter: Parameter, ordering: SpecOrderi
     implicit spec: RamlSpecEmitterContext)
     extends PartEmitter {
 
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   override def emit(b: PartBuilder): Unit = {
     val fs = parameter.fields
     b.obj { b =>
@@ -179,6 +185,8 @@ case class Raml08ParameterPartEmitter(parameter: Parameter, ordering: SpecOrderi
     implicit spec: RamlSpecEmitterContext)
     extends PartEmitter {
 
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   override def emit(b: PartBuilder): Unit = {
     parameter.schema match {
       case anyShape: AnyShape =>
@@ -241,6 +249,8 @@ case class OasParametersEmitter(key: String,
                                 ordering: SpecOrdering,
                                 payloads: Seq[Payload] = Nil,
                                 references: Seq[BaseUnit])(implicit val spec: OasSpecEmitterContext) {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
   def ramlEndpointEmitters(): Seq[EntryEmitter] = Seq(OasParameterEmitter(parameters, references))
 
@@ -340,6 +350,8 @@ case class ParameterEmitter(parameter: Parameter,
                             asHeader: Boolean)(implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
 
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   private def emitLink(b: PartBuilder): Unit = {
     val label = parameter.linkTarget match {
       case Some(e: ErrorParameter) => parameter.linkLabel.value()
@@ -435,6 +447,8 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
     implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   protected def emitParameter(b: EntryBuilder): Unit = {
     b.entry(
       parameter.name.option().get,
@@ -513,6 +527,8 @@ case class OasDeclaredHeadersEmitter(parameters: Seq[Parameter], ordering: SpecO
 case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit =
     handleInlinedRefOr(b, payload) {

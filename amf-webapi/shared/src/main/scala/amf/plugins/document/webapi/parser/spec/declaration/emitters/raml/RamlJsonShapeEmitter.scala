@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ExamplesEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ApiShapeEmitterContextAdapter, ExamplesEmitter}
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument.PartBuilder
 
@@ -18,6 +18,8 @@ case class RamlJsonShapeEmitter(shape: AnyShape,
                                 typeKey: String = "type")(implicit spec: SpecEmitterContext)
     extends PartEmitter
     with ExamplesEmitter {
+
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit = {
     shape.annotations.find(classOf[ParsedJSONSchema]) match {

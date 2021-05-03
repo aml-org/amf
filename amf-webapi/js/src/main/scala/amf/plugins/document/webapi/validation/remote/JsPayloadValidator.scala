@@ -7,7 +7,6 @@ import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.internal.environment.Environment
 import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 
-import scala.collection.mutable.ArrayBuffer
 import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
 
@@ -93,7 +92,9 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode, v
   }
 }
 
-case class JsReportValidationProcessor(override val profileName: ProfileName, override protected var intermediateResults: Seq[AMFValidationResult] = Seq()) extends ReportValidationProcessor {
+case class JsReportValidationProcessor(override val profileName: ProfileName,
+                                       override protected var intermediateResults: Seq[AMFValidationResult] = Seq())
+    extends ReportValidationProcessor {
 
   override def keepResults(r: Seq[AMFValidationResult]): Unit = intermediateResults ++= r
 

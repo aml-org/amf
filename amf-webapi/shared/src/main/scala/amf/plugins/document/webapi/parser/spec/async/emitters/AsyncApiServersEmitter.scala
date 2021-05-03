@@ -4,6 +4,7 @@ import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.domain.{OasServerVariablesEmitter, SecurityRequirementsEmitter}
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
@@ -42,6 +43,7 @@ class AsyncApiSingleServerEmitter(server: Server, ordering: SpecOrdering)(implic
 
 class AsyncApiServerPartEmitter(server: Server, ordering: SpecOrdering)(implicit val spec: OasLikeSpecEmitterContext)
     extends PartEmitter {
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
   override def emit(b: YDocument.PartBuilder): Unit = {
     val result = ListBuffer[EntryEmitter]()
     val fs     = server.fields

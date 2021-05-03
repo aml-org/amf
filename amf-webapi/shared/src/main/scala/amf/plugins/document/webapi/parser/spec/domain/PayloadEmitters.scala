@@ -17,7 +17,11 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
   Raml10TypePartEmitter,
   RamlRequiredShapeEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext,
+  raml
+}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
@@ -32,6 +36,9 @@ import org.yaml.model.{YMap, YNode, YType}
 case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   override def emit(b: EntryBuilder): Unit = {
     val fs = payload.fields
     Option(payload.schema) match {

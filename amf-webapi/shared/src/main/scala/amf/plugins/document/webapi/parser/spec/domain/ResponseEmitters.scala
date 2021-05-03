@@ -9,6 +9,10 @@ import amf.plugins.domain.webapi.models.Response
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 
 import scala.collection.mutable
@@ -86,6 +90,8 @@ abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, r
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
     val result = mutable.ListBuffer[EntryEmitter]()
 
@@ -116,6 +122,8 @@ abstract class RamlResponseEmitter(response: Response, ordering: SpecOrdering, r
 abstract class RamlResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
     extends PartEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
   protected def emitters(fs: Fields): ListBuffer[EntryEmitter] = {
     val result = mutable.ListBuffer[EntryEmitter]()

@@ -6,6 +6,10 @@ import amf.core.parser.{Fields, Position}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.webapi.parser.spec.oas.{
   OasLikeSecuritySchemeTypeMappings,
@@ -126,6 +130,7 @@ case class Oas3NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 class OasSecuritySchemeEmitter(securityScheme: SecurityScheme, mappedType: SecuritySchemeType, ordering: SpecOrdering)(
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
   def emitters(): Seq[EntryEmitter] = {
 
     val results = ListBuffer[EntryEmitter]()

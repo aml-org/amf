@@ -8,7 +8,8 @@ import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLe
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.validation.collector.{CollectorsRunner, ValidationCandidateCollector}
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
-import amf.validations.PayloadValidations
+import amf.validations.PayloadValidations.SchemaException
+import amf.validations.ShapePayloadValidations
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -44,7 +45,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
       .filter {
         case (_, validations) =>
           validations.exists(v =>
-            v.validationId == PayloadValidations.SchemaException.id || v.validationId == PayloadValidations.UntranslatableDraft2019Fields.id)
+            v.validationId == SchemaException.id || v.validationId == ShapePayloadValidations.UntranslatableDraft2019Fields.id)
       }
       .flatMap(_._2)
     payloadResults ++ schemaResults

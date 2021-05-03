@@ -7,7 +7,11 @@ import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ForceEntry, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ExamplesEmitter, SimpleTypeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ExamplesEmitter,
+  SimpleTypeEmitter
+}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
@@ -18,6 +22,8 @@ import scala.collection.mutable
 
 case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends ExamplesEmitter {
+
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   // TODO: Refactor -> Why does a TypeEmitter extend an ExampleEmitter?
   def inheritsEmitters(): Seq[Emitter] = {

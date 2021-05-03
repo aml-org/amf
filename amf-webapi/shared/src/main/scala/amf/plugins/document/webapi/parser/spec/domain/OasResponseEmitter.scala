@@ -17,9 +17,13 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
   OasSpecEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext,
+  oas
+}
 
 import scala.collection.mutable
 
@@ -52,6 +56,9 @@ case class OasResponseEmitter(response: Response,
 case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   override def emit(p: PartBuilder): Unit = {
     val fs = response.fields
     handleInlinedRefOr(p, response) {
@@ -87,18 +94,18 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
           if (spec.factory.isInstanceOf[Oas2SpecEmitterFactory]) {
             val payloads = OasPayloads(response.payloads)
 
-          payloads.default.foreach(payload => {
-            payload.fields
-              .entry(PayloadModel.MediaType)
-              .map(f => result += ValueEmitter("mediaType".asOasExtension, f))
-            payload.fields
-              .entry(PayloadModel.Schema)
-              .map { f =>
-                if (!f.value.annotations.contains(classOf[SynthesizedField])) {
-                  result += oas.OasSchemaEmitter(f, ordering, references)
+            payloads.default.foreach(payload => {
+              payload.fields
+                .entry(PayloadModel.MediaType)
+                .map(f => result += ValueEmitter("mediaType".asOasExtension, f))
+              payload.fields
+                .entry(PayloadModel.Schema)
+                .map { f =>
+                  if (!f.value.annotations.contains(classOf[SynthesizedField])) {
+                    result += oas.OasSchemaEmitter(f, ordering, references)
+                  }
                 }
-              }
-          })
+            })
 
             if (payloads.other.nonEmpty)
               result += OasPayloadsEmitter("responsePayloads".asOasExtension, payloads.other, ordering, references)
