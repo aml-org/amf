@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.parser.ShapeParserContext
 import amf.plugins.document.webapi.parser.spec.common.QuickFieldParserOps
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
 import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration.oas.types.InlineOasTypeParser
+import amf.plugins.document.webapi.parser.spec.oas.parser.types.InlineOasTypeParser
 import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector.LinkCriteria
 import amf.plugins.domain.shapes.models._
 import org.yaml.model._
@@ -39,8 +39,7 @@ object OasTypeParser {
       implicit ctx: ShapeParserContext): OasTypeParser =
     new OasTypeParser(node, name, node.asMap, adopt, version)
 
-  def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit)(
-      implicit ctx: ShapeParserContext): OasTypeParser =
+  def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: ShapeParserContext): OasTypeParser =
     new OasTypeParser(
       YMapEntryLike(entry),
       key(entry),

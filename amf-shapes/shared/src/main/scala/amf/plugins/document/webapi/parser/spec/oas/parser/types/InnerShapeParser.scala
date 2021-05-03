@@ -1,4 +1,4 @@
-package amf.plugins.document.webapi.parser.spec.declaration.oas.types
+package amf.plugins.document.webapi.parser.spec.oas.parser.types
 
 import amf.core.metamodel.Field
 import amf.core.model.domain.Shape
