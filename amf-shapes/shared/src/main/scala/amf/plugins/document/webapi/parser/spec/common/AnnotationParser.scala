@@ -14,7 +14,8 @@ import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.validations.ShapeParserSideValidations.InvalidAnnotationTarget
 import org.yaml.model._
 
-case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] = Nil)(implicit val ctx: ShapeParserContext) {
+case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] = Nil)(
+    implicit val ctx: ShapeParserContext) {
   def parse(): Unit = {
     val extensions = parseExtensions(element.id, map, target)
     setExtensions(extensions)
@@ -47,7 +48,7 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
 
 object AnnotationParser {
   def parseExtensions(parent: String, map: YMap, target: List[String] = Nil)(
-      implicit ctx: DataNodeParserContext): Seq[DomainExtension] =
+      implicit ctx: ErrorHandlingContext with DataNodeParserContext): Seq[DomainExtension] =
     map.entries.flatMap { entry =>
       resolveAnnotation(entryKey(entry)).map(ExtensionParser(_, parent, entry, target).parse().add(Annotations(entry)))
     }
@@ -58,7 +59,7 @@ object AnnotationParser {
 }
 
 private case class ExtensionParser(annotation: String, parent: String, entry: YMapEntry, target: List[String] = Nil)(
-    implicit val ctx: DataNodeParserContext) {
+    implicit val ctx: ErrorHandlingContext with DataNodeParserContext) {
   def parse(): DomainExtension = {
     val id              = s"$parent/extension/$annotation"
     val propertyId      = s"$parent/$annotation"
@@ -66,7 +67,8 @@ private case class ExtensionParser(annotation: String, parent: String, entry: YM
     val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId)).parse()
     // TODO
     // throw a parser-side warning validation error if no annotation can be found
-    val customDomainProperty = ctx.findAnnotation(annotation, SearchScope.All)
+    val customDomainProperty = ctx
+      .findAnnotation(annotation, SearchScope.All)
       .getOrElse(
         CustomDomainProperty(Annotations(entry)).withId(propertyId).withName(annotation, Annotations(entry.key)))
     validateAllowedTargets(customDomainProperty)

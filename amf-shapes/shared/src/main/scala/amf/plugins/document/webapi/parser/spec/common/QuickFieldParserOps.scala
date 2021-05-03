@@ -21,7 +21,8 @@ import org.yaml.model._
 import scala.collection.mutable.ListBuffer
 
 trait QuickFieldParserOps {
-  class ObjectField(target: Target, field: Field)(implicit iv: ErrorHandlingContext) extends (YMapEntry => Unit) {
+  class ObjectField(target: Target, field: Field)(implicit iv: ErrorHandlingContext with DataNodeParserContext)
+      extends (YMapEntry => Unit) {
 
     // Custom annotations
     private val custom: Annotations = Annotations()
@@ -145,16 +146,14 @@ trait QuickFieldParserOps {
     private def collectDomainExtensions(parent: String, n: ScalarNode): Seq[DomainExtension] = {
       n match {
         case n: RamlScalarValuedNode =>
-          // TODO: Uncomment
-//          AnnotationParser.parseExtensions(parent, n.obj)
-          Nil
+          AnnotationParser.parseExtensions(parent, n.obj)
         case _: DefaultScalarNode =>
           Nil
       }
     }
   }
 
-  implicit class FieldOps(field: Field)(implicit iv: ErrorHandlingContext) {
+  implicit class FieldOps(field: Field)(implicit iv: ErrorHandlingContext with DataNodeParserContext) {
     def in(elem: DomainElement): ObjectField = in(SingleTarget(elem))
 
     def in(target: Target): ObjectField = new ObjectField(target, field)

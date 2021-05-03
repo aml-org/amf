@@ -26,7 +26,10 @@ import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 import scala.collection.mutable
 
-abstract class ShapeParserContext(eh: ParserErrorHandler) extends DataNodeParserContext(eh) with UnresolvedComponents {
+abstract class ShapeParserContext(eh: ParserErrorHandler)
+    extends ErrorHandlingContext()(eh)
+    with DataNodeParserContext
+    with UnresolvedComponents {
 
   def toOasNext: ShapeParserContext
   def findExample(key: String, scope: SearchScope.Scope): Option[Example]
