@@ -1,7 +1,7 @@
 package amf.validations
 
 import amf._
-import amf.core.validation.SeverityLevels.WARNING
+import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
 import amf.core.validation.core.ValidationSpecification
 import amf.core.validation.core.ValidationSpecification.PARSER_SIDE_VALIDATION
 import amf.core.vocabulary.Namespace
@@ -16,6 +16,90 @@ object ShapeParserSideValidations extends Validations {
   val UserDefinedFacetMatchesBuiltInFacets = validation(
     "user-defined-facets-matches-built-in",
     "User defined facet name matches built in facet of type"
+  )
+
+  val InvalidTypeExpression = validation(
+    "invalid-type-expression",
+    "Invalid type expression"
+  )
+
+  val InvalidDatetimeFormat = validation(
+    "invalid-datetime-format",
+    "Invalid format value for datetime"
+  )
+
+  val UnexpectedFileTypesSyntax = validation(
+    "unexpected-file-types-syntax",
+    "Unexpected 'fileTypes' syntax. Options are string or sequence"
+  )
+
+  val UnableToParseArray = validation(
+    "unable-to-parse-array",
+    "Unable to parse array definition"
+  )
+
+  val InvalidValueInPropertiesFacet = validation(
+    "invalid-value-in-properties-facet",
+    "Properties facet must be a map of key and values"
+  )
+  val DiscriminatorOnExtendedUnionSpecification = validation(
+    "discriminator-on-extended-union",
+    "Property 'discriminator' not supported in a node extending a unionShape"
+  )
+
+  val InvalidPropertyType = validation(
+    "invalid-property-type",
+    "Invalid property key type. Should be string"
+  )
+
+  val InvalidExternalTypeType = validation(
+    "invalid-external-type-type",
+    "Invalid external type type"
+  )
+
+  val SchemaDeprecated = validation(
+    "schema-deprecated",
+    "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
+  )
+
+  val InvalidAbstractDeclarationParameterInType = validation(
+    "invalid-abstract-declaration-parameter-in-type",
+    "Trait/Resource Type parameter in type"
+  )
+
+  val UnableToParseJsonSchema = validation(
+    "unable-to-parse-json-schema",
+    "Unable to parse json schema"
+  )
+
+  val InvalidJsonSchemaVersion = validation(
+    "invalid-json-schema-version",
+    "Invalid Json Schema version"
+  )
+
+  val MissingDiscriminatorProperty = validation(
+    "missing-discriminator-property",
+    "Type is missing property marked as discriminator"
+  )
+
+  val PatternPropertiesOnClosedNodeSpecification = validation(
+    "pattern-properties-on-closed-node",
+    "Closed node cannot define pattern properties"
+  )
+
+  val JsonSchemaInheritanceWarning = validation(
+    "json-schema-inheritance",
+    "Inheriting from JSON Schema"
+  )
+
+  val XmlSchemaInheritancceWarning = validation(
+    "xml-schema-inheritance",
+    "Inheriting from XML Schema"
+  )
+
+  val InvalidDecimalPoint = validation(
+    "invalid-decimal-point",
+    "Invalid decimal point"
   )
 
   val UserDefinedFacetMatchesAncestorsTypeFacets = validation(
@@ -188,9 +272,46 @@ object ShapeParserSideValidations extends Validations {
     "Read only property should not be marked as required by a schema"
   )
 
+  val ChainedReferenceSpecification = validation(
+    "chained-reference-error",
+    "References cannot be chained"
+  )
+
+  val UnableToSetDefaultType = validation(
+    "unable-to-set-default-type",
+    "Unable to set default type"
+  )
+
+  val ExclusiveSchemaType = validation(
+    "exclusive-schema-type",
+    "'schema' and 'type' properties are mutually exclusive"
+  )
+
+  val ExclusiveSchemasType = validation(
+    "exclusive-schemas-type",
+    "'schemas' and 'types' properties are mutually exclusive"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
-    InvalidShapeFormat.id                     -> all(WARNING),
+    InvalidShapeFormat.id           -> all(WARNING),
+    JsonSchemaInheritanceWarning.id -> all(WARNING),
+    PatternPropertiesOnClosedNodeSpecification.id -> Map(
+      Raml10Profile -> VIOLATION,
+      Raml08Profile -> VIOLATION,
+      Oas20Profile  -> WARNING,
+      Oas30Profile  -> WARNING,
+      AmfProfile    -> WARNING
+    ),
+    DiscriminatorOnExtendedUnionSpecification.id -> Map(
+      Raml10Profile -> VIOLATION,
+      Raml08Profile -> VIOLATION,
+      Oas20Profile  -> WARNING,
+      Oas30Profile  -> WARNING,
+      AmfProfile    -> WARNING
+    ),
+    SchemaDeprecated.id                       -> all(WARNING),
     ReadOnlyPropertyMarkedRequired.id         -> all(WARNING),
+    MissingDiscriminatorProperty.id           -> all(VIOLATION),
     InvalidRequiredBooleanForSchemaVersion.id -> all(WARNING) // TODO: should be violation
   )
 

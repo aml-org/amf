@@ -102,7 +102,8 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         "type",
         (shape: Shape) => shape.withId(root.location + "#/shape"), // TODO: this is being ignored
         StringDefaultType
-      ).parse()
+      )(WebApiShapeParserContextAdapter(ctx))
+        .parse()
         .foreach(dataType.withEncodes)
 
       dataType

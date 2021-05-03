@@ -9,7 +9,9 @@ case class AstIndex(private val map: mutable.Map[String, YMapEntryLike], resolve
 
   def getNode(reference: String): Option[YMapEntryLike] = {
     val toLookUp = clean(reference)
-    map.get(toLookUp).orElse { callResolvers(toLookUp) }
+    map.get(toLookUp).orElse {
+      callResolvers(toLookUp)
+    }
   }
 
   private def callResolvers(reference: String): Option[YMapEntryLike] =

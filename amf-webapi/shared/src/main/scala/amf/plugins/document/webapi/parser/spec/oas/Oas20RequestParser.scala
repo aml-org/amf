@@ -4,7 +4,7 @@ import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
-import amf.plugins.document.webapi.parser.spec
+import amf.plugins.document.webapi.parser.{WebApiShapeParserContextAdapter, spec}
 import amf.plugins.document.webapi.parser.spec.declaration.Raml10TypeParser
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.toRaml
@@ -115,7 +115,8 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
     map.key(
       "queryString".asOasExtension,
       queryEntry => {
-        Raml10TypeParser(queryEntry, shape => shape.adopted(request.getOrCreate.id))(toRaml(ctx))
+        Raml10TypeParser(queryEntry, shape => shape.adopted(request.getOrCreate.id))(
+          WebApiShapeParserContextAdapter(toRaml(ctx)))
           .parse()
           .map(s => request.getOrCreate.withQueryString(tracking(s, request.getOrCreate.id)))
       }

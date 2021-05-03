@@ -1,25 +1,38 @@
 package amf.plugins.document.webapi.parser.spec.declaration.external.raml
 
-import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
+import amf.core.annotations.ExternalFragmentRef
 import amf.core.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
 import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{Annotations, Range, ReferenceFragmentPartition}
+import amf.core.parser.{Annotations, ReferenceFragmentPartition, YMapOps}
+import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
+import amf.plugins.document.webapi.parser.{
+  RamlExternalSchemaExpressionFactory,
+  ShapeParserContext,
+  WebApiShapeParserContextAdapter
+}
 import amf.plugins.domain.shapes.metamodel.SchemaShapeModel
 import amf.plugins.domain.shapes.models.SchemaShape
 import amf.validations.ParserSideValidations.InvalidXmlSchemaType
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
-import amf.core.parser.YMapOps
-import amf.core.parser.YNodeLikeOps
-import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
-import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
+import org.yaml.model._
+
+case class DefaultRamlExternalSchemaExpressionFactory()(implicit val ctx: RamlWebApiContext)
+    extends RamlExternalSchemaExpressionFactory {
+  def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false) =
+    RamlXmlSchemaExpression(key, value, adopt, parseExample)
+  def createJson(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false) =
+    RamlJsonSchemaExpression(key, value, adopt, parseExample)
+}
 
 case class RamlXmlSchemaExpression(key: YNode,
                                    override val value: YNode,
                                    override val adopt: Shape => Unit,
-                                   parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
+                                   parseExample: Boolean = false)(implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
+
+  override val shapeCtx: ShapeParserContext = WebApiShapeParserContextAdapter(ctx)
+
   override def parseValue(origin: ValueAndOrigin): SchemaShape = {
     val (maybeReferenceId, maybeLocation, maybeFragmentLabel): (Option[String], Option[String], Option[String]) =
       origin.originalUrlText.map(ReferenceFragmentPartition.apply) match {
@@ -85,7 +98,7 @@ case class RamlXmlSchemaExpression(key: YNode,
         }
       }
     )
-    parseExamples(parsedSchema, value.as[YMap])
+    parseExamples(parsedSchema, value.as[YMap])(shapeCtx)
   }
 
   private def buildSchemaShapeFrom(typeEntry: YMapEntry) = {

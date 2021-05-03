@@ -87,7 +87,7 @@ case class Raml10ParameterParser(entry: YMapEntry,
         map.key("binding".asRamlAnnotation, (ParameterModel.Binding in parameter).explicit)
         Raml10TypeParser(entry,
                          shape => shape.withName("schema").adopted(parameter.id),
-                         TypeInfo(isPropertyOrParameter = true))
+                         TypeInfo(isPropertyOrParameter = true))(WebApiShapeParserContextAdapter(ctx))
           .parse()
           .foreach(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
 
@@ -104,7 +104,7 @@ case class Raml10ParameterParser(entry: YMapEntry,
             Raml10TypeParser(
               entry,
               shape => shape.withName("schema").adopted(parameter.id)
-            ).parse().foreach { schema =>
+            )(WebApiShapeParserContextAdapter(ctx)).parse().foreach { schema =>
               tracking(schema, parameter.id).annotations += SynthesizedField()
               parameter.set(ParameterModel.Schema, schema, Annotations(entry))
             }
@@ -123,7 +123,7 @@ case class Raml10ParameterParser(entry: YMapEntry,
                   entry,
                   shape => shape.withName("schema", Annotations(SynthesizedField())).adopted(parameter.id),
                   TypeInfo(isPropertyOrParameter = true),
-                  StringDefaultType)
+                  StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
                   .parse() match {
                   case Some(schema) =>
                     parameter.set(ParameterModel.Schema, tracking(schema, parameter.id), Annotations(entry))
@@ -182,7 +182,7 @@ case class Raml08ParameterParser(entry: YMapEntry,
         Raml10TypeParser(
           entry,
           shape => shape.withName("schema").adopted(parameter.id)
-        ).parse().foreach { schema =>
+        )(WebApiShapeParserContextAdapter(ctx)).parse().foreach { schema =>
           tracking(schema, parameter.id).annotations += SynthesizedField()
           parameter.set(ParameterModel.Schema, schema, Annotations(entry))
         }
@@ -191,7 +191,7 @@ case class Raml08ParameterParser(entry: YMapEntry,
         Raml08TypeParser(entry,
                          (s: Shape) => s.withName(nameNode.text().toString).adopted(parameter.id),
                          isAnnotation = false,
-                         StringDefaultType)
+                         StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
           .parse()
           .foreach(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
     }

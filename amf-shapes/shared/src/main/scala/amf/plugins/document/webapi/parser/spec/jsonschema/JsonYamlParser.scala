@@ -16,7 +16,7 @@ object JsonYamlParser {
 
   private def getRaw(inputFragment: Fragment): String = inputFragment match {
     case fragment: ExternalFragment => fragment.encodes.raw.value()
-    case fragment: RecursiveUnit    => fragment.raw.get
-    case _                          => ""
+    case fragment: RecursiveUnit => fragment.raw.get
+    case _ => ""
   }
 }

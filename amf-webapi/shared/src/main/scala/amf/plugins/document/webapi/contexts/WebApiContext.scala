@@ -9,6 +9,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.{AliasCounter, IdCounter}
 import amf.plugins.document.vocabularies.parser.common.DeclarationContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{
@@ -55,7 +56,7 @@ abstract class WebApiContext(val loc: String,
     case _                  => None
   }
 
-  var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(this)
+  var jsonSchemaRefGuide: JsonSchemaRefGuide = JsonSchemaRefGuide(loc, refs)(WebApiShapeParserContextAdapter(this))
 
   var indexCache: mutable.Map[String, AstIndex] = mutable.Map[String, AstIndex]()
 
@@ -66,7 +67,7 @@ abstract class WebApiContext(val loc: String,
       location, {
         val result = AstIndexBuilder.buildAst(value,
                                               AliasCounter(options.getMaxYamlReferences),
-                                              computeJsonSchemaVersion(value))(this)
+                                              computeJsonSchemaVersion(value))(WebApiShapeParserContextAdapter(this))
         indexCache.put(location, result)
         result
       }
@@ -93,7 +94,7 @@ abstract class WebApiContext(val loc: String,
       implicit ctx: OasWebApiContext): Option[OasParameter] = {
     val referenceUrl = getReferenceUrl(fileUrl)
     obtainFragment(fileUrl) flatMap { fragment =>
-      AstFinder.findAst(fragment, referenceUrl).map { node =>
+      AstFinder.findAst(fragment, referenceUrl)(WebApiShapeParserContextAdapter(ctx)).map { node =>
         ctx.factory.parameterParser(YMapEntryLike(node), parentId, None, new IdCounter()).parse
       }
     }

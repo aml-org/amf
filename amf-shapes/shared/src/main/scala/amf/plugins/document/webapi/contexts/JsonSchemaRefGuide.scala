@@ -4,13 +4,14 @@ import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.parser.ParsedReference
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.UriUtils
+import amf.plugins.document.webapi.parser.ShapeParserContext
 import amf.plugins.document.webapi.parser.spec.jsonschema.AstFinder
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaRootCreator.getYNodeFrom
 import org.yaml.model.YNode
 
 case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReference])(
-    implicit val context: WebApiContext)
-    extends PlatformSecrets {
+  implicit val context: ShapeParserContext)
+  extends PlatformSecrets {
 
   def obtainRemoteYNode(ref: String): Option[YNode] = {
     withFragmentAndInFileReference(ref) { (fragment, referenceUrl) =>
@@ -26,7 +27,7 @@ case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReferenc
 
   def withFragmentAndInFileReference[T](ref: String)(action: (Fragment, Option[String]) => Option[T]): Option[T] = {
     if (!context.validateRefFormatWithError(ref)) return None
-    val fileUrl      = getFileUrl(ref)
+    val fileUrl = getFileUrl(ref)
     val referenceUrl = getReferenceUrl(fileUrl)
     obtainFragmentFromFullRef(fileUrl) flatMap { fragment =>
       action(fragment, referenceUrl)
@@ -47,7 +48,7 @@ case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReferenc
   private def getReferenceUrl(fileUrl: String): Option[String] = {
     fileUrl.split("#") match {
       case s: Array[String] if s.size > 1 => Some(s.last)
-      case _                              => None
+      case _ => None
     }
   }
 
@@ -57,7 +58,7 @@ case class JsonSchemaRefGuide(currentLoc: String, references: Seq[ParsedReferenc
       .filter(r => r.unit.location().isDefined)
       .find(_.unit.location().get == baseFileUrl) collectFirst {
       case ref if ref.unit.isInstanceOf[ExternalFragment] => ref.unit.asInstanceOf[ExternalFragment]
-      case ref if ref.unit.isInstanceOf[RecursiveUnit]    => ref.unit.asInstanceOf[RecursiveUnit]
+      case ref if ref.unit.isInstanceOf[RecursiveUnit] => ref.unit.asInstanceOf[RecursiveUnit]
     }
   }
 }
