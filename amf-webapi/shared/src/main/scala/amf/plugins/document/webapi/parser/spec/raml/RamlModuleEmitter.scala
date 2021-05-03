@@ -49,6 +49,9 @@ case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterC
 }
 
 class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitterContext) {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   def emitFragment(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, fragment.encodes.annotations)
@@ -82,7 +85,6 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
 
   case class DocumentationItemFragmentEmitter(documentationItem: DocumentationItemFragment, ordering: SpecOrdering)
       extends RamlFragmentTypeEmitter {
-    protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10DocumentationItem
 
@@ -97,7 +99,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
 
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
       Option(dataType.encodes) match {
-        case Some(shape: AnyShape) => raml.Raml10TypeEmitter(shape, ordering, references = Nil).entries()
+        case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = Nil).entries()
         case Some(other) =>
           spec.eh.violation(ResolutionValidation,
                             other.id,

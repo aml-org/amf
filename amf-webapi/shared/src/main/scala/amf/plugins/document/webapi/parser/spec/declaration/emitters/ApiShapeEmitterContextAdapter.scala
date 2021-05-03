@@ -5,8 +5,8 @@ import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
+import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
@@ -15,12 +15,10 @@ import amf.plugins.document.webapi.contexts.emitter.async.AsyncSpecEmitterFactor
 import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.Oas3SpecEmitterFactory
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.webapi.contexts.parser.async.AsyncSpecVersionFactory
-import amf.plugins.document.webapi.contexts.parser.oas.Oas3VersionFactory
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
-import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.oas.emitters.OasLikeExampleEmitters
+import amf.plugins.document.webapi.parser.spec.toOas
 import amf.plugins.domain.shapes.models.{Example, TypeDef}
 import org.yaml.model.{YDocument, YNode}
 
@@ -117,4 +115,27 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
   override def isJsonSchema: Boolean = spec.isInstanceOf[JsonSchemaEmitterContext]
 
   override def factoryIsAsync: Boolean = spec.factory.isInstanceOf[AsyncSpecEmitterFactory]
+
+  override def externalReference(reference: Linkable): PartEmitter = spec match {
+    case ramlSpec: RamlSpecEmitterContext => ramlSpec.externalReference(reference)
+    case _                                => throw new Exception("Render - can only be called from RAML")
+  }
+
+  override def externalLink(shape: Shape, references: Seq[BaseUnit]): Option[BaseUnit] =
+    spec.externalLink(shape, references)
+
+  override def toOasNext: ShapeEmitterContext = copy(toOas(spec))
+
+  override def ramlTypePropertyEmitter(value: String, shape: Shape): Option[EntryEmitter] =
+    spec.ramlTypePropertyEmitter(value, shape)
+
+  override def localReferenceEntryEmitter(str: String, shape: Shape): Emitter = spec match {
+    case ramlSpec: RamlSpecEmitterContext => ramlSpec.localReferenceEntryEmitter(str, shape)
+    case _                                => throw new Exception("Render - can only be called from RAML")
+  }
+
+  override def localReference(shape: Shape): PartEmitter = spec match {
+    case ramlSpec: RamlSpecEmitterContext => ramlSpec.localReference(shape)
+    case _                                => throw new Exception("Render - can only be called from RAML")
+  }
 }
