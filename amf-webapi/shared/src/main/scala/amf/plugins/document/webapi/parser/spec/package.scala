@@ -17,6 +17,7 @@ import amf.plugins.document.webapi.contexts.parser.oas.{
   OasWebApiContext
 }
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml10WebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ShapeEmitterContext, SpecAwareEmitterContext}
 
 /**
   * Oas package object
@@ -44,22 +45,18 @@ package object spec {
     }
 
     def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
-        implicit spec: SpecEmitterContext): String = {
-      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[Async20SpecEmitterFactory])
+        implicit spec: SpecAwareEmitterContext): String = {
+      if (spec.factoryIsOas3 || spec.factoryIsAsync)
         appendOas3ComponentsPrefix(url, "parameters")
       else
         appendPrefix(parameterDefinitionsPrefix, url)
     }
 
-    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: SpecEmitterContext): String = {
-      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
+    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: SpecAwareEmitterContext): String = {
+      if (spec.factoryIsOas3)
         appendOas3ComponentsPrefix(url, "responses")
       else
         appendPrefix(responsesDefinitionsPrefix, url)
-    }
-
-    def appendOas3ComponentsPrefix(url: String, fieldName: String): String = {
-      appendPrefix(oas3ComponentsPrefix + s"$fieldName/", url)
     }
   }
 

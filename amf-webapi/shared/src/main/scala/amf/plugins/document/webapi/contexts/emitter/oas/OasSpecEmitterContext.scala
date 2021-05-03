@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.contexts.emitter.oas
+import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.emitter.BaseEmitters.MapEntryEmitter
 import amf.core.emitter._
-import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
@@ -11,9 +11,9 @@ import amf.core.parser.FieldEntry
 import amf.core.remote.{Oas20, Oas30, Vendor}
 import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
-import amf.plugins.document.webapi.contexts.{RefEmitter, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
   AnnotationTypeEmitter,
   FacetsInstanceEmitter,
@@ -21,7 +21,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
   OasFacetsInstanceEmitter
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
-import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.parser.spec.domain.{OasHeaderEmitter, _}
 import amf.plugins.document.webapi.parser.spec.oas.emitters._
 import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, OasTypeDefStringValueMatcher}
 import amf.plugins.domain.webapi.models.api.Api
@@ -32,6 +32,9 @@ import org.yaml.model.YDocument.PartBuilder
 abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterContext)
     extends OasLikeSpecEmitterFactory
     with OasCompactEmitterFactory {
+
+  protected override implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+
   override def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter =
     (link, _) => OasTagToReferenceEmitter(link)
 

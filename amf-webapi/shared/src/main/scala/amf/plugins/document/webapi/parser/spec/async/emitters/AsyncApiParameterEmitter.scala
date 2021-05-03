@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.async
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ApiShapeEmitterContextAdapter, async}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
 import org.yaml.model.YDocument.PartBuilder
@@ -51,6 +51,7 @@ class AsyncApiSingleParameterEmitter(parameter: Parameter, ordering: SpecOrderin
 case class AsyncApiSingleParameterPartEmitter(parameter: Parameter, ordering: SpecOrdering)(
     implicit val spec: OasLikeSpecEmitterContext)
     extends PartEmitter {
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(b: YDocument.PartBuilder): Unit = {
     val fs = parameter.fields

@@ -8,11 +8,12 @@ import amf.core.model.domain.Shape
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeEntryEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{
   Draft4DependenciesEmitter,
   TypeEmitterFactory
 }
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.document.webapi.parser.spec.toOas
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel.{Dependencies, SchemaDependencies}
@@ -61,7 +62,7 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
     }
 
     val emitterFactory: TypeEmitterFactory = shape =>
-      OasTypeEmitter(shape, ordering, Seq(), references, Seq(), Seq())(toOas(spec))
+      OasTypeEmitter(shape, ordering, Seq(), references, Seq(), Seq())(ApiShapeEmitterContextAdapter(toOas(spec)))
     if (fs.entry(Dependencies).isDefined) {
       result += Draft4DependenciesEmitter(node, ordering, isRamlExtension = true, typeFactory = emitterFactory)
     }

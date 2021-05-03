@@ -11,7 +11,8 @@ import amf.core.utils._
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
-import amf.validations.{ParserSideValidations, PayloadValidations}
+import amf.validations.PayloadValidations.UnsupportedExampleMediaTypeWarningSpecification
+import amf.validations.{ParserSideValidations, PayloadValidations, ShapePayloadValidations}
 
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
@@ -119,7 +120,7 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
         Some((Namespace.Document + "value").iri()),
         if (defaultSeverity == SeverityLevels.VIOLATION)
           ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id
-        else PayloadValidations.UnsupportedExampleMediaTypeWarningSpecification.id,
+        else UnsupportedExampleMediaTypeWarningSpecification.id,
         None,
         None,
         null
@@ -136,7 +137,7 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
         Some((Namespace.Document + "value").iri()),
         if (defaultSeverity == SeverityLevels.VIOLATION)
           ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id
-        else PayloadValidations.UnsupportedExampleMediaTypeWarningSpecification.id,
+        else UnsupportedExampleMediaTypeWarningSpecification.id,
         payloadFragment.encodes.position(),
         payloadFragment.encodes.location(),
         null

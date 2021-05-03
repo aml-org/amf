@@ -13,8 +13,12 @@ import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterCont
 import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ApiShapeEmitterContextAdapter, oas}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasNamedTypeEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{RamlNamedTypeEmitter, RamlRecursiveShapeTypeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
+  RamlNamedTypeEmitter,
+  RamlRecursiveShapeTypeEmitter
+}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.EntryBuilder
@@ -49,12 +53,14 @@ case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
 case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
     implicit spec: OasLikeSpecEmitterContext)
     extends DeclaredTypesEmitters(types, references, ordering) {
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
   override def emitTypes(b: EntryBuilder): Unit = {
     if (types.nonEmpty)
       b.entry(
         key,
         _.obj(
-          traverse(ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq(key)))), _))
+          traverse(ordering.sorted(types.map(oas.OasNamedTypeEmitter(_, ordering, references, pointer = Seq(key)))),
+                   _))
       )
   }
 }
@@ -72,6 +78,8 @@ object AsyncDeclaredTypesEmitters {
 case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
     implicit spec: OasSpecEmitterContext)
     extends DeclaredTypesEmitters(types, references, ordering) {
+
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   override def emitTypes(b: EntryBuilder): Unit = {
     if (types.nonEmpty || spec.definitionsQueue.nonEmpty)

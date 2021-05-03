@@ -13,12 +13,15 @@ import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.remote._
 import amf.core.utils.TSort.tsort
 import amf.core.utils.{AmfStrings, IdCounter}
-import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{LicenseEmitter, OrganizationEmitter, TagsEmitter}
 import amf.plugins.document.webapi.parser.spec.oas.{OasDeclaredParametersEmitter, OasDeclaredResponsesEmitter}
@@ -28,7 +31,6 @@ import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.api.WebApi
-import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.render.YamlRender
@@ -257,6 +259,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
                            vendor: Option[Vendor],
                            references: Seq[BaseUnit] = Seq())(implicit val spec: RamlSpecEmitterContext) {
 
+    protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
     val emitters: Seq[EntryEmitter] = {
       val fs     = api.fields
       val result = mutable.ListBuffer[EntryEmitter]()
@@ -351,6 +354,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
 case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "documentation",
@@ -372,6 +376,7 @@ case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
 
 case class OasExtCreativeWorkEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit val spec: SpecEmitterContext)
     extends EntryEmitter {
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
       f.value.annotations,

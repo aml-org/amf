@@ -8,8 +8,13 @@ import amf.plugins.document.webapi.parser.spec.declaration.{OasEntryCreativeWork
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext
+}
 
 case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
   def emitters(): Seq[EntryEmitter] = {
 
     val documents: List[CreativeWork] = f.array.values.collect({ case c: CreativeWork => c }).toList
@@ -27,6 +32,7 @@ case class UserDocumentationsEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
 case class CreativeWorkEmitters(documents: Seq[CreativeWork], ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "userDocumentation".asOasExtension,

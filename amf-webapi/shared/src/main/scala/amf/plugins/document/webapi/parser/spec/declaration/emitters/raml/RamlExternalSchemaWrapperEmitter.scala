@@ -11,7 +11,11 @@ import amf.core.model.domain.Shape
 import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ExamplesEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ExamplesEmitter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.domain.shapes.metamodel.common.ExamplesField
@@ -27,6 +31,9 @@ case class RamlExternalSchemaWrapperEmitter(shape: AnyShape,
                                             forceEntry: Boolean = false)(implicit spec: RamlSpecEmitterContext)
     extends PartEmitter
     with ExamplesEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   override def emit(b: PartBuilder): Unit = {
     val fs = shape.fields
     if (shape.inherits.nonEmpty) {

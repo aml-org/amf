@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.annotations.ExampleIndex
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration.{OasTagToReferenceEmitter, emitters}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.async
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ApiShapeEmitterContextAdapter, async}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.async.AsyncSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleDataNodePartEmitter, NamedMultipleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasLikeExampleEmitters, TagsEmitter}
@@ -236,7 +236,7 @@ case class MessageExamplePairEmitter(pair: MessageExamplePair,
       val emitters: List[EntryEmitter] = List("headers" -> pair.headerExample, "payload" -> pair.payloadExample).flatMap {
         case (key, example) =>
           example.map { ex =>
-            EntryPartEmitter(key, ExampleDataNodePartEmitter(ex, ordering)(spec), position = pos(ex.annotations))
+            EntryPartEmitter(key, ExampleDataNodePartEmitter(ex, ordering)(ApiShapeEmitterContextAdapter(spec)), position = pos(ex.annotations))
           }
       }
       traverse(ordering.sorted(emitters), entryBuilder)

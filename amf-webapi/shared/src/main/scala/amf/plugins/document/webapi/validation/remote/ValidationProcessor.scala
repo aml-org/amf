@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.validation.remote
 import amf.ProfileName
-import amf.client.parse.DefaultParserErrorHandler
 import amf.core.model.domain.DomainElement
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.validations.PayloadValidations.ExampleValidationErrorSpecification

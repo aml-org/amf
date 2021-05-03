@@ -11,7 +11,11 @@ import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.EnumValuesEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  EnumValuesEmitter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, toRaml}
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
@@ -27,6 +31,8 @@ import scala.collection.mutable.ListBuffer
 
 case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext) {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
   def emitters(): Seq[EntryEmitter] = {
     val servers = Servers(f)
@@ -64,6 +70,7 @@ abstract class OasServersEmitter(elem: DomainElement,
                                  ordering: SpecOrdering,
                                  references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[EntryEmitter]
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
   protected def asExtension(key: String, servers: Seq[Server], result: ListBuffer[EntryEmitter]): Unit =
     if (servers.nonEmpty) result += ServersEmitters(key, servers, ordering)
@@ -185,6 +192,9 @@ private case class ServersEmitters(key: String, servers: Seq[Server], ordering: 
 
 case class OasServerEmitter(server: Server, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   override def emit(b: YDocument.PartBuilder): Unit = {
     val result = ListBuffer[EntryEmitter]()
     val fs     = server.fields
@@ -229,6 +239,9 @@ case class OasServerVariablesEmitter(f: FieldEntry, ordering: SpecOrdering)(impl
 private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       variable.name.value(),
@@ -243,7 +256,7 @@ private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecO
 
     fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
 
-    fs.entry(ShapeModel.Values).map(f => result += EnumValuesEmitter("enum", f.value, ordering)(spec))
+    fs.entry(ShapeModel.Values).map(f => result += EnumValuesEmitter("enum", f.value, ordering))
 
     fs.entry(ShapeModel.Default) match {
       case Some(f) =>

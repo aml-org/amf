@@ -9,6 +9,10 @@ import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import org.yaml.model.YDocument
 
@@ -18,6 +22,9 @@ case class CompactOasTypeEmitter(shape: Shape,
                                  references: Seq[BaseUnit],
                                  pointer: Seq[String],
                                  schemaPath: Seq[(String, String)])(implicit spec: OasSpecEmitterContext) {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   def emitters(): Seq[Emitter] = {
     val definitionQueue = spec.definitionsQueue
     if (spec.forceEmission.contains(shape.id) || emitInlined()) {

@@ -5,8 +5,9 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position
-import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.ReferenceEmitterHelper.emitLinkOr
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
@@ -15,6 +16,8 @@ case class NamedPropertyTypeEmitter(annotation: CustomDomainProperty,
                                     ordering: SpecOrdering)(implicit val spec: RamlSpecEmitterContext)
     extends EntryEmitter
     with PartEmitter {
+
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(b: EntryBuilder): Unit = {
     val name = annotation.name.option() match {

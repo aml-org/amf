@@ -43,7 +43,6 @@ case class OasOperationPartEmitter(operation: Operation,
                                    endpointPayloadEmitted: Boolean,
                                    references: Seq[BaseUnit])(override implicit val spec: OasSpecEmitterContext)
     extends OasLikeOperationPartEmitter(operation, ordering) {
-
   override def emit(p: PartBuilder): Unit = {
     p.obj { eb =>
       val fs     = operation.fields

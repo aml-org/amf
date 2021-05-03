@@ -18,6 +18,8 @@ import scala.collection.mutable.ListBuffer
 case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends RamlCommonOASFieldsEmitter {
 
+  implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   def emitters(): Seq[EntryEmitter] = {
     val fs = shape.fields
 

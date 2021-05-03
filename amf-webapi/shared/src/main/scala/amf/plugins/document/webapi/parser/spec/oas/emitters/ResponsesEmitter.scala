@@ -6,6 +6,10 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.OrphanAnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.domain.OasResponseEmitter
 import amf.plugins.domain.webapi.models.Response
@@ -17,6 +21,7 @@ class ResponsesEmitter(key: String,
                        references: Seq[BaseUnit],
                        orphanAnnotations: Seq[DomainExtension])(implicit val spec: OasSpecEmitterContext)
     extends EntryEmitter {
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
   override def emit(b: EntryBuilder): Unit = {
     val emitters = responses(f, ordering) ++ responsesElementsAnnotations()
     sourceOr(

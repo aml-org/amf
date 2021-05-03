@@ -14,7 +14,12 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
   DataNodeEmitter,
   FacetsEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{EnumValuesEmitter, XMLSerializerEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  EnumValuesEmitter,
+  ShapeEmitterContext,
+  XMLSerializerEmitter
+}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YType
@@ -25,8 +30,9 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
     implicit spec: RamlSpecEmitterContext) {
 
   val typeName: Option[String]
-  var typeEmitted                = false
-  protected val valuesTag: YType = YType.Str
+  var typeEmitted                                      = false
+  protected val valuesTag: YType                       = YType.Str
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
   def emitters(): Seq[EntryEmitter] = {
 

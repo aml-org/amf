@@ -8,11 +8,13 @@ import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
 
 import scala.collection.mutable.ListBuffer
 
 trait RamlCommonOASFieldsEmitter {
   def emitOASFields(fs: Fields, result: ListBuffer[EntryEmitter])(implicit spec: SpecEmitterContext): Unit = {
+    implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
     fs.entry(ScalarShapeModel.MinLength).map(f => result += RamlScalarEmitter("minLength", f))
 
     fs.entry(ScalarShapeModel.MaxLength).map(f => result += RamlScalarEmitter("maxLength", f))
