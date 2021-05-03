@@ -5,7 +5,8 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.annotations.OperationTraitEntry
-import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.parser.{RamlWebApiContextType, WebApiShapeParserContextAdapter}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkParser
@@ -66,8 +67,11 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     map.key("displayName", OperationModel.Name in operation)
     map.key("oasDeprecated".asRamlAnnotation, OperationModel.Deprecated in operation)
     map.key("summary".asRamlAnnotation, OperationModel.Summary in operation)
-    map.key("externalDocs".asRamlAnnotation,
-            OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)))
+    map.key(
+      "externalDocs".asRamlAnnotation,
+      OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)(
+        WebApiShapeParserContextAdapter(ctx)))
+    )
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
     map.key("consumes".asRamlAnnotation, OperationModel.Accepts in operation)
     map.key("produces".asRamlAnnotation, OperationModel.ContentType in operation)
@@ -160,7 +164,7 @@ case class RamlOperationParser(entry: YMapEntry, parentId: String, parseOptional
     AnnotationParser(operation,
                      map,
                      if (isTrait) List(VocabularyMappings.`trait`)
-                     else List(VocabularyMappings.operation)).parse()
+                     else List(VocabularyMappings.operation))(WebApiShapeParserContextAdapter(ctx)).parse()
 
     operation
   }

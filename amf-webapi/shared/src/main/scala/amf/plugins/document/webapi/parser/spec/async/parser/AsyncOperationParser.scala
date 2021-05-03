@@ -4,11 +4,13 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.SearchScope.Named
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorOperationTrait
 import amf.plugins.document.webapi.parser.spec.async.AsyncHelper
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeTagsParser
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncOperationBindingsParser
 import amf.plugins.document.webapi.parser.spec.domain.OasLikeOperationParser
 import amf.plugins.domain.webapi.metamodel.{AbstractModel, OperationModel}
@@ -44,7 +46,7 @@ abstract class AsyncOperationParser(entry: YMapEntry, adopt: Operation => Operat
       val bindings = AsyncOperationBindingsParser(YMapEntryLike(entry.value), operation.id).parse()
       operation.set(OperationModel.Bindings, bindings, Annotations(entry))
 
-      AnnotationParser(operation, map).parseOrphanNode("bindings")
+      AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
     }
 
     parseMessages(map, operation)

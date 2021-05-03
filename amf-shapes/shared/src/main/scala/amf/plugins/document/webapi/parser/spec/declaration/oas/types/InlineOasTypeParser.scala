@@ -1,9 +1,9 @@
-package amf.plugins.document.webapi.parser.spec.oas.parser.types
+package amf.plugins.document.webapi.parser.spec.declaration.oas.types
 
 import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
-import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.model.DataType
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
@@ -12,32 +12,16 @@ import amf.core.parser.{Annotations, Fields, FutureDeclarations, Range, ScalarNo
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
-import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
-import amf.plugins.document.webapi.contexts.parser.oas.Oas3WebApiContext
-import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
-import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.common.{
-  AnnotationParser,
-  DataNodeParser,
-  ScalarNodeParser,
-  TextKeyYMapEntryLike,
-  YMapEntryLike
-}
+import amf.validations.ShapeParserSideValidations.{DiscriminatorNameRequired, DuplicateRequiredItem, InvalidAdditionalItemsType, InvalidAdditionalPropertiesType, InvalidDisjointUnionType, InvalidJsonSchemaType, InvalidMediaTypeType, InvalidOrType, InvalidRequiredArrayForSchemaVersion, InvalidRequiredBooleanForSchemaVersion, InvalidRequiredValue, InvalidSchemaType, InvalidUnionType, InvalidXoneType, ItemsFieldRequired, ReadOnlyPropertyMarkedRequired}
+import amf.plugins.document.webapi.parser.ShapeParserContext
+import amf.plugins.document.webapi.parser.spec.OasShapeDefinitions
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, QuickFieldParserOps, ScalarNodeParser}
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector
-import amf.plugins.document.webapi.parser.spec.domain.{
-  ExampleOptions,
-  ExamplesDataParser,
-  NodeDataNodeParser,
-  RamlExamplesParser
-}
+import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, ExamplesDataParser, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.jsonschema.parser.{ContentParser, UnevaluatedParser}
-import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
-import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel.{
-  DiscriminatorValue,
-  DiscriminatorValueTarget
-}
+import amf.plugins.domain.shapes.metamodel.DiscriminatorValueMappingModel.{DiscriminatorValue, DiscriminatorValueTarget}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
@@ -46,7 +30,6 @@ import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.plugins.domain.webapi.models
 import amf.plugins.domain.webapi.models.IriTemplateMapping
-import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -57,8 +40,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                                map: YMap,
                                adopt: Shape => Unit,
                                version: SchemaVersion,
-                               isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext)
-    extends OasSpecParser {
+                               isDeclaration: Boolean = false)(implicit val ctx: ShapeParserContext)
+    extends QuickFieldParserOps {
 
   private val ast: YPart = entryOrNode.ast
 
@@ -237,7 +220,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       SchemaShapeParser(shape, map)(ctx.eh).parse()
     } else {
       val shape = NodeShape(ast).withName(name, nameAnnotations)
-      checkJsonIdentity(shape, map, adopt, ctx.declarations.futureDeclarations)
+      checkJsonIdentity(shape, map, adopt, ctx.futureDeclarations)
       NodeShapeParser(shape, map).parse()
     }
   }
@@ -261,8 +244,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     }
 
     def buildLocalRef(name: String) = ctx match {
-      case _: Oas3WebApiContext    => s"#/components/schemas/$name"
-      case _: Async20WebApiContext => s"#/components/schemas/$name"
+      case _ if ctx.isOas3Context    => s"#/components/schemas/$name"
+      case _ if ctx.isAsyncContext => s"#/components/schemas/$name"
       case _                       => s"#/definitions/$name"
     }
   }
@@ -314,7 +297,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       with CommonScalarParsingLogic {
 
     override lazy val dataNodeParser: YNode => DataNode =
-      ScalarNodeParser(parent = Some(shape.id))(WebApiShapeParserContextAdapter(ctx)).parse
+      ScalarNodeParser(parent = Some(shape.id)).parse
     override lazy val enumParser: YNode => DataNode = CommonEnumParser(shape.id, enumType = EnumParsing.SCALAR_ENUM)
 
     override def parse(): ScalarShape = {
@@ -555,7 +538,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
   case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit)
       extends DataArrangementShapeParser() {
     override def parse(): AnyShape = {
-      checkJsonIdentity(shape, map, adopt, ctx.declarations.futureDeclarations)
+      checkJsonIdentity(shape, map, adopt, ctx.futureDeclarations)
       super.parse()
 
       map.key("collectionFormat", ArrayShapeModel.CollectionFormat in shape)
@@ -635,7 +618,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         }
   }
 
-  case class NodeShapeParser(shape: NodeShape, map: YMap)(implicit val ctx: OasLikeWebApiContext)
+  case class NodeShapeParser(shape: NodeShape, map: YMap)(implicit val ctx: ShapeParserContext)
       extends AnyShapeParser() {
     override def parse(): NodeShape = {
 
@@ -821,9 +804,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         val discriminatorValue = ScalarNode(key).string()
         val targetShape = {
           val rawRef: String = entry.value
-          val definitionName = OasDefinitions.stripDefinitionsPrefix(rawRef)
-          ctx.declarations
-            .findType(definitionName, SearchScope.All) match {
+          val definitionName = OasShapeDefinitions.stripDefinitionsPrefix(rawRef)
+          ctx.findType(definitionName, SearchScope.All) match {
             case Some(s) =>
               s.link(AmfScalar(key.toString), Annotations(ast), Annotations.synthesized())
                 .asInstanceOf[AnyShape]
@@ -942,13 +924,12 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  abstract class ShapeParser(implicit ctx: OasLikeWebApiContext) {
+  abstract class ShapeParser(implicit ctx: ShapeParserContext) {
 
     val shape: Shape
     val map: YMap
 
-    lazy val dataNodeParser: YNode => DataNode = node =>
-      DataNodeParser.parse(Some(shape.id), new IdCounter())(node)(WebApiShapeParserContextAdapter(ctx))
+    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), new IdCounter())
     lazy val enumParser: YNode => DataNode = CommonEnumParser(shape.id)
 
     def parse(): Shape = {

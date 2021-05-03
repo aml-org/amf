@@ -6,10 +6,12 @@ import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.annotations.ExampleIndex
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorMessage
 import amf.plugins.document.webapi.parser.spec.async.{MessageType, Publish, Subscribe}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft7SchemaVersion,
   OasLikeCreativeWorkParser,
@@ -133,7 +135,8 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
     map.key("description", MessageModel.Description in message)
 
     map.key("externalDocs",
-            MessageModel.Documentation in message using (OasLikeCreativeWorkParser.parse(_, message.id)))
+            MessageModel.Documentation in message using (OasLikeCreativeWorkParser.parse(_, message.id)(
+              WebApiShapeParserContextAdapter(ctx))))
     map.key(
       "tags",
       entry => {
@@ -179,7 +182,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       val bindings: MessageBindings = AsyncMessageBindingsParser(YMapEntryLike(entry.value), message.id).parse()
       message.set(MessageModel.Bindings, bindings, Annotations(entry))
 
-      AnnotationParser(message, map).parseOrphanNode("bindings")
+      AnnotationParser(message, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
     }
 
     parseTraits(map, message)
@@ -188,7 +191,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       parsePayload(map, message)
 
     ctx.closedShape(message.id, map, "message")
-    AnnotationParser(message, map).parse()
+    AnnotationParser(message, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     message
   }
 
@@ -243,7 +246,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
     val node = n.value
     val exa  = Example(node).withName(name)
     exa.adopted(parentId)
-    ExampleDataParser(YMapEntryLike(node), exa, Oas3ExampleOptions).parse()
+    ExampleDataParser(YMapEntryLike(node), exa, Oas3ExampleOptions)(WebApiShapeParserContextAdapter(ctx)).parse()
   }
 }
 

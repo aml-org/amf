@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.jsonschema
 import java.net.URI
 import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft201909SchemaVersion,
   JSONSchemaDraft3SchemaVersion,

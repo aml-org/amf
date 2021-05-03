@@ -5,7 +5,7 @@ import amf.core.model.document.Fragment
 import amf.core.parser.SyamlParsedDocument
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaRootCreator.createRootFrom
 import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model.YNode
@@ -40,7 +40,7 @@ object AstFinder {
     ctx.setJsonSchemaAST(node)
     val rootAst = hashFragment match {
       case Some(fragment) => findNodeInIndex(fragment, ctx)
-      case None => Some(YMapEntryLike(node))
+      case None           => Some(YMapEntryLike(node))
     }
     rootAst.getOrElse {
       ctx.eh.violation(UnableToParseJsonSchema,
@@ -54,5 +54,3 @@ object AstFinder {
   // TODO: maybe we should decouple the JsonSchemaIndex from the ctx. Just a thought as it doesn't make sense t pass a ctx to a findNodeInIndex method.
   private def findNodeInIndex(path: String, ctx: WebApiContext): Option[YMapEntryLike] = ctx.findLocalJSONPath(path)
 }
-
-

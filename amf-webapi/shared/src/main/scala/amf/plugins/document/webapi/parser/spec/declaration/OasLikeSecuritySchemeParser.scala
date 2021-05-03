@@ -6,6 +6,7 @@ import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorSecurityScheme
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.toRaml
@@ -45,7 +46,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
             scheme.set(SecuritySchemeModel.Settings, settings, Annotations(map))
           }
 
-        AnnotationParser(scheme, map).parse()
+        AnnotationParser(scheme, map)(WebApiShapeParserContextAdapter(ctx)).parse()
         closedShape(scheme, map, "securityScheme")
         scheme
     }

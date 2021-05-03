@@ -12,7 +12,8 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.Raml08WebApiContext
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, OasTypeParser}
 import amf.plugins.document.webapi.parser.spec.jsonschema.AstFinder.getPointedAstOrNode
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaRootCreator.createRootFrom
@@ -51,7 +52,7 @@ class JsonSchemaParser {
           OasTypeParser(rootAst,
                         keyValueOrDefault(rootAst)(jsonSchemaContext.eh),
                         shape => shape.withId(shapeId),
-                        version = version)(jsonSchemaContext)
+                        version = version)(WebApiShapeParserContextAdapter(jsonSchemaContext))
             .parse() match {
             case Some(shape) => shape
             case None =>

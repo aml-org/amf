@@ -4,9 +4,11 @@ import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, OasTypeParser}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
@@ -49,7 +51,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
       inferAsUriParameter(param)
     }
 
-    AnnotationParser(param, map).parse()
+    AnnotationParser(param, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     ctx.closedShape(param.id, map, "parameter")
     param
   }
@@ -62,7 +64,8 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, shape => shape.withName("schema").adopted(param.id), JSONSchemaDraft7SchemaVersion)
+        OasTypeParser(entry, shape => shape.withName("schema").adopted(param.id), JSONSchemaDraft7SchemaVersion)(
+          WebApiShapeParserContextAdapter(ctx))
           .parse()
           .foreach { schema =>
             param.set(ParameterModel.Schema, schema, Annotations(entry))

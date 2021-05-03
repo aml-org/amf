@@ -2,7 +2,8 @@ package amf.plugins.document.webapi.contexts.parser.raml
 import amf.core.client.ParsingOptions
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{Raml08, Vendor}
-import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
+import amf.plugins.document.webapi.parser.RamlWebApiContextType
+import amf.plugins.document.webapi.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.spec.raml.Raml08Syntax
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, SpecSyntax}
 

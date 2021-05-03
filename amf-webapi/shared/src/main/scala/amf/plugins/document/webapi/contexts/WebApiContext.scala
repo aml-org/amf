@@ -10,7 +10,7 @@ import amf.core.utils.{AliasCounter, IdCounter}
 import amf.plugins.document.vocabularies.parser.common.DeclarationContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft4SchemaVersion,
   JSONSchemaVersion,

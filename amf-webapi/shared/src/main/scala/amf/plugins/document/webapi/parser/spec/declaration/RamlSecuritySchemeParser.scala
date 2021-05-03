@@ -3,6 +3,7 @@ import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.domain.{RamlParametersParser, RamlSecuritySettingsParser}
@@ -12,6 +13,7 @@ import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.validations.ParserSideValidations._
+import amf.validations.ShapeParserSideValidations.ExclusivePropertiesSpecification
 import org.yaml.model.{YMap, YNode, YPart, YScalar, YType}
 
 import scala.collection.mutable
@@ -69,7 +71,8 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
 
         map.key("settings", SecuritySchemeModel.Settings in scheme using RamlSecuritySettingsParser.parse(scheme))
 
-        AnnotationParser(scheme, map, List(VocabularyMappings.securityScheme)).parse()
+        AnnotationParser(scheme, map, List(VocabularyMappings.securityScheme))(WebApiShapeParserContextAdapter(ctx))
+          .parse()
 
         scheme
     }
@@ -168,7 +171,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                            Annotations(entry))
               }
             )
-            AnnotationParser(scheme, value).parse()
+            AnnotationParser(scheme, value)(WebApiShapeParserContextAdapter(ctx)).parse()
           case YType.Null =>
           case _ =>
             ctx.eh.violation(InvalidSecuritySchemeDescribedByType,

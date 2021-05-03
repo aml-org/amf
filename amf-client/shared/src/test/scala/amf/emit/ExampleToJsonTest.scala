@@ -2,19 +2,20 @@ package amf.emit
 
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.annotations.SourceAST
-import amf.core.model.document.{ExternalFragment, BaseUnit}
+import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.RamlYamlHint
-import amf.facades.{Validation, AMFCompiler}
+import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
-import amf.plugins.document.webapi.parser.spec.domain.{RamlExamplesParser, DefaultExampleOptions}
-import amf.plugins.domain.shapes.models.{Example, AnyShape}
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
+import amf.plugins.document.webapi.parser.spec.domain.{DefaultExampleOptions, RamlExamplesParser}
+import amf.plugins.domain.shapes.models.{AnyShape, Example}
 import org.scalatest.{Assertion, AsyncFunSuite}
-import org.yaml.model.{YMap, YDocument}
+import org.yaml.model.{YDocument, YMap}
 
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 
 class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
 
@@ -83,7 +84,8 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
           val ast      = a.ast.asInstanceOf[YDocument].as[YMap]
           val context  = new Raml10WebApiContext("", Nil, ParserContext(eh = DefaultParserErrorHandler.withRun()))
           val anyShape = AnyShape()
-          RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(context).parse()
+          RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(
+            WebApiShapeParserContextAdapter(context)).parse()
           Future.successful(anyShape.examples.head)
         case None => Future.failed(fail("Not a named example fragment"))
       }

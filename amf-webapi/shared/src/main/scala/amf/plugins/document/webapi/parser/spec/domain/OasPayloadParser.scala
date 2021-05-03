@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
@@ -25,13 +26,14 @@ case class OasPayloadParser(node: YNode, producer: Option[String] => Payload)(im
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, shape => shape.withName("schema").adopted(payload.id))
+        OasTypeParser(entry, shape => shape.withName("schema").adopted(payload.id))(
+          WebApiShapeParserContextAdapter(ctx))
           .parse()
           .map(s => payload.set(PayloadModel.Schema, tracking(s, payload.id), Annotations(entry)))
       }
     )
 
-    AnnotationParser(payload, map).parse()
+    AnnotationParser(payload, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
     payload
   }

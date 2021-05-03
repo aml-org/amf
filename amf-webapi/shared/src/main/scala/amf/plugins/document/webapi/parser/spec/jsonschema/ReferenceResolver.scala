@@ -1,8 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import org.yaml.model.{YMap, YNode, YSequence, YType}
 import amf.core.parser.YMapOps
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
+
 import scala.util.Try
 import java.net.URI
 import scala.annotation.tailrec

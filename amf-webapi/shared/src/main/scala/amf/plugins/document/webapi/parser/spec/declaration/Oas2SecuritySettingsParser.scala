@@ -5,6 +5,7 @@ import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.utils.{AmfStrings, Lazy}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.domain.webapi.metamodel.security.{OAuth2FlowModel, OAuth2SettingsModel}
 import amf.plugins.domain.webapi.models.security._
@@ -65,7 +66,7 @@ class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
       }
     )
 
-    AnnotationParser(settings, map).parseOrphanNode("scopes")
+    AnnotationParser(settings, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("scopes")
 
     flow.option.foreach { f =>
       f.adopted(settings.id)

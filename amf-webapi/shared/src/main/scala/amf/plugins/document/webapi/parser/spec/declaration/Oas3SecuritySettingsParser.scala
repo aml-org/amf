@@ -4,6 +4,7 @@ import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, OAuth2FlowValidations}
 import amf.plugins.domain.webapi.metamodel.security.{
   HttpSettingsModel,
@@ -57,7 +58,7 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
       entry => parseDynamicSettings(entry.value.as[YMap], settings, "authorizationGrants")
     )
 
-    AnnotationParser(settings, map).parseOrphanNode("flows")
+    AnnotationParser(settings, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("flows")
 
     settings
   }

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
-import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType
-import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
+import amf.plugins.document.webapi.parser.RamlWebApiContextType
+import amf.plugins.document.webapi.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 
 object RamlAnnotationTargets {

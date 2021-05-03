@@ -10,13 +10,9 @@ import amf.core.parser.{Annotations, FragmentRef, ParserContext}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.resolution.stages.helpers.ResolvedNamedEntity
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  RamlWebApiContextType
-}
+import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
+import amf.plugins.document.webapi.parser.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}

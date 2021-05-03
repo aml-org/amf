@@ -2,14 +2,10 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{SingleArrayNode, YMapEntryLike}
-import amf.plugins.domain.shapes.metamodel.{
-  DependenciesModel,
-  NodeShapeModel,
-  PropertyDependenciesModel,
-  SchemaDependenciesModel
-}
+import amf.plugins.document.webapi.parser.ShapeParserContext
+import amf.plugins.document.webapi.parser.spec.common.SingleArrayNode
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
+import amf.plugins.domain.shapes.metamodel.{DependenciesModel, NodeShapeModel, PropertyDependenciesModel, SchemaDependenciesModel}
 import amf.plugins.domain.shapes.models.{Dependencies, NodeShape, PropertyDependencies, SchemaDependencies}
 import org.yaml.model._
 
@@ -17,7 +13,7 @@ import org.yaml.model._
   *
   */
 case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: String, version: SchemaVersion)(
-    implicit ctx: OasLikeWebApiContext) {
+    implicit ctx: ShapeParserContext) {
 
   def parse(): Unit = {
 
@@ -54,7 +50,7 @@ case class Draft4ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: 
 }
 
 case class Draft2019ShapeDependenciesParser(shape: NodeShape, map: YMap, parentId: String, version: SchemaVersion)(
-    implicit ctx: OasLikeWebApiContext) {
+    implicit ctx: ShapeParserContext) {
   def parse(): Unit = {
     map.key("dependentSchemas").foreach { entry =>
       val schemaDependencies = entry.value
@@ -82,7 +78,7 @@ trait SpecializedDependencyParser {
   def parse(dependency: Dependencies): Dependencies
 }
 
-case class SchemaDependencyParser(node: YNode, version: SchemaVersion)(implicit ctx: OasLikeWebApiContext)
+case class SchemaDependencyParser(node: YNode, version: SchemaVersion)(implicit ctx: ShapeParserContext)
     extends SpecializedDependencyParser {
 
   override def create(entry: YMapEntry): Dependencies = SchemaDependencies(entry)
@@ -97,7 +93,7 @@ case class SchemaDependencyParser(node: YNode, version: SchemaVersion)(implicit 
   }
 }
 
-case class PropertyDependencyParser(node: YNode)(implicit ctx: OasLikeWebApiContext)
+case class PropertyDependencyParser(node: YNode)(implicit ctx: ShapeParserContext)
     extends SpecializedDependencyParser {
 
   override def create(entry: YMapEntry): Dependencies = PropertyDependencies(entry)
@@ -114,7 +110,7 @@ case class PropertyDependencyParser(node: YNode)(implicit ctx: OasLikeWebApiCont
 }
 
 case class DependenciesParser(entry: YMapEntry, parentId: String, parser: SpecializedDependencyParser)(
-    implicit ctx: OasLikeWebApiContext) {
+    implicit ctx: ShapeParserContext) {
   def parse(): Dependencies = {
     val dependency = parser.create(entry)
     dependency.set(DependenciesModel.PropertySource, AmfScalar(dependencyKey), Annotations(entry.key))

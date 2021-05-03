@@ -4,7 +4,8 @@ import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 import amf.core.parser.YMapOps
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 
 import scala.collection.mutable.ListBuffer
@@ -27,7 +28,8 @@ case class ExampleByMediaTypeParser(yMapEntry: YMapEntry, parentId: String)(impl
     val mediaType = yMapEntry.key.as[YScalar].text
     example.withName(mediaType).adopted(parentId)
     example.set(ExampleModel.MediaType, mediaType)
-    ExampleDataParser(YMapEntryLike(yMapEntry.value), example, ExampleOptions(strictDefault = false, quiet = true))
+    ExampleDataParser(YMapEntryLike(yMapEntry.value), example, ExampleOptions(strictDefault = false, quiet = true))(
+      WebApiShapeParserContextAdapter(ctx))
       .parse()
   }
 }

@@ -2,18 +2,17 @@ package amf.plugins.document.webapi.references
 
 import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.core.CompilerContext
+import amf.core.TaggedReferences._
 import amf.core.annotations.SourceAST
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{ParsedReference, ParserContext, Reference, ReferenceResolutionResult, SyamlParsedDocument}
-import amf.core.remote.{Raml, Raml08, Raml10}
-import amf.plugins.document.webapi.{BaseWebApiPlugin, Raml10Plugin}
-import amf.plugins.features.validation.CoreValidations.{InvalidFragmentRef, UnresolvedReference}
-import amf.validations.ParserSideValidations.InvalidFragmentType
-import org.yaml.model.{YDocument, YNode}
+import amf.plugins.document.webapi.Raml10Plugin
+import amf.plugins.features.validation.CoreValidations.UnresolvedReference
+import amf.validations.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.YNode.MutRef
+import org.yaml.model.{YDocument, YNode}
 import org.yaml.parser.YamlParser
-import amf.core.TaggedReferences._
 
 import scala.concurrent.{ExecutionContext, Future}
 

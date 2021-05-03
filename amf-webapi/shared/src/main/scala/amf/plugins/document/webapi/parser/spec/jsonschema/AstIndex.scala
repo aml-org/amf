@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
+
 import java.net.URI
 import scala.collection.mutable
 

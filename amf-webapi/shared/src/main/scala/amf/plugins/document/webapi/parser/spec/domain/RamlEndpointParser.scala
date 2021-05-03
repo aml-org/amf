@@ -1,19 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{LexicalInformation, SynthesizedField, VirtualElement}
+import amf.core.annotations.{LexicalInformation, VirtualElement}
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter, TemplateUri}
 import amf.plugins.document.webapi.annotations.{EndPointResourceTypeEntry, EndPointTraitEntry}
-import amf.plugins.document.webapi.contexts.parser.raml.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  RamlWebApiContextType
-}
-import amf.plugins.document.webapi.parser.spec
+import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.{RamlWebApiContextType, WebApiShapeParserContextAdapter, spec}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
@@ -214,7 +209,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     AnnotationParser(endpoint,
                      map,
                      if (isResourceType) List(VocabularyMappings.resourceType)
-                     else List(VocabularyMappings.endpoint)).parse()
+                     else List(VocabularyMappings.endpoint))(WebApiShapeParserContextAdapter(ctx)).parse()
 
     val nestedEndpointRegex = "^/.*"
     map.regex(

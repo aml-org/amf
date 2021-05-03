@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.metamodel.LicenseModel
@@ -26,7 +27,7 @@ class LicenseParser(node: YNode)(implicit ctx: WebApiContext) extends SpecParser
     map.key("url", LicenseModel.Url in license)
     map.key("name", LicenseModel.Name in license)
 
-    AnnotationParser(license, map).parse()
+    AnnotationParser(license, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
     ctx.closedShape(license.id, map, "license")
 

@@ -14,12 +14,9 @@ import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
-import amf.plugins.document.webapi.parser.spec.common.{
-  AnnotationParser,
-  SpecParserOps,
-  WebApiBaseSpecParser,
-  YMapEntryLike
-}
+import amf.plugins.document.webapi.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, OasTypeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -44,7 +41,7 @@ import scala.collection.mutable.ListBuffer
   * Oas spec parser
   */
 abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
-    extends OasSpecParser
+    extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))
     with OasLikeDeclarationsHelper {
 
   def parseExtension(): Extension = {
@@ -275,7 +272,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "externalDocs",
       entry => {
-        documentations.append((OasLikeCreativeWorkParser(entry.value, api.id).parse(), entry))
+        documentations.append(
+          (OasLikeCreativeWorkParser(entry.value, api.id)(WebApiShapeParserContextAdapter(ctx)).parse(), entry))
       }
     )
 
@@ -300,8 +298,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       case None        => ctx.eh.violation(MandatoryPathsProperty, api.id, "'paths' is mandatory in OAS spec")
     }
 
-    AnnotationParser(api, map).parse()
-    AnnotationParser(api, map).parseOrphanNode("paths")
+    AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parse()
+    AnnotationParser(api, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("paths")
 
     ctx.closedShape(api.id, map, "webApi")
 
@@ -338,7 +336,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   }
 }
 
-abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiBaseSpecParser with SpecParserOps {
+abstract class OasSpecParser(implicit ctx: ShapeParserContext) extends WebApiBaseSpecParser with SpecParserOps {
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {
@@ -380,7 +378,7 @@ abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiB
                                         scalar: YScalar,
                                         adopt: CustomDomainProperty => Unit) {
     def parse(): CustomDomainProperty = {
-      ctx.declarations
+      ctx
         .findAnnotation(scalar.text, SearchScope.All)
         .map { a =>
           val copied: CustomDomainProperty = a.link(AmfScalar(scalar.text), Annotations(ast), Annotations(scalar))
@@ -467,7 +465,7 @@ abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiB
           case YType.Map => RamlCreativeWorkParser(n).parse()
           case YType.Str =>
             val text = n.as[YScalar].text
-            ctx.declarations.findDocumentations(text, SearchScope.All) match {
+            ctx.findDocumentations(text, SearchScope.All) match {
               case Some(doc) =>
                 doc.link(AmfScalar(text), Annotations(n), Annotations.synthesized()).asInstanceOf[CreativeWork]
               case _ =>

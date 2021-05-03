@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
-import java.net.URI
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import java.net.URI
 import amf.plugins.document.webapi.parser.spec.jsonschema.CommonIdResolutionScope.{formatFragment, formatUri}
 import org.yaml.model.{YNode, YType}
 

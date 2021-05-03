@@ -8,7 +8,8 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, TemplateUri}
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{RamlScalarNode, SpecParserOps, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.{RamlScalarNode, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.ServerModel

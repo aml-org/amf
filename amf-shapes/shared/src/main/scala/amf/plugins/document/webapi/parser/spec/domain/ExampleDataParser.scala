@@ -1,22 +1,20 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.ExternalSourceElementModel
-import amf.core.model.domain.{AmfScalar, DataNode}
-import amf.core.parser.Annotations
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.core.model.domain.AmfScalar
+import amf.core.parser.{Annotations, YNodeLikeOps}
+import amf.core.utils.IdCounter
+import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
+import amf.plugins.document.webapi.parser.ShapeParserContext
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YNode.MutRef
-import org.yaml.model.{YMapEntry, YNode, YScalar, YSequence, YType}
+import org.yaml.model.{YScalar, YSequence, YType}
 import org.yaml.render.YamlRender
-import amf.core.parser.YNodeLikeOps
-import amf.core.utils.IdCounter
-import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 
 case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options: ExampleOptions)(
-    implicit ctx: WebApiContext) {
+    implicit ctx: ShapeParserContext) {
   private val node = entryLike.value
   def parse(): Example = {
     if (example.fields.entry(ExampleModel.Strict).isEmpty) {
@@ -26,7 +24,7 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
     val (targetNode, mutTarget) = node match {
       case mut: MutRef =>
         val refUrl = mut.origValue.asInstanceOf[YScalar].text
-        ctx.declarations.fragments
+        ctx.fragments
           .get(refUrl)
           .foreach { e =>
             example.add(ExternalReferenceUrl(refUrl))
@@ -59,7 +57,7 @@ case class ExampleDataParser(entryLike: YMapEntryLike, example: Example, options
   }
 }
 
-case class ExamplesDataParser(seq: YSequence, options: ExampleOptions, parentId: String)(implicit ctx: WebApiContext) {
+case class ExamplesDataParser(seq: YSequence, options: ExampleOptions, parentId: String)(implicit ctx: ShapeParserContext) {
   def parse(): Seq[Example] = {
     val counter = new IdCounter()
     seq.nodes.map { n =>

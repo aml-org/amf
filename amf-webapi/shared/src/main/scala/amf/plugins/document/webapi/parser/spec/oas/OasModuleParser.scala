@@ -7,13 +7,15 @@ import amf.core.model.document.Module
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
 import org.yaml.model._
 
 /**
   *
   */
-case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext) extends OasSpecParser {
+case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext)
+    extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx)) {
 
   def parseModule(): Module = {
     val sourceVendor = SourceVendor(ctx.vendor)

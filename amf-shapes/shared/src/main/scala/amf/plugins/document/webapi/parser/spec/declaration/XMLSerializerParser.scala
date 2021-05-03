@@ -2,17 +2,17 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations.ExplicitField
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.ShapeParserContext
 import amf.plugins.domain.shapes.metamodel.XMLSerializerModel
 import amf.plugins.domain.shapes.models.XMLSerializer
 import org.yaml.model.{YMap, YNode}
 
 object XMLSerializerParser {
-  def parse(defaultName: String)(node: YNode)(implicit ctx: WebApiContext): XMLSerializer =
+  def parse(defaultName: String)(node: YNode)(implicit ctx: ShapeParserContext): XMLSerializer =
     XMLSerializerParser(defaultName, node).parse()
 }
 
-case class XMLSerializerParser(defaultName: String, node: YNode)(implicit ctx: WebApiContext) {
+case class XMLSerializerParser(defaultName: String, node: YNode)(implicit ctx: ShapeParserContext) {
   val map: YMap = node.as[YMap]
   def parse(): XMLSerializer = {
     val serializer = XMLSerializer(node)

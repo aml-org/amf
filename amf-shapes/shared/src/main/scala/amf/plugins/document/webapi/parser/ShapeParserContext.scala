@@ -1,33 +1,56 @@
 package amf.plugins.document.webapi.parser
 
 import amf.core.model.domain.Shape
-import amf.core.parser.{FragmentRef, ParsedReference}
 import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.parser.{Annotations, ErrorHandlingContext, FutureDeclarations, SearchScope, UnresolvedComponents}
 import amf.core.remote.Vendor
-import amf.core.validation.core.ValidationSpecification
+import amf.plugins.document.webapi.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
+import amf.plugins.document.webapi.parser.spec.common.DataNodeParserContext
 import amf.plugins.document.webapi.parser.spec.declaration.TypeInfo
-import org.mulesoft.lexer.SourceLocation
-import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler, SyamlException, YError, YMap}
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
+import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
+import org.yaml.model.{YMap, YNode, YPart}
 
-abstract class ErrorHandlingContext(implicit val eh: ParserErrorHandler)
-    extends ParseErrorHandler
-    with IllegalTypeHandler
+abstract class ShapeParserContext(eh: ParserErrorHandler) extends DataNodeParserContext(eh) with UnresolvedComponents {
 
-abstract class ShapeParserContext(eh: ParserErrorHandler) extends ErrorHandlingContext()(eh) {
-
+  def toOasNext: ShapeParserContext
+  def findExample(key: String, scope: SearchScope.Scope): Option[Example]
+  def rootContextDocument: String
+  def futureDeclarations: FutureDeclarations
+  def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape]
+  def link(node: YNode): Either[String, YNode]
+  def loc: String
   def vendor: Vendor
   def syntax: SpecSyntax
   def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo)
-  def rootContextDocument: String
-  def refs: Seq[ParsedReference]
-  def getMaxYamlReferences: Option[Long]
-  def fragments: Map[String, FragmentRef]
+  def shapes: Map[String, Shape]
+  def closedShape(node: String, ast: YMap, shape: String): Unit
+  def registerJsonSchema(url: String, shape: AnyShape)
+  def isMainFileContext: Boolean
+  def findNamedExampleOrError(ast: YPart)(key: String): Example
+  def findLocalJSONPath(path: String): Option[YMapEntryLike]
+  def linkTypes: Boolean
+  def findJsonSchema(url: String): Option[AnyShape]
+  def findNamedExample(key: String, error: Option[String => Unit] = None): Option[Example]
+  def isOasLikeContext: Boolean
+  def isOas2Context: Boolean
+  def isOas3Context: Boolean
+  def isAsyncContext: Boolean
+  def isRamlContext: Boolean
+  def isOas3Syntax: Boolean
+  def isOas2Syntax: Boolean
+  def ramlContextType: RamlWebApiContextType
+  def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape
+  def parseRemoteJSONPath(ref: String): Option[AnyShape]
+  def findDocumentations(key: String,
+                         scope: SearchScope.Scope,
+                         error: Option[String => Unit] = None): Option[CreativeWork]
 
-  override def handle(location: SourceLocation, e: SyamlException): Unit = eh.handle(location, e)
+  def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations()): Option[YNode]
+}
 
-  override def handle[T](error: YError, defaultValue: T): T = eh.handle(error, defaultValue)
-
-  def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
-    eh.violation(violationId, node, message, rootContextDocument)
+object RamlWebApiContextType extends Enumeration {
+  type RamlWebApiContextType = Value
+  val DEFAULT, RESOURCE_TYPE, TRAIT, EXTENSION, OVERLAY, LIBRARY = Value
 }
