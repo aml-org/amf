@@ -143,7 +143,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
             value.key(
               "queryString",
               queryEntry => {
-                Raml10TypeParser(queryEntry, shape => shape.adopted(scheme.id))
+                Raml10TypeParser(queryEntry, shape => shape.adopted(scheme.id))(WebApiShapeParserContextAdapter(ctx))
                   .parse()
                   .foreach(s => scheme.withQueryString(tracking(s, scheme.id)))
               }

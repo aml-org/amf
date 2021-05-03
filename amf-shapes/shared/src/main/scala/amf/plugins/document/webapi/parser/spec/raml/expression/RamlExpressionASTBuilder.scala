@@ -8,7 +8,7 @@ import amf.core.parser.Annotations
 import amf.plugins.document.webapi.parser.spec.raml.expression.Token._
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models._
-import amf.validations.ParserSideValidations.InvalidTypeExpression
+import amf.validations.ShapeParserSideValidations.InvalidTypeExpression
 
 import scala.collection.mutable
 

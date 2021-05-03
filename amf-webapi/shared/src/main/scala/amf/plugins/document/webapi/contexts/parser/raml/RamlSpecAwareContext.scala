@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.contexts.parser.raml
 import amf.core.Root
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.plugins.document.webapi.contexts.{SpecAwareContext, SpecVersionFactory}
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08DocumentParser, Raml10DocumentParser, RamlDocumentParser}
@@ -60,7 +61,8 @@ class Raml10VersionFactory(implicit override val ctx: RamlWebApiContext) extends
   override def documentParser: (Root) => RamlDocumentParser = Raml10DocumentParser.apply
 
   override def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser =
-    (entry, f, isAnnotation, default) => Raml10TypeParser(entry, f, TypeInfo(isAnnotation = isAnnotation), default)
+    (entry, f, isAnnotation, default) =>
+      Raml10TypeParser(entry, f, TypeInfo(isAnnotation = isAnnotation), default)(WebApiShapeParserContextAdapter(ctx))
 
   override def payloadParser: (YMapEntry, String, Boolean) => RamlPayloadParser =
     Raml10PayloadParser.apply
@@ -85,7 +87,10 @@ class Raml08VersionFactory(implicit override val ctx: RamlWebApiContext) extends
 
   override def documentParser: (Root) => RamlDocumentParser = Raml08DocumentParser.apply
 
-  override def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser = Raml08TypeParser.apply
+  override def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser = {
+    implicit val shapeCtx: WebApiShapeParserContextAdapter = WebApiShapeParserContextAdapter(ctx)
+    Raml08TypeParser.apply
+  }
 
   override def payloadParser: (YMapEntry, String, Boolean) => RamlPayloadParser =
     Raml08PayloadParser.apply

@@ -4,33 +4,20 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext}
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{
-  JSONSchema,
-  XMLSchema,
-  isWellKnownType,
-  matchWellKnownType
-}
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, isWellKnownType, matchWellKnownType}
 import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeDetection.parseFormat
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
-import amf.plugins.document.webapi.parser.{
-  RamlTypeDefMatcher,
-  RamlTypeDefStringValueMatcher,
-  RamlWebApiContextType,
-  TypeName
-}
+import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher, RamlWebApiContextType, ShapeParserContext, TypeName}
 import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping._
-import amf.validations.ParserSideValidations._
-import amf.validations.ResolutionSideValidations.InvalidTypeInheritanceErrorSpecification
-import amf.validations.ShapeParserSideValidations.InvalidTypeDefinition
+import amf.validations.ShapeParserSideValidations.{ExclusiveSchemaType, InvalidAbstractDeclarationParameterInType, InvalidTypeDefinition, JsonSchemaInheritanceWarning, SchemaDeprecated}
+import amf.validations.ShapeResolutionSideValidations.InvalidTypeInheritanceErrorSpecification
 import org.yaml.model._
 
 object RamlTypeDetection {
   def apply(node: YNode, parent: String, format: Option[String] = None, defaultType: DefaultType = StringDefaultType)(
-      implicit ctx: RamlWebApiContext): Option[TypeDef] =
+      implicit ctx: ShapeParserContext): Option[TypeDef] =
     RamlTypeDetector(parent, format, defaultType).detect(node)
 
   def parseFormat(node: YNode): Option[String] =
@@ -45,7 +32,7 @@ case class RamlTypeDetector(parent: String,
                             format: Option[String] = None,
                             defaultType: DefaultType = StringDefaultType,
                             recursive: Boolean = false,
-                            isExplicit: Boolean = false)(implicit ctx: RamlWebApiContext)
+                            isExplicit: Boolean = false)(implicit ctx: ShapeParserContext)
     extends RamlTypeSyntax {
 
   def detect(node: YNode): Option[TypeDef] = node.tagType match {
@@ -61,10 +48,10 @@ case class RamlTypeDetector(parent: String,
     case _ =>
       val scalar = node.as[YScalar]
       scalar.text match {
-        case t if isRamlVariable(t) && ctx.contextType == RamlWebApiContextType.DEFAULT =>
+        case t if isRamlVariable(t) && ctx.ramlContextType == RamlWebApiContextType.DEFAULT =>
           throwInvalidAbstractDeclarationError(node, t)
           None
-        case t if isRamlVariable(t) && ctx.contextType != RamlWebApiContextType.DEFAULT => None
+        case t if isRamlVariable(t) && ctx.ramlContextType != RamlWebApiContextType.DEFAULT => None
 //        case XMLSchema(_) | JSONSchema(_) if isExplicit => Some(ExternalSchemaWrapper)
         case XMLSchema(_)                               => Some(XMLSchemaType)
         case JSONSchema(_)                              => Some(JSONSchemaType)
@@ -74,7 +61,7 @@ case class RamlTypeDetector(parent: String,
           // it might be a named type
           // its for identify the type, so i can search in all the scope, no need to difference between named ref and includes.
 
-          ctx.declarations.findType(scalar.text, SearchScope.All) match {
+          ctx.findType(scalar.text, SearchScope.All) match {
             case Some(ancestor) if recursive => ShapeClassTypeDefMatcher(ancestor, node, recursive)
             case Some(_) if !recursive       => Some(ObjectType)
             case None                        => Some(UndefinedType)
@@ -212,7 +199,7 @@ case class RamlTypeDetector(parent: String,
       }
     }
 
-    def shapeToType(inherits: Seq[Shape], part: YNode)(implicit ctx: ParserContext): Option[TypeDef] =
+    def shapeToType(inherits: Seq[Shape], part: YNode)(implicit ctx: ShapeParserContext): Option[TypeDef] =
       apply(inherits.flatMap(s => ShapeClassTypeDefMatcher(s, part, plainUnion = true)).toList, part)
   }
 
@@ -222,7 +209,7 @@ case class RamlTypeDetector(parent: String,
   }
 
   object ShapeClassTypeDefMatcher {
-    def apply(shape: Shape, part: YNode, plainUnion: Boolean)(implicit ctx: ParserContext): Option[TypeDef] =
+    def apply(shape: Shape, part: YNode, plainUnion: Boolean)(implicit ctx: ShapeParserContext): Option[TypeDef] =
       shape match {
         case _ if shape.isLink =>
           shape.linkTarget match {
@@ -248,7 +235,7 @@ case class RamlTypeDetector(parent: String,
       }
 
     private def simplifyUnionComponentsToType(union: UnionShape, part: YPart)(
-        implicit ctx: ParserContext): Option[TypeDef] = {
+        implicit ctx: ShapeParserContext): Option[TypeDef] = {
       val typeSet =
         union.anyOf.flatMap(t => ShapeClassTypeDefMatcher(t, part.asInstanceOf[YNode], plainUnion = true)).toSet
       if (typeSet.size == 1) Some(typeSet.head)

@@ -2,15 +2,25 @@ package amf.plugins.document.webapi.parser
 
 import amf.core.model.domain.Shape
 import amf.core.parser.errorhandler.ParserErrorHandler
-import amf.core.parser.{Annotations, ErrorHandlingContext, FutureDeclarations, SearchScope, UnresolvedComponents}
+import amf.core.parser.{
+  Annotations,
+  Declarations,
+  ErrorHandlingContext,
+  FutureDeclarations,
+  SearchScope,
+  UnresolvedComponents
+}
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParserContext
-import amf.plugins.document.webapi.parser.spec.declaration.TypeInfo
+import amf.plugins.document.webapi.parser.spec.declaration.{DefaultType, RamlTypeParser, TypeInfo}
 import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.spec.declaration.external.raml.RamlExternalTypesParser
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
-import org.yaml.model.{YMap, YNode, YPart}
+import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
+
+import scala.collection.mutable
 
 abstract class ShapeParserContext(eh: ParserErrorHandler) extends DataNodeParserContext(eh) with UnresolvedComponents {
 
@@ -48,6 +58,21 @@ abstract class ShapeParserContext(eh: ParserErrorHandler) extends DataNodeParser
                          error: Option[String => Unit] = None): Option[CreativeWork]
 
   def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations()): Option[YNode]
+  def addNodeRefIds(ids: mutable.Map[YNode, String])
+  def nodeRefIds: mutable.Map[YNode, String]
+  def raml10createContextFromRaml: ShapeParserContext
+  def raml08createContextFromRaml: ShapeParserContext
+  def libraries: Map[String, Declarations]
+  def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser
+  def ramlExternalSchemaParserFactory: RamlExternalSchemaExpressionFactory
+}
+
+trait RamlExternalSchemaExpressionFactory {
+  def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false): RamlExternalTypesParser
+  def createJson(key: YNode,
+                 value: YNode,
+                 adopt: Shape => Unit,
+                 parseExample: Boolean = false): RamlExternalTypesParser
 }
 
 object RamlWebApiContextType extends Enumeration {

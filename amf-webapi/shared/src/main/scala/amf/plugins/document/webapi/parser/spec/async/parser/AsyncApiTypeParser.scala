@@ -68,7 +68,9 @@ case class CustomRamlReferenceParser(entry: YMapEntryLike, adopt: Shape => Unit)
   private def parseRamlType(entry: YMapEntryLike): Option[Shape] = {
     val context = toRaml(ctx)
     context.declarations.shapes = Map.empty
-    val result = Raml10TypeParser(entry, "schema", adopt, TypeInfo(), AnyDefaultType)(context).parse()
+    val result =
+      Raml10TypeParser(entry, "schema", adopt, TypeInfo(), AnyDefaultType)(WebApiShapeParserContextAdapter(context))
+        .parse()
     context.futureDeclarations.resolve()
     result
   }

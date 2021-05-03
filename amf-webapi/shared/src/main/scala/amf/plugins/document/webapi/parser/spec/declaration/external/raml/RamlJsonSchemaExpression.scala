@@ -20,7 +20,7 @@ import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
+import amf.plugins.document.webapi.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
 import amf.plugins.document.webapi.parser.spec.common.ExternalFragmentHelper
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.declaration.utils.JsonSchemaParsingHelper
@@ -40,9 +40,11 @@ import scala.collection.mutable
 case class RamlJsonSchemaExpression(key: YNode,
                                     override val value: YNode,
                                     override val adopt: Shape => Unit,
-                                    parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
+                                    parseExample: Boolean = false)(implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser
     with PlatformSecrets {
+
+  override val shapeCtx: ShapeParserContext = WebApiShapeParserContextAdapter(ctx)
 
   override def parseValue(origin: ValueAndOrigin): AnyShape = value.value match {
     case map: YMap if parseExample =>
@@ -74,7 +76,7 @@ case class RamlJsonSchemaExpression(key: YNode,
         }
       }
     )
-    parseExamples(wrapper, value.as[YMap])
+    parseExamples(wrapper, value.as[YMap])(WebApiShapeParserContextAdapter(ctx))
     wrapperName(key).foreach(t => wrapper.withName(t, Annotations(key)))
     val typeEntryAnnotations =
       map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())

@@ -13,6 +13,7 @@ import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
+import amf.plugins.document.webapi.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.domain.shapes.models._
 
@@ -23,8 +24,10 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
       .map(_ => {
         val adopt: Shape => Unit = shape => { shape.adopted("/test") }
 
-        implicit val ctx: Raml10WebApiContext =
+        val ramlCtx: Raml10WebApiContext =
           new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledParserErrorHandler))
+
+        implicit val ctx: ShapeParserContext = WebApiShapeParserContextAdapter(ramlCtx)
 
         var res = RamlExpressionParser.check(adopt, expression = "integer")
         assert(res.get.isInstanceOf[ScalarShape])
@@ -63,8 +66,8 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         var error = false
         try {
 
-          val fail = new Raml10WebApiContext("", Nil, ctx)
-          RamlExpressionParser.check(adopt, expression = "[]")(fail)
+          val fail = new Raml10WebApiContext("", Nil, ramlCtx)
+          RamlExpressionParser.check(adopt, expression = "[]")(WebApiShapeParserContextAdapter(fail))
         } catch {
           case e: Exception => error = true
         }

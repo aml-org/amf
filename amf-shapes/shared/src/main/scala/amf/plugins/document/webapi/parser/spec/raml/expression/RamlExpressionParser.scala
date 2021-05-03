@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.raml.expression
 import amf.core.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
 import amf.core.model.domain.{AmfArray, Shape}
 import amf.core.parser.{Annotations, Position}
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.ShapeParserContext
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models._
@@ -11,7 +11,7 @@ import org.yaml.model._
 
 object RamlExpressionParser {
 
-  def parse(adopt: Shape => Unit, expression: String, part: YPart)(implicit ctx: WebApiContext): Option[Shape] = {
+  def parse(adopt: Shape => Unit, expression: String, part: YPart)(implicit ctx: ShapeParserContext): Option[Shape] = {
     val node        = getValue(part)
     val annotations = Annotations(node).reject(a => a.isInstanceOf[LexicalInformation])
     val position    = Position(node.location.lineFrom, node.location.columnFrom)
@@ -27,7 +27,7 @@ object RamlExpressionParser {
       .map(addAnnotations(_, part, expression))
   }
 
-  def check(adopt: Shape => Unit, expression: String)(implicit ctx: WebApiContext): Option[Shape] = {
+  def check(adopt: Shape => Unit, expression: String)(implicit ctx: ShapeParserContext): Option[Shape] = {
     val tokens = new RamlExpressionLexer(expression, Position.ZERO).lex()
     val builder =
       new RamlExpressionASTBuilder(tokens, ContextDeclarationFinder(ctx), unresolvedRegister = EmptyRegister())(ctx.eh)
