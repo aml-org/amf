@@ -17,12 +17,6 @@ import amf.plugins.document.webapi.contexts.parser.oas.{
   OasWebApiContext
 }
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml10WebApiContext, RamlWebApiContext}
-import amf.plugins.document.webapi.parser.spec.OasDefinitions.{
-  appendPrefix,
-  oas2DefinitionsPrefix,
-  oas3ComponentsPrefix,
-  oas3DefinitionsPrefix
-}
 
 /**
   * Oas package object

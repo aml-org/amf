@@ -159,9 +159,9 @@ class OasRefParser(map: YMap,
 
   private def isDeclaration(ref: String): Boolean =
     ctx match {
-      case _  if ctx.isOas2Context && ref.matches(oas2DeclarationRegex)                                => true
-      case _  if ctx.isOas3Context && ctx.isAsyncContext && ref.matches(oas3DeclarationRegex) => true
-      case _                                                                                        => false
+      case _ if ctx.isOas2Context && ref.matches(oas2DeclarationRegex)                         => true
+      case _ if (ctx.isOas3Context || ctx.isAsyncContext) && ref.matches(oas3DeclarationRegex) => true
+      case _                                                                                   => false
     }
 
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
