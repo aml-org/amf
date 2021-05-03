@@ -1130,6 +1130,19 @@ class EditingResolutionTest extends ResolutionTest {
         eh = Some(UnhandledParserErrorHandler)
       )
     }
+
+    multiGoldenTest("OAS 3.0 discriminators invalid mapping", "api.%s") { config =>
+      cycle(
+        "api.yaml",
+        config.golden,
+        Oas30YamlHint,
+        target = Amf,
+        directory = resolutionPath + "oas30-discriminator-invalid-mapping/",
+        transformWith = Some(Oas30),
+        renderOptions = Some(config.renderOptions)
+      )
+    }
+
   }
 
   override val basePath: String = ""

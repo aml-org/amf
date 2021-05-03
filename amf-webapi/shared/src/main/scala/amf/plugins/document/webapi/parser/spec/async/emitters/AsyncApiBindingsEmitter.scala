@@ -90,11 +90,6 @@ case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrder
     }
   }
 
-  def emitLink(l: Linkable): Option[EntryEmitter] = {
-    val label = OasDefinitions.appendOas3ComponentsPrefix(l.linkLabel.value(), "pija")
-    Some(MapEntryEmitter("$ref", label))
-  }
-
   override def position(): Position = pos(bindings.annotations)
 }
 

@@ -6,6 +6,7 @@ import org.scalatest.Matchers
 class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/oas3/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/oas3/"
+  val resolutionPath               = "file://amf-client/shared/src/test/resources/resolution/"
   override val hint: Hint          = Oas30YamlHint
 
   test("'Paths' property is required") {
@@ -128,6 +129,13 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
 
   test("Validate ref key in operation object") {
     validate("invalid-ref-key-operation.json", Some("invalid-ref-key-operation.report"), Oas20Profile)
+  }
+
+  test("Unresolved value in discriminator mapping results in warning") {
+    validate("oas30-discriminator-invalid-mapping/api.yaml",
+             Some("warning-unresolved-ref.report"),
+             Oas30Profile,
+             directory = resolutionPath)
   }
 
 }
