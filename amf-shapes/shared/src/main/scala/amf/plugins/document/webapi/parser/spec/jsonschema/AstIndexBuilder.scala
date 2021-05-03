@@ -1,25 +1,17 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
-import java.net.URI
 import amf.core.utils.AliasCounter
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.ShapeParserContext
 import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft201909SchemaVersion,
-  JSONSchemaDraft3SchemaVersion,
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaDraft6SchemaVersion,
-  JSONSchemaDraft7SchemaVersion,
-  JSONSchemaVersion,
-  SchemaVersion
-}
+import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.validations.ShapeParserSideValidations.ExceededMaxYamlReferences
 import org.yaml.model._
 
+import java.net.URI
 import scala.collection.mutable
 
 object AstIndexBuilder {
-  def buildAst(node: YNode, refCounter: AliasCounter, version: SchemaVersion)(implicit ctx: WebApiContext): AstIndex = {
+  def buildAst(node: YNode, refCounter: AliasCounter, version: SchemaVersion)(implicit ctx: ShapeParserContext): AstIndex = {
     val locationUri             = getBaseUri(ctx)
     val specificResolutionScope = locationUri.flatMap(loc => getResolutionScope(version, loc)).toSeq
     val scopes                  = Seq(LexicalResolutionScope()) ++ specificResolutionScope
@@ -27,7 +19,7 @@ object AstIndexBuilder {
     new AstIndexBuilder(refCounter).build(node, scopes, resolvers)
   }
 
-  private def getBaseUri(ctx: WebApiContext): Option[URI] =
+  private def getBaseUri(ctx: ShapeParserContext): Option[URI] =
     try {
       Some(new URI(ctx.jsonSchemaRefGuide.currentLoc))
     } catch {
@@ -43,7 +35,7 @@ object AstIndexBuilder {
   }
 }
 
-case class AstIndexBuilder private (private val refCounter: AliasCounter)(implicit ctx: WebApiContext) {
+case class AstIndexBuilder private (private val refCounter: AliasCounter)(implicit ctx: ShapeParserContext) {
 
   def build(node: YNode, scopes: Seq[ResolutionScope], resolvers: Seq[ReferenceResolver]): AstIndex = {
     val acc = mutable.Map.empty[String, YMapEntryLike]

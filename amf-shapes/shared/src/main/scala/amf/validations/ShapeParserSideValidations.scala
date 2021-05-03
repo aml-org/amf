@@ -67,6 +67,16 @@ object ShapeParserSideValidations extends Validations {
     "Trait/Resource Type parameter in type"
   )
 
+  val UnableToParseJsonSchema = validation(
+    "unable-to-parse-json-schema",
+    "Unable to parse json schema"
+  )
+
+  val InvalidJsonSchemaVersion = validation(
+    "invalid-json-schema-version",
+    "Invalid Json Schema version"
+  )
+
   val MissingDiscriminatorProperty = validation(
     "missing-discriminator-property",
     "Type is missing property marked as discriminator"

@@ -178,11 +178,6 @@ object ParserSideValidations extends Validations {
     "Invalid type for declaration node"
   )
 
-  val InvalidJsonSchemaVersion = validation(
-    "invalid-json-schema-version",
-    "Invalid Json Schema version"
-  )
-
   val CrossSecurityWarningSpecification = validation(
     "cross-security-warning",
     "Using a security scheme type from raml in oas or from oas in raml"
@@ -277,11 +272,6 @@ object ParserSideValidations extends Validations {
   val UnresolvedParameter = validation(
     "unresolved-parameter",
     "Unresolved parameter"
-  )
-
-  val UnableToParseJsonSchema = validation(
-    "unable-to-parse-json-schema",
-    "Unable to parse json schema"
   )
 
   val MalformedJsonReference = validation(
@@ -472,7 +462,6 @@ object ParserSideValidations extends Validations {
     OasFormDataNotFileSpecification,
     OasBodyAndFormDataParameterSpecification,
     OasInvalidParameterBinding,
-    UnableToParseJsonSchema,
     InvalidAbstractDeclarationType,
     NullAbstractDeclaration,
     JsonSchemaFragmentNotFound,
@@ -494,7 +483,6 @@ object ParserSideValidations extends Validations {
     InvalidBaseUriParametersType,
     InvalidBasePath,
     InvalidParameterType,
-    InvalidJsonSchemaVersion,
     InvalidEndpointType,
     UnableToParseShape,
     InvalidAnnotationType,

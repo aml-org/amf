@@ -1,11 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
 import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
-
-import java.net.URI
-import amf.plugins.document.webapi.parser.spec.jsonschema.CommonIdResolutionScope.{formatFragment, formatUri}
+import amf.plugins.document.webapi.parser.spec.jsonschema.CommonIdResolutionScope.formatUri
 import org.yaml.model.{YNode, YType}
 
+import java.net.URI
 import scala.collection.mutable
 
 trait ResolutionScope {

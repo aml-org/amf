@@ -29,7 +29,8 @@ import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.toJsonSchema
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
-import amf.validations.ParserSideValidations.{JsonSchemaFragmentNotFound, UnableToParseJsonSchema}
+import amf.validations.ParserSideValidations.{JsonSchemaFragmentNotFound}
+import amf.validations.ShapeParserSideValidations.UnableToParseJsonSchema
 import org.mulesoft.lexer.Position
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._

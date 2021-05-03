@@ -1,5 +1,7 @@
 package amf.plugins.document.webapi.parser
 
+import amf.core.Root
+import amf.core.client.ParsingOptions
 import amf.core.model.domain.Shape
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{
@@ -7,14 +9,16 @@ import amf.core.parser.{
   Declarations,
   ErrorHandlingContext,
   FutureDeclarations,
+  ParserContext,
   SearchScope,
   UnresolvedComponents
 }
 import amf.core.remote.Vendor
+import amf.plugins.document.webapi.contexts.JsonSchemaRefGuide
 import amf.plugins.document.webapi.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParserContext
-import amf.plugins.document.webapi.parser.spec.declaration.{DefaultType, RamlTypeParser, TypeInfo}
+import amf.plugins.document.webapi.parser.spec.declaration.{DefaultType, RamlTypeParser, SchemaVersion, TypeInfo}
 import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.external.raml.RamlExternalTypesParser
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
@@ -65,6 +69,12 @@ abstract class ShapeParserContext(eh: ParserErrorHandler) extends DataNodeParser
   def libraries: Map[String, Declarations]
   def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser
   def ramlExternalSchemaParserFactory: RamlExternalSchemaExpressionFactory
+  def getInheritedDeclarations: Option[Declarations]
+  def makeJsonSchemaContextForParsing(url: String, document: Root, options: ParsingOptions): ShapeParserContext
+  def computeJsonSchemaVersion(ast: YNode): SchemaVersion
+  def setJsonSchemaAST(value: YNode): Unit
+  def jsonSchemaRefGuide: JsonSchemaRefGuide
+  def validateRefFormatWithError(ref: String): Boolean
 }
 
 trait RamlExternalSchemaExpressionFactory {

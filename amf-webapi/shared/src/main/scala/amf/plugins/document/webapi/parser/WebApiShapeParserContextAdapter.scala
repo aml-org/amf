@@ -1,21 +1,33 @@
 package amf.plugins.document.webapi.parser
 
+import amf.core.Root
+import amf.core.client.ParsingOptions
+import amf.core.model.document.Document
 import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.{Annotations, Declarations, FragmentRef, FutureDeclarations, ParsedReference, SearchScope}
+import amf.core.parser.{
+  Annotations,
+  Declarations,
+  EmptyFutureDeclarations,
+  FragmentRef,
+  FutureDeclarations,
+  ParsedReference,
+  ParserContext,
+  SearchScope
+}
 import amf.core.remote.Vendor
 import amf.core.validation.core.ValidationSpecification
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.{JsonSchemaRefGuide, WebApiContext}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
-import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext}
+import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaWebApiContext, Oas2WebApiContext, Oas3WebApiContext}
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.RamlWebApiContextType.RamlWebApiContextType
-import amf.plugins.document.webapi.parser.spec.declaration.{DefaultType, RamlTypeParser, TypeInfo}
+import amf.plugins.document.webapi.parser.spec.declaration.{DefaultType, RamlTypeParser, SchemaVersion, TypeInfo}
 import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.external.raml.DefaultRamlExternalSchemaExpressionFactory
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
-import amf.plugins.document.webapi.parser.spec.{SpecSyntax, toOas}
+import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSyntax, toOas, toOasDeclarations, toRaml}
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
@@ -174,4 +186,36 @@ case class WebApiShapeParserContextAdapter(ctx: WebApiContext) extends ShapePars
     case ramlCtx: RamlWebApiContext => DefaultRamlExternalSchemaExpressionFactory()(ramlCtx)
     case _                          => throw new Exception("Parser - Can be called only from RAML!")
   }
+
+  override def getInheritedDeclarations: Option[OasWebApiDeclarations] = ctx match {
+    case ramlContext: Raml08WebApiContext => Some(toOasDeclarations(ramlContext.declarations))
+    case _                                => None
+  }
+
+  override def makeJsonSchemaContextForParsing(url: String,
+                                               document: Root,
+                                               options: ParsingOptions): ShapeParserContext = {
+    val cleanNested = ParserContext(url, document.references, EmptyFutureDeclarations(), ctx.eh)
+    cleanNested.globalSpace = ctx.globalSpace
+
+    // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
+    val inheritedDeclarations = getInheritedDeclarations
+
+    val schemaContext = new JsonSchemaWebApiContext(url,
+                                                    document.references,
+                                                    cleanNested,
+                                                    inheritedDeclarations,
+                                                    options,
+                                                    ctx.defaultSchemaVersion)
+    schemaContext.indexCache = ctx.indexCache
+    WebApiShapeParserContextAdapter(schemaContext)
+  }
+
+  override def computeJsonSchemaVersion(ast: YNode): SchemaVersion = ctx.computeJsonSchemaVersion(ast)
+
+  override def setJsonSchemaAST(value: YNode): Unit = ctx.setJsonSchemaAST(value)
+
+  override def jsonSchemaRefGuide: JsonSchemaRefGuide = ctx.jsonSchemaRefGuide
+
+  override def validateRefFormatWithError(ref: String): Boolean = ctx.validateRefFormatWithError(ref)
 }
