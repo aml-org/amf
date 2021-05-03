@@ -3,7 +3,8 @@ package amf.plugins.document.webapi.contexts
 import amf.core.client.ParsingOptions
 import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, ParsedReference, ParserContext}
+import amf.core.model.domain.extensions.CustomDomainProperty
+import amf.core.parser.{Annotations, FragmentRef, ParsedReference, ParserContext, SearchScope}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.{AliasCounter, IdCounter}
@@ -11,6 +12,7 @@ import amf.plugins.document.vocabularies.parser.common.DeclarationContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.common.DataNodeParserContext
 import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft4SchemaVersion,
@@ -25,13 +27,33 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-abstract class WebApiContext(val loc: String,
+abstract class ExtensionsContext(val loc: String,
+                                 refs: Seq[ParsedReference],
+                                 val options: ParsingOptions,
+                                 wrapped: ParserContext,
+                                 val declarationsOption: Option[WebApiDeclarations] = None,
+                                 val nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
+    extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
+    with DataNodeParserContext {
+
+  val declarations: WebApiDeclarations = declarationsOption.getOrElse(
+    new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
+
+  override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] =
+    declarations.findAnnotation(key, scope)
+
+  override def getMaxYamlReferences: Option[Long] = options.getMaxYamlReferences
+
+  override def fragments: Map[String, FragmentRef] = declarations.fragments
+}
+
+abstract class WebApiContext(loc: String,
                              refs: Seq[ParsedReference],
-                             val options: ParsingOptions,
+                             options: ParsingOptions,
                              wrapped: ParserContext,
                              declarationsOption: Option[WebApiDeclarations] = None,
-                             val nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
-    extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
+                             nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
+    extends ExtensionsContext(loc, refs, options, wrapped, declarationsOption, nodeRefIds)
     with DeclarationContext
     with SpecAwareContext
     with PlatformSecrets
@@ -43,8 +65,6 @@ abstract class WebApiContext(val loc: String,
 
   val syntax: SpecSyntax
   val vendor: Vendor
-  val declarations: WebApiDeclarations = declarationsOption.getOrElse(
-    new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
