@@ -13,7 +13,11 @@ import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterCont
 import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ApiShapeEmitterContextAdapter, oas}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext,
+  oas
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasNamedTypeEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
   RamlNamedTypeEmitter,
@@ -26,6 +30,9 @@ import org.yaml.model.YDocument.EntryBuilder
 case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
     implicit spec: RamlSpecEmitterContext)
     extends DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering) {
+
+  private implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   override def emitTypes(b: EntryBuilder): Unit = {
     b.entry(
       spec.factory.typesKey,

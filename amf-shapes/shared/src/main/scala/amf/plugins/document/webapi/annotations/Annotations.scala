@@ -70,3 +70,5 @@ case class ExternalJsonSchemaShape(original: YMapEntry) extends Annotation
 case class ExternalReferenceUrl(url: String) extends Annotation
 
 case class CollectionFormatFromItems() extends Annotation
+
+case class ForceEntry() extends Annotation

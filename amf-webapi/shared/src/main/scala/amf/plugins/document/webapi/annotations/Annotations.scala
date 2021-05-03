@@ -89,6 +89,4 @@ case class OperationTraitEntry(range: Range) extends Annotation
 // save original text link?
 case class ReferencedElement(parsedUrl: String, referenced: DomainElement) extends Annotation
 
-case class ForceEntry() extends Annotation
-
 case class ExampleIndex(index: Int) extends Annotation

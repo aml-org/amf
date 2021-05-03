@@ -30,7 +30,9 @@ case class AsyncSchemaEmitter(key: String,
   }
 
   private def emitAsRaml(b: EntryBuilder): Unit = {
-    val emitters = Raml10TypeEmitter(shape, ordering, references = references)(toRaml(spec)).entries()
+    val emitters =
+      Raml10TypeEmitter(shape, ordering, references = references)(ApiShapeEmitterContextAdapter(toRaml(spec)))
+        .entries()
     b.entry(
       key,
       _.obj(eb => emitters.foreach(_.emit(eb)))
