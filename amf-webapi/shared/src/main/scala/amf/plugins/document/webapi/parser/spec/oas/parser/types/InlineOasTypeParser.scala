@@ -46,6 +46,7 @@ import amf.plugins.domain.webapi.models
 import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
+import amf.core.utils.AmfStrings
 
 import scala.collection.mutable
 import scala.util.Try
@@ -807,18 +808,21 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                 .withName(name, nameAnnotations)
                 .withSupportsRecursion(true)
             case _ =>
-              val shape = AnyShape(ast).withName(entry.key, Annotations(entry.key))
+              val resultShape = AnyShape(ast).withName(entry.key, Annotations(entry.key))
               val tmpShape = UnresolvedShape(Fields(),
                                              Annotations(entry.value),
                                              entry.value,
                                              None,
-                                             Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
+                                             Some((k: String) => resultShape.set(LinkableElementModel.TargetId, k)),
                                              shouldLink = false)
                 .withName(entry.key, Annotations())
                 .withSupportsRecursion(true)
               tmpShape.unresolved(definitionName, entry.value, "warning")(ctx)
               tmpShape.withContext(ctx)
-              shape.withLinkTarget(tmpShape).withLinkLabel(entry.key)
+              val encodedKey = entry.key.toString.urlComponentEncoded
+              tmpShape.withId(s"${shape.id}/discriminator/$encodedKey/unresolved")
+              resultShape.withId(s"${shape.id}/discriminator/$encodedKey")
+              resultShape.withLinkTarget(tmpShape).withLinkLabel(entry.key)
           }
         }
 
