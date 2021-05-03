@@ -6,9 +6,10 @@ import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, SearchScope}
 import amf.core.remote.Raml10
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition._
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.{WebApiDeclarations, toRaml}
 import amf.plugins.domain.webapi.models.Payload
 import amf.plugins.features.validation.CoreValidations
@@ -48,7 +49,7 @@ case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: S
 
   def parse(): Option[Shape] = version match {
     case RAML10SchemaVersion() => CustomRamlReferenceParser(YMapEntryLike(entry), adopt).parse()
-    case _                     => OasTypeParser(entry, adopt, version).parse()
+    case _                     => OasTypeParser(entry, adopt, version)(WebApiShapeParserContextAdapter(ctx)).parse()
   }
 }
 

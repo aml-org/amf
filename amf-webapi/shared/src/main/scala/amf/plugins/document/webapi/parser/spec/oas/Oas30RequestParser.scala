@@ -4,6 +4,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, _}
 import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorRequest
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -49,7 +50,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
         }
         request.set(ResponseModel.Payloads, AmfArray(payloads, Annotations.virtual()), Annotations.inferred())
 
-        AnnotationParser(request, map).parse()
+        AnnotationParser(request, map)(WebApiShapeParserContextAdapter(ctx)).parse()
         ctx.closedShape(request.id, map, "request")
         request
     }

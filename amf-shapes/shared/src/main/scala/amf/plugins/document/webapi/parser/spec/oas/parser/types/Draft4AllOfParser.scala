@@ -3,13 +3,13 @@ package amf.plugins.document.webapi.parser.spec.oas.parser.types
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfArray, Shape}
 import amf.core.parser.{Annotations, YMapOps}
-import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+import amf.plugins.document.webapi.parser.ShapeParserContext
 import amf.plugins.document.webapi.parser.spec.declaration.{OasTypeParser, SchemaVersion}
-import amf.validations.ParserSideValidations.InvalidAndType
+import amf.validations.ShapeParserSideValidations.InvalidAndType
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
 case class AndConstraintParser(map: YMap, shape: Shape, adopt: Shape => Unit, version: SchemaVersion)(
-    implicit ctx: OasLikeWebApiContext) {
+    implicit ctx: ShapeParserContext) {
 
   def parse(): Unit = {
     map.key(

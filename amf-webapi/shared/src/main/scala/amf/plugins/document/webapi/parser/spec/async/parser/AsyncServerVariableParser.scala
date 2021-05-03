@@ -10,10 +10,11 @@ import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.Parameter
 import amf.validations.ParserSideValidations
+import amf.validations.ShapeParserSideValidations.ExamplesMustBeASeq
 import org.yaml.model.{YMap, YMapEntry, YSequence, YType}
 
 case class AsyncServerVariableParser(entry: YMapEntry, parent: String)(implicit override val ctx: AsyncWebApiContext)
-    extends OasLikeServerVariableParser(entry, parent) {
+    extends OasLikeServerVariableParser(entry, parent)(ctx) {
 
   override protected def parseMap(variable: Parameter, map: YMap): Unit = {
     super.parseMap(variable, map)
@@ -35,9 +36,7 @@ case class AsyncServerVariableParser(entry: YMapEntry, parent: String)(implicit 
                                 AmfArray(examples, Annotations(examplesEntry.value)),
                                 Annotations(examplesEntry))
           case _ =>
-            ctx.violation(ParserSideValidations.ExamplesMustBeASeq,
-                          variable.id,
-                          "Examples facet must be an array of strings")
+            ctx.violation(ExamplesMustBeASeq, variable.id, "Examples facet must be an array of strings")
         }
       }
     )

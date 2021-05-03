@@ -2,23 +2,22 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.{Oas, Raml}
-import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.parser.ShapeParserContext
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, QuickFieldParserOps}
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
+import amf.validations.ShapeParserSideValidations.UnexpectedVendor
 import org.yaml.model.{YMap, YNode}
-import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
-import amf.plugins.document.webapi.vocabulary.VocabularyMappings
-import amf.validations.ParserSideValidations.UnexpectedVendor
 
 object OasLikeCreativeWorkParser {
-  def parse(node: YNode, parentId: String)(implicit ctx: WebApiContext): CreativeWork =
+  def parse(node: YNode, parentId: String)(implicit ctx: ShapeParserContext): CreativeWork =
     OasLikeCreativeWorkParser(node, parentId).parse()
 }
 
-case class OasLikeCreativeWorkParser(node: YNode, parentId: String)(implicit val ctx: WebApiContext)
-    extends SpecParserOps {
+case class OasLikeCreativeWorkParser(node: YNode, parentId: String)(implicit val ctx: ShapeParserContext)
+    extends QuickFieldParserOps {
   def parse(): CreativeWork = {
 
     val map          = node.as[YMap]
@@ -30,13 +29,13 @@ case class OasLikeCreativeWorkParser(node: YNode, parentId: String)(implicit val
 
     creativeWork.adopted(parentId)
     AnnotationParser(creativeWork, map).parse()
-    if (ctx.syntax == Oas2Syntax || ctx.syntax == Oas3Syntax)
+    if (ctx.isOas2Syntax || ctx.isOas3Context)
       ctx.closedShape(creativeWork.id, map, "externalDoc")
     creativeWork
   }
 }
 
-case class RamlCreativeWorkParser(node: YNode)(implicit val ctx: WebApiContext) extends SpecParserOps {
+case class RamlCreativeWorkParser(node: YNode)(implicit val ctx: ShapeParserContext) extends QuickFieldParserOps {
   def parse(): CreativeWork = {
 
     val map           = node.as[YMap]

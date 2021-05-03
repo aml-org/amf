@@ -89,13 +89,6 @@ case class OperationTraitEntry(range: Range) extends Annotation
 // save original text link?
 case class ReferencedElement(parsedUrl: String, referenced: DomainElement) extends Annotation
 
-case class CollectionFormatFromItems() extends Annotation
-
-case class ExternalJsonSchemaShape(original: YMapEntry) extends Annotation
-
-// used internally for emission of links that have been inlined. This annotation is removed in resolution
-case class ExternalReferenceUrl(url: String) extends Annotation
-
 case class ForceEntry() extends Annotation
 
 case class ExampleIndex(index: Int) extends Annotation

@@ -4,7 +4,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{
   JSONSchema,
   XMLSchema,
@@ -13,13 +13,19 @@ import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{
 }
 import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeDetection.parseFormat
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
-import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher, TypeName}
+import amf.plugins.document.webapi.parser.{
+  RamlTypeDefMatcher,
+  RamlTypeDefStringValueMatcher,
+  RamlWebApiContextType,
+  TypeName
+}
 import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping._
 import amf.validations.ParserSideValidations._
 import amf.validations.ResolutionSideValidations.InvalidTypeInheritanceErrorSpecification
+import amf.validations.ShapeParserSideValidations.InvalidTypeDefinition
 import org.yaml.model._
 
 object RamlTypeDetection {
@@ -60,11 +66,11 @@ case class RamlTypeDetector(parent: String,
           None
         case t if isRamlVariable(t) && ctx.contextType != RamlWebApiContextType.DEFAULT => None
 //        case XMLSchema(_) | JSONSchema(_) if isExplicit => Some(ExternalSchemaWrapper)
-        case XMLSchema(_)                                                               => Some(XMLSchemaType)
-        case JSONSchema(_)                                                              => Some(JSONSchemaType)
-        case RamlTypeDefMatcher.TypeExpression(text)                                    => parseAndMatchTypeExpression(node, text)
-        case t if t.endsWith("?")                                                       => Some(NilUnionType)
-        case t: String if !isWellKnownType(TypeName(t))                                  =>
+        case XMLSchema(_)                               => Some(XMLSchemaType)
+        case JSONSchema(_)                              => Some(JSONSchemaType)
+        case RamlTypeDefMatcher.TypeExpression(text)    => parseAndMatchTypeExpression(node, text)
+        case t if t.endsWith("?")                       => Some(NilUnionType)
+        case t: String if !isWellKnownType(TypeName(t)) =>
           // it might be a named type
           // its for identify the type, so i can search in all the scope, no need to difference between named ref and includes.
 
@@ -82,9 +88,9 @@ case class RamlTypeDetector(parent: String,
   }
 
   private def detectOrInferType(node: YNode) = {
-    val map = node.as[YMap]
+    val map          = node.as[YMap]
     val typeExplicit = detectExplicitTypeOrSchema(map)
-    val inferred = inferTypeFrom(map)
+    val inferred     = inferTypeFrom(map)
     (typeExplicit, inferred) match {
       case (Some(JSONSchemaType), Some(_)) =>
         ctx.eh.warning(
@@ -95,9 +101,9 @@ case class RamlTypeDetector(parent: String,
           node.value
         )
         typeExplicit
-      case (Some(_), _) => typeExplicit
+      case (Some(_), _)    => typeExplicit
       case (None, Some(_)) => inferred
-      case _ => inferTypeFromPossibleShapeFacets(map)
+      case _               => inferTypeFromPossibleShapeFacets(map)
     }
   }
 

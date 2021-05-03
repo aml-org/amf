@@ -4,12 +4,12 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.Vendor
-import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.ShapeParserContext
+import amf.plugins.document.webapi.parser.spec.common.QuickFieldParserOps
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
-import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector.LinkCriteria
-import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.oas.parser.types.InlineOasTypeParser
+import amf.plugins.document.webapi.parser.spec.declaration.types.TypeDetector.LinkCriteria
 import amf.plugins.domain.shapes.models._
 import org.yaml.model._
 
@@ -22,7 +22,7 @@ import org.yaml.model._
  */
 object OasTypeParser {
 
-  def apply(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
+  def apply(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: ShapeParserContext): OasTypeParser =
     new OasTypeParser(
       YMapEntryLike(entry),
       key(entry),
@@ -32,15 +32,14 @@ object OasTypeParser {
     )
 
   def apply(entry: YMapEntry, adopt: Shape => Unit, version: SchemaVersion)(
-      implicit ctx: OasLikeWebApiContext): OasTypeParser =
+      implicit ctx: ShapeParserContext): OasTypeParser =
     new OasTypeParser(YMapEntryLike(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
 
   def apply(node: YMapEntryLike, name: String, adopt: Shape => Unit, version: SchemaVersion)(
-      implicit ctx: OasLikeWebApiContext): OasTypeParser =
+      implicit ctx: ShapeParserContext): OasTypeParser =
     new OasTypeParser(node, name, node.asMap, adopt, version)
 
-  def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit)(
-      implicit ctx: OasLikeWebApiContext): OasTypeParser =
+  def buildDeclarationParser(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: ShapeParserContext): OasTypeParser =
     new OasTypeParser(
       YMapEntryLike(entry),
       key(entry),
@@ -52,7 +51,7 @@ object OasTypeParser {
 
   private def key(entry: YMapEntry)(implicit errorHandler: IllegalTypeHandler) = entry.key.as[YScalar].text
 
-  private def getSchemaVersion(ctx: OasLikeWebApiContext) = {
+  private def getSchemaVersion(ctx: ShapeParserContext) = {
     if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion(Schema)
     else if (ctx.vendor == Vendor.ASYNC20) JSONSchemaDraft7SchemaVersion
     else OAS20SchemaVersion(Schema)
@@ -64,8 +63,8 @@ case class OasTypeParser(entryOrNode: YMapEntryLike,
                          map: YMap,
                          adopt: Shape => Unit,
                          version: SchemaVersion,
-                         isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext)
-    extends OasSpecParser {
+                         isDeclaration: Boolean = false)(implicit val ctx: ShapeParserContext)
+    extends QuickFieldParserOps {
 
   def parse(): Option[AnyShape] = {
     if (version.isBiggerThanOrEqualTo(JSONSchemaDraft201909SchemaVersion)) {
@@ -81,7 +80,7 @@ case class Draft2019TypeParser(entryOrNode: YMapEntryLike,
                                map: YMap,
                                adopt: Shape => Unit,
                                version: SchemaVersion,
-                               isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext) {
+                               isDeclaration: Boolean = false)(implicit val ctx: ShapeParserContext) {
 
   private val ast: YPart                   = entryOrNode.ast
   private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())
@@ -129,7 +128,7 @@ case class Draft4TypeParser(entryOrNode: YMapEntryLike,
                             map: YMap,
                             adopt: Shape => Unit,
                             version: SchemaVersion,
-                            isDeclaration: Boolean = false)(implicit val ctx: OasLikeWebApiContext) {
+                            isDeclaration: Boolean = false)(implicit val ctx: ShapeParserContext) {
 
   private val ast: YPart                   = entryOrNode.ast
   private val nameAnnotations: Annotations = entryOrNode.key.map(n => Annotations(n)).getOrElse(Annotations())

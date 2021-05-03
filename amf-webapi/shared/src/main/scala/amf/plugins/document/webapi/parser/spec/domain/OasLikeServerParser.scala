@@ -3,12 +3,18 @@ import amf.core.annotations.SynthesizedField
 import org.yaml.model.{YMap, YMapEntry}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.DataType
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.{
+  AnnotationParser,
+  DataNodeParser,
+  QuickFieldParserOps,
+  SpecParserOps
+}
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, ServerModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server}
 
@@ -19,7 +25,7 @@ import amf.plugins.domain.webapi.models.{Parameter, Server}
   * @param ctx parsing context
   */
 class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val ctx: OasLikeWebApiContext)
-    extends SpecParserOps {
+    extends QuickFieldParserOps {
 
   protected val map            = entryLike.asMap
   protected val server: Server = build()
@@ -33,7 +39,7 @@ class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val
       val variables = entry.value.as[YMap].entries.map(ctx.factory.serverVariableParser(_, server.id).parse())
       server.set(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
     }
-    AnnotationParser(server, map).parse()
+    AnnotationParser(server, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     ctx.closedShape(server.id, map, "server")
     server
   }
@@ -48,8 +54,11 @@ class OasLikeServerParser(parent: String, entryLike: YMapEntryLike)(implicit val
   }
 }
 
-class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val ctx: OasLikeWebApiContext)
-    extends SpecParserOps {
+class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(val ctx: OasLikeWebApiContext)
+    extends QuickFieldParserOps {
+
+  private implicit val shapeCtx: WebApiShapeParserContextAdapter = WebApiShapeParserContextAdapter(ctx)
+
   def parse(): Parameter = {
 
     val node     = ScalarNode(entry.key)
@@ -67,13 +76,12 @@ class OasLikeServerVariableParser(entry: YMapEntry, parent: String)(implicit val
 
   protected def parseMap(variable: Parameter, map: YMap): Unit = {
     ctx.closedShape(variable.id, map, "serverVariable")
-
+    implicit val shapeCtx: WebApiShapeParserContextAdapter = WebApiShapeParserContextAdapter(ctx)
     val schema = variable
       .withScalarSchema(entry.key)
       .add(Annotations(map))
       .withDataType(DataType.String, Annotations.synthesized())
-    val counter: IdCounter                                 = new IdCounter();
-    implicit val shapeCtx: WebApiShapeParserContextAdapter = WebApiShapeParserContextAdapter(ctx)
+    val counter: IdCounter = new IdCounter();
     map.key("enum", ShapeModel.Values in schema using DataNodeParser.parse(Some(schema.id), counter))
     map.key("default", entry => {
       schema.withDefaultStr(entry.value)

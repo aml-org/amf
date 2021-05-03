@@ -1,42 +1,29 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.LexicalInformation
-import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DataNode, ExternalDomainElement}
-import amf.core.parser.errorhandler.{JsonErrorHandler, ParserErrorHandler, WarningOnlyHandler}
+import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DataNode}
+import amf.core.parser.errorhandler.{ParserErrorHandler, WarningOnlyHandler}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ParsedJSONExample}
-import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
-import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
-import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorNamedExample
-import amf.plugins.document.webapi.parser.spec.common.{
-  AnnotationParser,
-  DataNodeParser,
-  ExternalFragmentHelper,
-  SpecParserOps,
-  YMapEntryLike
-}
+import amf.plugins.document.webapi.parser.spec.{ErrorNamedExample, OasShapeDefinitions}
+import amf.plugins.document.webapi.parser.{RamlWebApiContextType, ShapeParserContext}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ExternalFragmentHelper, QuickFieldParserOps}
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ExemplifiedDomainElement, ScalarShape}
 import amf.plugins.features.validation.CoreValidations
-import amf.validations.ParserSideValidations.{
-  ExamplesMustBeAMap,
-  ExclusivePropertiesSpecification,
-  InvalidFragmentType
-}
-import org.mulesoft.lexer.{Position, SourceLocation}
-import org.yaml.model.YNode.MutRef
+import amf.validations.ShapeParserSideValidations.{ExamplesMustBeAMap, ExclusivePropertiesSpecification, InvalidFragmentType}
+import org.mulesoft.lexer.Position
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 
 import scala.collection.mutable.ListBuffer
 
 case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDomainElement)(
-    implicit ctx: WebApiContext) {
+    implicit ctx: ShapeParserContext) {
   def parse(): Unit = {
     (map.key("example"), map.key("examples")) match {
       case (Some(exampleEntry), None) =>
@@ -66,7 +53,7 @@ case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDom
   }
 }
 
-case class Oas3NamedExamplesParser(entry: YMapEntry, parentId: String)(implicit ctx: WebApiContext) {
+case class Oas3NamedExamplesParser(entry: YMapEntry, parentId: String)(implicit ctx: ShapeParserContext) {
   def parse(): Seq[Example] = {
     entry.value
       .as[YMap]
@@ -79,7 +66,7 @@ case class RamlExamplesParser(map: YMap,
                               singleExampleKey: String,
                               multipleExamplesKey: String,
                               exemplified: ExemplifiedDomainElement,
-                              options: ExampleOptions)(implicit ctx: WebApiContext) {
+                              options: ExampleOptions)(implicit ctx: ShapeParserContext) {
   def parse(): Unit = {
     if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined && exemplified.id.nonEmpty) {
       ctx.eh.violation(
@@ -107,17 +94,15 @@ case class RamlExamplesParser(map: YMap,
 case class RamlMultipleExampleParser(key: String,
                                      map: YMap,
                                      producer: Option[String] => Example,
-                                     options: ExampleOptions)(implicit ctx: WebApiContext) {
+                                     options: ExampleOptions)(implicit ctx: ShapeParserContext) {
   def parse(): Seq[Example] = {
     val examples = ListBuffer[Example]()
 
     map.key(key).foreach { entry =>
       ctx.link(entry.value) match {
         case Left(s) =>
-          examples += ctx.declarations
-            .findNamedExampleOrError(entry.value)(s)
+          examples += ctx.findNamedExampleOrError(entry.value)(s)
             .link(s)
-        // .link(ScalarNode(entry.value), Annotations(entry))
 
         case Right(node) =>
           node.tagType match {
@@ -125,9 +110,8 @@ case class RamlMultipleExampleParser(key: String,
               examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_, producer, options).parse())
             case YType.Null => // ignore
             case YType.Str
-                if node.toString().matches("<<.*>>") && ctx
-                  .asInstanceOf[RamlWebApiContext]
-                  .contextType != RamlWebApiContextType.DEFAULT => // Ignore
+                if node.toString().matches("<<.*>>") && ctx.isRamlContext
+                  && ctx.ramlContextType != RamlWebApiContextType.DEFAULT => // Ignore
             case _ =>
               ctx.eh.violation(
                 ExamplesMustBeAMap,
@@ -143,14 +127,13 @@ case class RamlMultipleExampleParser(key: String,
 }
 
 case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => Example, options: ExampleOptions)(
-    implicit ctx: WebApiContext) {
+    implicit ctx: ShapeParserContext) {
   def parse(): Example = {
     val name           = ScalarNode(entry.key)
     val simpleProducer = () => producer(Some(name.text().toString))
     val example: Example = ctx.link(entry.value) match {
       case Left(s) =>
-        ctx.declarations
-          .findNamedExample(s)
+        ctx.findNamedExample(s)
           .map(e => e.link(ScalarNode(entry.value), Annotations(entry)).asInstanceOf[Example])
           .getOrElse(RamlSingleExampleValueParser(entry, simpleProducer, options).parse())
       case Right(_) => RamlSingleExampleValueParser(entry, simpleProducer, options).parse()
@@ -162,14 +145,13 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
 case class RamlSingleExampleParser(key: String,
                                    map: YMap,
                                    producer: Option[String] => Example,
-                                   options: ExampleOptions)(implicit ctx: WebApiContext) {
+                                   options: ExampleOptions)(implicit ctx: ShapeParserContext) {
   def parse(): Option[Example] = {
     val newProducer = () => producer(None)
     map.key(key).flatMap { entry =>
       ctx.link(entry.value) match {
         case Left(s) =>
-          ctx.declarations
-            .findNamedExample(s,
+          ctx.findNamedExample(s,
                               Some(
                                 errMsg =>
                                   ctx.eh.violation(
@@ -195,8 +177,8 @@ case class RamlSingleExampleParser(key: String,
 }
 
 case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Example, options: ExampleOptions)(
-    implicit ctx: WebApiContext)
-    extends SpecParserOps {
+    implicit ctx: ShapeParserContext)
+    extends QuickFieldParserOps {
   def parse(): Example = {
     val example = producer().add(Annotations(entry))
 
@@ -228,8 +210,8 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
 }
 
 case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: ExampleOptions)(
-    implicit ctx: WebApiContext)
-    extends SpecParserOps {
+    implicit ctx: ShapeParserContext)
+    extends QuickFieldParserOps {
   def parse(): Example = {
     val map = entry.value.as[YMap]
 
@@ -247,9 +229,8 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
     setName(Example(entry)).adopted(parentId)
 
   private def parseLink(fullRef: String, map: YMap) = {
-    val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
-    ctx.declarations
-      .findExample(name, SearchScope.All)
+    val name = OasShapeDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
+    ctx.findExample(name, SearchScope.All)
       .map(found => setName(found.link(AmfScalar(name), Annotations(map), Annotations.synthesized())))
       .getOrElse {
         ctx.obtainRemoteYNode(fullRef) match {
@@ -268,8 +249,8 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
   }
 }
 
-case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleOptions)(implicit ctx: WebApiContext)
-    extends SpecParserOps {
+case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleOptions)(implicit ctx: ShapeParserContext)
+    extends QuickFieldParserOps {
   def parse(): Example = {
     map.key("summary", (ExampleModel.Summary in example).allowingAnnotations)
     map.key("description", (ExampleModel.Description in example).allowingAnnotations)
@@ -294,7 +275,7 @@ case class NodeDataNodeParser(node: YNode,
                               parentId: String,
                               quiet: Boolean,
                               fromExternal: Boolean = false,
-                              isScalar: Boolean = false)(implicit ctx: WebApiContext) {
+                              isScalar: Boolean = false)(implicit ctx: ShapeParserContext) {
   def parse(): DataNodeParserResult = {
     val errorHandler             = if (quiet) WarningOnlyHandler(ctx.eh) else ctx.eh
     var jsonText: Option[String] = None
@@ -331,7 +312,7 @@ case class NodeDataNodeParser(node: YNode,
 
   private def parseDataNode(exampleNode: Option[YNode], ann: Seq[Annotation] = Seq()) = {
     val dataNode = exampleNode.map { ex =>
-      val dataNode = DataNodeParser(ex, parent = Some(parentId))(WebApiShapeParserContextAdapter(ctx)).parse()
+      val dataNode = DataNodeParser(ex, parent = Some(parentId)).parse()
       dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
       dataNode.annotations += LexicalInformation(Range(ex.value.range))
       ann.foreach { a =>

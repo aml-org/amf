@@ -32,7 +32,7 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
     extends SpecParserOps {
 
   protected def parseAnnotations(settings: Settings): Settings = {
-    AnnotationParser(settings, map).parse()
+    AnnotationParser(settings, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     settings.add(Annotations(map))
   }
 
@@ -61,7 +61,7 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
       settings.set(SettingsModel.AdditionalProperties, node)
     }
 
-    AnnotationParser(scheme, xSettings).parse()
+    AnnotationParser(scheme, xSettings)(WebApiShapeParserContextAdapter(ctx)).parse()
 
     settings
   }

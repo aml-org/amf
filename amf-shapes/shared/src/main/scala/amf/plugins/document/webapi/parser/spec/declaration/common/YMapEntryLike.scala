@@ -1,7 +1,7 @@
-package amf.plugins.document.webapi.parser.spec.common
+package amf.plugins.document.webapi.parser.spec.declaration.common
 
 import amf.core.parser.Annotations
-import org.yaml.model.{IllegalTypeHandler, YMap, YMapEntry, YNode, YPart, YSequence}
+import org.yaml.model._
 
 object YMapEntryLike {
   def apply(entry: YMapEntry)(implicit errorHandler: IllegalTypeHandler): YMapEntryLike = RealYMapEntryLike(entry)

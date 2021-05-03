@@ -3,9 +3,11 @@ package amf.plugins.document.webapi.parser.spec.async.parser
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorCorrelationId
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.domain.webapi.metamodel.CorrelationIdModel
 import amf.plugins.domain.webapi.models.CorrelationId
 import amf.plugins.features.validation.CoreValidations
@@ -68,7 +70,7 @@ sealed case class CorrelationIdPopulator(map: YMap, correlationId: CorrelationId
     map.key("description", CorrelationIdModel.Description in correlationId)
     map.key("location", CorrelationIdModel.Location in correlationId)
 
-    AnnotationParser(correlationId, map).parse()
+    AnnotationParser(correlationId, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     ctx.closedShape(correlationId.id, map, "correlationId")
     correlationId
   }

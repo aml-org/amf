@@ -3,19 +3,18 @@ package amf.plugins.document.webapi.parser.spec.common
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.model.domain.{AmfArray, AmfObject}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
+import amf.core.model.domain.{AmfArray, AmfObject}
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
+import amf.plugins.document.webapi.parser.ShapeParserContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser.parseExtensions
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.resolveAnnotation
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
-import amf.validations.ParserSideValidations.InvalidAnnotationTarget
+import amf.validations.ShapeParserSideValidations.InvalidAnnotationTarget
 import org.yaml.model._
 
-case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] = Nil)(implicit val ctx: WebApiContext) {
+case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] = Nil)(implicit val ctx: ShapeParserContext) {
   def parse(): Unit = {
     val extensions = parseExtensions(element.id, map, target)
     setExtensions(extensions)
@@ -48,7 +47,7 @@ case class AnnotationParser(element: AmfObject, map: YMap, target: List[String] 
 
 object AnnotationParser {
   def parseExtensions(parent: String, map: YMap, target: List[String] = Nil)(
-      implicit ctx: WebApiContext): Seq[DomainExtension] =
+      implicit ctx: DataNodeParserContext): Seq[DomainExtension] =
     map.entries.flatMap { entry =>
       resolveAnnotation(entryKey(entry)).map(ExtensionParser(_, parent, entry, target).parse().add(Annotations(entry)))
     }
@@ -59,16 +58,15 @@ object AnnotationParser {
 }
 
 private case class ExtensionParser(annotation: String, parent: String, entry: YMapEntry, target: List[String] = Nil)(
-    implicit val ctx: WebApiContext) {
+    implicit val ctx: DataNodeParserContext) {
   def parse(): DomainExtension = {
     val id              = s"$parent/extension/$annotation"
     val propertyId      = s"$parent/$annotation"
     val domainExtension = DomainExtension(Annotations(entry)).withId(id)
-    val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId))(WebApiShapeParserContextAdapter(ctx)).parse()
+    val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId)).parse()
     // TODO
     // throw a parser-side warning validation error if no annotation can be found
-    val customDomainProperty = ctx.declarations
-      .findAnnotation(annotation, SearchScope.All)
+    val customDomainProperty = ctx.findAnnotation(annotation, SearchScope.All)
       .getOrElse(
         CustomDomainProperty(Annotations(entry)).withId(propertyId).withName(annotation, Annotations(entry.key)))
     validateAllowedTargets(customDomainProperty)

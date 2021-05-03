@@ -13,6 +13,7 @@ import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
 import amf.core.parser.YMapOps
 import amf.core.parser.YNodeLikeOps
 import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 
 case class RamlXmlSchemaExpression(key: YNode,
                                    override val value: YNode,
@@ -76,7 +77,8 @@ case class RamlXmlSchemaExpression(key: YNode,
     map.key(
       "default",
       entry => {
-        val dataNodeResult = NodeDataNodeParser(entry.value, parsedSchema.id, quiet = false).parse()
+        val dataNodeResult =
+          NodeDataNodeParser(entry.value, parsedSchema.id, quiet = false)(WebApiShapeParserContextAdapter(ctx)).parse()
         parsedSchema.setDefaultStrValue(entry)
         dataNodeResult.dataNode.foreach { dataNode =>
           parsedSchema.set(ShapeModel.Default, dataNode, Annotations(entry))

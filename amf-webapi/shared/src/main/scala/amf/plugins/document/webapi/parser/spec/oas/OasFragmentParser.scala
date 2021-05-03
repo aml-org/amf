@@ -11,19 +11,19 @@ import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.ExternalJsonYamlRefsPlugin
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model._
-import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{OasTypeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
+import amf.plugins.document.webapi.parser.{OasHeader, WebApiShapeParserContextAdapter}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.validations.ParserSideValidations.InvalidFragmentType
+import amf.validations.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: OasWebApiContext)
-    extends OasSpecParser
+    extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx))
     with PlatformSecrets {
 
   def parseFragment(): BaseUnit = {
@@ -76,7 +76,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
       val item = DocumentationItemFragment().adopted(root.location + "#/")
 
-      item.withEncodes(OasLikeCreativeWorkParser(map, item.id).parse())
+      item.withEncodes(OasLikeCreativeWorkParser(map, item.id)(WebApiShapeParserContextAdapter(ctx)).parse())
 
       item
     }
@@ -99,7 +99,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         OasTypeParser(YMapEntryLike(filterMap),
                       "type",
                       (shape: Shape) => shape.withId(root.location + "#/shape"),
-                      OAS20SchemaVersion(Schema))
+                      OAS20SchemaVersion(Schema))(WebApiShapeParserContextAdapter(ctx))
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 
@@ -174,7 +174,8 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       }
 
       namedExample.withEncodes(
-        RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = true, quiet = true)).parse())
+        RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = true, quiet = true))(
+          WebApiShapeParserContextAdapter(ctx)).parse())
     }
   }
 }

@@ -8,6 +8,7 @@ import amf.core.model.domain.{
   PerpetualAnnotation,
   SerializableAnnotation
 }
+import org.yaml.model.YMapEntry
 
 case class InlineDefinition() extends Annotation
 
@@ -62,3 +63,10 @@ case class JSONSchemaId(id: String) extends SerializableAnnotation with Perpetua
 object JSONSchemaId extends AnnotationGraphLoader {
   override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = Some(JSONSchemaId(value))
 }
+
+case class ExternalJsonSchemaShape(original: YMapEntry) extends Annotation
+
+// used internally for emission of links that have been inlined. This annotation is removed in resolution
+case class ExternalReferenceUrl(url: String) extends Annotation
+
+case class CollectionFormatFromItems() extends Annotation

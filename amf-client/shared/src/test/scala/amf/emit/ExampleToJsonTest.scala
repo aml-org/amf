@@ -9,6 +9,7 @@ import amf.core.remote.Raml10YamlHint
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.domain.{DefaultExampleOptions, RamlExamplesParser}
 import amf.plugins.domain.shapes.models.{AnyShape, Example}
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -83,7 +84,8 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
           val ast      = a.ast.asInstanceOf[YDocument].as[YMap]
           val context  = new Raml10WebApiContext("", Nil, ParserContext(eh = DefaultParserErrorHandler.withRun()))
           val anyShape = AnyShape()
-          RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(context).parse()
+          RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(
+            WebApiShapeParserContextAdapter(context)).parse()
           Future.successful(anyShape.examples.head)
         case None => Future.failed(fail("Not a named example fragment"))
       }

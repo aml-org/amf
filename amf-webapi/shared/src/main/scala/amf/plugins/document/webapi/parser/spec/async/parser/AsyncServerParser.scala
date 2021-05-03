@@ -5,7 +5,9 @@ import amf.core.parser._
 import amf.core.parser.Annotations
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, YMapEntryLike}
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncServerBindingsParser
 import amf.plugins.document.webapi.parser.spec.domain.{OasLikeSecurityRequirementParser, OasLikeServerParser}
 import amf.plugins.domain.webapi.metamodel.ServerModel
@@ -38,7 +40,7 @@ private case class AsyncServerParser(parent: String, entry: YMapEntry)(implicit 
       val bindings = AsyncServerBindingsParser(YMapEntryLike(entry.value), server.id).parse()
       server.set(ServerModel.Bindings, bindings, Annotations(entry))
 
-      AnnotationParser(server, map).parseOrphanNode("bindings")
+      AnnotationParser(server, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
     }
 
     map.key(

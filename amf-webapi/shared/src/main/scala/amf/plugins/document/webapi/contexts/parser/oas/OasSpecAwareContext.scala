@@ -3,8 +3,8 @@ package amf.plugins.document.webapi.contexts.parser.oas
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.SpecAwareContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeSpecVersionFactory
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}

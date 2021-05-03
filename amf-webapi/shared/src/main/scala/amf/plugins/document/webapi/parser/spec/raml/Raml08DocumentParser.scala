@@ -12,12 +12,8 @@ import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationParser, Raml08TypeParser, _}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.validations.ParserSideValidations.{
-  InvalidAbstractDeclarationType,
-  InvalidSecuredByType,
-  InvalidTypeDefinition,
-  InvalidTypesType
-}
+import amf.validations.ParserSideValidations.{InvalidAbstractDeclarationType, InvalidSecuredByType, InvalidTypesType}
+import amf.validations.ShapeParserSideValidations.InvalidTypeDefinition
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 /**

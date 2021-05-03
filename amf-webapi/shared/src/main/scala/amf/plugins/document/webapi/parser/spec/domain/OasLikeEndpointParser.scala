@@ -6,9 +6,10 @@ import amf.core.utils.{IdCounter, TemplateUri, _}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
-import amf.plugins.document.webapi.parser.spec
+import amf.plugins.document.webapi.parser.{WebApiShapeParserContextAdapter, spec}
 import amf.plugins.document.webapi.parser.spec.async.parser.AsyncParametersParser
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncChannelBindingsParser
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models.security.SecurityRequirement
@@ -70,7 +71,7 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, parentId: String, collect
 
     // TODO ASYNC parameter parser missing here. Is the same that OAS? Then need to extract to OasLikeParameter parser
 
-    AnnotationParser(endpoint, map).parse()
+    AnnotationParser(endpoint, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
     endpoint
 
@@ -211,7 +212,7 @@ case class AsyncEndpointParser(entry: YMapEntry, parentId: String, collector: Li
       val bindings = AsyncChannelBindingsParser(YMapEntryLike(entry.value), endpoint.id).parse()
       endpoint.set(EndPointModel.Bindings, bindings, Annotations(entry))
 
-      AnnotationParser(endpoint, map).parseOrphanNode("bindings")
+      AnnotationParser(endpoint, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("bindings")
     }
 
     map.key("description", EndPointModel.Description in endpoint)

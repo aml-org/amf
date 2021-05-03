@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.metamodel.EncodingModel
 import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
@@ -44,7 +45,7 @@ case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit c
         m.key("explode", EncodingModel.Explode in encoding)
         m.key("allowReserved", EncodingModel.AllowReserved in encoding)
 
-        AnnotationParser(encoding, m).parse()
+        AnnotationParser(encoding, m)(WebApiShapeParserContextAdapter(ctx)).parse()
 
         ctx.closedShape(encoding.id, m, "encoding")
 

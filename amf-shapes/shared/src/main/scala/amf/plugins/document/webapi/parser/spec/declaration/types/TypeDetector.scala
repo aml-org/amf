@@ -1,12 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.declaration.types
 
-import amf.core.errorhandling.ErrorHandler
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{YMapOps, YNodeLikeOps}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.validations.ParserSideValidations.InvalidJsonSchemaType
+import amf.validations.ShapeParserSideValidations.InvalidJsonSchemaType
 import org.yaml.model.{YMap, YScalar}
 
 object TypeDetector {

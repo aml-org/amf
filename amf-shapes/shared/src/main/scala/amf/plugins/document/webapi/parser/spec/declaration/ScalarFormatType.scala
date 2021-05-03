@@ -2,13 +2,13 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.model.domain.Shape
 import amf.core.parser._
-import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
+import amf.plugins.document.webapi.parser.ShapeParserContext
+import amf.plugins.document.webapi.parser.spec.common.QuickFieldParserOps
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef.{DoubleType, FloatType, IntType, LongType}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import amf.validations.ParserSideValidations.InvalidShapeFormat
+import amf.validations.ShapeParserSideValidations.InvalidShapeFormat
 import org.yaml.model.{YMap, YScalar}
 
 object FormatValidator {
@@ -26,7 +26,7 @@ object FormatValidator {
   val VALID_NUMBER_FORMATS = List("int", "int8", "int16", "int32", "int64", "long", "float", "double")
 }
 
-case class ScalarFormatType(shape: Shape, typeDef: TypeDef)(implicit ctx: WebApiContext) extends SpecParserOps {
+case class ScalarFormatType(shape: Shape, typeDef: TypeDef)(implicit ctx: ShapeParserContext) extends QuickFieldParserOps {
   def parse(map: YMap): TypeDef = {
     map
       .key("format")
