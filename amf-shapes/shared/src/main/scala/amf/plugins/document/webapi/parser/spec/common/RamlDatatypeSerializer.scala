@@ -23,7 +23,7 @@ trait RamlDatatypeSerializer extends PlatformSecrets {
       case _ =>
         element.annotations.find(classOf[GeneratedRamlDatatype]) match {
           case Some(g) => g.rawText
-          case _       => generateRamlDatatype(element, exec)
+          case _ => generateRamlDatatype(element, exec)
         }
     }
   }

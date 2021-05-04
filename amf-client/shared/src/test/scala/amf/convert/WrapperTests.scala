@@ -42,6 +42,8 @@ import org.yaml.builder.JsonOutputBuilder
 import amf.core.emitter.{RenderOptions => InternalRenderOptions, ShapeRenderOptions => InternalShapeRenderOptions}
 import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
+import amf.remod.ClientJsonSchemaShapeSerializer.{buildJsonSchema, toJsonSchema}
+import amf.remod.{ClientJsonSchemaShapeSerializer, JsonSchemaShapeSerializer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -1821,108 +1823,109 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
-  // TODO: Shapes REmod - Unccoment
-//  test("Test emission of json schema of a shape with file type") {
-//    val api = """#%RAML 1.0
-//                |
-//                |title: test
-//                |
-//                |types:
-//                |  SomeType:
-//                |    type: object
-//                |    properties:
-//                |      a: integer
-//                |      b:
-//                |        type: file
-//                |        fileTypes: ['image/jpeg', 'image/png']
-//                |        example: I'm a file""".stripMargin
-//    for {
-//      _        <- AMF.init().asFuture
-//      unit     <- new RamlParser().parseStringAsync(api).asFuture
-//      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
-//      report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
-//      json <- Future(
-//        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
-//    } yield {
-//      val golden = """{
-//                     |  "$schema": "http://json-schema.org/draft-04/schema#",
-//                     |  "$ref": "#/definitions/SomeType",
-//                     |  "definitions": {
-//                     |    "SomeType": {
-//                     |      "type": "object",
-//                     |      "additionalProperties": true,
-//                     |      "required": [
-//                     |        "a",
-//                     |        "b"
-//                     |      ],
-//                     |      "properties": {
-//                     |        "a": {
-//                     |          "type": "integer"
-//                     |        },
-//                     |        "b": {
-//                     |          "type": "string",
-//                     |          "example": "I'm a file"
-//                     |        }
-//                     |      }
-//                     |    }
-//                     |  }
-//                     |}
-//                     |""".stripMargin
-//      assert(report.conforms)
-//      assert(json == golden)
-//    }
-//  }
 
-  // TODO: Shapes REmod - Unccoment
+  test("Test emission of json schema of a shape with file type") {
+    val api = """#%RAML 1.0
+                |
+                |title: test
+                |
+                |types:
+                |  SomeType:
+                |    type: object
+                |    properties:
+                |      a: integer
+                |      b:
+                |        type: file
+                |        fileTypes: ['image/jpeg', 'image/png']
+                |        example: I'm a file""".stripMargin
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseStringAsync(api).asFuture
+      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
+      json <- Future {
+        val shape = resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape]
+        toJsonSchema(shape)
+      }
+    } yield {
+      val golden = """{
+                     |  "$schema": "http://json-schema.org/draft-04/schema#",
+                     |  "$ref": "#/definitions/SomeType",
+                     |  "definitions": {
+                     |    "SomeType": {
+                     |      "type": "object",
+                     |      "additionalProperties": true,
+                     |      "required": [
+                     |        "a",
+                     |        "b"
+                     |      ],
+                     |      "properties": {
+                     |        "a": {
+                     |          "type": "integer"
+                     |        },
+                     |        "b": {
+                     |          "type": "string",
+                     |          "example": "I'm a file"
+                     |        }
+                     |      }
+                     |    }
+                     |  }
+                     |}
+                     |""".stripMargin
+      assert(report.conforms)
+      assert(json == golden)
+    }
+  }
 
-//  test("Test emission of json schema of a shape with a recursive type") {
-//    val api = "file://amf-client/shared/src/test/resources/validations/recursive-types.raml"
-//    for {
-//      _        <- AMF.init().asFuture
-//      unit     <- new RamlParser().parseFileAsync(api).asFuture
-//      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
-//    } yield {
-//      val golden    = """{
-//                        |  "$schema": "http://json-schema.org/draft-04/schema#",
-//                        |  "$ref": "#/definitions/C",
-//                        |  "definitions": {
-//                        |    "C": {
-//                        |      "type": "object",
-//                        |      "additionalProperties": true,
-//                        |      "properties": {
-//                        |        "c1": {
-//                        |          "items": {
-//                        |            "$ref": "#/definitions/A"
-//                        |          },
-//                        |          "type": "array"
-//                        |        }
-//                        |      }
-//                        |    },
-//                        |    "A": {
-//                        |      "type": "object",
-//                        |      "additionalProperties": true,
-//                        |      "properties": {
-//                        |        "a1": {
-//                        |          "type": "object",
-//                        |          "additionalProperties": true,
-//                        |          "properties": {
-//                        |            "c1": {
-//                        |              "items": {
-//                        |                "$ref": "#/definitions/A"
-//                        |              },
-//                        |              "type": "array"
-//                        |            }
-//                        |          }
-//                        |        }
-//                        |      }
-//                        |    }
-//                        |  }
-//                        |}
-//                        |""".stripMargin
-//      val generated = resolved.asInstanceOf[Document].declares.asSeq(2).asInstanceOf[NodeShape].buildJsonSchema()
-//      assert(generated == golden)
-//    }
-//  }
+  test("Test emission of json schema of a shape with a recursive type") {
+    val api = "file://amf-client/shared/src/test/resources/validations/recursive-types.raml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseFileAsync(api).asFuture
+      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+    } yield {
+      val golden    = """{
+                        |  "$schema": "http://json-schema.org/draft-04/schema#",
+                        |  "$ref": "#/definitions/C",
+                        |  "definitions": {
+                        |    "C": {
+                        |      "type": "object",
+                        |      "additionalProperties": true,
+                        |      "properties": {
+                        |        "c1": {
+                        |          "items": {
+                        |            "$ref": "#/definitions/A"
+                        |          },
+                        |          "type": "array"
+                        |        }
+                        |      }
+                        |    },
+                        |    "A": {
+                        |      "type": "object",
+                        |      "additionalProperties": true,
+                        |      "properties": {
+                        |        "a1": {
+                        |          "type": "object",
+                        |          "additionalProperties": true,
+                        |          "properties": {
+                        |            "c1": {
+                        |              "items": {
+                        |                "$ref": "#/definitions/A"
+                        |              },
+                        |              "type": "array"
+                        |            }
+                        |          }
+                        |        }
+                        |      }
+                        |    }
+                        |  }
+                        |}
+                        |""".stripMargin
+      val shape     = resolved.asInstanceOf[Document].declares.asSeq(2).asInstanceOf[NodeShape]
+      val generated = toJsonSchema(shape)
+      assert(generated == golden)
+    }
+  }
 
   // This test is here because of I need to resolve with default and then validate
   test("Test json schema emittion of recursive union shape") {
@@ -1959,82 +1962,82 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
-  // TODO: Shapes REmod - Unccoment
-
-//  test("Test JSON Schema emission without documentation") {
-//    val api = """#%RAML 1.0
-//                |title: test json schema
-//                |
-//                |types:
-//                |  A:
-//                |    type: object
-//                |    description: this is a test of documentation description
-//                |    displayName: this is a test of display name
-//                |    properties:
-//                |      a1:
-//                |        type: string
-//                |        description: the first property
-//                |        examples:
-//                |          a: I am a string
-//                |          b: I am other string
-//                |          c: I am another string
-//                |      a2:
-//                |        type: integer
-//                |        description: the second property
-//                |        example: 1
-//                |      a3:
-//                |        type: number
-//                |        description: the third property
-//                |        example: 3.2
-//                |    example:
-//                |      a1: blahblahblah
-//                |      a2: 32
-//                |      a3: 256.3""".stripMargin
-//    for {
-//      _        <- AMF.init().asFuture
-//      unit     <- new RamlParser().parseStringAsync(api).asFuture
-//      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
-//      report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
-//    } yield {
-//      val expectedSchema = """{
-//                             |  "$schema": "http://json-schema.org/draft-04/schema#",
-//                             |  "$ref": "#/definitions/A",
-//                             |  "definitions": {
-//                             |    "A": {
-//                             |      "type": "object",
-//                             |      "additionalProperties": true,
-//                             |      "required": [
-//                             |        "a1",
-//                             |        "a2",
-//                             |        "a3"
-//                             |      ],
-//                             |      "properties": {
-//                             |        "a1": {
-//                             |          "type": "string"
-//                             |        },
-//                             |        "a2": {
-//                             |          "type": "integer"
-//                             |        },
-//                             |        "a3": {
-//                             |          "type": "number"
-//                             |        }
-//                             |      }
-//                             |    }
-//                             |  }
-//                             |}
-//                             |""".stripMargin
-//      val options        = new ShapeRenderOptions().withoutDocumentation
-//      val schema = resolved
-//        .asInstanceOf[Document]
-//        .declares
-//        .asSeq
-//        .head
-//        .asInstanceOf[AnyShape]
-//        .buildJsonSchema(options)
-//      assert(report.conforms)
-//      assert(schema == expectedSchema)
-//    }
-//  }
+  test("Test JSON Schema emission without documentation") {
+    val api =
+      """#%RAML 1.0
+        |title: test json schema
+        |
+        |types:
+        |  A:
+        |    type: object
+        |    description: this is a test of documentation description
+        |    displayName: this is a test of display name
+        |    properties:
+        |      a1:
+        |        type: string
+        |        description: the first property
+        |        examples:
+        |          a: I am a string
+        |          b: I am other string
+        |          c: I am another string
+        |      a2:
+        |        type: integer
+        |        description: the second property
+        |        example: 1
+        |      a3:
+        |        type: number
+        |        description: the third property
+        |        example: 3.2
+        |    example:
+        |      a1: blahblahblah
+        |      a2: 32
+        |      a3: 256.3""".stripMargin
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseStringAsync(api).asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
+    } yield {
+      val expectedSchema =
+        """{
+          |  "$schema": "http://json-schema.org/draft-04/schema#",
+          |  "$ref": "#/definitions/A",
+          |  "definitions": {
+          |    "A": {
+          |      "type": "object",
+          |      "additionalProperties": true,
+          |      "required": [
+          |        "a1",
+          |        "a2",
+          |        "a3"
+          |      ],
+          |      "properties": {
+          |        "a1": {
+          |          "type": "string"
+          |        },
+          |        "a2": {
+          |          "type": "integer"
+          |        },
+          |        "a3": {
+          |          "type": "number"
+          |        }
+          |      }
+          |    }
+          |  }
+          |}
+          |""".stripMargin
+      val options = new ShapeRenderOptions().withoutDocumentation
+      val shape = resolved
+        .asInstanceOf[Document]
+        .declares
+        .asSeq
+        .head
+        .asInstanceOf[AnyShape]
+      val schema = buildJsonSchema(shape, options)
+      assert(report.conforms)
+      assert(schema == expectedSchema)
+    }
+  }
 
   test("Test non existent resource types") {
     val file = "file://amf-client/shared/src/test/resources/validations/resource_types/non-existent-include.raml"
@@ -2090,7 +2093,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
-  // TODO: Shapes REmod - Unccoment
+  //  TODO: Shapes REmod - Unccoment
 
 //  test("Test API with recursive type in array items") {
 //    val api =
@@ -2190,92 +2193,92 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //      assert(report.conforms)
 //    }
 //  }
-  // TODO: Shapes REmod - Unccoment
-//  test("Test emission of json schema with specified version") {
-//    val api = "file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml"
-//    for {
-//      _        <- AMF.init().asFuture
-//      unit     <- new Async20Parser().parseFileAsync(api).asFuture
-//      resolved <- Future(new Async20Resolver().resolve(unit, ResolutionPipeline.CACHE_PIPELINE))
-//    } yield {
-//      val golden  = """{
-//                        |  "$schema": "http://json-schema.org/draft-07/schema#",
-//                        |  "$ref": "#/definitions/conditional-subschemas",
-//                        |  "definitions": {
-//                        |    "conditional-subschemas": {
-//                        |      "type": "object",
-//                        |      "if": {
-//                        |        "properties": {
-//                        |          "country": {
-//                        |            "enum": [
-//                        |              "United States of America"
-//                        |            ]
-//                        |          }
-//                        |        },
-//                        |        "type": "object"
-//                        |      },
-//                        |      "then": {
-//                        |        "properties": {
-//                        |          "postal_code": {
-//                        |            "pattern": "[0-9]{5}(-[0-9]{4})?",
-//                        |            "type": "string"
-//                        |          }
-//                        |        },
-//                        |        "type": "object"
-//                        |      },
-//                        |      "else": {
-//                        |        "properties": {
-//                        |          "postal_code": {
-//                        |            "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]",
-//                        |            "type": "string"
-//                        |          }
-//                        |        },
-//                        |        "type": "object"
-//                        |      },
-//                        |      "examples": [
-//                        |        {
-//                        |          "country": "United States of America",
-//                        |          "postal_code": "dlkfjslfj"
-//                        |        },
-//                        |        {
-//                        |          "country": "United States of America",
-//                        |          "postal_code": "20500"
-//                        |        },
-//                        |        {
-//                        |          "country": "Canada",
-//                        |          "postal_code": "K1M 1M4"
-//                        |        },
-//                        |        {
-//                        |          "country": "Canada",
-//                        |          "postal_code": "K1M NOT"
-//                        |        }
-//                        |      ],
-//                        |      "additionalProperties": true,
-//                        |      "properties": {
-//                        |        "country": {
-//                        |          "enum": [
-//                        |            "United States of America",
-//                        |            "Canada"
-//                        |          ]
-//                        |        }
-//                        |      }
-//                        |    }
-//                        |  }
-//                        |}
-//                        |""".stripMargin
-//      val options = new ShapeRenderOptions().withSchemaVersion(JSONSchemaVersions.DRAFT_07)
-//      val generated =
-//        resolved
-//          .asInstanceOf[Document]
-//          .declares
-//          .asSeq
-//          .find(_._internal.id == "file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/conditional-subschemas")
-//          .get
-//          .asInstanceOf[NodeShape]
-//          .buildJsonSchema(options)
-//      assert(generated == golden)
-//    }
-//  }
+
+  test("Test emission of json schema with specified version") {
+    val api = "file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new Async20Parser().parseFileAsync(api).asFuture
+      resolved <- Future(new Async20Resolver().resolve(unit, ResolutionPipeline.CACHE_PIPELINE))
+    } yield {
+      val golden  = """{
+                        |  "$schema": "http://json-schema.org/draft-07/schema#",
+                        |  "$ref": "#/definitions/conditional-subschemas",
+                        |  "definitions": {
+                        |    "conditional-subschemas": {
+                        |      "type": "object",
+                        |      "if": {
+                        |        "properties": {
+                        |          "country": {
+                        |            "enum": [
+                        |              "United States of America"
+                        |            ]
+                        |          }
+                        |        },
+                        |        "type": "object"
+                        |      },
+                        |      "then": {
+                        |        "properties": {
+                        |          "postal_code": {
+                        |            "pattern": "[0-9]{5}(-[0-9]{4})?",
+                        |            "type": "string"
+                        |          }
+                        |        },
+                        |        "type": "object"
+                        |      },
+                        |      "else": {
+                        |        "properties": {
+                        |          "postal_code": {
+                        |            "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]",
+                        |            "type": "string"
+                        |          }
+                        |        },
+                        |        "type": "object"
+                        |      },
+                        |      "examples": [
+                        |        {
+                        |          "country": "United States of America",
+                        |          "postal_code": "dlkfjslfj"
+                        |        },
+                        |        {
+                        |          "country": "United States of America",
+                        |          "postal_code": "20500"
+                        |        },
+                        |        {
+                        |          "country": "Canada",
+                        |          "postal_code": "K1M 1M4"
+                        |        },
+                        |        {
+                        |          "country": "Canada",
+                        |          "postal_code": "K1M NOT"
+                        |        }
+                        |      ],
+                        |      "additionalProperties": true,
+                        |      "properties": {
+                        |        "country": {
+                        |          "enum": [
+                        |            "United States of America",
+                        |            "Canada"
+                        |          ]
+                        |        }
+                        |      }
+                        |    }
+                        |  }
+                        |}
+                        |""".stripMargin
+      val options = new ShapeRenderOptions().withSchemaVersion(JSONSchemaVersions.DRAFT_07)
+      val shape =
+        resolved
+          .asInstanceOf[Document]
+          .declares
+          .asSeq
+          .find(_._internal.id == "file://amf-client/shared/src/test/resources/validations/async20/validations/draft-7-validations.yaml#/declarations/types/conditional-subschemas")
+          .get
+          .asInstanceOf[NodeShape]
+      val generated = buildJsonSchema(shape, options)
+      assert(generated == golden)
+    }
+  }
 
   test("Empty static validations collector") {
     val api = """#%RAML 1.0
