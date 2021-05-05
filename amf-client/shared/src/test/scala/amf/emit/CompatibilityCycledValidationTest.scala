@@ -84,7 +84,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     // TODO: ARM change for AMFTransformer.transform
-    val pipeline = AMFPluginsRegistry.staticCofiguration.registry
+    val pipeline = AMFPluginsRegistry.staticConfiguration.registry
       .transformationPipelines(PipelineName.from(config.target.name, TransformationPipeline.COMPATIBILITY_PIPELINE))
     TransformationPipelineRunner(UnhandledErrorHandler).run(unit, pipeline)
   }

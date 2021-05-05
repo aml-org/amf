@@ -37,10 +37,10 @@ import amf.plugins.document.webapi.references.RamlReferenceHandler
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.Raml10CompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{
   Raml08EditingPipeline,
-  Raml08ResolutionPipeline,
+  Raml08TransformationPipeline,
   Raml10CachePipeline,
   Raml10EditingPipeline,
-  Raml10ResolutionPipeline
+  Raml10TransformationPipeline
 }
 import amf.plugins.document.webapi.validation.ApiValidationProfiles
 import amf.plugins.document.webapi.validation.ApiValidationProfiles._

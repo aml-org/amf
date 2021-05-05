@@ -30,8 +30,8 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
 import amf.plugins.document.webapi.resolution.pipelines.{
   Oas20CachePipeline,
   Oas20EditingPipeline,
-  Oas20ResolutionPipeline,
-  Oas30ResolutionPipeline,
+  Oas20TransformationPipeline,
+  Oas30TransformationPipeline,
   Oas3CachePipeline,
   Oas3EditingPipeline
 }
