@@ -85,7 +85,7 @@ case class ExtendsHelper(profile: ProfileName,
                                         mutable.Map[String, DomainElement]()): Operation = {
 
     val operation = parseOperation(unit, name, extensionId, entry, referencesCollector)
-    new ReferenceResolutionStage(keepEditingInfo)(errorHandler).resolveDomainElement(operation)
+    new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(operation, errorHandler)
   }
 
   def asEndpoint[T <: BaseUnit](unit: T,
@@ -171,7 +171,7 @@ case class ExtendsHelper(profile: ProfileName,
 
     collector.toList match {
       case element :: _ =>
-        new ReferenceResolutionStage(keepEditingInfo)(errorHandler).resolveDomainElement(element)
+        new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(element, errorHandler)
       case Nil =>
         errorHandler.violation(
           ParseResourceTypeFail,

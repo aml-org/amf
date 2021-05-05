@@ -8,10 +8,10 @@ import amf.plugins.domain.webapi.resolution.stages.{OpenApiParametersNormalizati
 import amf.{ProfileName, Raml08Profile}
 
 class Raml08ResolutionPipeline private (override val name: String) extends AmfResolutionPipeline(name) {
-  override def profileName: ProfileName              = Raml08Profile
-  override def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage()
+  override def profileName: ProfileName = Raml08Profile
+  override def references               = new WebApiReferenceResolutionStage()
 
-  override protected def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage =
+  override protected def parameterNormalizationStage: ParametersNormalizationStage =
     new OpenApiParametersNormalizationStage()
 }
 

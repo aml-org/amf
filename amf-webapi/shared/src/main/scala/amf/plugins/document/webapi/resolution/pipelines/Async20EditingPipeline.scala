@@ -18,12 +18,12 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
     extends AmfEditingPipeline(urlShortening, name) {
   override def profileName: ProfileName = Async20Profile
 
-  override def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage(true)
+  override def references = new WebApiReferenceResolutionStage(true)
 
-  override protected def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage =
+  override protected def parameterNormalizationStage: ParametersNormalizationStage =
     new OpenApiParametersNormalizationStage()
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+  override def steps: Seq[ResolutionStage] =
     Seq(
       references,
       new ShapeNormalizationStage(profileName, keepEditingInfo = true),

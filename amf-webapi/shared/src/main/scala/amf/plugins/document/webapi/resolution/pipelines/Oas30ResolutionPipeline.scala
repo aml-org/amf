@@ -10,17 +10,15 @@ import amf.{Oas30Profile, ProfileName}
 
 class Oas30ResolutionPipeline private (override val name: String) extends AmfResolutionPipeline(name) {
   override def profileName: ProfileName = Oas30Profile
-  override def references(implicit eh: ErrorHandler)               = new WebApiReferenceResolutionStage()
+  override def references               = new WebApiReferenceResolutionStage()
 
-  override protected def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage =
+  override protected def parameterNormalizationStage: ParametersNormalizationStage =
     new OpenApiParametersNormalizationStage()
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] = Seq(
-    new RequestParamsLinkStage(),
-  ) ++ super.steps(eh)
+  override def steps: Seq[ResolutionStage] = Seq(RequestParamsLinkStage) ++ super.steps
 }
 
-object Oas30ResolutionPipeline{
-  def apply() = new Oas30ResolutionPipeline(name)
+object Oas30ResolutionPipeline {
+  def apply()      = new Oas30ResolutionPipeline(name)
   val name: String = PipelineName.from(Oas30.name, ResolutionPipeline.DEFAULT_PIPELINE)
 }

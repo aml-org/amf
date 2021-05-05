@@ -7,10 +7,14 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.core.resolution.stages.elements.resolution.ReferenceResolution
 import amf.core.resolution.stages.selectors.{LinkSelector, Selector}
 import amf.plugins.domain.webapi.models.Request
+object RequestParamsLinkStage extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+    new RequestParamsLinkStage(errorHandler).resolve(model)
+}
 
-class RequestParamsLinkStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T): T = {
-    model.transform(LinkSelector && ReqWithParametersSelector, transform).asInstanceOf[T]
+private class RequestParamsLinkStage(val errorHandler: ErrorHandler) {
+  def resolve[T <: BaseUnit](model: T): T = {
+    model.transform(LinkSelector && ReqWithParametersSelector, transform)(errorHandler).asInstanceOf[T]
   }
 
   private def transform(e: DomainElement, isCycle: Boolean): Option[DomainElement] = {

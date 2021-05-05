@@ -16,11 +16,11 @@ import scala.collection.mutable.ListBuffer
   * Transforms unions 'anyOf: [A, B]' into type expressions 'A | B' so we generate valid RAML for the old parser
   * @param errorHandler
   */
-class UnionsAsTypeExpressions()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class UnionsAsTypeExpressions() extends ResolutionStage {
 
   val counter = new IdCounter()
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       val document                                        = model.asInstanceOf[DeclaresModel]
       val declarations: mutable.ListBuffer[DomainElement] = mutable.ListBuffer()

@@ -9,10 +9,10 @@ import amf.{Oas20Profile, ProfileName}
 
 class Oas20EditingPipeline private (urlShortening: Boolean, override val name: String)
     extends AmfEditingPipeline(urlShortening, name) {
-  override def profileName: ProfileName              = Oas20Profile
-  override def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage(true)
+  override def profileName: ProfileName = Oas20Profile
+  override def references               = new WebApiReferenceResolutionStage(true)
 
-  override def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage =
+  override def parameterNormalizationStage: ParametersNormalizationStage =
     new OpenApiParametersNormalizationStage()
 }
 

@@ -7,10 +7,10 @@ import amf.plugins.domain.webapi.resolution.stages.{OpenApiParametersNormalizati
 import amf.{Oas20Profile, ProfileName}
 
 class Oas20ResolutionPipeline private (override val name: String) extends AmfResolutionPipeline(name) {
-  override def profileName: ProfileName              = Oas20Profile
-  override def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage()
+  override def profileName: ProfileName = Oas20Profile
+  override def references               = new WebApiReferenceResolutionStage()
 
-  override protected def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage =
+  override protected def parameterNormalizationStage: ParametersNormalizationStage =
     new OpenApiParametersNormalizationStage()
 }
 

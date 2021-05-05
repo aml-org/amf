@@ -13,11 +13,11 @@ import amf.plugins.domain.webapi.metamodel.{MessageModel, PayloadModel}
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.models.{Message, Operation, Payload}
 
-class JsonMergePatchStage(isEditing: Boolean)(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
+class JsonMergePatchStage(isEditing: Boolean) extends ResolutionStage() {
 
   private lazy val merger = AsyncJsonMergePatch()
 
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val webApi = doc.encodes.asInstanceOf[Api]
       resolve(webApi)
@@ -72,7 +72,7 @@ object CustomMessageExamplesMerge extends CustomMerge {
             }
         }
       }
-    case _ =>  // ignore
+    case _ => // ignore
   }
   val exampleFields = Seq(MessageModel.HeaderExamples, MessageModel.Examples)
 

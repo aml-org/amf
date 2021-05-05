@@ -9,11 +9,17 @@ import amf.core.resolution.stages.selectors.{LinkSelector, MetaModelSelector, Se
 import amf.core.vocabulary.Namespace.ApiContract
 import amf.plugins.domain.webapi.models.{Response, Payload}
 
-class ResolveRamlCompatibleDeclarations()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  val domainSelector: Selector = ResponseSelector || ParameterSelector || PayloadSelector || CallbackSelector || ExampleSelector
+object ResolveRamlCompatibleDeclarationsStage extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+    new ResolveRamlCompatibleDeclarations(errorHandler).resolve(model)
+}
 
-  override def resolve[T <: BaseUnit](model: T): T = {
-    val result = model.transform(LinkSelector && domainSelector, transformation).asInstanceOf[T]
+private class ResolveRamlCompatibleDeclarations(val errorHandler: ErrorHandler) {
+  val domainSelector
+    : Selector = ResponseSelector || ParameterSelector || PayloadSelector || CallbackSelector || ExampleSelector
+
+  def resolve[T <: BaseUnit](model: T): T = {
+    val result = model.transform(LinkSelector && domainSelector, transformation)(errorHandler).asInstanceOf[T]
     model match {
       case d: Document =>
         val filteredDeclarations = d.declares.filterNot(domainSelector)

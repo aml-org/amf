@@ -10,8 +10,8 @@ import amf.plugins.domain.webapi.models.api.Api
 
 import scala.collection.mutable
 
-class EscapeTypeNames()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+class EscapeTypeNames() extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val replacedNames: mutable.Map[String, String] = mutable.Map.empty

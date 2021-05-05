@@ -6,11 +6,11 @@ import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.AnyShape
 
-class MandatoryAnnotationType()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class MandatoryAnnotationType() extends ResolutionStage {
 
   var annotationCounter = 0
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model match {
         case doc: Document =>

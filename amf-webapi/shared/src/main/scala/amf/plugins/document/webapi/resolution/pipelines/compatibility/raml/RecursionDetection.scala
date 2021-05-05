@@ -9,9 +9,9 @@ import amf.plugins.domain.shapes.models.DataArrangementShape
 
 import scala.collection.mutable.ListBuffer
 
-class RecursionDetection()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class RecursionDetection() extends ResolutionStage {
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     model match {
       case doc: Document => doc.fields.fields().foreach(f => advance(f.element, ListBuffer[String](), Set.empty))
       case _             => // Nothing

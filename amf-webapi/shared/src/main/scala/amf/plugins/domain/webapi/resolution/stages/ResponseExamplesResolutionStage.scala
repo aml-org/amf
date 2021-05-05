@@ -15,14 +15,14 @@ import amf.validations.ResolutionSideValidations.{ExamplesWithInvalidMimeType, E
   * MediaTypeResolution and Shape Normalization stages must already been run
   * for mutate each payload schema
   */
-class ResponseExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+class ResponseExamplesResolutionStage() extends ResolutionStage() {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
-      d.withEncodes(resolveApi(d.encodes.asInstanceOf[Api])).asInstanceOf[T]
+      d.withEncodes(resolveApi(d.encodes.asInstanceOf[Api])(errorHandler)).asInstanceOf[T]
     case _ => model
   }
 
-  def resolveApi(webApi: Api): Api = {
+  def resolveApi(webApi: Api)(implicit errorHandler: ErrorHandler): Api = {
     val allResponses = webApi.endPoints.flatMap(e => e.operations).flatMap(o => o.responses)
 
     allResponses.zipWithIndex.foreach {
@@ -55,7 +55,8 @@ class ResponseExamplesResolutionStage()(override implicit val errorHandler: Erro
     webApi
   }
 
-  private def violationForUnmappedExample(example: Example, mediaType: String, payloads: Seq[Payload]): Unit = {
+  private def violationForUnmappedExample(example: Example, mediaType: String, payloads: Seq[Payload])(
+      implicit errorHandler: ErrorHandler): Unit = {
     if (payloads.isEmpty)
       errorHandler.violation(
         ExamplesWithNoSchemaDefined,

@@ -12,11 +12,9 @@ import amf.plugins.domain.webapi.models.{Server, ServerContainer}
   *
   * @param profile target profile
   */
-class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)(
-    override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage() {
+class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false) extends ResolutionStage() {
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     profile match {
       // TODO should run for Amf too
       case Oas30Profile => normalizeServers(model).asInstanceOf[T]

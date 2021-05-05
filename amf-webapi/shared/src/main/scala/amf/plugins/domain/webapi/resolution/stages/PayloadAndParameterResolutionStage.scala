@@ -15,12 +15,11 @@ import amf.plugins.domain.webapi.models.api.{Api, WebApi}
   * in the examples validation phase
   * Only necessary for OAS 3.0 spec
   */
-class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage() {
+class PayloadAndParameterResolutionStage(profile: ProfileName) extends ResolutionStage() {
 
   private type SchemaContainerWithId = SchemaContainer with AmfObject
 
-  override def resolve[T <: BaseUnit](model: T): T =
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
     if (appliesTo(profile)) resolveExamples(model).asInstanceOf[T]
     else model
 
@@ -89,8 +88,8 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
   }
 }
 
-class RamlCompatiblePayloadAndParameterResolutionStage(profile: ProfileName)(implicit errorHandler: ErrorHandler)
-    extends PayloadAndParameterResolutionStage(profile)(errorHandler) {
+class RamlCompatiblePayloadAndParameterResolutionStage(profile: ProfileName)
+    extends PayloadAndParameterResolutionStage(profile) {
 
   override protected def appliesTo(profile: ProfileName): Boolean = profile match {
     case Raml10Profile | Raml08Profile => true

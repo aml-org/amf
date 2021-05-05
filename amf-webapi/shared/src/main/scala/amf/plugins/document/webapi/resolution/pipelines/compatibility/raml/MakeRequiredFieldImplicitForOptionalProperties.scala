@@ -11,16 +11,16 @@ import amf.core.resolution.stages.elements.resolution.{ElementResolutionStage, E
 import amf.core.resolution.stages.selectors.NodeShapeSelector
 import amf.plugins.domain.shapes.models.NodeShape
 
-class MakeRequiredFieldImplicitForOptionalProperties()(override implicit val errorHandler: ErrorHandler)
+class MakeRequiredFieldImplicitForOptionalProperties()
     extends ResolutionStage()
     with MetaModelTypeMapping
     with ElementResolutionStage[NodeShape] {
 
   protected var m: Option[BaseUnit] = None
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     m = Some(model)
-    model.transform(NodeShapeSelector, transform).asInstanceOf[T]
+    model.transform(NodeShapeSelector, transform)(errorHandler).asInstanceOf[T]
   }
 
   protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {

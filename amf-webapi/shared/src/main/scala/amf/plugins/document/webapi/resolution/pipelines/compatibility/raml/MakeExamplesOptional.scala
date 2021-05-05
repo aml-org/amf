@@ -5,9 +5,9 @@ import amf.core.model.document.BaseUnit
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.Example
 
-class MakeExamplesOptional()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class MakeExamplesOptional() extends ResolutionStage {
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case example: Example =>

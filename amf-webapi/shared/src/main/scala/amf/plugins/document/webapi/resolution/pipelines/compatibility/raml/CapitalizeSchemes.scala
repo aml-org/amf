@@ -13,7 +13,7 @@ import amf.plugins.domain.webapi.models.api.Api
 
 import scala.language.postfixOps
 
-class CapitalizeSchemes()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class CapitalizeSchemes() extends ResolutionStage {
 
   private def capitalizeProtocols(element: DomainElement, schemes: Seq[StrField], field: Field) = {
     val valid = Seq("http", "https")
@@ -23,7 +23,7 @@ class CapitalizeSchemes()(override implicit val errorHandler: ErrorHandler) exte
     if (s.nonEmpty) element.set(field, s)
   }
 
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val api = d.encodes.asInstanceOf[Api]

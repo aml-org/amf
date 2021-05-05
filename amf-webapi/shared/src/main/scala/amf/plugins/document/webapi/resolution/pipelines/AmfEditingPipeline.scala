@@ -12,14 +12,14 @@ import amf.{AmfProfile, ProfileName}
 class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override val name: String)
     extends ResolutionPipeline() {
 
-  protected def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage(keepEditingInfo = true)
-  protected def url(implicit eh: ErrorHandler): Option[UrlShortenerStage] =
+  protected def references = new WebApiReferenceResolutionStage(keepEditingInfo = true)
+  protected def url: Option[UrlShortenerStage] =
     if (urlShortening) Some(new UrlShortenerStage()) else None
 
-  protected def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage =
+  protected def parameterNormalizationStage: ParametersNormalizationStage =
     new AmfParametersNormalizationStage()
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] = {
+  override def steps: Seq[ResolutionStage] = {
     Seq(
       references,
       new ExtensionsResolutionStage(profileName, keepEditingInfo = true),

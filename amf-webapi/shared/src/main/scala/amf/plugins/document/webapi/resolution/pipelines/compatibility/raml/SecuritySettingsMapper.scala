@@ -7,7 +7,7 @@ import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models.security.{ApiKeySettings, OAuth2Settings, SecurityScheme}
 
-class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class SecuritySettingsMapper() extends ResolutionStage {
 
   def fixOauth2(oauth2: OAuth2Settings): Unit = {
     if (oauth2.authorizationGrants.isEmpty) oauth2.withAuthorizationGrants(Seq("implicit"))
@@ -40,7 +40,7 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
     case _                        => // ignore
   }
 
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case d: DeclaresModel =>
       try {
         fixSettings(d)

@@ -11,7 +11,7 @@ import amf.plugins.domain.webapi.models.security.{
   SecurityScheme
 }
 
-abstract class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+abstract class SecuritySettingsMapper() extends ResolutionStage {
 
   def fixOauth2(oauth2: OAuth2Settings): Unit
 
@@ -58,7 +58,7 @@ abstract class SecuritySettingsMapper()(override implicit val errorHandler: Erro
     d.withDeclares(filteredDeclarations)
   }
 
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case d: DeclaresModel =>
       try {
         fixSettings(d)

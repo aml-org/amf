@@ -20,9 +20,9 @@ import amf.plugins.domain.webapi.resolution.stages.async.{
 }
 
 class Async20ResolutionPipeline private (override val name: String) extends ResolutionPipeline() {
-  def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage()
+  def references = new WebApiReferenceResolutionStage()
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+  override def steps: Seq[ResolutionStage] =
     Seq(
       references,
       new ExternalSourceRemovalStage,

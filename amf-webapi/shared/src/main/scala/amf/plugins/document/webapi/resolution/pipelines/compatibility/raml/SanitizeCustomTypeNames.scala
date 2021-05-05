@@ -5,8 +5,8 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.resolution.stages.ResolutionStage
 
-class SanitizeCustomTypeNames()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T): T = {
+class SanitizeCustomTypeNames() extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     model match {
       case doc: Document =>
         doc.declares.collect {

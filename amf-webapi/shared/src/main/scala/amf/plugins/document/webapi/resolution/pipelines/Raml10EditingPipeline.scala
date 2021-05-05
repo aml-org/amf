@@ -9,10 +9,10 @@ import amf.{ProfileName, Raml10Profile}
 
 class Raml10EditingPipeline private (urlShortening: Boolean, override val name: String)
     extends AmfEditingPipeline(urlShortening, name) {
-  override def profileName: ProfileName              = Raml10Profile
-  override def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage(true)
+  override def profileName: ProfileName = Raml10Profile
+  override def references               = new WebApiReferenceResolutionStage(true)
 
-  override def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage =
+  override def parameterNormalizationStage: ParametersNormalizationStage =
     new Raml10ParametersNormalizationStage()
 }
 

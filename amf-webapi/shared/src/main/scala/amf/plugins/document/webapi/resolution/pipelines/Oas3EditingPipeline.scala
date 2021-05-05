@@ -11,12 +11,12 @@ import amf.{Oas30Profile, ProfileName}
 class Oas3EditingPipeline private(urlShortening: Boolean, override val name:String)
     extends AmfEditingPipeline(urlShortening, name) {
   override def profileName: ProfileName = Oas30Profile
-  override def references(implicit eh: ErrorHandler)               = new WebApiReferenceResolutionStage(true)
+  override def references               = new WebApiReferenceResolutionStage(true)
 
-  override def parameterNormalizationStage(implicit eh: ErrorHandler): ParametersNormalizationStage = new OpenApiParametersNormalizationStage()
+  override def parameterNormalizationStage: ParametersNormalizationStage = new OpenApiParametersNormalizationStage()
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] = Seq(
-    new RequestParamsLinkStage(),
+  override def steps: Seq[ResolutionStage] = Seq(
+    RequestParamsLinkStage,
   ) ++ super.steps
 }
 

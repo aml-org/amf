@@ -8,7 +8,7 @@ import amf.plugins.domain.shapes.resolution.stages.RequestParamsLinkStage
 class Oas30ValidationResolutionPipeline private (override val name: String)
     extends ValidationResolutionPipeline(Oas30Profile, name) {
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] = new RequestParamsLinkStage() +: super.steps(eh)
+  override def steps: Seq[ResolutionStage] = RequestParamsLinkStage +: super.steps
 }
 
 object Oas30ValidationResolutionPipeline {

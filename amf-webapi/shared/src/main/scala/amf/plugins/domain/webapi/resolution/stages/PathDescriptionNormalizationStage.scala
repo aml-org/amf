@@ -15,11 +15,10 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
   *
   * @param profile target profile
   */
-class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)(
-    override implicit val errorHandler: ErrorHandler)
+class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)
     extends ResolutionStage() {
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     profile match {
       // TODO should run for Amf too
       case Oas30Profile | Async20Profile => normalizeDescriptions(model).asInstanceOf[T]

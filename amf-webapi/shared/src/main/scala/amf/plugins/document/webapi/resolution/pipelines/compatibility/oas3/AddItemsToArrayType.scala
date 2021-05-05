@@ -5,8 +5,8 @@ import amf.core.model.document.BaseUnit
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape}
 
-class AddItemsToArrayType()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T): T = {
+class AddItemsToArrayType() extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model
         .iterator()

@@ -18,7 +18,7 @@ class ValidationResolutionPipeline private[amf] (profile: ProfileName,
                                                  override val name: String = "ValidationResolutionPipeline")
     extends ResolutionPipeline() {
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+  override def steps: Seq[ResolutionStage] =
     Seq(
       new ReferenceResolutionStage(keepEditingInfo = false),
       new ExternalSourceRemovalStage,

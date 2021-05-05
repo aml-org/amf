@@ -9,8 +9,8 @@ import amf.plugins.domain.shapes.models.TypeDef.{DateOnlyType, DateTimeOnlyType,
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 
 // TODO this is a bug, it's just adjusted to emit correctly for now.....
-class ShapeFormatAdjuster()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T): T = {
+class ShapeFormatAdjuster() extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case shape: ScalarShape if shape.format.nonEmpty =>

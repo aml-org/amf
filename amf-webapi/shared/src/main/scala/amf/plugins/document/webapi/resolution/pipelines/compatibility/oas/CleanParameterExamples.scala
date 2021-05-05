@@ -6,9 +6,9 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.webapi.models.Parameter
 
-class CleanParameterExamples()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class CleanParameterExamples() extends ResolutionStage {
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case param: Parameter =>

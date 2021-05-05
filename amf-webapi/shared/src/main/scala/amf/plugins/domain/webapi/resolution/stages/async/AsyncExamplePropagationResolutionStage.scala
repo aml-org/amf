@@ -8,11 +8,9 @@ import amf.plugins.domain.webapi.models.Message
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.resolution.stages.common.ExamplePropagationHelper
 
-class AsyncExamplePropagationResolutionStage()(override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage
-    with ExamplePropagationHelper {
+class AsyncExamplePropagationResolutionStage() extends ResolutionStage with ExamplePropagationHelper {
 
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       propagateExamples(doc.encodes.asInstanceOf[Api])
       doc.asInstanceOf[T]

@@ -5,8 +5,8 @@ import amf.core.model.document.BaseUnit
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.CreativeWork
 
-class MandatoryCreativeWorkFields()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T): T = {
+class MandatoryCreativeWorkFields() extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case work: CreativeWork => fillMandatoryFields(work)

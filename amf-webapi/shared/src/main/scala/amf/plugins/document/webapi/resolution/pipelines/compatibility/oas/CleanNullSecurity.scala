@@ -9,9 +9,9 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.models.Operation
 
-class CleanNullSecurity()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class CleanNullSecurity() extends ResolutionStage {
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case op: Operation =>

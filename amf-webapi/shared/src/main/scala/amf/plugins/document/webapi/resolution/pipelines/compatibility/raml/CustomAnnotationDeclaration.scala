@@ -7,8 +7,8 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation
 import amf.plugins.domain.shapes.models.AnyShape
 
-class CustomAnnotationDeclaration()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T): T = {
+class CustomAnnotationDeclaration() extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       val annotationsTypes = WellKnownAnnotation.ramlKnownAnnotations
         .map(name => CustomDomainProperty().withName(s"amf-$name").withSchema(AnyShape()))

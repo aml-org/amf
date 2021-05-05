@@ -16,7 +16,7 @@ import amf.plugins.domain.webapi.resolution.stages.{
 class RamlCompatibilityPipeline private[amf] (override val name: String, profile: ProfileName)
     extends ResolutionPipeline() {
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+  override def steps: Seq[ResolutionStage] =
     Seq(
       new MandatoryDocumentationTitle(),
       new MandatoryAnnotationType(),
@@ -33,7 +33,7 @@ class RamlCompatibilityPipeline private[amf] (override val name: String, profile
       new UnionsAsTypeExpressions(),
       new EscapeTypeNames(),
       new MakeRequiredFieldImplicitForOptionalProperties(),
-      new ResolveRamlCompatibleDeclarations(),
+      ResolveRamlCompatibleDeclarationsStage,
       new ResolveLinksWithNonDeclaredTargets(),
       new RamlCompatiblePayloadAndParameterResolutionStage(profile),
       new SanitizeCustomTypeNames(),

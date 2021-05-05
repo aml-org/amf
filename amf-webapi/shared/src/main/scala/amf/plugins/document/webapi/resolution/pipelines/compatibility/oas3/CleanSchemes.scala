@@ -8,9 +8,9 @@ import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
 import amf.plugins.domain.webapi.models.Operation
 import amf.plugins.domain.webapi.models.api.Api
 
-class CleanSchemes()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class CleanSchemes() extends ResolutionStage {
 
-  override def resolve[T <: BaseUnit](model: T): T =
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
     try {
       model
         .iterator()

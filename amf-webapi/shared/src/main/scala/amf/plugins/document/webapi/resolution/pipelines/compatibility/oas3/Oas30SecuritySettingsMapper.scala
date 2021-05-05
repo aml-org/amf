@@ -5,7 +5,7 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.common.Sec
 import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.webapi.models.security._
 
-class Oas30SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler) extends SecuritySettingsMapper {
+class Oas30SecuritySettingsMapper() extends SecuritySettingsMapper {
 
   def VALID_AUTHORIZATION_GRANTS: List[String] = List("implicit", "clientCredentials", "authorizationCode", "password")
 

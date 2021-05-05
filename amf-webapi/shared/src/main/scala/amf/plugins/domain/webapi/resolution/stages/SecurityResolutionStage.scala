@@ -10,9 +10,9 @@ import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.models.security.SecurityRequirement
 
-class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
+class SecurityResolutionStage() extends ResolutionStage() {
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         resolveSecurity(doc.encodes.asInstanceOf[Api])

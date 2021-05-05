@@ -7,9 +7,9 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.core.traversal.iterator.{DomainElementIterator, IdCollector, InstanceCollector}
 import amf.plugins.document.webapi.annotations.{ExternalJsonSchemaShape, ExternalReferenceUrl}
 
-class AnnotationRemovalStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
+class AnnotationRemovalStage() extends ResolutionStage() {
 
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case d: Document =>
       d.iterator(fieldsFilter = FieldsFilter.All, visited = InstanceCollector())
         .foreach(_.annotations.reject(eliminationCriteria))

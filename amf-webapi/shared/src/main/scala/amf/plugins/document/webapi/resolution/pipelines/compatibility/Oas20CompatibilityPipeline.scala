@@ -13,8 +13,8 @@ class Oas20CompatibilityPipeline private (override val name: String) extends Res
 
   private val resolution = Oas20ResolutionPipeline()
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
-    resolution.steps(eh) ++ Seq(
+  override def steps: Seq[ResolutionStage] =
+    resolution.steps ++ Seq(
       new LowercaseSchemes(),
       new Oas20SecuritySettingsMapper(),
       new MandatoryDocumentationUrl(),

@@ -12,8 +12,8 @@ class Oas3CompatibilityPipeline private (override val name: String) extends Reso
 
   val resolution = Oas30ResolutionPipeline()
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
-    resolution.steps(eh) ++ Seq(
+  override def steps: Seq[ResolutionStage] =
+    resolution.steps ++ Seq(
       new CleanNullSecurity(),
       new CleanSchemes(),
       new MandatoryDocumentationUrl(),
