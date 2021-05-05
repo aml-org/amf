@@ -72,6 +72,38 @@ lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "Generates the validation dialect documents for the standard profiles")
 
 /** **********************************************
+  * AMF-Shapes
+  * ********************************************* */
+lazy val shapes = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-shapes"
+    ))
+  .in(file("./amf-shapes"))
+  .settings(commonSettings)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
+    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2",
+    libraryDependencies += "org.json"                          % "json"                   % "20201115",
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-shapes-javadoc.jar",
+  )
+  .jsSettings(
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-shapes-module.js",
+    scalacOptions += "-P:scalajs:suppressExportDeprecations"
+  )
+  .disablePlugins(SonarPlugin)
+
+lazy val shapesJVM =
+  shapes.jvm.in(file("./amf-shapes/jvm")).sourceDependency(coreJVMRef, coreLibJVM)
+lazy val shapesJS =
+  shapes.js
+    .in(file("./amf-shapes/js"))
+    .sourceDependency(coreJSRef, coreLibJS)
+    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
+
+
+/** **********************************************
   * AMF-WebAPI
   * ********************************************* */
 lazy val webapi = crossProject(JSPlatform, JVMPlatform)
@@ -81,6 +113,7 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
     ))
   .in(file("./amf-webapi"))
   .settings(commonSettings)
+  .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2",
@@ -96,11 +129,12 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .disablePlugins(SonarPlugin)
 
 lazy val webapiJVM =
-  webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(coreJVMRef, coreLibJVM).sourceDependency(customValidationJVMRef, customValidationLibJVM)
+  webapi.jvm
+    .in(file("./amf-webapi/jvm"))
+    .sourceDependency(customValidationJVMRef, customValidationLibJVM)
 lazy val webapiJS =
   webapi.js
     .in(file("./amf-webapi/js"))
-    .sourceDependency(coreJSRef, coreLibJS)
     .sourceDependency(customValidationJSRef, customValidationLibJS)
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 

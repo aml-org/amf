@@ -8,6 +8,7 @@ AMF Model Documentation
 * [Amqp091MessageBinding](#amqp091messagebinding)
 * [Amqp091OperationBinding](#amqp091operationbinding)
 * [Amqp091Queue](#amqp091queue)
+* [AnnotationMapping](#annotationmapping)
 * [AnnotationTypeDeclarationFragment](#annotationtypedeclarationfragment)
 * [AnyShape](#anyshape)
 * [ApiKeySettings](#apikeysettings)
@@ -46,6 +47,7 @@ AMF Model Documentation
 * [Example](#example)
 * [Extension](#extension)
 * [ExtensionLike](#extensionlike)
+* [ExtensionMapping](#extensionmapping)
 * [External](#external)
 * [ExternalContextFields](#externalcontextfields)
 * [ExternalDomainElement](#externaldomainelement)
@@ -212,6 +214,18 @@ It can be extended by any domain element adding bindings for the variables in th
  | exclusive | boolean | Whether the queue should be used only by one connection or not | http://a.ml/vocabularies/apiBinding#exclusive |
  | autoDelete | boolean | Whether the exchange should be deleted when the last queue is unbound from it | http://a.ml/vocabularies/apiBinding#autoDelete |
  | vhost | string | The virtual host of the exchange | http://a.ml/vocabularies/apiBinding#vhost |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
+
+## AnnotationMapping
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name in the source AST for the mapping | http://a.ml/vocabularies/core#name |
+ | datatype | url | Scalar constraint over the type of the mapped graph property | http://www.w3.org/ns/shacl#datatype |
+ | node | [url] | Object constraint over the type of the mapped graph property | http://www.w3.org/ns/shacl#node |
+ | path | url | URI for the mapped graph property derived from this mapping | http://www.w3.org/ns/shacl#path |
+ | target | url | Target node IRI for which a specific annotation mapping can be applied | http://a.ml/vocabularies/document#target |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## AnnotationTypeDeclarationFragment
@@ -772,6 +786,15 @@ A Document that extends a target document, overwriting part of the information o
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+
+## ExtensionMapping
+Mapping a particular extension name to an extension definition
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name that identifies an extension in the target document | http://a.ml/vocabularies/core#name |
+ | extensionMappingDefinition | url | Extension mapping (annotation mapping) definition used to parse a certain extension identified with the ExtensionName | http://a.ml/vocabularies/meta#extensionMappingDefinition |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## External
 
@@ -1480,10 +1503,10 @@ Semantic mapping from an input AST in a dialect document to the output graph of 
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | path | url | URI in the mapped graph for this mapped property | http://www.w3.org/ns/shacl#path |
- | name | string | Name in the source AST for the mapped property | http://a.ml/vocabularies/core#name |
- | datatype | url | Scalar constraint over the type of the mapped property | http://www.w3.org/ns/shacl#datatype |
- | node | [url] | Object constraint over the type of the mapped property | http://www.w3.org/ns/shacl#node |
+ | path | url | URI for the mapped graph property derived from this mapping | http://www.w3.org/ns/shacl#path |
+ | name | string | Name in the source AST for the mapping | http://a.ml/vocabularies/core#name |
+ | datatype | url | Scalar constraint over the type of the mapped graph property | http://www.w3.org/ns/shacl#datatype |
+ | node | [url] | Object constraint over the type of the mapped graph property | http://www.w3.org/ns/shacl#node |
  | mapProperty | string | Marks the mapping as a 'map' mapping syntax. Directly related with mapTermKeyProperty | http://a.ml/vocabularies/meta#mapProperty |
  | mapValueProperty | string | Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty | http://a.ml/vocabularies/meta#mapValueProperty |
  | mapTermProperty | url | Marks the mapping as a 'map' mapping syntax.  | http://a.ml/vocabularies/meta#mapTermProperty |
@@ -1998,7 +2021,7 @@ Data shape containing a multi-valued collection of shapes
  | name | string | Name of the node mappable element | http://a.ml/vocabularies/core#name |
  | typeDiscriminatorMap | string | Information about the discriminator values in the source AST for the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorMap |
  | typeDiscriminatorName | string | Information about the field in the source AST to be used as discrimintaro in the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorName |
- | node | [url] | Object constraint over the type of the mapped property | http://www.w3.org/ns/shacl#node |
+ | node | [url] | Object constraint over the type of the mapped graph property | http://www.w3.org/ns/shacl#node |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |

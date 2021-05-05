@@ -5,9 +5,11 @@ import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{OAS20SchemaVersion, OasTypeParser, SchemaPosition}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.domain.shapes.models.Example
@@ -40,7 +42,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
       val parameter = Parameter()
       adopt(parameter)
       map.key("description", ParameterModel.Description in parameter)
-      AnnotationParser(parameter, map).parse()
+      AnnotationParser(parameter, map)(WebApiShapeParserContextAdapter(ctx)).parse()
       parameter
     }
 
@@ -96,7 +98,8 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
     map.key(
       "type",
       _ => {
-        OasTypeParser(YMapEntryLike(map), "schema", adoption, OAS20SchemaVersion(SchemaPosition.Schema))
+        OasTypeParser(YMapEntryLike(map), "schema", adoption, OAS20SchemaVersion(SchemaPosition.Schema))(
+          WebApiShapeParserContextAdapter(ctx))
           .parse()
           .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(map)))
       }
@@ -110,7 +113,8 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id))
+        OasTypeParser(entry, (shape) => shape.withName("schema").adopted(parameter.id))(
+          WebApiShapeParserContextAdapter(ctx))
           .parse()
           .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
       }
@@ -135,7 +139,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
           .map(entry => parameter.set(PayloadModel.Examples, AmfArray(examples), Annotations(entry)))
           .getOrElse(parameter.set(PayloadModel.Examples, AmfArray(examples)))
 
-    OasExamplesParser(map, parameter).parse()
+    OasExamplesParser(map, parameter)(WebApiShapeParserContextAdapter(ctx)).parse()
 
     parameter.syntheticBinding("header")
     Oas3ParameterParser.parseStyleField(map, parameter)

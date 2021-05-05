@@ -7,6 +7,7 @@ import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.{IdCounter, _}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.{Oas3WebApiContext, OasWebApiContext}
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkParser
@@ -54,10 +55,11 @@ abstract class OasLikeOperationParser(entry: YMapEntry, adopt: Operation => Oper
     map.key("description", OperationModel.Description in operation)
     map.key("summary", OperationModel.Summary in operation)
     map.key("externalDocs",
-            OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)))
+            OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)(
+              WebApiShapeParserContextAdapter(ctx))))
 
-    AnnotationParser(operation, map).parseOrphanNode("responses")
-    AnnotationParser(operation, map).parse()
+    AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parseOrphanNode("responses")
+    AnnotationParser(operation, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
     operation
   }

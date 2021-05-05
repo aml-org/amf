@@ -6,7 +6,8 @@ import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 import amf.facades.AMFCompiler
 import amf.plugins.domain.shapes.models.{ScalarShape, UnresolvedShape}
-import amf.validations.ParserSideValidations.{ClosedShapeSpecification, MissingRequiredUserDefinedFacet}
+import amf.validations.ParserSideValidations.ClosedShapeSpecification
+import amf.validations.ShapeParserSideValidations.MissingRequiredUserDefinedFacet
 
 import scala.concurrent.Future
 

@@ -17,27 +17,18 @@ import amf.plugins.document.webapi.contexts.parser.oas.{
   OasWebApiContext
 }
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml10WebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ShapeEmitterContext, SpecAwareEmitterContext}
 
 /**
   * Oas package object
   */
 package object spec {
 
-  object OasDefinitions {
-    val oas2DefinitionsPrefix = "#/definitions/"
-
-    val oas3DefinitionsPrefix = "#/components/schemas/"
-
-    val oas3ComponentsPrefix = "#/components/"
+  object OasDefinitions extends OasShapeDefinitions {
 
     val parameterDefinitionsPrefix = "#/parameters/"
 
     val responsesDefinitionsPrefix = "#/responses/"
-
-    def stripDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
-      if (ctx.vendor == Vendor.OAS30 || ctx.vendor == Vendor.ASYNC20) url.stripPrefix(oas3DefinitionsPrefix)
-      else url.stripPrefix(oas2DefinitionsPrefix)
-    }
 
     def stripParameterDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
       if (ctx.vendor == Vendor.OAS30)
@@ -46,9 +37,6 @@ package object spec {
         url.stripPrefix(parameterDefinitionsPrefix)
     }
 
-    def stripOas3ComponentsPrefix(url: String, fieldName: String): String =
-      url.stripPrefix(oas3ComponentsPrefix + fieldName + "/")
-
     def stripResponsesDefinitionsPrefix(url: String)(implicit ctx: OasWebApiContext): String = {
       if (ctx.vendor == Vendor.OAS30)
         stripOas3ComponentsPrefix(url, "responses")
@@ -56,33 +44,20 @@ package object spec {
         url.stripPrefix(responsesDefinitionsPrefix)
     }
 
-    def appendSchemasPrefix(url: String, vendor: Option[Vendor] = None): String = vendor match {
-      case Some(Vendor.OAS30) | Some(Vendor.ASYNC20) =>
-        if (!url.startsWith(oas3DefinitionsPrefix)) appendPrefix(oas3DefinitionsPrefix, url) else url
-      case _ =>
-        if (!url.startsWith(oas2DefinitionsPrefix)) appendPrefix(oas2DefinitionsPrefix, url) else url
-    }
-
     def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
-        implicit spec: SpecEmitterContext): String = {
-      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || spec.factory.isInstanceOf[Async20SpecEmitterFactory])
+        implicit spec: SpecAwareEmitterContext): String = {
+      if (spec.factoryIsOas3 || spec.factoryIsAsync)
         appendOas3ComponentsPrefix(url, "parameters")
       else
         appendPrefix(parameterDefinitionsPrefix, url)
     }
 
-    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: SpecEmitterContext): String = {
-      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
+    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: SpecAwareEmitterContext): String = {
+      if (spec.factoryIsOas3)
         appendOas3ComponentsPrefix(url, "responses")
       else
         appendPrefix(responsesDefinitionsPrefix, url)
     }
-
-    def appendOas3ComponentsPrefix(url: String, fieldName: String): String = {
-      appendPrefix(oas3ComponentsPrefix + s"$fieldName/", url)
-    }
-
-    private def appendPrefix(prefix: String, url: String): String = prefix + url
   }
 
   // TODO oas2? raml10?

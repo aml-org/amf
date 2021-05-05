@@ -26,12 +26,13 @@ import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasA
 import amf.core.parser.YMapOps
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 
 abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: WebApiContext)
     extends SpecParserOps {
 
   protected def parseAnnotations(settings: Settings): Settings = {
-    AnnotationParser(settings, map).parse()
+    AnnotationParser(settings, map)(WebApiShapeParserContextAdapter(ctx)).parse()
     settings.add(Annotations(map))
   }
 
@@ -56,11 +57,11 @@ abstract class OasLikeSecuritySettingsParser(map: YMap, scheme: SecurityScheme)(
 
     if (entries.nonEmpty) {
       val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))),
-                                parent = Some(settings.id)).parse()
+                                parent = Some(settings.id))(WebApiShapeParserContextAdapter(ctx)).parse()
       settings.set(SettingsModel.AdditionalProperties, node)
     }
 
-    AnnotationParser(scheme, xSettings).parse()
+    AnnotationParser(scheme, xSettings)(WebApiShapeParserContextAdapter(ctx)).parse()
 
     settings
   }

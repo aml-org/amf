@@ -1,0 +1,94 @@
+package amf.plugins.document.webapi.parser
+
+import amf.core.Root
+import amf.core.client.ParsingOptions
+import amf.core.model.domain.Shape
+import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.parser.{
+  Annotations,
+  Declarations,
+  ErrorHandlingContext,
+  FutureDeclarations,
+  ParserContext,
+  SearchScope,
+  UnresolvedComponents
+}
+import amf.core.remote.Vendor
+import amf.plugins.document.webapi.contexts.JsonSchemaRefGuide
+import amf.plugins.document.webapi.parser.RamlWebApiContextType.RamlWebApiContextType
+import amf.plugins.document.webapi.parser.spec.SpecSyntax
+import amf.plugins.document.webapi.parser.spec.common.DataNodeParserContext
+import amf.plugins.document.webapi.parser.spec.declaration.{DefaultType, RamlTypeParser, SchemaVersion, TypeInfo}
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.spec.declaration.external.raml.RamlExternalTypesParser
+import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
+import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
+
+import scala.collection.mutable
+
+abstract class ShapeParserContext(eh: ParserErrorHandler)
+    extends ErrorHandlingContext()(eh)
+    with DataNodeParserContext
+    with UnresolvedComponents {
+
+  def toOasNext: ShapeParserContext
+  def findExample(key: String, scope: SearchScope.Scope): Option[Example]
+  def rootContextDocument: String
+  def futureDeclarations: FutureDeclarations
+  def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape]
+  def link(node: YNode): Either[String, YNode]
+  def loc: String
+  def vendor: Vendor
+  def syntax: SpecSyntax
+  def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo)
+  def shapes: Map[String, Shape]
+  def closedShape(node: String, ast: YMap, shape: String): Unit
+  def registerJsonSchema(url: String, shape: AnyShape)
+  def isMainFileContext: Boolean
+  def findNamedExampleOrError(ast: YPart)(key: String): Example
+  def findLocalJSONPath(path: String): Option[YMapEntryLike]
+  def linkTypes: Boolean
+  def findJsonSchema(url: String): Option[AnyShape]
+  def findNamedExample(key: String, error: Option[String => Unit] = None): Option[Example]
+  def isOasLikeContext: Boolean
+  def isOas2Context: Boolean
+  def isOas3Context: Boolean
+  def isAsyncContext: Boolean
+  def isRamlContext: Boolean
+  def isOas3Syntax: Boolean
+  def isOas2Syntax: Boolean
+  def ramlContextType: RamlWebApiContextType
+  def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape
+  def parseRemoteJSONPath(ref: String): Option[AnyShape]
+  def findDocumentations(key: String,
+                         scope: SearchScope.Scope,
+                         error: Option[String => Unit] = None): Option[CreativeWork]
+
+  def obtainRemoteYNode(ref: String, refAnnotations: Annotations = Annotations()): Option[YNode]
+  def addNodeRefIds(ids: mutable.Map[YNode, String])
+  def nodeRefIds: mutable.Map[YNode, String]
+  def raml10createContextFromRaml: ShapeParserContext
+  def raml08createContextFromRaml: ShapeParserContext
+  def libraries: Map[String, Declarations]
+  def typeParser: (YMapEntry, Shape => Unit, Boolean, DefaultType) => RamlTypeParser
+  def ramlExternalSchemaParserFactory: RamlExternalSchemaExpressionFactory
+  def getInheritedDeclarations: Option[Declarations]
+  def makeJsonSchemaContextForParsing(url: String, document: Root, options: ParsingOptions): ShapeParserContext
+  def computeJsonSchemaVersion(ast: YNode): SchemaVersion
+  def setJsonSchemaAST(value: YNode): Unit
+  def jsonSchemaRefGuide: JsonSchemaRefGuide
+  def validateRefFormatWithError(ref: String): Boolean
+}
+
+trait RamlExternalSchemaExpressionFactory {
+  def createXml(key: YNode, value: YNode, adopt: Shape => Unit, parseExample: Boolean = false): RamlExternalTypesParser
+  def createJson(key: YNode,
+                 value: YNode,
+                 adopt: Shape => Unit,
+                 parseExample: Boolean = false): RamlExternalTypesParser
+}
+
+object RamlWebApiContextType extends Enumeration {
+  type RamlWebApiContextType = Value
+  val DEFAULT, RESOURCE_TYPE, TRAIT, EXTENSION, OVERLAY, LIBRARY = Value
+}

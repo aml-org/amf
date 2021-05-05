@@ -12,7 +12,11 @@ import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, DataNodeEmitter}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext,
+  raml
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
 import amf.plugins.document.webapi.parser.spec.raml.emitters.Raml10SecuritySchemeEmitter
@@ -25,7 +29,7 @@ import org.yaml.model.YDocument
   *
   */
 case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterContext) {
-
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
   def emitModule(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, module.annotations)
@@ -45,6 +49,9 @@ case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterC
 }
 
 class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitterContext) {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   def emitFragment(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, fragment.encodes.annotations)
@@ -92,7 +99,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
 
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
       Option(dataType.encodes) match {
-        case Some(shape: AnyShape) => raml.Raml10TypeEmitter(shape, ordering, references = Nil).entries()
+        case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = Nil).entries()
         case Some(other) =>
           spec.eh.violation(ResolutionValidation,
                             other.id,
@@ -156,6 +163,8 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
 
   case class FragmentNamedExampleEmitter(example: NamedExampleFragment, ordering: SpecOrdering)
       extends RamlFragmentTypeEmitter {
+
+    protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10NamedExample
 

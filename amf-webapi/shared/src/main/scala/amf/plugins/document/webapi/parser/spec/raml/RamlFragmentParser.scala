@@ -10,12 +10,12 @@ import amf.core.parser.{Annotations, _}
 import amf.core.remote.Raml10
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.model._
-import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.{RamlFragment, WebApiShapeParserContextAdapter}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.validations.ParserSideValidations.InvalidFragmentType
+import amf.validations.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YScalar}
 
 /**
@@ -87,7 +87,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
       val item = DocumentationItemFragment().adopted(root.location)
 
-      item.withEncodes(RamlCreativeWorkParser(map).parse())
+      item.withEncodes(RamlCreativeWorkParser(map)(WebApiShapeParserContextAdapter(ctx)).parse())
 
       item
     }
@@ -102,7 +102,8 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         "type",
         (shape: Shape) => shape.withId(root.location + "#/shape"), // TODO: this is being ignored
         StringDefaultType
-      ).parse()
+      )(WebApiShapeParserContextAdapter(ctx))
+        .parse()
         .foreach(dataType.withEncodes)
 
       dataType

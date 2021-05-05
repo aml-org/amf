@@ -10,6 +10,8 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.api.WebApi
+import amf.remod.RamlShapeSerializer
+import amf.remod.RamlShapeSerializer.toRamlDatatype
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -40,10 +42,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   test("Test parsed from json expression forced to build new") {
-    cycle("json-expression.json",
-          "json-expression-new.raml",
-          generalFindShapeFunc,
-          (a: AnyShape) => a.buildRamlDatatype())
+    cycle("json-expression.json", "json-expression-new.raml", generalFindShapeFunc, (a: AnyShape) => toRamlDatatype(a))
   }
 
   // https://github.com/aml-org/amf/issues/441
@@ -61,20 +60,17 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
   private def cycle(sourceFile: String,
                     goldenFile: String,
                     findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
-                    renderFn: AnyShape => String = (a: AnyShape) => a.toRamlDatatype()): Future[Assertion] = {
+                    renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a)): Future[Assertion] = {
     val ramlDatatype: Future[String] = for {
       _ <- Validation(platform)
-      sourceUnit <- AMFCompiler(basePath + sourceFile,
-                                platform,
-                                Oas20JsonHint,
-                                eh = DefaultParserErrorHandler.withRun())
+      sourceUnit <- AMFCompiler(basePath + sourceFile, platform, Oas20JsonHint, eh = DefaultParserErrorHandler.withRun())
         .build()
     } yield {
       findShapeFunc(
         RuntimeResolver.resolve(Vendor.OAS20.name,
                                 sourceUnit,
                                 ResolutionPipeline.DEFAULT_PIPELINE,
-                                UnhandledErrorHandler)).map(_.toRamlDatatype()).getOrElse("")
+                                UnhandledErrorHandler)).map(toRamlDatatype).getOrElse("")
     }
     ramlDatatype.flatMap { writeTemporaryFile(goldenFile) }.flatMap(assertDifferences(_, goldenPath + goldenFile))
   }

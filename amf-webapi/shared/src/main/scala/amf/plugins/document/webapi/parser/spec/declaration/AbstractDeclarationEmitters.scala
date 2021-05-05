@@ -1,12 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.emitter.BaseEmitters._
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper._
+import amf.plugins.document.webapi.parser.spec.declaration.ReferenceEmitterHelper.emitLinkOr
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -62,6 +63,8 @@ case class AbstractDeclarationPartEmitter(declaration: AbstractDeclaration,
                                           ordering: SpecOrdering,
                                           references: Seq[BaseUnit])(implicit spec: SpecEmitterContext)
     extends PartEmitter {
+
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit = {
     emitLinkOr(declaration, b, references) {

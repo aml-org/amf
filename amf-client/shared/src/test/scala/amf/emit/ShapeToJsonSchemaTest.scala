@@ -8,8 +8,10 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeResolver
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
+import amf.plugins.document.webapi.Oas20Plugin
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.api.WebApi
+import amf.remod.JsonSchemaShapeSerializer.toJsonSchema
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -92,7 +94,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
         .map(_.schema)
         .collectFirst({ case any: AnyShape => any })
 
-    cycle("json-expression.raml", "json-expression-new.json", func, (a: AnyShape) => a.buildJsonSchema())
+    cycle("json-expression.raml", "json-expression-new.json", func, toJsonSchema)
   }
 
   test("Test recursive shape") {
@@ -105,7 +107,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
         .map(_.schema)
         .collectFirst({ case any: AnyShape => any })
 
-    cycle("recursive.raml", "recursive.json", func, (a: AnyShape) => a.buildJsonSchema())
+    cycle("recursive.raml", "recursive.json", func, toJsonSchema)
   }
 
   test("Test shape id preservation") {
@@ -116,7 +118,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
           u.declares.forall {
             case anyShape: AnyShape =>
               val originalId = anyShape.id
-              anyShape.toJsonSchema()
+              toJsonSchema(anyShape)
               val newId = anyShape.id
               originalId == newId
           }
@@ -139,7 +141,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
   private def cycle(file: String,
                     golden: String,
                     findShapeFunc: BaseUnit => Option[AnyShape],
-                    renderFn: AnyShape => String = (a: AnyShape) => a.toJsonSchema(),
+                    renderFn: AnyShape => String = toJsonSchema,
                     hint: Hint = Raml10YamlHint): Future[Assertion] = {
     val jsonSchema: Future[String] = for {
       _    <- Validation(platform)
@@ -147,7 +149,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
     } yield {
       findShapeFunc(
         RuntimeResolver.resolve(Vendor.OAS20.name, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler))
-        .map(_.toJsonSchema())
+        .map(toJsonSchema)
         .getOrElse("")
     }
 

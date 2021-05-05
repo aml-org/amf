@@ -14,8 +14,12 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
   OasSpecEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext,
+  oas
+}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -25,6 +29,9 @@ import scala.collection.mutable
 case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   override def emit(b: PartBuilder): Unit = {
     sourceOr(
       payload.annotations,

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations
 
-import amf.core.emitter.BaseEmitters.{ValueEmitter}
+import amf.core.emitter.BaseEmitters.ValueEmitter
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain.extensions.CustomDomainProperty
@@ -9,6 +9,7 @@ import amf.core.parser.{FieldEntry, Value}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{Raml10TypeEmitter, RamlRecursiveShapeEmitter}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -22,6 +23,7 @@ abstract class AnnotationTypeEmitter(property: CustomDomainProperty, ordering: S
 
   private val fs = property.fields
   protected val shapeEmitters: Seq[Emitter]
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   def emitters(): Either[Seq[EntryEmitter], PartEmitter] = {
 

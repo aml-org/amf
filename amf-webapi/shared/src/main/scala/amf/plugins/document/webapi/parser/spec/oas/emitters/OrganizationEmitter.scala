@@ -4,6 +4,10 @@ import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.OrganizationModel
 import amf.plugins.domain.webapi.models.Organization
@@ -29,6 +33,7 @@ case class OrganizationEmitter(key: String, org: Organization, ordering: SpecOrd
 
 case class OrganizationPartEmitter(org: Organization, ordering: SpecOrdering)(implicit val spec: SpecEmitterContext)
     extends PartEmitter {
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
   override def emit(b: PartBuilder): Unit = {
     b.obj { b =>
       val fs     = org.fields

@@ -12,15 +12,13 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.document.vocabularies.parser.common.DeclarationKey
-import amf.plugins.document.webapi.contexts.parser.raml.{
-  ExtensionLikeWebApiContext,
-  RamlWebApiContext,
-  RamlWebApiContextType
-}
+import amf.plugins.document.webapi.contexts.parser.raml.{ExtensionLikeWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
+import amf.plugins.document.webapi.parser.{RamlWebApiContextType, WebApiShapeParserContextAdapter}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.RamlAnnotationTargets.targetsFor
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -34,6 +32,7 @@ import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations._
+import amf.validations.ShapeParserSideValidations.{ExclusiveSchemasType, InvalidFragmentType, InvalidTypeDefinition}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -234,7 +233,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       }
     )
 
-    AnnotationParser(api, map, targetsFor(ctx.contextType)).parse()
+    AnnotationParser(api, map, targetsFor(ctx.contextType))(WebApiShapeParserContextAdapter(ctx)).parse()
 
     api
   }
@@ -389,7 +388,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
                 shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(entry.key.value)), Annotations(entry.key))
                 shape.adopted(parent)
               }
-            )
+            )(WebApiShapeParserContextAdapter(ctx))
             parser.parse() match {
               case Some(shape) =>
                 if (entry.value.tagType == YType.Null) shape.annotations += SynthesizedField()
@@ -459,16 +458,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
 
 }
 
-abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBaseSpecParser {
-
-  protected def typeOrSchema(map: YMap): Option[YMapEntry] = map.key("type").orElse(map.key("schema"))
-
-  protected def nestedTypeOrSchema(map: YMap): Option[YMapEntry] = map.key("type").orElse(map.key("schema")) match {
-    case Some(n) if n.value.tagType == YType.Map =>
-      nestedTypeOrSchema(n.value.as[YMap])
-    case res =>
-      res
-  }
+abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBaseSpecParser with RamlTypeEntryParser {
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {
@@ -492,7 +482,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
 
       seq.foreach(n =>
         n.tagType match {
-          case YType.Map => results += RamlCreativeWorkParser(n).parse()
+          case YType.Map => results += RamlCreativeWorkParser(n)(WebApiShapeParserContextAdapter(ctx)).parse()
           case YType.Seq =>
             ctx.eh.violation(InvalidDocumentationType,
                              parent,
@@ -551,7 +541,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                                ast.key.as[YScalar].text,
                                shape => shape.adopted(domainProp.id),
                                isAnnotation = true,
-                               StringDefaultType)
+                               StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
                 .parse() match {
                 case Some(schema) =>
                   tracking(schema, domainProp.id)
@@ -630,7 +620,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
                            name.getOrElse("schema"),
                            shape => shape.withName("schema").adopted(custom.id),
                            isAnnotation = true,
-                           StringDefaultType)
+                           StringDefaultType)(WebApiShapeParserContextAdapter(ctx))
             .parse()
             .foreach({ shape =>
               tracking(shape, custom.id)
@@ -677,7 +667,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
             custom.set(CustomDomainPropertyModel.Description, value.string(), Annotations(entry))
           })
 
-          AnnotationParser(custom, map).parse()
+          AnnotationParser(custom, map)(WebApiShapeParserContextAdapter(ctx)).parse()
 
           custom
         case None =>

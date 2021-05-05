@@ -6,18 +6,9 @@ import amf.core.model.StrField
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.core.remote.Vendor
-import amf.plugins.domain.shapes.models.CreativeWork
+import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
 import amf.plugins.domain.webapi.metamodel.api.BaseApiModel.{License => WebApiLicense, _}
-import amf.plugins.domain.webapi.models.{
-  DocumentedElement,
-  EndPoint,
-  License,
-  Organization,
-  SecuredElement,
-  Server,
-  ServerContainer,
-  Tag
-}
+import amf.plugins.domain.webapi.models.{EndPoint, License, Organization, SecuredElement, Server, ServerContainer, Tag}
 import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import org.yaml.model.{YMap, YNode}
 

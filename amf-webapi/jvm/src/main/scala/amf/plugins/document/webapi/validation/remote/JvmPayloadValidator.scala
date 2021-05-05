@@ -14,21 +14,9 @@ import amf.plugins.document.webapi.validation.json.{
   ScalarTokenerHack
 }
 import amf.plugins.domain.shapes.models.ScalarShape
-import amf.validations.PayloadValidations.{
-  ExampleValidationErrorSpecification,
-  SchemaException => InternalSchemaException
-}
-import org.everit.json.schema.internal.{
-  DateFormatValidator,
-  DateTimeFormatValidator,
-  EmailFormatValidator,
-  HostnameFormatValidator,
-  IPV4Validator,
-  IPV6Validator,
-  RegexFormatValidator,
-  URIFormatValidator,
-  URIV4FormatValidator
-}
+import amf.validations.PayloadValidations
+import amf.validations.PayloadValidations._
+import org.everit.json.schema.internal._
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
@@ -36,7 +24,6 @@ import org.json.JSONException
 
 import java.util.regex.PatternSyntaxException
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
-import scala.collection.mutable.ArrayBuffer
 
 class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, val env: Environment)
     extends PlatformPayloadValidator(shape, env) {
@@ -199,7 +186,7 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName,
       level = SeverityLevels.VIOLATION,
       targetNode = element.map(_.id).getOrElse(""),
       targetProperty = None,
-      validationId = InternalSchemaException.id,
+      validationId = PayloadValidations.SchemaException.id,
       position = element.flatMap(_.position()),
       location = element.flatMap(_.location()),
       source = e

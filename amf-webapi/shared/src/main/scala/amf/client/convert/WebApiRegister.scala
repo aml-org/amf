@@ -11,7 +11,14 @@ import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.plugins.domain.webapi.metamodel.bindings._
 import amf.plugins.domain.webapi.metamodel.{CorrelationIdModel, IriTemplateMappingModel, TemplatedLinkModel, templates}
 import amf.plugins.features.validation.CoreValidations
-import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
+import amf.validations.{
+  ParserSideValidations,
+  PayloadValidations,
+  RenderSideValidations,
+  ResolutionSideValidations,
+  ShapeParserSideValidations,
+  ShapePayloadValidations
+}
 
 /** Shared WebApi registrations. */
 // TODO: could be renamed to ApiRegister??
@@ -243,7 +250,9 @@ object WebApiRegister {
 
     platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
     platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
+//    platform.registerValidations(ShapeParserSideValidations.validations, ShapeParserSideValidations.levels)
     platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
+//    platform.registerValidations(ShapePayloadValidations.validations, ShapePayloadValidations.levels)
     platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
     platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
 

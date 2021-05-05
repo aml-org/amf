@@ -28,11 +28,6 @@ object PayloadValidations extends Validations {
     "Schema exception"
   )
 
-  val UntranslatableDraft2019Fields = validation(
-    "untranslatable-draft-2019-fields",
-    "The schema to validate against has fields that will not be used for validation"
-  )
-
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     UnsupportedExampleMediaTypeWarningSpecification.id -> all(WARNING),
     ExampleValidationErrorSpecification.id -> Map(
@@ -42,14 +37,12 @@ object PayloadValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> VIOLATION
     ),
-    SchemaException.id               -> all(VIOLATION),
-    UntranslatableDraft2019Fields.id -> all(WARNING)
+    SchemaException.id -> all(VIOLATION),
   )
 
   override val validations: List[ValidationSpecification] = List(
     UnsupportedExampleMediaTypeWarningSpecification,
     ExampleValidationErrorSpecification,
-    SchemaException,
-    UntranslatableDraft2019Fields
+    SchemaException
   )
 }

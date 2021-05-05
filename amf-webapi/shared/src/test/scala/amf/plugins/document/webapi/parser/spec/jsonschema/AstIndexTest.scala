@@ -5,7 +5,8 @@ import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.parser.async.Async20WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft201909SchemaVersion,
   JSONSchemaDraft4SchemaVersion,
@@ -164,9 +165,9 @@ class AstIndexTest extends FunSuite with Matchers with IndexHelper {
 trait IndexHelper extends PlatformSecrets {
   def obtainIndex(pathToFile: String, version: JSONSchemaVersion): AstIndex = {
     val content = platform.fs.syncFile(pathToFile).read()
-    val doc = JsonParser(content).document()
-    val ctx = new Async20WebApiContext("loc", Seq(), ParserContext(eh = UnhandledParserErrorHandler))
-    AstIndexBuilder.buildAst(doc.node, AliasCounter(), version)(ctx)
+    val doc     = JsonParser(content).document()
+    val ctx     = new Async20WebApiContext("loc", Seq(), ParserContext(eh = UnhandledParserErrorHandler))
+    AstIndexBuilder.buildAst(doc.node, AliasCounter(), version)(WebApiShapeParserContextAdapter(ctx))
   }
 }
 

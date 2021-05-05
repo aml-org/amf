@@ -9,6 +9,7 @@ import amf.core.parser.{FieldEntry, Fields, Position, Value}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.ExtendsEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
@@ -107,6 +108,8 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
                                    references: Seq[BaseUnit] = Seq())(implicit val spec: RamlSpecEmitterContext)
     extends EntryEmitter
     with PartEmitter {
+
+  implicit val shapeEmitterCtx = ApiShapeEmitterContextAdapter(spec)
 
   def endpoint: EndPoint
 

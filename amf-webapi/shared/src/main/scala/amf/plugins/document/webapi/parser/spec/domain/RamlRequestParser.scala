@@ -5,16 +5,15 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, Lazy}
 import amf.plugins.document.webapi.annotations.EmptyPayload
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, Raml10TypeParser}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
-import amf.validations.ParserSideValidations.{
-  ExclusivePropertiesSpecification,
-  UnsupportedExampleMediaTypeErrorSpecification
-}
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
+import amf.validations.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
+import amf.validations.ShapeParserSideValidations.ExclusivePropertiesSpecification
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
 
@@ -29,7 +28,8 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
     map.key(
       "queryString",
       queryEntry => {
-        Raml10TypeParser(queryEntry, shape => shape.adopted(request.getOrCreate.id))
+        Raml10TypeParser(queryEntry, shape => shape.adopted(request.getOrCreate.id))(
+          WebApiShapeParserContextAdapter(ctx))
           .parse()
           .map(q => {
             val finalRequest = request.getOrCreate

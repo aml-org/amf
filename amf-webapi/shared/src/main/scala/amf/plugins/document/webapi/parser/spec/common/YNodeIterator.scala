@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
+import amf.validations.ShapeParserSideValidations.ExceededMaxYamlReferences
 import org.yaml.model.{YMap, YNode, YSequence, YType}
 
 /**
@@ -23,7 +23,7 @@ class YNodeIterator private (var buffer: List[YNode], refsCounter: AliasCounter)
     val next = buffer.head
     if (refsCounter.exceedsThreshold(next)) {
       ctx.violation(
-        ExeededMaxYamlReferences,
+        ExceededMaxYamlReferences,
         "",
         "Exceeded maximum yaml references threshold"
       )

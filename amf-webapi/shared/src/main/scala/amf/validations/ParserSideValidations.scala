@@ -23,29 +23,14 @@ object ParserSideValidations extends Validations {
     "operationRef and operationId are mutually exclusive in a OAS 3.0.0 Link Object"
   )
 
-  val InvalidJsonSchemaType = validation(
-    "invalid-json-schema-type",
-    "Invalid json schema definition type"
-  )
-
   val MandatoryObjectNodeType = validation(
     "mandatory-object-node-type",
     "Mandatory object node type"
   )
 
-  val InvalidShapeFormat = validation(
-    "invalid-shape-format",
-    "Invalid shape format"
-  )
-
   val InvalidSecuritySchemeType = validation(
     "invalid-security-scheme-type",
     "Invalid security scheme type"
-  )
-
-  val InvalidDatetimeFormat = validation(
-    "invalid-datetime-format",
-    "Invalid format value for datetime"
   )
 
   val InvalidBasePath = validation(
@@ -88,24 +73,9 @@ object ParserSideValidations extends Validations {
     "Request body content is required"
   )
 
-  val DiscriminatorNameRequired = validation(
-    "discriminator-name-required",
-    "Discriminator property name is required"
-  )
-
-  val InvalidRequiredValue = validation(
-    "invalid-required-value",
-    "Invalid required value"
-  )
-
   val InvalidServerPath = validation(
     "invalid-server-path",
     "Invalid server path"
-  )
-
-  val InvalidAbstractDeclarationParameterInType = validation(
-    "invalid-abstract-declaration-parameter-in-type",
-    "Trait/Resource Type parameter in type"
   )
 
   val InvalidSecuredByType = validation(
@@ -173,11 +143,6 @@ object ParserSideValidations extends Validations {
     "Duplicated operation id"
   )
 
-  val SchemaDeprecated = validation(
-    "schema-deprecated",
-    "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
-  )
-
   val SchemasDeprecated = validation(
     "schemas-deprecated",
     "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead"
@@ -186,11 +151,6 @@ object ParserSideValidations extends Validations {
   val InvalidOperationType = validation(
     "invalid-operation-type",
     "Invalid operation type"
-  )
-
-  val InvalidExternalTypeType = validation(
-    "invalid-external-type-type",
-    "Invalid external type type"
   )
 
   val InvalidXmlSchemaType = validation(
@@ -203,104 +163,9 @@ object ParserSideValidations extends Validations {
     "Invalid json schema expression"
   )
 
-  val InvalidPropertyType = validation(
-    "invalid-property-type",
-    "Invalid property key type. Should be string"
-  )
-
-  val UnableToParseArray = validation(
-    "unable-to-parse-array",
-    "Unable to parse array definition"
-  )
-
-  val InvalidDecimalPoint = validation(
-    "invalid-decimal-point",
-    "Invalid decimal point"
-  )
-
-  val DuplicateRequiredItem = validation(
-    "duplicate-required-item",
-    "Duplicate required item"
-  )
-
-  val InvalidTypeDefinition = validation(
-    "invalid-type-definition",
-    "Invalid type definition"
-  )
-
-  val InvalidRequiredArrayForSchemaVersion = validation(
-    "invalid-required-array-for-schema-version",
-    "Required arrays of properties not supported in JSON Schema below version draft-4"
-  )
-
-  val InvalidRequiredBooleanForSchemaVersion = validation(
-    "invalid-required-boolean-for-schema-version",
-    "Required property boolean value is only supported in JSON Schema draft-3"
-  )
-
   val MissingOAuthFlowField = validation(
     "missing-oauth-flow-field",
     "Missing mandatory property for declared OAuth flow"
-  )
-
-  val InvalidAdditionalPropertiesType = validation(
-    "invalid-additional-properties-type",
-    "additionalProperties should be a boolean or a map"
-  )
-
-  val InvalidAdditionalItemsType = validation(
-    "invalid-additional-items-type",
-    "additionalItems should be a boolean or a map"
-  )
-
-  val InvalidUnevaluatedPropertiesType = validation(
-    "invalid-unevaluated-properties-type",
-    "unevaluatedProperties should be a boolean or a map"
-  )
-
-  val InvalidUnevaluatedItemsType = validation(
-    "invalid-unevaluated-items-type",
-    "unevaluatedItems should be a boolean or a map"
-  )
-
-  val InvalidTupleType = validation(
-    "invalid-tuple-type",
-    "Tuple should be a sequence"
-  )
-
-  val InvalidSchemaType = validation(
-    "invalid-schema-type",
-    "Schema should be a string"
-  )
-
-  val InvalidMediaTypeType = validation(
-    "invalid-media-type-type",
-    "Media type should be a string"
-  )
-
-  val InvalidXoneType = validation(
-    "invalid-xone-type",
-    "Xone should be a sequence"
-  )
-
-  val InvalidAndType = validation(
-    "invalid-and-type",
-    "And should be a sequence"
-  )
-
-  val InvalidOrType = validation(
-    "invalid-or-type",
-    "Or should be a sequence"
-  )
-
-  val InvalidDisjointUnionType = validation(
-    "invalid-disjoint-union-type",
-    "Invalid type for disjoint union"
-  )
-
-  val UnexpectedVendor = validation(
-    "unexpected-vendor",
-    "Unexpected vendor"
   )
 
   val NullAbstractDeclaration = validation(
@@ -313,54 +178,9 @@ object ParserSideValidations extends Validations {
     "Invalid type for declaration node"
   )
 
-  val UnableToParseShapeExtensions = validation(
-    "unable-to-parse-shape-extensions",
-    "Unable to parse shape extensions"
-  )
-
-  val InvalidJsonSchemaVersion = validation(
-    "invalid-json-schema-version",
-    "Invalid Json Schema version"
-  )
-
   val CrossSecurityWarningSpecification = validation(
     "cross-security-warning",
     "Using a security scheme type from raml in oas or from oas in raml"
-  )
-
-  val ChainedReferenceSpecification = validation(
-    "chained-reference-error",
-    "References cannot be chained"
-  )
-
-  val UnableToSetDefaultType = validation(
-    "unable-to-set-default-type",
-    "Unable to set default type"
-  )
-
-  val ExclusiveSchemaType = validation(
-    "exclusive-schema-type",
-    "'schema' and 'type' properties are mutually exclusive"
-  )
-
-  val ExclusiveSchemasType = validation(
-    "exclusive-schemas-type",
-    "'schemas' and 'types' properties are mutually exclusive"
-  )
-
-  val ExclusivePropertiesSpecification = validation(
-    "exclusive-properties-error",
-    "Exclusive properties declared together"
-  )
-
-  val ExamplesMustBeAMap = validation(
-    "examples-must-be-map",
-    "Examples value should be a map"
-  )
-
-  val ExamplesMustBeASeq = validation(
-    "examples-must-be-seq",
-    "Examples value should be an array of strings"
   )
 
   val PathTemplateUnbalancedParameters = validation(
@@ -429,26 +249,6 @@ object ParserSideValidations extends Validations {
     "Duplicated property in node"
   )
 
-  val UnexpectedRamlScalarKey = validation(
-    "unexpected-raml-scalar-key",
-    "Unexpected key. Options are 'value' or annotations \\(.+\\)"
-  )
-
-  val UnexpectedFileTypesSyntax = validation(
-    "unexpected-file-types-syntax",
-    "Unexpected 'fileTypes' syntax. Options are string or sequence"
-  )
-
-  val JsonSchemaInheritanceWarning = validation(
-    "json-schema-inheritance",
-    "Inheriting from JSON Schema"
-  )
-
-  val XmlSchemaInheritancceWarning = validation(
-    "xml-schema-inheritance",
-    "Inheriting from XML Schema"
-  )
-
   val InvalidEndpointType = validation(
     "invalid-endpoint-type",
     "Invalid endpoint type"
@@ -469,24 +269,9 @@ object ParserSideValidations extends Validations {
     "Json schema fragment not found"
   )
 
-  val PatternPropertiesOnClosedNodeSpecification = validation(
-    "pattern-properties-on-closed-node",
-    "Closed node cannot define pattern properties"
-  )
-
-  val DiscriminatorOnExtendedUnionSpecification = validation(
-    "discriminator-on-extended-union",
-    "Property 'discriminator' not supported in a node extending a unionShape"
-  )
-
   val UnresolvedParameter = validation(
     "unresolved-parameter",
     "Unresolved parameter"
-  )
-
-  val UnableToParseJsonSchema = validation(
-    "unable-to-parse-json-schema",
-    "Unable to parse json schema"
   )
 
   val MalformedJsonReference = validation(
@@ -497,16 +282,6 @@ object ParserSideValidations extends Validations {
   val InvalidAnnotationType = validation(
     "invalid-annotation-type",
     "Invalid annotation type"
-  )
-
-  val InvalidAnnotationTarget = validation(
-    "invalid-annotation-target",
-    "Annotation not allowed in used target"
-  )
-
-  val InvalidFragmentType = validation(
-    "invalid-fragment-type",
-    "Invalid fragment type"
   )
 
   val InvalidParameterStyleBindingCombination = validation(
@@ -549,11 +324,6 @@ object ParserSideValidations extends Validations {
     "Module not found"
   )
 
-  val InvalidUnionType = validation(
-    "invalid-union-type",
-    "Union should be a sequence"
-  )
-
   val InvalidModuleType = validation(
     "invalid-module-type",
     "Invalid module type"
@@ -569,24 +339,9 @@ object ParserSideValidations extends Validations {
     "Invalid property for node"
   )
 
-  val InvalidTypeExpression = validation(
-    "invalid-type-expression",
-    "Invalid type expression"
-  )
-
   val UnexpectedReference = validation(
     "unexpected-reference",
     "Unexpected reference"
-  )
-
-  val ReadOnlyPropertyMarkedRequired = validation(
-    "read-only-property-marked-required",
-    "Read only property should not be marked as required by a schema"
-  )
-
-  val MissingDiscriminatorProperty = validation(
-    "missing-discriminator-property",
-    "Type is missing property marked as discriminator"
   )
 
   val InvalidPayload = validation(
@@ -594,10 +349,6 @@ object ParserSideValidations extends Validations {
     "Invalid payload"
   )
 
-  val InvalidValueInPropertiesFacet = validation(
-    "invalid-value-in-properties-facet",
-    "Properties facet must be a map of key and values"
-  )
 
   val InvalidComponents = validation("invalid-components", "Components facet must be a map")
 
@@ -611,11 +362,6 @@ object ParserSideValidations extends Validations {
     "Field name in components must match the following expression: ^[a-zA-Z0-9\\.\\-_]+$"
   )
 
-  val MissingRequiredUserDefinedFacet = validation(
-    "missing-user-defined-facet",
-    "Type is missing required user defined facet"
-  )
-
   val ParameterMissingSchemaOrContent = validation(
     "parameter-missing-schema-or-content",
     "Parameter must define a 'schema' or 'content' field, but not both"
@@ -626,26 +372,11 @@ object ParserSideValidations extends Validations {
     "Server variable must define a 'default' field"
   )
 
-  val UserDefinedFacetMatchesBuiltInFacets = validation(
-    "user-defined-facets-matches-built-in",
-    "User defined facet name matches built in facet of type"
-  )
-
   val InvalidEndpointDeclaration = validation("invalid-endpoint-declaration", "Invalid endpoint declaration")
-
-  val UserDefinedFacetMatchesAncestorsTypeFacets = validation(
-    "user-defined-facets-matches-ancestor",
-    "User defined facet name matches ancestor type facet"
-  )
 
   val SlashInUriParameterValues = validation(
     "slash-in-uri-parameter-value",
     "Values of uri parameter must not contain '/' character"
-  )
-
-  val ItemsFieldRequired = validation(
-    "items-field-required",
-    "'items' field is required when type is array"
   )
 
   // TODO: Should be removed and used the violation in the next major
@@ -663,11 +394,6 @@ object ParserSideValidations extends Validations {
   val InvalidIdentifier = validation(
     "invalid-identifier",
     "'id' must be a string"
-  )
-
-  val ExeededMaxYamlReferences = validation(
-    "max-yaml-references",
-    "Exceeded maximum yaml references threshold"
   )
 
   val MissingParameterType = validation(
@@ -705,95 +431,43 @@ object ParserSideValidations extends Validations {
     OasFormDataNotFileSpecification.id -> Map(
       Oas20Profile -> VIOLATION
     ),
-    JsonSchemaInheritanceWarning.id -> all(WARNING),
-    PatternPropertiesOnClosedNodeSpecification.id -> Map(
-      Raml10Profile -> VIOLATION,
-      Raml08Profile -> VIOLATION,
-      Oas20Profile  -> WARNING,
-      Oas30Profile  -> WARNING,
-      AmfProfile    -> WARNING
-    ),
-    DiscriminatorOnExtendedUnionSpecification.id -> Map(
-      Raml10Profile -> VIOLATION,
-      Raml08Profile -> VIOLATION,
-      Oas20Profile  -> WARNING,
-      Oas30Profile  -> WARNING,
-      AmfProfile    -> WARNING
-    ),
     ItemsFieldRequiredWarning.id                 -> all(WARNING), // TODO: should be violation
     NullAbstractDeclaration.id                   -> all(WARNING),
-    SchemaDeprecated.id                          -> all(WARNING),
     SchemasDeprecated.id                         -> all(WARNING),
     UnusedBaseUriParameter.id                    -> all(WARNING),
-    InvalidShapeFormat.id                        -> all(WARNING),
     CrossSecurityWarningSpecification.id         -> all(WARNING),
-    ReadOnlyPropertyMarkedRequired.id            -> all(WARNING),
     MissingRequiredFieldForGrantType.id          -> all(WARNING),
     invalidExampleFieldWarning.id                -> all(WARNING), // TODO: should be violation
     OasInvalidParameterSchema.id                 -> all(WARNING), // TODO: should be violation
     InvalidAllowedTargets.id                     -> all(WARNING), // TODO: should be violation
-    MissingDiscriminatorProperty.id              -> all(VIOLATION),
     InvalidPayload.id                            -> all(VIOLATION),
     ClosedShapeSpecificationWarning.id           -> all(WARNING),
     ImplicitVersionParameterWithoutApiVersion.id -> all(WARNING), // TODO: should be violation
     InvalidVersionBaseUriParameterDefinition.id  -> all(WARNING), // TODO: should be violation
     HeaderMustBeObject.id                        -> Map(Async20Profile -> VIOLATION),
-    InvalidRequiredBooleanForSchemaVersion.id    -> all(WARNING) // TODO: should be violation
   )
 
   override val validations: List[ValidationSpecification] = List(
-    ChainedReferenceSpecification,
-    ExclusivePropertiesSpecification,
     PathTemplateUnbalancedParameters,
     UnknownSecuritySchemeErrorSpecification,
     MissingSecuritySchemeErrorSpecification,
     UnknownScopeErrorSpecification,
-    JsonSchemaInheritanceWarning,
-    XmlSchemaInheritancceWarning,
     DuplicatedPropertySpecification,
-    ExamplesMustBeAMap,
-    ExamplesMustBeASeq,
     UnsupportedExampleMediaTypeErrorSpecification,
     OasInvalidBodyParameter,
     DuplicatedParameters,
     DuplicatedTags,
-    PatternPropertiesOnClosedNodeSpecification,
-    DiscriminatorOnExtendedUnionSpecification,
     OasFormDataNotFileSpecification,
     OasBodyAndFormDataParameterSpecification,
     OasInvalidParameterBinding,
-    UnableToParseJsonSchema,
-    UnexpectedRamlScalarKey,
-    UnableToParseShapeExtensions,
     InvalidAbstractDeclarationType,
     NullAbstractDeclaration,
-    UnexpectedVendor,
-    InvalidDisjointUnionType,
-    InvalidOrType,
-    InvalidAndType,
-    InvalidXoneType,
-    InvalidAdditionalPropertiesType,
-    InvalidAdditionalItemsType,
-    InvalidRequiredArrayForSchemaVersion,
-    InvalidRequiredBooleanForSchemaVersion,
-    InvalidSchemaType,
-    UnableToSetDefaultType,
-    InvalidTypeDefinition,
-    InvalidTupleType,
-    UnableToParseArray,
-    InvalidDecimalPoint,
-    InvalidPropertyType,
     JsonSchemaFragmentNotFound,
     InvalidJsonSchemaExpression,
     InvalidXmlSchemaType,
-    InvalidExternalTypeType,
-    InvalidAbstractDeclarationParameterInType,
-    ExclusiveSchemaType,
-    SchemaDeprecated,
     UnresolvedParameter,
     ParameterNameRequired,
     RequestBodyContentRequired,
-    DiscriminatorNameRequired,
     InvalidSecuredByType,
     ScopeNamesMustBeEmpty,
     InvalidSecuritySchemeDescribedByType,
@@ -807,47 +481,28 @@ object ParserSideValidations extends Validations {
     InvalidBaseUriParametersType,
     InvalidBasePath,
     InvalidParameterType,
-    InvalidMediaTypeType,
-    InvalidJsonSchemaVersion,
     InvalidEndpointType,
     UnableToParseShape,
     InvalidAnnotationType,
-    InvalidAnnotationTarget,
-    InvalidFragmentType,
     InvalidTypesType,
     SchemasDeprecated,
-    ExclusiveSchemasType,
     InvalidDocumentationType,
     InvalidAllowedTargetsType,
-    InvalidTypeExpression,
     InvalidExtensionsType,
     ModuleNotFound,
     UnexpectedReference,
-    InvalidShapeFormat,
-    UnexpectedFileTypesSyntax,
-    InvalidJsonSchemaType,
     CrossSecurityWarningSpecification,
-    ReadOnlyPropertyMarkedRequired,
-    MissingDiscriminatorProperty,
     InvalidPayload,
-    InvalidValueInPropertiesFacet,
     InvalidUserDefinedFacetName,
     InvalidFieldNameInComponents,
-    MissingRequiredUserDefinedFacet,
     ParameterMissingSchemaOrContent,
     ServerVariableMissingDefault,
     SlashInUriParameterValues,
-    InvalidDatetimeFormat,
-    ItemsFieldRequired,
     InvalidTagType,
     InvalidIdentifier,
     InvalidComponents,
-    ExeededMaxYamlReferences,
     InvalidStatusCode,
-    InvalidUnevaluatedPropertiesType,
-    InvalidUnevaluatedItemsType,
     HeaderMustBeObject,
-    InvalidUnionType,
     InvalidModuleType,
     ClosedShapeSpecification,
     ClosedShapeSpecificationWarning

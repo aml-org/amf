@@ -4,6 +4,10 @@ import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.LicenseModel
 import amf.plugins.domain.webapi.models.License
@@ -28,6 +32,9 @@ case class LicenseEmitter(key: String, license: License, ordering: SpecOrdering)
 
 case class LicensePartEmitter(license: License, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   override def emit(b: PartBuilder): Unit = {
     b.obj { b =>
       val fs     = license.fields

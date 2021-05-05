@@ -5,12 +5,16 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DataNode
 import amf.core.parser.{FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.plugins.document.webapi.parser.spec.declaration.ReferenceEmitterHelper.emitLinkOr
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{Raml10TypePartEmitter, RamlNamedTypeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.metamodel.security._
@@ -62,6 +66,8 @@ abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
                                               ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   protected def securitySchemeEmitter: (SecurityScheme, Seq[BaseUnit], SpecOrdering) => RamlSecuritySchemeEmitter
 
   override def position(): Position = pos(securityScheme.annotations)
@@ -103,6 +109,8 @@ abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
                                          references: Seq[BaseUnit],
                                          ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit = {
     emitLinkOr(securityScheme, b, references) {
@@ -202,6 +210,7 @@ case class RamlApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrde
 }
 
 case class RamlOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
   def emitters(): Seq[EntryEmitter] = {
     val fs      = o1.fields
     val results = ListBuffer[EntryEmitter]()
@@ -214,6 +223,9 @@ case class RamlOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering
 }
 
 case class RamlOAuth2SettingsEmitters(o2: OAuth2Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+
   def emitters(): Seq[EntryEmitter] = {
 
     val fs      = o2.fields
@@ -296,6 +308,8 @@ abstract class DescribedByEmitter(key: String,
                                   ordering: SpecOrdering,
                                   references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
+
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
   def entries(fs: Fields): Seq[EntryEmitter] = {
     val results = ListBuffer[EntryEmitter]()

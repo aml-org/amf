@@ -69,8 +69,6 @@ object ResolutionSideValidations extends Validations {
 
   override val validations: List[ValidationSpecification] = List(
     MissingExtensionInReferences,
-    InvalidTypeInheritanceErrorSpecification,
-    InvalidTypeInheritanceWarningSpecification,
     NestedEndpoint,
     UnequalMediaTypeDefinitionsInExtendsPayloads,
     ParseResourceTypeFail,

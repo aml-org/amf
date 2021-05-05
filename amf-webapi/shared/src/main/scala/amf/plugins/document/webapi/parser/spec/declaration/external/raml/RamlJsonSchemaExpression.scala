@@ -20,6 +20,7 @@ import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
 import amf.plugins.document.webapi.parser.spec.common.ExternalFragmentHelper
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.declaration.utils.JsonSchemaParsingHelper
@@ -28,7 +29,8 @@ import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.toJsonSchema
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
-import amf.validations.ParserSideValidations.{JsonSchemaFragmentNotFound, UnableToParseJsonSchema}
+import amf.validations.ParserSideValidations.{JsonSchemaFragmentNotFound}
+import amf.validations.ShapeParserSideValidations.UnableToParseJsonSchema
 import org.mulesoft.lexer.Position
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
@@ -39,9 +41,11 @@ import scala.collection.mutable
 case class RamlJsonSchemaExpression(key: YNode,
                                     override val value: YNode,
                                     override val adopt: Shape => Unit,
-                                    parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
+                                    parseExample: Boolean = false)(implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser
     with PlatformSecrets {
+
+  override val shapeCtx: ShapeParserContext = WebApiShapeParserContextAdapter(ctx)
 
   override def parseValue(origin: ValueAndOrigin): AnyShape = value.value match {
     case map: YMap if parseExample =>
@@ -65,14 +69,15 @@ case class RamlJsonSchemaExpression(key: YNode,
     map.key(
       "default",
       entry => {
-        val dataNodeResult = NodeDataNodeParser(entry.value, wrapper.id, quiet = false).parse()
+        val dataNodeResult =
+          NodeDataNodeParser(entry.value, wrapper.id, quiet = false)(WebApiShapeParserContextAdapter(ctx)).parse()
         wrapper.setDefaultStrValue(entry)
         dataNodeResult.dataNode.foreach { dataNode =>
           wrapper.set(ShapeModel.Default, dataNode, Annotations(entry))
         }
       }
     )
-    parseExamples(wrapper, value.as[YMap])
+    parseExamples(wrapper, value.as[YMap])(WebApiShapeParserContextAdapter(ctx))
     wrapperName(key).foreach(t => wrapper.withName(t, Annotations(key)))
     val typeEntryAnnotations =
       map.key("type").orElse(map.key("schema")).map(e => Annotations(e)).getOrElse(Annotations())
@@ -204,7 +209,7 @@ case class RamlJsonSchemaExpression(key: YNode,
                              value: YNode,
                              extLocation: Option[String]): AnyShape = {
 
-    val node = ExternalFragmentHelper.searchNodeInFragments(valueAST).getOrElse {
+    val node = ExternalFragmentHelper.searchNodeInFragments(valueAST)(WebApiShapeParserContextAdapter(ctx)).getOrElse {
       jsonParser(extLocation, text, valueAST).document().node
     }
     val schemaEntry       = YMapEntry(key, node)
@@ -212,7 +217,10 @@ case class RamlJsonSchemaExpression(key: YNode,
     val fullRef           = platform.normalizePath(jsonSchemaContext.rootContextDocument)
 
     val tmpShape: UnresolvedShape =
-      JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), schemaEntry, jsonSchemaContext, fullRef)
+      JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape),
+                                                   schemaEntry,
+                                                   WebApiShapeParserContextAdapter(jsonSchemaContext),
+                                                   fullRef)
 
     val s = actualParsing(adopt, value, schemaEntry, jsonSchemaContext, fullRef, tmpShape)
     cleanGlobalSpace()
@@ -261,7 +269,7 @@ case class RamlJsonSchemaExpression(key: YNode,
                             fullRef: String,
                             tmpShape: UnresolvedShape) = {
     OasTypeParser(schemaEntry, shape => adopt(shape), ctx.computeJsonSchemaVersion(schemaEntry.value))(
-      jsonSchemaContext)
+      (WebApiShapeParserContextAdapter(jsonSchemaContext)))
       .parse() match {
       case Some(sh) =>
         ctx.futureDeclarations.resolveRef(fullRef, sh)

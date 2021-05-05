@@ -13,6 +13,11 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
   OasSpecEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ApiShapeEmitterContextAdapter,
+  ShapeEmitterContext,
+  oas
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypePartEmitter
 import amf.plugins.document.webapi.parser.spec.domain.{
   ExampleDataNodePartEmitter,
@@ -146,9 +151,10 @@ trait OasEmitterFactory extends OasLikeEmitterFactory {
 trait OasLikeEmitterFactory extends DomainElementEmitterFactory {
 
   implicit val ctx: OasLikeSpecEmitterContext
+  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(ctx)
 
   override def typeEmitter(s: Shape): Option[PartEmitter] =
-    Some(OasTypePartEmitter(s, SpecOrdering.Lexical, references = Nil))
+    Some(oas.OasTypePartEmitter(s, SpecOrdering.Lexical, references = Nil))
 
   override def parametrizedSecuritySchemeEmitter(s: ParametrizedSecurityScheme): Option[PartEmitter] =
     Some(ctx.factory.parametrizedSecurityEmitter(s, SpecOrdering.Lexical))
