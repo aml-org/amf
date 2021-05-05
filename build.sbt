@@ -42,7 +42,7 @@ sonarProperties ++= Map(
 
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
-  resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal),
+  resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Common.nexus3, Resolver.mavenLocal),
   resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   aggregate in assembly := false,

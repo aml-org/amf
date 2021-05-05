@@ -10,6 +10,7 @@ buildscript {
             url "https://repository.mulesoft.org/nexus/content/repositories/releases/"
         }
         maven { url "https://jitpack.io" }
+        maven { url "https://nexus3.build.msap.io/repository/maven-all/" }
     }
     dependencies {
         classpath "com.mulesoft:gradle-tools:0.2.6"

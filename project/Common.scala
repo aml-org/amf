@@ -7,6 +7,7 @@ object Common {
 
   val snapshots: MavenRepository = "MuleSoft snapshots" at s"$nexus/snapshots"
   val releases: MavenRepository  = "MuleSoft releases" at s"$nexus/releases"
+  val nexus3: MavenRepository    = "Nexus 3 repository" at "https://nexus3.build.msap.io/repository/maven-all/"
 
   val settings: Seq[Def.Setting[_]] = Seq(
     scalaVersion := "2.12.11",
