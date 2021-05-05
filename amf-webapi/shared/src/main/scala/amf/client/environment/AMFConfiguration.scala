@@ -1,98 +1,99 @@
 package amf.client.environment
 
-import amf.{Oas30Profile, OasProfile, RamlProfile}
-import amf.client.remod.amfcore.config.{AMFEventListener, AMFLogger, AMFOptions, AMFResolvers}
+import amf.client.remod.amfcore.config._
+import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
-import amf.client.remod.amfcore.resolution.{PipelineInfo, PipelineName}
 import amf.client.remod.{AMFGraphConfiguration, ErrorHandlerProvider}
-import amf.core.remote.{AsyncApi20, Oas20, Oas30, Raml08, Raml10}
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.plugins.document.webapi.Async20Plugin.vendor
+import amf.core.validation.core.ValidationProfile
+import amf.internal.reference.UnitCache
+import amf.internal.resource.ResourceLoader
 import amf.plugins.document.webapi._
-import amf.plugins.document.webapi.resolution.pipelines.{
-  Async20EditingPipeline,
-  Async20ResolutionPipeline,
-  Oas30EditingPipeline,
-  Oas30ResolutionPipeline,
-  OasEditingPipeline,
-  OasResolutionPipeline,
-  Raml08EditingPipeline,
-  Raml08ResolutionPipeline,
-  Raml10EditingPipeline,
-  Raml10ResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines._
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
+  Oas20CompatibilityPipeline,
+  Oas3CompatibilityPipeline,
+  Raml08CompatibilityPipeline,
+  Raml10CompatibilityPipeline
 }
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 
 sealed trait APIConfigurationBuilder {
 
-  //  will also define APIDomainPlugin, DataShapesDomainPlugin
-  private[amf] def common(): AMFGraphConfiguration =
-    AMLConfiguration
-      .predefined()
+//  will also define APIDomainPlugin, DataShapesDomainPlugin
+  private[amf] def common(): AMFConfiguration = {
+    val configuration = AMLConfiguration.predefined()
+    new AMFConfiguration(configuration.resolvers,
+                         configuration.errorHandlerProvider,
+                         configuration.registry,
+                         configuration.logger,
+                         configuration.listeners,
+                         configuration.options)
       .withPlugins(List(ExternalJsonYamlRefsParsePlugin, PayloadParsePlugin, JsonSchemaParsePlugin))
+  }
 }
 object RAMLConfiguration extends APIConfigurationBuilder {
-  def RAML10(): AMFGraphConfiguration =
+  def RAML10(): AMFConfiguration =
     common()
       .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin))
-      .withTransformationPipelines(Map(
-        PipelineName.from(Raml10.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new Raml10ResolutionPipeline(),
-        PipelineName.from(Raml10.name, ResolutionPipeline.EDITING_PIPELINE) -> new Raml10EditingPipeline(),
-        PipelineName.from(Raml10.name, ResolutionPipeline.COMPATIBILITY_PIPELINE) -> new CompatibilityPipeline(
-          RamlProfile),
-        PipelineName.from(Raml10.name, ResolutionPipeline.CACHE_PIPELINE) -> new Raml10EditingPipeline(false)
-      ))
-  def RAML08(): AMFGraphConfiguration =
+      .withTransformationPipelines(
+        List(
+          Raml10ResolutionPipeline(),
+          Raml10EditingPipeline(),
+          Raml10CompatibilityPipeline(),
+          Raml10CachePipeline()
+        ))
+  def RAML08(): AMFConfiguration =
     common()
       .withPlugins(List(Raml08ParsePlugin, Raml08RenderPlugin))
-      .withTransformationPipelines(Map(
-        PipelineName.from(Raml08.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new Raml08ResolutionPipeline(),
-        PipelineName.from(Raml08.name, ResolutionPipeline.EDITING_PIPELINE) -> new Raml08EditingPipeline(),
-        PipelineName.from(Raml08.name, ResolutionPipeline.COMPATIBILITY_PIPELINE) -> new CompatibilityPipeline(
-          RamlProfile),
-        PipelineName.from(Raml08.name, ResolutionPipeline.CACHE_PIPELINE) -> new Raml08EditingPipeline(false)
-      ))
+      .withTransformationPipelines(
+        List(
+          Raml08ResolutionPipeline(),
+          Raml08EditingPipeline(),
+          Raml08CompatibilityPipeline(),
+          Raml08CachePipeline()
+        ))
 
-  def RAML(): AMFGraphConfiguration = RAML08().merge(RAML10())
+  def RAML(): AMFConfiguration = RAML08().merge(RAML10())
 }
 
 object OASConfiguration extends APIConfigurationBuilder {
-  def OAS20(): AMFGraphConfiguration =
+  def OAS20(): AMFConfiguration =
     common()
       .withPlugins(List(Oas20ParsePlugin, Oas20RenderPlugin))
-      .withTransformationPipelines(Map(
-        PipelineName.from(Oas20.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new OasResolutionPipeline(),
-        PipelineName.from(Oas20.name, ResolutionPipeline.EDITING_PIPELINE) -> new OasEditingPipeline(),
-        PipelineName.from(Oas20.name, ResolutionPipeline.COMPATIBILITY_PIPELINE) -> new CompatibilityPipeline(
-          OasProfile),
-        PipelineName.from(Oas20.name, ResolutionPipeline.CACHE_PIPELINE) -> new OasEditingPipeline(false)
-      ))
-  def OAS30(): AMFGraphConfiguration =
+      .withTransformationPipelines(
+        List(
+          Oas20ResolutionPipeline(),
+          Oas20EditingPipeline(),
+          Oas20CompatibilityPipeline(),
+          Oas20CachePipeline()
+        ))
+  def OAS30(): AMFConfiguration =
     common()
       .withPlugins(List(Oas30ParsePlugin, Oas30RenderPlugin))
-      .withTransformationPipelines(Map(
-        PipelineName.from(Oas30.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new Oas30ResolutionPipeline(),
-        PipelineName.from(Oas30.name, ResolutionPipeline.EDITING_PIPELINE) -> new Oas30EditingPipeline(),
-        PipelineName.from(Oas30.name, ResolutionPipeline.COMPATIBILITY_PIPELINE) -> new CompatibilityPipeline(
-          Oas30Profile),
-        PipelineName.from(Oas30.name, ResolutionPipeline.CACHE_PIPELINE) -> new Oas30EditingPipeline(false)
-      ))
-  def OAS(): AMFGraphConfiguration = OAS20().merge(OAS30())
+      .withTransformationPipelines(
+        List(
+          Oas30ResolutionPipeline(),
+          Oas3EditingPipeline(),
+          Oas3CompatibilityPipeline(),
+          Oas3CachePipeline()
+        ))
+  def OAS(): AMFConfiguration = OAS20().merge(OAS30())
 }
 
 object WebAPIConfiguration {
-  def WebAPI(): AMFGraphConfiguration = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
+  def WebAPI(): AMFConfiguration = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
 }
 
 object AsyncAPIConfiguration extends APIConfigurationBuilder {
   def Async20(): AMFGraphConfiguration =
     common()
       .withPlugins(List(Async20ParsePlugin, Async20RenderPlugin))
-      .withTransformationPipelines(Map(
-        PipelineName.from(AsyncApi20.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new Async20ResolutionPipeline(),
-        PipelineName.from(AsyncApi20.name, ResolutionPipeline.EDITING_PIPELINE) -> new Async20EditingPipeline(),
-        PipelineName.from(AsyncApi20.name, ResolutionPipeline.CACHE_PIPELINE)   -> new Async20EditingPipeline(false)
-      ))
+      .withTransformationPipelines(
+        List(
+          Async20ResolutionPipeline(),
+          Async20EditingPipeline(),
+          Async20EditingPipeline()
+        ))
 }
 
 class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
@@ -104,6 +105,46 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     extends AMLConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
 
   override def createClient(): AMFClient = new AMFClient(this)
+
+  override def withParsingOptions(parsingOptions: ParsingOptions): AMFConfiguration =
+    super._withParsingOptions(parsingOptions)
+
+  override def withResourceLoader(rl: ResourceLoader): AMFConfiguration =
+    super._withResourceLoader(rl)
+
+  override def withResourceLoaders(rl: List[ResourceLoader]): AMFConfiguration =
+    super._withResourceLoaders(rl)
+
+  override def withUnitCache(cache: UnitCache): AMFConfiguration =
+    super._withUnitCache(cache)
+
+  override def withPlugin(amfPlugin: AMFPlugin[_]): AMFConfiguration =
+    super._withPlugin(amfPlugin)
+
+  override def withPlugins(plugins: List[AMFPlugin[_]]): AMFConfiguration =
+    super._withPlugins(plugins)
+
+  override def withValidationProfile(profile: ValidationProfile): AMFConfiguration =
+    super._withValidationProfile(profile)
+
+  override def withTransformationPipeline(pipeline: ResolutionPipeline): AMFConfiguration =
+    super._withTransformationPipeline(pipeline)
+
+  /**
+    * AMF internal method just to facilitate the construction
+    * @param pipelines
+    * @return
+    */
+  override private[amf] def withTransformationPipelines(pipelines: List[ResolutionPipeline]): AMFConfiguration =
+    super._withTransformationPipelines(pipelines)
+
+  override def withRenderOptions(renderOptions: RenderOptions): AMFConfiguration =
+    super._withRenderOptions(renderOptions)
+
+  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration =
+    super._withErrorHandlerProvider(provider)
+
+  def merge(other: AMFConfiguration): AMFConfiguration = super._merge(other)
 
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,
