@@ -1,6 +1,5 @@
 package amf.client.environment
 
-import amf.ProfileName
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
@@ -17,15 +16,7 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
   Raml08CompatibilityPipeline,
   Raml10CompatibilityPipeline
 }
-import amf.plugins.document.webapi.validation.ApiValidationProfiles
-import amf.plugins.document.webapi.validation.ApiValidationProfiles.{
-  AmfValidationProfile,
-  Async20ValidationProfile,
-  Oas20ValidationProfile,
-  Oas30ValidationProfile,
-  Raml08ValidationProfile,
-  Raml10ValidationProfile
-}
+import amf.plugins.document.webapi.validation.ApiValidationProfiles._
 
 sealed trait APIConfigurationBuilder {
 
@@ -41,6 +32,8 @@ sealed trait APIConfigurationBuilder {
       .withPlugins(List(ExternalJsonYamlRefsParsePlugin, PayloadParsePlugin, JsonSchemaParsePlugin))
   }
 }
+
+/** Common configuration with RAML plugins and transformation pipelines */
 object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML10(): AMFConfiguration =
     common()
@@ -69,6 +62,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML(): AMFConfiguration = RAML08().merge(RAML10())
 }
 
+/** Common configuration with OAS plugins and transformation pipelines */
 object OASConfiguration extends APIConfigurationBuilder {
   def OAS20(): AMFConfiguration =
     common()
@@ -95,10 +89,12 @@ object OASConfiguration extends APIConfigurationBuilder {
   def OAS(): AMFConfiguration = OAS20().merge(OAS30())
 }
 
+/** Configuration with OAS and RAML plugins and transformation pipelines */
 object WebAPIConfiguration {
   def WebAPI(): AMFConfiguration = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
 }
 
+/** Common configuration with AsyncAPI plugins and transformation pipelines */
 object AsyncAPIConfiguration extends APIConfigurationBuilder {
   def Async20(): AMFGraphConfiguration =
     common()
@@ -112,6 +108,15 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
         ))
 }
 
+/**
+  * The configuration object required for using AMF
+  * @param resolvers {@link amf.client.remod.amfcore.config.AMFResolvers}
+  * @param errorHandlerProvider {@link amf.client.remod.ErrorHandlerProvider}
+  * @param registry {@link amf.client.remod.amfcore.registry.AMFRegistry}
+  * @param logger {@link amf.client.remod.amfcore.config.AMFLogger}
+  * @param listeners a Set of {@link amf.client.remod.amfcore.config.AMFEventListener}
+  * @param options {@link amf.client.remod.amfcore.config.AMFOptions}
+  */
 class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                      override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
                                      override private[amf] val registry: AMFRegistry,
