@@ -114,6 +114,7 @@ pipeline {
           branch 'master'
           branch 'release/*'
           branch 'support/*'
+          branch 'nexus-3-resolver'
         }
       }
       steps {
