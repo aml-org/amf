@@ -7,6 +7,7 @@ digraph G {
     subgraph cluster_0 {
         "amf-client" [style=dashed]
 	    "amf-webapi"
+	    "amf-shapes"
 	    color=gray
     }
     subgraph cluster_1 {
@@ -22,6 +23,6 @@ digraph G {
     }
     
 	# dependencies
-	"amf-client" -> "amf-webapi"
-	"amf-webapi" -> "amf-custom-validation" -> "amf-aml" -> "amf-validation" -> "amf-core" [label="dependsOn"]
+	"amf-client" -> "amf-webapi" -> "amf-shapes"
+	"amf-shapes" -> "amf-custom-validation" -> "amf-aml" -> "amf-validation" -> "amf-core" [label="dependsOn"]
 }
