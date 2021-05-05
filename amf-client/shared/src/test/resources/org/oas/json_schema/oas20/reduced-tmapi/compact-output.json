@@ -1,0 +1,2278 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "apiHeader": {
+          "$ref": "#/definitions/ApiHeaderType"
+        },
+        "rateCriteria": {
+          "$ref": "#/definitions/RateCriteriaType"
+        },
+        "returnDiagnosticsFlag": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ApiHeaderType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "RateCriteriaType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "chargeOverwrite": {
+          "items": {
+            "$ref": "#/definitions/ChargeDetailType"
+          },
+          "type": "array"
+        },
+        "freightDetail": {
+          "$ref": "#/definitions/FreightDetailType"
+        },
+        "intermediatePoint": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IntermediatePointType"
+          }
+        },
+        "rateQuotationContainer": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RateQuotationContainerType"
+          }
+        }
+      }
+    },
+    "FreightDetailType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "weightByFreightClass": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WeightByFreightClassType"
+          }
+        }
+      }
+    },
+    "ChargeDetailType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "nonOperationalFreightAP": {
+          "$ref": "#/definitions/NonOperationalFreightType"
+        },
+        "nonOperationalFreightAR": {
+          "$ref": "#/definitions/NonOperationalFreightType"
+        }
+      }
+    },
+    "IntermediatePointType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "RateQuotationContainerType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "weightByFreightClass": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WeightByFreightClassType"
+          }
+        }
+      }
+    },
+    "WeightByFreightClassType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "NonOperationalFreightType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "APCharge": {
+          "items": {
+            "$ref": "#/definitions/ChargeDetailType"
+          },
+          "type": "array"
+        },
+        "APRatingInformation": {
+          "$ref": "#/definitions/RatingInformationType"
+        },
+        "ARCharge": {
+          "items": {
+            "$ref": "#/definitions/ChargeDetailType"
+          },
+          "type": "array"
+        },
+        "ARRatingInformation": {
+          "$ref": "#/definitions/RatingInformationType"
+        },
+        "NOFWeightByFreightClass": {
+          "items": {
+            "$ref": "#/definitions/NOFWeightByFreightClassType"
+          },
+          "type": "array"
+        },
+        "chargeOverride": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChargeOverrideType"
+          }
+        },
+        "firstShippingAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "lastShippingAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "nonOperationalStop": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NonOperationalStopType"
+          }
+        },
+        "referenceNumberStructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          }
+        },
+        "thirdPartyAddress": {
+          "$ref": "#/definitions/AddressType"
+        }
+      }
+    },
+    "RatingInformationType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "charge": {
+          "items": {
+            "$ref": "#/definitions/APChargeType"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "AddressType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "MemoType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "NOFWeightByFreightClassType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "nonOperationalFreight": {
+          "$ref": "#/definitions/NonOperationalFreightType"
+        }
+      }
+    },
+    "ChargeOverrideType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "NonOperationalStopType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "nonOperationalFreight": {
+          "$ref": "#/definitions/NonOperationalFreightType"
+        },
+        "referenceNumberStructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          }
+        }
+      }
+    },
+    "ReferenceNumberType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "APVoucher": {
+          "$ref": "#/definitions/APVoucherType"
+        },
+        "ARVoucher": {
+          "$ref": "#/definitions/ARVoucherType"
+        },
+        "container": {
+          "$ref": "#/definitions/ContainerType"
+        },
+        "dockCommitment": {
+          "$ref": "#/definitions/DockCommitmentType"
+        },
+        "freightBill": {
+          "$ref": "#/definitions/FreightBillType"
+        },
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "nonOperationalFreight": {
+          "$ref": "#/definitions/NonOperationalFreightType"
+        },
+        "nonOperationalStop": {
+          "$ref": "#/definitions/NonOperationalStopType"
+        },
+        "referenceNumberQualifier": {
+          "$ref": "#/definitions/ReferenceNumberQualifierType"
+        },
+        "shipment": {
+          "$ref": "#/definitions/ShipmentType"
+        },
+        "shipmentItem": {
+          "$ref": "#/definitions/ShipmentItemType"
+        },
+        "shipmentLeg": {
+          "$ref": "#/definitions/ShipmentLegType"
+        },
+        "shipmentLegContainer": {
+          "$ref": "#/definitions/ShipmentLegContainerType"
+        },
+        "stop": {
+          "$ref": "#/definitions/StopType"
+        },
+        "trip": {
+          "$ref": "#/definitions/TripType"
+        }
+      }
+    },
+    "APChargeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "nonOperationalFreightAP": {
+          "$ref": "#/definitions/NonOperationalFreightType"
+        },
+        "nonOperationalFreightAR": {
+          "$ref": "#/definitions/NonOperationalFreightType"
+        },
+        "shipment": {
+          "$ref": "#/definitions/ShipmentType"
+        },
+        "shipmentLeg": {
+          "$ref": "#/definitions/ShipmentLegType"
+        },
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        }
+      }
+    },
+    "ARVoucherType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "referenceNumberStructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          }
+        },
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        },
+        "voucherCharge": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VoucherChargeType"
+          }
+        },
+        "voucherHeldLog": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VoucherHeldLogType"
+          }
+        }
+      }
+    },
+    "ContainerType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "containerOrientation": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContainerOrientationType"
+          }
+        },
+        "containerShippingInformation": {
+          "$ref": "#/definitions/ShippingInformationType"
+        },
+        "referenceNumberStructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ComponentReferenceNumberType"
+          }
+        },
+        "shipment": {
+          "$ref": "#/definitions/ShipmentType"
+        },
+        "shipmentItem": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ShipmentItemType"
+          }
+        },
+        "transportOrderInfo": {
+          "$ref": "#/definitions/TransportOrderType"
+        },
+        "weightByFreightClass": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WeightByFreightClassType"
+          }
+        }
+      }
+    },
+    "DockCommitmentType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "dock": {
+          "$ref": "#/definitions/DockType"
+        },
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "referenceNumberStructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          }
+        },
+        "stop": {
+          "$ref": "#/definitions/StopType"
+        }
+      }
+    },
+    "LoadType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "APCharge": {
+          "items": {
+            "$ref": "#/definitions/APChargeType"
+          },
+          "type": "array"
+        },
+        "Shipment": {
+          "$ref": "#/definitions/ShipmentType"
+        },
+        "TPSoftConstraintViolations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TPSoftConstraintViolationsType"
+          }
+        },
+        "carrierTenderContact": {
+          "$ref": "#/definitions/LoadTenderContactType"
+        },
+        "chargeOverrides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChargeOverrideType"
+          }
+        },
+        "destinationAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "externalCost": {
+          "items": {
+            "$ref": "#/definitions/ExternalCostType"
+          },
+          "type": "array"
+        },
+        "loadConfiguratorAxle": {
+          "items": {
+            "$ref": "#/definitions/LoadConfiguratorAxleType"
+          },
+          "type": "array"
+        },
+        "loadConfiguratorContainer": {
+          "items": {
+            "$ref": "#/definitions/LoadConfiguratorContainerType"
+          },
+          "type": "array"
+        },
+        "loadConfiguratorSpace": {
+          "items": {
+            "$ref": "#/definitions/LoadConfiguratorSpaceType"
+          },
+          "type": "array"
+        },
+        "loadItemLoading": {
+          "items": {
+            "$ref": "#/definitions/LoadItemLoadingType"
+          },
+          "type": "array"
+        },
+        "loadScheduleEntry": {
+          "items": {
+            "$ref": "#/definitions/LoadScheduleEntryType"
+          },
+          "type": "array"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "note": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          }
+        },
+        "originAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "referenceNumberStructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          }
+        },
+        "resource": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceType"
+          }
+        },
+        "senderTenderContact": {
+          "$ref": "#/definitions/LoadTenderContactType"
+        },
+        "shipmentLeg": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ShipmentLegType"
+          }
+        },
+        "skeletonRoute": {
+          "$ref": "#/definitions/SkeletonRouteType"
+        },
+        "stop": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StopType"
+          }
+        },
+        "trip": {
+          "$ref": "#/definitions/TripType"
+        },
+        "tripComparativeLoadCostInformation": {
+          "$ref": "#/definitions/RatingInformationType"
+        },
+        "unselectedResource": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResourceType"
+          }
+        }
+      }
+    },
+    "ReferenceNumberQualifierType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "referenceNumberCategory": {
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberCategoryType"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "ShipmentType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "ARCharge": {
+          "items": {
+            "$ref": "#/definitions/APChargeType"
+          },
+          "type": "array"
+        },
+        "chargeOverrides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChargeOverrideType"
+          }
+        },
+        "container": {
+          "items": {
+            "$ref": "#/definitions/ContainerType"
+          },
+          "type": "array"
+        },
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "newNote": {
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          },
+          "type": "array"
+        },
+        "note": {
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          },
+          "type": "array"
+        },
+        "referenceNumberStructure": {
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          },
+          "type": "array"
+        },
+        "shipFromAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "shipToAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "shipmentItem": {
+          "items": {
+            "$ref": "#/definitions/ShipmentItemType"
+          },
+          "type": "array"
+        },
+        "shipmentLeg": {
+          "items": {
+            "$ref": "#/definitions/ShipmentLegType"
+          },
+          "type": "array"
+        },
+        "shippingInformation": {
+          "$ref": "#/definitions/ShippingInformationType"
+        },
+        "tariffUnitOfMeasure": {
+          "$ref": "#/definitions/UnitOfMeasureType"
+        },
+        "throughPoint": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ThroughPointType"
+          }
+        },
+        "unitOfMeasure": {
+          "$ref": "#/definitions/UnitOfMeasureType"
+        }
+      }
+    },
+    "ShipmentItemType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "container": {
+          "$ref": "#/definitions/ContainerType"
+        },
+        "referenceNumberStructure": {
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          },
+          "type": "array"
+        },
+        "shipment": {
+          "$ref": "#/definitions/ShipmentType"
+        }
+      }
+    },
+    "ShipmentLegType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "APCharge": {
+          "items": {
+            "$ref": "#/definitions/APChargeType"
+          },
+          "type": "array"
+        },
+        "chargeOverrides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChargeOverrideType"
+          }
+        },
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "referenceNumberStructure": {
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          },
+          "type": "array"
+        },
+        "shipFromAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "shipToAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "shipment": {
+          "$ref": "#/definitions/ShipmentType"
+        },
+        "shipmentLegContainer": {
+          "items": {
+            "$ref": "#/definitions/ShipmentLegContainerType"
+          },
+          "type": "array"
+        },
+        "trip": {
+          "$ref": "#/definitions/TripType"
+        }
+      }
+    },
+    "ShipmentLegContainerType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "referenceNumberStructure": {
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          },
+          "type": "array"
+        },
+        "shipmentLeg": {
+          "$ref": "#/definitions/ShipmentLegType"
+        }
+      }
+    },
+    "StopType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "appointment": {
+          "$ref": "#/definitions/AppointmentType"
+        },
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "loadingInstruction": {
+          "$ref": "#/definitions/LoadingInstructionType"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "referenceNumberStructure": {
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          },
+          "type": "array"
+        },
+        "skeletonRoute": {
+          "$ref": "#/definitions/SkeletonRouteType"
+        },
+        "trip": {
+          "$ref": "#/definitions/TripType"
+        }
+      }
+    },
+    "TripType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "TPSoftConstraintViolations": {
+          "items": {
+            "$ref": "#/definitions/TPSoftConstraintViolationsType"
+          },
+          "type": "array"
+        },
+        "carrierTenderContact": {
+          "$ref": "#/definitions/LoadTenderContactType"
+        },
+        "destinationAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "load": {
+          "items": {
+            "$ref": "#/definitions/LoadType"
+          },
+          "type": "array"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "originAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "referenceNumberStructure": {
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          },
+          "type": "array"
+        },
+        "resource": {
+          "items": {
+            "$ref": "#/definitions/ResourceType"
+          },
+          "type": "array"
+        },
+        "senderTenderContact": {
+          "$ref": "#/definitions/LoadTenderContactType"
+        },
+        "shipmentLeg": {
+          "items": {
+            "$ref": "#/definitions/ShipmentLegType"
+          },
+          "type": "array"
+        },
+        "stop": {
+          "items": {
+            "$ref": "#/definitions/StopType"
+          },
+          "type": "array"
+        },
+        "unselectedResource": {
+          "items": {
+            "$ref": "#/definitions/ResourceType"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "APVoucherType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "referenceNumberStructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          }
+        },
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        },
+        "voucherCharge": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VoucherChargeType"
+          }
+        },
+        "voucherHeldLog": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VoucherHeldLogType"
+          }
+        }
+      }
+    },
+    "FreightBillType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "freightBillDetail": {
+          "items": {
+            "$ref": "#/definitions/FreightBillDetailType"
+          },
+          "type": "array"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "newNote": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          }
+        },
+        "note": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          }
+        },
+        "referenceNumberStructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          }
+        }
+      }
+    },
+    "TariffType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "APVouchers": {
+          "items": {
+            "$ref": "#/definitions/APVoucherType"
+          },
+          "type": "array"
+        },
+        "chargeSurcharge": {
+          "items": {
+            "$ref": "#/definitions/ChargeSurchargeType"
+          },
+          "type": "array"
+        },
+        "lane": {
+          "items": {
+            "$ref": "#/definitions/LaneType"
+          },
+          "type": "array"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "rateSurcharge": {
+          "items": {
+            "$ref": "#/definitions/RateSurchargeType"
+          },
+          "type": "array"
+        },
+        "serviceSurcharge": {
+          "items": {
+            "$ref": "#/definitions/ServiceSurchargeType"
+          },
+          "type": "array"
+        },
+        "tariffRateCode": {
+          "items": {
+            "$ref": "#/definitions/TariffRateCodeType"
+          },
+          "type": "array"
+        },
+        "tariffService": {
+          "items": {
+            "$ref": "#/definitions/TariffServiceType"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "VoucherChargeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "ARVoucher": {
+          "$ref": "#/definitions/ARVoucherType"
+        },
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        },
+        "voucher": {
+          "$ref": "#/definitions/APVoucherType"
+        }
+      }
+    },
+    "VoucherHeldLogType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "APVoucher": {
+          "$ref": "#/definitions/APVoucherType"
+        },
+        "ARVoucher": {
+          "$ref": "#/definitions/ARVoucherType"
+        }
+      }
+    },
+    "ShippingInformationType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TransportOrderType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "referenceNumberStructure": {
+          "items": {
+            "$ref": "#/definitions/ReferenceNumberType"
+          },
+          "type": "array"
+        },
+        "shipFromAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "shipToAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "shippingInformation": {
+          "$ref": "#/definitions/ShippingInformationType"
+        },
+        "throughPoint": {
+          "items": {
+            "$ref": "#/definitions/ItineraryTemplateThroughPointType"
+          },
+          "type": "array"
+        },
+        "unitOfMeasure": {
+          "$ref": "#/definitions/UnitOfMeasureType"
+        }
+      }
+    },
+    "ContainerOrientationType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ComponentReferenceNumberType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "DockType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "businessHours": {
+          "$ref": "#/definitions/BusinessHoursType"
+        },
+        "dockCommitment": {
+          "items": {
+            "$ref": "#/definitions/DockCommitmentType"
+          },
+          "type": "array"
+        },
+        "dockCommodityExclusion": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DockCommodityExclusionType"
+          }
+        },
+        "dockEquipmentType": {
+          "items": {
+            "$ref": "#/definitions/DockEquipmentTypeType"
+          },
+          "type": "array"
+        },
+        "dockLoadingType": {
+          "items": {
+            "$ref": "#/definitions/DockLoadingTypeType"
+          },
+          "type": "array"
+        },
+        "dockSelectionOption": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DockSelectionOptionType"
+          }
+        },
+        "shippingLocation": {
+          "$ref": "#/definitions/ShippingLocationType"
+        },
+        "variableLoadingUnloadingTime": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VariableLoadingUnloadingTimeType"
+          }
+        }
+      }
+    },
+    "LoadTenderContactType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "trip": {
+          "$ref": "#/definitions/TripType"
+        }
+      }
+    },
+    "SkeletonRouteType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "location": {
+          "items": {
+            "$ref": "#/definitions/SkeletonLocationType"
+          },
+          "type": "array"
+        },
+        "newNote": {
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          },
+          "type": "array"
+        },
+        "note": {
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "TPSoftConstraintViolationsType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        }
+      }
+    },
+    "ExternalCostType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "LoadConfiguratorAxleType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        }
+      }
+    },
+    "LoadConfiguratorContainerType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "container": {
+          "$ref": "#/definitions/ContainerType"
+        },
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "shipment": {
+          "$ref": "#/definitions/ShipmentType"
+        },
+        "shipmentLeg": {
+          "$ref": "#/definitions/ShipmentLegType"
+        },
+        "space": {
+          "$ref": "#/definitions/LoadConfiguratorSpaceType"
+        }
+      }
+    },
+    "LoadConfiguratorSpaceType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "equipmentCompartment": {
+          "$ref": "#/definitions/EquipmentCompartmentType"
+        },
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        }
+      }
+    },
+    "LoadItemLoadingType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "destinationShippingLocationAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "originShippingLocationAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "stop": {
+          "$ref": "#/definitions/StopType"
+        }
+      }
+    },
+    "LoadScheduleEntryType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "arrivalShippingLocationAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "arrivalStop": {
+          "$ref": "#/definitions/StopType"
+        },
+        "departureShippingLocationAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "departureStop": {
+          "$ref": "#/definitions/StopType"
+        },
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        }
+      }
+    },
+    "NoteType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "asset": {
+          "$ref": "#/definitions/AssetType"
+        },
+        "driver": {
+          "$ref": "#/definitions/DriverType"
+        },
+        "freightBill": {
+          "$ref": "#/definitions/FreightBillType"
+        },
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "shipment": {
+          "$ref": "#/definitions/ShipmentType"
+        },
+        "skeletonRoute": {
+          "$ref": "#/definitions/SkeletonRouteType"
+        },
+        "tenderRequest": {
+          "$ref": "#/definitions/TenderRequestType"
+        }
+      }
+    },
+    "ResourceType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ReferenceNumberCategoryType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "referenceNumberQualifier": {
+          "$ref": "#/definitions/ReferenceNumberQualifierType"
+        }
+      }
+    },
+    "UnitOfMeasureType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ThroughPointType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "shipment": {
+          "$ref": "#/definitions/ShipmentType"
+        }
+      }
+    },
+    "AppointmentType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "contact": {
+          "$ref": "#/definitions/ContactType"
+        }
+      }
+    },
+    "LoadingInstructionType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "stop": {
+          "$ref": "#/definitions/StopType"
+        }
+      }
+    },
+    "FreightBillDetailType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "APVoucher": {
+          "$ref": "#/definitions/APVoucherType"
+        },
+        "charge": {
+          "items": {
+            "$ref": "#/definitions/FreightBillDetailChargeType"
+          },
+          "type": "array"
+        },
+        "freightBill": {
+          "$ref": "#/definitions/FreightBillType"
+        }
+      }
+    },
+    "ChargeSurchargeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        }
+      }
+    },
+    "LaneType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "dockSelectionConstraint": {
+          "items": {
+            "$ref": "#/definitions/DockSelectionConstraintType"
+          },
+          "type": "array"
+        },
+        "restriction": {
+          "$ref": "#/definitions/RestrictionType"
+        },
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        }
+      }
+    },
+    "RateSurchargeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        }
+      }
+    },
+    "ServiceSurchargeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        }
+      }
+    },
+    "TariffRateCodeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "rate": {
+          "items": {
+            "$ref": "#/definitions/RateType"
+          },
+          "type": "array"
+        },
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        }
+      }
+    },
+    "TariffServiceType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "businessHours": {
+          "$ref": "#/definitions/BusinessHoursType"
+        },
+        "contactPerson": {
+          "items": {
+            "$ref": "#/definitions/ContactPersonType"
+          },
+          "type": "array"
+        },
+        "dockSelectionConstraint": {
+          "items": {
+            "$ref": "#/definitions/DockSelectionConstraintType"
+          },
+          "type": "array"
+        },
+        "equipmentAvailability": {
+          "$ref": "#/definitions/EquipmentAvailabilityType"
+        },
+        "equipmentAvailabilityDateRange": {
+          "items": {
+            "$ref": "#/definitions/EquipmentAvailabilityDateRangeType"
+          },
+          "type": "array"
+        },
+        "restriction": {
+          "$ref": "#/definitions/RestrictionType"
+        },
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        },
+        "tariffCharge": {
+          "items": {
+            "$ref": "#/definitions/TariffChargeType"
+          },
+          "type": "array"
+        },
+        "tariffServiceCEAGrouping": {
+          "items": {
+            "$ref": "#/definitions/TariffServiceCEAGroupingType"
+          },
+          "type": "array"
+        },
+        "tariffServiceEquipment": {
+          "items": {
+            "$ref": "#/definitions/TariffServiceEquipmentType"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "ItineraryTemplateThroughPointType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "itineraryTemplate": {
+          "$ref": "#/definitions/ItineraryTemplateType"
+        }
+      }
+    },
+    "BusinessHoursType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "holiday": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HolidayType"
+          }
+        }
+      }
+    },
+    "DockCommodityExclusionType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "DockEquipmentTypeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "dock": {
+          "$ref": "#/definitions/DockType"
+        }
+      }
+    },
+    "DockLoadingTypeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "dock": {
+          "$ref": "#/definitions/DockType"
+        }
+      }
+    },
+    "DockSelectionOptionType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ShippingLocationType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "associatedZone": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ShippingLocationZoneType"
+          }
+        },
+        "autoAppliedOption": {
+          "items": {
+            "$ref": "#/definitions/AutoAppliedOptionType"
+          },
+          "type": "array"
+        },
+        "businessHours": {
+          "$ref": "#/definitions/BusinessHoursType"
+        },
+        "contact": {
+          "$ref": "#/definitions/ContactType"
+        },
+        "contactPerson": {
+          "items": {
+            "$ref": "#/definitions/ContactPersonType"
+          },
+          "type": "array"
+        },
+        "createZone": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ShippingLocationZoneType"
+          }
+        },
+        "customerShippingLocationCrossReference": {
+          "items": {
+            "$ref": "#/definitions/CustomerShippingLocationCrossReferenceType"
+          },
+          "type": "array"
+        },
+        "directions": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "dock": {
+          "items": {
+            "$ref": "#/definitions/DockType"
+          },
+          "type": "array"
+        },
+        "equipment": {
+          "items": {
+            "$ref": "#/definitions/ShippingLocationEquipmentType"
+          },
+          "type": "array"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "shipmentSplitRule": {
+          "items": {
+            "$ref": "#/definitions/ShipmentSplitRuleType"
+          },
+          "type": "array"
+        },
+        "variableLoadingUnloadingTime": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VariableLoadingUnloadingTimeType"
+          }
+        }
+      }
+    },
+    "VariableLoadingUnloadingTimeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "loadingType": {
+          "$ref": "#/definitions/LoadingTypeType"
+        },
+        "shippingLocation": {
+          "$ref": "#/definitions/ShippingLocationType"
+        }
+      }
+    },
+    "SkeletonLocationType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "shippingLocationAddress": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "skeletonRoute": {
+          "$ref": "#/definitions/SkeletonRouteType"
+        },
+        "stopsBeforeFlag": {
+          "type": "boolean"
+        }
+      }
+    },
+    "EquipmentCompartmentType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "commodityExclusion": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommodityExclusionType"
+          }
+        },
+        "equipmentCommodityExclusion": {
+          "items": {
+            "$ref": "#/definitions/EquipmentCommodityExclusionType"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "AssetType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "assetCommodity": {
+          "items": {
+            "$ref": "#/definitions/AssetCommodityType"
+          },
+          "type": "array"
+        },
+        "assetCustomer": {
+          "items": {
+            "$ref": "#/definitions/AssetCustomerType"
+          },
+          "type": "array"
+        },
+        "assetDomicile": {
+          "items": {
+            "$ref": "#/definitions/AssetDomicileType"
+          },
+          "type": "array"
+        },
+        "assetEquipmentType": {
+          "items": {
+            "$ref": "#/definitions/AssetEquipmentTypeType"
+          },
+          "type": "array"
+        },
+        "assetService": {
+          "items": {
+            "$ref": "#/definitions/AssetServiceType"
+          },
+          "type": "array"
+        },
+        "assetShippingLocation": {
+          "items": {
+            "$ref": "#/definitions/AssetShippingLocationType"
+          },
+          "type": "array"
+        },
+        "assetType": {
+          "$ref": "#/definitions/AssetTypeType"
+        },
+        "businessHours": {
+          "$ref": "#/definitions/BusinessHoursType"
+        },
+        "carrier": {
+          "$ref": "#/definitions/CarrierType"
+        },
+        "contact": {
+          "$ref": "#/definitions/ContactType"
+        },
+        "newNote": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          }
+        },
+        "note": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          }
+        }
+      }
+    },
+    "DriverType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "businessHours": {
+          "$ref": "#/definitions/BusinessHoursType"
+        },
+        "carrier": {
+          "$ref": "#/definitions/CarrierType"
+        },
+        "contact": {
+          "$ref": "#/definitions/ContactType"
+        },
+        "driverCommodity": {
+          "items": {
+            "$ref": "#/definitions/DriverCommodityType"
+          },
+          "type": "array"
+        },
+        "driverCustomer": {
+          "items": {
+            "$ref": "#/definitions/DriverCustomerType"
+          },
+          "type": "array"
+        },
+        "driverDomicile": {
+          "items": {
+            "$ref": "#/definitions/DriverDomicileType"
+          },
+          "type": "array"
+        },
+        "driverEquipmentType": {
+          "items": {
+            "$ref": "#/definitions/DriverEquipmentTypeType"
+          },
+          "type": "array"
+        },
+        "driverService": {
+          "items": {
+            "$ref": "#/definitions/DriverServiceType"
+          },
+          "type": "array"
+        },
+        "driverShippingLocation": {
+          "items": {
+            "$ref": "#/definitions/DriverShippingLocationType"
+          },
+          "type": "array"
+        },
+        "newNote": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          }
+        },
+        "note": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          }
+        }
+      }
+    },
+    "TenderRequestType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "load": {
+          "$ref": "#/definitions/LoadType"
+        },
+        "note": {
+          "items": {
+            "$ref": "#/definitions/NoteType"
+          },
+          "type": "array"
+        },
+        "trip": {
+          "$ref": "#/definitions/TripType"
+        }
+      }
+    },
+    "ContactType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "FreightBillDetailChargeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "freightBillDetail": {
+          "$ref": "#/definitions/FreightBillDetailType"
+        }
+      }
+    },
+    "RestrictionType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "DockSelectionConstraintType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        }
+      }
+    },
+    "RateType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "rateRange": {
+          "items": {
+            "$ref": "#/definitions/RateRangeType"
+          },
+          "type": "array"
+        },
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        }
+      }
+    },
+    "EquipmentAvailabilityType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ContactPersonType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "carrier": {
+          "$ref": "#/definitions/CarrierType"
+        },
+        "customer": {
+          "$ref": "#/definitions/CustomerType"
+        },
+        "customerCarrierFreightAudit": {
+          "$ref": "#/definitions/CustomerCarrierFreightAuditType"
+        },
+        "domicile": {
+          "$ref": "#/definitions/DomicileType"
+        },
+        "shippingLocation": {
+          "$ref": "#/definitions/ShippingLocationType"
+        },
+        "tariffService": {
+          "$ref": "#/definitions/TariffServiceType"
+        }
+      }
+    },
+    "EquipmentAvailabilityDateRangeType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "TariffChargeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "equipmentTypeCrossReference": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TariffEquipmentTypeCrossReferenceType"
+          }
+        },
+        "freightClassCrossReference": {
+          "items": {
+            "$ref": "#/definitions/FreightClassCrossReferenceType"
+          },
+          "type": "array"
+        },
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        },
+        "tariffService": {
+          "$ref": "#/definitions/TariffServiceType"
+        }
+      }
+    },
+    "TariffServiceCEAGroupingType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        },
+        "tariffService": {
+          "$ref": "#/definitions/TariffServiceType"
+        }
+      }
+    },
+    "TariffServiceEquipmentType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "restriction": {
+          "$ref": "#/definitions/RestrictionType"
+        },
+        "tariff": {
+          "$ref": "#/definitions/TariffType"
+        },
+        "tariffService": {
+          "$ref": "#/definitions/TariffServiceType"
+        }
+      }
+    },
+    "ItineraryTemplateType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "itineraryTemplateThroughPoint": {
+          "items": {
+            "$ref": "#/definitions/ItineraryTemplateThroughPointType"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "HolidayType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ShippingLocationZoneType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "AutoAppliedOptionType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "shippingLocation": {
+          "$ref": "#/definitions/ShippingLocationType"
+        },
+        "shippingLocationCode": {
+          "maxLength": 16,
+          "type": "string"
+        }
+      }
+    },
+    "CustomerShippingLocationCrossReferenceType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "customer": {
+          "$ref": "#/definitions/CustomerType"
+        },
+        "externalAliasStructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExternalAliasStructureType"
+          }
+        },
+        "shippingLocation": {
+          "$ref": "#/definitions/ShippingLocationType"
+        }
+      }
+    },
+    "ShippingLocationEquipmentType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "shippingLocation": {
+          "$ref": "#/definitions/ShippingLocationType"
+        }
+      }
+    },
+    "ShipmentSplitRuleType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "shippingLocation": {
+          "$ref": "#/definitions/ShippingLocationType"
+        }
+      }
+    },
+    "LoadingTypeType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "CommodityExclusionType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "EquipmentCommodityExclusionType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "AssetTypeType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "AssetCommodityType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "asset": {
+          "$ref": "#/definitions/AssetType"
+        }
+      }
+    },
+    "AssetCustomerType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "asset": {
+          "$ref": "#/definitions/AssetType"
+        },
+        "customer": {
+          "$ref": "#/definitions/CustomerType"
+        }
+      }
+    },
+    "AssetDomicileType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "asset": {
+          "$ref": "#/definitions/AssetType"
+        },
+        "domicile": {
+          "$ref": "#/definitions/DomicileType"
+        }
+      }
+    },
+    "AssetEquipmentTypeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "asset": {
+          "$ref": "#/definitions/AssetType"
+        },
+        "equipmentType": {
+          "$ref": "#/definitions/EquipmentTypeType"
+        }
+      }
+    },
+    "AssetServiceType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "asset": {
+          "$ref": "#/definitions/AssetType"
+        }
+      }
+    },
+    "AssetShippingLocationType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "asset": {
+          "$ref": "#/definitions/AssetType"
+        },
+        "shippingLocation": {
+          "$ref": "#/definitions/ShippingLocationType"
+        }
+      }
+    },
+    "CarrierType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "businessHours": {
+          "$ref": "#/definitions/BusinessHoursType"
+        },
+        "carrierAccountNumbers": {
+          "items": {
+            "$ref": "#/definitions/CarrierAccountNumbersType"
+          },
+          "type": "array"
+        },
+        "contact": {
+          "$ref": "#/definitions/ContactType"
+        },
+        "contactPerson": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContactPersonType"
+          }
+        },
+        "customerCarrierFreightAudit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomerCarrierFreightAuditType"
+          }
+        },
+        "equipmentAvailability": {
+          "$ref": "#/definitions/EquipmentAvailabilityType"
+        },
+        "equipmentAvailabilityDateRange": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EquipmentAvailabilityDateRangeType"
+          }
+        },
+        "insuranceNotes": {
+          "$ref": "#/definitions/MemoType"
+        },
+        "laneAvailability": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LaneAvailabilityType"
+          }
+        },
+        "matchFreightBillCurrency": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MatchFreightBillCurrencyType"
+          }
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        }
+      }
+    },
+    "DriverCommodityType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "driver": {
+          "$ref": "#/definitions/DriverType"
+        }
+      }
+    },
+    "DriverCustomerType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "customer": {
+          "$ref": "#/definitions/CustomerType"
+        },
+        "driver": {
+          "$ref": "#/definitions/DriverType"
+        }
+      }
+    },
+    "DriverDomicileType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "domicile": {
+          "$ref": "#/definitions/DomicileType"
+        },
+        "driver": {
+          "$ref": "#/definitions/DriverType"
+        }
+      }
+    },
+    "DriverEquipmentTypeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "driver": {
+          "$ref": "#/definitions/DriverType"
+        },
+        "equipmentType": {
+          "$ref": "#/definitions/EquipmentTypeType"
+        }
+      }
+    },
+    "DriverServiceType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "driver": {
+          "$ref": "#/definitions/DriverType"
+        }
+      }
+    },
+    "DriverShippingLocationType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "driver": {
+          "$ref": "#/definitions/DriverType"
+        },
+        "shippingLocation": {
+          "$ref": "#/definitions/ShippingLocationType"
+        }
+      }
+    },
+    "RateRangeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "rate": {
+          "$ref": "#/definitions/RateType"
+        }
+      }
+    },
+    "CustomerType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "autoAppliedOption": {
+          "items": {
+            "$ref": "#/definitions/AutoAppliedOptionType"
+          },
+          "type": "array"
+        },
+        "businessHours": {
+          "$ref": "#/definitions/BusinessHoursType"
+        },
+        "contact": {
+          "$ref": "#/definitions/ContactType"
+        },
+        "contactPerson": {
+          "items": {
+            "$ref": "#/definitions/ContactPersonType"
+          },
+          "type": "array"
+        },
+        "customerCarrierFreightAudit": {
+          "items": {
+            "$ref": "#/definitions/CustomerCarrierFreightAuditType"
+          },
+          "type": "array"
+        },
+        "customerShippingLocationCrossReference": {
+          "items": {
+            "$ref": "#/definitions/CustomerShippingLocationCrossReferenceType"
+          },
+          "type": "array"
+        },
+        "memo": {
+          "$ref": "#/definitions/MemoType"
+        }
+      }
+    },
+    "CustomerCarrierFreightAuditType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "carrier": {
+          "$ref": "#/definitions/CarrierType"
+        },
+        "contactPerson": {
+          "items": {
+            "$ref": "#/definitions/ContactPersonType"
+          },
+          "type": "array"
+        },
+        "customer": {
+          "$ref": "#/definitions/CustomerType"
+        }
+      }
+    },
+    "DomicileType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/AddressType"
+        },
+        "businessHours": {
+          "$ref": "#/definitions/BusinessHoursType"
+        },
+        "contacts": {
+          "items": {
+            "$ref": "#/definitions/ContactPersonType"
+          },
+          "type": "array"
+        },
+        "domicileEquipment": {
+          "items": {
+            "$ref": "#/definitions/DomicileEquipmentType"
+          },
+          "type": "array"
+        },
+        "vehicleAvailabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DomicileVehicleAvailabilityType"
+          }
+        }
+      }
+    },
+    "TariffEquipmentTypeCrossReferenceType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "tariffCharge": {
+          "$ref": "#/definitions/TariffChargeType"
+        }
+      }
+    },
+    "FreightClassCrossReferenceType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "tariffCharge": {
+          "$ref": "#/definitions/TariffChargeType"
+        }
+      }
+    },
+    "ExternalAliasStructureType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "customerShippingLocationCrossReference": {
+          "$ref": "#/definitions/CustomerShippingLocationCrossReferenceType"
+        }
+      }
+    },
+    "EquipmentTypeType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "commodityExclusion": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CommodityExclusionType"
+          }
+        },
+        "equipmentAssociation": {
+          "items": {
+            "$ref": "#/definitions/EquipmentAssociationType"
+          },
+          "type": "array"
+        },
+        "equipmentAxle": {
+          "items": {
+            "$ref": "#/definitions/EquipmentAxleType"
+          },
+          "type": "array"
+        },
+        "equipmentCommodityExclusion": {
+          "items": {
+            "$ref": "#/definitions/EquipmentCommodityExclusionType"
+          },
+          "type": "array"
+        },
+        "equipmentCompartment": {
+          "items": {
+            "$ref": "#/definitions/EquipmentCompartmentType"
+          },
+          "type": "array"
+        },
+        "unitOfMeasure": {
+          "$ref": "#/definitions/UnitOfMeasureType"
+        },
+        "variableLoadingUnloadingTime": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VariableLoadingUnloadingTimeType"
+          }
+        }
+      }
+    },
+    "CarrierAccountNumbersType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "carrier": {
+          "$ref": "#/definitions/CarrierType"
+        }
+      }
+    },
+    "LaneAvailabilityType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "carrier": {
+          "$ref": "#/definitions/CarrierType"
+        }
+      }
+    },
+    "MatchFreightBillCurrencyType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "DomicileEquipmentType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "domicile": {
+          "$ref": "#/definitions/DomicileType"
+        }
+      }
+    },
+    "DomicileVehicleAvailabilityType": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "domicile": {
+          "$ref": "#/definitions/DomicileType"
+        }
+      }
+    },
+    "EquipmentAssociationType": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "EquipmentAxleType": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}
