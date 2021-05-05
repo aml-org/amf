@@ -2,15 +2,15 @@ package amf.error
 
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.Range
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
-import amf.core.remote.RamlYamlHint
-import amf.facades.{AMFCompiler, Validation}
+import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
+import amf.facades.AMFCompiler
 import amf.plugins.domain.shapes.models.{ScalarShape, UnresolvedShape}
 import amf.validations.ParserSideValidations.{ClosedShapeSpecification, MissingRequiredUserDefinedFacet}
 
 import scala.concurrent.Future
 
-class RamlParserErrorTest extends ParserErrorTest {
+class Raml10ParserErrorTest extends RamlParserErrorTest {
 
   test("Test unexpected node types") {
     validate(
@@ -272,17 +272,6 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
-  test("Invalid closed shape media type 08") {
-    validate(
-      "/error/invalid-mediatype.raml",
-      violation => {
-        violation.severityLevel should be("Violation")
-        violation.message should be("Property 'applicationjson' not supported in a RAML 0.8 shape node")
-        violation.position.map(_.range) should be(Some(Range((8, 10), (8, 26))))
-      }
-    )
-  }
-
   test("Invalid payload key - close shape") {
     validate(
       "/error/invalid-payload-facet.raml",
@@ -347,26 +336,6 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
-  test("Numeric key in external fragment root entry") {
-    validate("/valid/numeric-key-in-external-fragment/api.raml")
-  }
-
-  test("Invalid library and type def in 08") {
-    validate(
-      "/error/invalid-lib-and-type-08/api.raml",
-      first => {
-        first.severityLevel should be("Violation")
-        first.message should be("Property 'uses' not supported in a RAML 0.8 webApi node")
-        first.position.map(_.range) should be(Some(Range((4, 0), (8, 0))))
-      },
-      second => {
-        second.severityLevel should be("Violation")
-        second.message should be("Invalid type def duTypes.storyCollection for RAML 0.8")
-        second.position.map(_.range) should be(Some(Range((14, 18), (14, 41))))
-      }
-    )
-  }
-
   test("Invalid library tag type def") {
     validate(
       "/error/invalid-lib-tagtype/api.raml",
@@ -389,10 +358,6 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
-  test("Json example external that starts with space") {
-    validate("/valid/json-example-space-start/api.raml")
-  }
-
   test("Discriminator in union definition") {
     validate(
       "/error/discriminator_union.raml",
@@ -402,10 +367,6 @@ class RamlParserErrorTest extends ParserErrorTest {
         error.position.map(_.range) should be(Some(Range((20, 3), (20, 25))))
       }
     )
-  }
-
-  test("Connect and trace methods") {
-    validate("/valid/connect-trace.raml")
   }
 
   test("Cycle in references handled exception") {
@@ -480,17 +441,6 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
-  test("test non used operation uri param 08") {
-    validate(
-      "/warning/unused-uri-params-operation08.raml",
-      operation => {
-        operation.severityLevel should be("Warning")
-        operation.message should be("Unused operation uri parameter unusedUriParam")
-        operation.position.map(_.range) should be(Some(Range((9, 6), (10, 20))))
-      }
-    )
-  }
-
   ignore("Invalid json example - unquoted key") {
     validate(
       "/error/unquoted-json-key-example.raml",
@@ -530,31 +480,6 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   test("Test reference by id at json schema") {
     validate("valid/reference-by-id/api.raml")
-  }
-
-  test("Test invalid string format in jsonschema number") {
-    validate(
-      "error/invalid-number-format/api.raml",
-      duplicateWarning => {
-        duplicateWarning.severityLevel should be("Warning")
-        duplicateWarning.message should endWith("Duplicate key : 'type'")
-      },
-      formatWarning => {
-        formatWarning.severityLevel should be("Warning")
-        formatWarning.message should endWith(
-          "Format UTC_MILLISEC is not valid for type http://a.ml/vocabularies/shapes#number")
-      }
-    )
-  }
-
-  test("Test swap between referenced schema and example") {
-    validate(
-      "error/swap-schema-example/api.raml",
-      notYmap => {
-        notYmap.severityLevel should be("Violation")
-        notYmap.message should be("YAML map expected")
-      }
-    )
   }
 
   test("Test invalid fragment (distinct type)") {
@@ -600,9 +525,92 @@ class RamlParserErrorTest extends ParserErrorTest {
       }
     )
   }
+  override val hint: Hint = Raml10YamlHint
+}
 
+class Raml08ParserErrorTest extends RamlParserErrorTest {
+  override val hint: Hint = Raml08YamlHint
+
+  test("Test swap between referenced schema and example") {
+    validate(
+      "error/swap-schema-example/api.raml",
+      notYmap => {
+        notYmap.severityLevel should be("Violation")
+        notYmap.message should be("YAML map expected")
+      }
+    )
+  }
+
+  test("Test invalid string format in jsonschema number") {
+    validate(
+      "error/invalid-number-format/api.raml",
+      duplicateWarning => {
+        duplicateWarning.severityLevel should be("Warning")
+        duplicateWarning.message should endWith("Duplicate key : 'type'")
+      },
+      formatWarning => {
+        formatWarning.severityLevel should be("Warning")
+        formatWarning.message should endWith(
+          "Format UTC_MILLISEC is not valid for type http://a.ml/vocabularies/shapes#number")
+      }
+    )
+  }
+
+  test("test non used operation uri param 08") {
+    validate(
+      "/warning/unused-uri-params-operation08.raml",
+      operation => {
+        operation.severityLevel should be("Warning")
+        operation.message should be("Unused operation uri parameter unusedUriParam")
+        operation.position.map(_.range) should be(Some(Range((9, 6), (10, 20))))
+      }
+    )
+  }
+
+  test("Connect and trace methods") {
+    validate("/valid/connect-trace.raml")
+  }
+
+  test("Json example external that starts with space") {
+    validate("/valid/json-example-space-start/api.raml")
+  }
+
+  test("Invalid library and type def in 08") {
+    validate(
+      "/error/invalid-lib-and-type-08/api.raml",
+      first => {
+        first.severityLevel should be("Violation")
+        first.message should be("Property 'uses' not supported in a RAML 0.8 webApi node")
+        first.position.map(_.range) should be(Some(Range((4, 0), (8, 0))))
+      },
+      second => {
+        second.severityLevel should be("Violation")
+        second.message should be("Invalid type def duTypes.storyCollection for RAML 0.8")
+        second.position.map(_.range) should be(Some(Range((14, 18), (14, 41))))
+      }
+    )
+  }
+
+  test("Numeric key in external fragment root entry") {
+    validate("/valid/numeric-key-in-external-fragment/api.raml")
+  }
+
+  test("Invalid closed shape media type 08") {
+    validate(
+      "/error/invalid-mediatype.raml",
+      violation => {
+        violation.severityLevel should be("Violation")
+        violation.message should be("Property 'applicationjson' not supported in a RAML 0.8 shape node")
+        violation.position.map(_.range) should be(Some(Range((8, 10), (8, 26))))
+      }
+    )
+  }
+}
+
+trait RamlParserErrorTest extends ParserErrorTest {
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
+  val hint: Hint
   override protected def build(eh: ParserErrorHandler, file: String): Future[BaseUnit] =
-    AMFCompiler(file, platform, RamlYamlHint, eh = eh).build()
+    AMFCompiler(file, platform, hint, eh = eh).build()
 }

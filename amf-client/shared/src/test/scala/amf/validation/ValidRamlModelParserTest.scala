@@ -1,7 +1,7 @@
 package amf.validation
 
-import amf.{Raml08Profile, Raml10Profile}
-import amf.core.remote.{Hint, RamlYamlHint}
+import amf.Raml08Profile
+import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class ValidRamlModelParserTest extends ValidModelTest {
   test("Valid baseUri validations test") {
@@ -17,7 +17,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("External raml 0.8 fragment") {
-    checkValid("08/external_fragment_test.raml")
+    validate("08/external_fragment_test.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Headers example array validation") {
@@ -46,21 +46,21 @@ class ValidRamlModelParserTest extends ValidModelTest {
 
   // what its testing this? the api is empty
   test("08 Validation") {
-    checkValid("08/some.raml", Raml08Profile)
+    validate("08/some.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   // this test has not sense for me. What is testing? parameter parsing? validation? it should not be here.
   // delete tck-examples folder
   test("Raml 0.8 Parameter") {
-    checkValid("/tck-examples/query-parameter.raml", Raml08Profile)
+    validate("/tck-examples/query-parameter.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Empty parameter validation") {
-    checkValid("/08/empty-param.raml", Raml08Profile)
+    validate("/08/empty-param.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Empty describe by") {
-    checkValid("security-schemes/empty-described-by.raml")
+    validate("security-schemes/empty-described-by.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Empty uri parameters") {
@@ -68,7 +68,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Date parameter validation") {
-    checkValid("08/empty-param.raml", Raml08Profile)
+    validate("08/empty-param.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Recursive property") {
@@ -92,7 +92,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Test media type with + char in resource type") {
-    checkValid("/resource_types/media-type-resource-type.raml")
+    validate("/resource_types/media-type-resource-type.raml",
+             profile = Raml08Profile,
+             overridedHint = Some(Raml08YamlHint))
   }
 
   test("Empty responses") {
@@ -108,7 +110,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Test different declarations with same name") {
-    checkValid("/declarations/api.raml", profile = Raml08Profile)
+    validate("/declarations/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test empty usage/uses entries") {
@@ -128,7 +130,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Float validation") {
-    validate("examples/float-validation/api.raml")
+    validate("examples/float-validation/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Multiple example fragments") {
@@ -136,7 +138,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Included json schema with ref to himself with file name") {
-    checkValid("shapes/ref-recursive-samefilename/api.raml")
+    validate("shapes/ref-recursive-samefilename/api.raml",
+             profile = Raml08Profile,
+             overridedHint = Some(Raml08YamlHint))
   }
 
   test("Included json schema with ref inner ref to another") {
@@ -160,7 +164,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
   }
 
   test("Valid use of recursive shape in json schemas") {
-    checkValid("valid-recursive/valid-recursive.raml")
+    validate("valid-recursive/valid-recursive.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Nil union with '?' reference to type") {
@@ -275,5 +279,5 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/api-with-includes-with-spaces/api.raml")
   }
 
-  override val hint: Hint = RamlYamlHint
+  override val hint: Hint = Raml10YamlHint
 }

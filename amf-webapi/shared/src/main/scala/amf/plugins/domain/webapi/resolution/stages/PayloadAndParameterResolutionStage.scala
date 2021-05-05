@@ -93,8 +93,8 @@ class RamlCompatiblePayloadAndParameterResolutionStage(profile: ProfileName)(imp
     extends PayloadAndParameterResolutionStage(profile)(errorHandler) {
 
   override protected def appliesTo(profile: ProfileName): Boolean = profile match {
-    case RamlProfile | Raml10Profile | Raml08Profile => true
-    case _                                           => false
+    case Raml10Profile | Raml08Profile => true
+    case _                             => false
   }
 
   override protected def addExampleToShape(shape: AnyShape, example: Example): Unit =

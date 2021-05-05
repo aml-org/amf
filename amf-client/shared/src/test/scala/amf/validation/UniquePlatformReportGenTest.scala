@@ -22,9 +22,11 @@ sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTes
   val hint: Hint
 
   protected lazy val defaultProfile: ProfileName = hint.vendor match {
-    case Raml => Raml10Profile
-    case Oas  => Oas20Profile
-    case _    => AmfProfile
+    case Raml10 => Raml10Profile
+    case Raml08 => Raml08Profile
+    case Oas20  => Oas20Profile
+    case Oas30  => Oas30Profile
+    case _      => AmfProfile
   }
 
   protected def generate(report: AMFValidationReport): String = {
@@ -104,9 +106,9 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
 
   private def profileToHint(profile: ProfileName): Hint = {
     profile match {
-      case OasProfile | Oas20Profile => OasJsonHint
-      case Oas30Profile              => Hint(Oas30, Yaml)
-      case _                         => RamlYamlHint
+      case Oas20Profile => Oas20JsonHint
+      case Oas30Profile => Hint(Oas30, Yaml)
+      case _            => Raml10YamlHint
     }
   }
 }
@@ -115,7 +117,7 @@ trait ValidModelTest extends MultiPlatformReportGenTest {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath: String = ""
 
-  protected def checkValid(api: String, profile: ProfileName = RamlProfile): Future[Assertion] =
+  protected def checkValid(api: String, profile: ProfileName = Raml10Profile): Future[Assertion] =
     super.validate(api, None, profile, None)
 
 }

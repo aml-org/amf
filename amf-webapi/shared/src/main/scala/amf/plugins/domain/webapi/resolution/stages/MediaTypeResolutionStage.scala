@@ -12,7 +12,7 @@ import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.models.{Payload, Request}
 import amf.validations.ResolutionSideValidations.InvalidConsumesWithFileParameter
-import amf.{Oas20Profile, OasProfile, ProfileName}
+import amf.{Oas20Profile, ProfileName}
 
 /** Apply root and operation mime types to payloads.
   *
@@ -68,7 +68,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
           // Use accepts field.
           accepts match {
             case Some(a) =>
-              if (!isValidation && profile == OasProfile) operation.set(OperationModel.Accepts, a)
+              if (!isValidation && profile.isOas()) operation.set(OperationModel.Accepts, a)
               request.setArray(RequestModel.Payloads, payloads(request.payloads, a, request.id))
             case None =>
           }
@@ -79,7 +79,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
           // Use contentType field.
           contentType match {
             case Some(ct) =>
-              if (!isValidation && profile == OasProfile) operation.set(OperationModel.ContentType, ct)
+              if (!isValidation && profile == Oas20Profile) operation.set(OperationModel.ContentType, ct)
               response.setArray(RequestModel.Payloads, payloads(response.payloads, ct, response.id))
             case None =>
           }

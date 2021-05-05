@@ -3,7 +3,7 @@ package amf.ls
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.Document
 import amf.core.model.domain.templates.ParametrizedDeclaration
-import amf.core.remote.RamlYamlHint
+import amf.core.remote.Raml10YamlHint
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
@@ -18,7 +18,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
   private val file = "file://amf-client/shared/src/test/resources/ls/resource-type-trait.raml"
 
   test("Parse resource type from model.") {
-    build(file, RamlYamlHint)
+    build(file, Raml10YamlHint)
       .map(_.asInstanceOf[Document])
       .map { model =>
         model.declares
@@ -33,7 +33,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Parse trait from model.") {
-    build(file, RamlYamlHint)
+    build(file, Raml10YamlHint)
       .map(_.asInstanceOf[Document])
       .map { model =>
         model.declares
@@ -49,7 +49,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Parse variable in query param") {
     val file = "file://amf-client/shared/src/test/resources/ls/trait_error1.raml"
-    build(file, RamlYamlHint)
+    build(file, Raml10YamlHint)
       .map(_.asInstanceOf[Document])
       .map { model =>
         model.declares
@@ -65,7 +65,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Parse variable in nested type") {
     val file = "file://amf-client/shared/src/test/resources/ls/trait_error2.raml"
-    build(file, RamlYamlHint)
+    build(file, Raml10YamlHint)
       .map(_.asInstanceOf[Document])
       .map { model =>
         model.declares
@@ -82,7 +82,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Error in trait 3") {
     val file = "file://amf-client/shared/src/test/resources/ls/trait_error3.raml"
-    build(file, RamlYamlHint)
+    build(file, Raml10YamlHint)
       .map(_.asInstanceOf[Document])
       .map { model =>
         val res = model.encodes
@@ -104,7 +104,7 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Trait with unresolved reference") {
     val file = "file://amf-client/shared/src/test/resources/ls/trait-unresolved.raml"
-    build(file, RamlYamlHint)
+    build(file, Raml10YamlHint)
       .map(_.asInstanceOf[Document])
       .map { model =>
         val res = model.encodes

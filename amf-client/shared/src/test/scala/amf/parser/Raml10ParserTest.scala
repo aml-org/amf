@@ -1,7 +1,7 @@
 package amf.parser
 
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.remote.{Amf, RamlYamlHint}
+import amf.core.remote.{Amf, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class Raml10ParserTest extends FunSuiteCycleTests {
@@ -12,7 +12,7 @@ class Raml10ParserTest extends FunSuiteCycleTests {
                   "type-with-json-schema-in-type-facet.%s") { config =>
     cycle("type-with-json-schema-in-type-facet.raml",
           config.golden,
-          RamlYamlHint,
+          Raml10YamlHint,
           Amf,
           renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint))
   }
@@ -21,7 +21,7 @@ class Raml10ParserTest extends FunSuiteCycleTests {
     cycle(
       "api.raml",
       config.golden,
-      RamlYamlHint,
+      Raml10YamlHint,
       Amf,
       renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint),
       directory = s"${basePath}nillable-type-in-parameter/",

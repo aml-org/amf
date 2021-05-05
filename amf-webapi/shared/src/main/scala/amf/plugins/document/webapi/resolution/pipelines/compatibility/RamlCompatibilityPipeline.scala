@@ -1,6 +1,9 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility
 
-import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
+import amf.{ProfileName, Raml08Profile, Raml10Profile}
+import amf.client.remod.amfcore.resolution.PipelineName
+import amf.core.errorhandling.ErrorHandler
+import amf.core.remote.{Raml08, Raml10}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.raml._
@@ -9,15 +12,15 @@ import amf.plugins.domain.webapi.resolution.stages.{
   MediaTypeResolutionStage,
   RamlCompatiblePayloadAndParameterResolutionStage
 }
-import amf.{ProfileName, RamlProfile}
 
-class RamlCompatibilityPipeline() extends ResolutionPipeline() {
+class RamlCompatibilityPipeline private[amf] (override val name: String, profile: ProfileName)
+    extends ResolutionPipeline() {
 
   override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
     Seq(
       new MandatoryDocumentationTitle(),
       new MandatoryAnnotationType(),
-      new MediaTypeResolutionStage(RamlProfile, keepEditingInfo = true),
+      new MediaTypeResolutionStage(profile, keepEditingInfo = true),
       new DefaultPayloadMediaType(),
       new MandatoryCreativeWorkFields(),
       new DefaultToNumericDefaultResponse(),
@@ -32,10 +35,19 @@ class RamlCompatibilityPipeline() extends ResolutionPipeline() {
       new MakeRequiredFieldImplicitForOptionalProperties(),
       new ResolveRamlCompatibleDeclarations(),
       new ResolveLinksWithNonDeclaredTargets(),
-      new RamlCompatiblePayloadAndParameterResolutionStage(RamlProfile),
+      new RamlCompatiblePayloadAndParameterResolutionStage(profile),
       new SanitizeCustomTypeNames(),
       new RecursionDetection(),
       new AnnotationRemovalStage()
     )
+}
 
+object Raml10CompatibilityPipeline {
+  def apply()      = new RamlCompatibilityPipeline(name, Raml10Profile)
+  val name: String = PipelineName.from(Raml10.name, ResolutionPipeline.COMPATIBILITY_PIPELINE)
+}
+
+object Raml08CompatibilityPipeline {
+  def apply()      = new RamlCompatibilityPipeline(name, Raml08Profile)
+  val name: String = PipelineName.from(Raml08.name, ResolutionPipeline.COMPATIBILITY_PIPELINE)
 }

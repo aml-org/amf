@@ -1557,22 +1557,20 @@ object AMFRawValidations {
     AmfProfile     -> forProfile(AmfProfile),
     Raml10Profile  -> forProfile(Raml10Profile),
     Raml08Profile  -> forProfile(Raml08Profile),
-    RamlProfile    -> forProfile(RamlProfile), // ???
     Oas20Profile   -> forProfile(Oas20Profile),
     Oas30Profile   -> forProfile(Oas30Profile),
-    OasProfile     -> forProfile(OasProfile),
     Async20Profile -> forProfile(Async20Profile)
   )
 
   private def forProfile(p: ProfileName): Seq[AMFValidation] = {
     p match {
-      case Raml10Profile | RamlProfile => Raml10Validations.validations()
-      case Raml08Profile               => Raml08Validations.validations()
-      case OasProfile | Oas20Profile   => Oas20Validations.validations()
-      case Oas30Profile                => Oas30Validations.validations()
-      case Async20Profile              => Async20Validations.validations()
-      case AmfProfile                  => AmfValidations.validations()
-      case _                           => Nil
+      case Raml10Profile  => Raml10Validations.validations()
+      case Raml08Profile  => Raml08Validations.validations()
+      case Oas20Profile   => Oas20Validations.validations()
+      case Oas30Profile   => Oas30Validations.validations()
+      case Async20Profile => Async20Validations.validations()
+      case AmfProfile     => AmfValidations.validations()
+      case _              => Nil
     }
   }
 }

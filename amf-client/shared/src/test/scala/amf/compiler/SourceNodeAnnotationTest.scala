@@ -4,10 +4,10 @@ import amf.core.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfObject, Shape}
 import amf.core.parser.{Annotations, Range => PositionRange}
-import amf.core.remote.{OasJsonHint, OasYamlHint, RamlYamlHint}
+import amf.core.remote.{Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
-import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.plugins.domain.webapi.models.api.WebApi
+import amf.plugins.domain.webapi.models.{Parameter, Response}
 import org.mulesoft.lexer.InputRange
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
@@ -17,20 +17,20 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("test full raml") {
-    build("file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml", RamlYamlHint) map {
+    build("file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml", Raml10YamlHint) map {
       checkAnnotation
     }
   }
 
   test("test full oas") {
-    build("file://amf-client/shared/src/test/resources/upanddown/full-example.json", OasJsonHint) map {
+    build("file://amf-client/shared/src/test/resources/upanddown/full-example.json", Oas20JsonHint) map {
       checkAnnotation
     }
   }
 
   test("test full raml with type xml tag") {
     build("file://amf-client/shared/src/test/resources/org/raml/api/v10/xmlbodyinlinewithfacet/input.raml",
-          RamlYamlHint) map { checkAnnotation }
+          Raml10YamlHint) map { checkAnnotation }
   }
 
   private def checkAnnotation(obj: AmfObject): Assertion = {
@@ -52,7 +52,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
   test("test node and entry annotation in oas parameters") {
     for {
       unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
-                    OasYamlHint)
+                    Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
       document.declares.collectFirst({ case p: Parameter => (p.id, p.annotations) }) match {
@@ -73,7 +73,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
   test("test node and entry annotation in oas path items") {
     for {
       unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
-                    OasYamlHint)
+                    Oas20YamlHint)
     } yield {
       val endpoint = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].endPoints.head
       assertRangeElement(endpoint.id,
@@ -87,7 +87,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
   test("test node and entry annotation in oas operations") {
     for {
       unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-parameters.yaml",
-                    OasYamlHint)
+                    Oas20YamlHint)
     } yield {
       val api = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
       val op  = api.endPoints.head.operations.head
@@ -102,7 +102,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
   test("test node and entry annotation in oas responses") {
     for {
       unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-responses.yaml",
-                    OasYamlHint)
+                    Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
       document.declares.collectFirst({ case p: Response => (p.id, p.annotations) }) match {
@@ -138,7 +138,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
   test("test node and entry annotation in oas definitions and schemes") {
     for {
       unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-schemes.yaml",
-                    OasYamlHint)
+                    Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
       document.declares.collectFirst({ case p: Shape => (p.id, p.annotations) }) match {
@@ -162,7 +162,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
   test("test node and entry annotation in oas xml shape property") {
     for {
       unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-xmlSerializer.yaml",
-                    OasYamlHint)
+                    Oas20YamlHint)
     } yield {
       val document = unit.asInstanceOf[Document]
       document.declares.collectFirst({

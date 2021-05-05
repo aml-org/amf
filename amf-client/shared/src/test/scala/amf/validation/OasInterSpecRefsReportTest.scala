@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.core.remote.{Hint, OasJsonHint}
+import amf.core.remote.{Hint, Oas20JsonHint}
 
 class OasInterSpecRefsReportTest extends UniquePlatformReportGenTest {
 
@@ -15,5 +15,5 @@ class OasInterSpecRefsReportTest extends UniquePlatformReportGenTest {
     validate("oas-raml-securityScheme/api.json", Some("oas-raml-securityScheme.report"))
   }
 
-  override val hint: Hint = OasJsonHint
+  override val hint: Hint = Oas20JsonHint
 }

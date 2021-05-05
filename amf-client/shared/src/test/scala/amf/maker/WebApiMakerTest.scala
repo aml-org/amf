@@ -1,15 +1,15 @@
 package amf.maker
 
-import amf.common.{AmfObjectTestMatcher}
+import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
 import amf.core.metamodel.Field
 import amf.core.model.document.Document
 import amf.core.model.domain.AmfObject
-import amf.core.remote.{AmfJsonHint, Hint, OasJsonHint, RamlYamlHint}
+import amf.core.remote.{AmfJsonHint, Hint, Oas20JsonHint, Raml10YamlHint}
 import amf.plugins.domain.shapes.models.DomainExtensions.propertyShapeToPropertyShape
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, ScalarShape, XMLSerializer}
-import amf.plugins.domain.webapi.models.api.WebApi
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.api.WebApi
 import org.mulesoft.common.test.ListAssertions
 import org.scalatest.{Assertion, AsyncFunSuite, Succeeded}
 
@@ -36,7 +36,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     api.withServer("http://api.example.com/path")
     api.withDocumentationUrl("urlExternalDocs").withDescription("descriptionExternalDocs")
 
-    assertFixture(api, "completeExample.raml", RamlYamlHint)
+    assertFixture(api, "completeExample.raml", Raml10YamlHint)
   }
 
   test("WebApi with nested endpoints - RAML.") {
@@ -57,7 +57,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     api.withServer("/some/base/uri")
 
-    assertFixture(api, "nested-endpoints.raml", RamlYamlHint)
+    assertFixture(api, "nested-endpoints.raml", Raml10YamlHint)
   }
 
   test("WebApi with nested endpoints - OAS.") {
@@ -77,7 +77,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withEndPoints(endpoints)
     api.withServer("/some/base/uri")
 
-    assertFixture(api, "nested-endpoints.json", OasJsonHint)
+    assertFixture(api, "nested-endpoints.json", Oas20JsonHint)
   }
 
   test("WebApi with multiple operations - RAML.") {
@@ -108,7 +108,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
       .withSchemes(List("http", "https"))
 
-    assertFixture(api, "endpoint-operations.raml", RamlYamlHint)
+    assertFixture(api, "endpoint-operations.raml", Raml10YamlHint)
   }
 
   test("WebApi with multiple operations - OAS.") {
@@ -140,7 +140,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withDocumentation(CreativeWork().withUrl("urlExternalDocs").withDescription("descriptionExternalDocs"))
       .withSchemes(List("http", "https"))
 
-    assertFixture(api, "endpoint-operations.json", OasJsonHint)
+    assertFixture(api, "endpoint-operations.json", Oas20JsonHint)
   }
 
   test("Parameters - RAML.") {
@@ -227,7 +227,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
               .withDescription("One base uri param")
               .withDataType("http://www.w3.org/2001/XMLSchema#string"))))
 
-    assertFixture(api, "operation-request.raml", RamlYamlHint)
+    assertFixture(api, "operation-request.raml", Raml10YamlHint)
   }
 
   test("Parameters - OAS.") {
@@ -302,7 +302,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     api.withServer("/some/base/uri")
 
-    assertFixture(api, "operation-request.json", OasJsonHint)
+    assertFixture(api, "operation-request.json", Oas20JsonHint)
   }
 
   test("Responses - RAML.") {
@@ -361,7 +361,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     api.withServer("/some/uri")
 
-    assertFixture(api, "operation-response.raml", RamlYamlHint)
+    assertFixture(api, "operation-response.raml", Raml10YamlHint)
   }
 
   test("Responses - OAS.") {
@@ -422,7 +422,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withEndPoints(endpoints)
     api.withServer("/some/uri")
 
-    assertFixture(api, "operation-response.json", OasJsonHint)
+    assertFixture(api, "operation-response.json", Oas20JsonHint)
   }
 
   test("generate partial succeed") {
@@ -438,7 +438,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     api.withDocumentationUrl("urlExternalDocs").withDescription("descriptionExternalDocs")
 
-    assertFixture(api, "partialExample.raml", RamlYamlHint)
+    assertFixture(api, "partialExample.raml", Raml10YamlHint)
   }
 
   test("generate partial json") {
@@ -457,12 +457,12 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
     api.withServer("api.example.com/path")
     api.withDocumentationUrl("urlExternalDocs").withDescription("descriptionExternalDocs")
 
-    assertFixture(api, "completeExample.json", OasJsonHint)
+    assertFixture(api, "completeExample.json", Oas20JsonHint)
   }
 
   test("Generate raml example with types") {
 
-    assertFixture(webApiWithTypes(), "example-types.raml", RamlYamlHint)
+    assertFixture(webApiWithTypes(), "example-types.raml", Raml10YamlHint)
   }
 
   test("Generate amf example with types") {
@@ -652,7 +652,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
       .withClosed(false)
       .withName("items")
 
-    assertFixture(api, "example-types.json", OasJsonHint)
+    assertFixture(api, "example-types.json", Oas20JsonHint)
   }
 
   private def assertField(field: Field, actual: Any, expected: Any): Unit =

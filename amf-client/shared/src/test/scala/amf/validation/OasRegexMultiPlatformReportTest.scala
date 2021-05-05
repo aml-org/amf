@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.core.remote.{Hint, OasJsonHint}
+import amf.core.remote.{Hint, Oas20JsonHint}
 
 /**
   * Test to document regex differences between jvm and js. No specific reason for it to be OAS.
@@ -17,5 +17,5 @@ class OasRegexMultiPlatformReportTest extends MultiPlatformReportGenTest {
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/multi-plat-model/"
-  override val hint: Hint  = OasJsonHint
+  override val hint: Hint  = Oas20JsonHint
 }

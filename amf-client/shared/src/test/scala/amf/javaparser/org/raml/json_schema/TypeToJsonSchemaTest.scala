@@ -2,7 +2,7 @@ package amf.javaparser.org.raml.json_schema
 
 import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.remote.{Hint, OasJsonHint, Vendor}
+import amf.core.remote.{Hint, Oas20JsonHint, Oas20YamlHint, Oas30YamlHint, Vendor}
 import amf.javaparser.org.raml.ModelValidationTest
 import amf.plugins.domain.shapes.models.AnyShape
 
@@ -57,10 +57,18 @@ class RamlTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
 //  override def renderShape(shape: AnyShape): String = shape.toJsonSchema
 //}
 //
-class OasTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
-  override def path: String                         = "amf-client/shared/src/test/resources/org/oas/json_schema/"
+trait OasTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
   override def inputFileName: String                = "input.json"
   override def outputFileName: String               = "compact-output.json"
-  override def hint: Hint                           = OasJsonHint
   override def renderShape(shape: AnyShape): String = shape.buildJsonSchema(ShapeRenderOptions().withCompactedEmission)
+}
+
+case class Oas20TypeToCompactJsonSchemaTest() extends OasTypeToCompactJsonSchemaTest {
+  override def path: String = "amf-client/shared/src/test/resources/org/oas/json_schema/oas20/"
+  override def hint: Hint   = Oas20YamlHint
+}
+
+case class Oas30TypeToCompactJsonSchemaTest() extends OasTypeToCompactJsonSchemaTest {
+  override def path: String = "amf-client/shared/src/test/resources/org/oas/json_schema/oas30/"
+  override def hint: Hint   = Oas30YamlHint
 }

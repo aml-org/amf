@@ -240,7 +240,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
   def emitDocument(): YDocument = {
     val doc                    = document.asInstanceOf[Document]
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml, doc.encodes.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, doc.encodes.annotations)
 
     val content = spec.factory.rootLevelEmitters(doc, ordering).emitters ++ apiEmitters(ordering)
 
@@ -320,7 +320,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
       val endpoints = f.array.values
         .asInstanceOf[Seq[EndPoint]]
 
-      val notOas = !vendor.contains(Oas)
+      val notOas = vendor.forall(v => !v.isOas)
 
       if (notOas) {
         val graph                                               = endpoints.map(e => (e, e.parent.toSet)).toMap

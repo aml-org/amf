@@ -4,7 +4,7 @@ import amf.core.AMFCompilerRunCount
 import amf.core.annotations.LexicalInformation
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline.DEFAULT_PIPELINE
 import amf.core.services.RuntimeResolver
@@ -12,7 +12,6 @@ import amf.core.validation.SeverityLevels
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.AmfResolutionPipeline
-import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations.UnknownSecuritySchemeErrorSpecification
 import org.scalatest.Assertion
@@ -27,7 +26,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   test("Unexisting include for resource type") {
     errorCycle(
       "api.raml",
-      RamlYamlHint,
+      Raml10YamlHint,
       List(
         ErrorContainer(
           DeclarationNotFound.id,
@@ -45,7 +44,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   test("Cannot replace variable") {
     errorCycle(
       "api.raml",
-      RamlYamlHint,
+      Raml10YamlHint,
       List(
         ErrorContainer(
           UnknownSecuritySchemeErrorSpecification.id,
@@ -93,9 +92,9 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
 
   private def transform(unit: BaseUnit, config: CycleConfig, eh: ErrorHandler): BaseUnit = {
     config.target match {
-      case Raml | Raml08 | Raml10 | Oas | Oas20 | Oas30 =>
+      case Raml08 | Raml10 | Oas20 | Oas30 =>
         RuntimeResolver.resolve(config.target.name, unit, DEFAULT_PIPELINE, eh)
-      case Amf    => new AmfResolutionPipeline().transform(unit, eh)
+      case Amf    => AmfResolutionPipeline().transform(unit, eh)
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }

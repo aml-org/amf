@@ -4,7 +4,7 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.remote.{Hint, OasYamlHint, RamlYamlHint, Vendor}
+import amf.core.remote._
 import amf.core.{AMF, AMFSerializer}
 import amf.facades.AMFCompiler
 import amf.io.FileAssertionTest
@@ -133,8 +133,10 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
   }
 
   private def hint(vendor: Vendor): Hint = vendor match {
-    case Vendor.RAML10 | Vendor.RAML | Vendor.RAML08 => RamlYamlHint
-    case Vendor.OAS | Vendor.OAS20 | Vendor.OAS30    => OasYamlHint
-    case _                                           => throw new IllegalArgumentException("Vendor is not recognized")
+    case Vendor.RAML10 => Raml10YamlHint
+    case Vendor.RAML08 => Raml08YamlHint
+    case Vendor.OAS20  => Oas20YamlHint
+    case Vendor.OAS30  => Oas30YamlHint
+    case _             => throw new IllegalArgumentException("Vendor is not recognized")
   }
 }

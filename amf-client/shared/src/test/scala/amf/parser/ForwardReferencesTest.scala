@@ -2,7 +2,7 @@ package amf.parser
 
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.parser.Range
-import amf.core.remote.RamlYamlHint
+import amf.core.remote.Raml10YamlHint
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationResult
 import amf.facades.{AMFCompiler, Validation}
@@ -81,7 +81,7 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
   private def validate(file: String, fixture: (AMFValidationResult => Unit)*) = {
     val eh = DefaultParserErrorHandler.withRun()
     Validation(platform).flatMap { _ =>
-      AMFCompiler(file, platform, RamlYamlHint, eh = eh)
+      AMFCompiler(file, platform, Raml10YamlHint, eh = eh)
         .build()
         .map { _ =>
           val report = eh.getErrors.distinct

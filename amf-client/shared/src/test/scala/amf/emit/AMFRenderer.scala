@@ -46,12 +46,12 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
 
   private def render()(implicit executionContext: ExecutionContext): Future[String] = {
     val mediaType = syntax.fold(vendor match {
-      case Amf                          => "application/ld+json"
-      case Payload                      => "application/amf+json"
-      case Raml10 | Raml08 | Raml | Aml => "application/yaml"
-      case Oas | Oas20 | Oas30          => "application/json"
-      case AsyncApi20 | AsyncApi        => "application/json"
-      case _                            => "text/plain"
+      case Amf                   => "application/ld+json"
+      case Payload               => "application/amf+json"
+      case Raml10 | Raml08 | Aml => "application/yaml"
+      case Oas20 | Oas30         => "application/json"
+      case AsyncApi20 | AsyncApi => "application/json"
+      case _                     => "text/plain"
     })({
       case Json => "application/json"
       case _    => "application/yaml"

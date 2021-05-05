@@ -8,7 +8,7 @@ import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages._
 import amf.{AmfProfile, ProfileName}
 
-class AmfResolutionPipeline() extends ResolutionPipeline() {
+class AmfResolutionPipeline private[amf] (override val name: String) extends ResolutionPipeline() {
   def profileName: ProfileName = AmfProfile
 
   protected def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage(keepEditingInfo = false)(eh)
@@ -33,4 +33,9 @@ class AmfResolutionPipeline() extends ResolutionPipeline() {
       new DeclarationsRemovalStage(),
       new AnnotationRemovalStage()
     )
+}
+
+object AmfResolutionPipeline {
+  val name: String = ResolutionPipeline.DEFAULT_PIPELINE
+  def apply()      = new AmfResolutionPipeline(name)
 }

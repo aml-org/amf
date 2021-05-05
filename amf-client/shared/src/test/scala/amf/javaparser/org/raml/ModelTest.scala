@@ -25,7 +25,7 @@ import scala.concurrent.Future
 // TODO remove default Raml hints and vendors
 trait ModelValidationTest extends DirectoryTest {
 
-  def hint: Hint = RamlYamlHint
+  def hint: Hint = Raml10YamlHint
 
   override def ignorableExtension: String = ".ignore"
 
@@ -70,7 +70,7 @@ trait ModelValidationTest extends DirectoryTest {
       case Some(Oas20)      => Oas20Profile
       case Some(Oas30)      => Oas30Profile
       case Some(AsyncApi20) => Async20Profile
-      case _                => RamlProfile
+      case _                => Raml10Profile
     }
   }
 
@@ -98,19 +98,19 @@ trait ModelResolutionTest extends ModelValidationTest {
 
   private def profileFromVendor(vendor: Vendor): ProfileName = {
     vendor match {
-      case Raml08        => Raml08Profile
-      case Raml | Raml10 => RamlProfile
-      case Oas | Oas20   => OasProfile
-      case Oas30         => Oas30Profile
-      case _             => AmfProfile
+      case Raml08 => Raml08Profile
+      case Raml10 => Raml10Profile
+      case Oas20  => Oas20Profile
+      case Oas30  => Oas30Profile
+      case _      => AmfProfile
     }
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.target match {
-      case Raml | Raml08 | Raml10 | Oas | Oas20 | Oas30 =>
+      case Raml08 | Raml10 | Oas20 | Oas30 =>
         RuntimeResolver.resolve(config.target.name, unit, EDITING_PIPELINE, unit.errorHandler())
-      case Amf    => new AmfEditingPipeline().transform(unit, UnhandledErrorHandler)
+      case Amf    => AmfEditingPipeline().transform(unit, UnhandledErrorHandler)
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }
@@ -118,8 +118,10 @@ trait ModelResolutionTest extends ModelValidationTest {
   }
 
   private def hintFromTarget(t: Vendor) = t match {
-    case _: Raml => RamlYamlHint
-    case Oas     => OasJsonHint
-    case _       => AmfJsonHint
+    case Raml10 => Raml10YamlHint
+    case Raml08 => Raml08YamlHint
+    case Oas20  => Oas20JsonHint
+    case Oas30  => Oas30JsonHint
+    case _      => AmfJsonHint
   }
 }

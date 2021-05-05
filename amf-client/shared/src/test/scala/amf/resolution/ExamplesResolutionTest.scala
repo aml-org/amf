@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.core.emitter.RenderOptions
-import amf.core.remote.{Amf, OasJsonHint, OasYamlHint, RamlYamlHint}
+import amf.core.remote.{Amf, Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
 
 /**
   *
@@ -13,7 +13,7 @@ class ExamplesResolutionTest extends ResolutionTest {
   multiGoldenTest("Response examples oas to AMF", "response-examples.json.%s") { config =>
     cycle("response-examples.json",
           config.golden,
-          OasJsonHint,
+          Oas20JsonHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
   }
@@ -22,7 +22,7 @@ class ExamplesResolutionTest extends ResolutionTest {
                   "response-declarations-with-multiple-media-types.%s") { config =>
     cycle("response-declarations-with-multiple-media-types.yaml",
           config.golden,
-          OasYamlHint,
+          Oas20YamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
   }
@@ -30,7 +30,7 @@ class ExamplesResolutionTest extends ResolutionTest {
   multiGoldenTest("Response examples raml to AMF", "response-examples.raml.%s") { config =>
     cycle("response-examples.raml",
           config.golden,
-          RamlYamlHint,
+          Raml10YamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
   }
@@ -39,7 +39,7 @@ class ExamplesResolutionTest extends ResolutionTest {
     config =>
       cycle("examples/vocabulary-fragment/api.raml",
             config.golden,
-            RamlYamlHint,
+            Raml10YamlHint,
             target = Amf,
             directory = validationPath,
             renderOptions = Some(config.renderOptions))
@@ -49,7 +49,7 @@ class ExamplesResolutionTest extends ResolutionTest {
     config =>
       cycle("examples/dialect-fragment/api.raml",
             config.golden,
-            RamlYamlHint,
+            Raml10YamlHint,
             target = Amf,
             directory = validationPath,
             renderOptions = Some(config.renderOptions))

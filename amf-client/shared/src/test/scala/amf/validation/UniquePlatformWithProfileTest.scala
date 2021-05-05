@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.ProfileName
-import amf.core.remote.{Hint, RamlYamlHint}
+import amf.core.remote.{Hint, Raml10YamlHint}
 import amf.core.validation.AMFValidationReport
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
@@ -34,5 +34,5 @@ class UniquePlatformWithProfileTest extends UniquePlatformReportGenTest {
     validate("banking/api.raml", Some("baking-api.report"), ProfileName("Banking"), Some("banking/profile.raml"))
   }
 
-  override val hint: Hint = RamlYamlHint
+  override val hint: Hint = Raml10YamlHint
 }

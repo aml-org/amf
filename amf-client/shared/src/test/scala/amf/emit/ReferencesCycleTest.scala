@@ -19,29 +19,29 @@ class ReferencesCycleTest extends FunSuiteCycleTests with ListAssertions with Co
   override val basePath = "amf-client/shared/src/test/resources/references/"
 
   private val fixture = Seq(
-    "Simple library raml"                         -> ("libraries.raml", RamlYamlHint)                -> ("lib/lib.raml", Raml),
-    "Simple library oas"                          -> ("libraries.json", OasJsonHint)                 -> ("lib/lib.json", Oas),
-    "Library raml to oas"                         -> ("libraries.raml", RamlYamlHint)                -> ("lib/lib.raml.json", Oas),
-    "Library oas to raml"                         -> ("libraries.json", OasJsonHint)                 -> ("lib/lib.json.raml", Raml),
-    "Library raml to amf"                         -> ("libraries.raml", RamlYamlHint)                -> ("lib/lib.raml.%s", Amf),
-    "Library oas to amf"                          -> ("libraries.json", OasJsonHint)                 -> ("lib/lib.json.%s", Amf),
-    "Library amf to oas from include"             -> ("libraries.json.%s", AmfJsonHint)              -> ("lib/lib.json", Oas),
-    "Library amf to raml from include"            -> ("libraries.raml.%s", AmfJsonHint)              -> ("lib/lib.raml", Raml),
-    "Data type fragment raml to raml"             -> ("data-type-fragment.raml", RamlYamlHint)       -> ("fragments/person.raml", Raml),
-    "Data type fragment oas to oas"               -> ("data-type-fragment.json", OasJsonHint)        -> ("fragments/person.json", Oas),
-    "Data type fragment raml to oas"              -> ("data-type-fragment.raml", RamlYamlHint)       -> ("fragments/person.json", Oas),
-    "Data type fragment oas to raml"              -> ("data-type-fragment.json", OasJsonHint)        -> ("fragments/person.json.raml", Raml),
-    "Data type fragment amf to raml from include" -> ("data-type-fragment.raml.%s", AmfJsonHint)     -> ("fragments/person.raml", Raml),
-    "Data type fragment amf to oas from include"  -> ("data-type-fragment.json.%s", AmfJsonHint)     -> ("fragments/person.json", Oas),
-    "Resource type fragment raml to raml"         -> ("resource-type-fragment.raml", RamlYamlHint)   -> ("fragments/resource-type.raml", Raml),
-    "Trait fragment raml to raml"                 -> ("trait-fragment.raml", RamlYamlHint)           -> ("fragments/trait.raml", Raml),
-    "Alias library reference raml test"           -> ("lib-alias-reference.raml", RamlYamlHint)      -> ("lib/lib-declaration.raml", Raml),
-    "Security schemes fragment raml to raml"      -> ("security-scheme-fragment.raml", RamlYamlHint) -> ("fragments/security-scheme.raml", Raml),
-    "Security schemes fragment oas to oas"        -> ("security-scheme-fragment.json", OasJsonHint)  -> ("fragments/security-scheme.json", Oas),
+    "Simple library raml"                         -> ("libraries.raml", Raml10YamlHint)                -> ("lib/lib.raml", Raml10),
+    "Simple library oas"                          -> ("libraries.json", Oas20JsonHint)                 -> ("lib/lib.json", Oas20),
+    "Library raml to oas"                         -> ("libraries.raml", Raml10YamlHint)                -> ("lib/lib.raml.json", Oas20),
+    "Library oas to raml"                         -> ("libraries.json", Oas20JsonHint)                 -> ("lib/lib.json.raml", Raml10),
+    "Library raml to amf"                         -> ("libraries.raml", Raml10YamlHint)                -> ("lib/lib.raml.%s", Amf),
+    "Library oas to amf"                          -> ("libraries.json", Oas20JsonHint)                 -> ("lib/lib.json.%s", Amf),
+    "Library amf to oas from include"             -> ("libraries.json.%s", AmfJsonHint)                -> ("lib/lib.json", Oas20),
+    "Library amf to raml from include"            -> ("libraries.raml.%s", AmfJsonHint)                -> ("lib/lib.raml", Raml10),
+    "Data type fragment raml to raml"             -> ("data-type-fragment.raml", Raml10YamlHint)       -> ("fragments/person.raml", Raml10),
+    "Data type fragment oas to oas"               -> ("data-type-fragment.json", Oas20JsonHint)        -> ("fragments/person.json", Oas20),
+    "Data type fragment raml to oas"              -> ("data-type-fragment.raml", Raml10YamlHint)       -> ("fragments/person.json", Oas20),
+    "Data type fragment oas to raml"              -> ("data-type-fragment.json", Oas20JsonHint)        -> ("fragments/person.json.raml", Raml10),
+    "Data type fragment amf to raml from include" -> ("data-type-fragment.raml.%s", AmfJsonHint)       -> ("fragments/person.raml", Raml10),
+    "Data type fragment amf to oas from include"  -> ("data-type-fragment.json.%s", AmfJsonHint)       -> ("fragments/person.json", Oas20),
+    "Resource type fragment raml to raml"         -> ("resource-type-fragment.raml", Raml10YamlHint)   -> ("fragments/resource-type.raml", Raml10),
+    "Trait fragment raml to raml"                 -> ("trait-fragment.raml", Raml10YamlHint)           -> ("fragments/trait.raml", Raml10),
+    "Alias library reference raml test"           -> ("lib-alias-reference.raml", Raml10YamlHint)      -> ("lib/lib-declaration.raml", Raml10),
+    "Security schemes fragment raml to raml"      -> ("security-scheme-fragment.raml", Raml10YamlHint) -> ("fragments/security-scheme.raml", Raml10),
+    "Security schemes fragment oas to oas"        -> ("security-scheme-fragment.json", Oas20JsonHint)  -> ("fragments/security-scheme.json", Oas20),
     //TODO this should be emitted without the '-'? All external fragments (now NamedExample is parsed as an external fragment) are emitted as a String in YAML
-    "Named Example fragment raml to raml" -> ("named-example.raml", RamlYamlHint)     -> ("fragments/named-example.raml.raml", Raml),
-    "Named Example fragment oas to oas"   -> ("named-example.json", OasJsonHint)      -> ("fragments/named-example.json", Oas),
-    "External fragment raml to raml"      -> ("external-fragment.raml", RamlYamlHint) -> ("fragments/external-fragment.raml.raml", Raml)
+    "Named Example fragment raml to raml" -> ("named-example.raml", Raml10YamlHint)     -> ("fragments/named-example.raml.raml", Raml10),
+    "Named Example fragment oas to oas"   -> ("named-example.json", Oas20JsonHint)      -> ("fragments/named-example.json", Oas20),
+    "External fragment raml to raml"      -> ("external-fragment.raml", Raml10YamlHint) -> ("fragments/external-fragment.raml.raml", Raml10)
   )
 
   fixture.foreach {

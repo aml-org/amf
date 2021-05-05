@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.core.emitter.RenderOptions
-import amf.core.remote.{Amf, Oas20, OasYamlHint, RamlYamlHint}
+import amf.core.remote.{Amf, Oas20, Oas20YamlHint, Raml10YamlHint}
 
 class ReferencesResolutionTest extends ResolutionTest {
   override val basePath: String = "amf-client/shared/src/test/resources/upanddown/"
@@ -10,7 +10,7 @@ class ReferencesResolutionTest extends ResolutionTest {
   multiGoldenTest("References resolution", "with_references_resolved.%s") { config =>
     cycle("with_references.raml",
           config.golden,
-          RamlYamlHint,
+          Raml10YamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
   }
@@ -19,7 +19,7 @@ class ReferencesResolutionTest extends ResolutionTest {
     cycle(
       "all-objects-case.yaml",
       config.golden,
-      OasYamlHint,
+      Oas20YamlHint,
       target = Amf,
       directory = s"$resolutionPath/oas-link-of-link/",
       transformWith = Some(Oas20),
@@ -32,7 +32,7 @@ class ReferencesResolutionTest extends ResolutionTest {
       cycle(
         "array-in-the-middle.yaml",
         config.golden,
-        OasYamlHint,
+        Oas20YamlHint,
         target = Amf,
         directory = s"$resolutionPath/oas-link-of-link/",
         transformWith = Some(Oas20),
@@ -45,7 +45,7 @@ class ReferencesResolutionTest extends ResolutionTest {
     cycle(
       "array-with-child-recursion.yaml",
       config.golden,
-      OasYamlHint,
+      Oas20YamlHint,
       target = Amf,
       directory = s"$resolutionPath/oas-link-of-link/",
       transformWith = Some(Oas20),

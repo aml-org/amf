@@ -1,9 +1,8 @@
 package amf.plugins.document.webapi
 
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.resolution.{PipelineInfo, PipelineName}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -18,7 +17,11 @@ import amf.plugins.document.webapi.parser.AsyncHeader
 import amf.plugins.document.webapi.parser.AsyncHeader.Async20Header
 import amf.plugins.document.webapi.parser.spec.AsyncWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.async.{AsyncApi20DocumentEmitter, AsyncApi20DocumentParser}
-import amf.plugins.document.webapi.resolution.pipelines.{Async20EditingPipeline, Async20ResolutionPipeline}
+import amf.plugins.document.webapi.resolution.pipelines.{
+  Async20CachePipeline,
+  Async20EditingPipeline,
+  Async20ResolutionPipeline
+}
 import amf.plugins.domain.webapi.models.api.Api
 import amf.{Async20Profile, AsyncProfile, ProfileName}
 import org.yaml.model.YDocument
@@ -112,9 +115,9 @@ object Async20Plugin extends AsyncPlugin {
     }
 
   override val pipelines: Map[String, ResolutionPipeline] = Map(
-    PipelineName.from(vendor.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new Async20ResolutionPipeline(),
-    PipelineName.from(vendor.name, ResolutionPipeline.EDITING_PIPELINE) -> new Async20EditingPipeline(),
-    PipelineName.from(vendor.name, ResolutionPipeline.CACHE_PIPELINE)   -> new Async20EditingPipeline(false)
+    Async20ResolutionPipeline.name -> Async20ResolutionPipeline(),
+    Async20EditingPipeline.name    -> Async20EditingPipeline(),
+    Async20CachePipeline.name      -> Async20CachePipeline()
   )
 
   override def context(loc: String,

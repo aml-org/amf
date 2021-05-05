@@ -2,7 +2,7 @@ package amf.maker
 
 import amf.core.model.document.Document
 import amf.core.model.domain.AmfArray
-import amf.core.parser.errorhandler.{AmfParserErrorHandler, UnhandledParserErrorHandler}
+import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.remote._
 import amf.core.validation.AMFValidationResult
 import amf.facades.{AMFCompiler, Validation}
@@ -20,30 +20,30 @@ import scala.concurrent.Future
 class DocumentMakerTest extends WebApiMakerTest {
 
   test("Raml declared types ") {
-    val doc = documentWithTypes(Raml)
+    val doc = documentWithTypes(Raml10)
       .withLocation("file://amf-client/shared/src/test/resources/maker/declared-types.raml")
-    assertFixture(doc, "declared-types.raml", RamlYamlHint)
+    assertFixture(doc, "declared-types.raml", Raml10YamlHint)
   }
 
   test("Oas declared types ") {
-    val doc = documentWithTypes(Oas)
+    val doc = documentWithTypes(Oas20)
       .withLocation("file://amf-client/shared/src/test/resources/maker/declared-types.json")
 
     doc.encodes.set(WebApiModel.EndPoints, AmfArray(Seq()))
 
-    assertFixture(doc, "declared-types.json", OasJsonHint)
+    assertFixture(doc, "declared-types.json", Oas20JsonHint)
   }
 
   test("Raml inherits declared types ") {
-    val doc = documentWithInheritsTypes(Raml)
+    val doc = documentWithInheritsTypes(Raml10)
       .withLocation("file://amf-client/shared/src/test/resources/maker/inherits-declared-types.raml")
-    assertFixture(doc, "inherits-declared-types.raml", RamlYamlHint)
+    assertFixture(doc, "inherits-declared-types.raml", Raml10YamlHint)
   }
 
   test("Oas inherits declared types ") {
-    val doc = documentWithInheritsTypes(Oas)
+    val doc = documentWithInheritsTypes(Oas20)
       .withLocation("file://amf-client/shared/src/test/resources/maker/inherits-declared-types.json")
-    assertFixture(doc, "inherits-declared-types.json", OasYamlHint)
+    assertFixture(doc, "inherits-declared-types.json", Oas20YamlHint)
   }
 
   private def assertFixture(expected: Document, file: String, hint: Hint): Future[Assertion] = {
@@ -67,8 +67,8 @@ class DocumentMakerTest extends WebApiMakerTest {
   private def documentWithTypes(vendor: Vendor): Document = {
 
     val minCount = vendor match {
-      case Oas => 0
-      case _   => 1
+      case _: Oas => 0
+      case _      => 1
     }
 
     val person = NodeShape()
@@ -131,20 +131,20 @@ class DocumentMakerTest extends WebApiMakerTest {
 
   private def documentWithInheritsTypes(vendor: Vendor) = {
     val minCount = vendor match {
-      case Oas => 0
-      case _   => 1
+      case _: Oas => 0
+      case _      => 1
     }
 
     val id = vendor match {
-      case Oas =>
+      case _: Oas =>
         "file://amf-client/shared/src/test/resources/maker/inherits-declared-types.json#/declarations/types/Human"
       case _ =>
         "file://amf-client/shared/src/test/resources/maker/inherits-declared-types.raml#/declarations/types/Human"
     }
 
     val linkLabel = vendor match {
-      case Oas => "#/definitions/Human"
-      case _   => "Human"
+      case _: Oas => "#/definitions/Human"
+      case _      => "Human"
     }
 
     val human = NodeShape()

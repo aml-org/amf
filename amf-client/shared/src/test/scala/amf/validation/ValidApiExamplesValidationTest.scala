@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.core.remote.{Hint, RamlYamlHint}
+import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 import amf.{AmfProfile, Raml08Profile}
 
 class ValidApiExamplesValidationTest extends ValidModelTest {
@@ -40,7 +40,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Raml 0.8 Query Parameter Positive test case") {
-    checkValid("/08/date-query-parameter-correct.raml")
+    validate("/08/date-query-parameter-correct.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Ignore empty example") {
@@ -52,7 +52,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Empty payload with example validation") {
-    checkValid("/08/empty-payload-with-example.raml", Raml08Profile)
+    validate("/08/empty-payload-with-example.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Invalid yaml with scalar an map as value") {
@@ -68,7 +68,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test validation of body with only example (default any shape)") {
-    checkValid("/examples/only-example-body.raml")
+    validate("/examples/only-example-body.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test seq in seq example") {
@@ -96,7 +96,10 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test invalid responses api (2)") {
-    validate("/production/responses-invalid-2.raml", golden = Some("production_responses_invalid_2.report"))
+    validate("/production/responses-invalid-2.raml",
+             golden = Some("production_responses_invalid_2.report"),
+             profile = Raml08Profile,
+             overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test invalid responses api (3)") {
@@ -108,7 +111,10 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test valid api with type problems 1") {
-    validate("/production/type_problems1.raml", golden = Some("type_problems1.report"))
+    validate("/production/type_problems1.raml",
+             golden = Some("type_problems1.report"),
+             profile = Raml08Profile,
+             overridedHint = Some(Raml08YamlHint))
   }
 
   ignore("Test valid api with type problems 2") {
@@ -160,7 +166,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Include twice same json schema and add example in raml 08") {
-    checkValid("/examples/reuse-json-schema/api.raml", profile = Raml08Profile)
+    validate("/examples/reuse-json-schema/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Date format not SYaml timestamp") {
@@ -185,7 +191,7 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
 
   // xml example in any shape types are no more candidates, so there is no warning
   test("Test unsupported example with raml08 profile") {
-    validate("/examples/unsupported-examples-08.raml", profile = Raml08Profile)
+    validate("/examples/unsupported-examples-08.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test json quoted string example") {
@@ -229,11 +235,13 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   }
 
   test("Test double with .00 against integer") {
-    checkValid("/examples/double-against-integer/api.raml")
+    validate("/examples/double-against-integer/api.raml",
+             profile = Raml08Profile,
+             overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test raml 08 with 2 schemas that contains definitions with same name but different content") {
-    checkValid("/examples/schemas-with-definition.raml")
+    validate("/examples/schemas-with-definition.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test union of a type and an array of that type") {
@@ -252,5 +260,5 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/complex-multiple-recursions-calfa.raml")
   }
 
-  override val hint: Hint = RamlYamlHint
+  override val hint: Hint = Raml10YamlHint
 }

@@ -2,7 +2,6 @@ package amf.plugins.document.webapi
 
 import amf._
 import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.resolution.{PipelineInfo, PipelineName}
 import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 import amf.core.Root
 import amf.core.client.ParsingOptions
@@ -19,7 +18,7 @@ import amf.core.parser.{
   RefContainer,
   UnspecifiedReference
 }
-import amf.core.remote.{Platform, Raml, Vendor}
+import amf.core.remote.{Platform, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.raml.{
@@ -35,21 +34,14 @@ import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFr
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.RamlReferenceHandler
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
-import amf.plugins.document.webapi.resolution.pipelines.{
-  Raml08EditingPipeline,
-  Raml08ResolutionPipeline,
-  Raml10EditingPipeline,
-  Raml10ResolutionPipeline
-}
+import amf.plugins.document.webapi.resolution.pipelines._
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.Raml10CompatibilityPipeline
 import amf.plugins.domain.webapi.models.api.{Api, WebApi}
 import amf.plugins.features.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 
 sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
-
-  override val vendors: Seq[String] = Seq(vendor.name, Raml.name)
 
   override def referenceHandler(eh: ErrorHandler) = new RamlReferenceHandler(AMFParsePluginAdapter(this))
 
@@ -232,20 +224,21 @@ object Raml08Plugin extends RamlPlugin {
     new Raml08SpecEmitterContext(errorHandler)
 
   override val pipelines: Map[String, ResolutionPipeline] = Map(
-    PipelineName.from(vendor.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new Raml08ResolutionPipeline(),
-    PipelineName.from(vendor.name, ResolutionPipeline.EDITING_PIPELINE) -> new Raml08EditingPipeline(),
-    PipelineName.from(vendor.name, ResolutionPipeline.CACHE_PIPELINE)   -> new Raml08EditingPipeline(false)
+    Raml08ResolutionPipeline.name -> Raml08ResolutionPipeline(),
+    Raml08EditingPipeline.name    -> Raml08EditingPipeline()
   )
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     defaultValidationProfiles.filterKeys(_ == validationProfile.p)
+
+  override val vendors: Seq[String] = Seq(vendor.name)
 }
 
 object Raml10Plugin extends RamlPlugin {
 
   override protected def vendor: Vendor = amf.core.remote.Raml10
 
-  override val validationProfile: ProfileName = RamlProfile
+  override val validationProfile: ProfileName = Raml10Profile
 
   def canParse(root: Root): Boolean = RamlHeader(root) exists {
     case Raml10 | Raml10Overlay | Raml10Extension | Raml10Library => true
@@ -297,18 +290,18 @@ object Raml10Plugin extends RamlPlugin {
   def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
     new Raml10SpecEmitterContext(errorHandler)
 
-  override val pipelines: Map[String, ResolutionPipeline] =
-    pipelinesForVendor(amf.core.remote.Raml.name) ++ pipelinesForVendor(amf.core.remote.Raml10.name)
-
-  def pipelinesForVendor(vendor: String): Map[String, ResolutionPipeline] = Map(
-    PipelineName.from(vendor, ResolutionPipeline.DEFAULT_PIPELINE)       -> new Raml10ResolutionPipeline(),
-    PipelineName.from(vendor, ResolutionPipeline.EDITING_PIPELINE)       -> new Raml10EditingPipeline(),
-    PipelineName.from(vendor, ResolutionPipeline.COMPATIBILITY_PIPELINE) -> new CompatibilityPipeline(RamlProfile),
-    PipelineName.from(vendor, ResolutionPipeline.CACHE_PIPELINE)         -> new Raml10EditingPipeline(false)
+  override val pipelines: Map[String, ResolutionPipeline] = Map(
+    Raml10ResolutionPipeline.name    -> Raml10ResolutionPipeline(),
+    Raml10ResolutionPipeline.name    -> Raml10ResolutionPipeline(),
+    Raml10EditingPipeline.name       -> Raml10EditingPipeline(),
+    Raml10CompatibilityPipeline.name -> Raml10CompatibilityPipeline(),
+    Raml10CachePipeline.name         -> Raml10CachePipeline()
   )
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     super
       .domainValidationProfiles(platform)
-      .filterKeys(k => k == Raml10Profile.p || k == RamlProfile.p || k == AmfProfile.p)
+      .filterKeys(k => k == Raml10Profile.p || k == AmfProfile.p)
+
+  override val vendors: Seq[String] = Seq(vendor.name)
 }

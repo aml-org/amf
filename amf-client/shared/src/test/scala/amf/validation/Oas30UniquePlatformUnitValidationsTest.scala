@@ -1,12 +1,12 @@
 package amf.validation
-import amf.core.remote.{Hint, OasJsonHint, OasYamlHint}
+import amf.core.remote.{Hint, Oas20JsonHint, Oas30JsonHint, Oas30YamlHint}
 import amf.{Oas20Profile, Oas30Profile}
 import org.scalatest.Matchers
 
 class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/oas3/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/oas3/"
-  override val hint: Hint          = OasYamlHint
+  override val hint: Hint          = Oas30YamlHint
 
   test("'Paths' property is required") {
     validate("paths-property.json", Some("paths-property.report"), Oas30Profile)
@@ -56,8 +56,12 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
     validate("required-duplicate-values2.json", Some("required-duplicate-values2.report"), Oas30Profile)
   }
 
+  // todo: what does this source in here?
   test("invalid query parameter schema") {
-    validate("invalid-query-parameter-schema.json", Some("invalid-query-parameter-schema.report"), Oas30Profile)
+    validate("invalid-query-parameter-schema.json",
+             Some("invalid-query-parameter-schema.report"),
+             Oas30Profile,
+             overridedHint = Some(Oas20JsonHint))
   }
 
   test("invalid ref inside paths object") {
@@ -107,11 +111,11 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("JSON with duplicate keys") {
-    validate("duplicate-keys.json", Some("duplicate-keys.report"), Oas30Profile, overridedHint = Some(OasJsonHint))
+    validate("duplicate-keys.json", Some("duplicate-keys.report"), Oas30Profile, overridedHint = Some(Oas30JsonHint))
   }
 
   test("Valid $ref with array indices in pointer") {
-    validate("ref-with-array-indices.json", None, Oas30Profile, overridedHint = Some(OasJsonHint))
+    validate("ref-with-array-indices.json", None, Oas30Profile, overridedHint = Some(Oas30JsonHint))
   }
 
   test("'type' facet of types produces a violation") {

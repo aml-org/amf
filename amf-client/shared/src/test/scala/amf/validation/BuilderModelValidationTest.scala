@@ -4,13 +4,13 @@ import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{Document, Module, PayloadFragment}
 import amf.core.model.domain.ScalarNode
-import amf.core.remote.{Payload, Raml}
+import amf.core.remote.{Payload, Raml10}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
-import amf.{RAMLStyle, RamlProfile}
+import amf.{RAMLStyle, Raml10Profile}
 import org.mulesoft.common.test.Diff
 import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.{AsyncFunSuite, Matchers}
@@ -37,7 +37,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
 
     for {
       validation <- Validation(platform)
-      report     <- validation.validate(module, RamlProfile, RAMLStyle)
+      report     <- validation.validate(module, Raml10Profile, RAMLStyle)
     } yield {
       report.conforms should be(true)
     }
@@ -68,7 +68,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
         |   format: int""".stripMargin
     for {
       _ <- Validation(platform) // in order to initialize
-      s <- new AMFSerializer(m, "application/raml+yaml", Raml.name, RenderOptions()).renderToString
+      s <- new AMFSerializer(m, "application/raml+yaml", Raml10.name, RenderOptions()).renderToString
     } yield {
       val diffs = Diff.ignoreAllSpace.diff(s, e)
       if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")

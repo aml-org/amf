@@ -69,8 +69,8 @@ class WebApiReferenceHandler(vendor: String) extends ReferenceHandler {
 
   private def links(part: YPart)(implicit errorHandler: ParserErrorHandler): Unit = {
     vendor match {
-      case Raml10.name | Raml08.name | Raml.name => ramlLinks(part)
-      case Oas20.name | Oas30.name               => oasLinks(part)
+      case Raml10.name | Raml08.name => ramlLinks(part)
+      case Oas20.name | Oas30.name   => oasLinks(part)
       case AsyncApi20.name =>
         oasLinks(part)
         ramlLinks(part)

@@ -1,12 +1,12 @@
 package amf.validation
+import amf.core.remote.{Hint, Raml10YamlHint}
 import amf.{ProfileName, RAMLStyle}
-import amf.core.remote.{Hint, RamlYamlHint}
 
 class CustomValidationTest extends UniquePlatformReportGenTest {
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/"
-  override val hint: Hint  = RamlYamlHint
+  override val hint: Hint  = Raml10YamlHint
 
   test("Load dialect") {
     validate("mercury.raml",

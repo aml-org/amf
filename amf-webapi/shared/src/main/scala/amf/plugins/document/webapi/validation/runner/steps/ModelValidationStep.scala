@@ -35,8 +35,7 @@ case class ModelValidationStep(override val validationContext: ValidationContext
 
   private def computeValidationExtent(baseOptions: ValidationOptions) = {
     val options = validationContext.profile match {
-      case RamlProfile | Raml10Profile | Raml08Profile | OasProfile | Oas20Profile | Oas30Profile | AsyncProfile |
-          Async20Profile | AmfProfile =>
+      case Raml10Profile | Raml08Profile | Oas20Profile | Oas30Profile | AsyncProfile | Async20Profile | AmfProfile =>
         baseOptions.withPartialValidation()
       case _ =>
         baseOptions.withFullValidation()

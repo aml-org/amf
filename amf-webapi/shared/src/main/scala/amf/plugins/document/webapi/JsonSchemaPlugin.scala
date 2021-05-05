@@ -1,27 +1,22 @@
 package amf.plugins.document.webapi
 
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{ParsedReference, ParserContext, ReferenceHandler, SimpleReferenceHandler}
-import amf.core.remote.{JsonSchema, Platform}
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.remote.JsonSchema
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.JSONSchemaRoot
-import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaWebApiContext, OasWebApiContext}
+import amf.plugins.document.webapi.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaUnspecifiedVersion
-}
+import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaUnspecifiedVersion
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaParser
-import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model._
 

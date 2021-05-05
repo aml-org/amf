@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.core.remote.{Amf, RamlYamlHint}
+import amf.core.remote.{Amf, Raml08YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class Raml08ParserTest extends FunSuiteCycleTests {
@@ -9,7 +9,7 @@ class Raml08ParserTest extends FunSuiteCycleTests {
   multiGoldenTest("Raml types include the name in the lexical information", "schemas-lexical-info.%s") { config =>
     cycle("schemas-lexical-info.raml",
           config.golden,
-          RamlYamlHint,
+          Raml08YamlHint,
           Amf,
           renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint))
   }

@@ -3,7 +3,7 @@ package amf.resolution
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.ParserErrorHandler
-import amf.core.remote.{Amf, Raml, RamlYamlHint}
+import amf.core.remote.{Amf, Raml10, Raml10YamlHint}
 import amf.facades.{AMFCompiler, Validation}
 
 import scala.concurrent.Future
@@ -24,15 +24,19 @@ class ProductionValidationTest extends RamlResolutionTest {
   }
 
   multiGoldenTest("Recursive union raml to amf", "recursive-union.raml.%s") { config =>
-    cycle("recursive-union.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("recursive-union.raml",
+          config.golden,
+          Raml10YamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   test("Recursive union raml to raml") {
-    cycle("recursive-union.raml", "recursive-union.raml.raml", RamlYamlHint, Raml)
+    cycle("recursive-union.raml", "recursive-union.raml.raml", Raml10YamlHint, Raml10)
   }
 
   test("Patch method raml to raml") {
-    cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, directory = basePath + "patch-method/")
+    cycle("api.raml", "api.raml.raml", Raml10YamlHint, Raml10, directory = basePath + "patch-method/")
   }
 
 }

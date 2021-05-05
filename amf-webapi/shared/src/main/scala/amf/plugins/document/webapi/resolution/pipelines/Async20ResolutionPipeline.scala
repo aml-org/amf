@@ -1,6 +1,9 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
+import amf.Async20Profile
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.ErrorHandler
+import amf.core.remote.AsyncApi20
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.{
   CleanReferencesStage,
@@ -15,9 +18,8 @@ import amf.plugins.domain.webapi.resolution.stages.async.{
   AsyncExamplePropagationResolutionStage,
   ServerVariableExampleResolutionStage
 }
-import amf.{Async20Profile, ProfileName}
 
-class Async20ResolutionPipeline() extends ResolutionPipeline() {
+class Async20ResolutionPipeline private (override val name: String) extends ResolutionPipeline() {
   def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage()
 
   override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
@@ -34,4 +36,9 @@ class Async20ResolutionPipeline() extends ResolutionPipeline() {
       new DeclarationsRemovalStage(),
       new AnnotationRemovalStage()
     )
+}
+
+object Async20ResolutionPipeline {
+  def apply()      = new Async20ResolutionPipeline(name)
+  val name: String = PipelineName.from(AsyncApi20.name, ResolutionPipeline.DEFAULT_PIPELINE)
 }

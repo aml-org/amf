@@ -1,19 +1,18 @@
 package amf.cache
 
-import amf.RamlProfile
+import amf.Raml10Profile
 import amf.client.convert.CoreClientConverters._
 import amf.client.convert.NativeOps
 import amf.client.environment.DefaultEnvironment
 import amf.client.model.document.{Document, Module}
-import amf.client.model.domain.{NodeShape, Api}
+import amf.client.model.domain.{Api, NodeShape}
 import amf.client.parse.RamlParser
-import amf.client.reference.ReferenceResolver
+import amf.client.reference.{CachedReference, ReferenceResolver}
 import amf.client.resolve.Raml10Resolver
 import amf.client.resource.ResourceNotFound
 import amf.client.{AMF, reference}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.internal.reference.{CachedReference => InternalCachedReference}
-import amf.client.reference.CachedReference
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -50,7 +49,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
       assert(root.references().asSeq.nonEmpty)
@@ -77,7 +76,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
       assert(root.references().asSeq.nonEmpty)
@@ -101,7 +100,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
       assert(root.references().asSeq.nonEmpty)
@@ -124,7 +123,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
       assert(root.references().asSeq.nonEmpty)
@@ -148,7 +147,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
       assert(root.references().asSeq.nonEmpty)
@@ -191,7 +190,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
       assert(root.references().asSeq.nonEmpty)
@@ -238,7 +237,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -265,7 +264,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -288,7 +287,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -315,7 +314,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -338,7 +337,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
-      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+      report <- AMF.validate(root, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
     }

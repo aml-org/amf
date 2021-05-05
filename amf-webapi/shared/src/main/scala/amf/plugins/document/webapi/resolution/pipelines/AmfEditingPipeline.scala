@@ -9,7 +9,8 @@ import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages._
 import amf.{AmfProfile, ProfileName}
 
-class AmfEditingPipeline(urlShortening: Boolean = true) extends ResolutionPipeline() {
+class AmfEditingPipeline private[amf] (urlShortening: Boolean = true, override val name: String)
+    extends ResolutionPipeline() {
 
   protected def references(implicit eh: ErrorHandler) = new WebApiReferenceResolutionStage(keepEditingInfo = true)
   protected def url(implicit eh: ErrorHandler): Option[UrlShortenerStage] =
@@ -36,4 +37,9 @@ class AmfEditingPipeline(urlShortening: Boolean = true) extends ResolutionPipeli
 
   val ID: String               = EDITING_PIPELINE
   def profileName: ProfileName = AmfProfile
+}
+
+object AmfEditingPipeline {
+  val name: String = ResolutionPipeline.EDITING_PIPELINE
+  def apply()      = new AmfEditingPipeline(name = name)
 }

@@ -21,18 +21,18 @@ import org.yaml.model.YMap
 class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions {
 
   test("Test simple Raml generation") {
-    val root = ast(`document/api/bare`, Raml)
+    val root = ast(`document/api/bare`, Raml10)
     assertNode(root, ("title", "test"))
     assertNode(root, ("description", "test description"))
   }
 
   test("Test simple Oas generation") {
-    val root = ast(`document/api/bare`, Oas)
+    val root = ast(`document/api/bare`, Oas20)
     assertNode(root, ("info", List(("title", "test"), ("description", "test description"))))
   }
 
   test("Test complete Oas generation") {
-    val root = ast(`document/api/basic`, Oas)
+    val root = ast(`document/api/basic`, Oas20)
 
     assertNode(
       root,
@@ -62,7 +62,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   }
 
   test("Test complete Raml generation") {
-    val root = ast(`document/api/basic`, Raml)
+    val root = ast(`document/api/basic`, Raml10)
     assertNode(root, ("title", "test"))
     assertNode(root, ("description", "test description"))
 
@@ -89,13 +89,13 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
   }
 
   test("Test Raml generation with operations") {
-    val root = ast(`document/api/advanced`, Raml)
+    val root = ast(`document/api/advanced`, Raml10)
     assertNode(root,
                ("/endpoint", List(("get", List(("description", "test operation get"), ("displayName", "test get"))))))
   }
 
   test("Test Oas generation with operations") {
-    val root = ast(`document/api/advanced`, Oas)
+    val root = ast(`document/api/advanced`, Oas20)
     assertNode(
       root,
       ("paths",
@@ -149,7 +149,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
       case Amf     => "application/ld+json"
       case Payload => "application/amf+json"
       case r: Raml => "application/yaml"
-      case Oas     => "application/json"
+      case Oas20   => "application/json"
       case _       => ""
     }
 

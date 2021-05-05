@@ -8,7 +8,7 @@ class ValidationDialectTextGenerator(profile: ValidationProfile) {
 
   def emit(): String = {
     val extension =
-      if (profile.name == ProfileNames.RAML || profile.name == ProfileNames.RAML08 || profile.name == ProfileNames.OAS) {
+      if (profile.name == ProfileNames.RAML10 || profile.name == ProfileNames.RAML08 || profile.name == ProfileNames.OAS20) {
         "\nextends: AMF\n"
       } else {
         "\n"

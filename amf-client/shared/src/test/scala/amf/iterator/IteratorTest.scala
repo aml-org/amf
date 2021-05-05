@@ -5,10 +5,10 @@ import amf.core.annotations.DomainExtensionAnnotation
 import amf.core.metamodel.domain.common.DescriptionField
 import amf.core.model.document.Document
 import amf.core.model.document.FieldsFilter.Local
-import amf.core.model.domain.{AmfObject, AmfScalar}
 import amf.core.model.domain.extensions.DomainExtension
+import amf.core.model.domain.{AmfObject, AmfScalar}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.remote.RamlYamlHint
+import amf.core.remote.Raml10YamlHint
 import amf.core.traversal.iterator.{AmfElementStrategy, DomainElementStrategy, IdCollector, InstanceCollector}
 import amf.plugins.domain.webapi.models.Parameter
 import amf.plugins.domain.webapi.models.api.WebApi
@@ -59,7 +59,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Full api with complete iterator") {
     build("file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
-          RamlYamlHint) map (
+          Raml10YamlHint) map (
         baseUnit => {
           val iterator = AmfElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), IdCollector())
           val elements = iterator.toList
@@ -70,7 +70,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Full api with complete iterator using instance collector") {
     build("file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
-          RamlYamlHint) map (
+          Raml10YamlHint) map (
         baseUnit => {
           val iterator = AmfElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), InstanceCollector())
           val elements = iterator.toList
@@ -87,7 +87,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Full api with domain element iterator") {
     build("file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
-          RamlYamlHint) map (
+          Raml10YamlHint) map (
         baseUnit => {
           val iterator = DomainElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), IdCollector())
           val elements = iterator.toList
@@ -98,7 +98,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Full api with domain element iterator using instance collector") {
     build("file://amf-client/shared/src/test/resources/validations/annotations/allowed-targets/allowed-targets.raml",
-          RamlYamlHint) map (
+          Raml10YamlHint) map (
         baseUnit => {
           val iterator = DomainElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]), InstanceCollector())
           val elements = iterator.toList

@@ -1,6 +1,6 @@
 package amf.validation
-import amf.Oas20Profile
-import amf.core.remote.{Hint, RamlYamlHint}
+import amf.{Oas20Profile, Raml08Profile}
+import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
@@ -143,7 +143,7 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   }
 
   test("Test inner reference inside json schema") {
-    checkReport("/json-inner-ref/case1/api.raml")
+    validate("/json-inner-ref/case1/api.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Test example and jsonschema with same name in diff folder") {
@@ -176,5 +176,5 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/same-type-inheritance-recursion.raml", Some("same-type-inheritance-recursion.report"))
   }
 
-  override val hint: Hint = RamlYamlHint
+  override val hint: Hint = Raml10YamlHint
 }

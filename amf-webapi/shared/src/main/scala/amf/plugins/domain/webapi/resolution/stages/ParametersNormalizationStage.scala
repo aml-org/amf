@@ -54,7 +54,7 @@ abstract class ParametersNormalizationStage(profile: ProfileName)(override impli
 }
 
 class OpenApiParametersNormalizationStage(override implicit val errorHandler: ErrorHandler)
-    extends ParametersNormalizationStage(OasProfile) {
+    extends ParametersNormalizationStage(Oas20Profile) {
 
   /**
     * In OpenAPI we just push the endpoint parameters to the operation level, overwriting the any endpoint parameter

@@ -15,7 +15,7 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
   override def basePath = "amf-client/shared/src/test/resources/validations/japanese/resolve/"
 
   multiGoldenTest("Raml10 to Json-LD resolves", "ramlapi.%s") { config =>
-    cycle("ramlapi.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("ramlapi.raml", config.golden, Raml10YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
   multiSourceTest("Flattened Json-LD resolves to Raml", "ramlapi.%s") { config =>
@@ -23,15 +23,15 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
   }
 
   multiGoldenTest("Oas20 to Json-LD resolves", "oasapi.%s") { config =>
-    cycle("oasapi.json", config.golden, OasYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("oasapi.json", config.golden, Oas20YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Oas30 to JSON-LD resolves", "oas30api.%s") { config =>
-    cycle("oas30api.json", config.golden, OasYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("oas30api.json", config.golden, Oas30YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
   test("RAML emission applies singularize") {
-    cycle("singularize.raml", "resolved-singularize.raml", RamlYamlHint, Raml10)
+    cycle("singularize.raml", "resolved-singularize.raml", Raml10YamlHint, Raml10)
   }
 
 // TODO: JSON-LD to OAS doesnt decode Japanese characters. RAML does
@@ -49,9 +49,9 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {
-      case Raml | Raml08 | Raml10 | Oas | Oas20 | Oas30 =>
+      case Raml08 | Raml10 | Oas20 | Oas30 =>
         RuntimeResolver.resolve(config.target.name, unit, ResolutionPipeline.EDITING_PIPELINE, UnhandledErrorHandler)
-      case Amf    => new AmfEditingPipeline().transform(unit, UnhandledErrorHandler)
+      case Amf    => AmfEditingPipeline().transform(unit, UnhandledErrorHandler)
       case target => throw new Exception(s"Cannot resolve $target")
     }
 }
