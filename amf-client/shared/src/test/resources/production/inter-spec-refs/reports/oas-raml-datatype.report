@@ -1,14 +1,23 @@
 Model: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-datatype/api.json
 Profile: OAS 2.0
 Conforms? false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#invalid-cross-spec
-  Message: Cannot reference fragments of another spec
+- Source: http://a.ml/vocabularies/amf/core#syaml-error
+  Message: YAML map expected
   Level: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(14,22)-(14,37)]))
-  Location: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-datatype/api.json
+  Position: None
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/core#syaml-error
+  Message: Syntax error : Unexpected '#%RAML 1.0 DataType
+type'
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(1,0)-(2,4)]))
+  Location: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-datatype/datatype.raml

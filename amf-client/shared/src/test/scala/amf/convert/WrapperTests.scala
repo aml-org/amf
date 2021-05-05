@@ -65,6 +65,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
   private val apiWithSpaces =
     "file://amf-client/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
+  private val apiWithIncludesWithSpaces =
+    "file://amf-client/shared/src/test/resources/api/api-with-includes-with-spaces/api.raml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
   private val recursiveAdditionalProperties =

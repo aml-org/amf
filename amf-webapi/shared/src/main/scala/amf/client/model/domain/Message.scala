@@ -95,6 +95,8 @@ class Message(override private[amf] val _internal: InternalMessage)
 
   def withPayload(mediaType: ClientOption[String]): Payload = _internal.withPayload(mediaType.toScala)
 
+  def withPayload(mediaType: String): Payload = _internal.withPayload(Some(mediaType))
+
   def withPayload(): Payload = _internal.withPayload()
 
   override def linkCopy(): Message = _internal.linkCopy()

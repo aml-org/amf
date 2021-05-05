@@ -12,19 +12,20 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   @JSExportTopLevel("model.domain.NodeShape")
   def this() = this(InternalNodeShape())
 
-  def minProperties: IntField                              = _internal.minProperties
-  def maxProperties: IntField                              = _internal.maxProperties
-  def closed: BoolField                                    = _internal.closed
-  def discriminator: StrField                              = _internal.discriminator
-  def discriminatorValue: StrField                         = _internal.discriminatorValue
-  def discriminatorMapping: ClientList[IriTemplateMapping] = _internal.discriminatorMapping.asClient
-  def properties: ClientList[PropertyShape]                = _internal.properties.asClient
-  def additionalPropertiesSchema: Shape                    = _internal.additionalPropertiesSchema
-  def dependencies: ClientList[PropertyDependencies]       = _internal.dependencies.asClient
-  def schemaDependencies: ClientList[SchemaDependencies]   = _internal.schemaDependencies.asClient
-  def propertyNames: Shape                                 = _internal.propertyNames
-  def unevaluatedProperties: Boolean                       = _internal.unevaluatedProperties
-  def unevaluatedPropertiesSchema: Shape                   = _internal.unevaluatedPropertiesSchema
+  def minProperties: IntField                                          = _internal.minProperties
+  def maxProperties: IntField                                          = _internal.maxProperties
+  def closed: BoolField                                                = _internal.closed
+  def discriminator: StrField                                          = _internal.discriminator
+  def discriminatorValue: StrField                                     = _internal.discriminatorValue
+  def discriminatorMapping: ClientList[IriTemplateMapping]             = _internal.discriminatorMapping.asClient
+  def discriminatorValueMapping: ClientList[DiscriminatorValueMapping] = _internal.discriminatorValueMapping.asClient
+  def properties: ClientList[PropertyShape]                            = _internal.properties.asClient
+  def additionalPropertiesSchema: Shape                                = _internal.additionalPropertiesSchema
+  def dependencies: ClientList[PropertyDependencies]                   = _internal.dependencies.asClient
+  def schemaDependencies: ClientList[SchemaDependencies]               = _internal.schemaDependencies.asClient
+  def propertyNames: Shape                                             = _internal.propertyNames
+  def unevaluatedProperties: Boolean                                   = _internal.unevaluatedProperties
+  def unevaluatedPropertiesSchema: Shape                               = _internal.unevaluatedPropertiesSchema
 
   def withMinProperties(min: Int): this.type = {
     _internal.withMinProperties(min)

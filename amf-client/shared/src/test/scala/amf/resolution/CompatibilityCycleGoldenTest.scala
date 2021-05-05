@@ -172,4 +172,14 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
     )
   }
 
+  test("Consumes at root level in OAS 2.0 API") {
+    cycle(
+      "oas20/consumes-global.json",
+      "cycled-apis/raml/consumes-global.raml",
+      OasJsonHint,
+      Raml,
+      transformWith = Some(Raml10)
+    )
+  }
+
 }

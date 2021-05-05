@@ -271,5 +271,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/raml/big-number-in-schema.raml")
   }
 
+  test("Resolve !include with spaces") {
+    checkValid("/raml/api-with-includes-with-spaces/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

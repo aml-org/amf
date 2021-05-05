@@ -39,6 +39,8 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
     ExternalJsonYamlRefsPlugin
   )
 
+  def validVendorsToReference: Seq[String] = List(ExternalJsonYamlRefsPlugin.ID)
+
   def specContext(options: RenderOptions, errorHandler: ErrorHandler): SpecEmitterContext
 
   /**

@@ -1,0 +1,16 @@
+#%RAML 1.0 Library
+resourceTypes:
+  Member:
+    put?:
+      body:
+        examples: <<putSampleRequest>>
+      responses:
+        200:
+          body:
+            examples: <<putSampleResponse>>
+
+    get?:
+      responses:
+        200:
+          body:
+            examples: <<getSampleResponse>>

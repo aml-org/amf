@@ -5,7 +5,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Yaml
-import amf.core.remote.Vendor.AMF
+import amf.core.remote.Vendor.{AMF, ASYNC20, OAS20, OAS30}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
@@ -822,6 +822,17 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
+  test("Reduced KG Service API resolution") {
+    cycle(
+      "knowledge-graph-reduced/api.raml",
+      "knowledge-graph-reduced/api.jsonld",
+      RamlYamlHint,
+      target = Amf,
+      directory = productionPath,
+      transformWith = Some(Raml10)
+    )
+  }
+
   test("Example1 resolution to Raml") {
     cycle("example1.yaml", "example1.resolved.yaml", OasYamlHint, Oas20, resolutionPath, syntax = Some(Yaml))
   }
@@ -1099,18 +1110,32 @@ class EditingResolutionTest extends ResolutionTest {
       )
     }
 
-    multiGoldenTest("RecursiveShape in nested library has correct fixpoint using UrlShortening", "api.%s") { config =>
+    multiGoldenTest("OAS 3.0 discriminators", "api.%s") { config =>
       cycle(
-        "api.raml",
+        "api.yaml",
         config.golden,
-        RamlYamlHint,
+        OasYamlHint,
         target = Amf,
-        directory = resolutionPath + "nested-library-with-recursive-shape/",
-        transformWith = Some(Raml10),
+        directory = resolutionPath + "oas30-discriminator/",
+        transformWith = Some(Oas30),
         renderOptions = Some(config.renderOptions),
         eh = Some(UnhandledParserErrorHandler)
       )
     }
+
+    multiGoldenTest("OAS 3.0 discriminators invalid mapping", "api.%s") { config =>
+      cycle(
+        "api.yaml",
+        config.golden,
+        OasYamlHint,
+        target = Amf,
+        directory = resolutionPath + "oas30-discriminator-invalid-mapping/",
+        transformWith = Some(Oas30),
+        renderOptions = Some(config.renderOptions)
+      )
+    }
+
   }
+
   override val basePath: String = ""
 }

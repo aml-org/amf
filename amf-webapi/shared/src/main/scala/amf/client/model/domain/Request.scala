@@ -70,9 +70,6 @@ case class Request(override private[amf] val _internal: InternalRequest) extends
     */
   def withHeader(name: String): Parameter = _internal.withHeader(name)
 
-  /** Adds one Payload]to the payloads property of this Request with the given media type and returns it for population. */
-  def withPayload(mediaType: String): Payload = _internal.withPayload(Some(mediaType))
-
   /**
     * Adds one Parameter to the uriParameters property of this Request and returns it for population.
     * Name property of the parameter is required.

@@ -34,7 +34,9 @@ object PayloadPlugin extends AMFDocumentPlugin {
 
   override def dependencies(): Seq[AMFDomainPlugin] = Seq(APIDomainPlugin, DataShapesDomainPlugin)
 
-  // we are looking for documents with a very specific payload
+  override val validVendorsToReference: Seq[String] = Nil
+
+// we are looking for documents with a very specific payload
   // otherwise, this plugin can become the fallback option.
   // Fallback option should be an external fragment.
   override def documentSyntaxes: Seq[String] = Seq(

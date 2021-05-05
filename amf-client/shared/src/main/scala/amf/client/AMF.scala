@@ -1,12 +1,13 @@
 package amf.client
 
 import amf.client.convert.ClientPayloadPluginConverter
+import amf.client.convert.ClientPayloadPluginConverter.AMFPluginConverter
 import amf.client.convert.CoreClientConverters._
 import amf.client.environment.Environment
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.model.document.{BaseUnit, Dialect}
 import amf.client.parse._
-import amf.client.plugins.{AMFPlugin, ClientAMFPayloadValidationPlugin}
+import amf.client.plugins.{AMFPlugin, ClientAMFPayloadValidationPlugin, ClientAMFPlugin}
 import amf.client.render._
 import amf.client.resolve._
 import amf.client.validate.ValidationReport
@@ -17,12 +18,12 @@ import amf.plugins.features.AMFCustomValidation
 import amf.plugins.{document, features}
 import amf.{AMFStyle, Core, MessageStyle, ProfileName}
 
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
 
-@JSExportAll
 @JSExportTopLevel("AMF")
 object AMF extends PlatformSecrets {
 
+  @JSExport
   def init(): ClientFuture[Unit] = init(platform.defaultExecutionEnvironment)
 
   def init(executionEnvironment: BaseExecutionEnvironment): ClientFuture[Unit] = {
@@ -33,27 +34,29 @@ object AMF extends PlatformSecrets {
     amf.Core.init(executionEnvironment)
   }
 
-  def raml10Parser(): Raml10Parser = new Raml10Parser()
+  @JSExport def raml10Parser(): Raml10Parser = new Raml10Parser()
 
-  def ramlParser(): RamlParser = new RamlParser()
+  @JSExport def ramlParser(): RamlParser = new RamlParser()
 
-  def raml10Generator(): Raml10Renderer = new Raml10Renderer()
+  @JSExport def raml10Generator(): Raml10Renderer = new Raml10Renderer()
 
-  def raml08Parser(): Raml08Parser = new Raml08Parser()
+  @JSExport def raml08Parser(): Raml08Parser = new Raml08Parser()
 
-  def raml08Generator(): Raml08Renderer = new Raml08Renderer()
+  @JSExport def raml08Generator(): Raml08Renderer = new Raml08Renderer()
 
-  def oas20Parser(): Oas20Parser = new Oas20Parser()
+  @JSExport def oas20Parser(): Oas20Parser = new Oas20Parser()
 
-  def oas20Generator(): Oas20Renderer = new Oas20Renderer()
+  @JSExport def oas20Generator(): Oas20Renderer = new Oas20Renderer()
 
-  def amfGraphParser(): AmfGraphParser = new AmfGraphParser()
+  @JSExport def amfGraphParser(): AmfGraphParser = new AmfGraphParser()
 
-  def amfGraphGenerator(): AmfGraphRenderer = new AmfGraphRenderer()
+  @JSExport def amfGraphGenerator(): AmfGraphRenderer = new AmfGraphRenderer()
 
+  @JSExport
   def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle)
 
+  @JSExport
   def validate(model: BaseUnit,
                profileName: ProfileName,
                messageStyle: MessageStyle,
@@ -63,6 +66,7 @@ object AMF extends PlatformSecrets {
   /**
     * This method receives a resolved model. Don't use it with an unresolved one.
     */
+  @JSExport
   def validateResolved(model: BaseUnit,
                        profileName: ProfileName,
                        messageStyle: MessageStyle): ClientFuture[ValidationReport] =
@@ -71,37 +75,39 @@ object AMF extends PlatformSecrets {
   /**
     * This method receives a resolved model. Don't use it with an unresolved one.
     */
+  @JSExport
   def validateResolved(model: BaseUnit,
                        profileName: ProfileName,
                        messageStyle: MessageStyle,
                        env: Environment): ClientFuture[ValidationReport] =
     Core.validateResolved(model, profileName, messageStyle, env)
 
-  def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
+  @JSExport def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 
-  def loadValidationProfile(url: String, env: Environment): ClientFuture[ProfileName] =
+  @JSExport def loadValidationProfile(url: String, env: Environment): ClientFuture[ProfileName] =
     Core.loadValidationProfile(url, env)
 
-  def emitShapesGraph(profileName: ProfileName): String =
+  @JSExport def emitShapesGraph(profileName: ProfileName): String =
     Core.emitShapesGraph(profileName)
 
-  def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
+  @JSExport def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 
-  def registerDialect(url: String): ClientFuture[Dialect] = Vocabularies.registerDialect(url)
+  @JSExport def registerDialect(url: String): ClientFuture[Dialect] = Vocabularies.registerDialect(url)
 
+  @JSExport
   def registerDialect(url: String, env: Environment): ClientFuture[Dialect] = Vocabularies.registerDialect(url, env)
 
-  def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
+  @JSExport def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
 
-  def resolveRaml08(unit: BaseUnit): BaseUnit = new Raml08Resolver().resolve(unit)
+  @JSExport def resolveRaml08(unit: BaseUnit): BaseUnit = new Raml08Resolver().resolve(unit)
 
-  def resolveOas20(unit: BaseUnit): BaseUnit = new Oas20Resolver().resolve(unit)
+  @JSExport def resolveOas20(unit: BaseUnit): BaseUnit = new Oas20Resolver().resolve(unit)
 
-  def resolveAmfGraph(unit: BaseUnit): BaseUnit = new AmfGraphResolver().resolve(unit)
+  @JSExport def resolveAmfGraph(unit: BaseUnit): BaseUnit = new AmfGraphResolver().resolve(unit)
 
-  def jsonPayloadParser(): JsonPayloadParser = new JsonPayloadParser()
+  @JSExport def jsonPayloadParser(): JsonPayloadParser = new JsonPayloadParser()
 
-  def yamlPayloadParser(): YamlPayloadParser = new YamlPayloadParser()
+  @JSExport def yamlPayloadParser(): YamlPayloadParser = new YamlPayloadParser()
 }
 
 @JSExportAll
@@ -138,27 +144,23 @@ object CoreWrapper {
 
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 
-  def registerPlugin(plugin: AMFPlugin): Unit = Core.registerPlugin(plugin)
+  def registerPlugin(plugin: ClientAMFPlugin): Unit = Core.registerPlugin(AMFPluginConverter.asInternal(plugin))
 
   def registerPayloadPlugin(plugin: ClientAMFPayloadValidationPlugin): Unit =
     Core.registerPlugin(ClientPayloadPluginConverter.convert(plugin))
 
 }
 
-@JSExportAll
-@JSExportTopLevel("plugins")
 object PluginsWrapper {
   val document: DocumentPluginsWrapper.type = DocumentPluginsWrapper
   val features: FeaturesPluginsWrapper.type = FeaturesPluginsWrapper
 }
 
-@JSExportAll
 object DocumentPluginsWrapper {
   val WebApi: document.WebApi.type             = document.WebApi
   val Vocabularies: document.Vocabularies.type = document.Vocabularies
 }
 
-@JSExportAll
 object FeaturesPluginsWrapper {
   val AMFValidation: features.AMFValidation.type             = features.AMFValidation
   val AMFCustomValidation: features.AMFCustomValidation.type = features.AMFCustomValidation

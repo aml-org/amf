@@ -3,7 +3,7 @@ package amf.validation
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.plugins.features.validation.PlatformValidator
-import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
+import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ShaclJsonLdShapeGraphEmitter}
 import amf.{AmfProfile, Oas30Profile, OasProfile, RamlProfile}
 import org.scalatest.AsyncFunSuite
 
@@ -63,7 +63,7 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
 
         jsLibrary match {
           case Some(code) =>
-            PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
+            PlatformValidator.instance.registerLibrary(ShaclJsonLdShapeGraphEmitter.validationLibraryUrl, code)
           case _ => // ignore
         }
         PlatformValidator.instance.report(

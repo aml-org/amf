@@ -2,7 +2,6 @@ package amf.cycle
 
 import amf.core.remote.{Raml, RamlYamlHint}
 import amf.io.{BuildCycleTests, FunSuiteCycleTests}
-import amf.remote._
 
 class YamlSpecCycleTest extends FunSuiteCycleTests {
 

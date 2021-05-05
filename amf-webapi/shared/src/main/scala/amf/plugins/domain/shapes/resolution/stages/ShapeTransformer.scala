@@ -15,7 +15,9 @@ class ShapeTransformer(context: NormalizationContext) extends ElementStageTransf
 
   private val recursionRegister = new RecursionErrorRegister(context.errorHandler)
   override def transform(element: Shape): Option[Shape] = {
-    Some(ShapeCanonizer(ShapeExpander(element, context, recursionRegister), context))
+    val expanded  = ShapeExpander(element, context, recursionRegister)
+    val canonized = ShapeCanonizer(expanded, context)
+    Some(canonized)
 
   }
 }

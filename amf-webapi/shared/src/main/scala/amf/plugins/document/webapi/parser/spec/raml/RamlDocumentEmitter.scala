@@ -267,7 +267,12 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
       fs.entry(WebApiModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
-      fs.entry(WebApiModel.ContentType).map(f => result += spec.arrayEmitter("mediaType", f, ordering))
+      fs.entry(WebApiModel.ContentType) match {
+        case Some(f) => result += spec.arrayEmitter("mediaType", f, ordering)
+        case None    =>
+          // If there is not ContentType but an Accepts, this field is from an OAS so it will be emitted as an extension
+          fs.entry(WebApiModel.Accepts).map(f => result += spec.arrayEmitter("consumes".asRamlAnnotation, f, ordering))
+      }
 
       fs.entry(WebApiModel.Version).map(f => result += RamlScalarEmitter("version", f))
 

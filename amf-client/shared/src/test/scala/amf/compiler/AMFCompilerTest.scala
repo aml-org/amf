@@ -1,5 +1,6 @@
 package amf.compiler
 
+import amf.client.environment.{AMFConfiguration, RAMLConfiguration}
 import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.client.remote.Content
 import amf.core.Root
@@ -196,7 +197,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
       s should include("libraries")
     })
 
-    libraries.entries.length should be(references.count(!_.isInstanceOf[ExternalFragment]))
+    libraries.entries.length should be(references.size)
   }
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {

@@ -6,6 +6,10 @@ import sbtsonar.SonarPlugin.autoImport.sonarProperties
 import scala.language.postfixOps
 import scala.sys.process._
 import Versions.versions
+import org.mulesoft.typings.generation.ScalaClassFilterBuilder
+import org.mulesoft.typings.resolution.BuiltInMappings.{dictionary, option, overwrite}
+import org.mulesoft.typings.resolution.MappingFactory
+import org.mulesoft.typings.resolution.namespace.PrefixNamespaceReplacer
 
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
@@ -98,12 +102,13 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .disablePlugins(SonarPlugin)
 
 lazy val webapiJVM =
-  webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(coreJVMRef, coreLibJVM)
+  webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(coreJVMRef, coreLibJVM).sourceDependency(customValidationJVMRef, customValidationLibJVM)
 lazy val webapiJS =
   webapi.js
     .in(file("./amf-webapi/js"))
     .sourceDependency(coreJSRef, coreLibJS)
-    .disablePlugins(SonarPlugin)
+    .sourceDependency(customValidationJSRef, customValidationLibJS)
+    .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 /** **********************************************
   * AMF Client
@@ -148,13 +153,47 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
   )
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js",
+    typingModuleName := "amf-client-js",
+    customMappings := MappingFactory()
+      .map("ClientList").to("Array")
+      .map("ClientFuture").to("Promise")
+      .map("AmfCustomClass").to("AnotherCustomClass")
+      .map("ClientOption").to(option())
+      .map("ClientMap").to(dictionary())
+      .map("AnyVal").to("any")
+      .map("ClientLoader").to("ClientResourceLoader")
+      .map("ClientReference").to("ClientReferenceResolver")
+      .map("DocBuilder").to(overwrite("JsOutputBuilder"))
+      .map("Unit").to("void"),
+    namespaceReplacer := PrefixNamespaceReplacer("amf\\.client\\.", ""),
+    scalaFilteredClasses := ScalaClassFilterBuilder()
+      .withClassFilter("^.*\\.DataTypes$")
+      .withClassFilter("^.*\\.remod\\..*$")
+      .withClassFilter("^.*\\.JsFs$")
+      .withClassFilter("^.*\\.SysError$")
+      .withClassFilter("^amf\\.core\\.remote\\.*$")
+      .withClassFilter("^.*\\.JSValidation.*$")
+      .withClassFilter("^.*\\.Main.*$")
+      .withClassFilter("^.*\\.Https$")
+      .withClassFilter("^.*\\.Http$")
+      .withClassFilter("^.*\\.ExecutionLog.*$")
+      .withClassFilter("^.*\\.ErrorHandler.*$")
+      .withMethodFilter("^.*\\.ValidationReport$", "toString")
+      .withMethodFilter("^.*\\.BaseUnit", "toNativeRdfModel")
+      .withMethodFilter("^.*\\.Linkable", "link")
+      .withClassFilter("^.*\\.JSONSchemaVersions.*$")
+      .withTypeFilter("^.*$", "JSONSchemaVersion")
+      .withTypeFilter("^.*$", "Option")
+      .withTypeFilter("^.*$", "Long")
+      .withTypeFilter("^.*$", "Seq")
+      .withTypeFilter("^.*$", "CharStream")
   )
   .disablePlugins(SonarPlugin)
 
 lazy val clientJVM =
-  client.jvm.in(file("./amf-client/jvm")).sourceDependency(customValidationJVMRef, customValidationLibJVM)
-lazy val clientJS = client.js.in(file("./amf-client/js")).sourceDependency(customValidationJSRef, customValidationLibJS)
+  client.jvm.in(file("./amf-client/jvm"))
+lazy val clientJS = client.js.in(file("./amf-client/js"))
 
 // Tasks
 

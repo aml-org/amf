@@ -5,10 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#invalid-cross-spec
-  Message: Cannot reference fragments of another spec
+- Source: http://a.ml/vocabularies/amf/parser#WebAPI-name-minCount
+  Message: API title is mandatory
   Level: Violation
-  Target: 
-  Property: 
-  Position: Some(LexicalInformation([(2,9)-(2,17)]))
+  Target: file://amf-client/shared/src/test/resources/validations/invalid-cross-overlay/invalid-cross-overlay.raml#/web-api
+  Property: http://a.ml/vocabularies/core#name
+  Position: Some(LexicalInformation([(2,0)-(2,17)]))
   Location: file://amf-client/shared/src/test/resources/validations/invalid-cross-overlay/invalid-cross-overlay.raml

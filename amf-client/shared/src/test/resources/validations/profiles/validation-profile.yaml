@@ -1,0 +1,22 @@
+#%Validation Profile 1.0
+
+description: Validation profile implementing common validations
+
+profile: Banking
+
+extends: RAML
+
+warning:
+  - amf-parser.raml-root-schemes-values
+
+violation:
+  - custom-schemes
+
+validations:
+
+  custom-schemes:
+    message: Supported schemes are HTTP, HTTPS and FTP
+    targetClass: schema-org.WebAPI
+    propertyConstraints:
+      raml-http.scheme:
+        in: ["http", "https", "HTTP", "HTTPS", "ftp", "FTP"]

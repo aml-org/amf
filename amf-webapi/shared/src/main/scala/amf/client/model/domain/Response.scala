@@ -42,8 +42,5 @@ case class Response(override private[amf] val _internal: InternalResponse) exten
     */
   def withHeader(name: String): Parameter = _internal.withHeader(name)
 
-  /** Adds one Payload]to the payloads property of this Response]with the given media type and returns it for population. */
-  def withPayload(mediaType: String): Payload = _internal.withPayload(Some(mediaType))
-
   override def linkCopy(): Response = _internal.linkCopy()
 }

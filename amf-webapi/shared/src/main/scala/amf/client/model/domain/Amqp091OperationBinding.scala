@@ -40,8 +40,8 @@ case class Amqp091OperationBinding(override private[amf] val _internal: Internal
     this
   }
 
-  def withCc(cC: Seq[String]): this.type = {
-    _internal.withCc(cC)
+  def withCc(cC: ClientList[String]): this.type = {
+    _internal.withCc(cC.asInternal)
     this
   }
 
@@ -60,8 +60,8 @@ case class Amqp091OperationBinding(override private[amf] val _internal: Internal
     this
   }
 
-  def withBcc(bCC: Seq[String]): this.type = {
-    _internal.withBcc(bCC)
+  def withBcc(bCC: ClientList[String]): this.type = {
+    _internal.withBcc(bCC.asInternal)
     this
   }
 

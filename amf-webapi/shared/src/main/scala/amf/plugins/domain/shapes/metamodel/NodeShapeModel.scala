@@ -4,8 +4,8 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Bool, Int, Str}
 import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.plugins.domain.shapes.models.NodeShape
-import amf.core.vocabulary.Namespace.{Shacl, Shapes}
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.core.vocabulary.Namespace.{Shacl, Shapes, Document}
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
 
@@ -14,69 +14,86 @@ import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
   */
 object NodeShapeModel extends AnyShapeModel {
 
-  val MinProperties = Field(
+  val MinProperties: Field = Field(
     Int,
     Shapes + "minProperties",
     ModelDoc(ModelVocabularies.Shapes, "minProperties", "Minimum number of properties in the input node constraint"))
 
-  val MaxProperties = Field(
+  val MaxProperties: Field = Field(
     Int,
     Shapes + "maxProperties",
     ModelDoc(ModelVocabularies.Shapes, "maxProperties", "Maximum number of properties in the input node constraint"))
 
-  val Closed = Field(
+  val Closed: Field = Field(
     Bool,
     Shacl + "closed",
     ModelDoc(ExternalModelVocabularies.Shacl, "closed", "Additional properties in the input node accepted constraint"))
 
-  val AdditionalPropertiesSchema = Field(
+  val AdditionalPropertiesSchema: Field = Field(
     ShapeModel,
     Shacl + "additionalPropertiesSchema",
     ModelDoc(ExternalModelVocabularies.Shacl, "additionalPropertiesSchema", "Additional properties schema"))
 
-  val Discriminator =
+  val Discriminator: Field =
     Field(Str, Shapes + "discriminator", ModelDoc(ModelVocabularies.Shapes, "discriminator", "Discriminator property"))
 
-  val DiscriminatorValue = Field(
+  val DiscriminatorValue: Field = Field(
     Str,
     Shapes + "discriminatorValue",
     ModelDoc(ModelVocabularies.Shapes, "discriminatorValue", "Values for the discriminator property"))
 
-  val DiscriminatorMapping = Field(
-    Array(IriTemplateMappingModel),
+//  @deprecated("Use DiscriminatorValueMapping", "4.7.2")
+  val DiscriminatorMapping: Field = Field(
+    Array(DiscriminatorValueMappingModel),
     Shapes + "discriminatorMapping",
     ModelDoc(ModelVocabularies.Shapes,
              "discriminatorMapping",
-             "Mappping of acceptable values for the node discriminator")
+             "Mapping of acceptable values for the node discriminator")
   )
 
-  val Properties = Field(Array(PropertyShapeModel),
-                         Shacl + "property",
-                         ModelDoc(ExternalModelVocabularies.Shacl, "property", "Properties associated to this node"))
+  val DiscriminatorValueMapping: Field = Field(
+    Array(DiscriminatorValueMappingModel),
+    Shapes + "discriminatorValueMapping",
+    ModelDoc(ModelVocabularies.AmlDoc,
+             "discriminatorValueMapping",
+             "Mapping of acceptable values for the node discriminator")
+  )
 
-  val PropertyNames = Field(ShapeModel,
-                            Shacl + "propertyNames",
-                            ModelDoc(ExternalModelVocabularies.Shacl, "propertyNames", "Property names schema"))
+  val Properties: Field = Field(
+    Array(PropertyShapeModel),
+    Shacl + "property",
+    ModelDoc(ExternalModelVocabularies.Shacl, "property", "Properties associated to this node"))
 
-  val Dependencies = Field(Array(PropertyDependenciesModel),
-                           Shapes + "dependencies",
-                           ModelDoc(ModelVocabularies.Shapes, "dependencies", "Dependent properties constraint"))
+  val PropertyNames: Field = Field(ShapeModel,
+                                   Shacl + "propertyNames",
+                                   ModelDoc(ExternalModelVocabularies.Shacl, "propertyNames", "Property names schema"))
 
-  val SchemaDependencies = Field(
+  val Dependencies: Field = Field(
+    Array(PropertyDependenciesModel),
+    Shapes + "dependencies",
+    ModelDoc(ModelVocabularies.Shapes, "dependencies", "Dependent properties constraint"))
+
+  val SchemaDependencies: Field = Field(
     Array(SchemaDependenciesModel),
     Shapes + "schemaDependencies",
     ModelDoc(ModelVocabularies.Shapes, "schemaDependencies", "Applied schemas if property exists constraint")
   )
 
-  val UnevaluatedProperties = Field(
+  val UnevaluatedProperties: Field = Field(
     Bool,
     Shapes + "unevaluatedProperties",
-    ModelDoc(ModelVocabularies.Shapes, "unevaluatedProperties", "Accepts that properties may not be evaluated in schema validation"))
+    ModelDoc(ModelVocabularies.Shapes,
+             "unevaluatedProperties",
+             "Accepts that properties may not be evaluated in schema validation")
+  )
 
-  val UnevaluatedPropertiesSchema = Field(
+  val UnevaluatedPropertiesSchema: Field = Field(
     ShapeModel,
     Shapes + "unevaluatedPropertiesSchema",
-    ModelDoc(ModelVocabularies.Shapes, "unevaluatedPropertiesSchema", "Properties that may not be evaluated in schema validation"))
+    ModelDoc(ModelVocabularies.Shapes,
+             "unevaluatedPropertiesSchema",
+             "Properties that may not be evaluated in schema validation")
+  )
 
   val specificFields = List(
     MinProperties,
@@ -86,6 +103,7 @@ object NodeShapeModel extends AnyShapeModel {
     Discriminator,
     DiscriminatorValue,
     DiscriminatorMapping,
+    DiscriminatorValueMapping,
     Properties,
     PropertyNames,
     Dependencies,
@@ -99,7 +117,7 @@ object NodeShapeModel extends AnyShapeModel {
 
   override val `type`: List[ValueType] = List(Shacl + "NodeShape") ++ AnyShapeModel.`type`
 
-  override def modelInstance = NodeShape()
+  override def modelInstance: AnyShape = NodeShape()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
