@@ -1,8 +1,8 @@
 package amf.cycle
 
 import amf.core.emitter.RenderOptions
-import amf.core.remote.{Amf, RamlYamlHint}
-import amf.io.{FunSuiteCycleTests, MultiJsonldAsyncFunSuite}
+import amf.core.remote.{Amf, Raml10YamlHint}
+import amf.io.FunSuiteCycleTests
 
 class RamlArrayCycleTest extends FunSuiteCycleTests {
   override def basePath: String = "amf-client/shared/src/test/resources/parser/"
@@ -14,7 +14,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
                   s"${arrayExpression}base-type-array.%s") { config =>
     cycle(s"${arrayExpression}base-type-array.raml",
           config.golden,
-          RamlYamlHint,
+          Raml10YamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
   }
@@ -23,7 +23,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
     config =>
       cycle(s"${arrayExpression}type-expression-with-inheritance.raml",
             config.golden,
-            RamlYamlHint,
+            Raml10YamlHint,
             target = Amf,
             renderOptions = Some(config.renderOptions))
   }
@@ -32,7 +32,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
                   s"${arrayExpression}union-type-array.%s") { config =>
     cycle(s"${arrayExpression}union-type-array.raml",
           config.golden,
-          RamlYamlHint,
+          Raml10YamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
   }
@@ -41,7 +41,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
                   s"${arrayExpression}matrix-type-array.%s") { config =>
     cycle(s"${arrayExpression}matrix-type-array.raml",
           config.golden,
-          RamlYamlHint,
+          Raml10YamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
   }
@@ -49,7 +49,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
   multiGoldenTest("Unions don't lose right side declaration links", s"${unions}union-right-declaration.%s") { config =>
     cycle(s"${unions}union-right-declaration.raml",
           config.golden,
-          RamlYamlHint,
+          Raml10YamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
   }
@@ -58,7 +58,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
     config =>
       cycle(s"${unions}child-declaration-links.raml",
             config.golden,
-            RamlYamlHint,
+            Raml10YamlHint,
             target = Amf,
             renderOptions = Some(config.renderOptions))
   }
@@ -66,7 +66,7 @@ class RamlArrayCycleTest extends FunSuiteCycleTests {
   multiGoldenTest("Unions with types from lib", s"${unionsLib}api.%s") { config =>
     cycle(s"${unionsLib}api.raml",
           config.golden,
-          RamlYamlHint,
+          Raml10YamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
   }

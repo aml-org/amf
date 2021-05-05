@@ -1,7 +1,7 @@
 package amf.recursive.shapes
 
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{Hint, Oas20, RamlYamlHint}
+import amf.core.remote.{Hint, Oas20, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.validation.MultiPlatformReportGenTest
@@ -16,7 +16,7 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
 
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/recursives/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/recursives/"
-  override val hint: Hint          = RamlYamlHint
+  override val hint: Hint          = Raml10YamlHint
 
   override protected lazy val defaultProfile: ProfileName = Raml10Profile
 
@@ -47,7 +47,7 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
   def cycle(source: String, golden: String): Future[Assertion] = {
       super.cycle(source,
                   "oas/" + golden,
-                  RamlYamlHint,
+                  Raml10YamlHint,
                   Oas20,
                   directory = basePath.replace("file://", ""))
   }

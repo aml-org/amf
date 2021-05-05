@@ -1,5 +1,6 @@
 package amf.javaparser.org.raml.v08.parser
 
+import amf.core.remote.{Hint, Raml08YamlHint}
 import amf.javaparser.org.raml.ModelResolutionTest
 
 /** Original test in java parser: Calls raml builder, that runs all facets but return the Node tree,
@@ -11,5 +12,7 @@ class Raml08BuilderTestCase extends ModelResolutionTest {
   override def inputFileName: String = "input.raml"
 
   override def outputFileName: String = "output.txt"
+
+  override def hint: Hint = Raml08YamlHint
 
 }

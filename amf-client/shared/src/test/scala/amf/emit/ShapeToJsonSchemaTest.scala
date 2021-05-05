@@ -3,12 +3,11 @@ package amf.emit
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, Module}
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.remote.{Hint, OasJsonHint, RamlYamlHint, Vendor}
+import amf.core.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeResolver
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
-import amf.plugins.document.webapi.Oas20Plugin
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -29,7 +28,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
         .map(_.schema)
         .collectFirst({ case any: AnyShape => any })
 
-    cycle("x-examples.json", "x-examples.schema.json", func, hint = OasJsonHint)
+    cycle("x-examples.json", "x-examples.schema.json", func, hint = Oas20JsonHint)
   }
 
   test("Test api with x-examples 2") {
@@ -42,7 +41,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
         .map(_.schema)
         .collectFirst({ case any: AnyShape => any })
 
-    cycle("x-examples2.json", "x-examples2.schema.json", func, hint = OasJsonHint)
+    cycle("x-examples2.json", "x-examples2.schema.json", func, hint = Oas20JsonHint)
   }
 
   test("Test array with object items") {
@@ -131,7 +130,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
   private def parse(file: String): Future[BaseUnit] = {
     for {
       _    <- Validation(platform)
-      unit <- AMFCompiler(basePath + file, platform, RamlYamlHint, eh = UnhandledParserErrorHandler).build()
+      unit <- AMFCompiler(basePath + file, platform, Raml10YamlHint, eh = UnhandledParserErrorHandler).build()
     } yield {
       unit
     }
@@ -141,7 +140,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
                     golden: String,
                     findShapeFunc: BaseUnit => Option[AnyShape],
                     renderFn: AnyShape => String = (a: AnyShape) => a.toJsonSchema(),
-                    hint: Hint = RamlYamlHint): Future[Assertion] = {
+                    hint: Hint = Raml10YamlHint): Future[Assertion] = {
     val jsonSchema: Future[String] = for {
       _    <- Validation(platform)
       unit <- AMFCompiler(basePath + file, platform, hint, eh = UnhandledParserErrorHandler).build()

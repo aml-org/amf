@@ -14,7 +14,9 @@ import amf.plugins.domain.webapi.resolution.stages.{
   ResponseExamplesResolutionStage
 }
 
-class ValidationResolutionPipeline(profile: ProfileName) extends ResolutionPipeline() {
+class ValidationResolutionPipeline private[amf] (profile: ProfileName,
+                                                 override val name: String = "ValidationResolutionPipeline")
+    extends ResolutionPipeline() {
 
   override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
     Seq(
@@ -27,14 +29,13 @@ class ValidationResolutionPipeline(profile: ProfileName) extends ResolutionPipel
       new PayloadAndParameterResolutionStage(profile),
       new AnnotationRemovalStage()
     )
-
 }
 
 object ValidationResolutionPipeline {
   def apply(profile: ProfileName, unit: BaseUnit): BaseUnit = {
     val pipeline = profile match {
-      case Oas30Profile   => new Oas30ValidationResolutionPipeline()
-      case Async20Profile => new Async20EditingPipeline(urlShortening = false)
+      case Oas30Profile   => Oas30ValidationResolutionPipeline()
+      case Async20Profile => Async20CachePipeline()
       case _              => new ValidationResolutionPipeline(profile)
     }
     pipeline.transform(unit, unit.errorHandler())

@@ -127,39 +127,6 @@ mediaType:
 version: 1.0.0
 protocols:
   - https
-/history:
-  get:
-    description: The User Activity endpoint returns data about a user's lifetime activity with Uber. The response will include pickup locations and times, dropoff locations and times, the distance of past requests, and information about which products were requested.<br><br>The history array in the response will have a maximum length based on the limit parameter. The response value count may exceed limit, therefore subsequent API requests may be necessary.
-    (amf-summary): User Activity
-    queryParameters:
-      offset?:
-        description: Offset the list of returned results by this amount. Default is zero.
-        type: number
-        format: int32
-      limit?:
-        description: Number of items to retrieve. Default is 5, maximum is 100.
-        type: number
-        format: int32
-    responses:
-      "200":
-        description: History information for the given user
-        body: Activities
-    (amf-defaultResponse):
-      default:
-        description: Unexpected error
-        body: Error
-/me:
-  get:
-    description: The User Profile endpoint returns information about the Uber user that has authorized with the application.
-    (amf-summary): User Profile
-    responses:
-      "200":
-        description: Profile information for a user
-        body: Profile
-    (amf-defaultResponse):
-      default:
-        description: Unexpected error
-        body: Error
 /products:
   get:
     description: |
@@ -260,6 +227,39 @@ protocols:
         body:
           type: array
           items: Product
+    (amf-defaultResponse):
+      default:
+        description: Unexpected error
+        body: Error
+/me:
+  get:
+    description: The User Profile endpoint returns information about the Uber user that has authorized with the application.
+    (amf-summary): User Profile
+    responses:
+      "200":
+        description: Profile information for a user
+        body: Profile
+    (amf-defaultResponse):
+      default:
+        description: Unexpected error
+        body: Error
+/history:
+  get:
+    description: The User Activity endpoint returns data about a user's lifetime activity with Uber. The response will include pickup locations and times, dropoff locations and times, the distance of past requests, and information about which products were requested.<br><br>The history array in the response will have a maximum length based on the limit parameter. The response value count may exceed limit, therefore subsequent API requests may be necessary.
+    (amf-summary): User Activity
+    queryParameters:
+      offset?:
+        description: Offset the list of returned results by this amount. Default is zero.
+        type: number
+        format: int32
+      limit?:
+        description: Number of items to retrieve. Default is 5, maximum is 100.
+        type: number
+        format: int32
+    responses:
+      "200":
+        description: History information for the given user
+        body: Activities
     (amf-defaultResponse):
       default:
         description: Unexpected error

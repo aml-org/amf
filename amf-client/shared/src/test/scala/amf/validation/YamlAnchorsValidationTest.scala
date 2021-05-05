@@ -1,18 +1,17 @@
 package amf.validation
 
 import _root_.org.scalatest.{Assertion, AsyncFunSuite, Matchers}
-import amf.{AMFStyle, Oas20Profile, Raml10Profile, RamlProfile}
 import amf.client.AMF
 import amf.client.convert.NativeOps
 import amf.client.environment.Environment
 import amf.client.model.domain.ScalarShape
-import amf.client.parse.{DefaultParserErrorHandler, Oas20YamlParser, Parser, RamlParser}
+import amf.client.parse.{DefaultParserErrorHandler, Oas20YamlParser, RamlParser}
 import amf.client.resolve.ClientErrorHandlerConverter.ErrorHandlerConverter
 import amf.client.resolve.{Oas20Resolver, Raml10Resolver}
-import amf.client.validate.ValidationResult
 import amf.core.client.ParsingOptions
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.AMFValidationResult
+import amf.{AMFStyle, Oas20Profile, Raml10Profile}
 
 import scala.concurrent.{ExecutionContext, Future}
 

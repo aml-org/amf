@@ -4,7 +4,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ShaclJsonLdShapeGraphEmitter}
-import amf.{AmfProfile, Oas30Profile, OasProfile, RamlProfile}
+import amf.{AmfProfile, Oas20Profile, Oas30Profile, Raml10Profile}
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
@@ -15,7 +15,7 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
   val path = "file://amf-client/shared/src/test/resources/validations/"
 
   val testValidations = Map(
-    "bad_domain/valid.jsonld"                                -> ExpectedReport(conforms = true, 0, OasProfile),
+    "bad_domain/valid.jsonld"                                -> ExpectedReport(conforms = true, 0, Oas20Profile),
     "endpoint/amf.jsonld"                                    -> ExpectedReport(conforms = true, 0, AmfProfile),
     "endpoint/valid.jsonld"                                  -> ExpectedReport(conforms = true, 0, AmfProfile),
     "operation/amf.jsonld"                                   -> ExpectedReport(conforms = true, 0, AmfProfile),
@@ -23,25 +23,25 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "parameters/amf_properties.jsonld"                       -> ExpectedReport(conforms = false, 2, AmfProfile),
     "parameters/amf_empty.jsonld"                            -> ExpectedReport(conforms = false, 2, AmfProfile),
     "parameters/amf_valid.jsonld"                            -> ExpectedReport(conforms = true, 0, AmfProfile),
-    "shapes/enum_amf.jsonld"                                 -> ExpectedReport(conforms = false, 1, OasProfile),
-    "shapes/enum_valid.jsonld"                               -> ExpectedReport(conforms = true, 0, OasProfile),
-    "webapi/amf.jsonld"                                      -> ExpectedReport(conforms = false, 1, OasProfile),
-    "webapi/valid.jsonld"                                    -> ExpectedReport(conforms = false, 1, OasProfile),
-    "webapi/valid.jsonld"                                    -> ExpectedReport(conforms = true, 0, RamlProfile),
-    "webapi/bad_protocol.jsonld"                             -> ExpectedReport(conforms = false, 1, RamlProfile),
-    "types/scalars/missing_type.jsonld"                      -> ExpectedReport(conforms = false, 1, RamlProfile),
-    "types/scalars/missing_type_valid.jsonld"                -> ExpectedReport(conforms = true, 0, RamlProfile),
-    "types/scalars/wrong_facet.jsonld"                       -> ExpectedReport(conforms = false, 1, RamlProfile),
-    "types/scalars/valid_facet.jsonld"                       -> ExpectedReport(conforms = true, 0, RamlProfile),
-    "types/scalars/invalid_xml_attribute_non_scalar.jsonld"  -> ExpectedReport(conforms = false, 1, RamlProfile),
-    "types/scalars/invalid_xml_wrapped_scalar.jsonld"        -> ExpectedReport(conforms = false, 1, RamlProfile),
-    "types/arrays/empty_items.jsonld"                        -> ExpectedReport(conforms = true, 0, RamlProfile),
-    "types/arrays/empty_items.jsonld"                        -> ExpectedReport(conforms = false, 1, OasProfile),
-    "annotationTypes/invalid.jsonld"                         -> ExpectedReport(conforms = false, 1, RamlProfile),
-    "annotationTypes/valid.jsonld"                           -> ExpectedReport(conforms = true, 0, RamlProfile),
-    "path-parameter-required/required-is-not-present.jsonld" -> ExpectedReport(conforms = false, 1, OasProfile),
-    "path-parameter-required/required-set-to-true.jsonld"    -> ExpectedReport(conforms = true, 0, OasProfile),
-    "file-parameter/invalid.jsonld"                          -> ExpectedReport(conforms = false, 1, OasProfile),
+    "shapes/enum_amf.jsonld"                                 -> ExpectedReport(conforms = false, 1, Oas20Profile),
+    "shapes/enum_valid.jsonld"                               -> ExpectedReport(conforms = true, 0, Oas20Profile),
+    "webapi/amf.jsonld"                                      -> ExpectedReport(conforms = false, 1, Oas20Profile),
+    "webapi/valid.jsonld"                                    -> ExpectedReport(conforms = false, 1, Oas20Profile),
+    "webapi/valid.jsonld"                                    -> ExpectedReport(conforms = true, 0, Raml10Profile),
+    "webapi/bad_protocol.jsonld"                             -> ExpectedReport(conforms = false, 1, Raml10Profile),
+    "types/scalars/missing_type.jsonld"                      -> ExpectedReport(conforms = false, 1, Raml10Profile),
+    "types/scalars/missing_type_valid.jsonld"                -> ExpectedReport(conforms = true, 0, Raml10Profile),
+    "types/scalars/wrong_facet.jsonld"                       -> ExpectedReport(conforms = false, 1, Raml10Profile),
+    "types/scalars/valid_facet.jsonld"                       -> ExpectedReport(conforms = true, 0, Raml10Profile),
+    "types/scalars/invalid_xml_attribute_non_scalar.jsonld"  -> ExpectedReport(conforms = false, 1, Raml10Profile),
+    "types/scalars/invalid_xml_wrapped_scalar.jsonld"        -> ExpectedReport(conforms = false, 1, Raml10Profile),
+    "types/arrays/empty_items.jsonld"                        -> ExpectedReport(conforms = true, 0, Raml10Profile),
+    "types/arrays/empty_items.jsonld"                        -> ExpectedReport(conforms = false, 1, Oas20Profile),
+    "annotationTypes/invalid.jsonld"                         -> ExpectedReport(conforms = false, 1, Raml10Profile),
+    "annotationTypes/valid.jsonld"                           -> ExpectedReport(conforms = true, 0, Raml10Profile),
+    "path-parameter-required/required-is-not-present.jsonld" -> ExpectedReport(conforms = false, 1, Oas20Profile),
+    "path-parameter-required/required-set-to-true.jsonld"    -> ExpectedReport(conforms = true, 0, Oas20Profile),
+    "file-parameter/invalid.jsonld"                          -> ExpectedReport(conforms = false, 1, Oas20Profile),
     "../upanddown/oas3/basic-content.jsonld"                 -> ExpectedReport(conforms = false, 1, Oas30Profile)
   )
 

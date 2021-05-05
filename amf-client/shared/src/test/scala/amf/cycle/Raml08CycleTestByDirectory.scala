@@ -1,7 +1,7 @@
 package amf.cycle
 
 import amf.core.remote.Syntax.Yaml
-import amf.core.remote.{Hint, Raml08, RamlYamlHint}
+import amf.core.remote.{Hint, Raml08}
 
 /**
   * Cycle by directory test for dir: [[amf-client/shared/src/test/resources/upanddown/cycle/raml08/]]

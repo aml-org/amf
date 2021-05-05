@@ -1,11 +1,11 @@
 package amf.validation
 import amf.Raml08Profile
-import amf.core.remote.{Hint, RamlYamlHint}
+import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 
 class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTest {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/extends/"
-  override val hint: Hint          = RamlYamlHint
+  override val hint: Hint          = Raml10YamlHint
 
   // Closed shape
 
@@ -235,11 +235,13 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
   // Merging optional RAML 0.8 nodes
 
   test("Merging optional nodes in resource types") {
-    validate("/extends/optional-raml08-nodes/rts.raml", profile = Raml08Profile)
+    validate("/extends/optional-raml08-nodes/rts.raml", profile = Raml08Profile, overridedHint = Some(Raml08YamlHint))
   }
 
   test("Merging optional nodes in traits") {
-    validate("/extends/optional-raml08-nodes/traits.raml", profile = Raml08Profile)
+    validate("/extends/optional-raml08-nodes/traits.raml",
+             profile = Raml08Profile,
+             overridedHint = Some(Raml08YamlHint))
   }
 
   test("Uri parameter in resource type") {
@@ -257,7 +259,9 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
 
   // Merging security schemes
   test("Merging security schemes in RAML 0.8") {
-    validate("extends/raml08-with-security-schemes-in-trait.raml")
+    validate("extends/raml08-with-security-schemes-in-trait.raml",
+             profile = Raml08Profile,
+             overridedHint = Some(Raml08YamlHint))
   }
 
   test("Merging security schemes in RAML 1.0") {
@@ -269,7 +273,7 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
 class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/extends/"
-  override val hint: Hint          = RamlYamlHint
+  override val hint: Hint          = Raml10YamlHint
 
   // Payload merging
 

@@ -35,7 +35,8 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
                                     |    "device": "/dev/hdb"
                                     |  }
                                     |}""".stripMargin,
-        conforms = true
+        conforms = true,
+        hint = Raml08YamlHint
       ),
       Fixture("Required pattern property", "required-pattern-prop.raml", "element-2: 2", conforms = true),
       Fixture("Big number payload",
@@ -61,7 +62,6 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
       .head
       .schema
 
-  override protected val hint: Hint       = RamlYamlHint
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/validations/body-payload/"
 
   override def transform(unit: BaseUnit): BaseUnit =
@@ -83,9 +83,8 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                                api: String,
                                payload: String,
                                conforms: Boolean,
-                               mediaType: Option[String] = None)
-
-  protected val hint: Hint
+                               mediaType: Option[String] = None,
+                               hint: Hint = Raml10YamlHint)
 
   protected def findShape(d: Document): Shape
 
@@ -93,10 +92,13 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
 
   protected def fixtureList: Seq[Fixture]
 
-  protected def validate(api: String, payload: String, mediaType: Option[String]): Future[AMFValidationReport] =
+  protected def validate(api: String,
+                         payload: String,
+                         mediaType: Option[String],
+                         givenHint: Hint): Future[AMFValidationReport] =
     for {
       _ <- Validation(platform)
-      model <- AMFCompiler(api, platform, hint, eh = DefaultParserErrorHandler.withRun())
+      model <- AMFCompiler(api, platform, givenHint, eh = DefaultParserErrorHandler.withRun())
         .build()
         .map(transform)
       result <- {
@@ -115,7 +117,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
 
   fixtureList.foreach { f =>
     test("Test " + f.name) {
-      validate(basePath + f.api, f.payload, f.mediaType).map(_.conforms should be(f.conforms))
+      validate(basePath + f.api, f.payload, f.mediaType, f.hint).map(_.conforms should be(f.conforms))
     }
   }
 

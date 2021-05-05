@@ -7,7 +7,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{BaseUnit, Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.remote.Raml
+import amf.core.remote.{Raml, Raml10}
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -28,10 +28,12 @@ case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterC
 
   def emitModule(): YDocument = {
 
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml, module.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, module.annotations)
 
     // TODO ordering??
-    val emitters = spec.factory.rootLevelEmitters(module, ordering).emitters ++ AnnotationsEmitter(module, ordering).emitters
+    val emitters = spec.factory
+      .rootLevelEmitters(module, ordering)
+      .emitters ++ AnnotationsEmitter(module, ordering).emitters
 
     // TODO invoke traits end resource types
 
@@ -45,7 +47,7 @@ case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterC
 class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitterContext) {
   def emitFragment(): YDocument = {
 
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml, fragment.encodes.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, fragment.encodes.annotations)
 
     val typeEmitter: RamlFragmentTypeEmitter = fragment match {
       case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)

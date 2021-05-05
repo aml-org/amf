@@ -18,12 +18,12 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
   private val basePath = "amf-client/shared/src/test/resources/upanddown/"
 
   test("leagues raml to oas") {
-    compatibility("leagues-api.raml", RamlYamlHint, OasJsonHint)
+    compatibility("leagues-api.raml", Raml10YamlHint, Oas20JsonHint)
   }
 
   test("leagues oas to raml") {
 
-    compatibility("leagues-api.json", OasJsonHint, RamlYamlHint)
+    compatibility("leagues-api.json", Oas20JsonHint, Raml10YamlHint)
   }
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
@@ -41,8 +41,8 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
 
   private def parseBaseUnit(content: String, hint: Hint) = {
     val mediaType: String = hint match {
-      case RamlYamlHint | OasYamlHint => "application/yaml"
-      case _                          => "application/json"
+      case Raml10YamlHint | Oas20YamlHint => "application/yaml"
+      case _                              => "application/json"
     }
 
     for {

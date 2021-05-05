@@ -102,7 +102,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("Parsing raml 0.8 test (detect)") {
     for {
       _    <- AMF.init().asFuture
-      unit <- new RamlParser().parseFileAsync(zencoder08).asFuture
+      unit <- new Raml08Parser().parseFileAsync(zencoder08).asFuture
     } yield {
       assertBaseUnit(unit, zencoder08)
     }
@@ -200,7 +200,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("Render / parse test RAML 0.8") {
     for {
       _      <- AMF.init().asFuture
-      unit   <- new RamlParser().parseFileAsync(zencoder08).asFuture
+      unit   <- new Raml08Parser().parseFileAsync(zencoder08).asFuture
       output <- new Raml08Renderer().generateString(unit).asFuture
       result <- new Raml08Parser().parseStringAsync(output).asFuture
     } yield {
@@ -274,7 +274,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _           <- AMF.init().asFuture
       unit        <- new RamlParser().parseFileAsync(zencoder).asFuture
-      report      <- AMF.validate(unit, RamlProfile, AMFStyle).asFuture
+      report      <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
       profileName <- AMF.loadValidationProfile(profile).asFuture
       custom      <- AMF.validate(unit, profileName, AMFStyle).asFuture
     } yield {
@@ -288,7 +288,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(zencoder).asFuture
       resolved <- Future.successful(AMF.resolveRaml10(unit))
-      report   <- AMF.validate(resolved, RamlProfile, AMFStyle).asFuture
+      report   <- AMF.validate(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -443,7 +443,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _      <- AMF.init().asFuture
       unit   <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(music).asFuture
-      report <- AMF.validate(unit, RamlProfile, RAMLStyle).asFuture
+      report <- AMF.validate(unit, Raml10Profile, RAMLStyle).asFuture
     } yield {
       assert(!unit.references().asSeq.map(_.location).contains(null))
       assert(report.conforms)
@@ -659,7 +659,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
     for {
       _      <- AMF.init().asFuture
-      unit   <- new RamlParser(environment).parseFileAsync(uri).asFuture
+      unit   <- new Raml08Parser(environment).parseFileAsync(uri).asFuture
       report <- AMF.validate(unit, Raml10Profile, MessageStyles.RAML).asFuture
     } yield {
       report.conforms shouldBe false
@@ -1208,7 +1208,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 
     for {
       _        <- AMF.init().asFuture
-      unit     <- new RamlParser().parseStringAsync(api).asFuture
+      unit     <- new Raml08Parser().parseStringAsync(api).asFuture
       resolved <- Future { new Raml08Resolver().resolve(unit) }
     } yield {
       val shape: Shape = unit
@@ -1510,7 +1510,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       unit <- new Raml10Parser()
         .parseFileAsync(scalarAnnotations)
         .asFuture
-      v <- AMF.validate(unit, RamlProfile, RamlProfile.messageStyle).asFuture
+      v <- AMF.validate(unit, Raml10Profile, Raml10Profile.messageStyle).asFuture
     } yield {
       assert(v.conforms)
     }
@@ -1752,7 +1752,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _      <- AMF.init().asFuture
       unit   <- new Oas20Parser().parseFileAsync(absPath).asFuture
-      report <- AMF.validate(unit, RamlProfile, AMFStyle).asFuture
+      report <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -1928,7 +1928,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(file).asFuture
       resolved <- Future.successful(AMF.resolveRaml10(unit))
-      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+      report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -1948,7 +1948,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("Test uri references to external reference from external reference are not encoded") {
     for {
       _    <- AMF.init().asFuture
-      unit <- new RamlParser().parseFileAsync(apiWithSpaces).asFuture
+      unit <- new Raml08Parser().parseFileAsync(apiWithSpaces).asFuture
     } yield {
       val units      = unit.references().asSeq
       val references = units.flatMap(x => x.references().asSeq)
@@ -1989,7 +1989,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseStringAsync(api).asFuture
       resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
-      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+      report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       val expectedSchema = """{
                              |  "$schema": "http://json-schema.org/draft-04/schema#",
@@ -2037,7 +2037,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(file).asFuture
       resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
-      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+      report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(!report.conforms)
     }
@@ -2049,7 +2049,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(file).asFuture
       resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
-      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+      report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
     }
@@ -2061,7 +2061,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(file).asFuture
       resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
-      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+      report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(!report.conforms)
     }
@@ -2311,7 +2311,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _          <- AMF.init().asFuture
       unit       <- new RamlParser().parseFileAsync(instance).asFuture
-      report     <- AMF.validate(unit, RamlProfile, AMFStyle).asFuture
+      report     <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
       newProfile <- AMF.loadValidationProfile(validationProfile).asFuture
       custom     <- AMF.validate(unit, newProfile, AMFStyle).asFuture
     } yield {

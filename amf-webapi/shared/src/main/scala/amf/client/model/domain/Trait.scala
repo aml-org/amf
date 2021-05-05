@@ -3,7 +3,7 @@ package amf.client.model.domain
 import amf.client.convert.WebApiClientConverters._
 import amf.client.model.document.BaseUnit
 import amf.plugins.domain.webapi.models.templates.{Trait => InternalTrait}
-import amf.{ProfileName, RamlProfile}
+import amf.{ProfileName, Raml10Profile}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -17,6 +17,6 @@ case class Trait(override private[amf] val _internal: InternalTrait) extends Abs
 
   override def linkCopy(): Trait = _internal.linkCopy()
 
-  def asOperation[T <: BaseUnit](unit: T, profile: ProfileName = RamlProfile): Operation =
+  def asOperation[T <: BaseUnit](unit: T, profile: ProfileName = Raml10Profile): Operation =
     Operation(_internal.asOperation(unit._internal, profile))
 }

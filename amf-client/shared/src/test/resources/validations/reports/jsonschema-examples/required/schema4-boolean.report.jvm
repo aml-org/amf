@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/jsonschema/required/schema4-boolean.raml
-Profile: RAML 1.0
+Profile: RAML 0.8
 Conforms? false
 Number of results: 1
 

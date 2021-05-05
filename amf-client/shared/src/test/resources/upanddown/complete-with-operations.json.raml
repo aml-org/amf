@@ -20,17 +20,6 @@ documentation:
 (amf-license):
   url: http://test.com/licenseUrl
   name: licenseName
-/another-levelzero:
-  displayName: Root name
-  post:
-    displayName: Some title another level 0
-    description: Some description another level 0
-    (amf-externalDocs):
-      url: http://test.com/urlExternalDocs
-      description: descriptionExternalDocs another level 0
-    protocols:
-      - http
-      - https
 /levelzero:
   displayName: Name
   get:
@@ -57,8 +46,6 @@ documentation:
     protocols:
       - http
       - https
-/levelzero/another-level-one:
-  displayName: some other display name
 /levelzero/level-one:
   displayName: One display name
   description: and this description!
@@ -70,6 +57,19 @@ documentation:
     (amf-externalDocs):
       url: http://test.com/urlExternalDocs
       description: descriptionExternalDocs level one
+    protocols:
+      - http
+      - https
+/levelzero/another-level-one:
+  displayName: some other display name
+/another-levelzero:
+  displayName: Root name
+  post:
+    displayName: Some title another level 0
+    description: Some description another level 0
+    (amf-externalDocs):
+      url: http://test.com/urlExternalDocs
+      description: descriptionExternalDocs another level 0
     protocols:
       - http
       - https

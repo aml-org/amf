@@ -1,13 +1,13 @@
 package amf.validation
 
 import amf.Oas20Profile
-import amf.core.remote.{Hint, OasJsonHint, OasYamlHint}
+import amf.core.remote.{Hint, Oas20JsonHint, Oas20YamlHint}
 import org.scalatest.Matchers
 
 class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/oas2/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/oas2/"
-  override val hint: Hint          = OasYamlHint
+  override val hint: Hint          = Oas20YamlHint
 
   test("missing schema in body parameter") {
     validate("missing-schema-body-parameter.json", Some("missing-schema-body-parameter.report"), Oas20Profile)
@@ -94,7 +94,7 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("JSON with duplicate keys") {
-    validate("duplicate-keys.json", Some("duplicate-keys.report"), Oas20Profile, overridedHint = Some(OasJsonHint))
+    validate("duplicate-keys.json", Some("duplicate-keys.report"), Oas20Profile, overridedHint = Some(Oas20JsonHint))
   }
 
   test("invalid 'example' field in parameter object") {

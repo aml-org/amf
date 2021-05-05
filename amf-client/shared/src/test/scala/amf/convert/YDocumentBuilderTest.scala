@@ -28,7 +28,7 @@ abstract class DocBuilderTest extends FunSuiteCycleTests {
     RuntimeResolver.resolve(Vendor.RAML10.name, unit, ResolutionPipeline.EDITING_PIPELINE, UnhandledErrorHandler)
 
   private def run(source: String, golden: String, renderOptions: RenderOptions): Future[Assertion] =
-    cycle(source, golden, RamlYamlHint, target = Amf, eh = None, renderOptions = Some(renderOptions))
+    cycle(source, golden, Raml10YamlHint, target = Amf, eh = None, renderOptions = Some(renderOptions))
 
   multiGoldenTest("Test types with references", "types.%s") { config =>
     run("types.raml", config.golden, config.renderOptions)

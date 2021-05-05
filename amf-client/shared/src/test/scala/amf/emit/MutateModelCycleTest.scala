@@ -19,7 +19,7 @@ class MutateModelCycleTest extends FunSuiteCycleTests {
       traitNode.asInstanceOf[ParametrizedDeclaration].withVariables(Seq(newParam))
       bu
     }
-    transformCycle("add-empty-variable.raml", "add-empty-variable-mutated.raml", RamlYamlHint, Raml10, trasform)
+    transformCycle("add-empty-variable.raml", "add-empty-variable-mutated.raml", Raml10YamlHint, Raml10, trasform)
   }
 
   final def transformCycle(source: String,

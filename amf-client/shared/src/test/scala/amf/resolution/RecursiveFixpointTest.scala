@@ -4,7 +4,7 @@ import amf.core.model.document.FieldsFilter.All
 import amf.core.model.domain.{AmfObject, RecursiveShape}
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Yaml
-import amf.core.remote.{AsyncApi20, AsyncYamlHint, Hint, OasYamlHint, RamlYamlHint}
+import amf.core.remote.{AsyncApi20, Hint, Oas20YamlHint, Raml10YamlHint}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
@@ -23,8 +23,8 @@ class RecursiveFixpointTest() extends AsyncFunSuite with PlatformSecrets with Re
   case class RecursiveTestCase(path: String, hint: Hint)
 
   val testCases: Seq[RecursiveTestCase] = Seq(
-    RecursiveTestCase("nested-library-with-recursive-shape/api.raml", RamlYamlHint),
-    RecursiveTestCase("additional-prop-recursive-shape/api.yaml", OasYamlHint),
+    RecursiveTestCase("nested-library-with-recursive-shape/api.raml", Raml10YamlHint),
+    RecursiveTestCase("additional-prop-recursive-shape/api.yaml", Oas20YamlHint),
     RecursiveTestCase("not-facet-recursive-shape/api.yaml", Hint(AsyncApi20, Yaml))
   )
 

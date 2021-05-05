@@ -9,7 +9,7 @@ class JapaneseCycleTest extends FunSuiteCycleTests {
   override def basePath = "amf-client/shared/src/test/resources/validations/japanese/cycle/"
 
   multiGoldenTest("Raml10 to Json-LD resolves", "ramlapi.%s") { config =>
-    cycle("ramlapi.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("ramlapi.raml", config.golden, Raml10YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
   multiSourceTest("Json-LD resolves to Raml10", "ramlapi.%s") { config =>
@@ -17,11 +17,11 @@ class JapaneseCycleTest extends FunSuiteCycleTests {
   }
 
   multiGoldenTest("Oas20 to Json-LD resolves", "oasapi.%s") { config =>
-    cycle("oasapi.json", config.golden, OasYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("oasapi.json", config.golden, Oas20YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("Oas30 to JSON-LD resolves", "oas30api.%s") { config =>
-    cycle("oas30api.json", config.golden, OasYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("oas30api.json", config.golden, Oas30YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
 // TODO: JSON-LD to OAS doesnt decode Japanese characters. It keeps them encoded. RAML does.

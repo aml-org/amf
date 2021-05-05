@@ -1,6 +1,6 @@
 package amf.validation
+import amf.core.remote.{Hint, Raml08YamlHint, Raml10YamlHint}
 import amf.{Raml08Profile, Raml10Profile}
-import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
 
@@ -9,11 +9,19 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
   }
 
   test("Test non existing include in resource type def") {
-    validate("/missing-includes/in-resource-type-def.raml", Some("missing-includes/in-resource-type-def.report"))
+    validate(
+      "/missing-includes/in-resource-type-def.raml",
+      Some("missing-includes/in-resource-type-def.report"),
+      profile = Raml08Profile,
+      overridedHint = Some(Raml08YamlHint)
+    )
   }
 
   test("Test non existing include in trait def") {
-    validate("/missing-includes/in-trait-def.raml", Some("missing-includes/in-trait-def.report"))
+    validate("/missing-includes/in-trait-def.raml",
+             Some("missing-includes/in-trait-def.report"),
+             profile = Raml08Profile,
+             overridedHint = Some(Raml08YamlHint))
   }
 
   test("Facet minimum and maximum with left zeros") {
@@ -57,7 +65,8 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
   test("nested json schema defined in external fragment") {
     validate("raml/nested-json-schema-external-fragment/api.raml",
              Some("invalid-example-result.report"),
-             Raml08Profile)
+             Raml08Profile,
+             overridedHint = Some(Raml08YamlHint))
   }
 
   test("maximum/minimum validation with 17 digit numbers") {
@@ -70,5 +79,5 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/multi-plat-model/"
-  override val hint: Hint  = RamlYamlHint
+  override val hint: Hint  = Raml10YamlHint
 }

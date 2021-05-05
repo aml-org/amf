@@ -9,7 +9,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.ResourceTypeModel
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
-import amf.{ProfileName, RamlProfile}
+import amf.{ProfileName, Raml10Profile}
 import org.yaml.model.{YMapEntry, YPart}
 
 class ResourceType(override val fields: Fields, override val annotations: Annotations)
@@ -20,7 +20,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
   override def meta: ResourceTypeModel.type = ResourceTypeModel
 
   def asEndpoint[T <: BaseUnit](unit: T,
-                                profile: ProfileName = RamlProfile,
+                                profile: ProfileName = Raml10Profile,
                                 errorHandler: ErrorHandler = UnhandledErrorHandler): EndPoint = {
     linkTarget match {
       case Some(_) =>
@@ -40,7 +40,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
                                      entry: YMapEntry,
                                      annotations: Annotations,
                                      errorHandler: ErrorHandler = UnhandledErrorHandler,
-                                     profile: ProfileName = RamlProfile): EndPoint = {
+                                     profile: ProfileName = Raml10Profile): EndPoint = {
     val helper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
     helper.entryAsEndpoint(unit, node, name.option().getOrElse(""), id, entry)
   }

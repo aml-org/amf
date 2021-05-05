@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.core.remote.{OasJsonHint, Vendor}
+import amf.core.remote.{Oas20JsonHint, Vendor}
 
 class Oas20ElementCycleTest extends DomainElementCycleTest {
 
@@ -14,7 +14,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "type/composition-with-refs.json",
       CommonExtractors.declaresIndex(0),
       "type/cat-emission.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -23,7 +23,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "type/composition-with-refs.json",
       CommonExtractors.declaresIndex(1),
       "type/pet-emission.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -32,7 +32,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "type/ref-to-external-schema.json",
       CommonExtractors.declaresIndex(0),
       "type/external-ref-emission.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -41,7 +41,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(1),
       "parameter/query-param.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -50,7 +50,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(5),
       "parameter/body-param.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -59,7 +59,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(4),
       "parameter/form-data.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -68,7 +68,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(2),
       "parameter/header-param.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -77,7 +77,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "parameter/parameter-definitions.json",
       CommonExtractors.declaresIndex(3),
       "parameter/path-param.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -86,7 +86,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "response/response.json",
       CommonExtractors.firstResponse,
       "response/response.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -95,7 +95,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "response/reference-external-response.json",
       CommonExtractors.firstResponse,
       "response/external-response-link-emission.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -104,7 +104,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "apiWithExternalDocs.json",
       CommonExtractors.webapi.andThen(_.map(_.documentations.head)),
       "external-docs-emission.yaml",
-      OasJsonHint,
+      Oas20JsonHint,
       validationsPath
     )
   }
@@ -114,7 +114,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "api-with-security-requirement.json",
       CommonExtractors.declaresIndex(0),
       "security-scheme-emission.yaml",
-      OasJsonHint,
+      Oas20JsonHint,
       validationsPath + "oas-security/"
     )
   }
@@ -124,7 +124,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "license/license.json",
       CommonExtractors.webapi.andThen(_.map(_.license)),
       "license/license-emission.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -133,7 +133,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "license/license.json",
       CommonExtractors.webapi.andThen(_.map(_.provider)),
       "license/organization-emission.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -142,7 +142,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "oas20/custom-annotation-declaration.json",
       CommonExtractors.webapi.andThen(_.map(_.tags.head)),
       "emission/tag-emission.yaml",
-      OasJsonHint,
+      Oas20JsonHint,
       directory = compatibilityPath
     )
   }
@@ -152,7 +152,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "response/response.json",
       CommonExtractors.firstResponse.andThen(_.map(_.examples.head)),
       "response/example.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 
@@ -161,7 +161,7 @@ class Oas20ElementCycleTest extends DomainElementCycleTest {
       "response/response.json",
       CommonExtractors.firstEndpoint,
       "response/endpoint.yaml",
-      OasJsonHint
+      Oas20JsonHint
     )
   }
 

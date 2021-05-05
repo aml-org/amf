@@ -3,7 +3,7 @@ package amf.parser
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.Fragment
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.remote.{Raml10, RamlYamlHint}
+import amf.core.remote.{Raml10, Raml10YamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
@@ -37,7 +37,7 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
     test(s"Test data type ${ex.literalType} format ${ex.format}") {
       for {
         validation <- Validation(platform)
-        unit       <- AMFCompiler("", TrunkPlatform(ex.api), RamlYamlHint, eh = UnhandledParserErrorHandler).build()
+        unit       <- AMFCompiler("", TrunkPlatform(ex.api), Raml10YamlHint, eh = UnhandledParserErrorHandler).build()
         dumped     <- AMFRenderer(unit, Raml10, RenderOptions()).renderToString
       } yield {
         unit match {

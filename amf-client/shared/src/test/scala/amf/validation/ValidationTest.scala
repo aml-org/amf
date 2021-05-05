@@ -9,9 +9,8 @@ import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeResolver
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.{AMFValidationResult, SeverityLevels}
+import amf.core.validation.SeverityLevels
 import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.features.validation.CoreValidations
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -44,9 +43,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(productionPath + "americanflightapi.raml",
                              platform,
-                             RamlYamlHint,
+                             Raml10YamlHint,
                              eh = DefaultParserErrorHandler.withRun()).build()
-      report <- validation.validate(library, RamlProfile)
+      report <- validation.validate(library, Raml10Profile)
     } yield {
       assert(report.conforms)
     }
@@ -58,7 +57,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
     for {
       validation <- Validation(platform)
-      doc        <- AMFCompiler(productionPath + "recursive.raml", platform, RamlYamlHint, eh = eh).build()
+      doc        <- AMFCompiler(productionPath + "recursive.raml", platform, Raml10YamlHint, eh = eh).build()
     } yield {
       val resolved = RuntimeResolver.resolve(Raml10.name, doc, ResolutionPipeline.DEFAULT_PIPELINE, eh)
       assert(Option(resolved).isDefined)
@@ -71,9 +70,9 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(productionPath + "includes-api/api.raml",
                              platform,
-                             RamlYamlHint,
+                             Raml10YamlHint,
                              eh = DefaultParserErrorHandler.withRun()).build()
-      report <- validation.validate(library, RamlProfile)
+      report <- validation.validate(library, Raml10Profile)
     } yield {
       val (violations, others) =
         report.results.partition(r => r.severityLevel.equals(SeverityLevels.VIOLATION))
@@ -90,10 +89,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/tck-examples/cast-external-exception.raml",
                          platform,
-                         RamlYamlHint,
+                         Raml10YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
-      report <- validation.validate(doc, RamlProfile)
+      report <- validation.validate(doc, Raml10Profile)
     } yield {
       assert(report.conforms)
     }
@@ -107,7 +106,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/tck-examples/nullpointer-spec-example.raml",
                              platform,
-                             RamlYamlHint,
+                             Raml08YamlHint,
                              eh = DefaultParserErrorHandler.withRun())
         .build()
       report <- validation.validate(library, Raml08Profile)
@@ -122,10 +121,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/stackoverflow/api.raml",
                              platform,
-                             RamlYamlHint,
+                             Raml08YamlHint,
                              eh = DefaultParserErrorHandler.withRun())
         .build()
-      report <- validation.validate(library, RamlProfile)
+      report <- validation.validate(library, Raml08Profile)
     } yield {
       assert(!report.results.exists(_.validationId != CoreValidations.RecursiveShapeSpecification.id))
     }
@@ -137,7 +136,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/stackoverflow2/api.raml",
                              platform,
-                             RamlYamlHint,
+                             Raml08YamlHint,
                              eh = DefaultParserErrorHandler.withRun())
         .build()
       report <- validation.validate(library, Raml08Profile)
@@ -151,13 +150,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val eh = DefaultParserErrorHandler.withRun()
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/security-schemes/security1.raml", platform, RamlYamlHint, eh = eh)
+      doc <- AMFCompiler(validationsPath + "/security-schemes/security1.raml", platform, Raml10YamlHint, eh = eh)
         .build()
       resolved <- Future {
         RuntimeResolver.resolve(Raml10.name, doc, ResolutionPipeline.DEFAULT_PIPELINE, eh)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report    <- validation.validate(doc, RamlProfile)
+      report    <- validation.validate(doc, Raml10Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 2)
@@ -170,14 +169,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/missing-annotation-types/api.raml",
                          platform,
-                         RamlYamlHint,
+                         Raml10YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
       resolved <- Future {
         RuntimeResolver.resolve(Raml10.name, doc, ResolutionPipeline.DEFAULT_PIPELINE, doc.errorHandler())
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report    <- validation.validate(doc, RamlProfile)
+      report    <- validation.validate(doc, Raml10Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -189,13 +188,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, RamlYamlHint, eh = eh)
+      doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, Raml10YamlHint, eh = eh)
         .build()
       resolved <- Future {
         RuntimeResolver.resolve(Raml10.name, doc, ResolutionPipeline.DEFAULT_PIPELINE, eh)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report    <- validation.validate(doc, RamlProfile)
+      report    <- validation.validate(doc, Raml10Profile)
     } yield {
       assert(report.conforms)
     }
@@ -205,13 +204,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     val eh = DefaultParserErrorHandler.withRun()
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, RamlYamlHint, eh = eh)
+      doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, Raml10YamlHint, eh = eh)
         .build()
       resolved <- Future {
         RuntimeResolver.resolve(Raml10.name, doc, ResolutionPipeline.DEFAULT_PIPELINE, eh)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", Amf.name, RenderOptions().withoutSourceMaps).renderToString
-      report    <- validation.validate(doc, OasProfile)
+      report    <- validation.validate(doc, Oas20Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 2)
@@ -223,10 +222,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/types/arrays/matrix_type_expression.raml",
                          platform,
-                         RamlYamlHint,
+                         Raml10YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
-      report <- validation.validate(doc, RamlProfile)
+      report <- validation.validate(doc, Raml10Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -238,10 +237,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/types/patterned_properties.raml",
                          platform,
-                         RamlYamlHint,
+                         Raml10YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
-      report <- validation.validate(doc, RamlProfile)
+      report <- validation.validate(doc, Raml10Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -253,10 +252,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/types/recursive_array.raml",
                          platform,
-                         RamlYamlHint,
+                         Raml10YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
-      report <- validation.validate(doc, RamlProfile)
+      report <- validation.validate(doc, Raml10Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -268,7 +267,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/production/oas_example1.yaml",
                          platform,
-                         OasYamlHint,
+                         Oas20YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
       report <- validation.validate(doc, Oas20Profile)
@@ -282,10 +281,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(productionPath + "/null_superarray_items/api.raml",
                          platform,
-                         RamlYamlHint,
+                         Raml10YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
-      report <- validation.validate(doc, RamlProfile)
+      report <- validation.validate(doc, Raml10Profile)
     } yield {
       assert(report.conforms)
     }
@@ -296,10 +295,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(productionPath + "/id_json_schema_locations.raml",
                          platform,
-                         RamlYamlHint,
+                         Raml08YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
-      report <- validation.validate(doc, RamlProfile)
+      report <- validation.validate(doc, Raml08Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 2)
@@ -311,10 +310,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(productionPath + "/resource_type_failing_schema/api.raml",
                          platform,
-                         RamlYamlHint,
+                         Raml10YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
-      report <- validation.validate(doc, RamlProfile)
+      report <- validation.validate(doc, Raml10Profile)
     } yield {
       assert(report.conforms)
     }
@@ -325,7 +324,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(productionPath + "/nested_xml_schema/api.raml",
                          platform,
-                         RamlYamlHint,
+                         Raml10YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
       report <- validation.validate(doc, Raml10Profile)
@@ -339,7 +338,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(productionPath + "/recursion_after_resource_type/api.raml",
                          platform,
-                         RamlYamlHint,
+                         Raml08YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
       report <- validation.validate(doc, Raml08Profile)
@@ -354,7 +353,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc <- AMFCompiler(productionPath + "/oas_numeric_resources.yaml",
                          platform,
-                         OasYamlHint,
+                         Oas20YamlHint,
                          eh = DefaultParserErrorHandler.withRun())
         .build()
       report <- validation.validate(doc, Oas20Profile)
@@ -370,10 +369,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       model <- AMFCompiler(
         productionPath + "sys-sabre-air-api-1.0.3-fat-raml/ha-sys-sabre-air-api.raml",
         platform,
-        RamlYamlHint,
+        Raml10YamlHint,
         eh = DefaultParserErrorHandler.withRun()) // Change hint here for a different syntax parsing.
         .build()
-      report <- validation.validate(model, RamlProfile) // Change profile name here to validate for a different spec.
+      report <- validation.validate(model, Raml10Profile) // Change profile name here to validate for a different spec.
     } yield {
       //RAML10Plugin.resolve(model) // Change plugin here to resolve for a different spec.
       assert(report.results.isEmpty)

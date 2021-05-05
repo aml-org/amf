@@ -1,10 +1,10 @@
 package amf.maker
 
 import amf.compiler.CompilerTestBuilder
-import amf.core.remote.RamlYamlHint
+import amf.core.remote.{Raml08YamlHint, Raml10YamlHint}
 import amf.core.validation.SeverityLevels
 import amf.facades.Validation
-import amf.{ProfileName, Raml08Profile, RamlProfile}
+import amf.{ProfileName, Raml08Profile, Raml10Profile}
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
@@ -21,7 +21,7 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
     Fixture(
       "deprecated schemas 10 warning",
       "schemas.raml",
-      RamlProfile,
+      Raml10Profile,
       Seq(
         FixtureResult(SeverityLevels.WARNING,
                       "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead"))
@@ -29,7 +29,7 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
     Fixture(
       "deprecated schema 10 warning",
       "schema.raml",
-      RamlProfile,
+      Raml10Profile,
       Seq(
         FixtureResult(SeverityLevels.WARNING,
                       "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"))
@@ -42,8 +42,10 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
     test("Test " + f.name) {
       for {
         validation <- Validation(platform)
-        model      <- build(basePath + f.file, RamlYamlHint, validation = Option(validation))
-        report     <- validation.validate(model, f.profileName)
+        model <- build(basePath + f.file,
+                       if (f.profileName == Raml08Profile) Raml08YamlHint else Raml10YamlHint,
+                       validation = Option(validation))
+        report <- validation.validate(model, f.profileName)
       } yield {
         assert(report.conforms)
         assert(report.results.lengthCompare(f.results.length) == 0)

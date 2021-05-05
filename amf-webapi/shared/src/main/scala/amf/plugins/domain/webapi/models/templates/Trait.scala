@@ -8,7 +8,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.TraitModel
 import amf.plugins.domain.webapi.models.Operation
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
-import amf.{ProfileName, RamlProfile}
+import amf.{ProfileName, Raml10Profile}
 import org.yaml.model.{YMapEntry, YPart}
 
 class Trait(override val fields: Fields, override val annotations: Annotations)
@@ -21,7 +21,7 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
 
   /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
   def asOperation[T <: BaseUnit](unit: T,
-                                 profile: ProfileName = RamlProfile,
+                                 profile: ProfileName = Raml10Profile,
                                  errorHandler: ErrorHandler = UnhandledErrorHandler): Operation = {
     linkTarget match {
       case Some(_) =>
@@ -45,7 +45,7 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
   def entryAsOperation[T <: BaseUnit](unit: T,
                                       entry: YMapEntry,
                                       annotations: Annotations,
-                                      profile: ProfileName = RamlProfile,
+                                      profile: ProfileName = Raml10Profile,
                                       errorHandler: ErrorHandler = UnhandledErrorHandler): Operation = {
     val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
     extendsHelper.entryAsOperation(unit, name.option().getOrElse(""), id, entry)

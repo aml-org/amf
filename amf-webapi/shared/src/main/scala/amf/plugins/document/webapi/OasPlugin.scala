@@ -1,10 +1,9 @@
 package amf.plugins.document.webapi
 
 import amf._
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.resolution.{PipelineInfo, PipelineName}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -24,19 +23,15 @@ import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay, Oas30Header}
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.oas._
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
-import amf.plugins.document.webapi.resolution.pipelines.{
-  Oas30EditingPipeline,
-  Oas30ResolutionPipeline,
-  OasEditingPipeline,
-  OasResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
+  Oas20CompatibilityPipeline,
+  Oas3CompatibilityPipeline
 }
+import amf.plugins.document.webapi.resolution.pipelines._
 import amf.plugins.domain.webapi.models.api.Api
 import org.yaml.model.{YDocument, YNode}
 
 sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
-
-  override val vendors: Seq[String] = Seq(vendor.name, Oas.name)
 
   override def specContext(options: RenderOptions, errorHandler: ErrorHandler): OasSpecEmitterContext
 
@@ -137,14 +132,11 @@ object Oas20Plugin extends OasPlugin {
       case _ => None
     }
 
-  override val pipelines: Map[String, ResolutionPipeline] =
-    pipelinesForVendor(Oas.name) ++ pipelinesForVendor(Oas20.name)
-
-  def pipelinesForVendor(vendor: String): Map[String, ResolutionPipeline] = Map(
-    PipelineName.from(vendor, ResolutionPipeline.DEFAULT_PIPELINE)       -> new OasResolutionPipeline(),
-    PipelineName.from(vendor, ResolutionPipeline.EDITING_PIPELINE)       -> new OasEditingPipeline(),
-    PipelineName.from(vendor, ResolutionPipeline.COMPATIBILITY_PIPELINE) -> new CompatibilityPipeline(OasProfile),
-    PipelineName.from(vendor, ResolutionPipeline.CACHE_PIPELINE)         -> new OasEditingPipeline(false)
+  override val pipelines: Map[String, ResolutionPipeline] = Map(
+    Oas20ResolutionPipeline.name    -> Oas20ResolutionPipeline(),
+    Oas20EditingPipeline.name       -> Oas20EditingPipeline(),
+    Oas20CompatibilityPipeline.name -> Oas20CompatibilityPipeline(),
+    Oas20CachePipeline.name         -> Oas20CachePipeline()
   )
 
   override def context(loc: String,
@@ -154,7 +146,9 @@ object Oas20Plugin extends OasPlugin {
                        ds: Option[OasWebApiDeclarations]) = new Oas2WebApiContext(loc, refs, wrapped, ds, options)
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
-    super.domainValidationProfiles(platform).filterKeys(k => k == Oas20Profile.p || k == OasProfile.p)
+    super.domainValidationProfiles(platform).filterKeys(k => k == Oas20Profile.p)
+
+  override val vendors: Seq[String] = Seq(vendor.name)
 }
 
 object Oas30Plugin extends OasPlugin {
@@ -220,11 +214,10 @@ object Oas30Plugin extends OasPlugin {
   )
 
   override val pipelines: Map[String, ResolutionPipeline] = Map(
-    PipelineName.from(vendor.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new Oas30ResolutionPipeline(),
-    PipelineName.from(vendor.name, ResolutionPipeline.EDITING_PIPELINE) -> new Oas30EditingPipeline(),
-    PipelineName.from(vendor.name, ResolutionPipeline.COMPATIBILITY_PIPELINE) -> new CompatibilityPipeline(
-      Oas30Profile),
-    PipelineName.from(vendor.name, ResolutionPipeline.CACHE_PIPELINE) -> new Oas30EditingPipeline(false)
+    Oas30ResolutionPipeline.name   -> Oas30ResolutionPipeline(),
+    Oas3EditingPipeline.name       -> Oas3EditingPipeline(),
+    Oas3CompatibilityPipeline.name -> Oas3CompatibilityPipeline(),
+    Oas3CachePipeline.name         -> Oas3CachePipeline()
   )
 
   override def context(loc: String,
@@ -235,4 +228,6 @@ object Oas30Plugin extends OasPlugin {
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     defaultValidationProfiles.filterKeys(_ == validationProfile.p)
+
+  override val vendors: Seq[String] = Seq(vendor.name)
 }

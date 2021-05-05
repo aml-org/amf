@@ -7,7 +7,7 @@ import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
-import amf.core.remote.Oas
+import amf.core.remote.{Oas, Oas20}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.model._
@@ -29,7 +29,7 @@ abstract class OasModuleEmitter(module: Module)(implicit override val spec: OasS
 
   def emitModule(): YDocument = {
 
-    val ordering = SpecOrdering.ordering(Oas, module.annotations)
+    val ordering = SpecOrdering.ordering(Oas20, module.annotations)
 
     val references = Seq(ReferencesEmitter(module, ordering))
     val declares   = OasDeclarationsEmitter(module.declares, ordering, module.references).emitters
@@ -62,7 +62,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
 
   def emitFragment(): YDocument = {
 
-    val ordering: SpecOrdering = SpecOrdering.ordering(Oas, fragment.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Oas20, fragment.annotations)
 
     val typeEmitter: OasFragmentTypeEmitter = fragment match {
       case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)

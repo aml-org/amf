@@ -5,13 +5,12 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.remote.{Raml, RamlYamlHint, Vendor}
+import amf.core.remote.{Raml10, Raml10YamlHint, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeResolver
 import amf.core.vocabulary.Namespace
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.domain.shapes.models._
@@ -207,7 +206,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
           v.loadValidationDialect().map(_ => v)
         })
         .flatMap { validation =>
-          cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath)
+          cycle(s"$example.raml", s"${example}_canonical.raml", Raml10YamlHint, Raml10, basePath)
         }
     }
   }
@@ -230,7 +229,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
           v.loadValidationDialect().map(_ => v)
         })
         .flatMap { validation =>
-          cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath)
+          cycle(s"$example.raml", s"${example}_canonical.raml", Raml10YamlHint, Raml10, basePath)
         }
     }
   }

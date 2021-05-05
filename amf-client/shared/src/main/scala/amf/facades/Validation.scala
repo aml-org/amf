@@ -16,13 +16,13 @@ import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Ra
 import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
-import amf.plugins.features.validation.custom.model.ValidationDialectText
-import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import amf.plugins.features.validation.CoreValidations
+import amf.plugins.features.validation.custom.AMFValidatorPlugin
+import amf.plugins.features.validation.custom.model.ValidationDialectText
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.validation.DialectValidations
 import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
-import amf.{MessageStyle, ProfileName, RAMLStyle, RamlProfile}
+import amf.{MessageStyle, ProfileName, RAMLStyle, Raml10Profile}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -91,7 +91,7 @@ class Validation(platform: Platform) {
 
   def computeValidations(profileName: ProfileName): EffectiveValidations = validator.computeValidations(profileName)
 
-  def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = RamlProfile): String =
+  def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = Raml10Profile): String =
     validator.shapesGraph(validations, profileName)
 }
 

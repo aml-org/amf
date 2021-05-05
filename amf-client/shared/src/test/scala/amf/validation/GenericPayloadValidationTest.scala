@@ -2,7 +2,7 @@ package amf.validation
 import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.Shape
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.remote.{PayloadJsonHint, PayloadYamlHint, RamlYamlHint}
+import amf.core.remote.{PayloadJsonHint, PayloadYamlHint, Raml10YamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, Validation}
@@ -70,7 +70,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
       }
       val candidates: Future[Seq[ValidationCandidate]] = for {
         validation <- Validation(platform)
-        library <- AMFCompiler(payloadsPath + libraryFile, platform, RamlYamlHint, eh = UnhandledParserErrorHandler)
+        library <- AMFCompiler(payloadsPath + libraryFile, platform, Raml10YamlHint, eh = UnhandledParserErrorHandler)
           .build()
         payload <- AMFCompiler(payloadsPath + payloadFile, platform, hint, eh = UnhandledParserErrorHandler).build()
       } yield {

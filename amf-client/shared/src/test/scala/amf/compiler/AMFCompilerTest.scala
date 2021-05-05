@@ -1,18 +1,17 @@
 package amf.compiler
 
-import amf.client.environment.{AMFConfiguration, RAMLConfiguration}
+import amf.{RAMLStyle, Raml10Profile}
 import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.client.remote.Content
 import amf.core.Root
-import amf.core.model.document.{BaseUnit, Document, ExternalFragment}
+import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.parser.{UnspecifiedReference, _}
-import amf.core.remote.Syntax.{Json, Syntax, Yaml}
+import amf.core.remote.Syntax.{Syntax, Yaml}
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
 import amf.facades.Validation
 import amf.plugins.domain.webapi.models.api.WebApi
-import amf.{RAMLStyle, RamlProfile}
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YMap, YMapEntry}
@@ -25,7 +24,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Api (raml)") {
-    build("file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", RamlYamlHint) map assertDocument
+    build("file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", Raml10YamlHint) map assertDocument
   }
 
   test("Vocabulary") {
@@ -35,7 +34,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Api (oas)") {
-    build("file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi", OasJsonHint) map assertDocument
+    build("file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.openapi", Oas20JsonHint) map assertDocument
   }
 
   test("Api (amf)") {
@@ -43,13 +42,13 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Simple import") {
-    build("file://amf-client/shared/src/test/resources/input.json", OasJsonHint) map {
+    build("file://amf-client/shared/src/test/resources/input.json", Oas20JsonHint) map {
       _ should not be null
     }
   }
 
   test("Reference in imports with cycles (yaml)") {
-    assertCycles(Yaml, RamlYamlHint)
+    assertCycles(Yaml, Raml10YamlHint)
   }
 
   test("Simple cicle (yaml)") {
@@ -58,7 +57,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
         .flatMap(
           v =>
             build(s"file://amf-client/shared/src/test/resources/reference-itself.raml",
-                  RamlYamlHint,
+                  Raml10YamlHint,
                   validation = Some(v),
                   eh = Some(UnhandledParserErrorHandler)))
     } map { ex =>
@@ -70,7 +69,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   test("Cache duplicate imports") {
     val cache = new TestCache()
     build("file://amf-client/shared/src/test/resources/input-duplicate-includes.json",
-          OasJsonHint,
+          Oas20JsonHint,
           cache = Some(cache)) map { _ =>
       cache.assertCacheSize(2)
     }
@@ -78,13 +77,13 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Cache different imports") {
     val cache = new TestCache()
-    build("file://amf-client/shared/src/test/resources/input.json", OasJsonHint, cache = Some(cache)) map { _ =>
+    build("file://amf-client/shared/src/test/resources/input.json", Oas20JsonHint, cache = Some(cache)) map { _ =>
       cache.assertCacheSize(3)
     }
   }
 
   test("Libraries (raml)") {
-    compiler("file://amf-client/shared/src/test/resources/modules.raml", RamlYamlHint)
+    compiler("file://amf-client/shared/src/test/resources/modules.raml", Raml10YamlHint)
       .flatMap(_.root()) map {
       case Root(root, _, _, references, UnspecifiedReference, _) =>
         val body = root.asInstanceOf[SyamlParsedDocument].document.as[YMap]
@@ -95,7 +94,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Libraries (oas)") {
-    compiler("file://amf-client/shared/src/test/resources/modules.json", OasJsonHint)
+    compiler("file://amf-client/shared/src/test/resources/modules.json", Oas20JsonHint)
       .flatMap(_.root()) map {
       case Root(root, _, _, references, UnspecifiedReference, _) =>
         val body = root.asInstanceOf[SyamlParsedDocument].document.as[YMap]
@@ -110,10 +109,10 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
       .flatMap(v => {
 
         build("file://amf-client/shared/src/test/resources/non-exists-include.raml",
-              RamlYamlHint,
+              Raml10YamlHint,
               validation = Some(v))
           .flatMap(bu => {
-            v.validate(bu, RamlProfile, RAMLStyle)
+            v.validate(bu, Raml10Profile, RAMLStyle)
           })
       })
       .map(r => {

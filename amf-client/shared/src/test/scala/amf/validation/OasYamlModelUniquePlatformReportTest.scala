@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.core.remote.{Hint, OasYamlHint}
+import amf.core.remote.{Hint, Oas20YamlHint}
 
 class OasYamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
@@ -19,5 +19,5 @@ class OasYamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("ymap-exception/api.yaml", Some("ymap-exception.report"))
   }
 
-  override val hint: Hint = OasYamlHint
+  override val hint: Hint = Oas20YamlHint
 }

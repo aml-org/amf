@@ -22,19 +22,19 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
   private val directory: String          = "amf-client/shared/src/test/resources/parser/annotations/"
 
   test("Test raml 1.0 annotations") {
-    runTest("raml10.raml", RamlYamlHint)
+    runTest("raml10.raml", Raml10YamlHint)
   }
 
   test("Test raml 0.8 annotations") {
-    runTest("raml08.raml", RamlYamlHint)
+    runTest("raml08.raml", Raml08YamlHint)
   }
 
   test("Test oas 2.0 annotations") {
-    runTest("oas20.yaml", OasYamlHint)
+    runTest("oas20.yaml", Oas20YamlHint)
   }
 
   test("Test oas 3.0 annotations") {
-    runTest("oas30.yaml", OasYamlHint)
+    runTest("oas30.yaml", Oas30YamlHint)
   }
 
   test("Test Async 2.0 annotations") {

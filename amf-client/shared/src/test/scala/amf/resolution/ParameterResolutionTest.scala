@@ -8,22 +8,22 @@ class ParameterResolutionTest extends ResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/resolution/"
 
   multiGoldenTest("resolution AMF", "parameters.raml.%s") { config =>
-    cycle("parameters.raml", config.golden, RamlYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("parameters.raml", config.golden, Raml10YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("resolution OpenAPI", "parameters.json.%s") { config =>
     cycle("parameters.json",
           config.golden,
-          OasJsonHint,
+          Oas20JsonHint,
           target = Amf,
           renderOptions = Some(config.renderOptions),
-          transformWith = Some(Oas))
+          transformWith = Some(Oas20))
   }
 
   multiGoldenTest("nested parameters AMF", "nested-parameters.raml.%s") { config =>
     cycle("nested-parameters.raml",
           config.golden,
-          RamlYamlHint,
+          Raml10YamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
   }
@@ -32,7 +32,7 @@ class ParameterResolutionTest extends ResolutionTest {
     config =>
       cycle("overrided-baseUriParams.raml",
             config.golden,
-            RamlYamlHint,
+            Raml08YamlHint,
             target = Amf,
             renderOptions = Some(config.renderOptions),
             transformWith = Some(Raml08))

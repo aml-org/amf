@@ -4,11 +4,10 @@ import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Annotation
 import amf.core.parser.{Annotations, Range}
-import amf.core.remote.RamlYamlHint
+import amf.core.remote.Raml10YamlHint
 import amf.core.traversal.iterator.AmfElementStrategy
 import org.scalatest.{Assertion, AsyncFlatSpec, Matchers}
 
-import scala.annotation.tailrec
 import scala.concurrent.{ExecutionContext, Future}
 
 class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with CompilerTestBuilder {
@@ -29,7 +28,7 @@ class RamlTypeExpressionAnnotationTest extends AsyncFlatSpec with Matchers with 
   private val unionArrayA  = LexicalInformation(Range((11, 15), (11, 20)))
   private val unionArrayB  = LexicalInformation(Range((11, 23), (11, 28)))
 
-  private val fBu: Future[BaseUnit] = build(s"$rootPath/many-expressions-01.raml", RamlYamlHint)
+  private val fBu: Future[BaseUnit] = build(s"$rootPath/many-expressions-01.raml", Raml10YamlHint)
 
   it should "annotate range for simple array" in {
     test(aArray)

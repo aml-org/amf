@@ -698,30 +698,24 @@ object ParserSideValidations extends Validations {
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
-      OasProfile   -> VIOLATION,
       Oas20Profile -> VIOLATION
     ),
     OasInvalidBodyParameter.id    -> all(VIOLATION),
     OasInvalidParameterBinding.id -> all(VIOLATION),
     OasFormDataNotFileSpecification.id -> Map(
-      OasProfile   -> VIOLATION,
       Oas20Profile -> VIOLATION
     ),
     JsonSchemaInheritanceWarning.id -> all(WARNING),
     PatternPropertiesOnClosedNodeSpecification.id -> Map(
-      RamlProfile   -> VIOLATION,
       Raml10Profile -> VIOLATION,
       Raml08Profile -> VIOLATION,
-      OasProfile    -> WARNING,
       Oas20Profile  -> WARNING,
       Oas30Profile  -> WARNING,
       AmfProfile    -> WARNING
     ),
     DiscriminatorOnExtendedUnionSpecification.id -> Map(
-      RamlProfile   -> VIOLATION,
       Raml10Profile -> VIOLATION,
       Raml08Profile -> VIOLATION,
-      OasProfile    -> WARNING,
       Oas20Profile  -> WARNING,
       Oas30Profile  -> WARNING,
       AmfProfile    -> WARNING

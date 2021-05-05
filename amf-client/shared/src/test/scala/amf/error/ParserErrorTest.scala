@@ -3,6 +3,7 @@ package amf.error
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.remote.Hint
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationResult
 import amf.facades.Validation

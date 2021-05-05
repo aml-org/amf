@@ -10,7 +10,7 @@ import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Position}
-import amf.core.remote.{Oas, Vendor}
+import amf.core.remote.{Oas, Oas20, Vendor}
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.emitter.oas.{
@@ -172,7 +172,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
   def emitDocument(): YDocument = {
     val doc = document.asInstanceOf[Document]
 
-    val ordering = SpecOrdering.ordering(Oas, doc.encodes.annotations)
+    val ordering = SpecOrdering.ordering(Oas20, doc.encodes.annotations)
 
     val references = ReferencesEmitter(document, ordering)
     def declares: Seq[EntryEmitter] =

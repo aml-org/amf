@@ -1,15 +1,17 @@
 package amf.emit
 
 import amf.client.parse.DefaultParserErrorHandler
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.AMFValidationReport
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
-import amf.{Oas30Profile, OasProfile, ProfileName, RamlProfile}
+import amf._
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
 
@@ -20,10 +22,10 @@ class CompatibilityCycledValidationTest extends CompatibilityCycle {
 
   override val basePath = "amf-client/shared/src/test/resources/compatibility/"
 
-  testCycleCompatibility("oas30", OasJsonHint, Raml, basePath)
-  testCycleCompatibility("oas20", OasJsonHint, Raml, basePath)
-  testCycleCompatibility("raml10", RamlYamlHint, Oas30, basePath)
-  testCycleCompatibility("raml10", RamlYamlHint, Oas20, basePath)
+  testCycleCompatibility("oas30", Oas30JsonHint, Raml10, basePath)
+  testCycleCompatibility("oas20", Oas20JsonHint, Raml10, basePath)
+  testCycleCompatibility("raml10", Raml10YamlHint, Oas30, basePath)
+  testCycleCompatibility("raml10", Raml10YamlHint, Oas20, basePath)
 }
 
 trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
@@ -59,9 +61,11 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
   }
 
   private def hint(vendor: Vendor) = vendor match {
-    case Raml | Raml08 | Raml10 => RamlYamlHint
-    case Oas | Oas20 | Oas30    => OasYamlHint
-    case _                      => throw new IllegalArgumentException
+    case Raml10 => Raml10YamlHint
+    case Raml08 => Raml08YamlHint
+    case Oas20  => Oas20YamlHint
+    case Oas30  => Oas30YamlHint
+    case _      => throw new IllegalArgumentException
   }
 
   private def outputReportErrors(report: AMFValidationReport) = report.toString should include(REPORT_CONFORMS)
@@ -78,13 +82,18 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
         }
       }
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    new CompatibilityPipeline(profile(config.target)).transform(unit, UnhandledErrorHandler)
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+    // TODO: ARM change for AMFTransformer.transform
+    AMFPluginsRegistry.staticCofiguration.registry
+      .transformationPipelines(PipelineName.from(config.target.name, ResolutionPipeline.COMPATIBILITY_PIPELINE))
+      .transform(unit, UnhandledErrorHandler)
+  }
 
   private def profile(vendor: Vendor): ProfileName = vendor match {
-    case Raml | Raml08 | Raml10 => RamlProfile
-    case Oas | Oas20            => OasProfile
-    case Oas30                  => Oas30Profile
-    case _                      => throw new IllegalArgumentException
+    case Raml10 => Raml10Profile
+    case Raml08 => Raml08Profile
+    case Oas20  => Oas20Profile
+    case Oas30  => Oas30Profile
+    case _      => throw new IllegalArgumentException
   }
 }

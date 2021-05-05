@@ -1,7 +1,7 @@
 package amf.emit
 
-import amf.core.remote.{Oas, Raml08, Raml10, RamlYamlHint}
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.core.remote.{Oas20, Raml08, Raml08YamlHint, Raml10}
+import amf.io.FunSuiteCycleTests
 
 class Cycle08ToVersion extends FunSuiteCycleTests {
   override val basePath: String = "amf-client/shared/src/test/resources/upanddown/raml08/"
@@ -24,7 +24,7 @@ class Cycle08ToVersion extends FunSuiteCycleTests {
 
   cycle08to10.foreach(f => {
     test(s"Test Cycle raml 08 to raml 10 ${f.name}") {
-      cycle(f.apiFrom, f.apiTo, RamlYamlHint, Raml10)
+      cycle(f.apiFrom, f.apiTo, Raml08YamlHint, Raml10)
     }
   })
 
@@ -57,7 +57,7 @@ class Cycle08ToVersion extends FunSuiteCycleTests {
 
   cycles08.foreach(f => {
     test(s"Test 08 Cycle ${f.name}") {
-      cycle(f.apiFrom, f.apiTo, RamlYamlHint, Raml08)
+      cycle(f.apiFrom, f.apiTo, Raml08YamlHint, Raml08)
     }
   })
 
@@ -71,7 +71,7 @@ class Cycle08ToVersion extends FunSuiteCycleTests {
 
   cycleOas.foreach { f =>
     test(s"Test 08 to Oas Cycle ${f.name}") {
-      cycle(f.apiFrom, f.apiTo, RamlYamlHint, Oas)
+      cycle(f.apiFrom, f.apiTo, Raml08YamlHint, Oas20)
     }
   }
 
