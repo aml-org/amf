@@ -9,7 +9,7 @@ import amf.client.parse.{DefaultParserErrorHandler, Oas20YamlParser, RamlParser}
 import amf.client.resolve.ClientErrorHandlerConverter.ErrorHandlerConverter
 import amf.client.resolve.{Oas20Resolver, Raml10Resolver}
 import amf.core.client.ParsingOptions
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.AMFValidationResult
 import amf.{AMFStyle, Oas20Profile, Raml10Profile}
 
@@ -66,7 +66,7 @@ trait YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with NativeO
       _           <- AMF.init().asFuture
       unit        <- new RamlParser().parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50)).asFuture
       parseReport <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
-      _           <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE, clientHandler))
+      _           <- Future(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE, clientHandler))
     } yield {
       assertThresholdViolation(eh.getErrors)
       assertThresholdViolation(parseReport.results.asSeq.map(_._internal))
@@ -103,7 +103,7 @@ trait YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with NativeO
       _           <- AMF.init().asFuture
       unit        <- new Oas20YamlParser().parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50)).asFuture
       parseReport <- AMF.validate(unit, Oas20Profile, AMFStyle).asFuture
-      _           <- Future(new Oas20Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE, clientHandler))
+      _           <- Future(new Oas20Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE, clientHandler))
     } yield {
       assertThresholdViolation(eh.getErrors)
       assertThresholdViolation(parseReport.results.asSeq.map(_._internal))
@@ -188,7 +188,7 @@ trait YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with NativeO
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50)).asFuture
       r    <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
-      _    <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      _    <- Future(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
     } yield {
       assertThresholdViolation(r.results.asSeq.map(_._internal))
     }
@@ -200,7 +200,7 @@ trait YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with NativeO
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseFileAsync(file, ParsingOptions().setMaxYamlReferences(50)).asFuture
       r    <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
-      _    <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      _    <- Future(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
     } yield {
       assertThresholdViolation(r.results.asSeq.map(_._internal))
     }

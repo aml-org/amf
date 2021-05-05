@@ -3,7 +3,7 @@ package amf.plugins.domain.webapi.resolution.stages
 import amf.core.annotations.TrackedElement
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ExampleTracking}
 import amf.plugins.domain.webapi.metamodel.ResponseModel
 import amf.plugins.domain.webapi.models.api.Api
@@ -15,8 +15,8 @@ import amf.validations.ResolutionSideValidations.{ExamplesWithInvalidMimeType, E
   * MediaTypeResolution and Shape Normalization stages must already been run
   * for mutate each payload schema
   */
-class ResponseExamplesResolutionStage() extends ResolutionStage() {
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
+class ResponseExamplesResolutionStage() extends TransformationStep() {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       d.withEncodes(resolveApi(d.encodes.asInstanceOf[Api])(errorHandler)).asInstanceOf[T]
     case _ => model

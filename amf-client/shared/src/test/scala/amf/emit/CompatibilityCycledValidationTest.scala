@@ -7,7 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.AMFValidationReport
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
@@ -85,7 +85,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     // TODO: ARM change for AMFTransformer.transform
     AMFPluginsRegistry.staticCofiguration.registry
-      .transformationPipelines(PipelineName.from(config.target.name, ResolutionPipeline.COMPATIBILITY_PIPELINE))
+      .transformationPipelines(PipelineName.from(config.target.name, TransformationPipeline.COMPATIBILITY_PIPELINE))
       .transform(unit, UnhandledErrorHandler)
   }
 

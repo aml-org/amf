@@ -4,7 +4,7 @@ import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
 import amf.client.remod.{AMFGraphConfiguration, ErrorHandlerProvider}
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
@@ -37,7 +37,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Raml10ParsePlugin, Raml10RenderPlugin))
       .withTransformationPipelines(
         List(
-          Raml10ResolutionPipeline(),
+          Raml10TransformationPipeline(),
           Raml10EditingPipeline(),
           Raml10CompatibilityPipeline(),
           Raml10CachePipeline()
@@ -47,7 +47,7 @@ object RAMLConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Raml08ParsePlugin, Raml08RenderPlugin))
       .withTransformationPipelines(
         List(
-          Raml08ResolutionPipeline(),
+          Raml08TransformationPipeline(),
           Raml08EditingPipeline(),
           Raml08CompatibilityPipeline(),
           Raml08CachePipeline()
@@ -62,7 +62,7 @@ object OASConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Oas20ParsePlugin, Oas20RenderPlugin))
       .withTransformationPipelines(
         List(
-          Oas20ResolutionPipeline(),
+          Oas20TransformationPipeline(),
           Oas20EditingPipeline(),
           Oas20CompatibilityPipeline(),
           Oas20CachePipeline()
@@ -72,7 +72,7 @@ object OASConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Oas30ParsePlugin, Oas30RenderPlugin))
       .withTransformationPipelines(
         List(
-          Oas30ResolutionPipeline(),
+          Oas30TransformationPipeline(),
           Oas3EditingPipeline(),
           Oas3CompatibilityPipeline(),
           Oas3CachePipeline()
@@ -127,7 +127,7 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withValidationProfile(profile: ValidationProfile): AMFConfiguration =
     super._withValidationProfile(profile)
 
-  override def withTransformationPipeline(pipeline: ResolutionPipeline): AMFConfiguration =
+  override def withTransformationPipeline(pipeline: TransformationPipeline): AMFConfiguration =
     super._withTransformationPipeline(pipeline)
 
   /**
@@ -135,7 +135,7 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     * @param pipelines
     * @return
     */
-  override private[amf] def withTransformationPipelines(pipelines: List[ResolutionPipeline]): AMFConfiguration =
+  override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): AMFConfiguration =
     super._withTransformationPipelines(pipelines)
 
   override def withRenderOptions(renderOptions: RenderOptions): AMFConfiguration =

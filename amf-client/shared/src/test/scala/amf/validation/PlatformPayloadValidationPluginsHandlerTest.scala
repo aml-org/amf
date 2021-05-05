@@ -7,7 +7,7 @@ import amf.core.remote.Raml10YamlHint
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.resolution.pipelines.AmfResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.AmfTransformationPipeline
 import amf.plugins.domain.shapes.models.AnyShape
 import org.scalatest.AsyncFunSuite
 
@@ -90,7 +90,7 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
 //                             Raml10YamlHint,
 //                             eh = UnhandledParserErrorHandler).build()
 //      validator <- Future {
-//        val resolved = AmfResolutionPipeline().transform(library, UnhandledErrorHandler)
+//        val resolved = AmfTransformationPipeline().transform(library, UnhandledErrorHandler)
 //        val shape    = findShape(resolved, "D")
 //        shape.payloadValidator("application/json", Environment()).get
 //      }

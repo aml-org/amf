@@ -5,7 +5,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeResolver
 import amf.io.{FunSuiteCycleTests, MultiJsonldAsyncFunSuite}
 import amf.plugins.document.webapi.Raml10Plugin
@@ -25,7 +25,7 @@ abstract class DocBuilderTest extends FunSuiteCycleTests {
     RenderOptions().withSourceMaps.withPrettyPrint.withAmfJsonLdSerialization
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    RuntimeResolver.resolve(Vendor.RAML10.name, unit, ResolutionPipeline.EDITING_PIPELINE, UnhandledErrorHandler)
+    RuntimeResolver.resolve(Vendor.RAML10.name, unit, TransformationPipeline.EDITING_PIPELINE, UnhandledErrorHandler)
 
   private def run(source: String, golden: String, renderOptions: RenderOptions): Future[Assertion] =
     cycle(source, golden, Raml10YamlHint, target = Amf, eh = None, renderOptions = Some(renderOptions))

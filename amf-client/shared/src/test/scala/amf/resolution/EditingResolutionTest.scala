@@ -5,14 +5,14 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.emit.AMFRenderer
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class EditingResolutionTest extends ResolutionTest {
 
-  override val defaultPipelineToUse: String = ResolutionPipeline.EDITING_PIPELINE
+  override val defaultPipelineToUse: String = TransformationPipeline.EDITING_PIPELINE
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

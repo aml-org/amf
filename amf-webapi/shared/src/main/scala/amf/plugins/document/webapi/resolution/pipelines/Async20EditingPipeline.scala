@@ -3,8 +3,8 @@ package amf.plugins.document.webapi.resolution.pipelines
 import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.ErrorHandler
 import amf.core.remote.AsyncApi20
-import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages._
 import amf.plugins.domain.webapi.resolution.stages.async.{
@@ -23,7 +23,7 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
   override protected def parameterNormalizationStage: ParametersNormalizationStage =
     new OpenApiParametersNormalizationStage()
 
-  override def steps: Seq[ResolutionStage] =
+  override def steps: Seq[TransformationStep] =
     Seq(
       references,
       new ShapeNormalizationStage(profileName, keepEditingInfo = true),
@@ -39,10 +39,10 @@ class Async20EditingPipeline private (urlShortening: Boolean = true, override va
 object Async20EditingPipeline {
   def apply()                    = new Async20EditingPipeline(true, name)
   private[amf] def cachePipeline = new Async20EditingPipeline(false, Async20CachePipeline.name)
-  val name: String               = PipelineName.from(AsyncApi20.name, ResolutionPipeline.EDITING_PIPELINE)
+  val name: String               = PipelineName.from(AsyncApi20.name, TransformationPipeline.EDITING_PIPELINE)
 }
 
 object Async20CachePipeline {
-  val name: String                                 = PipelineName.from(AsyncApi20.name, ResolutionPipeline.CACHE_PIPELINE)
+  val name: String                                 = PipelineName.from(AsyncApi20.name, TransformationPipeline.CACHE_PIPELINE)
   private[amf] def apply(): Async20EditingPipeline = Async20EditingPipeline.cachePipeline
 }

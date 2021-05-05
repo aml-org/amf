@@ -5,7 +5,7 @@ import amf.core.annotations.SynthesizedField
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfArray
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.webapi.parser.spec.domain.Parameters
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel, ServerModel}
 import amf.plugins.domain.webapi.models.api.Api
@@ -17,9 +17,9 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
   *
   * @param profile target profile
   */
-abstract class ParametersNormalizationStage(profile: ProfileName) extends ResolutionStage() {
+abstract class ParametersNormalizationStage(profile: ProfileName) extends TransformationStep() {
 
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val api = doc.encodes.asInstanceOf[Api]
       resolve(api)

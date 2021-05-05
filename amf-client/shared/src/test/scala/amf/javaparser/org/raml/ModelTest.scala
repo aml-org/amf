@@ -7,7 +7,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline.EDITING_PIPELINE
+import amf.core.resolution.pipelines.TransformationPipeline.EDITING_PIPELINE
 import amf.core.services.RuntimeResolver
 import amf.core.validation.AMFValidationReport
 import amf.emit.AMFRenderer

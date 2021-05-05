@@ -6,19 +6,19 @@ import amf.core.metamodel.MetaModelTypeMapping
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.core.resolution.stages.elements.resolution.{ElementResolutionStage, ElementStageTransformer}
 import amf.core.resolution.stages.selectors.NodeShapeSelector
 import amf.plugins.domain.shapes.models.NodeShape
 
 class MakeRequiredFieldImplicitForOptionalProperties()
-    extends ResolutionStage()
+    extends TransformationStep()
     with MetaModelTypeMapping
     with ElementResolutionStage[NodeShape] {
 
   protected var m: Option[BaseUnit] = None
 
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     m = Some(model)
     model.transform(NodeShapeSelector, transform)(errorHandler).asInstanceOf[T]
   }

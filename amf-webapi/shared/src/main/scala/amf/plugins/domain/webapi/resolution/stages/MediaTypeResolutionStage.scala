@@ -5,7 +5,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, DomainElement, Shape}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.models.{ExampleTracking, FileShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
@@ -22,8 +22,8 @@ import amf.{Oas20Profile, ProfileName}
 class MediaTypeResolutionStage(profile: ProfileName,
                                isValidation: Boolean = false,
                                val keepEditingInfo: Boolean = false)
-    extends ResolutionStage() {
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+    extends TransformationStep() {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         propagatePayloads(doc.encodes.asInstanceOf[Api])

@@ -2,15 +2,15 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.core.resolution.stages.elements.resolution.ReferenceResolution
 import amf.core.resolution.stages.elements.resolution.ReferenceResolution.ASSERT_DIFFERENT
 import amf.core.resolution.stages.selectors.{LinkSelector, MetaModelSelector, Selector}
 import amf.core.vocabulary.Namespace.ApiContract
 import amf.plugins.domain.webapi.models.{Response, Payload}
 
-object ResolveRamlCompatibleDeclarationsStage extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+object ResolveRamlCompatibleDeclarationsStage extends TransformationStep {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
     new ResolveRamlCompatibleDeclarations(errorHandler).resolve(model)
 }
 

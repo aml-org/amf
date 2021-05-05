@@ -4,7 +4,7 @@ import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, Module}
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeResolver
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
@@ -148,7 +148,8 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
       unit <- AMFCompiler(basePath + file, platform, hint, eh = UnhandledParserErrorHandler).build()
     } yield {
       findShapeFunc(
-        RuntimeResolver.resolve(Vendor.OAS20.name, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler))
+        RuntimeResolver
+          .resolve(Vendor.OAS20.name, unit, TransformationPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler))
         .map(toJsonSchema)
         .getOrElse("")
     }

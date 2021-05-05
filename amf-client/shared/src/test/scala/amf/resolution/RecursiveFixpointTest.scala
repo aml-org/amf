@@ -5,7 +5,7 @@ import amf.core.model.domain.{AmfObject, RecursiveShape}
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote.{AsyncApi20, Hint, Oas20YamlHint, Raml10YamlHint}
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
 import org.mulesoft.common.collections.FilterType
@@ -34,7 +34,7 @@ class RecursiveFixpointTest() extends AsyncFunSuite with PlatformSecrets with Re
         _ <- Validation(platform)
         unit <- AMFCompiler(s"file://$basePath${data.path}", platform, data.hint, eh = UnhandledParserErrorHandler)
           .build()
-        _ <- Future(transform(unit, ResolutionPipeline.EDITING_PIPELINE, data.hint.vendor))
+        _ <- Future(transform(unit, TransformationPipeline.EDITING_PIPELINE, data.hint.vendor))
       } yield {
         val elements                    = unit.iterator(fieldsFilter = All).toList
         val fixpointValues: Seq[String] = elements.filterType[RecursiveShape].map(_.fixpoint.value())

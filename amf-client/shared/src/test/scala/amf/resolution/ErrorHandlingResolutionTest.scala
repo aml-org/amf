@@ -6,12 +6,12 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline.DEFAULT_PIPELINE
+import amf.core.resolution.pipelines.TransformationPipeline.DEFAULT_PIPELINE
 import amf.core.services.RuntimeResolver
 import amf.core.validation.SeverityLevels
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.webapi.resolution.pipelines.AmfResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.AmfTransformationPipeline
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations.UnknownSecuritySchemeErrorSpecification
 import org.scalatest.Assertion
@@ -94,7 +94,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
     config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
         RuntimeResolver.resolve(config.target.name, unit, DEFAULT_PIPELINE, eh)
-      case Amf    => AmfResolutionPipeline().transform(unit, eh)
+      case Amf    => AmfTransformationPipeline().transform(unit, eh)
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }

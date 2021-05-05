@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.resolution.pipelines
 import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.ErrorHandler
 import amf.core.remote.Raml10
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.plugins.domain.webapi.resolution.stages._
 import amf.{ProfileName, Raml10Profile}
 
@@ -19,10 +19,10 @@ class Raml10EditingPipeline private (urlShortening: Boolean, override val name: 
 object Raml10EditingPipeline {
   def apply()                      = new Raml10EditingPipeline(true, name)
   private[amf] def cachePipeline() = new Raml10EditingPipeline(false, Raml10CachePipeline.name)
-  val name: String                 = PipelineName.from(Raml10.name, ResolutionPipeline.EDITING_PIPELINE)
+  val name: String                 = PipelineName.from(Raml10.name, TransformationPipeline.EDITING_PIPELINE)
 }
 
 object Raml10CachePipeline {
   def apply(): Raml10EditingPipeline = Raml10EditingPipeline.cachePipeline()
-  val name: String                   = PipelineName.from(Raml10.name, ResolutionPipeline.CACHE_PIPELINE)
+  val name: String                   = PipelineName.from(Raml10.name, TransformationPipeline.CACHE_PIPELINE)
 }

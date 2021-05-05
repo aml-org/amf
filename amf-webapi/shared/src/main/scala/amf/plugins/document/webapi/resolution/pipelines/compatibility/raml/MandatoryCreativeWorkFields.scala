@@ -2,11 +2,11 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.models.CreativeWork
 
-class MandatoryCreativeWorkFields() extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+class MandatoryCreativeWorkFields() extends TransformationStep {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case work: CreativeWork => fillMandatoryFields(work)

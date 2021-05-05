@@ -6,12 +6,12 @@ import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.ScalarNode
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.Operation
 
-class CleanNullSecurity() extends ResolutionStage {
+class CleanNullSecurity() extends TransformationStep {
 
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case op: Operation =>

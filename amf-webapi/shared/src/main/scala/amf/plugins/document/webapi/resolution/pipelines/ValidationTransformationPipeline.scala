@@ -3,8 +3,8 @@ package amf.plugins.document.webapi.resolution.pipelines
 import amf.{Async20Profile, Oas30Profile, ProfileName}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.resolution.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage, ResolutionStage}
+import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.resolution.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage, TransformationStep}
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages.{
@@ -14,11 +14,11 @@ import amf.plugins.domain.webapi.resolution.stages.{
   ResponseExamplesResolutionStage
 }
 
-class ValidationResolutionPipeline private[amf] (profile: ProfileName,
-                                                 override val name: String = "ValidationResolutionPipeline")
-    extends ResolutionPipeline() {
+class ValidationTransformationPipeline private[amf](profile: ProfileName,
+                                                    override val name: String = "ValidationResolutionPipeline")
+    extends TransformationPipeline() {
 
-  override def steps: Seq[ResolutionStage] =
+  override def steps: Seq[TransformationStep] =
     Seq(
       new ReferenceResolutionStage(keepEditingInfo = false),
       new ExternalSourceRemovalStage,
@@ -31,12 +31,12 @@ class ValidationResolutionPipeline private[amf] (profile: ProfileName,
     )
 }
 
-object ValidationResolutionPipeline {
+object ValidationTransformationPipeline {
   def apply(profile: ProfileName, unit: BaseUnit): BaseUnit = {
     val pipeline = profile match {
-      case Oas30Profile   => Oas30ValidationResolutionPipeline()
+      case Oas30Profile   => Oas30ValidationTransformationPipeline()
       case Async20Profile => Async20CachePipeline()
-      case _              => new ValidationResolutionPipeline(profile)
+      case _              => new ValidationTransformationPipeline(profile)
     }
     pipeline.transform(unit, unit.errorHandler())
   }

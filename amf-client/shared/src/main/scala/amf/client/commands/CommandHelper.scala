@@ -7,7 +7,7 @@ import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.{RuntimeCompiler, RuntimeResolver, RuntimeSerializer}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
@@ -55,7 +55,7 @@ trait CommandHelper {
     val vendor = effectiveVendor(config.inputFormat)
     if (config.resolve)
       parsed map (unit =>
-        RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler))
+        RuntimeResolver.resolve(vendor, unit, TransformationPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler))
     else parsed
   }
 
@@ -71,10 +71,10 @@ trait CommandHelper {
         cache = Cache()
       )
       parsed map { parsed =>
-        RuntimeResolver.resolve(vendor, parsed, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
+        RuntimeResolver.resolve(vendor, parsed, TransformationPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
       }
     } else if (config.resolve) {
-      Future { RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler) }
+      Future { RuntimeResolver.resolve(vendor, unit, TransformationPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler) }
     } else {
       Future { unit }
     }

@@ -3,12 +3,12 @@ package amf.plugins.domain.shapes.resolution.stages
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.core.resolution.stages.elements.resolution.ReferenceResolution
 import amf.core.resolution.stages.selectors.{LinkSelector, Selector}
 import amf.plugins.domain.webapi.models.Request
-object RequestParamsLinkStage extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+object RequestParamsLinkStage extends TransformationStep {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
     new RequestParamsLinkStage(errorHandler).resolve(model)
 }
 

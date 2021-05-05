@@ -5,7 +5,7 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.MetaModelTypeMapping
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.core.resolution.stages.elements.resolution.{ElementResolutionStage, ElementStageTransformer}
 import amf.core.resolution.stages.selectors.ShapeSelector
 import amf.core.traversal.ModelTraversalRegistry
@@ -19,8 +19,8 @@ import scala.collection.mutable.ListBuffer
   * We are assuming certain pre-conditions in the state of the shape:
   *  - All type references have been replaced by their expanded forms
   */
-class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean) extends TransformationStep {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
     new ShapeNormalization(profile, keepEditingInfo)(errorHandler).resolve(model)
 
   private class ShapeNormalization(profile: ProfileName, val keepEditingInfo: Boolean)(

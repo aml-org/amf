@@ -8,7 +8,7 @@ import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DataNode, DomainElement, ElementTree}
 import amf.core.parser.{ParserContext, YNodeLikeOps}
-import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
+import amf.core.resolution.stages.{ReferenceResolutionStage, TransformationStep}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
@@ -36,9 +36,9 @@ import scala.collection.mutable.ListBuffer
   * 5) Remove 'extends' property from the endpoint and from the operations.
   */
 class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean, val fromOverlay: Boolean = false)
-    extends ResolutionStage()
+    extends TransformationStep()
     with PlatformSecrets {
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
     new ExtendsResolution(profile, keepEditingInfo, fromOverlay)(errorHandler).resolve(model)
 
   class ExtendsResolution(profile: ProfileName,
@@ -339,7 +339,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
       private def withRefCounterGuard(node: YNode)(thunk: => Seq[ElementTree]) = {
         if (refsCounter.exceedsThreshold(node)) {
           errorHandler.violation(
-            ExeededMaxYamlReferences,
+            ExceededMaxYamlReferences,
             "",
             "Exceeded maximum yaml references threshold"
           )

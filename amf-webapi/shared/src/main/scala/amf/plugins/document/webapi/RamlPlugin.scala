@@ -11,7 +11,7 @@ import amf.core.model.document._
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{EmptyFutureDeclarations, LibraryReference, LinkReference, ParsedReference, ParserContext, RefContainer, UnspecifiedReference}
 import amf.core.remote.{Platform, Vendor}
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.raml.{Raml08SpecEmitterContext, Raml10SpecEmitterContext, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
@@ -211,9 +211,9 @@ object Raml08Plugin extends RamlPlugin {
   def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
     new Raml08SpecEmitterContext(errorHandler)
 
-  override val pipelines: Map[String, ResolutionPipeline] = Map(
-    Raml08ResolutionPipeline.name -> Raml08ResolutionPipeline(),
-    Raml08EditingPipeline.name    -> Raml08EditingPipeline()
+  override val pipelines: Map[String, TransformationPipeline] = Map(
+    Raml08TransformationPipeline.name -> Raml08TransformationPipeline(),
+    Raml08EditingPipeline.name        -> Raml08EditingPipeline()
   )
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
@@ -278,12 +278,12 @@ object Raml10Plugin extends RamlPlugin {
   def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
     new Raml10SpecEmitterContext(errorHandler)
 
-  override val pipelines: Map[String, ResolutionPipeline] = Map(
-    Raml10ResolutionPipeline.name    -> Raml10ResolutionPipeline(),
-    Raml10ResolutionPipeline.name    -> Raml10ResolutionPipeline(),
-    Raml10EditingPipeline.name       -> Raml10EditingPipeline(),
-    Raml10CompatibilityPipeline.name -> Raml10CompatibilityPipeline(),
-    Raml10CachePipeline.name         -> Raml10CachePipeline()
+  override val pipelines: Map[String, TransformationPipeline] = Map(
+    Raml10TransformationPipeline.name -> Raml10TransformationPipeline(),
+    Raml10TransformationPipeline.name -> Raml10TransformationPipeline(),
+    Raml10EditingPipeline.name        -> Raml10EditingPipeline(),
+    Raml10CompatibilityPipeline.name  -> Raml10CompatibilityPipeline(),
+    Raml10CachePipeline.name          -> Raml10CachePipeline()
   )
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =

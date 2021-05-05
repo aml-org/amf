@@ -3,7 +3,7 @@ package amf.plugins.domain.webapi.resolution.stages
 import amf._
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.models.{Server, ServerContainer}
 
@@ -12,9 +12,10 @@ import amf.plugins.domain.webapi.models.{Server, ServerContainer}
   *
   * @param profile target profile
   */
-class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false) extends ResolutionStage() {
+class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)
+    extends TransformationStep() {
 
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     profile match {
       // TODO should run for Amf too
       case Oas30Profile => normalizeServers(model).asInstanceOf[T]

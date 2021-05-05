@@ -3,17 +3,17 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility
 import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.ErrorHandler
 import amf.core.remote.Oas20
-import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.document.webapi.resolution.pipelines.Oas20ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.resolution.stages.TransformationStep
+import amf.plugins.document.webapi.resolution.pipelines.Oas20TransformationPipeline
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.oas._
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.oas3.CleanRepeatedOperationIds
 
-class Oas20CompatibilityPipeline private (override val name: String) extends ResolutionPipeline() {
+class Oas20CompatibilityPipeline private (override val name: String) extends TransformationPipeline() {
 
-  private val resolution = Oas20ResolutionPipeline()
+  private val resolution = Oas20TransformationPipeline()
 
-  override def steps: Seq[ResolutionStage] =
+  override def steps: Seq[TransformationStep] =
     resolution.steps ++ Seq(
       new LowercaseSchemes(),
       new Oas20SecuritySettingsMapper(),
@@ -30,5 +30,5 @@ class Oas20CompatibilityPipeline private (override val name: String) extends Res
 
 object Oas20CompatibilityPipeline {
   def apply(): Oas20CompatibilityPipeline = new Oas20CompatibilityPipeline(name)
-  val name: String                        = PipelineName.from(Oas20.name, ResolutionPipeline.COMPATIBILITY_PIPELINE)
+  val name: String                        = PipelineName.from(Oas20.name, TransformationPipeline.COMPATIBILITY_PIPELINE)
 }

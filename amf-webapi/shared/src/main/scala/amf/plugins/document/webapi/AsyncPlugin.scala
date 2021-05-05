@@ -9,7 +9,7 @@ import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.async.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
@@ -114,7 +114,7 @@ object Async20Plugin extends AsyncPlugin {
       case _ => None
     }
 
-  override val pipelines: Map[String, ResolutionPipeline] = Map(
+  override val pipelines: Map[String, TransformationPipeline] = Map(
     Async20ResolutionPipeline.name -> Async20ResolutionPipeline(),
     Async20EditingPipeline.name    -> Async20EditingPipeline(),
     Async20CachePipeline.name      -> Async20CachePipeline()

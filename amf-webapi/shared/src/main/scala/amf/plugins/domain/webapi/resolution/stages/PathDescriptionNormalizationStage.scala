@@ -5,7 +5,7 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfScalar
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
@@ -16,9 +16,9 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
   * @param profile target profile
   */
 class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)
-    extends ResolutionStage() {
+    extends TransformationStep() {
 
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     profile match {
       // TODO should run for Amf too
       case Oas30Profile | Async20Profile => normalizeDescriptions(model).asInstanceOf[T]
