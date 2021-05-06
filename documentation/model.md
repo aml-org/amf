@@ -1218,7 +1218,7 @@ Shape that validates a record of fields, like a JS object
  | additionalPropertiesSchema | [Shape](#shape) | Additional properties schema | http://www.w3.org/ns/shacl#additionalPropertiesSchema |
  | discriminator | string | Discriminator property | http://a.ml/vocabularies/shapes#discriminator |
  | discriminatorValue | string | Values for the discriminator property | http://a.ml/vocabularies/shapes#discriminatorValue |
- | discriminatorMapping | [[DiscriminatorValueMapping](#discriminatorvaluemapping)] | Mapping of acceptable values for the node discriminator | http://a.ml/vocabularies/shapes#discriminatorMapping |
+ | discriminatorMapping | [[IriTemplateMapping](#iritemplatemapping)] | Mapping of acceptable values for the node discriminator | http://a.ml/vocabularies/shapes#discriminatorMapping |
  | discriminatorValueMapping | [[DiscriminatorValueMapping](#discriminatorvaluemapping)] | Mapping of acceptable values for the node discriminator | http://a.ml/vocabularies/shapes#discriminatorValueMapping |
  | property | [[PropertyShape](#propertyshape)] | Properties associated to this node | http://www.w3.org/ns/shacl#property |
  | propertyNames | [Shape](#shape) | Property names schema | http://www.w3.org/ns/shacl#propertyNames |
