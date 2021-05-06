@@ -19,7 +19,7 @@ import amf.plugins.domain.webapi.resolution.stages.async.{
   ServerVariableExampleResolutionStage
 }
 
-class Async20ResolutionPipeline private (override val name: String) extends TransformationPipeline() {
+class Async20TransformationPipeline private(override val name: String) extends TransformationPipeline() {
   def references = new WebApiReferenceResolutionStage()
 
   override def steps: Seq[TransformationStep] =
@@ -38,7 +38,7 @@ class Async20ResolutionPipeline private (override val name: String) extends Tran
     )
 }
 
-object Async20ResolutionPipeline {
-  def apply()      = new Async20ResolutionPipeline(name)
+object Async20TransformationPipeline {
+  def apply()      = new Async20TransformationPipeline(name)
   val name: String = PipelineName.from(AsyncApi20.name, TransformationPipeline.DEFAULT_PIPELINE)
 }

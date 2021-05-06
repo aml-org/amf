@@ -17,7 +17,7 @@ class JsonMergePatchStage(isEditing: Boolean) extends TransformationStep() {
 
   private lazy val merger = AsyncJsonMergePatch()
 
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val webApi = doc.encodes.asInstanceOf[Api]
       resolve(webApi)

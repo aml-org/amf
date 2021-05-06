@@ -14,8 +14,8 @@ import amf.plugins.domain.webapi.resolution.stages.{
   ResponseExamplesResolutionStage
 }
 
-class ValidationTransformationPipeline private[amf](profile: ProfileName,
-                                                    override val name: String = "ValidationResolutionPipeline")
+class ValidationTransformationPipeline private[amf] (profile: ProfileName,
+                                                     override val name: String = "ValidationTransformationPipeline")
     extends TransformationPipeline() {
 
   override def steps: Seq[TransformationStep] =

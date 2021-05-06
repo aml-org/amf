@@ -7,7 +7,7 @@ import amf.plugins.domain.webapi.models.Parameter
 
 class MandatoryPathParameters() extends TransformationStep {
 
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case param: Parameter if param.isPath =>

@@ -6,7 +6,7 @@ import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape}
 
 class AddItemsToArrayType() extends TransformationStep {
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model
         .iterator()

@@ -21,7 +21,7 @@ class PushSingleOperationPathParams() extends TransformationStep {
     } else endpoint
   }
 
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case endpoint: EndPoint =>

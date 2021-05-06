@@ -90,7 +90,7 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
       .withPlugins(List(Async20ParsePlugin, Async20RenderPlugin))
       .withTransformationPipelines(
         List(
-          Async20ResolutionPipeline(),
+          Async20TransformationPipeline(),
           Async20EditingPipeline(),
           Async20EditingPipeline()
         ))

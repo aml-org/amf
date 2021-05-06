@@ -10,7 +10,7 @@ import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 
 // TODO this is a bug, it's just adjusted to emit correctly for now.....
 class ShapeFormatAdjuster() extends TransformationStep {
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case shape: ScalarShape if shape.format.nonEmpty =>

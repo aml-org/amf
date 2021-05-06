@@ -35,14 +35,14 @@ import scala.collection.mutable.ListBuffer
 class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: Boolean)
     extends TransformationStep()
     with PlatformSecrets {
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     val extendsStage = new ExtendsResolutionStage(profile, keepEditingInfo)
     val resolvedModel = model match {
       case overlay: Overlay =>
         new OverlayResolutionStage(profile, keepEditingInfo)(errorHandler).resolve(model, overlay).asInstanceOf[T]
       case extension: Extension =>
         new ExtensionResolutionStage(profile, keepEditingInfo)(errorHandler).resolve(model, extension).asInstanceOf[T]
-      case _ => extendsStage.apply(model, errorHandler)
+      case _ => extendsStage.transform(model, errorHandler)
     }
     assignNewRoot(resolvedModel)
   }
@@ -159,7 +159,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
         val referenceStage = new ReferenceResolutionStage(keepEditingInfo)
 
         // All includes are resolved and applied for both Master Tree and Extension Tree.
-        referenceStage.apply(document, errorHandler)
+        referenceStage.transform(document, errorHandler)
 
         // Current Target Tree Object is set to the Target Tree root (API).
         val masterTree = document.asInstanceOf[EncodesModel].encodes.asInstanceOf[Api]
@@ -169,7 +169,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
           // Current Extension Tree Object is set to the Extension Tree root (API).
           case extension: ExtensionLike[_] =>
             // Resolve references.
-            referenceStage.apply(extension, errorHandler)
+            referenceStage.transform(extension, errorHandler)
 
             val iriMerger = IriMerger(document.id + "#", extension.id + "#")
 
@@ -189,7 +189,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
         // Then, with all the declarations and references applied.
         // All Trait and Resource Types applications are applied in the Master Tree.
-        extendsStage.apply(document, errorHandler)
+        extendsStage.transform(document, errorHandler)
 
         extensions.foreach {
           // Current Extension Tree Object is set to the Extension Tree root (API).
@@ -207,7 +207,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             adoptIris(iriMerger, masterTree, IdTracker())
 
             // Traits and Resource Types applications are applied one more time to the Target Tree.
-            extendsStage.apply(document, errorHandler)
+            extendsStage.transform(document, errorHandler)
         }
 
         // now we can remove is/type predicates safely if requested by pipeline

@@ -12,7 +12,7 @@ import amf.plugins.domain.webapi.models.security.SecurityRequirement
 
 class SecurityResolutionStage() extends TransformationStep() {
 
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         resolveSecurity(doc.encodes.asInstanceOf[Api])

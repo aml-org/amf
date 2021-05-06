@@ -18,7 +18,7 @@ class MakeRequiredFieldImplicitForOptionalProperties()
 
   protected var m: Option[BaseUnit] = None
 
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     m = Some(model)
     model.transform(NodeShapeSelector, transform)(errorHandler).asInstanceOf[T]
   }

@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation
 import amf.plugins.domain.shapes.models.AnyShape
 
 class CustomAnnotationDeclaration() extends TransformationStep {
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       val annotationsTypes = WellKnownAnnotation.ramlKnownAnnotations
         .map(name => CustomDomainProperty().withName(s"amf-$name").withSchema(AnyShape()))

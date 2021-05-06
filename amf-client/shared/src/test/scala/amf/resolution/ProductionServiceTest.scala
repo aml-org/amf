@@ -99,7 +99,7 @@ class ProductionServiceTest extends RamlResolutionTest {
       AmfJsonHint,
       target = Raml10,
       tFn = (u: BaseUnit, _: CycleConfig) => {
-        val resolved = new ReferenceResolutionStage(false).apply(u, UnhandledErrorHandler)
+        val resolved = new ReferenceResolutionStage(false).transform(u, UnhandledErrorHandler)
         resolved.fields.removeField(DocumentModel.Declares)
         resolved
       }

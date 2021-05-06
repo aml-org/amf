@@ -10,7 +10,7 @@ class MandatoryAnnotationType() extends TransformationStep {
 
   var annotationCounter = 0
 
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model match {
         case doc: Document =>

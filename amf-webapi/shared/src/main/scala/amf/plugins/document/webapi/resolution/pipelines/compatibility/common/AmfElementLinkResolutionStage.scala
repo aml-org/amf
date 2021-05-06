@@ -8,7 +8,7 @@ import amf.core.resolution.stages.elements.resolution.ReferenceResolution
 import amf.core.resolution.stages.elements.resolution.ReferenceResolution.ASSERT_DIFFERENT
 
 abstract class AmfElementLinkResolutionStage() extends TransformationStep {
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     model match {
       case doc: Document =>
         val resolver = new ReferenceResolution(errorHandler)

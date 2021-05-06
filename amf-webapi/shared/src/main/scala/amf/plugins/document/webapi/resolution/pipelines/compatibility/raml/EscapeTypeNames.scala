@@ -11,7 +11,7 @@ import amf.plugins.domain.webapi.models.api.Api
 import scala.collection.mutable
 
 class EscapeTypeNames() extends TransformationStep {
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val replacedNames: mutable.Map[String, String] = mutable.Map.empty

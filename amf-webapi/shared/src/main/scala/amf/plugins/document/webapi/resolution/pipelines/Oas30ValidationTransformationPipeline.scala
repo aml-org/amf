@@ -12,6 +12,6 @@ class Oas30ValidationTransformationPipeline private (override val name: String)
 }
 
 object Oas30ValidationTransformationPipeline {
-  val name: String = "Oas30ValidationResolutionPipeline"
+  val name: String = "Oas30ValidationTransformationPipeline"
   def apply()      = new Oas30ValidationTransformationPipeline(name)
 }

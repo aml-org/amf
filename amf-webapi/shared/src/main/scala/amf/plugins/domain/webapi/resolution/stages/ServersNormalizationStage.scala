@@ -15,7 +15,7 @@ import amf.plugins.domain.webapi.models.{Server, ServerContainer}
 class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)
     extends TransformationStep() {
 
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     profile match {
       // TODO should run for Amf too
       case Oas30Profile => normalizeServers(model).asInstanceOf[T]

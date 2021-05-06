@@ -20,7 +20,7 @@ class UnionsAsTypeExpressions() extends TransformationStep {
 
   val counter = new IdCounter()
 
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       val document                                        = model.asInstanceOf[DeclaresModel]
       val declarations: mutable.ListBuffer[DomainElement] = mutable.ListBuffer()

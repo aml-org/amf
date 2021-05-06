@@ -23,7 +23,7 @@ class LowercaseSchemes() extends TransformationStep {
     if (s.nonEmpty) element.set(field, s)
   }
 
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val api = d.encodes.asInstanceOf[Api]
