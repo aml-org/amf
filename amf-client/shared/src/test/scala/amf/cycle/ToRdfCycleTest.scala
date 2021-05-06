@@ -6,7 +6,7 @@ import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.plugin.PluginContext
 import amf.core.remote.{Cache, Context, Vendor}
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeCompiler
 import amf.facades.Validation
 import amf.io.FileAssertionTest
@@ -49,7 +49,7 @@ class ToRdfCycleTest
 
   private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {
     build(path)
-      .map(transform(_, ResolutionPipeline.EDITING_PIPELINE, vendor))
+      .map(transform(_, TransformationPipeline.EDITING_PIPELINE, vendor))
       .map(_.toNativeRdfModel(RenderOptions().withSourceMaps))
       .map(_.toN3())
   }

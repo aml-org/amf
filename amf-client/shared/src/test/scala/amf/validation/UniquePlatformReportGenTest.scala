@@ -7,10 +7,11 @@ import amf.core.errorhandling.AmfReportBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
+import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.validation.AMFValidationReport
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
-import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -94,7 +95,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
       validation <- Validation(platform)
       model      <- AMFCompiler(basePath + api, platform, profileToHint(profile), eh = errorHandler).build()
       report <- {
-        new ValidationResolutionPipeline(profile).transform(model, errorHandler)
+        TransformationPipelineRunner(errorHandler).run(model, new ValidationTransformationPipeline(profile))
         val results = errorHandler.getErrors
         val report  = new AmfReportBuilder(model, profile).buildReport(results)
         handleReport(report, golden)

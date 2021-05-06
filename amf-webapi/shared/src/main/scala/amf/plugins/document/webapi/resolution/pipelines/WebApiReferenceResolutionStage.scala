@@ -6,8 +6,7 @@ import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.plugins.domain.webapi.metamodel.MessageModel
 import amf.plugins.domain.webapi.models.{Message, Parameter, Request, Response}
 
-class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)(
-    override implicit val errorHandler: ErrorHandler)
+class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)
     extends ReferenceResolutionStage(keepEditingInfo) {
 
   override protected def customDomainElementTransformation: (DomainElement, Linkable) => DomainElement =

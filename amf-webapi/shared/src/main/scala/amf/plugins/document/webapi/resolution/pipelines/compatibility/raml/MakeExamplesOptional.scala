@@ -2,12 +2,12 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.models.Example
 
-class MakeExamplesOptional()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class MakeExamplesOptional() extends TransformationStep {
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case example: Example =>

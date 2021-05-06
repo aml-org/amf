@@ -5,7 +5,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, DomainElement, Shape}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.models.{ExampleTracking, FileShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.api.BaseApiModel
@@ -21,13 +21,13 @@ import amf.{Oas20Profile, ProfileName}
   */
 class MediaTypeResolutionStage(profile: ProfileName,
                                isValidation: Boolean = false,
-                               val keepEditingInfo: Boolean = false)(override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage() {
-  override def resolve[T <: BaseUnit](model: T): T = {
+                               val keepEditingInfo: Boolean = false)
+    extends TransformationStep() {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         propagatePayloads(doc.encodes.asInstanceOf[Api])
-        resolveMediaTypes(doc.encodes.asInstanceOf[Api])
+        resolveMediaTypes(doc.encodes.asInstanceOf[Api])(errorHandler)
       case _ =>
     }
     model.asInstanceOf[T]
@@ -51,7 +51,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
     }
   }
 
-  def resolveMediaTypes(api: Api): Unit = {
+  def resolveMediaTypes(api: Api)(implicit errorHandler: ErrorHandler): Unit = {
     val rootAccepts     = getAndRemove(api, BaseApiModel.Accepts, keepMediaTypesInModel)
     val rootContentType = getAndRemove(api, BaseApiModel.ContentType, keepMediaTypesInModel)
 
@@ -135,7 +135,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
     overrider.orElse(root).filter(_.nonEmpty)
 
   /** Oas 2.0 violation in which all file parameters must comply with specific consumes property */
-  private def validateFilePayloads(request: Request): Unit = {
+  private def validateFilePayloads(request: Request)(implicit errorHandler: ErrorHandler): Unit = {
     val filePayloads = request.payloads.filter(_.schema match {
       // another violation is present to make sure all file parameters are NodeShapes
       case node: NodeShape => node.properties.exists(_.range.isInstanceOf[FileShape])
@@ -155,7 +155,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
       }
   }
 
-  private def mediaTypeError(prop: PropertyShape): Unit = errorHandler.violation(
+  private def mediaTypeError(prop: PropertyShape)(implicit errorHandler: ErrorHandler): Unit = errorHandler.violation(
     InvalidConsumesWithFileParameter,
     prop.id,
     "Consumes must be either 'multipart/form-data', 'application/x-www-form-urlencoded', or both when a file parameter is present",

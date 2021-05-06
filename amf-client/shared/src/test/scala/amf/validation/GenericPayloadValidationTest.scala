@@ -8,7 +8,7 @@ import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, Validation}
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.emitter.EmbeddedJsonLdEmitter
-import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import amf.{AmfProfile, PayloadProfile}
 import org.scalatest.AsyncFunSuite
@@ -75,7 +75,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         payload <- AMFCompiler(payloadsPath + payloadFile, platform, hint, eh = UnhandledParserErrorHandler).build()
       } yield {
         // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
-        ValidationResolutionPipeline(AmfProfile, library)
+        ValidationTransformationPipeline(AmfProfile, library)
         val targetType = library
           .asInstanceOf[Module]
           .declares

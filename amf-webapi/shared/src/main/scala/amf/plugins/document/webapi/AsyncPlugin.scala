@@ -9,7 +9,7 @@ import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.async.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
@@ -20,7 +20,7 @@ import amf.plugins.document.webapi.parser.spec.async.{AsyncApi20DocumentEmitter,
 import amf.plugins.document.webapi.resolution.pipelines.{
   Async20CachePipeline,
   Async20EditingPipeline,
-  Async20ResolutionPipeline
+  Async20TransformationPipeline
 }
 import amf.plugins.domain.webapi.models.api.Api
 import amf.{Async20Profile, AsyncProfile, ProfileName}
@@ -114,10 +114,10 @@ object Async20Plugin extends AsyncPlugin {
       case _ => None
     }
 
-  override val pipelines: Map[String, ResolutionPipeline] = Map(
-    Async20ResolutionPipeline.name -> Async20ResolutionPipeline(),
-    Async20EditingPipeline.name    -> Async20EditingPipeline(),
-    Async20CachePipeline.name      -> Async20CachePipeline()
+  override val pipelines: Map[String, TransformationPipeline] = Map(
+    Async20TransformationPipeline.name -> Async20TransformationPipeline(),
+    Async20EditingPipeline.name        -> Async20EditingPipeline(),
+    Async20CachePipeline.name          -> Async20CachePipeline()
   )
 
   override def context(loc: String,

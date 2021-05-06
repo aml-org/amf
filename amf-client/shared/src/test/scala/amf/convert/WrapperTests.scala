@@ -26,7 +26,7 @@ import amf.core.model.domain.{
 }
 import amf.core.parser.Range
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.internal.environment.{Environment => InternalEnvironment}
@@ -1841,7 +1841,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseStringAsync(api).asFuture
-      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
       json <- Future {
         val shape = resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape]
@@ -1882,7 +1882,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(api).asFuture
-      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
     } yield {
       val golden    = """{
                         |  "$schema": "http://json-schema.org/draft-04/schema#",
@@ -1995,7 +1995,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseStringAsync(api).asFuture
-      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       val expectedSchema =
@@ -2044,7 +2044,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(file).asFuture
-      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(!report.conforms)
@@ -2056,7 +2056,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(file).asFuture
-      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
@@ -2068,7 +2068,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseFileAsync(file).asFuture
-      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(!report.conforms)
@@ -2086,7 +2086,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new RamlParser().parseStringAsync(api).asFuture
-      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(!report.conforms)
@@ -2199,7 +2199,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new Async20Parser().parseFileAsync(api).asFuture
-      resolved <- Future(new Async20Resolver().resolve(unit, ResolutionPipeline.CACHE_PIPELINE))
+      resolved <- Future(new Async20Resolver().resolve(unit, TransformationPipeline.CACHE_PIPELINE))
     } yield {
       val golden  = """{
                         |  "$schema": "http://json-schema.org/draft-07/schema#",
@@ -2307,7 +2307,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       parsed   <- new Raml10Parser().parseFileAsync(knowledgeGraphServiceApi).asFuture
-      resolved <- Future.successful(new Raml10Resolver().resolve(parsed, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future.successful(new Raml10Resolver().resolve(parsed, TransformationPipeline.EDITING_PIPELINE))
     } yield {
       assert(resolved.references().asSeq.forall(_.id != null))
     }
@@ -2386,7 +2386,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new Oas30Parser().parseFileAsync(file).asFuture
-      resolved <- Future.successful(new Oas30Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future.successful(new Oas30Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
     } yield {
       val exampleIds =
         resolved.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[AnyShape].examples.asSeq.map(x => x.id)
@@ -2411,7 +2411,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       _        <- AMF.init().asFuture
       unit     <- new Raml10Parser().parseFileAsync(api).asFuture
-      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      resolved <- Future(new Raml10Resolver().resolve(unit, TransformationPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(!report.conforms)

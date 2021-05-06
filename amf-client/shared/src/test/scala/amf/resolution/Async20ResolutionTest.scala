@@ -5,7 +5,7 @@ import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{AsyncApi20, AsyncYamlHint, Vendor}
 import amf.core.remote.Vendor._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.emit.AMFRenderer
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.Async20Plugin
@@ -57,7 +57,7 @@ class Async20ResolutionTest extends ResolutionTest {
       AsyncYamlHint,
       target = AMF,
       renderOptions = Some(config.renderOptions),
-      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE)
+      pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE)
     )
   }
 
@@ -69,7 +69,7 @@ class Async20ResolutionTest extends ResolutionTest {
       AsyncYamlHint,
       target = AMF,
       renderOptions = Some(config.renderOptions),
-      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE)
+      pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE)
     )
   }
 
@@ -187,7 +187,7 @@ class Async20ResolutionTest extends ResolutionTest {
   }
 
   override val defaultVendor: Option[Vendor] = Some(AsyncApi20)
-  override val defaultPipelineToUse: String  = ResolutionPipeline.EDITING_PIPELINE
+  override val defaultPipelineToUse: String  = TransformationPipeline.EDITING_PIPELINE
 
   override def defaultRenderOptions: RenderOptions =
     RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint

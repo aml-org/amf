@@ -2,15 +2,13 @@ package amf.plugins.domain.webapi.resolution.stages.async
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.resolution.stages.common.ExamplePropagationHelper
 
-class ServerVariableExampleResolutionStage()(override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage
-    with ExamplePropagationHelper {
+class ServerVariableExampleResolutionStage() extends TransformationStep with ExamplePropagationHelper {
 
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       propagateInServerVariables(doc.encodes.asInstanceOf[Api])
       doc.asInstanceOf[T]

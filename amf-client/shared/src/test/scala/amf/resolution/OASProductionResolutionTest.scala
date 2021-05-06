@@ -4,7 +4,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeResolver
 
 class OASProductionResolutionTest extends ResolutionTest {
@@ -15,7 +15,7 @@ class OASProductionResolutionTest extends ResolutionTest {
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     if (config.target.equals(Amf) && config.transformWith.isEmpty)
-      RuntimeResolver.resolve(Vendor.OAS20.name, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
+      RuntimeResolver.resolve(Vendor.OAS20.name, unit, TransformationPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
     else super.transform(unit, config)
   }
 

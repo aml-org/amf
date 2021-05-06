@@ -4,7 +4,7 @@ import amf.ProfileName
 import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions, ValidationResult}
 import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
 import amf.core.model.document.BaseUnit
-import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
 import amf.plugins.document.webapi.validation.runner.ValidationContext
 import amf.plugins.document.webapi.validation.runner.steps.{
   ExamplesValidationStep,
@@ -20,7 +20,7 @@ trait ModelResolution {
   def withResolvedModel[T](unit: BaseUnit, profile: ProfileName)(withResolved: BaseUnit => T): T = {
     if (unit.resolved) withResolved(unit)
     else {
-      val resolvedUnit = ValidationResolutionPipeline(profile, unit)
+      val resolvedUnit = ValidationTransformationPipeline(profile, unit)
       withResolved(resolvedUnit)
     }
   }

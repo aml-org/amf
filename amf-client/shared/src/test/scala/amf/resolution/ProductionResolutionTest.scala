@@ -3,6 +3,7 @@ package amf.resolution
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.Document
 import amf.core.remote._
+import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 
 class ProductionResolutionTest extends RamlResolutionTest {
@@ -187,10 +188,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
 
     for {
       simpleModel <- build(config, validation, useAmfJsonldSerialization).map(
-        AmfEditingPipeline().transform(_, UnhandledErrorHandler))
+        TransformationPipelineRunner(UnhandledErrorHandler).run(_, AmfEditingPipeline()))
       a <- render(simpleModel, config, useAmfJsonldSerialization)
       doubleModel <- build(config, validation, useAmfJsonldSerialization).map(
-        AmfEditingPipeline().transform(_, UnhandledErrorHandler))
+        TransformationPipelineRunner(UnhandledErrorHandler).run(_, AmfEditingPipeline()))
       _ <- render(doubleModel, config, useAmfJsonldSerialization)
       b <- render(doubleModel, config, useAmfJsonldSerialization)
     } yield {

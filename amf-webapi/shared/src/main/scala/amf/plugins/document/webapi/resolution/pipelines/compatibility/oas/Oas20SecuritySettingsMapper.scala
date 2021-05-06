@@ -5,7 +5,7 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.common.Sec
 import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.webapi.models.security._
 
-class Oas20SecuritySettingsMapper(override implicit val errorHandler: ErrorHandler) extends SecuritySettingsMapper {
+class Oas20SecuritySettingsMapper() extends SecuritySettingsMapper {
 
   def fixOauth2(oauth2: OAuth2Settings): Unit = {
     if (oauth2.flows.isEmpty) {

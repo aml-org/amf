@@ -3,7 +3,7 @@ package amf.resolution
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.emit.AMFRenderer
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -211,7 +211,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
       config.golden,
       Raml10YamlHint,
       target = Amf,
-      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE),
+      pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE),
       renderOptions = Some(config.renderOptions.withoutSourceMaps),
       directory = basePath + "extends-with-references-to-declares/trait/"
     )
@@ -223,7 +223,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
       config.golden,
       Raml10YamlHint,
       target = Amf,
-      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE),
+      pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE),
       renderOptions = Some(config.renderOptions.withoutSourceMaps),
       directory = basePath + "extends-with-references-to-declares/resource-type/"
     )
@@ -235,7 +235,7 @@ trait ExtendsResolutionTest extends ResolutionTest {
       config.golden,
       Raml10YamlHint,
       target = Amf,
-      pipeline = Some(ResolutionPipeline.DEFAULT_PIPELINE),
+      pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE),
       renderOptions = Some(config.renderOptions.withoutSourceMaps),
       directory = basePath + "extends-with-references-to-declares/merging/"
     )

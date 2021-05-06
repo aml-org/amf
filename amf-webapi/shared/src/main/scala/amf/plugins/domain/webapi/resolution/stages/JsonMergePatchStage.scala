@@ -6,18 +6,18 @@ import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{AmfElement, AmfObject, DomainElement}
 import amf.core.parser.Annotations
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncJsonMergePatch, CustomMerge}
 import amf.plugins.domain.webapi.metamodel.PayloadModel.{MediaType, SchemaMediaType}
 import amf.plugins.domain.webapi.metamodel.{MessageModel, PayloadModel}
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.models.{Message, Operation, Payload}
 
-class JsonMergePatchStage(isEditing: Boolean)(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
+class JsonMergePatchStage(isEditing: Boolean) extends TransformationStep() {
 
   private lazy val merger = AsyncJsonMergePatch()
 
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val webApi = doc.encodes.asInstanceOf[Api]
       resolve(webApi)
@@ -72,7 +72,7 @@ object CustomMessageExamplesMerge extends CustomMerge {
             }
         }
       }
-    case _ =>  // ignore
+    case _ => // ignore
   }
   val exampleFields = Seq(MessageModel.HeaderExamples, MessageModel.Examples)
 

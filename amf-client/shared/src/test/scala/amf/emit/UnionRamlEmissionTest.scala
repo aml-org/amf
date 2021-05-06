@@ -3,8 +3,8 @@ package amf.emit
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.resolution.pipelines.ResolutionPipeline._
+import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.resolution.pipelines.TransformationPipeline._
 import amf.core.services.RuntimeResolver
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.Raml10Plugin

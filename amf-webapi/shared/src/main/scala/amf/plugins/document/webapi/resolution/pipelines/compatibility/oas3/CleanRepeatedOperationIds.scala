@@ -2,11 +2,11 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas3
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.Operation
 
-class CleanRepeatedOperationIds()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T): T =
+class CleanRepeatedOperationIds() extends TransformationStep {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
     try {
       val operations           = getOperationsFromModel(model)
       val repeatedOperationIds = operationsWithRepeatedIds(operations)

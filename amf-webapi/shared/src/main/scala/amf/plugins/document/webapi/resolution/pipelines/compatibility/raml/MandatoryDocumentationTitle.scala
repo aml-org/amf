@@ -2,17 +2,17 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.models.Tag
 
-class MandatoryDocumentationTitle()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class MandatoryDocumentationTitle() extends TransformationStep {
 
   var tagCounter = 0
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     // Have to filter for null documentations as the documentation method of domainElements does not return Option. It can return null
     // TODO: keeping separate treatment for Tags to keep backwards compatibility.
     extractDocumentedElements(model).foreach {

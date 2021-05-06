@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{DomainElement, NamedDomainElement, Shape}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.RamlUnionEmitterHelper
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
@@ -16,11 +16,11 @@ import scala.collection.mutable.ListBuffer
   * Transforms unions 'anyOf: [A, B]' into type expressions 'A | B' so we generate valid RAML for the old parser
   * @param errorHandler
   */
-class UnionsAsTypeExpressions()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class UnionsAsTypeExpressions() extends TransformationStep {
 
   val counter = new IdCounter()
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       val document                                        = model.asInstanceOf[DeclaresModel]
       val declarations: mutable.ListBuffer[DomainElement] = mutable.ListBuffer()

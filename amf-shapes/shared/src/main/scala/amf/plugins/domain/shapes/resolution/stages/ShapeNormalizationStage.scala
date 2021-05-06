@@ -5,7 +5,7 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.MetaModelTypeMapping
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.core.resolution.stages.elements.resolution.{ElementResolutionStage, ElementStageTransformer}
 import amf.core.resolution.stages.selectors.ShapeSelector
 import amf.core.traversal.ModelTraversalRegistry
@@ -19,24 +19,28 @@ import scala.collection.mutable.ListBuffer
   * We are assuming certain pre-conditions in the state of the shape:
   *  - All type references have been replaced by their expanded forms
   */
-class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean)(
-    override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage() {
+class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean) extends TransformationStep {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+    new ShapeNormalization(profile, keepEditingInfo)(errorHandler).resolve(model)
 
-  protected var m: Option[BaseUnit] = None
-  protected val context             = new NormalizationContext(errorHandler, keepEditingInfo, profile)
+  private class ShapeNormalization(profile: ProfileName, val keepEditingInfo: Boolean)(
+      implicit val errorHandler: ErrorHandler) {
 
-  override def resolve[T <: BaseUnit](model: T): T = {
-    m = Some(model)
-    model.transform(ShapeSelector, transform).asInstanceOf[T]
-  }
+    protected var m: Option[BaseUnit] = None
+    protected val context             = new NormalizationContext(errorHandler, keepEditingInfo, profile)
 
-  protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
-    element match {
-      case shape: Shape => transformer.transform(shape)
-      case other        => Some(other)
+    def resolve[T <: BaseUnit](model: T): T = {
+      m = Some(model)
+      model.transform(ShapeSelector, transform).asInstanceOf[T]
     }
-  }
 
-  def transformer: ElementStageTransformer[Shape] = new ShapeTransformer(context)
+    protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
+      element match {
+        case shape: Shape => transformer.transform(shape)
+        case other        => Some(other)
+      }
+    }
+
+    def transformer: ElementStageTransformer[Shape] = new ShapeTransformer(context)
+  }
 }

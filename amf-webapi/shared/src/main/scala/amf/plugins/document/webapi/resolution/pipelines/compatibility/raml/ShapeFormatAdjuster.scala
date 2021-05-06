@@ -2,15 +2,15 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.shapes.models.TypeDef.{DateOnlyType, DateTimeOnlyType, DateTimeType, TimeOnlyType}
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 
 // TODO this is a bug, it's just adjusted to emit correctly for now.....
-class ShapeFormatAdjuster()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T): T = {
+class ShapeFormatAdjuster() extends TransformationStep {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     try {
       model.iterator().foreach {
         case shape: ScalarShape if shape.format.nonEmpty =>

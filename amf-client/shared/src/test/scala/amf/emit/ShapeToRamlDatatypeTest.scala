@@ -4,7 +4,7 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote.{Oas20JsonHint, Vendor}
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeResolver
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
@@ -69,7 +69,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
       findShapeFunc(
         RuntimeResolver.resolve(Vendor.OAS20.name,
                                 sourceUnit,
-                                ResolutionPipeline.DEFAULT_PIPELINE,
+                                TransformationPipeline.DEFAULT_PIPELINE,
                                 UnhandledErrorHandler)).map(toRamlDatatype).getOrElse("")
     }
     ramlDatatype.flatMap { writeTemporaryFile(goldenFile) }.flatMap(assertDifferences(_, goldenPath + goldenFile))

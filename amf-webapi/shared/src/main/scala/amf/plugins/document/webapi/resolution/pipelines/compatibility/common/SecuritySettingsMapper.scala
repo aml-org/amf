@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.common
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.security.{
   ApiKeySettings,
   OAuth1Settings,
@@ -11,7 +11,7 @@ import amf.plugins.domain.webapi.models.security.{
   SecurityScheme
 }
 
-abstract class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+abstract class SecuritySettingsMapper() extends TransformationStep {
 
   def fixOauth2(oauth2: OAuth2Settings): Unit
 
@@ -58,7 +58,7 @@ abstract class SecuritySettingsMapper()(override implicit val errorHandler: Erro
     d.withDeclares(filteredDeclarations)
   }
 
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case d: DeclaresModel =>
       try {
         fixSettings(d)

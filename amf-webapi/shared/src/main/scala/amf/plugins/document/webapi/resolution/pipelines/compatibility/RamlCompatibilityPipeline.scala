@@ -4,8 +4,8 @@ import amf.{ProfileName, Raml08Profile, Raml10Profile}
 import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.ErrorHandler
 import amf.core.remote.{Raml08, Raml10}
-import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.raml._
 import amf.plugins.domain.webapi.resolution.stages.{
   AnnotationRemovalStage,
@@ -14,9 +14,9 @@ import amf.plugins.domain.webapi.resolution.stages.{
 }
 
 class RamlCompatibilityPipeline private[amf] (override val name: String, profile: ProfileName)
-    extends ResolutionPipeline() {
+    extends TransformationPipeline() {
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+  override def steps: Seq[TransformationStep] =
     Seq(
       new MandatoryDocumentationTitle(),
       new MandatoryAnnotationType(),
@@ -33,7 +33,7 @@ class RamlCompatibilityPipeline private[amf] (override val name: String, profile
       new UnionsAsTypeExpressions(),
       new EscapeTypeNames(),
       new MakeRequiredFieldImplicitForOptionalProperties(),
-      new ResolveRamlCompatibleDeclarations(),
+      ResolveRamlCompatibleDeclarationsStage,
       new ResolveLinksWithNonDeclaredTargets(),
       new RamlCompatiblePayloadAndParameterResolutionStage(profile),
       new SanitizeCustomTypeNames(),
@@ -44,10 +44,10 @@ class RamlCompatibilityPipeline private[amf] (override val name: String, profile
 
 object Raml10CompatibilityPipeline {
   def apply()      = new RamlCompatibilityPipeline(name, Raml10Profile)
-  val name: String = PipelineName.from(Raml10.name, ResolutionPipeline.COMPATIBILITY_PIPELINE)
+  val name: String = PipelineName.from(Raml10.name, TransformationPipeline.COMPATIBILITY_PIPELINE)
 }
 
 object Raml08CompatibilityPipeline {
   def apply()      = new RamlCompatibilityPipeline(name, Raml08Profile)
-  val name: String = PipelineName.from(Raml08.name, ResolutionPipeline.COMPATIBILITY_PIPELINE)
+  val name: String = PipelineName.from(Raml08.name, TransformationPipeline.COMPATIBILITY_PIPELINE)
 }

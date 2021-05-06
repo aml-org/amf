@@ -2,14 +2,14 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas3
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.api.Api
 
-class MandatoryDocumentationUrl()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class MandatoryDocumentationUrl() extends TransformationStep {
 
   var tagCounter = 0
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     model match {
       case d: Document if d.encodes.isInstanceOf[Api] =>
         try {

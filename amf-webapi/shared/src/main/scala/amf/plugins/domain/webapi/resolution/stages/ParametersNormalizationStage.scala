@@ -5,7 +5,7 @@ import amf.core.annotations.SynthesizedField
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfArray
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.webapi.parser.spec.domain.Parameters
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel, ServerModel}
 import amf.plugins.domain.webapi.models.api.Api
@@ -17,10 +17,9 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
   *
   * @param profile target profile
   */
-abstract class ParametersNormalizationStage(profile: ProfileName)(override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage() {
+abstract class ParametersNormalizationStage(profile: ProfileName) extends TransformationStep() {
 
-  override def resolve[T <: BaseUnit](model: T): T = model match {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val api = doc.encodes.asInstanceOf[Api]
       resolve(api)
@@ -53,8 +52,7 @@ abstract class ParametersNormalizationStage(profile: ProfileName)(override impli
   }
 }
 
-class OpenApiParametersNormalizationStage(override implicit val errorHandler: ErrorHandler)
-    extends ParametersNormalizationStage(Oas20Profile) {
+class OpenApiParametersNormalizationStage extends ParametersNormalizationStage(Oas20Profile) {
 
   /**
     * In OpenAPI we just push the endpoint parameters to the operation level, overwriting the any endpoint parameter
@@ -77,8 +75,7 @@ class OpenApiParametersNormalizationStage(override implicit val errorHandler: Er
   }
 }
 
-class AmfParametersNormalizationStage(override implicit val errorHandler: ErrorHandler)
-    extends ParametersNormalizationStage(AmfProfile) {
+class AmfParametersNormalizationStage extends ParametersNormalizationStage(AmfProfile) {
 
   /**
     * In AMF we push all the parameters at the operation level.
@@ -112,8 +109,7 @@ class AmfParametersNormalizationStage(override implicit val errorHandler: ErrorH
   }
 }
 
-class Raml10ParametersNormalizationStage(override implicit val errorHandler: ErrorHandler)
-    extends ParametersNormalizationStage(AmfProfile) {
+class Raml10ParametersNormalizationStage extends ParametersNormalizationStage(AmfProfile) {
 
   /**
     * In RAML we assign the parameters at the right level according to the RAML spec:

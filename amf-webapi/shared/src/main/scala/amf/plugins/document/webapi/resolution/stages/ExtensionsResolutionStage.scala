@@ -11,7 +11,7 @@ import amf.core.metamodel.{Field, Type}
 import amf.core.model.document._
 import amf.core.model.domain._
 import amf.core.parser.{EmptyFutureDeclarations, ParserContext}
-import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
+import amf.core.resolution.stages.{ReferenceResolutionStage, TransformationStep}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
@@ -32,18 +32,17 @@ import scala.collection.mutable.ListBuffer
   *
   */
 // todo: refactor to support error handler in all resolution stages
-class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: Boolean)(
-    override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage()
+class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: Boolean)
+    extends TransformationStep()
     with PlatformSecrets {
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     val extendsStage = new ExtendsResolutionStage(profile, keepEditingInfo)
     val resolvedModel = model match {
       case overlay: Overlay =>
-        new OverlayResolutionStage(profile, keepEditingInfo).resolve(model, overlay).asInstanceOf[T]
+        new OverlayResolutionStage(profile, keepEditingInfo)(errorHandler).resolve(model, overlay).asInstanceOf[T]
       case extension: Extension =>
-        new ExtensionResolutionStage(profile, keepEditingInfo).resolve(model, extension).asInstanceOf[T]
-      case _ => extendsStage.resolve(model)
+        new ExtensionResolutionStage(profile, keepEditingInfo)(errorHandler).resolve(model, extension).asInstanceOf[T]
+      case _ => extendsStage.transform(model, errorHandler)
     }
     assignNewRoot(resolvedModel)
   }
@@ -160,7 +159,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
         val referenceStage = new ReferenceResolutionStage(keepEditingInfo)
 
         // All includes are resolved and applied for both Master Tree and Extension Tree.
-        referenceStage.resolve(document)
+        referenceStage.transform(document, errorHandler)
 
         // Current Target Tree Object is set to the Target Tree root (API).
         val masterTree = document.asInstanceOf[EncodesModel].encodes.asInstanceOf[Api]
@@ -170,7 +169,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
           // Current Extension Tree Object is set to the Extension Tree root (API).
           case extension: ExtensionLike[_] =>
             // Resolve references.
-            referenceStage.resolve(extension)
+            referenceStage.transform(extension, errorHandler)
 
             val iriMerger = IriMerger(document.id + "#", extension.id + "#")
 
@@ -190,7 +189,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
         // Then, with all the declarations and references applied.
         // All Trait and Resource Types applications are applied in the Master Tree.
-        extendsStage.resolve(document)
+        extendsStage.transform(document, errorHandler)
 
         extensions.foreach {
           // Current Extension Tree Object is set to the Extension Tree root (API).
@@ -208,7 +207,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             adoptIris(iriMerger, masterTree, IdTracker())
 
             // Traits and Resource Types applications are applied one more time to the Target Tree.
-            extendsStage.resolve(document)
+            extendsStage.transform(document, errorHandler)
         }
 
         // now we can remove is/type predicates safely if requested by pipeline

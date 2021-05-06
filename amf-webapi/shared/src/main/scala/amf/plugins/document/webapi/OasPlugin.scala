@@ -10,7 +10,7 @@ import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterContext,
@@ -132,11 +132,11 @@ object Oas20Plugin extends OasPlugin {
       case _ => None
     }
 
-  override val pipelines: Map[String, ResolutionPipeline] = Map(
-    Oas20ResolutionPipeline.name    -> Oas20ResolutionPipeline(),
-    Oas20EditingPipeline.name       -> Oas20EditingPipeline(),
-    Oas20CompatibilityPipeline.name -> Oas20CompatibilityPipeline(),
-    Oas20CachePipeline.name         -> Oas20CachePipeline()
+  override val pipelines: Map[String, TransformationPipeline] = Map(
+    Oas20TransformationPipeline.name -> Oas20TransformationPipeline(),
+    Oas20EditingPipeline.name        -> Oas20EditingPipeline(),
+    Oas20CompatibilityPipeline.name  -> Oas20CompatibilityPipeline(),
+    Oas20CachePipeline.name          -> Oas20CachePipeline()
   )
 
   override def context(loc: String,
@@ -213,11 +213,11 @@ object Oas30Plugin extends OasPlugin {
     "application/swagger"
   )
 
-  override val pipelines: Map[String, ResolutionPipeline] = Map(
-    Oas30ResolutionPipeline.name   -> Oas30ResolutionPipeline(),
-    Oas3EditingPipeline.name       -> Oas3EditingPipeline(),
-    Oas3CompatibilityPipeline.name -> Oas3CompatibilityPipeline(),
-    Oas3CachePipeline.name         -> Oas3CachePipeline()
+  override val pipelines: Map[String, TransformationPipeline] = Map(
+    Oas30TransformationPipeline.name -> Oas30TransformationPipeline(),
+    Oas3EditingPipeline.name         -> Oas3EditingPipeline(),
+    Oas3CompatibilityPipeline.name   -> Oas3CompatibilityPipeline(),
+    Oas3CachePipeline.name           -> Oas3CachePipeline()
   )
 
   override def context(loc: String,
