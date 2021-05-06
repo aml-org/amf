@@ -44,7 +44,7 @@ object NodeShapeModel extends AnyShapeModel {
 
 //  @deprecated("Use DiscriminatorValueMapping", "4.7.2")
   val DiscriminatorMapping: Field = Field(
-    Array(DiscriminatorValueMappingModel),
+    Array(IriTemplateMappingModel),
     Shapes + "discriminatorMapping",
     ModelDoc(ModelVocabularies.Shapes,
              "discriminatorMapping",
