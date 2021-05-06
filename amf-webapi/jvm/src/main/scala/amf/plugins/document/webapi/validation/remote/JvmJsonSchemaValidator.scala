@@ -29,7 +29,7 @@ object Rfc2616AttributeLowerCase extends Rfc2616Attribute {
 
 object DateTimeOnlyFormatValidator extends FormatValidator {
   val pattern =
-    "^([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$"
+    "^([0-9]{4})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$"
 
   override def formatName = "date-time-only"
 

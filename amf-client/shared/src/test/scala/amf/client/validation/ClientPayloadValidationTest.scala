@@ -1,15 +1,7 @@
 package amf.client.validation
 
-import amf.client.convert.CoreClientConverters._
-import amf.client.convert.{NativeOps, WebApiRegister}
-import amf.client.model.DataTypes
-import amf.client.model.domain._
-import amf.core.AMF
-import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
+import amf.client.convert.NativeOps
 import org.scalatest.{AsyncFunSuite, Matchers}
-import amf.core.model.domain.{RecursiveShape => InternalRecursiveShape}
-import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.{ScalarShape => InternalScalarShape}
 
 import scala.concurrent.ExecutionContext
 
@@ -267,6 +259,16 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
 //      val validator = shape.payloadValidator("application/json").asOption.get
 //      validator
 //        .syncValidate("application/json", """["a", "aaaa", "b", "bbb"]asdfgh""").conforms shouldBe false
+//    }
+//  }
+
+//  test("Date-time can only have 4 digits") {
+//    amf.Core.init().asFuture.flatMap { _ =>
+//      amf.Core.registerPlugin(PayloadValidatorPlugin)
+//      val shape     = new ScalarShape().withDataType(DataTypes.DateTimeOnly)
+//      val validator = shape.payloadValidator("application/json").asOption.get
+//      validator.syncValidate("application/json", """"22021-06-05T00:00:00"""").conforms shouldBe false
+//      validator.syncValidate("application/json", """"2021-06-05T00:00:00"""").conforms shouldBe true
 //    }
 //  }
 
