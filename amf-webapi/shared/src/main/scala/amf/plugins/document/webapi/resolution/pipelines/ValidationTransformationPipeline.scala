@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.resolution.pipelines
 import amf.{Async20Profile, Oas30Profile, ProfileName}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.resolution.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage, TransformationStep}
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
@@ -14,6 +14,7 @@ import amf.plugins.domain.webapi.resolution.stages.{
   ResponseExamplesResolutionStage
 }
 
+// Validation pipeline is not registered in AMF configuration, is it only called internally.
 class ValidationTransformationPipeline private[amf] (profile: ProfileName,
                                                      override val name: String = "ValidationTransformationPipeline")
     extends TransformationPipeline() {
@@ -38,6 +39,7 @@ object ValidationTransformationPipeline {
       case Async20Profile => Async20CachePipeline()
       case _              => new ValidationTransformationPipeline(profile)
     }
-    pipeline.transform(unit, unit.errorHandler())
+    val runner = TransformationPipelineRunner(unit.errorHandler())
+    runner.run(unit, pipeline)
   }
 }

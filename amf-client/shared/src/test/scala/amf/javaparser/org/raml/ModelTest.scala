@@ -8,6 +8,7 @@ import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline.EDITING_PIPELINE
+import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.services.RuntimeResolver
 import amf.core.validation.AMFValidationReport
 import amf.emit.AMFRenderer
@@ -106,7 +107,7 @@ trait ModelResolutionTest extends ModelValidationTest {
     val res = config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
         RuntimeResolver.resolve(config.target.name, unit, EDITING_PIPELINE, unit.errorHandler())
-      case Amf    => AmfEditingPipeline().transform(unit, UnhandledErrorHandler)
+      case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }

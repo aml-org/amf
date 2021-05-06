@@ -4,10 +4,10 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.services.RuntimeResolver
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
+import amf.plugins.document.webapi.resolution.pipelines.{AmfEditingPipeline, ValidationTransformationPipeline}
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 
 class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
@@ -54,7 +54,7 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
                                 unit,
                                 TransformationPipeline.EDITING_PIPELINE,
                                 UnhandledErrorHandler)
-      case Amf    => AmfEditingPipeline().transform(unit, UnhandledErrorHandler)
+      case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
     }
 }
