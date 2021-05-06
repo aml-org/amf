@@ -21,11 +21,11 @@ class AMFEventListenerTest extends AsyncBeforeAndAfterEach with PlatformSecrets 
   ignore("Test event listener in parsing") {
     val url = "file://amf-client/shared/src/test/resources/validations/aip/ex1.raml"
     val expectedFrequency = Map(
-      AMFEventNames.STARTING_PARSING         -> 1,
-      AMFEventNames.STARTING_CONTENT_PARSING -> 2,
-      AMFEventNames.PARSED_SYNTAX            -> 2,
-      AMFEventNames.PARSED_MODEL             -> 2,
-      AMFEventNames.FINISHED_PARSING         -> 1
+      AMFEventNames.StartingParsing        -> 1,
+      AMFEventNames.StartingContentParsing -> 2,
+      AMFEventNames.ParsedSyntax           -> 2,
+      AMFEventNames.ParsedModel            -> 2,
+      AMFEventNames.FinishedParsing        -> 1
     )
     val listener = EventAccumulator()
     // TODO set listener in config.
