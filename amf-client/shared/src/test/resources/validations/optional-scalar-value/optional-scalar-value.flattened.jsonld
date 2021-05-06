@@ -13,16 +13,7 @@
         {
           "@id": "#4"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#3": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(4,0)]",
-          "#3": "[(2,0)-(9,13)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#4",
@@ -39,13 +30,7 @@
         {
           "@id": "#4/scalar-valued/1/a"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "core:description": "[(8,2)-(9,13)]",
-          "#4": "[(7,0)-(9,13)]"
-        }
-      }
+      ]
     },
     {
       "core:extensionName": "a",
@@ -62,12 +47,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1",
-      "smaps": {
-        "lexical": {
-          "#4/scalar-valued/1/a/scalar_1": "[(9,9)-(9,13)]"
-        }
-      }
+      "core:name": "scalar_1"
     },
     {
       "@id": "",
@@ -98,16 +78,7 @@
       "raml-shapes:schema": {
         "@id": "#2"
       },
-      "core:name": "a",
-      "smaps": {
-        "declared-element": {
-          "#1": ""
-        },
-        "lexical": {
-          "core:name": "[(5,2)-(5,3)]",
-          "#1": "[(5,2)-(7,0)]"
-        }
-      }
+      "core:name": "a"
     },
     {
       "@id": "#2",
@@ -123,12 +94,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "a",
-      "smaps": {
-        "lexical": {
-          "#2": "[(5,5)-(5,11)]"
-        }
-      }
+      "shacl:name": "a"
     }
   ],
   "@context": {

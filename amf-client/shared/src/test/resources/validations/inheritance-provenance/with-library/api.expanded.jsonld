@@ -20,16 +20,7 @@
           {
             "@value": "API"
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#9": "RAML 1.0"
-          },
-          "lexical": {
-            "core:name": "[(2,0)-(3,0)]",
-            "#9": "[(2,0)-(7,21)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -42,11 +33,6 @@
         "@value": true
       }
     ],
-    "smaps": {
-      "aliases-array": {
-        "": "lib->amf://id#1::lib.raml"
-      }
-    },
     "doc:references": [
       {
         "@id": "#1",
@@ -102,12 +88,7 @@
                       {
                         "@value": "libProp"
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#4": "[(6,6)-(6,21)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:minCount": [
@@ -119,34 +100,14 @@
                   {
                     "@value": "libProp"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#3": "[(6,6)-(6,21)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:name": [
               {
                 "@value": "LibType"
               }
-            ],
-            "smaps": {
-              "resolved-link-target": {
-                "#2": "amf://id#2"
-              },
-              "declared-element": {
-                "#2": ""
-              },
-              "lexical": {
-                "shacl:name": "[(4,2)-(4,9)]",
-                "#2": "[(4,2)-(6,21)]"
-              },
-              "resolved-link": {
-                "#2": "amf://id#5"
-              }
-            }
+            ]
           }
         ],
         "doc:version": [
@@ -163,16 +124,7 @@
           {
             "@value": false
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#1": "RAML 1.0"
-          },
-          "lexical": {
-            "doc:usage": "[(2,0)-(3,0)]",
-            "#1": "[(1,0)-(6,21)]"
-          }
-        }
+        ]
       }
     ],
     "doc:declares": [
@@ -223,12 +175,7 @@
                   {
                     "@value": "libProp"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#4": "[(6,6)-(6,21)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -240,37 +187,14 @@
               {
                 "@value": "libProp"
               }
-            ],
-            "smaps": {
-              "inheritance-provenance": {
-                "#7": "amf://id#2"
-              },
-              "lexical": {
-                "#7": "[(6,6)-(6,21)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "ApiType"
           }
-        ],
-        "smaps": {
-          "inherited-shapes": {
-            "#6": "amf://id#8"
-          },
-          "type-property-lexical-info": {
-            "#6": "[(7,4)-(7,8)]"
-          },
-          "lexical": {
-            "shacl:name": "[(6,2)-(6,9)]",
-            "#6": "[(6,2)-(7,21)]"
-          },
-          "declared-element": {
-            "#6": ""
-          }
-        }
+        ]
       }
     ],
     "@context": {

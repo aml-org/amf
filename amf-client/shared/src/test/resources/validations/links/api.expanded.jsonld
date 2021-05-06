@@ -101,47 +101,15 @@
                               }
                             ]
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#12": "[(12,10)-(14,14)]"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "apiContract:payload": "[(11,8)-(14,14)]",
-                        "#11": "[(10,6)-(14,14)]"
-                      }
-                    }
+                    ]
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "apiContract:returns": "[(9,4)-(14,14)]",
-                    "#10": "[(8,2)-(14,14)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#9": "[(7,0)-(14,14)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#8": "RAML 1.0"
-          },
-          "lexical": {
-            "core:version": "[(2,0)-(3,0)]",
-            "#8": "[(2,0)-(14,14)]",
-            "core:name": "[(3,0)-(5,0)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -210,12 +178,7 @@
                       {
                         "@value": "ID?"
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#4": "[(5,2)-(6,0)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:minCount": [
@@ -227,12 +190,7 @@
                   {
                     "@value": "ID"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#3": "[(5,2)-(6,0)]"
-                  }
-                }
+                ]
               },
               {
                 "@id": "#5",
@@ -266,12 +224,7 @@
                       {
                         "@value": "code"
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#6": "[(6,2)-(6,14)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:minCount": [
@@ -283,30 +236,14 @@
                   {
                     "@value": "code"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#5": "[(6,2)-(6,14)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:name": [
               {
                 "@value": "type"
               }
-            ],
-            "smaps": {
-              "source-vendor": {
-                "#2": "RAML 1.0"
-              },
-              "lexical": {
-                "#2": "[(3,0)-(6,14)]"
-              },
-              "type-property-lexical-info": {
-                "#2": "[(3,0)-(3,4)]"
-              }
-            }
+            ]
           }
         ],
         "doc:version": [
@@ -318,12 +255,7 @@
           {
             "@value": false
           }
-        ],
-        "smaps": {
-          "lexical": {
-            "#1": "[(1,0)-(6,14)]"
-          }
-        }
+        ]
       }
     ],
     "doc:declares": [
@@ -374,12 +306,7 @@
                   {
                     "@value": "ID?"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#4": "[(5,2)-(6,0)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -391,12 +318,7 @@
               {
                 "@value": "ID"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#3": "[(5,2)-(6,0)]"
-              }
-            }
+            ]
           },
           {
             "@id": "#5",
@@ -430,12 +352,7 @@
                   {
                     "@value": "code"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#6": "[(6,2)-(6,14)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -447,39 +364,14 @@
               {
                 "@value": "code"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#5": "[(6,2)-(6,14)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "AmericanFlight"
           }
-        ],
-        "smaps": {
-          "declared-element": {
-            "#7": ""
-          },
-          "resolved-link": {
-            "#7": "amf://id#7"
-          },
-          "type-property-lexical-info": {
-            "#7": "[(3,0)-(3,4)]"
-          },
-          "lexical": {
-            "#7": "[(3,0)-(6,14)]"
-          },
-          "source-vendor": {
-            "#7": "RAML 1.0"
-          },
-          "resolved-link-target": {
-            "#7": "amf://id#2"
-          }
-        }
+        ]
       }
     ],
     "@context": {

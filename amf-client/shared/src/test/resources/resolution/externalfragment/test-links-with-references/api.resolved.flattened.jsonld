@@ -13,16 +13,7 @@
         {
           "@id": "#15"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#14": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(3,0)]",
-          "#14": "[(2,0)-(18,23)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#15",
@@ -38,12 +29,7 @@
         {
           "@id": "#19"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#15": "[(6,0)-(18,23)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#16",
@@ -56,13 +42,7 @@
         {
           "@id": "#17"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(8,4)-(13,0)]",
-          "#16": "[(7,2)-(13,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#19",
@@ -75,13 +55,7 @@
         {
           "@id": "#20"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(14,4)-(18,23)]",
-          "#19": "[(13,2)-(18,23)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#17",
@@ -96,13 +70,7 @@
         {
           "@id": "#18"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(10,8)-(13,0)]",
-          "#17": "[(9,6)-(13,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#20",
@@ -117,13 +85,7 @@
         {
           "@id": "#21"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(16,8)-(18,23)]",
-          "#20": "[(15,6)-(18,23)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#18",
@@ -134,11 +96,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#3"
-      },
-      "smaps": {
-        "lexical": {
-          "#18": "[(11,10)-(13,0)]"
-        }
       }
     },
     {
@@ -150,11 +107,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#3"
-      },
-      "smaps": {
-        "lexical": {
-          "#21": "[(17,10)-(18,23)]"
-        }
       }
     },
     {
@@ -185,22 +137,6 @@
         }
       ],
       "smaps": {
-        "resolved-link-target": {
-          "#3": "amf://id#3"
-        },
-        "declared-element": {
-          "#3": ""
-        },
-        "lexical": {
-          "shacl:name": "[(4,2)-(4,7)]",
-          "#3": "[(4,2)-(28,1)]"
-        },
-        "type-property-lexical-info": {
-          "#3": "[(3,2)-(3,8)]"
-        },
-        "resolved-link": {
-          "#3": "amf://id#13"
-        },
         "parsed-json-schema": {
           "#3": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"details\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"message\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\n        \"message\"\n      ]\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\",\n    \"details\"\n  ]\n}"
         }
@@ -223,13 +159,7 @@
         "@id": "#5"
       },
       "shacl:minCount": 1,
-      "shacl:name": "status",
-      "smaps": {
-        "lexical": {
-          "shacl:minCount": "[(24,4)-(24,12)]",
-          "#4": "[(5,4)-(7,5)]"
-        }
-      }
+      "shacl:name": "status"
     },
     {
       "@id": "#6",
@@ -248,13 +178,7 @@
         "@id": "#7"
       },
       "shacl:minCount": 1,
-      "shacl:name": "message",
-      "smaps": {
-        "lexical": {
-          "shacl:minCount": "[(25,4)-(25,13)]",
-          "#6": "[(8,4)-(10,5)]"
-        }
-      }
+      "shacl:name": "message"
     },
     {
       "@id": "#8",
@@ -273,13 +197,7 @@
         "@id": "#9"
       },
       "shacl:minCount": 1,
-      "shacl:name": "details",
-      "smaps": {
-        "lexical": {
-          "shacl:minCount": "[(26,4)-(26,13)]",
-          "#8": "[(11,4)-(21,5)]"
-        }
-      }
+      "shacl:name": "details"
     },
     {
       "@id": "#5",
@@ -295,16 +213,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "status",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#5": "[(6,6)-(6,12)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(6,6)-(6,22)]",
-          "#5": "[(5,4)-(7,5)]"
-        }
-      }
+      "shacl:name": "status"
     },
     {
       "@id": "#7",
@@ -320,16 +229,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "message",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#7": "[(9,6)-(9,12)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(9,6)-(9,22)]",
-          "#7": "[(8,4)-(10,5)]"
-        }
-      }
+      "shacl:name": "message"
     },
     {
       "@id": "#9",
@@ -346,15 +246,7 @@
           "@id": "#10"
         }
       ],
-      "shacl:name": "details",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#9": "[(12,6)-(12,12)]"
-        },
-        "lexical": {
-          "#9": "[(11,4)-(21,5)]"
-        }
-      }
+      "shacl:name": "details"
     },
     {
       "@id": "#10",
@@ -373,13 +265,7 @@
         "@id": "#11"
       },
       "shacl:minCount": 1,
-      "shacl:name": "message",
-      "smaps": {
-        "lexical": {
-          "shacl:minCount": "[(19,8)-(19,17)]",
-          "#10": "[(14,8)-(16,9)]"
-        }
-      }
+      "shacl:name": "message"
     },
     {
       "@id": "#11",
@@ -395,16 +281,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "message",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#11": "[(15,10)-(15,16)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(15,10)-(15,26)]",
-          "#11": "[(14,8)-(16,9)]"
-        }
-      }
+      "shacl:name": "message"
     },
     {
       "@id": "",
@@ -450,12 +327,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"status\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"details\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"message\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\n        \"message\"\n      ]\n    }\n  },\n  \"required\": [\n    \"status\",\n    \"message\",\n    \"details\"\n  ]\n}",
-      "core:mediaType": "application/json",
-      "smaps": {
-        "lexical": {
-          "#2": "[(1,0)-(28,1)]"
-        }
-      }
+      "core:mediaType": "application/json"
     }
   ],
   "@context": {

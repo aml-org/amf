@@ -9,17 +9,7 @@
         "doc:DomainElement"
       ],
       "core:name": "test",
-      "core:version": "1.1",
-      "smaps": {
-        "source-vendor": {
-          "#7": "OAS 2.0"
-        },
-        "lexical": {
-          "core:version": "[(5,4)-(5,20)]",
-          "#7": "[(1,0)-(26,1)]",
-          "core:name": "[(4,4)-(4,19)]"
-        }
-      }
+      "core:version": "1.1"
     },
     {
       "@id": "",
@@ -58,24 +48,7 @@
           "@id": "#2"
         }
       ],
-      "shacl:name": "Causes",
-      "smaps": {
-        "resolved-link-target": {
-          "#1": "amf://id#5"
-        },
-        "declared-element": {
-          "#1": ""
-        },
-        "lexical": {
-          "#1": "[(12,4)-(23,5)]"
-        },
-        "type-property-lexical-info": {
-          "#1": "[(22,6)-(22,12)]"
-        },
-        "resolved-link": {
-          "#1": "amf://id#1"
-        }
-      }
+      "shacl:name": "Causes"
     },
     {
       "@id": "#5",
@@ -92,25 +65,7 @@
           "@id": "#2"
         }
       ],
-      "shacl:name": "ThesaurusSense",
-      "smaps": {
-        "resolved-link-target": {
-          "#5": "amf://id#5"
-        },
-        "declared-element": {
-          "#5": ""
-        },
-        "lexical": {
-          "shacl:name": "[(12,4)-(12,20)]",
-          "#5": "[(12,4)-(23,5)]"
-        },
-        "type-property-lexical-info": {
-          "#5": "[(22,6)-(22,12)]"
-        },
-        "resolved-link": {
-          "#5": "amf://id#6"
-        }
-      }
+      "shacl:name": "ThesaurusSense"
     },
     {
       "@id": "#2",
@@ -129,12 +84,7 @@
         "@id": "#3"
       },
       "shacl:minCount": 0,
-      "shacl:name": "subsenses",
-      "smaps": {
-        "lexical": {
-          "#2": "[(14,8)-(20,9)]"
-        }
-      }
+      "shacl:name": "subsenses"
     },
     {
       "@id": "#3",
@@ -149,16 +99,7 @@
         "@id": "#4"
       },
       "shacl:minCount": 1,
-      "shacl:name": "subsenses",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#3": "[(19,10)-(19,16)]"
-        },
-        "lexical": {
-          "shacl:minCount": "[(18,10)-(18,23)]",
-          "#3": "[(14,8)-(20,9)]"
-        }
-      }
+      "shacl:name": "subsenses"
     },
     {
       "@id": "#4",
@@ -174,24 +115,7 @@
         }
       ],
       "doc:recursive": true,
-      "shacl:name": "ThesaurusSense",
-      "smaps": {
-        "resolved-link-target": {
-          "#4": "amf://id#5"
-        },
-        "declared-element": {
-          "#4": ""
-        },
-        "lexical": {
-          "#4": "[(12,4)-(23,5)]"
-        },
-        "type-property-lexical-info": {
-          "#4": "[(22,6)-(22,12)]"
-        },
-        "resolved-link": {
-          "#4": "amf://id#6"
-        }
-      }
+      "shacl:name": "ThesaurusSense"
     }
   ],
   "@context": {

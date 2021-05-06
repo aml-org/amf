@@ -8,16 +8,7 @@
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
-      "core:name": "test",
-      "smaps": {
-        "source-vendor": {
-          "#6": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(3,0)]",
-          "#6": "[(2,0)-(6,18)]"
-        }
-      }
+      "core:name": "test"
     },
     {
       "@id": "",
@@ -41,12 +32,7 @@
         "@id": "#6"
       },
       "doc:version": "3.1.0",
-      "doc:root": true,
-      "smaps": {
-        "aliases-array": {
-          "": "lib->amf://id#1::lib.raml"
-        }
-      }
+      "doc:root": true
     },
     {
       "@id": "#1",
@@ -60,15 +46,7 @@
         }
       ],
       "doc:version": "3.1.0",
-      "doc:root": false,
-      "smaps": {
-        "source-vendor": {
-          "#1": "RAML 1.0"
-        },
-        "lexical": {
-          "#1": "[(1,0)-(5,15)]"
-        }
-      }
+      "doc:root": false
     },
     {
       "@id": "#5",
@@ -85,21 +63,7 @@
           "@id": "#3"
         }
       ],
-      "shacl:name": "objectName",
-      "smaps": {
-        "resolved-link-target": {
-          "#5": "amf://id#2"
-        },
-        "declared-element": {
-          "#5": ""
-        },
-        "lexical": {
-          "#5": "[(3,2)-(5,15)]"
-        },
-        "resolved-link": {
-          "#5": "amf://id#5"
-        }
-      }
+      "shacl:name": "objectName"
     },
     {
       "@id": "#2",
@@ -116,16 +80,7 @@
           "@id": "#3"
         }
       ],
-      "shacl:name": "A",
-      "smaps": {
-        "declared-element": {
-          "#2": ""
-        },
-        "lexical": {
-          "shacl:name": "[(3,2)-(3,3)]",
-          "#2": "[(3,2)-(5,15)]"
-        }
-      }
+      "shacl:name": "A"
     },
     {
       "@id": "#3",
@@ -144,12 +99,7 @@
         "@id": "#4"
       },
       "shacl:minCount": 1,
-      "shacl:name": "a",
-      "smaps": {
-        "lexical": {
-          "#3": "[(5,6)-(5,15)]"
-        }
-      }
+      "shacl:name": "a"
     },
     {
       "@id": "#4",
@@ -165,12 +115,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "a",
-      "smaps": {
-        "lexical": {
-          "#4": "[(5,6)-(5,15)]"
-        }
-      }
+      "shacl:name": "a"
     }
   ],
   "@context": {

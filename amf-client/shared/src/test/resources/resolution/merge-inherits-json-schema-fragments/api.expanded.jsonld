@@ -128,16 +128,7 @@
                                       {
                                         "@value": "animalName"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#29": "[(17,10)-(17,16)]"
-                                      },
-                                      "lexical": {
-                                        "shacl:datatype": "[(17,10)-(17,26)]",
-                                        "#29": "[(16,8)-(18,9)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "shacl:minCount": [
@@ -149,12 +140,7 @@
                                   {
                                     "@value": "animalName"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "#28": "[(16,8)-(18,9)]"
-                                  }
-                                }
+                                ]
                               },
                               {
                                 "@id": "#30",
@@ -188,16 +174,7 @@
                                       {
                                         "@value": "personName"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#31": "[(9,10)-(9,16)]"
-                                      },
-                                      "lexical": {
-                                        "shacl:datatype": "[(9,10)-(9,26)]",
-                                        "#31": "[(8,8)-(10,9)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "shacl:minCount": [
@@ -209,12 +186,7 @@
                                   {
                                     "@value": "personName"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "#30": "[(8,8)-(10,9)]"
-                                  }
-                                }
+                                ]
                               }
                             ],
                             "shacl:name": [
@@ -226,36 +198,11 @@
                               {
                                 "@id": "#27"
                               }
-                            ],
-                            "smaps": {
-                              "external-fragment-ref": {
-                                "#26": "Animal"
-                              },
-                              "type-property-lexical-info": {
-                                "#26": "[(14,6)-(14,12)]"
-                              },
-                              "lexical": {
-                                "#26": "[(13,4)-(20,5)]"
-                              },
-                              "declared-element": {
-                                "#26": ""
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#25": "[(29,10)-(32,0)]"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "apiContract:payload": "[(28,8)-(32,0)]",
-                        "#24": "[(27,6)-(32,0)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "doc:extends": [
@@ -346,118 +293,50 @@
                                                   {
                                                     "@value": "type"
                                                   }
-                                                ],
-                                                "smaps": {
-                                                  "lexical": {
-                                                    "#18": "[(1,0)-(1,0)]"
-                                                  }
-                                                }
+                                                ]
                                               }
                                             ],
                                             "core:name": [
                                               {
                                                 "@value": "application/json"
                                               }
-                                            ],
-                                            "smaps": {
-                                              "lexical": {
-                                                "data:type": "[(11,12)-(13,0)]",
-                                                "#17": "[(11,0)-(13,0)]"
-                                              }
-                                            }
+                                            ]
                                           }
                                         ],
                                         "core:name": [
                                           {
                                             "@value": "body"
                                           }
-                                        ],
-                                        "smaps": {
-                                          "lexical": {
-                                            "data:application%2Fjson": "[(10,10)-(13,0)]",
-                                            "#16": "[(10,0)-(13,0)]"
-                                          }
-                                        }
+                                        ]
                                       }
                                     ],
                                     "core:name": [
                                       {
                                         "@value": "500"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "data:body": "[(9,8)-(13,0)]",
-                                        "#15": "[(9,0)-(13,0)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "core:name": [
                                   {
                                     "@value": "responses"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "data:500": "[(8,6)-(13,0)]",
-                                    "#14": "[(8,0)-(13,0)]"
-                                  }
-                                }
+                                ]
                               }
                             ],
                             "core:name": [
                               {
                                 "@value": "object_1"
                               }
-                            ],
-                            "smaps": {
-                              "lexical": {
-                                "data:responses": "[(7,4)-(13,0)]",
-                                "#13": "[(7,4)-(13,0)]"
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "resolved-link-target": {
-                            "#12": "amf://id#12"
-                          },
-                          "declared-element": {
-                            "#12": ""
-                          },
-                          "lexical": {
-                            "doc:dataNode": "[(7,4)-(13,0)]",
-                            "#12": "[(6,2)-(13,0)]"
-                          },
-                          "resolved-link": {
-                            "#12": "amf://id#19"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "core:name": "[(25,9)-(25,16)]",
-                        "#23": "[(25,9)-(25,16)]"
-                      }
-                    }
+                    ]
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "doc:extends": "[(25,4)-(26,0)]",
-                    "#22": "[(24,2)-(32,0)]",
-                    "apiContract:returns": "[(26,4)-(32,0)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#21": "[(23,0)-(32,0)]"
-              }
-            }
+            ]
           },
           {
             "@id": "#32",
@@ -560,16 +439,7 @@
                                       {
                                         "@value": "animalName"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#29": "[(17,10)-(17,16)]"
-                                      },
-                                      "lexical": {
-                                        "shacl:datatype": "[(17,10)-(17,26)]",
-                                        "#29": "[(16,8)-(18,9)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "shacl:minCount": [
@@ -581,12 +451,7 @@
                                   {
                                     "@value": "animalName"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "#28": "[(16,8)-(18,9)]"
-                                  }
-                                }
+                                ]
                               },
                               {
                                 "@id": "#38",
@@ -620,16 +485,7 @@
                                       {
                                         "@value": "personName"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#39": "[(9,10)-(9,16)]"
-                                      },
-                                      "lexical": {
-                                        "shacl:datatype": "[(9,10)-(9,26)]",
-                                        "#39": "[(8,8)-(10,9)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "shacl:minCount": [
@@ -641,12 +497,7 @@
                                   {
                                     "@value": "personName"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "#38": "[(8,8)-(10,9)]"
-                                  }
-                                }
+                                ]
                               }
                             ],
                             "shacl:name": [
@@ -658,41 +509,13 @@
                               {
                                 "@id": "#27"
                               }
-                            ],
-                            "smaps": {
-                              "declared-element": {
-                                "#37": ""
-                              },
-                              "lexical": {
-                                "#37": "[(13,4)-(20,5)]"
-                              },
-                              "type-property-lexical-info": {
-                                "#37": "[(14,6)-(14,12)]"
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#36": "[(38,10)-(40,0)]"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "apiContract:payload": "[(37,8)-(40,0)]",
-                        "#35": "[(36,6)-(40,0)]"
-                      }
-                    }
+                    ]
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "apiContract:returns": "[(35,4)-(40,0)]",
-                    "#34": "[(34,2)-(40,0)]"
-                  }
-                }
+                ]
               }
             ],
             "doc:extends": [
@@ -791,134 +614,57 @@
                                                   {
                                                     "@value": "type"
                                                   }
-                                                ],
-                                                "smaps": {
-                                                  "lexical": {
-                                                    "#10": "[(1,0)-(1,0)]"
-                                                  }
-                                                }
+                                                ]
                                               }
                                             ],
                                             "core:name": [
                                               {
                                                 "@value": "application/json"
                                               }
-                                            ],
-                                            "smaps": {
-                                              "lexical": {
-                                                "data:type": "[(20,14)-(23,0)]",
-                                                "#9": "[(20,0)-(23,0)]"
-                                              }
-                                            }
+                                            ]
                                           }
                                         ],
                                         "core:name": [
                                           {
                                             "@value": "body"
                                           }
-                                        ],
-                                        "smaps": {
-                                          "lexical": {
-                                            "data:application%2Fjson": "[(19,12)-(23,0)]",
-                                            "#8": "[(19,0)-(23,0)]"
-                                          }
-                                        }
+                                        ]
                                       }
                                     ],
                                     "core:name": [
                                       {
                                         "@value": "500"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "data:body": "[(18,10)-(23,0)]",
-                                        "#7": "[(18,0)-(23,0)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "core:name": [
                                   {
                                     "@value": "responses"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "data:500": "[(17,8)-(23,0)]",
-                                    "#6": "[(17,0)-(23,0)]"
-                                  }
-                                }
+                                ]
                               }
                             ],
                             "core:name": [
                               {
                                 "@value": "post"
                               }
-                            ],
-                            "smaps": {
-                              "lexical": {
-                                "data:responses": "[(16,6)-(23,0)]",
-                                "#5": "[(16,0)-(23,0)]"
-                              }
-                            }
+                            ]
                           }
                         ],
                         "core:name": [
                           {
                             "@value": "object_1"
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "data:post": "[(15,4)-(23,0)]",
-                            "#4": "[(15,4)-(23,0)]"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "resolved-link-target": {
-                        "#3": "amf://id#3"
-                      },
-                      "declared-element": {
-                        "#3": ""
-                      },
-                      "lexical": {
-                        "doc:dataNode": "[(15,4)-(23,0)]",
-                        "#3": "[(14,2)-(23,0)]"
-                      },
-                      "resolved-link": {
-                        "#3": "amf://id#11"
-                      }
-                    }
+                    ]
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "core:name": "[(33,8)-(33,12)]",
-                    "#33": "[(33,8)-(33,12)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#32": "[(32,0)-(40,0)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#20": "RAML 1.0"
-          },
-          "lexical": {
-            "core:version": "[(3,0)-(5,0)]",
-            "#20": "[(2,0)-(40,0)]",
-            "core:name": "[(2,0)-(3,0)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -955,12 +701,7 @@
               {
                 "@value": "application/json"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#2": "[(1,0)-(22,1)]"
-              }
-            }
+            ]
           }
         ],
         "doc:version": [
@@ -1058,107 +799,51 @@
                                       {
                                         "@value": "type"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "#10": "[(1,0)-(1,0)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "core:name": [
                                   {
                                     "@value": "application/json"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "data:type": "[(20,14)-(23,0)]",
-                                    "#9": "[(20,0)-(23,0)]"
-                                  }
-                                }
+                                ]
                               }
                             ],
                             "core:name": [
                               {
                                 "@value": "body"
                               }
-                            ],
-                            "smaps": {
-                              "lexical": {
-                                "data:application%2Fjson": "[(19,12)-(23,0)]",
-                                "#8": "[(19,0)-(23,0)]"
-                              }
-                            }
+                            ]
                           }
                         ],
                         "core:name": [
                           {
                             "@value": "500"
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "data:body": "[(18,10)-(23,0)]",
-                            "#7": "[(18,0)-(23,0)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "core:name": [
                       {
                         "@value": "responses"
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "data:500": "[(17,8)-(23,0)]",
-                        "#6": "[(17,0)-(23,0)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "core:name": [
                   {
                     "@value": "post"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "data:responses": "[(16,6)-(23,0)]",
-                    "#5": "[(16,0)-(23,0)]"
-                  }
-                }
+                ]
               }
             ],
             "core:name": [
               {
                 "@value": "object_1"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "data:post": "[(15,4)-(23,0)]",
-                "#4": "[(15,4)-(23,0)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "resolved-link-target": {
-            "#3": "amf://id#3"
-          },
-          "declared-element": {
-            "#3": ""
-          },
-          "lexical": {
-            "doc:dataNode": "[(15,4)-(23,0)]",
-            "#3": "[(14,2)-(23,0)]"
-          },
-          "resolved-link": {
-            "#3": "amf://id#11"
-          }
-        }
+        ]
       },
       {
         "@id": "#12",
@@ -1234,94 +919,44 @@
                                   {
                                     "@value": "type"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "#18": "[(1,0)-(1,0)]"
-                                  }
-                                }
+                                ]
                               }
                             ],
                             "core:name": [
                               {
                                 "@value": "application/json"
                               }
-                            ],
-                            "smaps": {
-                              "lexical": {
-                                "data:type": "[(11,12)-(13,0)]",
-                                "#17": "[(11,0)-(13,0)]"
-                              }
-                            }
+                            ]
                           }
                         ],
                         "core:name": [
                           {
                             "@value": "body"
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "data:application%2Fjson": "[(10,10)-(13,0)]",
-                            "#16": "[(10,0)-(13,0)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "core:name": [
                       {
                         "@value": "500"
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "data:body": "[(9,8)-(13,0)]",
-                        "#15": "[(9,0)-(13,0)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "core:name": [
                   {
                     "@value": "responses"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "data:500": "[(8,6)-(13,0)]",
-                    "#14": "[(8,0)-(13,0)]"
-                  }
-                }
+                ]
               }
             ],
             "core:name": [
               {
                 "@value": "object_1"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "data:responses": "[(7,4)-(13,0)]",
-                "#13": "[(7,4)-(13,0)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "resolved-link-target": {
-            "#12": "amf://id#12"
-          },
-          "declared-element": {
-            "#12": ""
-          },
-          "lexical": {
-            "doc:dataNode": "[(7,4)-(13,0)]",
-            "#12": "[(6,2)-(13,0)]"
-          },
-          "resolved-link": {
-            "#12": "amf://id#19"
-          }
-        }
+        ]
       }
     ],
     "@context": {

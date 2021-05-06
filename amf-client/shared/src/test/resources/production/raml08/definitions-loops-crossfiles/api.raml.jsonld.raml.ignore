@@ -4,20 +4,4 @@ version: "0.2"
 baseUri: https://domain.test.com/
 mediaType: application/json
 schemas:
-  someSchema: |-
-    {
-      "$schema": "http://json-schema.org/draft-04/schema#",
-      "description": "Comment describing your JSON Schema",
-      "type": "object",
-      "properties": {
-        "a1": {
-          "$ref": "b.json#/definitions/B"
-        },
-        "a2": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    }
+  someSchem: {}

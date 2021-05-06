@@ -18,17 +18,7 @@
         {
           "@id": "#5"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#3": "OAS 2.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(7,11)-(17,3)]",
-          "#3": "[(1,0)-(24,1)]",
-          "core:name": "[(4,4)-(4,48)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#4",
@@ -36,15 +26,7 @@
         "apiContract:Server",
         "doc:DomainElement"
       ],
-      "core:urlTemplate": "sandbox.przelewy24.pl",
-      "smaps": {
-        "host-lexical": {
-          "core:urlTemplate": "[(6,2)-(6,33)]"
-        },
-        "synthesized-field": {
-          "#4": "true"
-        }
-      }
+      "core:urlTemplate": "sandbox.przelewy24.pl"
     },
     {
       "@id": "#5",
@@ -57,12 +39,7 @@
         {
           "@id": "#6"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#5": "[(8,4)-(16,5)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#6",
@@ -75,15 +52,7 @@
         {
           "@id": "#7"
         }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
-        "lexical": {
-          "#6": "[(9,6)-(15,7)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#7",
@@ -96,13 +65,7 @@
         {
           "@id": "#8"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(10,8)-(14,9)]",
-          "#7": "[(9,14)-(15,7)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#8",
@@ -113,11 +76,6 @@
       "core:name": "formData",
       "raml-shapes:schema": {
         "@id": "#9"
-      },
-      "smaps": {
-        "form-body-parameter": {
-          "#8": "true"
-        }
       }
     },
     {
@@ -188,20 +146,6 @@
       "core:name": "splitPaymentDetails",
       "raml-shapes:schema": {
         "@id": "#2"
-      },
-      "smaps": {
-        "parameter-name-for-payload": {
-          "core:name": "splitPaymentDetails->[(20,6)-(20,35)]"
-        },
-        "form-body-parameter": {
-          "#1": "true"
-        },
-        "lexical": {
-          "#1": "[(19,4)-(22,5)]"
-        },
-        "declared-element": {
-          "#1": ""
-        }
       }
     }
   ],

@@ -8,46 +8,7 @@
         "http://a.ml/vocabularies/document#RootDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/core#name": "Example API",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/web-api/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/web-api/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/web-api/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/web-api/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/web-api/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(6,19)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/web-api/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,0)]"
+      "http://a.ml/vocabularies/core#name": "Example API"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml",
@@ -88,12 +49,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "A",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "A"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B",
@@ -112,12 +68,7 @@
           "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/1/scalar/default-scalar"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "B",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "B"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion",
@@ -136,31 +87,7 @@
           "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/link--126703158"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "tripleUnion",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/source-map/lexical/element_0"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "tripleUnion"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/0/scalar/default-scalar",
@@ -174,11 +101,6 @@
       "http://www.w3.org/ns/shacl#datatype": [
         {
           "@id": "http://a.ml/vocabularies/shapes#number"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/0/scalar/default-scalar/source-map"
         }
       ]
     },
@@ -194,35 +116,6 @@
       "http://www.w3.org/ns/shacl#datatype": [
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/1/scalar/default-scalar/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-expression": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/source-map/type-expression/element_0"
         }
       ]
     },
@@ -240,12 +133,7 @@
           "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A"
         }
       ],
-      "http://a.ml/vocabularies/document#link-label": "A",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/link--585417463/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/document#link-label": "A"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/link--126703158",
@@ -261,155 +149,7 @@
           "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B"
         }
       ],
-      "http://a.ml/vocabularies/document#link-label": "B",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/link--126703158/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-expression": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion/source-map/type-expression/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,1)-(5,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,1)-(4,2)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/0/scalar/default-scalar/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/0/scalar/default-scalar/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/1/scalar/default-scalar/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/1/scalar/default-scalar/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,1)-(6,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,1)-(5,2)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/source-map/type-expression/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B",
-      "http://a.ml/vocabularies/document-source-maps#value": "number | string"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/link--585417463/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/link--585417463/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/link--126703158/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/link--126703158/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,1)-(6,19)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,1)-(6,12)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion/source-map/type-expression/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/tripleUnion",
-      "http://a.ml/vocabularies/document-source-maps#value": "A | B"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/0/scalar/default-scalar/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/0/scalar/default-scalar",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,10)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/1/scalar/default-scalar/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/1/scalar/default-scalar",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,13)-(5,19)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/link--585417463/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/scalar/A/link--585417463",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,14)-(6,15)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/link--126703158/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/parser/union-expressions/union-right-declaration.raml#/declarations/types/union/B/link--126703158",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,18)-(6,19)]"
+      "http://a.ml/vocabularies/document#link-label": "B"
     }
   ]
 }

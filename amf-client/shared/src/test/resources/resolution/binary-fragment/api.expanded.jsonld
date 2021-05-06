@@ -44,19 +44,9 @@
                   {
                     "@value": "get"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#5": "[(5,2)-(6,0)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#4": "[(4,0)-(16,56)]"
-              }
-            }
+            ]
           },
           {
             "@id": "#6",
@@ -68,15 +58,7 @@
               {
                 "@value": "/songs/{songId}"
               }
-            ],
-            "smaps": {
-              "parent-end-point": {
-                "#6": "file://amf-client/shared/src/test/resources/resolution/binary-fragment/api.raml#/web-api/end-points/%2Fsongs"
-              },
-              "lexical": {
-                "#6": "[(6,2)-(16,56)]"
-              }
-            }
+            ]
           },
           {
             "@id": "#7",
@@ -167,12 +149,7 @@
                               }
                             ]
                           }
-                        ],
-                        "smaps": {
-                          "synthesized-field": {
-                            "#15": "true"
-                          }
-                        }
+                        ]
                       }
                     ]
                   }
@@ -261,12 +238,7 @@
                                       {
                                         "@value": "scalar_1"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "#13": "[(1,0)-(1,0)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "doc:reference-id": [
@@ -280,78 +252,22 @@
                                   }
                                 ],
                                 "smaps": {
-                                  "synthesized-field": {
-                                    "doc:strict": "true"
-                                  },
-                                  "lexical": {
-                                    "doc:structuredValue": "[(16,25)-(16,56)]",
-                                    "#12": "[(16,25)-(16,56)]"
-                                  },
                                   "tracked-element": {
                                     "#12": "amf://id#10"
                                   }
                                 }
                               }
-                            ],
-                            "smaps": {
-                              "auto-generated-name": {
-                                "#11": ""
-                              },
-                              "lexical": {
-                                "apiContract:examples": "[(16,16)-(16,56)]",
-                                "#11": "[(14,14)-(16,56)]",
-                                "shacl:datatype": "[(15,16)-(16,0)]"
-                              },
-                              "type-property-lexical-info": {
-                                "#11": "[(15,16)-(15,20)]"
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#10": "[(14,14)-(16,56)]"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "apiContract:payload": "[(13,12)-(16,56)]",
-                        "#9": "[(12,10)-(16,56)]"
-                      }
-                    }
+                    ]
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "apiContract:returns": "[(11,8)-(16,56)]",
-                    "#8": "[(9,6)-(16,56)]",
-                    "core:description": "[(10,8)-(11,0)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "parent-end-point": {
-                "#7": "file://amf-client/shared/src/test/resources/resolution/binary-fragment/api.raml#/web-api/end-points/%2Fsongs%2F%7BsongId%7D"
-              },
-              "lexical": {
-                "core:description": "[(8,6)-(9,0)]",
-                "#7": "[(7,4)-(16,56)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#3": "RAML 1.0"
-          },
-          "lexical": {
-            "core:name": "[(3,0)-(4,0)]",
-            "#3": "[(3,0)-(16,56)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [

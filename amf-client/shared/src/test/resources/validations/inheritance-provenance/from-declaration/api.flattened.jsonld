@@ -13,16 +13,7 @@
         {
           "@id": "#6"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#5": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(3,0)]",
-          "#5": "[(2,0)-(14,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#6",
@@ -35,12 +26,7 @@
         {
           "@id": "#7"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#6": "[(7,0)-(14,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#7",
@@ -53,15 +39,7 @@
         {
           "@id": "#8"
         }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
-        "lexical": {
-          "#7": "[(8,2)-(14,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#8",
@@ -74,13 +52,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(9,4)-(14,0)]",
-          "#8": "[(9,0)-(14,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#9",
@@ -91,11 +63,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#10"
-      },
-      "smaps": {
-        "lexical": {
-          "#9": "[(10,6)-(14,0)]"
-        }
       }
     },
     {
@@ -116,21 +83,7 @@
           "@id": "#12"
         }
       ],
-      "shacl:name": "Person",
-      "smaps": {
-        "inheritance-provenance": {
-          "shacl:name": "amf://id#1"
-        },
-        "type-property-lexical-info": {
-          "#10": "[(11,8)-(11,12)]"
-        },
-        "lexical": {
-          "#10": "[(10,6)-(14,0)]"
-        },
-        "inherited-shapes": {
-          "#10": "amf://id#14"
-        }
-      }
+      "shacl:name": "Person"
     },
     {
       "@id": "#11",
@@ -149,15 +102,7 @@
         "@id": "#3"
       },
       "shacl:minCount": 1,
-      "shacl:name": "name",
-      "smaps": {
-        "inheritance-provenance": {
-          "#11": "amf://id#1"
-        },
-        "lexical": {
-          "#11": "[(6,6)-(7,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#12",
@@ -176,12 +121,7 @@
         "@id": "#13"
       },
       "shacl:minCount": 1,
-      "shacl:name": "employeeNumber",
-      "smaps": {
-        "lexical": {
-          "#12": "[(13,10)-(14,0)]"
-        }
-      }
+      "shacl:name": "employeeNumber"
     },
     {
       "@id": "#3",
@@ -197,12 +137,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "lexical": {
-          "#3": "[(6,6)-(7,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#13",
@@ -218,12 +153,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "shacl:name": "employeeNumber",
-      "smaps": {
-        "lexical": {
-          "#13": "[(13,10)-(14,0)]"
-        }
-      }
+      "shacl:name": "employeeNumber"
     },
     {
       "@id": "",
@@ -259,22 +189,7 @@
           "@id": "#2"
         }
       ],
-      "shacl:name": "Person",
-      "smaps": {
-        "resolved-link-target": {
-          "#1": "amf://id#1"
-        },
-        "declared-element": {
-          "#1": ""
-        },
-        "lexical": {
-          "shacl:name": "[(4,2)-(4,8)]",
-          "#1": "[(4,2)-(7,0)]"
-        },
-        "resolved-link": {
-          "#1": "amf://id#4"
-        }
-      }
+      "shacl:name": "Person"
     },
     {
       "@id": "#2",
@@ -293,12 +208,7 @@
         "@id": "#3"
       },
       "shacl:minCount": 1,
-      "shacl:name": "name",
-      "smaps": {
-        "lexical": {
-          "#2": "[(6,6)-(7,0)]"
-        }
-      }
+      "shacl:name": "name"
     }
   ],
   "@context": {

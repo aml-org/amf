@@ -13,16 +13,7 @@
         {
           "@id": "#10"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#9": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(4,0)]",
-          "#9": "[(2,0)-(13,30)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#10",
@@ -35,12 +26,7 @@
         {
           "@id": "#11"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#10": "[(7,0)-(13,30)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#11",
@@ -53,13 +39,7 @@
         {
           "@id": "#12"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(9,4)-(13,30)]",
-          "#11": "[(8,2)-(13,30)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#12",
@@ -74,13 +54,7 @@
         {
           "@id": "#13"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(11,8)-(13,30)]",
-          "#12": "[(10,6)-(13,30)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#13",
@@ -91,11 +65,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#4"
-      },
-      "smaps": {
-        "lexical": {
-          "#13": "[(12,10)-(13,30)]"
-        }
       }
     },
     {
@@ -113,27 +82,7 @@
           "@id": "#5"
         }
       ],
-      "shacl:name": "User",
-      "smaps": {
-        "inherited-shapes": {
-          "#4": "amf://id#8"
-        },
-        "resolved-link": {
-          "#4": "amf://id#4"
-        },
-        "type-property-lexical-info": {
-          "#4": "[(11,4)-(11,8)]"
-        },
-        "lexical": {
-          "#4": "[(10,2)-(14,20)]"
-        },
-        "declared-element": {
-          "#4": ""
-        },
-        "resolved-link-target": {
-          "#4": "amf://id#7"
-        }
-      }
+      "shacl:name": "User"
     },
     {
       "@id": "#5",
@@ -152,12 +101,7 @@
         "@id": "#6"
       },
       "shacl:minCount": 1,
-      "shacl:name": "identifier",
-      "smaps": {
-        "lexical": {
-          "#5": "[(13,6)-(14,20)]"
-        }
-      }
+      "shacl:name": "identifier"
     },
     {
       "@id": "#6",
@@ -173,16 +117,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "identifier",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#6": "[(14,8)-(14,12)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(14,8)-(14,20)]",
-          "#6": "[(13,6)-(14,20)]"
-        }
-      }
+      "shacl:name": "identifier"
     },
     {
       "@id": "",
@@ -201,12 +136,7 @@
         "@id": "#9"
       },
       "doc:version": "3.1.0",
-      "doc:root": true,
-      "smaps": {
-        "aliases-array": {
-          "": "myTypes->amf://id#1::./library.raml"
-        }
-      }
+      "doc:root": true
     },
     {
       "@id": "#1",
@@ -226,15 +156,7 @@
         }
       ],
       "doc:version": "3.1.0",
-      "doc:root": false,
-      "smaps": {
-        "source-vendor": {
-          "#1": "RAML 1.0"
-        },
-        "lexical": {
-          "#1": "[(1,0)-(14,20)]"
-        }
-      }
+      "doc:root": false
     },
     {
       "@id": "#2",
@@ -247,26 +169,7 @@
       ],
       "shacl:closed": true,
       "shacl:property": [],
-      "shacl:name": "RestrictedObject",
-      "smaps": {
-        "resolved-link-target": {
-          "#2": "amf://id#2"
-        },
-        "declared-element": {
-          "#2": ""
-        },
-        "lexical": {
-          "shacl:name": "[(4,2)-(4,18)]",
-          "#2": "[(4,2)-(8,0)]",
-          "shacl:closed": "[(6,4)-(8,0)]"
-        },
-        "type-property-lexical-info": {
-          "#2": "[(5,4)-(5,8)]"
-        },
-        "resolved-link": {
-          "#2": "amf://id#3"
-        }
-      }
+      "shacl:name": "RestrictedObject"
     },
     {
       "@id": "#7",
@@ -283,22 +186,7 @@
           "@id": "#5"
         }
       ],
-      "shacl:name": "Identifier",
-      "smaps": {
-        "inherited-shapes": {
-          "#7": "amf://id#8"
-        },
-        "type-property-lexical-info": {
-          "#7": "[(11,4)-(11,8)]"
-        },
-        "lexical": {
-          "shacl:name": "[(10,2)-(10,12)]",
-          "#7": "[(10,2)-(14,20)]"
-        },
-        "declared-element": {
-          "#7": ""
-        }
-      }
+      "shacl:name": "Identifier"
     }
   ],
   "@context": {

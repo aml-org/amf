@@ -23,20 +23,7 @@
         {
           "@id": "#15"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#1": "ASYNC 2.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(6,0)-(38,26)]",
-          "apiContract:contentType": "[(5,0)-(6,0)]",
-          "core:name": "[(3,2)-(4,0)]",
-          "#1": "[(1,0)-(38,26)]",
-          "apiContract:accepts": "[(5,0)-(6,0)]",
-          "core:version": "[(4,2)-(5,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#2",
@@ -52,12 +39,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#2": "[(7,2)-(24,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#15",
@@ -73,12 +55,7 @@
         {
           "@id": "#22"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#15": "[(24,2)-(38,26)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#3",
@@ -91,13 +68,7 @@
         {
           "@id": "#4"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(9,6)-(16,0)]",
-          "#3": "[(8,4)-(16,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#9",
@@ -110,13 +81,7 @@
         {
           "@id": "#10"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:expects": "[(17,6)-(24,0)]",
-          "#9": "[(16,4)-(24,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#16",
@@ -129,13 +94,7 @@
         {
           "@id": "#17"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(26,6)-(32,0)]",
-          "#16": "[(25,4)-(32,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#22",
@@ -148,13 +107,7 @@
         {
           "@id": "#23"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:expects": "[(33,6)-(38,26)]",
-          "#22": "[(32,4)-(38,26)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#4",
@@ -167,12 +120,7 @@
         {
           "@id": "#5"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#4": "[(10,0)-(16,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#10",
@@ -185,12 +133,7 @@
         {
           "@id": "#11"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#10": "[(18,0)-(24,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#17",
@@ -203,12 +146,7 @@
         {
           "@id": "#18"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#17": "[(27,0)-(32,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#23",
@@ -221,12 +159,7 @@
         {
           "@id": "#24"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#23": "[(34,0)-(38,26)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#5",
@@ -237,12 +170,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#6"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(11,8)-(16,0)]",
-          "core:mediaType": "[(10,8)-(11,0)]"
-        }
       }
     },
     {
@@ -254,12 +181,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#12"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(19,8)-(24,0)]",
-          "core:mediaType": "[(18,8)-(19,0)]"
-        }
       }
     },
     {
@@ -271,11 +192,6 @@
       "core:mediaType": "application/yaml",
       "raml-shapes:schema": {
         "@id": "#19"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(27,8)-(32,0)]"
-        }
       }
     },
     {
@@ -287,11 +203,6 @@
       "core:mediaType": "application/yaml",
       "raml-shapes:schema": {
         "@id": "#25"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(34,8)-(38,26)]"
-        }
       }
     },
     {
@@ -309,15 +220,7 @@
           "@id": "#7"
         }
       ],
-      "shacl:name": "schema",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#6": "[(12,10)-(12,14)]"
-        },
-        "lexical": {
-          "#6": "[(11,8)-(16,0)]"
-        }
-      }
+      "shacl:name": "schema"
     },
     {
       "@id": "#12",
@@ -334,15 +237,7 @@
           "@id": "#13"
         }
       ],
-      "shacl:name": "schema",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#12": "[(20,10)-(20,14)]"
-        },
-        "lexical": {
-          "#12": "[(19,8)-(24,0)]"
-        }
-      }
+      "shacl:name": "schema"
     },
     {
       "@id": "#19",
@@ -359,15 +254,7 @@
           "@id": "#20"
         }
       ],
-      "shacl:name": "schema",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#19": "[(28,10)-(28,14)]"
-        },
-        "lexical": {
-          "#19": "[(27,8)-(32,0)]"
-        }
-      }
+      "shacl:name": "schema"
     },
     {
       "@id": "#25",
@@ -384,15 +271,7 @@
           "@id": "#26"
         }
       ],
-      "shacl:name": "schema",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#25": "[(35,10)-(35,14)]"
-        },
-        "lexical": {
-          "#25": "[(34,8)-(38,26)]"
-        }
-      }
+      "shacl:name": "schema"
     },
     {
       "@id": "#7",
@@ -411,12 +290,7 @@
         "@id": "#8"
       },
       "shacl:minCount": 0,
-      "shacl:name": "name",
-      "smaps": {
-        "lexical": {
-          "#7": "[(14,12)-(16,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#13",
@@ -435,12 +309,7 @@
         "@id": "#14"
       },
       "shacl:minCount": 0,
-      "shacl:name": "name",
-      "smaps": {
-        "lexical": {
-          "#13": "[(22,12)-(24,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#20",
@@ -459,12 +328,7 @@
         "@id": "#21"
       },
       "shacl:minCount": 0,
-      "shacl:name": "name",
-      "smaps": {
-        "lexical": {
-          "#20": "[(30,12)-(32,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#26",
@@ -483,12 +347,7 @@
         "@id": "#27"
       },
       "shacl:minCount": 0,
-      "shacl:name": "name",
-      "smaps": {
-        "lexical": {
-          "#26": "[(37,12)-(38,26)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#8",
@@ -504,16 +363,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#8": "[(15,14)-(15,18)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(15,14)-(16,0)]",
-          "#8": "[(14,12)-(16,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#14",
@@ -529,16 +379,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#14": "[(23,14)-(23,18)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(23,14)-(24,0)]",
-          "#14": "[(22,12)-(24,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#21",
@@ -554,16 +395,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#21": "[(31,14)-(31,18)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(31,14)-(32,0)]",
-          "#21": "[(30,12)-(32,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#27",
@@ -579,16 +411,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#27": "[(38,14)-(38,18)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(38,14)-(38,26)]",
-          "#27": "[(37,12)-(38,26)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "",

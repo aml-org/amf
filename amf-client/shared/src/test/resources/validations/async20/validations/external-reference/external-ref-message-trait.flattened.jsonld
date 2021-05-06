@@ -14,18 +14,7 @@
         {
           "@id": "#11"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#10": "ASYNC 2.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(7,0)-(18,0)]",
-          "core:name": "[(4,2)-(5,0)]",
-          "#10": "[(1,0)-(22,0)]",
-          "core:version": "[(5,2)-(7,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#11",
@@ -38,12 +27,7 @@
         {
           "@id": "#12"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#11": "[(8,2)-(18,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#12",
@@ -56,13 +40,7 @@
         {
           "@id": "#13"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(10,6)-(18,0)]",
-          "#12": "[(9,4)-(18,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#13",
@@ -75,12 +53,7 @@
         {
           "@id": "#14"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#13": "[(11,0)-(18,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#14",
@@ -90,11 +63,6 @@
       ],
       "raml-shapes:schema": {
         "@id": "#15"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(11,8)-(18,0)]"
-        }
       }
     },
     {
@@ -112,15 +80,7 @@
           "@id": "#16"
         }
       ],
-      "shacl:name": "schema",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#15": "[(12,10)-(12,14)]"
-        },
-        "lexical": {
-          "#15": "[(11,8)-(18,0)]"
-        }
-      }
+      "shacl:name": "schema"
     },
     {
       "@id": "#16",
@@ -139,12 +99,7 @@
         "@id": "#17"
       },
       "shacl:minCount": 0,
-      "shacl:name": "email",
-      "smaps": {
-        "lexical": {
-          "#16": "[(14,12)-(18,0)]"
-        }
-      }
+      "shacl:name": "email"
     },
     {
       "@id": "#17",
@@ -161,17 +116,7 @@
         }
       ],
       "raml-shapes:format": "email",
-      "shacl:name": "email",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#17": "[(15,14)-(15,18)]"
-        },
-        "lexical": {
-          "raml-shapes:format": "[(16,14)-(18,0)]",
-          "#17": "[(14,12)-(18,0)]",
-          "shacl:datatype": "[(15,14)-(16,0)]"
-        }
-      }
+      "shacl:name": "email"
     },
     {
       "@id": "",
@@ -232,26 +177,6 @@
       "apiContract:isAbstract": true,
       "apiContract:headerSchema": {
         "@id": "#4"
-      },
-      "smaps": {
-        "declared-element": {
-          "#3": ""
-        },
-        "resolved-link": {
-          "#3": "amf://id#3"
-        },
-        "lexical": {
-          "apiContract:headerSchema": "[(14,2)-(20,0)]",
-          "core:title": "[(6,2)-(7,0)]",
-          "core:correlationId": "[(11,2)-(14,0)]",
-          "#3": "[(5,0)-(20,0)]",
-          "core:description": "[(8,2)-(9,0)]",
-          "core:displayName": "[(5,2)-(6,0)]",
-          "core:summary": "[(7,2)-(8,0)]"
-        },
-        "resolved-link-target": {
-          "#3": "amf://id#9"
-        }
       }
     },
     {
@@ -261,12 +186,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "myOperationTrait:\n  description: user signed up to load some data\n\nmyMessageTrait:\n  name: UserSignup\n  title: User signup\n  summary: Action to sign a user up.\n  description: A longer description\n  contentType: application/json\n  schemaFormat: application/vnd.oai.openapi;version=3.0.0\n  correlationId:\n    description: Default Correlation ID\n    location: $message.header#/correlationId\n  headers:\n    type: object\n    properties:\n      applicationInstanceId:\n        description: Unique identifier\n        type: string\n",
-      "core:mediaType": "application/yaml",
-      "smaps": {
-        "lexical": {
-          "#2": "[(1,0)-(20,0)]"
-        }
-      }
+      "core:mediaType": "application/yaml"
     },
     {
       "@id": "#8",
@@ -275,13 +195,7 @@
         "doc:DomainElement"
       ],
       "core:mediaType": "application/json",
-      "apiContract:schemaMediaType": "application/vnd.oai.openapi;version=3.0.0",
-      "smaps": {
-        "lexical": {
-          "apiContract:schemaMediaType": "[(10,2)-(11,0)]",
-          "core:mediaType": "[(9,2)-(10,0)]"
-        }
-      }
+      "apiContract:schemaMediaType": "application/vnd.oai.openapi;version=3.0.0"
     },
     {
       "@id": "#7",
@@ -290,14 +204,7 @@
         "doc:DomainElement"
       ],
       "core:description": "Default Correlation ID",
-      "core:location": "$message.header#/correlationId",
-      "smaps": {
-        "lexical": {
-          "core:location": "[(13,4)-(14,0)]",
-          "#7": "[(12,0)-(14,0)]",
-          "core:description": "[(12,4)-(13,0)]"
-        }
-      }
+      "core:location": "$message.header#/correlationId"
     },
     {
       "@id": "#4",
@@ -314,15 +221,7 @@
           "@id": "#5"
         }
       ],
-      "shacl:name": "schema",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#4": "[(15,4)-(15,8)]"
-        },
-        "lexical": {
-          "#4": "[(14,2)-(20,0)]"
-        }
-      }
+      "shacl:name": "schema"
     },
     {
       "@id": "#5",
@@ -341,12 +240,7 @@
         "@id": "#6"
       },
       "shacl:minCount": 0,
-      "shacl:name": "applicationInstanceId",
-      "smaps": {
-        "lexical": {
-          "#5": "[(17,6)-(20,0)]"
-        }
-      }
+      "shacl:name": "applicationInstanceId"
     },
     {
       "@id": "#6",
@@ -363,17 +257,7 @@
         }
       ],
       "shacl:name": "applicationInstanceId",
-      "core:description": "Unique identifier",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#6": "[(19,8)-(19,12)]"
-        },
-        "lexical": {
-          "core:description": "[(18,8)-(19,0)]",
-          "#6": "[(17,6)-(20,0)]",
-          "shacl:datatype": "[(19,8)-(20,0)]"
-        }
-      }
+      "core:description": "Unique identifier"
     }
   ],
   "@context": {

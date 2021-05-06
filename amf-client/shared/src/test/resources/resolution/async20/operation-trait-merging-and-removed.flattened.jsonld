@@ -14,18 +14,7 @@
         {
           "@id": "#/async-api/end-points/someChannel"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#/async-api": "ASYNC 2.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(5,0)-(14,0)]",
-          "core:name": "[(3,2)-(4,0)]",
-          "#/async-api": "[(1,0)-(20,36)]",
-          "core:version": "[(4,2)-(5,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#/async-api/end-points/someChannel",
@@ -38,12 +27,7 @@
         {
           "@id": "#/async-api/end-points/someChannel/publish"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#/async-api/end-points/someChannel": "[(6,2)-(14,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#/async-api/end-points/someChannel/publish",
@@ -54,13 +38,7 @@
       "apiContract:method": "publish",
       "core:description": "secondDescription",
       "apiContract:guiSummary": "firstSummary",
-      "apiContract:operationId": "baseId",
-      "smaps": {
-        "lexical": {
-          "apiContract:operationId": "[(8,6)-(9,0)]",
-          "#/async-api/end-points/someChannel/publish": "[(7,4)-(14,0)]"
-        }
-      }
+      "apiContract:operationId": "baseId"
     },
     {
       "@id": "",

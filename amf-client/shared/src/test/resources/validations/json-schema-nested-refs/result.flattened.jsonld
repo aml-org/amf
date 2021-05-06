@@ -21,25 +21,7 @@
       "apiContract:contentType": [
         "application/json"
       ],
-      "core:version": "1.0",
-      "smaps": {
-        "single-value-array": {
-          "apiContract:contentType": "",
-          "apiContract:accepts": ""
-        },
-        "lexical": {
-          "core:version": "[(5,0)-(6,0)]",
-          "apiContract:accepts": "[(6,0)-(7,0)]",
-          "core:description": "[(7,0)-(9,0)]",
-          "#39": "[(2,0)-(16,0)]",
-          "core:name": "[(4,0)-(5,0)]",
-          "apiContract:server": "[(2,0)-(4,0)]",
-          "apiContract:contentType": "[(6,0)-(7,0)]"
-        },
-        "source-vendor": {
-          "#39": "RAML 1.0"
-        }
-      }
+      "core:version": "1.0"
     },
     {
       "@id": "#40",
@@ -47,15 +29,7 @@
         "apiContract:Server",
         "doc:DomainElement"
       ],
-      "core:urlTemplate": "uri",
-      "smaps": {
-        "lexical": {
-          "core:urlTemplate": "[(2,0)-(4,0)]"
-        },
-        "synthesized-field": {
-          "#40": "true"
-        }
-      }
+      "core:urlTemplate": "uri"
     },
     {
       "@id": "",
@@ -149,23 +123,7 @@
         {
           "@id": "#4"
         }
-      ],
-      "smaps": {
-        "inheritance-provenance": {
-          "doc:reference-id": "amf://id#17"
-        },
-        "declared-element": {
-          "#7": ""
-        },
-        "lexical": {
-          "apiContract:examples": "[(12,4)-(16,0)]",
-          "#7": "[(10,11)-(16,0)]",
-          "shacl:name": "[(10,2)-(10,10)]"
-        },
-        "inherited-shapes": {
-          "#7": "amf://id#38"
-        }
-      }
+      ]
     },
     {
       "@id": "#4",
@@ -174,12 +132,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema\",\r\n  \"type\": \"object\",\r\n  \"additionalProperties\": false,\r\n  \"properties\": {\r\n    \"merchant\": {\r\n      \"type\": \"string\"\r\n    },\r\n    \"operator\": {\r\n      \"type\": \"string\"\r\n    },\r\n\r\n    \"primaryApplicant\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    },\r\n    \"additionalApplicants\": {\r\n      \"$ref\": \"definitions.json#/applicant\"\r\n    }\r\n  },\r\n  \"required\": [\r\n    \"merchant\",\r\n    \"operator\"\r\n  ]\r\n}",
-      "core:mediaType": "application/json",
-      "smaps": {
-        "lexical": {
-          "#4": "[(1,0)-(24,1)]"
-        }
-      }
+      "core:mediaType": "application/json"
     },
     {
       "@id": "#2",
@@ -201,12 +154,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}",
-      "core:mediaType": "application/json",
-      "smaps": {
-        "lexical": {
-          "#6": "[(1,0)-(12,1)]"
-        }
-      }
+      "core:mediaType": "application/json"
     },
     {
       "@id": "#18",
@@ -225,15 +173,7 @@
         "@id": "#19"
       },
       "shacl:minCount": 0,
-      "shacl:name": "primaryApplicant",
-      "smaps": {
-        "inheritance-provenance": {
-          "#18": "amf://id#17"
-        },
-        "lexical": {
-          "#18": "[(13,4)-(15,5)]"
-        }
-      }
+      "shacl:name": "primaryApplicant"
     },
     {
       "@id": "#28",
@@ -252,15 +192,7 @@
         "@id": "#29"
       },
       "shacl:minCount": 0,
-      "shacl:name": "additionalApplicants",
-      "smaps": {
-        "inheritance-provenance": {
-          "#28": "amf://id#17"
-        },
-        "lexical": {
-          "#28": "[(16,4)-(18,5)]"
-        }
-      }
+      "shacl:name": "additionalApplicants"
     },
     {
       "@id": "#34",
@@ -279,16 +211,7 @@
         "@id": "#35"
       },
       "shacl:minCount": 1,
-      "shacl:name": "merchant",
-      "smaps": {
-        "inheritance-provenance": {
-          "#34": "amf://id#17"
-        },
-        "lexical": {
-          "shacl:minCount": "[(21,4)-(21,14)]",
-          "#34": "[(6,4)-(8,5)]"
-        }
-      }
+      "shacl:name": "merchant"
     },
     {
       "@id": "#36",
@@ -307,16 +230,7 @@
         "@id": "#37"
       },
       "shacl:minCount": 1,
-      "shacl:name": "operator",
-      "smaps": {
-        "inheritance-provenance": {
-          "#36": "amf://id#17"
-        },
-        "lexical": {
-          "shacl:minCount": "[(22,4)-(22,14)]",
-          "#36": "[(9,4)-(11,5)]"
-        }
-      }
+      "shacl:name": "operator"
     },
     {
       "@id": "#8",
@@ -333,16 +247,7 @@
           "@id": "#6"
         }
       ],
-      "doc:location": "file://amf-client/shared/src/test/resources/validations/json-schema-nested-refs/examples/CreateApplicationRequest.json",
-      "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "doc:structuredValue": "[(12,13)-(12,60)]",
-          "#8": "[(12,13)-(12,60)]"
-        }
-      }
+      "doc:location": "file://amf-client/shared/src/test/resources/validations/json-schema-nested-refs/examples/CreateApplicationRequest.json"
     },
     {
       "@id": "#3",
@@ -351,12 +256,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\r\n  \"$schema\": \"http://json-schema.org/draft-04/schema\",\r\n\r\n  \"expensesLiving\": {\r\n    \"type\": \"object\"\r\n  },\r\n  \"fullAddress\": {\r\n    \"type\": \"object\"\r\n  },\r\n  \"applicant\": {\r\n    \"type\": \"object\",\r\n    \"properties\": {\r\n      \"addresses\": {\r\n        \"allOf\": [\r\n          {\r\n            \"$ref\": \"#/fullAddress\"\r\n          }\r\n        ]\r\n      },\r\n      \"expenses\": {\r\n        \"anyOf\": [\r\n          {\r\n            \"$ref\": \"#/expensesLiving\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}",
-      "core:mediaType": "application/json",
-      "smaps": {
-        "lexical": {
-          "#3": "[(1,0)-(29,1)]"
-        }
-      }
+      "core:mediaType": "application/json"
     },
     {
       "@id": "#19",
@@ -376,15 +276,7 @@
           "@id": "#24"
         }
       ],
-      "shacl:name": "applicant",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#19": "[(11,4)-(11,10)]"
-        },
-        "lexical": {
-          "#19": "[(10,2)-(28,3)]"
-        }
-      }
+      "shacl:name": "applicant"
     },
     {
       "@id": "#29",
@@ -404,15 +296,7 @@
           "@id": "#32"
         }
       ],
-      "shacl:name": "applicant",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#29": "[(11,4)-(11,10)]"
-        },
-        "lexical": {
-          "#29": "[(10,2)-(28,3)]"
-        }
-      }
+      "shacl:name": "applicant"
     },
     {
       "@id": "#35",
@@ -428,16 +312,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "merchant",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#35": "[(7,6)-(7,12)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(7,6)-(7,22)]",
-          "#35": "[(6,4)-(8,5)]"
-        }
-      }
+      "shacl:name": "merchant"
     },
     {
       "@id": "#37",
@@ -453,16 +328,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "operator",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#37": "[(10,6)-(10,12)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(10,6)-(10,22)]",
-          "#37": "[(9,4)-(11,5)]"
-        }
-      }
+      "shacl:name": "operator"
     },
     {
       "@id": "#9",
@@ -480,18 +346,7 @@
       "data:operator": {
         "@id": "#16"
       },
-      "core:name": "object_1",
-      "smaps": {
-        "parsed-json-example": {
-          "#9": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
-        },
-        "lexical": {
-          "data:operator": "[(11,2)-(11,31)]",
-          "data:additionalApplicants": "[(2,2)-(9,3)]",
-          "#9": "[(1,0)-(12,1)]",
-          "data:merchant": "[(10,2)-(10,30)]"
-        }
-      }
+      "core:name": "object_1"
     },
     {
       "@id": "#20",
@@ -510,12 +365,7 @@
         "@id": "#21"
       },
       "shacl:minCount": 0,
-      "shacl:name": "addresses",
-      "smaps": {
-        "lexical": {
-          "#20": "[(13,6)-(19,7)]"
-        }
-      }
+      "shacl:name": "addresses"
     },
     {
       "@id": "#24",
@@ -534,12 +384,7 @@
         "@id": "#25"
       },
       "shacl:minCount": 0,
-      "shacl:name": "expenses",
-      "smaps": {
-        "lexical": {
-          "#24": "[(20,6)-(26,7)]"
-        }
-      }
+      "shacl:name": "expenses"
     },
     {
       "@id": "#30",
@@ -558,12 +403,7 @@
         "@id": "#31"
       },
       "shacl:minCount": 0,
-      "shacl:name": "addresses",
-      "smaps": {
-        "lexical": {
-          "#30": "[(13,6)-(19,7)]"
-        }
-      }
+      "shacl:name": "addresses"
     },
     {
       "@id": "#32",
@@ -582,12 +422,7 @@
         "@id": "#33"
       },
       "shacl:minCount": 0,
-      "shacl:name": "expenses",
-      "smaps": {
-        "lexical": {
-          "#32": "[(20,6)-(26,7)]"
-        }
-      }
+      "shacl:name": "expenses"
     },
     {
       "@id": "#10",
@@ -602,14 +437,7 @@
       "data:expenses": {
         "@id": "#13"
       },
-      "core:name": "additionalApplicants",
-      "smaps": {
-        "lexical": {
-          "data:expenses": "[(6,4)-(8,5)]",
-          "#10": "[(2,26)-(9,3)]",
-          "data:addresses": "[(3,4)-(5,5)]"
-        }
-      }
+      "core:name": "additionalApplicants"
     },
     {
       "@id": "#15",
@@ -624,12 +452,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "merchant",
-      "smaps": {
-        "lexical": {
-          "#15": "[(10,14)-(10,30)]"
-        }
-      }
+      "core:name": "merchant"
     },
     {
       "@id": "#16",
@@ -644,12 +467,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "operator",
-      "smaps": {
-        "lexical": {
-          "#16": "[(11,14)-(11,31)]"
-        }
-      }
+      "core:name": "operator"
     },
     {
       "@id": "#21",
@@ -664,13 +482,7 @@
         {
           "@id": "#22"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "shacl:and": "[(14,17)-(18,9)]",
-          "#21": "[(13,6)-(19,7)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#25",
@@ -685,13 +497,7 @@
         {
           "@id": "#26"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "shacl:or": "[(21,17)-(25,9)]",
-          "#25": "[(20,6)-(26,7)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#31",
@@ -706,13 +512,7 @@
         {
           "@id": "#22"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "shacl:and": "[(14,17)-(18,9)]",
-          "#31": "[(13,6)-(19,7)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#33",
@@ -727,13 +527,7 @@
         {
           "@id": "#26"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "shacl:or": "[(21,17)-(25,9)]",
-          "#33": "[(20,6)-(26,7)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#11",
@@ -745,13 +539,7 @@
       "data:randomKey": {
         "@id": "#12"
       },
-      "core:name": "addresses",
-      "smaps": {
-        "lexical": {
-          "data:randomKey": "[(4,6)-(4,28)]",
-          "#11": "[(3,17)-(5,5)]"
-        }
-      }
+      "core:name": "addresses"
     },
     {
       "@id": "#13",
@@ -763,13 +551,7 @@
       "data:otherRandomKey": {
         "@id": "#14"
       },
-      "core:name": "expenses",
-      "smaps": {
-        "lexical": {
-          "data:otherRandomKey": "[(7,6)-(7,31)]",
-          "#13": "[(6,16)-(8,5)]"
-        }
-      }
+      "core:name": "expenses"
     },
     {
       "@id": "#22",
@@ -783,21 +565,7 @@
       "shacl:closed": false,
       "shacl:property": [],
       "doc:recursive": true,
-      "shacl:name": "fullAddress",
-      "smaps": {
-        "resolved-link-target": {
-          "#22": "amf://id#22"
-        },
-        "type-property-lexical-info": {
-          "#22": "[(8,4)-(8,10)]"
-        },
-        "lexical": {
-          "#22": "[(7,2)-(9,3)]"
-        },
-        "resolved-link": {
-          "#22": "amf://id#23"
-        }
-      }
+      "shacl:name": "fullAddress"
     },
     {
       "@id": "#26",
@@ -811,21 +579,7 @@
       "shacl:closed": false,
       "shacl:property": [],
       "doc:recursive": true,
-      "shacl:name": "expensesLiving",
-      "smaps": {
-        "resolved-link-target": {
-          "#26": "amf://id#26"
-        },
-        "type-property-lexical-info": {
-          "#26": "[(5,4)-(5,10)]"
-        },
-        "lexical": {
-          "#26": "[(4,2)-(6,3)]"
-        },
-        "resolved-link": {
-          "#26": "amf://id#27"
-        }
-      }
+      "shacl:name": "expensesLiving"
     },
     {
       "@id": "#12",
@@ -840,12 +594,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "randomKey",
-      "smaps": {
-        "lexical": {
-          "#12": "[(4,19)-(4,28)]"
-        }
-      }
+      "core:name": "randomKey"
     },
     {
       "@id": "#14",
@@ -860,12 +609,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "otherRandomKey",
-      "smaps": {
-        "lexical": {
-          "#14": "[(7,24)-(7,31)]"
-        }
-      }
+      "core:name": "otherRandomKey"
     }
   ],
   "@context": {

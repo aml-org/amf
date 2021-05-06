@@ -9,17 +9,7 @@
         "doc:DomainElement"
       ],
       "core:name": "API",
-      "core:version": "1.0",
-      "smaps": {
-        "source-vendor": {
-          "#6": "RAML 1.0"
-        },
-        "lexical": {
-          "core:version": "[(3,0)-(4,0)]",
-          "#6": "[(2,0)-(6,0)]",
-          "core:name": "[(2,0)-(3,0)]"
-        }
-      }
+      "core:version": "1.0"
     },
     {
       "@id": "",
@@ -56,12 +46,7 @@
         "@id": "#2"
       },
       "doc:version": "3.1.0",
-      "doc:root": false,
-      "smaps": {
-        "lexical": {
-          "#1": "[(1,0)-(5,0)]"
-        }
-      }
+      "doc:root": false
     },
     {
       "@id": "#5",
@@ -78,24 +63,7 @@
           "@id": "#3"
         }
       ],
-      "shacl:name": "person",
-      "smaps": {
-        "declared-element": {
-          "#5": ""
-        },
-        "resolved-link": {
-          "#5": "amf://id#5"
-        },
-        "lexical": {
-          "#5": "[(2,0)-(5,0)]"
-        },
-        "source-vendor": {
-          "#5": "RAML 1.0"
-        },
-        "resolved-link-target": {
-          "#5": "amf://id#2"
-        }
-      }
+      "shacl:name": "person"
     },
     {
       "@id": "#2",
@@ -112,15 +80,7 @@
           "@id": "#3"
         }
       ],
-      "shacl:name": "type",
-      "smaps": {
-        "source-vendor": {
-          "#2": "RAML 1.0"
-        },
-        "lexical": {
-          "#2": "[(2,0)-(5,0)]"
-        }
-      }
+      "shacl:name": "type"
     },
     {
       "@id": "#3",
@@ -139,12 +99,7 @@
         "@id": "#4"
       },
       "shacl:minCount": 1,
-      "shacl:name": "name",
-      "smaps": {
-        "lexical": {
-          "#3": "[(3,2)-(5,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#4",
@@ -160,16 +115,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#4": "[(4,4)-(4,8)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(4,4)-(5,0)]",
-          "#4": "[(3,2)-(5,0)]"
-        }
-      }
+      "shacl:name": "name"
     }
   ],
   "@context": {

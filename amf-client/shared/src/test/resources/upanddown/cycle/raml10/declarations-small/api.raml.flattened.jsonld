@@ -8,46 +8,7 @@
         "http://a.ml/vocabularies/document#RootDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/core#name": "API",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/web-api/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/web-api/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/web-api/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/web-api/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/web-api/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(20,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/web-api/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(19,0)-(20,0)]"
+      "http://a.ml/vocabularies/core#name": "API"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml",
@@ -86,12 +47,7 @@
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema"
       },
-      "http://a.ml/vocabularies/core#name": "Wadus",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "Wadus"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person",
@@ -111,12 +67,7 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "Person",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "Person"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema",
@@ -133,36 +84,6 @@
       "http://a.ml/vocabularies/shapes#inherits": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map/lexical/element_2"
         }
       ]
     },
@@ -183,12 +104,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
-      "http://www.w3.org/ns/shacl#name": "age",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "age"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name",
@@ -207,34 +123,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
-      "http://www.w3.org/ns/shacl#name": "name",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/source-map/lexical/element_1"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "name"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type",
@@ -251,59 +140,7 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "type",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/source-map/lexical/element_1"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,8)-(12,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#domain",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(7,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,7)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(12,0)]"
+      "http://www.w3.org/ns/shacl#name": "type"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age",
@@ -319,23 +156,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "age",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/source-map/lexical/element_0"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "age"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name",
@@ -351,43 +172,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "name",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,4)-(19,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,2)-(13,8)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,2)-(19,0)]"
+      "http://www.w3.org/ns/shacl#name": "name"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus",
@@ -406,99 +191,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
-      "http://www.w3.org/ns/shacl#name": "wadus",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(7,8)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(5,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#inherits",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(12,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,8)-(12,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(15,6)-(17,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(17,6)-(19,0)]"
+      "http://www.w3.org/ns/shacl#name": "wadus"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus",
@@ -514,107 +207,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "wadus",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(8,6)-(8,10)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(12,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(12,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,8)-(16,12)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(15,6)-(17,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/age/scalar/age/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,8)-(17,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,8)-(18,12)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(17,6)-(19,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/types/Person/property/name/scalar/name/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,8)-(19,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(12,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,10)-(11,14)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(12,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/declarations-small/api.raml#/declarations/annotations/Wadus/schema/type/property/wadus/scalar/wadus/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,10)-(12,0)]"
+      "http://www.w3.org/ns/shacl#name": "wadus"
     }
   ]
 }

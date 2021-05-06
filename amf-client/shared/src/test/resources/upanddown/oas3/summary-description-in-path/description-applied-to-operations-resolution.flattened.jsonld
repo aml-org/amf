@@ -23,11 +23,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fpath-with-no-operation"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map"
-        }
       ]
     },
     {
@@ -40,11 +35,6 @@
       "http://a.ml/vocabularies/apiContract#supportedOperation": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/source-map"
         }
       ]
     },
@@ -59,11 +49,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/source-map"
-        }
       ]
     },
     {
@@ -77,11 +62,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/source-map"
-        }
       ]
     },
     {
@@ -92,37 +72,7 @@
       ],
       "http://a.ml/vocabularies/apiContract#path": "/path-with-no-operation",
       "http://a.ml/vocabularies/core#summary": "defined in path",
-      "http://a.ml/vocabularies/core#description": "defined in path",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fpath-with-no-operation/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map/lexical/element_2"
-        }
-      ]
+      "http://a.ml/vocabularies/core#description": "defined in path"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get",
@@ -136,22 +86,6 @@
       "http://a.ml/vocabularies/apiContract#returns": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/source-map/lexical/element_0"
         }
       ]
     },
@@ -168,22 +102,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/source-map/lexical/element_0"
-        }
       ]
     },
     {
@@ -199,65 +117,7 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fpath-with-no-operation/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fpath-with-no-operation/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fpath-with-no-operation/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fpath-with-no-operation/source-map/lexical/element_1"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 3.0"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,20)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(4,28)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,11)-(68,3)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(69,1)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200",
@@ -273,31 +133,7 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(25,5)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200",
@@ -313,37 +149,7 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(26,4)-(43,5)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200",
@@ -359,52 +165,7 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(44,4)-(63,5)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fpath-with-no-operation/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#summary",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(66,6)-(66,34)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fpath-with-no-operation/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(65,6)-(65,38)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fpath-with-no-operation/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fpath-with-no-operation",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(64,4)-(67,5)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson",
@@ -415,42 +176,7 @@
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,6)-(24,7)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(23,9)]"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson",
@@ -461,52 +187,7 @@
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#guiSummary",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(29,8)-(29,33)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(28,8)-(28,37)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(30,8)-(41,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(27,6)-(42,7)]"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson",
@@ -517,52 +198,7 @@
       "http://a.ml/vocabularies/core#mediaType": "application/json",
       "http://a.ml/vocabularies/shapes#schema": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#guiSummary",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(49,8)-(49,40)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(48,8)-(48,44)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#returns",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(50,8)-(61,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(47,6)-(62,7)]"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema",
@@ -578,49 +214,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "schema",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/source-map/lexical/element_1"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,12)-(14,49)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,10)-(13,15)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(15,12)-(21,13)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,10)-(22,11)]"
+      "http://www.w3.org/ns/shacl#name": "schema"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema",
@@ -636,49 +230,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "schema",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/source-map/lexical/element_1"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(32,12)-(32,49)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,10)-(31,15)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(33,12)-(39,13)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,10)-(40,11)]"
+      "http://www.w3.org/ns/shacl#name": "schema"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema",
@@ -694,226 +246,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "schema",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/source-map/lexical/element_1"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(52,12)-(52,49)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(51,10)-(51,15)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#payload",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(53,12)-(59,13)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(51,10)-(60,11)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema/source-map/auto-generated-name/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#mediaType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,14)-(16,32)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(17,16)-(19,17)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,14)-(20,15)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema/source-map/auto-generated-name/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#mediaType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(34,14)-(34,32)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(35,16)-(37,17)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(34,14)-(38,15)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema/source-map/auto-generated-name/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#mediaType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(54,14)-(54,32)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(55,16)-(57,17)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(54,14)-(58,15)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema/source-map/auto-generated-name/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(17,16)-(19,17)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,18)-(18,34)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200/application%2Fjson/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,18)-(18,24)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema/source-map/auto-generated-name/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(35,16)-(37,17)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(36,18)-(36,34)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200/application%2Fjson/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(36,18)-(36,24)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema/source-map/auto-generated-name/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(55,16)-(57,17)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(56,18)-(56,34)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200/application%2Fjson/scalar/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(56,18)-(56,24)]"
+      "http://www.w3.org/ns/shacl#name": "schema"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json",

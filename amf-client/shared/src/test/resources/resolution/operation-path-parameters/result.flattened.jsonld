@@ -27,21 +27,7 @@
         {
           "@id": "#13"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#1": "RAML 1.0"
-        },
-        "lexical": {
-          "core:version": "[(6,0)-(7,0)]",
-          "apiContract:contentType": "[(4,0)-(6,0)]",
-          "core:description": "[(3,0)-(4,0)]",
-          "#1": "[(2,0)-(44,0)]",
-          "core:name": "[(2,0)-(3,0)]",
-          "apiContract:accepts": "[(4,0)-(6,0)]",
-          "apiContract:scheme": "[(7,0)-(9,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#2",
@@ -57,12 +43,7 @@
         {
           "@id": "#8"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#2": "[(9,0)-(33,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#13",
@@ -80,13 +61,7 @@
         {
           "@id": "#16"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:parameter": "[(40,16)-(44,0)]",
-          "#13": "[(33,0)-(44,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#3",
@@ -106,18 +81,7 @@
         {
           "@id": "#7"
         }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
-        "lexical": {
-          "apiContract:returns": "[(18,4)-(21,0)]",
-          "core:name": "[(11,4)-(12,0)]",
-          "#3": "[(10,2)-(21,0)]",
-          "core:description": "[(12,4)-(13,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#8",
@@ -137,18 +101,7 @@
         {
           "@id": "#12"
         }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
-        "lexical": {
-          "apiContract:returns": "[(29,4)-(33,0)]",
-          "core:name": "[(22,4)-(23,0)]",
-          "#8": "[(21,2)-(33,0)]",
-          "core:description": "[(23,4)-(24,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#14",
@@ -163,15 +116,7 @@
         {
           "@id": "#15"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(37,4)-(40,0)]",
-          "core:name": "[(35,4)-(36,0)]",
-          "#14": "[(34,2)-(40,0)]",
-          "core:description": "[(36,4)-(37,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#16",
@@ -186,13 +131,6 @@
       "apiContract:binding": "path",
       "raml-shapes:schema": {
         "@id": "#17"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(41,4)-(44,0)]",
-          "#16": "[(41,4)-(44,0)]",
-          "core:description": "[(42,6)-(43,0)]"
-        }
       }
     },
     {
@@ -207,13 +145,7 @@
           "@id": "#5"
         }
       ],
-      "apiContract:payload": [],
-      "smaps": {
-        "lexical": {
-          "apiContract:uriParameter": "[(13,4)-(18,0)]",
-          "#4": "[(11,0)-(21,0)]"
-        }
-      }
+      "apiContract:payload": []
     },
     {
       "@id": "#7",
@@ -225,13 +157,7 @@
       "apiContract:statusCode": "200",
       "core:name": "200",
       "core:description": "Ok",
-      "apiContract:payload": [],
-      "smaps": {
-        "lexical": {
-          "core:description": "[(20,8)-(21,0)]",
-          "#7": "[(19,6)-(21,0)]"
-        }
-      }
+      "apiContract:payload": []
     },
     {
       "@id": "#9",
@@ -245,13 +171,7 @@
           "@id": "#10"
         }
       ],
-      "apiContract:payload": [],
-      "smaps": {
-        "lexical": {
-          "apiContract:uriParameter": "[(24,4)-(29,0)]",
-          "#9": "[(22,0)-(33,0)]"
-        }
-      }
+      "apiContract:payload": []
     },
     {
       "@id": "#12",
@@ -263,13 +183,7 @@
       "apiContract:statusCode": "201",
       "core:name": "201",
       "core:description": "Ok",
-      "apiContract:payload": [],
-      "smaps": {
-        "lexical": {
-          "core:description": "[(31,8)-(33,0)]",
-          "#12": "[(30,6)-(33,0)]"
-        }
-      }
+      "apiContract:payload": []
     },
     {
       "@id": "#15",
@@ -281,13 +195,7 @@
       "apiContract:statusCode": "200",
       "core:name": "200",
       "core:description": "Ok",
-      "apiContract:payload": [],
-      "smaps": {
-        "lexical": {
-          "core:description": "[(39,8)-(40,0)]",
-          "#15": "[(38,6)-(40,0)]"
-        }
-      }
+      "apiContract:payload": []
     },
     {
       "@id": "#17",
@@ -304,17 +212,7 @@
         }
       ],
       "shacl:name": "schema",
-      "core:description": "The id of the document to be retrieved.",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#17": "[(43,6)-(43,10)]"
-        },
-        "lexical": {
-          "core:description": "[(42,6)-(43,0)]",
-          "#17": "[(41,4)-(44,0)]",
-          "shacl:datatype": "[(43,6)-(44,0)]"
-        }
-      }
+      "core:description": "The id of the document to be retrieved."
     },
     {
       "@id": "#5",
@@ -329,14 +227,6 @@
       "apiContract:binding": "path",
       "raml-shapes:schema": {
         "@id": "#6"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(14,6)-(18,0)]",
-          "core:description": "[(15,8)-(16,0)]",
-          "#5": "[(14,6)-(18,0)]",
-          "apiContract:required": "[(16,8)-(17,0)]"
-        }
       }
     },
     {
@@ -352,14 +242,6 @@
       "apiContract:binding": "path",
       "raml-shapes:schema": {
         "@id": "#11"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(25,6)-(29,0)]",
-          "core:description": "[(26,8)-(27,0)]",
-          "#10": "[(25,6)-(29,0)]",
-          "apiContract:required": "[(27,8)-(28,0)]"
-        }
       }
     },
     {
@@ -377,17 +259,7 @@
         }
       ],
       "shacl:name": "schema",
-      "core:description": "string parameter",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#6": "[(17,8)-(17,12)]"
-        },
-        "lexical": {
-          "core:description": "[(15,8)-(16,0)]",
-          "#6": "[(14,6)-(18,0)]",
-          "shacl:datatype": "[(17,8)-(18,0)]"
-        }
-      }
+      "core:description": "string parameter"
     },
     {
       "@id": "#11",
@@ -404,17 +276,7 @@
         }
       ],
       "shacl:name": "schema",
-      "core:description": "integer parameter",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#11": "[(28,8)-(28,12)]"
-        },
-        "lexical": {
-          "core:description": "[(26,8)-(27,0)]",
-          "#11": "[(25,6)-(29,0)]",
-          "shacl:datatype": "[(28,8)-(29,0)]"
-        }
-      }
+      "core:description": "integer parameter"
     },
     {
       "@id": "",

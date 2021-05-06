@@ -21,18 +21,7 @@
         {
           "@id": "#12"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#11": "RAML 1.0"
-        },
-        "lexical": {
-          "apiContract:contentType": "[(4,0)-(6,0)]",
-          "core:name": "[(2,0)-(4,0)]",
-          "#11": "[(2,0)-(17,22)]",
-          "apiContract:accepts": "[(4,0)-(6,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#12",
@@ -45,12 +34,7 @@
         {
           "@id": "#13"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#12": "[(13,0)-(17,22)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#13",
@@ -63,15 +47,7 @@
         {
           "@id": "#14"
         }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
-        "lexical": {
-          "#13": "[(14,2)-(17,22)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#14",
@@ -87,12 +63,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#14": "[(15,0)-(17,22)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#8",
@@ -103,11 +74,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#1"
-      },
-      "smaps": {
-        "lexical": {
-          "#8": "[(15,4)-(17,22)]"
-        }
       }
     },
     {
@@ -119,11 +85,6 @@
       "core:mediaType": "application/xml",
       "raml-shapes:schema": {
         "@id": "#1"
-      },
-      "smaps": {
-        "lexical": {
-          "#9": "[(15,4)-(17,22)]"
-        }
       }
     },
     {
@@ -151,26 +112,7 @@
         {
           "@id": "#6"
         }
-      ],
-      "smaps": {
-        "resolved-link-target": {
-          "#1": "amf://id#1"
-        },
-        "declared-element": {
-          "#1": ""
-        },
-        "lexical": {
-          "shacl:name": "[(7,2)-(7,10)]",
-          "#1": "[(7,2)-(13,0)]",
-          "shacl:datatype": "[(8,4)-(9,0)]"
-        },
-        "type-property-lexical-info": {
-          "#1": "[(8,4)-(8,8)]"
-        },
-        "resolved-link": {
-          "#1": "amf://id#10"
-        }
-      }
+      ]
     },
     {
       "@id": "#2",
@@ -183,18 +125,7 @@
       "doc:structuredValue": {
         "@id": "#3"
       },
-      "doc:raw": "somesome",
-      "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "doc:raw": "[(10,11)-(10,19)]",
-          "core:name": "[(10,6)-(11,0)]",
-          "#2": "[(10,6)-(11,0)]",
-          "doc:structuredValue": "[(10,11)-(10,19)]"
-        }
-      }
+      "doc:raw": "somesome"
     },
     {
       "@id": "#4",
@@ -207,18 +138,7 @@
       "doc:structuredValue": {
         "@id": "#5"
       },
-      "doc:raw": "somesomesome",
-      "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "doc:raw": "[(11,11)-(11,23)]",
-          "core:name": "[(11,6)-(13,0)]",
-          "#4": "[(11,6)-(13,0)]",
-          "doc:structuredValue": "[(11,11)-(11,23)]"
-        }
-      }
+      "doc:raw": "somesomesome"
     },
     {
       "@id": "#6",
@@ -233,17 +153,6 @@
       },
       "doc:raw": "tracked",
       "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "doc:raw": "[(17,15)-(17,22)]",
-          "#6": "[(17,15)-(17,22)]",
-          "doc:structuredValue": "[(17,15)-(17,22)]"
-        },
-        "local-element": {
-          "#6": ""
-        },
         "tracked-element": {
           "#6": "amf://id#8,amf://id#9"
         }
@@ -262,12 +171,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1",
-      "smaps": {
-        "lexical": {
-          "#3": "[(10,11)-(10,19)]"
-        }
-      }
+      "core:name": "scalar_1"
     },
     {
       "@id": "#5",
@@ -282,12 +186,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1",
-      "smaps": {
-        "lexical": {
-          "#5": "[(11,11)-(11,23)]"
-        }
-      }
+      "core:name": "scalar_1"
     },
     {
       "@id": "#7",
@@ -302,12 +201,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1",
-      "smaps": {
-        "lexical": {
-          "#7": "[(17,15)-(17,22)]"
-        }
-      }
+      "core:name": "scalar_1"
     },
     {
       "@id": "",

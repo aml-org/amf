@@ -20,16 +20,7 @@
           {
             "@value": "test"
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#7": "RAML 1.0"
-          },
-          "lexical": {
-            "core:name": "[(2,0)-(3,0)]",
-            "#7": "[(2,0)-(5,27)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -98,12 +89,7 @@
                       {
                         "@value": "a"
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#4": "[(3,2)-(3,11)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:minCount": [
@@ -115,27 +101,14 @@
                   {
                     "@value": "a"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#3": "[(3,2)-(3,11)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:name": [
               {
                 "@value": "type"
               }
-            ],
-            "smaps": {
-              "source-vendor": {
-                "#2": "RAML 1.0"
-              },
-              "lexical": {
-                "#2": "[(2,0)-(3,11)]"
-              }
-            }
+            ]
           }
         ],
         "doc:version": [
@@ -147,12 +120,7 @@
           {
             "@value": false
           }
-        ],
-        "smaps": {
-          "lexical": {
-            "#1": "[(1,0)-(3,11)]"
-          }
-        }
+        ]
       }
     ],
     "doc:declares": [
@@ -203,12 +171,7 @@
                   {
                     "@value": "a"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#4": "[(3,2)-(3,11)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -220,36 +183,14 @@
               {
                 "@value": "a"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#3": "[(3,2)-(3,11)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "A"
           }
-        ],
-        "smaps": {
-          "declared-element": {
-            "#5": ""
-          },
-          "resolved-link": {
-            "#5": "amf://id#5"
-          },
-          "lexical": {
-            "#5": "[(2,0)-(3,11)]"
-          },
-          "source-vendor": {
-            "#5": "RAML 1.0"
-          },
-          "resolved-link-target": {
-            "#5": "amf://id#2"
-          }
-        }
+        ]
       },
       {
         "@id": "#6",
@@ -298,12 +239,7 @@
                   {
                     "@value": "a"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#4": "[(3,2)-(3,11)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -315,36 +251,14 @@
               {
                 "@value": "a"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#3": "[(3,2)-(3,11)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "B"
           }
-        ],
-        "smaps": {
-          "declared-element": {
-            "#6": ""
-          },
-          "resolved-link": {
-            "#6": "amf://id#6"
-          },
-          "lexical": {
-            "#6": "[(2,0)-(3,11)]"
-          },
-          "source-vendor": {
-            "#6": "RAML 1.0"
-          },
-          "resolved-link-target": {
-            "#6": "amf://id#2"
-          }
-        }
+        ]
       }
     ],
     "@context": {

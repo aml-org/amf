@@ -13,16 +13,7 @@
         {
           "@id": "#23"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#22": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(3,0)]",
-          "#22": "[(2,0)-(28,19)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#23",
@@ -38,12 +29,7 @@
         {
           "@id": "#26"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#23": "[(12,0)-(28,19)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#24",
@@ -56,15 +42,7 @@
         {
           "@id": "#25"
         }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
-        "lexical": {
-          "#24": "[(13,2)-(21,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#26",
@@ -77,15 +55,7 @@
         {
           "@id": "#27"
         }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
-        "lexical": {
-          "#26": "[(21,2)-(28,19)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#25",
@@ -98,13 +68,7 @@
         {
           "@id": "#14"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(14,4)-(21,0)]",
-          "#25": "[(14,0)-(21,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#27",
@@ -117,13 +81,7 @@
         {
           "@id": "#19"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(22,4)-(28,19)]",
-          "#27": "[(22,0)-(28,19)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#14",
@@ -134,11 +92,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#1"
-      },
-      "smaps": {
-        "lexical": {
-          "#14": "[(15,6)-(21,0)]"
-        }
       }
     },
     {
@@ -150,11 +103,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#1"
-      },
-      "smaps": {
-        "lexical": {
-          "#19": "[(23,6)-(28,19)]"
-        }
       }
     },
     {
@@ -186,22 +134,7 @@
         {
           "@id": "#15"
         }
-      ],
-      "smaps": {
-        "resolved-link-target": {
-          "#1": "amf://id#1"
-        },
-        "declared-element": {
-          "#1": ""
-        },
-        "lexical": {
-          "shacl:name": "[(4,2)-(4,3)]",
-          "#1": "[(4,2)-(12,0)]"
-        },
-        "resolved-link": {
-          "#1": "amf://id#21"
-        }
-      }
+      ]
     },
     {
       "@id": "#2",
@@ -220,12 +153,7 @@
         "@id": "#3"
       },
       "shacl:minCount": 1,
-      "shacl:name": "a",
-      "smaps": {
-        "lexical": {
-          "#2": "[(6,6)-(7,0)]"
-        }
-      }
+      "shacl:name": "a"
     },
     {
       "@id": "#4",
@@ -244,12 +172,7 @@
         "@id": "#5"
       },
       "shacl:minCount": 1,
-      "shacl:name": "b",
-      "smaps": {
-        "lexical": {
-          "#4": "[(7,6)-(8,0)]"
-        }
-      }
+      "shacl:name": "b"
     },
     {
       "@id": "#6",
@@ -262,18 +185,7 @@
       "doc:structuredValue": {
         "@id": "#7"
       },
-      "doc:raw": "a: cristian\nb: pavon",
-      "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "doc:raw": "[(10,0)-(12,0)]",
-          "core:name": "[(9,6)-(12,0)]",
-          "#6": "[(9,6)-(12,0)]",
-          "doc:structuredValue": "[(9,15)-(12,0)]"
-        }
-      }
+      "doc:raw": "a: cristian\nb: pavon"
     },
     {
       "@id": "#10",
@@ -288,18 +200,6 @@
       },
       "doc:raw": "a: roman\nb: riquelme",
       "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "doc:raw": "[(19,0)-(21,0)]",
-          "core:name": "[(18,10)-(21,0)]",
-          "#10": "[(18,10)-(21,0)]",
-          "doc:structuredValue": "[(18,20)-(21,0)]"
-        },
-        "local-element": {
-          "#10": ""
-        },
         "tracked-element": {
           "#10": "amf://id#14"
         }
@@ -318,18 +218,6 @@
       },
       "doc:raw": "a: leonardo\nb: jara",
       "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "doc:raw": "[(27,0)-(28,19)]",
-          "core:name": "[(26,10)-(28,19)]",
-          "#15": "[(26,10)-(28,19)]",
-          "doc:structuredValue": "[(26,20)-(28,19)]"
-        },
-        "local-element": {
-          "#15": ""
-        },
         "tracked-element": {
           "#15": "amf://id#19"
         }
@@ -349,12 +237,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "a",
-      "smaps": {
-        "lexical": {
-          "#3": "[(6,6)-(7,0)]"
-        }
-      }
+      "shacl:name": "a"
     },
     {
       "@id": "#5",
@@ -370,12 +253,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "b",
-      "smaps": {
-        "lexical": {
-          "#5": "[(7,6)-(8,0)]"
-        }
-      }
+      "shacl:name": "b"
     },
     {
       "@id": "#7",
@@ -390,14 +268,7 @@
       "data:b": {
         "@id": "#9"
       },
-      "core:name": "object_1",
-      "smaps": {
-        "lexical": {
-          "data:b": "[(11,8)-(12,0)]",
-          "#7": "[(10,0)-(12,0)]",
-          "data:a": "[(10,8)-(11,0)]"
-        }
-      }
+      "core:name": "object_1"
     },
     {
       "@id": "#11",
@@ -412,14 +283,7 @@
       "data:b": {
         "@id": "#13"
       },
-      "core:name": "object_1",
-      "smaps": {
-        "lexical": {
-          "data:b": "[(20,12)-(21,0)]",
-          "#11": "[(19,0)-(21,0)]",
-          "data:a": "[(19,12)-(20,0)]"
-        }
-      }
+      "core:name": "object_1"
     },
     {
       "@id": "#16",
@@ -434,14 +298,7 @@
       "data:b": {
         "@id": "#18"
       },
-      "core:name": "object_1",
-      "smaps": {
-        "lexical": {
-          "data:b": "[(28,12)-(28,19)]",
-          "#16": "[(27,0)-(28,19)]",
-          "data:a": "[(27,12)-(28,0)]"
-        }
-      }
+      "core:name": "object_1"
     },
     {
       "@id": "#8",
@@ -456,12 +313,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "a",
-      "smaps": {
-        "lexical": {
-          "#8": "[(10,11)-(10,19)]"
-        }
-      }
+      "core:name": "a"
     },
     {
       "@id": "#9",
@@ -476,12 +328,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "b",
-      "smaps": {
-        "lexical": {
-          "#9": "[(11,11)-(11,16)]"
-        }
-      }
+      "core:name": "b"
     },
     {
       "@id": "#12",
@@ -496,12 +343,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "a",
-      "smaps": {
-        "lexical": {
-          "#12": "[(19,15)-(19,20)]"
-        }
-      }
+      "core:name": "a"
     },
     {
       "@id": "#13",
@@ -516,12 +358,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "b",
-      "smaps": {
-        "lexical": {
-          "#13": "[(20,15)-(20,23)]"
-        }
-      }
+      "core:name": "b"
     },
     {
       "@id": "#17",
@@ -536,12 +373,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "a",
-      "smaps": {
-        "lexical": {
-          "#17": "[(27,15)-(27,23)]"
-        }
-      }
+      "core:name": "a"
     },
     {
       "@id": "#18",
@@ -556,12 +388,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "b",
-      "smaps": {
-        "lexical": {
-          "#18": "[(28,15)-(28,19)]"
-        }
-      }
+      "core:name": "b"
     },
     {
       "@id": "",

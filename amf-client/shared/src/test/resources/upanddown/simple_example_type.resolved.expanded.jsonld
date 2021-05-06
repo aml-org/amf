@@ -37,15 +37,7 @@
               {
                 "@value": "api.example.com/path"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "core:urlTemplate": "[(5,0)-(7,0)]"
-              },
-              "synthesized-field": {
-                "#14": "true"
-              }
-            }
+            ]
           }
         ],
         "apiContract:scheme": [
@@ -128,53 +120,15 @@
                               }
                             ]
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#13": "[(15,6)-(16,23)]"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "apiContract:payload": "[(14,4)-(16,23)]",
-                        "#12": "[(13,0)-(16,23)]"
-                      }
-                    }
+                    ]
                   }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "apiContract:expects": "true"
-                  },
-                  "lexical": {
-                    "core:name": "[(13,4)-(14,0)]",
-                    "#11": "[(12,2)-(16,23)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "core:name": "[(11,2)-(12,0)]",
-                "#10": "[(10,0)-(16,23)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#9": "RAML 1.0"
-          },
-          "lexical": {
-            "apiContract:scheme": "[(4,0)-(5,0)]",
-            "core:description": "[(3,0)-(4,0)]",
-            "#9": "[(2,0)-(16,23)]",
-            "core:name": "[(2,0)-(3,0)]",
-            "apiContract:server": "[(5,0)-(7,0)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -243,12 +197,7 @@
                       {
                         "@value": "a"
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#7": "[(4,2)-(5,0)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:minCount": [
@@ -260,12 +209,7 @@
                   {
                     "@value": "a"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#6": "[(4,2)-(5,0)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:name": [
@@ -315,56 +259,23 @@
                           {
                             "@value": "a"
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#5": "[(6,5)-(6,10)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "core:name": [
                       {
                         "@value": "object_1"
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "data:a": "[(6,2)-(6,10)]",
-                        "#4": "[(6,0)-(6,10)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "doc:raw": [
                   {
                     "@value": "a: wadus"
                   }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "doc:strict": "true"
-                  },
-                  "lexical": {
-                    "doc:raw": "[(6,0)-(6,10)]",
-                    "#3": "[(5,0)-(6,10)]",
-                    "doc:structuredValue": "[(5,8)-(6,10)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "source-vendor": {
-                "#2": "RAML 1.0"
-              },
-              "lexical": {
-                "apiContract:examples": "[(5,0)-(6,10)]",
-                "#2": "[(2,0)-(6,10)]"
-              },
-              "type-property-lexical-info": {
-                "#2": "[(2,0)-(2,4)]"
-              }
-            }
+            ]
           }
         ],
         "doc:version": [
@@ -376,12 +287,7 @@
           {
             "@value": false
           }
-        ],
-        "smaps": {
-          "lexical": {
-            "#1": "[(1,0)-(6,10)]"
-          }
-        }
+        ]
       }
     ],
     "doc:declares": [
@@ -432,12 +338,7 @@
                   {
                     "@value": "a"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#7": "[(4,2)-(5,0)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -449,12 +350,7 @@
               {
                 "@value": "a"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#6": "[(4,2)-(5,0)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
@@ -504,65 +400,23 @@
                       {
                         "@value": "a"
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#5": "[(6,5)-(6,10)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "core:name": [
                   {
                     "@value": "object_1"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "data:a": "[(6,2)-(6,10)]",
-                    "#4": "[(6,0)-(6,10)]"
-                  }
-                }
+                ]
               }
             ],
             "doc:raw": [
               {
                 "@value": "a: wadus"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "doc:strict": "true"
-              },
-              "lexical": {
-                "doc:raw": "[(6,0)-(6,10)]",
-                "#3": "[(5,0)-(6,10)]",
-                "doc:structuredValue": "[(5,8)-(6,10)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "declared-element": {
-            "#8": ""
-          },
-          "resolved-link": {
-            "#8": "amf://id#8"
-          },
-          "type-property-lexical-info": {
-            "#8": "[(2,0)-(2,4)]"
-          },
-          "lexical": {
-            "apiContract:examples": "[(5,0)-(6,10)]",
-            "#8": "[(2,0)-(6,10)]"
-          },
-          "source-vendor": {
-            "#8": "RAML 1.0"
-          },
-          "resolved-link-target": {
-            "#8": "amf://id#2"
-          }
-        }
+        ]
       }
     ],
     "@context": {

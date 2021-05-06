@@ -25,17 +25,7 @@
           {
             "@value": "1.0"
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#6": "RAML 1.0"
-          },
-          "lexical": {
-            "core:version": "[(3,0)-(4,0)]",
-            "#6": "[(2,0)-(6,0)]",
-            "core:name": "[(2,0)-(3,0)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -104,16 +94,7 @@
                       {
                         "@value": "name"
                       }
-                    ],
-                    "smaps": {
-                      "type-property-lexical-info": {
-                        "#4": "[(4,4)-(4,8)]"
-                      },
-                      "lexical": {
-                        "shacl:datatype": "[(4,4)-(5,0)]",
-                        "#4": "[(3,2)-(5,0)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:minCount": [
@@ -125,27 +106,14 @@
                   {
                     "@value": "name"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#3": "[(3,2)-(5,0)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:name": [
               {
                 "@value": "type"
               }
-            ],
-            "smaps": {
-              "source-vendor": {
-                "#2": "RAML 1.0"
-              },
-              "lexical": {
-                "#2": "[(2,0)-(5,0)]"
-              }
-            }
+            ]
           }
         ],
         "doc:version": [
@@ -157,12 +125,7 @@
           {
             "@value": false
           }
-        ],
-        "smaps": {
-          "lexical": {
-            "#1": "[(1,0)-(5,0)]"
-          }
-        }
+        ]
       }
     ],
     "doc:declares": [
@@ -213,16 +176,7 @@
                   {
                     "@value": "name"
                   }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "#4": "[(4,4)-(4,8)]"
-                  },
-                  "lexical": {
-                    "shacl:datatype": "[(4,4)-(5,0)]",
-                    "#4": "[(3,2)-(5,0)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -234,36 +188,14 @@
               {
                 "@value": "name"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#3": "[(3,2)-(5,0)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "person"
           }
-        ],
-        "smaps": {
-          "declared-element": {
-            "#5": ""
-          },
-          "resolved-link": {
-            "#5": "amf://id#5"
-          },
-          "lexical": {
-            "#5": "[(2,0)-(5,0)]"
-          },
-          "source-vendor": {
-            "#5": "RAML 1.0"
-          },
-          "resolved-link-target": {
-            "#5": "amf://id#2"
-          }
-        }
+        ]
       }
     ],
     "@context": {

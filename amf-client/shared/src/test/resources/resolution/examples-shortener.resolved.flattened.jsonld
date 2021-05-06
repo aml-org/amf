@@ -8,16 +8,7 @@
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
-      "core:name": "test",
-      "smaps": {
-        "source-vendor": {
-          "#7": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(3,0)]",
-          "#7": "[(2,0)-(8,13)]"
-        }
-      }
+      "core:name": "test"
     },
     {
       "@id": "",
@@ -58,17 +49,7 @@
         {
           "@id": "#2"
         }
-      ],
-      "smaps": {
-        "declared-element": {
-          "#1": ""
-        },
-        "lexical": {
-          "apiContract:examples": "[(7,4)-(8,13)]",
-          "#1": "[(4,2)-(8,13)]",
-          "shacl:name": "[(4,2)-(4,3)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#5",
@@ -87,12 +68,7 @@
         "@id": "#6"
       },
       "shacl:minCount": 1,
-      "shacl:name": "a",
-      "smaps": {
-        "lexical": {
-          "#5": "[(6,6)-(7,0)]"
-        }
-      }
+      "shacl:name": "a"
     },
     {
       "@id": "#2",
@@ -104,17 +80,7 @@
       "doc:structuredValue": {
         "@id": "#3"
       },
-      "doc:raw": "a: lala",
-      "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "doc:raw": "[(8,0)-(8,13)]",
-          "#2": "[(7,4)-(8,13)]",
-          "doc:structuredValue": "[(7,12)-(8,13)]"
-        }
-      }
+      "doc:raw": "a: lala"
     },
     {
       "@id": "#6",
@@ -130,12 +96,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "a",
-      "smaps": {
-        "lexical": {
-          "#6": "[(6,6)-(7,0)]"
-        }
-      }
+      "shacl:name": "a"
     },
     {
       "@id": "#3",
@@ -147,13 +108,7 @@
       "data:a": {
         "@id": "#4"
       },
-      "core:name": "object_1",
-      "smaps": {
-        "lexical": {
-          "data:a": "[(8,6)-(8,13)]",
-          "#3": "[(8,0)-(8,13)]"
-        }
-      }
+      "core:name": "object_1"
     },
     {
       "@id": "#4",
@@ -168,12 +123,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "a",
-      "smaps": {
-        "lexical": {
-          "#4": "[(8,9)-(8,13)]"
-        }
-      }
+      "core:name": "a"
     }
   ],
   "@context": {

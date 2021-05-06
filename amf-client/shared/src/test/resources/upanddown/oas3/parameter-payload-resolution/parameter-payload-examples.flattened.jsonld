@@ -14,18 +14,7 @@
         {
           "@id": "#8"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#7": "OAS 3.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(27,11)-(45,3)]",
-          "core:name": "[(4,4)-(4,30)]",
-          "#7": "[(1,0)-(47,1)]",
-          "core:version": "[(5,4)-(5,20)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#8",
@@ -38,12 +27,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#8": "[(28,4)-(44,5)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#9",
@@ -56,13 +40,7 @@
         {
           "@id": "#10"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(30,8)-(42,9)]",
-          "#9": "[(29,6)-(43,7)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#10",
@@ -78,15 +56,7 @@
         {
           "@id": "#11"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(33,12)-(40,13)]",
-          "core:name": "[(31,10)-(31,15)]",
-          "#10": "[(31,10)-(41,11)]",
-          "core:description": "[(32,12)-(32,40)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#11",
@@ -97,13 +67,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#12"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(35,16)-(37,17)]",
-          "#11": "[(34,14)-(39,15)]",
-          "core:mediaType": "[(34,14)-(34,32)]"
-        }
       }
     },
     {
@@ -125,19 +88,7 @@
         {
           "@id": "#13"
         }
-      ],
-      "smaps": {
-        "auto-generated-name": {
-          "#12": ""
-        },
-        "lexical": {
-          "shacl:datatype": "[(36,18)-(36,34)]",
-          "#12": "[(35,16)-(37,17)]"
-        },
-        "type-property-lexical-info": {
-          "#12": "[(36,18)-(36,24)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#13",
@@ -152,14 +103,6 @@
       },
       "doc:raw": "Example defined in payload",
       "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "doc:raw": "[(38,27)-(38,55)]",
-          "#13": "[(38,27)-(38,55)]",
-          "doc:structuredValue": "[(38,27)-(38,55)]"
-        },
         "tracked-element": {
           "#13": "amf://id#11"
         }
@@ -178,12 +121,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1",
-      "smaps": {
-        "lexical": {
-          "#14": "[(38,27)-(38,55)]"
-        }
-      }
+      "core:name": "scalar_1"
     },
     {
       "@id": "",
@@ -219,18 +157,6 @@
       "apiContract:binding": "header",
       "raml-shapes:schema": {
         "@id": "#2"
-      },
-      "smaps": {
-        "declared-element": {
-          "#1": ""
-        },
-        "lexical": {
-          "raml-shapes:schema": "[(13,8)-(16,9)]",
-          "core:description": "[(12,8)-(12,55)]",
-          "#1": "[(9,6)-(24,7)]",
-          "apiContract:paramName": "[(10,8)-(10,23)]",
-          "apiContract:binding": "[(11,8)-(11,22)]"
-        }
       }
     },
     {
@@ -255,19 +181,7 @@
         {
           "@id": "#5"
         }
-      ],
-      "smaps": {
-        "auto-generated-name": {
-          "#2": ""
-        },
-        "lexical": {
-          "shacl:datatype": "[(14,10)-(14,26)]",
-          "#2": "[(13,8)-(16,9)]"
-        },
-        "type-property-lexical-info": {
-          "#2": "[(14,10)-(14,16)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#3",
@@ -279,17 +193,7 @@
       "doc:structuredValue": {
         "@id": "#4"
       },
-      "doc:raw": "Example defined in schema",
-      "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "doc:raw": "[(15,21)-(15,48)]",
-          "#3": "[(15,21)-(15,48)]",
-          "doc:structuredValue": "[(15,21)-(15,48)]"
-        }
-      }
+      "doc:raw": "Example defined in schema"
     },
     {
       "@id": "#5",
@@ -306,13 +210,6 @@
       },
       "doc:raw": "Example defined in parameter examples",
       "smaps": {
-        "lexical": {
-          "doc:raw": "[(21,21)-(21,60)]",
-          "core:description": "[(20,12)-(20,55)]",
-          "#5": "[(18,10)-(22,11)]",
-          "apiContract:guiSummary": "[(19,12)-(19,39)]",
-          "doc:structuredValue": "[(21,21)-(21,60)]"
-        },
         "tracked-element": {
           "#5": "amf://id#1"
         }
@@ -331,12 +228,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1",
-      "smaps": {
-        "lexical": {
-          "#4": "[(15,21)-(15,48)]"
-        }
-      }
+      "core:name": "scalar_1"
     },
     {
       "@id": "#6",
@@ -351,12 +243,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1",
-      "smaps": {
-        "lexical": {
-          "#6": "[(21,21)-(21,60)]"
-        }
-      }
+      "core:name": "scalar_1"
     }
   ],
   "@context": {
