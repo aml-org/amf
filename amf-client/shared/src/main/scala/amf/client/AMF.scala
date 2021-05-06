@@ -151,16 +151,20 @@ object CoreWrapper {
 
 }
 
+@JSExportAll
+@JSExportTopLevel("plugins")
 object PluginsWrapper {
   val document: DocumentPluginsWrapper.type = DocumentPluginsWrapper
   val features: FeaturesPluginsWrapper.type = FeaturesPluginsWrapper
 }
 
+@JSExportAll
 object DocumentPluginsWrapper {
   val WebApi: document.WebApi.type             = document.WebApi
   val Vocabularies: document.Vocabularies.type = document.Vocabularies
 }
 
+@JSExportAll
 object FeaturesPluginsWrapper {
   val AMFValidation: features.AMFValidation.type             = features.AMFValidation
   val AMFCustomValidation: features.AMFCustomValidation.type = features.AMFCustomValidation
