@@ -27,7 +27,16 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
   Oas20CompatibilityPipeline,
   Oas3CompatibilityPipeline
 }
-import amf.plugins.document.webapi.resolution.pipelines._
+import amf.plugins.document.webapi.resolution.pipelines.{
+  Oas20CachePipeline,
+  Oas20EditingPipeline,
+  Oas20TransformationPipeline,
+  Oas30TransformationPipeline,
+  Oas3CachePipeline,
+  Oas3EditingPipeline
+}
+import amf.plugins.document.webapi.validation.ApiValidationProfiles
+import amf.plugins.document.webapi.validation.ApiValidationProfiles.Oas20ValidationProfile
 import amf.plugins.domain.webapi.models.api.Api
 import org.yaml.model.{YDocument, YNode}
 
@@ -145,8 +154,8 @@ object Oas20Plugin extends OasPlugin {
                        wrapped: ParserContext,
                        ds: Option[OasWebApiDeclarations]) = new Oas2WebApiContext(loc, refs, wrapped, ds, options)
 
-  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
-    super.domainValidationProfiles(platform).filterKeys(k => k == Oas20Profile.p)
+  // TODO: Temporary, should be erased until synchronous validation profile building for dialects is implemented
+  override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Oas20ValidationProfile)
 
   override val vendors: Seq[String] = Seq(vendor.name)
 }
@@ -226,8 +235,8 @@ object Oas30Plugin extends OasPlugin {
                        wrapped: ParserContext,
                        ds: Option[OasWebApiDeclarations]) = new Oas3WebApiContext(loc, refs, wrapped, ds, options)
 
-  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
-    defaultValidationProfiles.filterKeys(_ == validationProfile.p)
+  // TODO: Temporary, should be erased until synchronous validation profile building for dialects is implemented
+  override def domainValidationProfiles: Seq[ValidationProfile] = Seq(ApiValidationProfiles.Oas30ValidationProfile)
 
   override val vendors: Seq[String] = Seq(vendor.name)
 }

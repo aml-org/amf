@@ -753,6 +753,8 @@ object AMFRawValidations {
     override def validations(): Seq[AMFValidation] = result
   }
 
+  object CommonRamlValidations extends RamlValidations
+
   trait RamlValidations extends WebApiValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
@@ -972,6 +974,8 @@ object AMFRawValidations {
 
     override def validations(): Seq[AMFValidation] = result
   }
+
+  object OasCommonValidations extends OasValidations
 
   trait OasValidations extends WebApiValidations with GenericValidations {
     private lazy val result = super.validations() ++ Seq(
@@ -1553,7 +1557,7 @@ object AMFRawValidations {
       )
   }
 
-  val profileToValidationMap: Map[ProfileName, Seq[AMFValidation]] = Map(
+  val profileToValidationMap: Map[ProfileName, ProfileValidations] = Map(
     AmfProfile     -> forProfile(AmfProfile),
     Raml10Profile  -> forProfile(Raml10Profile),
     Raml08Profile  -> forProfile(Raml08Profile),
@@ -1562,15 +1566,15 @@ object AMFRawValidations {
     Async20Profile -> forProfile(Async20Profile)
   )
 
-  private def forProfile(p: ProfileName): Seq[AMFValidation] = {
+  private def forProfile(p: ProfileName): ProfileValidations = {
     p match {
-      case Raml10Profile  => Raml10Validations.validations()
-      case Raml08Profile  => Raml08Validations.validations()
-      case Oas20Profile   => Oas20Validations.validations()
-      case Oas30Profile   => Oas30Validations.validations()
-      case Async20Profile => Async20Validations.validations()
-      case AmfProfile     => AmfValidations.validations()
-      case _              => Nil
+      case Raml10Profile => Raml10Validations
+      case Raml08Profile               => Raml08Validations
+      case Oas20Profile                 => Oas20Validations
+      case Oas30Profile                => Oas30Validations
+      case Async20Profile              => Async20Validations
+      case AmfProfile                  => AmfValidations
+      case _                           => () => Seq.empty
     }
   }
 }

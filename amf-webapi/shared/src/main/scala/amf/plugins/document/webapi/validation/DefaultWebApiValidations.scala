@@ -4,7 +4,7 @@ import amf._
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core._
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
+import amf.plugins.document.webapi.validation.AMFRawValidations.{AMFValidation, ProfileValidations}
 import amf.plugins.features.validation.Validations
 
 trait ImportUtils {
@@ -34,30 +34,33 @@ trait ImportUtils {
 
 object DefaultAMFValidations extends ImportUtils {
 
+  def buildProfileFrom(profile: ProfileName, profileValidations: ProfileValidations): ValidationProfile = {
+    val validations          = profileValidations.validations()
+    val violationValidations = parseRawValidations(validations.filter(_.severity == SeverityLevels.VIOLATION))
+    val infoValidations      = parseRawValidations(validations.filter(_.severity == SeverityLevels.INFO))
+    val warningValidations   = parseRawValidations(validations.filter(_.severity == SeverityLevels.WARNING))
+
+    // sorting parser side validation for this profile
+    val violationParserSideValidations = getValidationsWithSeverity(profile, SeverityLevels.VIOLATION)
+    val infoParserSideValidations      = getValidationsWithSeverity(profile, SeverityLevels.INFO)
+    val warningParserSideValidations   = getValidationsWithSeverity(profile, SeverityLevels.WARNING)
+
+    val severityMapping = SeverityMapping()
+      .set(infoParserSideValidations ++ infoValidations.map(_.name), SeverityLevels.INFO)
+      .set(warningParserSideValidations ++ warningValidations.map(_.name), SeverityLevels.WARNING)
+      .set(violationParserSideValidations ++ violationValidations.map(_.name), SeverityLevels.VIOLATION)
+
+    ValidationProfile(
+      name = profile,
+      baseProfile = if (profile == AmfProfile) None else Some(AmfProfile),
+      validations = infoValidations ++ warningValidations ++ violationValidations ++ Validations.validations,
+      severities = severityMapping
+    )
+  }
+
   def profiles(): List[ValidationProfile] =
     AMFRawValidations.profileToValidationMap.map {
-      case (profile, validationsInGroup) =>
-        val violationValidations =
-          parseRawValidations(validationsInGroup.filter(_.severity == SeverityLevels.VIOLATION))
-        val infoValidations    = parseRawValidations(validationsInGroup.filter(_.severity == SeverityLevels.INFO))
-        val warningValidations = parseRawValidations(validationsInGroup.filter(_.severity == SeverityLevels.WARNING))
-
-        // sorting parser side validation for this profile
-        val violationParserSideValidations = getValidationsWithSeverity(profile, SeverityLevels.VIOLATION)
-        val infoParserSideValidations      = getValidationsWithSeverity(profile, SeverityLevels.INFO)
-        val warningParserSideValidations   = getValidationsWithSeverity(profile, SeverityLevels.WARNING)
-
-        val severityMapping = SeverityMapping()
-          .set(infoParserSideValidations ++ infoValidations.map(_.name), SeverityLevels.INFO)
-          .set(warningParserSideValidations ++ warningValidations.map(_.name), SeverityLevels.WARNING)
-          .set(violationParserSideValidations ++ violationValidations.map(_.name), SeverityLevels.VIOLATION)
-
-        ValidationProfile(
-          name = profile,
-          baseProfile = if (profile == AmfProfile) None else Some(AmfProfile),
-          validations = infoValidations ++ warningValidations ++ violationValidations ++ Validations.validations,
-          severities = severityMapping
-        )
+      case (profile, profileValidations) => buildProfileFrom(profile, profileValidations)
     }.toList
 
   private def getValidationsWithSeverity(profile: ProfileName, severity: String) = {
