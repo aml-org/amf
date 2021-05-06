@@ -1,7 +1,7 @@
 package amf.compiler
 
 import amf.{RAMLStyle, Raml10Profile}
-import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
+import amf.client.plugins.AMFPlugin
 import amf.client.remote.Content
 import amf.core.Root
 import amf.core.model.document.{BaseUnit, Document}
@@ -125,59 +125,6 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
           r.results.last.message
             .contains("such file or directory")) // temp, assert better the message for js and jvm
       })
-  }
-
-  test("Feature plugin test") {
-    val url = "file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml"
-    amf.core.AMF.init()
-    object FeaturePlugin extends AMFFeaturePlugin {
-
-      override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future { this }
-
-      var invocations: mutable.ListBuffer[String] = mutable.ListBuffer()
-
-      override def dependencies(): Seq[AMFPlugin] = Nil
-
-      override val ID: String = "Test Feature Plugin"
-
-      override def onBeginParsingInvocation(url: String, mediaType: Option[String]): Unit = {
-        invocations += "begin_parsing_invocation"
-      }
-
-      override def onBeginDocumentParsing(url: String, content: Content, referenceKind: ReferenceKind): Content = {
-        invocations += "begin_document_parsing"
-        content
-      }
-
-      override def onSyntaxParsed(url: String, ast: ParsedDocument): ParsedDocument = {
-        invocations += "syntax_parsed"
-        ast
-      }
-
-      override def onModelParsed(url: String, unit: BaseUnit): BaseUnit = {
-        invocations += "model_parsed"
-        unit
-      }
-
-      override def onFinishedParsingInvocation(url: String, unit: BaseUnit): BaseUnit = {
-        invocations += "finished_parsing"
-        unit
-      }
-    }
-    amf.core.AMF.registerPlugin(FeaturePlugin)
-    FeaturePlugin.init() flatMap { _ =>
-      RuntimeCompiler(url, Some("application/yaml"), Some(Raml10.name), Context(platform), cache = Cache()) map { _ =>
-        val allPhases = Seq("begin_parsing_invocation",
-                            "begin_document_parsing",
-                            "syntax_parsed",
-                            "model_parsed",
-                            "finished_parsing").foldLeft(true) {
-          case (acc, phase) =>
-            acc && FeaturePlugin.invocations.contains(phase)
-        }
-        assert(allPhases)
-      }
-    }
   }
 
   private def assertDocument(unit: BaseUnit): Assertion = unit match {
