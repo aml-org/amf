@@ -7,8 +7,8 @@ import amf.core.model.document.{Document, Module}
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
-  * AMF client for parsing {@link amf.core.model.document.Document} and {@link amf.core.model.document.Module} created with {@link amf.client.environment.AMFConfiguration.createClient createClient} method
-  * @param configuration {@link amf.client.environment.AMFConfiguration}
+  * The AMF Client contains common AMF operations.
+  * For more complex uses see {@link amf.client.remod.AMFParser} or {@link amf.client.remod.AMFRenderer}
   */
 class AMFClient private[amf] (override protected val configuration: AMFConfiguration)
     extends AMLClient(configuration) {
