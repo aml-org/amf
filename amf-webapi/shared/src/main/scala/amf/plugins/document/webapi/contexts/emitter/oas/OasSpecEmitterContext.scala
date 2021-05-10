@@ -21,9 +21,8 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
   OasFacetsInstanceEmitter
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
-import amf.plugins.document.webapi.parser.spec.domain.{OasHeaderEmitter, _}
+import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.emitters._
-import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, OasTypeDefStringValueMatcher}
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
@@ -150,8 +149,6 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler,
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   override val factory: OasSpecEmitterFactory
-
-  val typeDefMatcher: OasTypeDefStringValueMatcher = CommonOasTypeDefMatcher
 
   override def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] =
     super[CompactEmissionContext].filterLocal(elements)

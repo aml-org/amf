@@ -70,6 +70,4 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
   val jsonPointersMap: mutable.Map[String, String] = mutable.Map() // id -> pointer
 
   val anyOfKey: String = "union".asOasExtension
-
-  def typeDefMatcher: OasTypeDefStringValueMatcher
 }
