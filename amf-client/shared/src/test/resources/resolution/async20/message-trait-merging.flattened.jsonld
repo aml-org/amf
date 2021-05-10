@@ -14,18 +14,7 @@
         {
           "@id": "#5"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#4": "ASYNC 2.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(5,0)-(15,0)]",
-          "core:name": "[(3,2)-(4,0)]",
-          "#4": "[(1,0)-(22,24)]",
-          "core:version": "[(4,2)-(5,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#5",
@@ -38,13 +27,7 @@
         {
           "@id": "#6"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:supportedOperation": "[(7,0)-(15,0)]",
-          "#5": "[(6,2)-(15,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#6",
@@ -57,13 +40,7 @@
         {
           "@id": "#7"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:expects": "[(8,6)-(15,0)]",
-          "#6": "[(7,4)-(15,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#7",
@@ -87,13 +64,7 @@
         {
           "@id": "#3"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "doc:extends": "[(12,8)-(15,0)]",
-          "#7": "[(9,0)-(15,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#8",
@@ -101,13 +72,7 @@
         "apiContract:Payload",
         "doc:DomainElement"
       ],
-      "core:mediaType": "baseContentType",
-      "smaps": {
-        "lexical": {
-          "core:mediaType": "[(11,8)-(12,0)]",
-          "#8": "[(9,0)-(15,0)]"
-        }
-      }
+      "core:mediaType": "baseContentType"
     },
     {
       "@id": "#1",
@@ -118,27 +83,7 @@
       "core:name": "firstTrait",
       "core:displayName": "firstMessage",
       "core:summary": "firstSummary",
-      "apiContract:isAbstract": true,
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:isAbstract": "true"
-        },
-        "resolved-link": {
-          "#1": "amf://id#2"
-        },
-        "lexical": {
-          "core:summary": "[(19,6)-(20,0)]",
-          "core:name": "[(17,4)-(17,14)]",
-          "#1": "[(17,4)-(20,0)]",
-          "core:displayName": "[(18,6)-(19,0)]"
-        },
-        "declared-element": {
-          "#1": ""
-        },
-        "resolved-link-target": {
-          "#1": "amf://id#1"
-        }
-      }
+      "apiContract:isAbstract": true
     },
     {
       "@id": "#3",
@@ -149,27 +94,7 @@
       "core:name": "secondTrait",
       "core:displayName": "secondMessage",
       "core:title": "secondTitle",
-      "apiContract:isAbstract": true,
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:isAbstract": "true"
-        },
-        "resolved-link": {
-          "#3": "amf://id#2"
-        },
-        "lexical": {
-          "core:title": "[(22,6)-(22,24)]",
-          "core:name": "[(20,4)-(20,15)]",
-          "#3": "[(20,4)-(22,24)]",
-          "core:displayName": "[(21,6)-(22,0)]"
-        },
-        "declared-element": {
-          "#3": ""
-        },
-        "resolved-link-target": {
-          "#3": "amf://id#3"
-        }
-      }
+      "apiContract:isAbstract": true
     },
     {
       "@id": "",

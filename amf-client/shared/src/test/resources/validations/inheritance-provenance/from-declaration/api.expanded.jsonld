@@ -113,13 +113,7 @@
                                       {
                                         "@value": "name"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "shacl:datatype": "[(6,12)-(6,18)]",
-                                        "#3": "[(6,6)-(7,0)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "shacl:minCount": [
@@ -131,20 +125,7 @@
                                   {
                                     "@value": "name"
                                   }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "shacl:minCount": "true",
-                                    "shacl:path": "true"
-                                  },
-                                  "lexical": {
-                                    "raml-shapes:range": "[(6,12)-(6,18)]",
-                                    "#11": "[(6,6)-(7,0)]"
-                                  },
-                                  "inheritance-provenance": {
-                                    "#11": "amf://id#1"
-                                  }
-                                }
+                                ]
                               },
                               {
                                 "@id": "#12",
@@ -178,13 +159,7 @@
                                       {
                                         "@value": "employeeNumber"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "lexical": {
-                                        "shacl:datatype": "[(13,26)-(13,33)]",
-                                        "#13": "[(13,10)-(14,0)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "shacl:minCount": [
@@ -196,81 +171,24 @@
                                   {
                                     "@value": "employeeNumber"
                                   }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "shacl:minCount": "true",
-                                    "shacl:path": "true"
-                                  },
-                                  "lexical": {
-                                    "raml-shapes:range": "[(13,26)-(13,33)]",
-                                    "#12": "[(13,10)-(14,0)]"
-                                  }
-                                }
+                                ]
                               }
                             ],
                             "shacl:name": [
                               {
                                 "@value": "Person"
                               }
-                            ],
-                            "smaps": {
-                              "inheritance-provenance": {
-                                "shacl:name": "amf://id#1"
-                              },
-                              "inherited-shapes": {
-                                "#10": "amf://id#14"
-                              },
-                              "lexical": {
-                                "#10": "[(10,6)-(14,0)]"
-                              },
-                              "type-property-lexical-info": {
-                                "#10": "[(11,8)-(11,12)]"
-                              },
-                              "synthesized-field": {
-                                "shacl:closed": "true"
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#9": "[(10,6)-(14,0)]"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "apiContract:payload": "[(9,4)-(14,0)]"
-                      }
-                    }
+                    ]
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#7": "[(8,2)-(14,0)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "apiContract:path": "[(7,0)-(7,9)]",
-                "#6": "[(7,0)-(14,0)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#5": "RAML 1.0"
-          },
-          "lexical": {
-            "core:name": "[(2,0)-(3,0)]",
-            "#5": "[(2,0)-(14,0)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -331,13 +249,7 @@
                   {
                     "@value": "name"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "shacl:datatype": "[(6,12)-(6,18)]",
-                    "#3": "[(6,6)-(7,0)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -349,42 +261,14 @@
               {
                 "@value": "name"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true",
-                "shacl:path": "true"
-              },
-              "lexical": {
-                "raml-shapes:range": "[(6,12)-(6,18)]",
-                "#2": "[(6,6)-(7,0)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "Person"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "shacl:closed": "true"
-          },
-          "resolved-link": {
-            "#1": "amf://id#4"
-          },
-          "lexical": {
-            "shacl:name": "[(4,2)-(4,8)]",
-            "#1": "[(4,2)-(7,0)]"
-          },
-          "declared-element": {
-            "#1": ""
-          },
-          "resolved-link-target": {
-            "#1": "amf://id#1"
-          }
-        }
+        ]
       }
     ],
     "@context": {

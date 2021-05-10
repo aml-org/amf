@@ -1,8 +1,8 @@
 #%RAML 1.0
-title: test
 types:
   Customer:
-    example: null
+    example:
+      strict: true
     properties:
       name:
         type: string
@@ -14,3 +14,4 @@ types:
             type: string
           number:
             type: integer
+title: test

@@ -31,19 +31,7 @@
             "@value": "1.0.0"
           }
         ],
-        "apiContract:endpoint": [],
-        "smaps": {
-          "source-vendor": {
-            "#3": "OAS 3.0"
-          },
-          "lexical": {
-            "apiContract:endpoint": "[(8,2)-(9,3)]",
-            "core:description": "[(6,4)-(6,61)]",
-            "#3": "[(1,0)-(22,1)]",
-            "core:name": "[(4,4)-(4,51)]",
-            "core:version": "[(5,4)-(5,22)]"
-          }
-        }
+        "apiContract:endpoint": []
       }
     ],
     "doc:version": [
@@ -85,22 +73,7 @@
           {
             "@value": "Uint32"
           }
-        ],
-        "smaps": {
-          "declared-element": {
-            "#1": ""
-          },
-          "lexical": {
-            "shacl:name": "[(12,6)-(12,14)]",
-            "shacl:minInclusive": "[(15,8)-(15,20)]",
-            "#1": "[(12,6)-(16,7)]",
-            "shacl:datatype": "[(14,8)-(14,25)]",
-            "raml-shapes:format": "[(13,8)-(13,25)]"
-          },
-          "type-property-lexical-info": {
-            "#1": "[(14,8)-(14,14)]"
-          }
-        }
+        ]
       },
       {
         "@id": "#2",
@@ -135,30 +108,7 @@
           {
             "@value": "ServiceId"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "doc:recursive": "true"
-          },
-          "resolved-link": {
-            "#2": "amf://id#2"
-          },
-          "type-property-lexical-info": {
-            "#2": "[(14,8)-(14,14)]"
-          },
-          "lexical": {
-            "raml-shapes:format": "[(13,8)-(13,25)]",
-            "shacl:datatype": "[(14,8)-(14,25)]",
-            "#2": "[(12,6)-(16,7)]",
-            "shacl:minInclusive": "[(15,8)-(15,20)]"
-          },
-          "declared-element": {
-            "#2": ""
-          },
-          "resolved-link-target": {
-            "#2": "amf://id#1"
-          }
-        }
+        ]
       }
     ],
     "@context": {

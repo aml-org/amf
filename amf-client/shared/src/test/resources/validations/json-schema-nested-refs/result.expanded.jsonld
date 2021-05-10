@@ -37,15 +37,7 @@
               {
                 "@value": "uri"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "core:urlTemplate": "[(2,0)-(4,0)]"
-              },
-              "synthesized-field": {
-                "#40": "true"
-              }
-            }
+            ]
           }
         ],
         "apiContract:accepts": [
@@ -62,25 +54,7 @@
           {
             "@value": "1.0"
           }
-        ],
-        "smaps": {
-          "single-value-array": {
-            "apiContract:contentType": "",
-            "apiContract:accepts": ""
-          },
-          "lexical": {
-            "core:version": "[(5,0)-(6,0)]",
-            "apiContract:accepts": "[(6,0)-(7,0)]",
-            "core:description": "[(7,0)-(9,0)]",
-            "#39": "[(2,0)-(16,0)]",
-            "core:name": "[(4,0)-(5,0)]",
-            "apiContract:server": "[(2,0)-(4,0)]",
-            "apiContract:contentType": "[(6,0)-(7,0)]"
-          },
-          "source-vendor": {
-            "#39": "RAML 1.0"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -117,12 +91,7 @@
               {
                 "@value": "application/json"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#4": "[(1,0)-(24,1)]"
-              }
-            }
+            ]
           }
         ],
         "doc:version": [
@@ -154,12 +123,7 @@
                   {
                     "@value": "application/json"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#3": "[(1,0)-(29,1)]"
-                  }
-                }
+                ]
               }
             ],
             "doc:version": [
@@ -203,12 +167,7 @@
               {
                 "@value": "application/json"
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#6": "[(1,0)-(12,1)]"
-              }
-            }
+            ]
           }
         ],
         "doc:version": [
@@ -320,33 +279,9 @@
                               {
                                 "@value": "fullAddress"
                               }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "doc:recursive": "true",
-                                "shacl:closed": "true"
-                              },
-                              "resolved-link": {
-                                "#22": "amf://id#23"
-                              },
-                              "lexical": {
-                                "#22": "[(7,2)-(9,3)]"
-                              },
-                              "type-property-lexical-info": {
-                                "#22": "[(8,4)-(8,10)]"
-                              },
-                              "resolved-link-target": {
-                                "#22": "amf://id#22"
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "shacl:and": "[(14,8)-(18,9)]",
-                            "#21": "[(13,6)-(19,7)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "shacl:minCount": [
@@ -358,15 +293,7 @@
                       {
                         "@value": "addresses"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "shacl:minCount": "true"
-                      },
-                      "lexical": {
-                        "#20": "[(13,6)-(19,7)]"
-                      }
-                    }
+                    ]
                   },
                   {
                     "@id": "#24",
@@ -420,33 +347,9 @@
                               {
                                 "@value": "expensesLiving"
                               }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "doc:recursive": "true",
-                                "shacl:closed": "true"
-                              },
-                              "resolved-link": {
-                                "#26": "amf://id#27"
-                              },
-                              "lexical": {
-                                "#26": "[(4,2)-(6,3)]"
-                              },
-                              "type-property-lexical-info": {
-                                "#26": "[(5,4)-(5,10)]"
-                              },
-                              "resolved-link-target": {
-                                "#26": "amf://id#26"
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "shacl:or": "[(21,8)-(25,9)]",
-                            "#25": "[(20,6)-(26,7)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "shacl:minCount": [
@@ -458,33 +361,14 @@
                       {
                         "@value": "expenses"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "shacl:minCount": "true"
-                      },
-                      "lexical": {
-                        "#24": "[(20,6)-(26,7)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:name": [
                   {
                     "@value": "applicant"
                   }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "shacl:closed": "true"
-                  },
-                  "lexical": {
-                    "#19": "[(10,2)-(28,3)]"
-                  },
-                  "type-property-lexical-info": {
-                    "#19": "[(11,4)-(11,10)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -496,18 +380,7 @@
               {
                 "@value": "primaryApplicant"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true"
-              },
-              "lexical": {
-                "#18": "[(13,4)-(15,5)]"
-              },
-              "inheritance-provenance": {
-                "#18": "amf://id#17"
-              }
-            }
+            ]
           },
           {
             "@id": "#28",
@@ -590,33 +463,9 @@
                               {
                                 "@value": "fullAddress"
                               }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "doc:recursive": "true",
-                                "shacl:closed": "true"
-                              },
-                              "resolved-link": {
-                                "#22": "amf://id#23"
-                              },
-                              "lexical": {
-                                "#22": "[(7,2)-(9,3)]"
-                              },
-                              "type-property-lexical-info": {
-                                "#22": "[(8,4)-(8,10)]"
-                              },
-                              "resolved-link-target": {
-                                "#22": "amf://id#22"
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "shacl:and": "[(14,8)-(18,9)]",
-                            "#31": "[(13,6)-(19,7)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "shacl:minCount": [
@@ -628,15 +477,7 @@
                       {
                         "@value": "addresses"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "shacl:minCount": "true"
-                      },
-                      "lexical": {
-                        "#30": "[(13,6)-(19,7)]"
-                      }
-                    }
+                    ]
                   },
                   {
                     "@id": "#32",
@@ -690,33 +531,9 @@
                               {
                                 "@value": "expensesLiving"
                               }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "doc:recursive": "true",
-                                "shacl:closed": "true"
-                              },
-                              "resolved-link": {
-                                "#26": "amf://id#27"
-                              },
-                              "lexical": {
-                                "#26": "[(4,2)-(6,3)]"
-                              },
-                              "type-property-lexical-info": {
-                                "#26": "[(5,4)-(5,10)]"
-                              },
-                              "resolved-link-target": {
-                                "#26": "amf://id#26"
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "shacl:or": "[(21,8)-(25,9)]",
-                            "#33": "[(20,6)-(26,7)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "shacl:minCount": [
@@ -728,33 +545,14 @@
                       {
                         "@value": "expenses"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "shacl:minCount": "true"
-                      },
-                      "lexical": {
-                        "#32": "[(20,6)-(26,7)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:name": [
                   {
                     "@value": "applicant"
                   }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "shacl:closed": "true"
-                  },
-                  "lexical": {
-                    "#29": "[(10,2)-(28,3)]"
-                  },
-                  "type-property-lexical-info": {
-                    "#29": "[(11,4)-(11,10)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -766,18 +564,7 @@
               {
                 "@value": "additionalApplicants"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true"
-              },
-              "lexical": {
-                "#28": "[(16,4)-(18,5)]"
-              },
-              "inheritance-provenance": {
-                "#28": "amf://id#17"
-              }
-            }
+            ]
           },
           {
             "@id": "#34",
@@ -811,16 +598,7 @@
                   {
                     "@value": "merchant"
                   }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "#35": "[(7,6)-(7,12)]"
-                  },
-                  "lexical": {
-                    "shacl:datatype": "[(7,6)-(7,22)]",
-                    "#35": "[(6,4)-(8,5)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -832,16 +610,7 @@
               {
                 "@value": "merchant"
               }
-            ],
-            "smaps": {
-              "inheritance-provenance": {
-                "#34": "amf://id#17"
-              },
-              "lexical": {
-                "shacl:minCount": "[(21,4)-(21,14)]",
-                "#34": "[(6,4)-(8,5)]"
-              }
-            }
+            ]
           },
           {
             "@id": "#36",
@@ -875,16 +644,7 @@
                   {
                     "@value": "operator"
                   }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "#37": "[(10,6)-(10,12)]"
-                  },
-                  "lexical": {
-                    "shacl:datatype": "[(10,6)-(10,22)]",
-                    "#37": "[(9,4)-(11,5)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -896,16 +656,7 @@
               {
                 "@value": "operator"
               }
-            ],
-            "smaps": {
-              "inheritance-provenance": {
-                "#36": "amf://id#17"
-              },
-              "lexical": {
-                "shacl:minCount": "[(22,4)-(22,14)]",
-                "#36": "[(9,4)-(11,5)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
@@ -971,32 +722,14 @@
                               {
                                 "@value": "randomKey"
                               }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "core:name": "true",
-                                "shacl:datatype": "true"
-                              },
-                              "lexical": {
-                                "#12": "[(4,19)-(4,28)]"
-                              }
-                            }
+                            ]
                           }
                         ],
                         "core:name": [
                           {
                             "@value": "addresses"
                           }
-                        ],
-                        "smaps": {
-                          "synthesized-field": {
-                            "core:name": "true"
-                          },
-                          "lexical": {
-                            "data:randomKey": "[(4,6)-(4,28)]",
-                            "#11": "[(3,17)-(5,5)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "data:expenses": [
@@ -1029,49 +762,21 @@
                               {
                                 "@value": "otherRandomKey"
                               }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "core:name": "true",
-                                "shacl:datatype": "true"
-                              },
-                              "lexical": {
-                                "#14": "[(7,24)-(7,31)]"
-                              }
-                            }
+                            ]
                           }
                         ],
                         "core:name": [
                           {
                             "@value": "expenses"
                           }
-                        ],
-                        "smaps": {
-                          "synthesized-field": {
-                            "core:name": "true"
-                          },
-                          "lexical": {
-                            "data:otherRandomKey": "[(7,6)-(7,31)]",
-                            "#13": "[(6,16)-(8,5)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "core:name": [
                       {
                         "@value": "additionalApplicants"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "core:name": "true"
-                      },
-                      "lexical": {
-                        "data:expenses": "[(6,4)-(8,5)]",
-                        "#10": "[(2,26)-(9,3)]",
-                        "data:addresses": "[(3,4)-(5,5)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "data:merchant": [
@@ -1096,16 +801,7 @@
                       {
                         "@value": "merchant"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "core:name": "true",
-                        "shacl:datatype": "true"
-                      },
-                      "lexical": {
-                        "#15": "[(10,14)-(10,30)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "data:operator": [
@@ -1130,37 +826,14 @@
                       {
                         "@value": "operator"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "core:name": "true",
-                        "shacl:datatype": "true"
-                      },
-                      "lexical": {
-                        "#16": "[(11,14)-(11,31)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "core:name": [
                   {
                     "@value": "object_1"
                   }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "core:name": "true"
-                  },
-                  "lexical": {
-                    "data:operator": "[(11,2)-(11,31)]",
-                    "data:additionalApplicants": "[(2,2)-(9,3)]",
-                    "#9": "[(1,0)-(12,1)]",
-                    "data:merchant": "[(10,2)-(10,30)]"
-                  },
-                  "parsed-json-example": {
-                    "#9": "{\n  \"additionalApplicants\": {\n    \"addresses\": {\n      \"randomKey\": \"Current\"\n    },\n    \"expenses\": {\n      \"otherRandomKey\": \"Basic\"\n    }\n  },\n  \"merchant\": \"STRATTON - QLD\",\n  \"operator\": \"kenandrajog_adm\"\n}"
-                  }
-                }
+                ]
               }
             ],
             "doc:reference-id": [
@@ -1172,37 +845,14 @@
               {
                 "@value": "file://amf-client/shared/src/test/resources/validations/json-schema-nested-refs/examples/CreateApplicationRequest.json"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "doc:strict": "true"
-              },
-              "lexical": {
-                "#8": "[(1,0)-(1,0)]"
-              }
-            }
+            ]
           }
         ],
         "doc:reference-id": [
           {
             "@id": "#4"
           }
-        ],
-        "smaps": {
-          "inheritance-provenance": {
-            "doc:reference-id": "amf://id#17"
-          },
-          "declared-element": {
-            "#7": ""
-          },
-          "lexical": {
-            "apiContract:examples": "[(12,4)-(16,0)]",
-            "#7": "[(10,11)-(16,0)]"
-          },
-          "inherited-shapes": {
-            "#7": "amf://id#38"
-          }
-        }
+        ]
       }
     ],
     "@context": {

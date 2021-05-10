@@ -14,17 +14,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#8": "RAML 1.0"
-        },
-        "lexical": {
-          "core:version": "[(2,0)-(3,0)]",
-          "#8": "[(2,0)-(14,14)]",
-          "core:name": "[(3,0)-(5,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#9",
@@ -37,13 +27,7 @@
         {
           "@id": "#10"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:path": "[(7,0)-(7,8)]",
-          "#9": "[(7,0)-(14,14)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#10",
@@ -56,13 +40,7 @@
         {
           "@id": "#11"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(9,4)-(14,14)]",
-          "#10": "[(8,2)-(14,14)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#11",
@@ -77,13 +55,7 @@
         {
           "@id": "#12"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(11,8)-(14,14)]",
-          "#11": "[(10,6)-(14,14)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#12",
@@ -94,11 +66,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#7"
-      },
-      "smaps": {
-        "lexical": {
-          "#12": "[(12,10)-(14,14)]"
-        }
       }
     },
     {
@@ -119,30 +86,7 @@
           "@id": "#5"
         }
       ],
-      "shacl:name": "AmericanFlight",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link-target": {
-          "#7": "amf://id#2"
-        },
-        "source-vendor": {
-          "#7": "RAML 1.0"
-        },
-        "lexical": {
-          "#7": "[(3,0)-(6,14)]"
-        },
-        "type-property-lexical-info": {
-          "#7": "[(3,0)-(3,4)]"
-        },
-        "resolved-link": {
-          "#7": "amf://id#7"
-        },
-        "declared-element": {
-          "#7": ""
-        }
-      }
+      "shacl:name": "AmericanFlight"
     },
     {
       "@id": "#3",
@@ -161,17 +105,7 @@
         "@id": "#4"
       },
       "shacl:minCount": 0,
-      "shacl:name": "ID",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(5,7)-(5,14)]",
-          "#3": "[(5,2)-(6,0)]"
-        }
-      }
+      "shacl:name": "ID"
     },
     {
       "@id": "#5",
@@ -190,17 +124,7 @@
         "@id": "#6"
       },
       "shacl:minCount": 1,
-      "shacl:name": "code",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(6,8)-(6,14)]",
-          "#5": "[(6,2)-(6,14)]"
-        }
-      }
+      "shacl:name": "code"
     },
     {
       "@id": "#4",
@@ -216,13 +140,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "shacl:name": "ID?",
-      "smaps": {
-        "lexical": {
-          "shacl:datatype": "[(5,7)-(5,14)]",
-          "#4": "[(5,2)-(6,0)]"
-        }
-      }
+      "shacl:name": "ID?"
     },
     {
       "@id": "#6",
@@ -238,13 +156,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "code",
-      "smaps": {
-        "lexical": {
-          "shacl:datatype": "[(6,8)-(6,14)]",
-          "#6": "[(6,2)-(6,14)]"
-        }
-      }
+      "shacl:name": "code"
     },
     {
       "@id": "",
@@ -281,12 +193,7 @@
         "@id": "#2"
       },
       "doc:version": "3.1.0",
-      "doc:root": false,
-      "smaps": {
-        "lexical": {
-          "#1": "[(1,0)-(6,14)]"
-        }
-      }
+      "doc:root": false
     },
     {
       "@id": "#2",
@@ -306,21 +213,7 @@
           "@id": "#5"
         }
       ],
-      "shacl:name": "type",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "type-property-lexical-info": {
-          "#2": "[(3,0)-(3,4)]"
-        },
-        "lexical": {
-          "#2": "[(3,0)-(6,14)]"
-        },
-        "source-vendor": {
-          "#2": "RAML 1.0"
-        }
-      }
+      "shacl:name": "type"
     }
   ],
   "@context": {

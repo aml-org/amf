@@ -1,18 +1,18 @@
 #%RAML 1.0
 (amf-parameters):
   a:
-    required: true
-    type: string
-    in: path
     name: a
+    required: true
+    in: path
+    type: string
   payload?:
+    in: body
+    name: payload?
     schema:
       type: object
       properties:
         prop:
           type: string
-    in: body
-    name: payload
 title: test
 version: "1.0"
 /a/{a}:

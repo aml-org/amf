@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
-    "title": "Swagger Sample API"
+    "title": "Swagger Sample API",
+    "version": "1.0.0"
   },
   "paths": {
     "/bla": {
@@ -12,10 +12,10 @@
         ],
         "responses": {
           "200": {
+            "description": "",
             "schema": {
               "type": "string"
-            },
-            "description": ""
+            }
           }
         }
       }

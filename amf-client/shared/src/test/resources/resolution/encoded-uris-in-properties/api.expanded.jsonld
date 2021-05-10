@@ -20,16 +20,7 @@
           {
             "@value": "Something"
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#6": "RAML 1.0"
-          },
-          "lexical": {
-            "core:name": "[(2,0)-(3,0)]",
-            "#6": "[(2,0)-(8,41)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -90,13 +81,7 @@
                   {
                     "@value": "from"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "shacl:datatype": "[(7,14)-(7,20)]",
-                    "#3": "[(7,6)-(8,0)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -108,17 +93,7 @@
               {
                 "@value": "from"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true",
-                "shacl:path": "true"
-              },
-              "lexical": {
-                "raml-shapes:range": "[(7,14)-(7,20)]",
-                "#2": "[(7,6)-(8,0)]"
-              }
-            }
+            ]
           },
           {
             "@id": "#4",
@@ -152,13 +127,7 @@
                   {
                     "@value": "amount after conversion"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "shacl:datatype": "[(8,34)-(8,41)]",
-                    "#5": "[(8,6)-(8,41)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -170,39 +139,14 @@
               {
                 "@value": "amount after conversion"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true",
-                "shacl:path": "true"
-              },
-              "lexical": {
-                "raml-shapes:range": "[(8,34)-(8,41)]",
-                "#4": "[(8,6)-(8,41)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "myTypeWithEncodedUris"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "shacl:closed": "true"
-          },
-          "type-property-lexical-info": {
-            "#1": "[(5,4)-(5,8)]"
-          },
-          "lexical": {
-            "shacl:name": "[(4,2)-(4,23)]",
-            "#1": "[(4,2)-(8,41)]"
-          },
-          "declared-element": {
-            "#1": ""
-          }
-        }
+        ]
       }
     ],
     "@context": {

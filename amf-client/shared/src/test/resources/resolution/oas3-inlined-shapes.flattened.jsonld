@@ -19,21 +19,7 @@
         {
           "@id": "#5"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#3": "OAS 3.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(19,0)-(34,32)]",
-          "core:termsOfService": "[(10,2)-(12,0)]",
-          "core:description": "[(9,2)-(10,0)]",
-          "#3": "[(1,0)-(34,32)]",
-          "core:name": "[(4,2)-(5,0)]",
-          "core:version": "[(3,2)-(4,0)]",
-          "core:provider": "[(5,2)-(9,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#4",
@@ -47,15 +33,7 @@
         }
       ],
       "core:name": "cb",
-      "core:email": "cbazan@mulesoft.com",
-      "smaps": {
-        "lexical": {
-          "core:email": "[(7,4)-(8,0)]",
-          "core:url": "[(8,4)-(9,0)]",
-          "#4": "[(6,0)-(9,0)]",
-          "core:name": "[(6,4)-(7,0)]"
-        }
-      }
+      "core:email": "cbazan@mulesoft.com"
     },
     {
       "@id": "#5",
@@ -68,12 +46,7 @@
         {
           "@id": "#6"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#5": "[(20,2)-(34,32)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#6",
@@ -87,14 +60,7 @@
         {
           "@id": "#7"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(23,6)-(34,32)]",
-          "#6": "[(21,4)-(34,32)]",
-          "apiContract:guiSummary": "[(22,6)-(23,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#7",
@@ -110,15 +76,7 @@
         {
           "@id": "#8"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(26,10)-(34,32)]",
-          "core:name": "[(24,8)-(24,13)]",
-          "#7": "[(24,8)-(34,32)]",
-          "core:description": "[(25,10)-(26,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#8",
@@ -129,13 +87,6 @@
       "core:mediaType": "*/*",
       "raml-shapes:schema": {
         "@id": "#9"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(28,14)-(34,32)]",
-          "#8": "[(27,12)-(34,32)]",
-          "core:mediaType": "[(27,12)-(27,17)]"
-        }
       }
     },
     {
@@ -156,21 +107,7 @@
           "@id": "#12"
         }
       ],
-      "shacl:name": "schema",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "type-property-lexical-info": {
-          "#9": "[(29,16)-(29,20)]"
-        },
-        "lexical": {
-          "#9": "[(28,14)-(34,32)]"
-        },
-        "auto-generated-name": {
-          "#9": ""
-        }
-      }
+      "shacl:name": "schema"
     },
     {
       "@id": "#10",
@@ -189,15 +126,7 @@
         "@id": "#11"
       },
       "shacl:minCount": 0,
-      "shacl:name": "code",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#10": "[(31,18)-(33,0)]"
-        }
-      }
+      "shacl:name": "code"
     },
     {
       "@id": "#12",
@@ -216,15 +145,7 @@
         "@id": "#13"
       },
       "shacl:minCount": 0,
-      "shacl:name": "msg",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#12": "[(33,18)-(34,32)]"
-        }
-      }
+      "shacl:name": "msg"
     },
     {
       "@id": "#11",
@@ -240,16 +161,7 @@
           "@id": "http://a.ml/vocabularies/shapes#number"
         }
       ],
-      "shacl:name": "code",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#11": "[(32,20)-(32,24)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(32,20)-(33,0)]",
-          "#11": "[(31,18)-(33,0)]"
-        }
-      }
+      "shacl:name": "code"
     },
     {
       "@id": "#13",
@@ -265,16 +177,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "msg",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#13": "[(34,20)-(34,24)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(34,20)-(34,32)]",
-          "#13": "[(33,18)-(34,32)]"
-        }
-      }
+      "shacl:name": "msg"
     },
     {
       "@id": "",
@@ -311,22 +214,6 @@
       "apiContract:binding": "query",
       "raml-shapes:schema": {
         "@id": "#2"
-      },
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:explode": "true",
-          "apiContract:required": "true",
-          "apiContract:style": "true"
-        },
-        "lexical": {
-          "raml-shapes:schema": "[(17,6)-(19,0)]",
-          "apiContract:paramName": "[(16,6)-(17,0)]",
-          "#1": "[(14,4)-(19,0)]",
-          "apiContract:binding": "[(15,6)-(16,0)]"
-        },
-        "declared-element": {
-          "#1": ""
-        }
       }
     },
     {
@@ -340,21 +227,7 @@
       ],
       "shacl:closed": false,
       "shacl:property": [],
-      "shacl:name": "query-with-schema",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "type-property-lexical-info": {
-          "#2": "[(18,8)-(18,12)]"
-        },
-        "lexical": {
-          "#2": "[(17,6)-(19,0)]"
-        },
-        "auto-generated-name": {
-          "#2": ""
-        }
-      }
+      "shacl:name": "query-with-schema"
     }
   ],
   "@context": {

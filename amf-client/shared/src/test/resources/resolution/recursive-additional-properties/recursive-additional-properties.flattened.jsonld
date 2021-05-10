@@ -30,18 +30,7 @@
         {
           "@id": "#12"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#10": "OAS 2.0"
-        },
-        "lexical": {
-          "apiContract:tag": "[(9,0)-(11,0)]",
-          "apiContract:scheme": "[(2,0)-(4,0)]",
-          "#10": "[(1,0)-(34,16)]",
-          "apiContract:endpoint": "[(11,0)-(20,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#11",
@@ -49,18 +38,7 @@
         "apiContract:Server",
         "doc:DomainElement"
       ],
-      "core:urlTemplate": "firestore.googleapis.com/",
-      "smaps": {
-        "host-lexical": {
-          "core:urlTemplate": "[(4,0)-(5,0)]"
-        },
-        "synthesized-field": {
-          "core:urlTemplate": "true"
-        },
-        "base-path-lexical": {
-          "core:urlTemplate": "[(5,0)-(7,0)]"
-        }
-      }
+      "core:urlTemplate": "firestore.googleapis.com/"
     },
     {
       "@id": "#13",
@@ -72,13 +50,7 @@
         {
           "@id": "https://cloud.google.com/firestore"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "core:url": "[(8,2)-(9,0)]",
-          "#13": "[(8,0)-(9,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#14",
@@ -91,12 +63,7 @@
         {
           "@id": "#15"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#14": "[(12,2)-(20,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#12",
@@ -104,13 +71,7 @@
         "apiContract:Tag",
         "doc:DomainElement"
       ],
-      "core:name": "projects",
-      "smaps": {
-        "lexical": {
-          "core:name": "[(10,4)-(11,0)]",
-          "#12": "[(10,4)-(11,0)]"
-        }
-      }
+      "core:name": "projects"
     },
     {
       "@id": "#15",
@@ -125,15 +86,7 @@
           "@id": "#16"
         }
       ],
-      "apiContract:operationId": "firestore.projects.databases.documents.list",
-      "smaps": {
-        "lexical": {
-          "apiContract:operationId": "[(14,6)-(15,0)]",
-          "core:name": "[(14,6)-(15,0)]",
-          "#15": "[(13,4)-(20,0)]",
-          "apiContract:returns": "[(15,6)-(20,0)]"
-        }
-      }
+      "apiContract:operationId": "firestore.projects.databases.documents.list"
     },
     {
       "@id": "#16",
@@ -149,14 +102,7 @@
         {
           "@id": "#17"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "core:description": "[(17,10)-(18,0)]",
-          "#16": "[(16,8)-(20,0)]",
-          "core:name": "[(16,8)-(16,13)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#17",
@@ -166,11 +112,6 @@
       ],
       "raml-shapes:schema": {
         "@id": "#4"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(18,10)-(20,0)]"
-        }
       }
     },
     {
@@ -189,29 +130,7 @@
         }
       ],
       "doc:recursive": true,
-      "shacl:name": "Value",
-      "smaps": {
-        "synthesized-field": {
-          "doc:recursive": "true",
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#4": "amf://id#9"
-        },
-        "type-property-lexical-info": {
-          "#4": "[(34,4)-(34,8)]"
-        },
-        "lexical": {
-          "shacl:name": "[(29,2)-(29,7)]",
-          "#4": "[(29,2)-(34,16)]"
-        },
-        "declared-element": {
-          "#4": ""
-        },
-        "resolved-link-target": {
-          "#4": "amf://id#4"
-        }
-      }
+      "shacl:name": "Value"
     },
     {
       "@id": "#5",
@@ -230,15 +149,7 @@
         "@id": "#6"
       },
       "shacl:minCount": 0,
-      "shacl:name": "mapValue",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#5": "[(31,6)-(34,0)]"
-        }
-      }
+      "shacl:name": "mapValue"
     },
     {
       "@id": "#6",
@@ -254,27 +165,7 @@
         }
       ],
       "doc:recursive": true,
-      "shacl:name": "MapValue",
-      "smaps": {
-        "synthesized-field": {
-          "doc:recursive": "true"
-        },
-        "resolved-link": {
-          "#6": "amf://id#7"
-        },
-        "type-property-lexical-info": {
-          "#6": "[(28,4)-(28,8)]"
-        },
-        "lexical": {
-          "#6": "[(21,2)-(29,0)]"
-        },
-        "declared-element": {
-          "#6": ""
-        },
-        "resolved-link-target": {
-          "#6": "amf://id#1"
-        }
-      }
+      "shacl:name": "MapValue"
     },
     {
       "@id": "",
@@ -315,30 +206,7 @@
       ],
       "doc:recursive": true,
       "shacl:name": "MapValue",
-      "core:description": "An array value.",
-      "smaps": {
-        "synthesized-field": {
-          "doc:recursive": "true",
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#1": "amf://id#7"
-        },
-        "type-property-lexical-info": {
-          "#1": "[(28,4)-(28,8)]"
-        },
-        "lexical": {
-          "core:description": "[(22,4)-(23,0)]",
-          "#1": "[(21,2)-(29,0)]",
-          "shacl:name": "[(21,2)-(21,10)]"
-        },
-        "declared-element": {
-          "#1": ""
-        },
-        "resolved-link-target": {
-          "#1": "amf://id#1"
-        }
-      }
+      "core:description": "An array value."
     },
     {
       "@id": "#2",
@@ -357,15 +225,7 @@
         "@id": "#3"
       },
       "shacl:minCount": 0,
-      "shacl:name": "values",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#2": "[(24,6)-(28,0)]"
-        }
-      }
+      "shacl:name": "values"
     },
     {
       "@id": "#3",
@@ -381,18 +241,7 @@
         "@id": "#4"
       },
       "shacl:property": [],
-      "shacl:name": "values",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "lexical": {
-          "#3": "[(24,6)-(28,0)]"
-        },
-        "type-property-lexical-info": {
-          "#3": "[(27,8)-(27,12)]"
-        }
-      }
+      "shacl:name": "values"
     }
   ],
   "@context": {

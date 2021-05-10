@@ -14,18 +14,7 @@
         {
           "@id": "#6"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#5": "ASYNC 2.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(5,0)-(12,0)]",
-          "core:name": "[(3,2)-(4,0)]",
-          "#5": "[(1,0)-(12,0)]",
-          "core:version": "[(4,2)-(5,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#6",
@@ -38,13 +27,7 @@
         {
           "@id": "#7"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:supportedOperation": "[(7,0)-(12,0)]",
-          "#6": "[(6,2)-(12,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#7",
@@ -57,13 +40,7 @@
         {
           "@id": "#8"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(8,6)-(12,0)]",
-          "#7": "[(7,4)-(12,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#8",
@@ -76,12 +53,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#8": "[(9,0)-(12,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#9",
@@ -92,13 +64,6 @@
       "apiContract:schemaMediaType": "application/raml+yaml;version=1.0",
       "raml-shapes:schema": {
         "@id": "#2"
-      },
-      "smaps": {
-        "lexical": {
-          "raml-shapes:schema": "[(10,8)-(12,0)]",
-          "#9": "[(9,0)-(12,0)]",
-          "apiContract:schemaMediaType": "[(9,8)-(10,0)]"
-        }
       }
     },
     {
@@ -117,12 +82,7 @@
         {
           "@id": "#4"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#2": "[(3,0)-(4,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#3",
@@ -134,12 +94,7 @@
         "doc:DomainElement"
       ],
       "shacl:closed": false,
-      "shacl:property": [],
-      "smaps": {
-        "lexical": {
-          "#3": "[(3,6)-(3,12)]"
-        }
-      }
+      "shacl:property": []
     },
     {
       "@id": "#4",
@@ -154,12 +109,7 @@
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#4": "[(3,15)-(3,21)]"
-        }
-      }
+      ]
     },
     {
       "@id": "",
@@ -191,12 +141,7 @@
         "@id": "#2"
       },
       "doc:version": "3.1.0",
-      "doc:root": false,
-      "smaps": {
-        "lexical": {
-          "#1": "[(1,0)-(4,0)]"
-        }
-      }
+      "doc:root": false
     }
   ],
   "@context": {

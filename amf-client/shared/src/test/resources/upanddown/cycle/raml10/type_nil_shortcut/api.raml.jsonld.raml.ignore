@@ -1,6 +1,4 @@
 #%RAML 1.0
-title: Offices API
-baseUri: http://localhost/office
 annotationTypes:
   base:
     type: string | nil
@@ -9,21 +7,23 @@ annotationTypes:
       - Method
     anyOf:
       -
-        type: string
         description: |
           This annotation allows to specify a method which will not be transformed into an operation.
           Optionally, a reason can be defined.
+        type: string
       -
         type: nil
   operationName:
-    type: string
-    description: |
-      This annotation allows to specify a custom operation name.
     allowedTargets:
       - Method
-  parameterName:
-    type: string
     description: |
-      This annotation allows to specify a custom parameter name.
+      This annotation allows to specify a custom operation name.
+    type: string
+  parameterName:
     allowedTargets:
       - TypeDeclaration
+    description: |
+      This annotation allows to specify a custom parameter name.
+    type: string
+title: Offices API
+baseUri: http://localhost/office

@@ -15,19 +15,7 @@
         {
           "@id": "#2"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#1": "OAS 2.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(8,0)-(48,28)]",
-          "core:description": "[(5,2)-(6,0)]",
-          "#1": "[(1,0)-(48,28)]",
-          "core:name": "[(4,2)-(5,0)]",
-          "core:version": "[(6,2)-(8,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#2",
@@ -40,12 +28,7 @@
         {
           "@id": "#3"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#2": "[(9,2)-(48,28)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#3",
@@ -58,13 +41,7 @@
         {
           "@id": "#4"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:expects": "[(11,0)-(48,28)]",
-          "#3": "[(10,4)-(48,28)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#4",
@@ -77,13 +54,7 @@
         {
           "@id": "#5"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(11,6)-(48,28)]",
-          "#4": "[(11,0)-(48,28)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#5",
@@ -95,17 +66,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#6"
-      },
-      "smaps": {
-        "body-parameter": {
-          "#5": "true"
-        },
-        "lexical": {
-          "raml-shapes:schema": "[(16,10)-(48,28)]",
-          "core:name": "[(15,10)-(16,0)]",
-          "#5": "[(12,9)-(48,28)]",
-          "core:mediaType": "[(13,10)-(14,0)]"
-        }
       }
     },
     {
@@ -134,21 +94,7 @@
         {
           "@id": "#7"
         }
-      ],
-      "smaps": {
-        "parameter-binding-in-body-lexical-info": {
-          "#6": "[(14,10)-(15,0)]"
-        },
-        "lexical": {
-          "apiContract:examples": "[(17,12)-(25,0)]",
-          "shacl:closed": "[(26,12)-(27,0)]",
-          "#6": "[(16,10)-(48,28)]",
-          "shacl:name": "[(15,10)-(16,0)]"
-        },
-        "type-property-lexical-info": {
-          "#6": "[(25,12)-(25,16)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#14",
@@ -167,13 +113,7 @@
         "@id": "#15"
       },
       "shacl:minCount": 1,
-      "shacl:name": "address",
-      "smaps": {
-        "lexical": {
-          "shacl:minCount": "[(28,16)-(28,23)]",
-          "#14": "[(32,14)-(44,0)]"
-        }
-      }
+      "shacl:name": "address"
     },
     {
       "@id": "#22",
@@ -192,13 +132,7 @@
         "@id": "#23"
       },
       "shacl:minCount": 1,
-      "shacl:name": "id",
-      "smaps": {
-        "lexical": {
-          "shacl:minCount": "[(29,16)-(29,18)]",
-          "#22": "[(44,14)-(47,0)]"
-        }
-      }
+      "shacl:name": "id"
     },
     {
       "@id": "#24",
@@ -217,13 +151,7 @@
         "@id": "#25"
       },
       "shacl:minCount": 1,
-      "shacl:name": "name",
-      "smaps": {
-        "lexical": {
-          "shacl:minCount": "[(30,16)-(30,20)]",
-          "#24": "[(47,14)-(48,28)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#7",
@@ -237,14 +165,6 @@
       },
       "doc:raw": "address:\n  street: 12 Oxford St.\n  city: London\nid: 1299\nname: Example",
       "smaps": {
-        "synthesized-field": {
-          "doc:raw": "true"
-        },
-        "lexical": {
-          "doc:structuredValue": "[(19,14)-(25,0)]",
-          "#7": "[(17,12)-(25,0)]",
-          "doc:strict": "[(18,14)-(19,0)]"
-        },
         "tracked-element": {
           "#7": "amf://id#5"
         }
@@ -268,16 +188,7 @@
           "@id": "#20"
         }
       ],
-      "shacl:name": "address",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#15": "[(33,16)-(33,20)]"
-        },
-        "lexical": {
-          "shacl:closed": "[(34,16)-(35,0)]",
-          "#15": "[(32,14)-(44,0)]"
-        }
-      }
+      "shacl:name": "address"
     },
     {
       "@id": "#23",
@@ -294,17 +205,7 @@
         }
       ],
       "raml-shapes:format": "int",
-      "shacl:name": "id",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#23": "[(45,16)-(45,20)]"
-        },
-        "lexical": {
-          "raml-shapes:format": "[(46,16)-(47,0)]",
-          "#23": "[(44,14)-(47,0)]",
-          "shacl:datatype": "[(45,16)-(46,0)]"
-        }
-      }
+      "shacl:name": "id"
     },
     {
       "@id": "#25",
@@ -320,16 +221,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#25": "[(48,16)-(48,20)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(48,16)-(48,28)]",
-          "#25": "[(47,14)-(48,28)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#8",
@@ -347,18 +239,7 @@
       "data:name": {
         "@id": "#13"
       },
-      "core:name": "object_1",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:name": "[(24,16)-(25,0)]",
-          "data:address": "[(20,16)-(23,0)]",
-          "#8": "[(20,0)-(25,0)]",
-          "data:id": "[(23,16)-(24,0)]"
-        }
-      }
+      "core:name": "object_1"
     },
     {
       "@id": "#16",
@@ -377,13 +258,7 @@
         "@id": "#17"
       },
       "shacl:minCount": 1,
-      "shacl:name": "street",
-      "smaps": {
-        "lexical": {
-          "shacl:minCount": "[(36,20)-(36,26)]",
-          "#16": "[(39,18)-(42,0)]"
-        }
-      }
+      "shacl:name": "street"
     },
     {
       "@id": "#20",
@@ -402,13 +277,7 @@
         "@id": "#21"
       },
       "shacl:minCount": 1,
-      "shacl:name": "city",
-      "smaps": {
-        "lexical": {
-          "shacl:minCount": "[(37,20)-(37,24)]",
-          "#20": "[(42,18)-(44,0)]"
-        }
-      }
+      "shacl:name": "city"
     },
     {
       "@id": "#9",
@@ -423,17 +292,7 @@
       "data:city": {
         "@id": "#11"
       },
-      "core:name": "address",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:city": "[(22,18)-(23,0)]",
-          "#9": "[(21,0)-(23,0)]",
-          "data:street": "[(21,18)-(22,0)]"
-        }
-      }
+      "core:name": "address"
     },
     {
       "@id": "#12",
@@ -448,16 +307,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "core:name": "id",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#12": "[(23,20)-(23,24)]"
-        }
-      }
+      "core:name": "id"
     },
     {
       "@id": "#13",
@@ -472,16 +322,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#13": "[(24,22)-(24,29)]"
-        }
-      }
+      "core:name": "name"
     },
     {
       "@id": "#17",
@@ -502,17 +343,7 @@
         {
           "@id": "#18"
         }
-      ],
-      "smaps": {
-        "type-property-lexical-info": {
-          "#17": "[(41,20)-(41,24)]"
-        },
-        "lexical": {
-          "apiContract:examples": "[(40,20)-(41,0)]",
-          "#17": "[(39,18)-(42,0)]",
-          "shacl:datatype": "[(41,20)-(42,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#21",
@@ -528,16 +359,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "city",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#21": "[(43,20)-(43,24)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(43,20)-(44,0)]",
-          "#21": "[(42,18)-(44,0)]"
-        }
-      }
+      "shacl:name": "city"
     },
     {
       "@id": "#10",
@@ -552,16 +374,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "street",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#10": "[(21,26)-(21,39)]"
-        }
-      }
+      "core:name": "street"
     },
     {
       "@id": "#11",
@@ -576,16 +389,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "city",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#11": "[(22,24)-(22,30)]"
-        }
-      }
+      "core:name": "city"
     },
     {
       "@id": "#18",
@@ -597,16 +401,7 @@
       "doc:structuredValue": {
         "@id": "#19"
       },
-      "doc:raw": "12 Oxford St.",
-      "smaps": {
-        "synthesized-field": {
-          "doc:raw": "true",
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "#18": "[(40,29)-(40,42)]"
-        }
-      }
+      "doc:raw": "12 Oxford St."
     },
     {
       "@id": "#19",
@@ -621,16 +416,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_1",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#19": "[(40,29)-(40,42)]"
-        }
-      }
+      "core:name": "scalar_1"
     },
     {
       "@id": "",

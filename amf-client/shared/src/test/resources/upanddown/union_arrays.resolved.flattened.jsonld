@@ -8,16 +8,7 @@
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
-      "core:name": "test",
-      "smaps": {
-        "source-vendor": {
-          "#15": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(3,0)]",
-          "#15": "[(2,0)-(13,39)]"
-        }
-      }
+      "core:name": "test"
     },
     {
       "@id": "",
@@ -52,22 +43,7 @@
         "raml-shapes:Shape",
         "doc:DomainElement"
       ],
-      "shacl:name": "Product",
-      "smaps": {
-        "resolved-link-target": {
-          "#1": "amf://id#1"
-        },
-        "declared-element": {
-          "#1": ""
-        },
-        "lexical": {
-          "shacl:name": "[(4,2)-(4,9)]",
-          "#1": "[(4,2)-(5,0)]"
-        },
-        "resolved-link": {
-          "#1": "amf://id#3"
-        }
-      }
+      "shacl:name": "Product"
     },
     {
       "@id": "#4",
@@ -84,19 +60,7 @@
           "@id": "#5"
         }
       ],
-      "shacl:name": "PropertyArray",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "lexical": {
-          "shacl:name": "[(5,2)-(5,15)]",
-          "#4": "[(5,2)-(10,0)]"
-        },
-        "declared-element": {
-          "#4": ""
-        }
-      }
+      "shacl:name": "PropertyArray"
     },
     {
       "@id": "#10",
@@ -113,19 +77,7 @@
           "@id": "#11"
         }
       ],
-      "shacl:name": "PropertyNoArray",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "lexical": {
-          "shacl:name": "[(10,2)-(10,17)]",
-          "#10": "[(10,2)-(13,39)]"
-        },
-        "declared-element": {
-          "#10": ""
-        }
-      }
+      "shacl:name": "PropertyNoArray"
     },
     {
       "@id": "#5",
@@ -144,17 +96,7 @@
         "@id": "#6"
       },
       "shacl:minCount": 1,
-      "shacl:name": "complex",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(7,14)-(10,0)]",
-          "#5": "[(7,6)-(10,0)]"
-        }
-      }
+      "shacl:name": "complex"
     },
     {
       "@id": "#11",
@@ -173,17 +115,7 @@
         "@id": "#12"
       },
       "shacl:minCount": 1,
-      "shacl:name": "complex",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(12,14)-(13,39)]",
-          "#11": "[(12,6)-(13,39)]"
-        }
-      }
+      "shacl:name": "complex"
     },
     {
       "@id": "#6",
@@ -197,15 +129,7 @@
       "raml-shapes:items": {
         "@id": "#7"
       },
-      "shacl:name": "complex",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#6": "[(8,8)-(8,12)]"
-        },
-        "lexical": {
-          "#6": "[(7,6)-(10,0)]"
-        }
-      }
+      "shacl:name": "complex"
     },
     {
       "@id": "#12",
@@ -226,12 +150,7 @@
         {
           "@id": "#1"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#12": "[(13,8)-(13,39)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#7",
@@ -253,12 +172,7 @@
           "@id": "#1"
         }
       ],
-      "shacl:name": "items",
-      "smaps": {
-        "lexical": {
-          "#7": "[(9,8)-(10,0)]"
-        }
-      }
+      "shacl:name": "items"
     },
     {
       "@id": "#13",
@@ -273,12 +187,7 @@
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#13": "[(13,14)-(13,20)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#14",
@@ -293,12 +202,7 @@
         {
           "@id": "http://a.ml/vocabularies/shapes#number"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#14": "[(13,23)-(13,29)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#8",
@@ -313,12 +217,7 @@
         {
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#8": "[(9,15)-(9,21)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#9",
@@ -333,12 +232,7 @@
         {
           "@id": "http://a.ml/vocabularies/shapes#number"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#9": "[(9,24)-(9,30)]"
-        }
-      }
+      ]
     }
   ],
   "@context": {

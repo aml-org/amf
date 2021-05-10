@@ -15,14 +15,6 @@
         "@value": true
       }
     ],
-    "smaps": {
-      "source-vendor": {
-        "": "RAML 1.0"
-      },
-      "lexical": {
-        "": "[(1,0)-(14,20)]"
-      }
-    },
     "doc:declares": [
       {
         "@id": "#1",
@@ -43,26 +35,7 @@
           {
             "@value": "RestrictedObject"
           }
-        ],
-        "smaps": {
-          "resolved-link-target": {
-            "#1": "amf://id#1"
-          },
-          "declared-element": {
-            "#1": ""
-          },
-          "lexical": {
-            "shacl:name": "[(4,2)-(4,18)]",
-            "#1": "[(4,2)-(8,0)]",
-            "shacl:closed": "[(6,4)-(8,0)]"
-          },
-          "type-property-lexical-info": {
-            "#1": "[(5,4)-(5,8)]"
-          },
-          "resolved-link": {
-            "#1": "amf://id#2"
-          }
-        }
+        ]
       },
       {
         "@id": "#3",
@@ -111,16 +84,7 @@
                   {
                     "@value": "identifier"
                   }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "#5": "[(14,8)-(14,12)]"
-                  },
-                  "lexical": {
-                    "shacl:datatype": "[(14,8)-(14,20)]",
-                    "#5": "[(13,6)-(14,20)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -132,47 +96,14 @@
               {
                 "@value": "identifier"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true",
-                "shacl:path": "true"
-              },
-              "lexical": {
-                "raml-shapes:range": "[(13,17)-(14,20)]",
-                "#4": "[(13,6)-(14,20)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "User"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "shacl:closed": "true"
-          },
-          "resolved-link-target": {
-            "#3": "amf://id#6"
-          },
-          "declared-element": {
-            "#3": ""
-          },
-          "lexical": {
-            "#3": "[(10,2)-(14,20)]"
-          },
-          "type-property-lexical-info": {
-            "#3": "[(11,4)-(11,8)]"
-          },
-          "resolved-link": {
-            "#3": "amf://id#3"
-          },
-          "inherited-shapes": {
-            "#3": "amf://id#7"
-          }
-        }
+        ]
       },
       {
         "@id": "#6",
@@ -221,16 +152,7 @@
                   {
                     "@value": "identifier"
                   }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "#5": "[(14,8)-(14,12)]"
-                  },
-                  "lexical": {
-                    "shacl:datatype": "[(14,8)-(14,20)]",
-                    "#5": "[(13,6)-(14,20)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -242,42 +164,14 @@
               {
                 "@value": "identifier"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true",
-                "shacl:path": "true"
-              },
-              "lexical": {
-                "raml-shapes:range": "[(13,17)-(14,20)]",
-                "#4": "[(13,6)-(14,20)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "Identifier"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "shacl:closed": "true"
-          },
-          "declared-element": {
-            "#6": ""
-          },
-          "lexical": {
-            "shacl:name": "[(10,2)-(10,12)]",
-            "#6": "[(10,2)-(14,20)]"
-          },
-          "type-property-lexical-info": {
-            "#6": "[(11,4)-(11,8)]"
-          },
-          "inherited-shapes": {
-            "#6": "amf://id#7"
-          }
-        }
+        ]
       }
     ],
     "@context": {

@@ -8,16 +8,7 @@
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
-      "core:name": "test",
-      "smaps": {
-        "source-vendor": {
-          "#7": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(3,0)]",
-          "#7": "[(2,0)-(5,27)]"
-        }
-      }
+      "core:name": "test"
     },
     {
       "@id": "",
@@ -57,12 +48,7 @@
         "@id": "#2"
       },
       "doc:version": "3.1.0",
-      "doc:root": false,
-      "smaps": {
-        "lexical": {
-          "#1": "[(1,0)-(3,11)]"
-        }
-      }
+      "doc:root": false
     },
     {
       "@id": "#5",
@@ -79,27 +65,7 @@
           "@id": "#3"
         }
       ],
-      "shacl:name": "A",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link-target": {
-          "#5": "amf://id#2"
-        },
-        "source-vendor": {
-          "#5": "RAML 1.0"
-        },
-        "lexical": {
-          "#5": "[(2,0)-(3,11)]"
-        },
-        "resolved-link": {
-          "#5": "amf://id#5"
-        },
-        "declared-element": {
-          "#5": ""
-        }
-      }
+      "shacl:name": "A"
     },
     {
       "@id": "#6",
@@ -116,27 +82,7 @@
           "@id": "#3"
         }
       ],
-      "shacl:name": "B",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link-target": {
-          "#6": "amf://id#2"
-        },
-        "source-vendor": {
-          "#6": "RAML 1.0"
-        },
-        "lexical": {
-          "#6": "[(2,0)-(3,11)]"
-        },
-        "resolved-link": {
-          "#6": "amf://id#6"
-        },
-        "declared-element": {
-          "#6": ""
-        }
-      }
+      "shacl:name": "B"
     },
     {
       "@id": "#2",
@@ -153,18 +99,7 @@
           "@id": "#3"
         }
       ],
-      "shacl:name": "type",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "lexical": {
-          "#2": "[(2,0)-(3,11)]"
-        },
-        "source-vendor": {
-          "#2": "RAML 1.0"
-        }
-      }
+      "shacl:name": "type"
     },
     {
       "@id": "#3",
@@ -183,17 +118,7 @@
         "@id": "#4"
       },
       "shacl:minCount": 1,
-      "shacl:name": "a",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(3,5)-(3,11)]",
-          "#3": "[(3,2)-(3,11)]"
-        }
-      }
+      "shacl:name": "a"
     },
     {
       "@id": "#4",
@@ -209,13 +134,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "a",
-      "smaps": {
-        "lexical": {
-          "shacl:datatype": "[(3,5)-(3,11)]",
-          "#4": "[(3,2)-(3,11)]"
-        }
-      }
+      "shacl:name": "a"
     }
   ],
   "@context": {

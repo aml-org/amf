@@ -8,16 +8,7 @@
         "doc:RootDomainElement",
         "doc:DomainElement"
       ],
-      "core:name": "API",
-      "smaps": {
-        "source-vendor": {
-          "#9": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(3,0)]",
-          "#9": "[(2,0)-(9,16)]"
-        }
-      }
+      "core:name": "API"
     },
     {
       "@id": "",
@@ -59,25 +50,7 @@
           "@id": "#7"
         }
       ],
-      "shacl:name": "Person",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#1": "amf://id#5"
-        },
-        "lexical": {
-          "shacl:name": "[(4,2)-(4,8)]",
-          "#1": "[(4,2)-(8,0)]"
-        },
-        "declared-element": {
-          "#1": ""
-        },
-        "resolved-link-target": {
-          "#1": "amf://id#1"
-        }
-      }
+      "shacl:name": "Person"
     },
     {
       "@id": "#4",
@@ -93,27 +66,7 @@
         }
       ],
       "doc:recursive": true,
-      "shacl:name": "Child",
-      "smaps": {
-        "synthesized-field": {
-          "doc:recursive": "true"
-        },
-        "resolved-link-target": {
-          "#4": "amf://id#1"
-        },
-        "declared-element": {
-          "#4": ""
-        },
-        "lexical": {
-          "#4": "[(4,2)-(8,0)]"
-        },
-        "resolved-link": {
-          "#4": "amf://id#5"
-        },
-        "inherited-shapes": {
-          "#4": "amf://id#6"
-        }
-      }
+      "shacl:name": "Child"
     },
     {
       "@id": "#2",
@@ -132,17 +85,7 @@
         "@id": "#3"
       },
       "shacl:minCount": 1,
-      "shacl:name": "children",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(6,16)-(6,23)]",
-          "#2": "[(6,6)-(7,0)]"
-        }
-      }
+      "shacl:name": "children"
     },
     {
       "@id": "#7",
@@ -161,17 +104,7 @@
         "@id": "#8"
       },
       "shacl:minCount": 1,
-      "shacl:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(7,12)-(7,18)]",
-          "#7": "[(7,6)-(8,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#3",
@@ -185,12 +118,7 @@
       "raml-shapes:items": {
         "@id": "#4"
       },
-      "shacl:name": "children",
-      "smaps": {
-        "lexical": {
-          "#3": "[(6,6)-(7,0)]"
-        }
-      }
+      "shacl:name": "children"
     },
     {
       "@id": "#8",
@@ -206,13 +134,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "lexical": {
-          "shacl:datatype": "[(7,12)-(7,18)]",
-          "#8": "[(7,6)-(8,0)]"
-        }
-      }
+      "shacl:name": "name"
     }
   ],
   "@context": {

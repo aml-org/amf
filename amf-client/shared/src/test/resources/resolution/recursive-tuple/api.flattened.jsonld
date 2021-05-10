@@ -13,16 +13,7 @@
         {
           "@id": "#6"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#5": "RAML 0.8"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(4,0)]",
-          "#5": "[(2,0)-(11,45)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#6",
@@ -35,13 +26,7 @@
         {
           "@id": "#7"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:path": "[(4,0)-(4,6)]",
-          "#6": "[(4,0)-(11,45)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#7",
@@ -54,13 +39,7 @@
         {
           "@id": "#8"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(6,6)-(11,45)]",
-          "#7": "[(5,4)-(11,45)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#8",
@@ -75,13 +54,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(8,10)-(11,45)]",
-          "#8": "[(7,8)-(11,45)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#9",
@@ -92,11 +65,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#10"
-      },
-      "smaps": {
-        "lexical": {
-          "#9": "[(9,12)-(11,45)]"
-        }
       }
     },
     {
@@ -124,12 +92,6 @@
         }
       ],
       "smaps": {
-        "type-property-lexical-info": {
-          "#10": "[(2,2)-(2,8)]"
-        },
-        "lexical": {
-          "#10": "[(9,12)-(36,1)]"
-        },
         "parsed-json-schema": {
           "#10": "{\n  \"type\": \"array\",\n  \"items\": [{\n    \"$ref\": \"#/definitions/Person\"\n  },{\n    \"$ref\": \"#/definitions/Animal\"\n  }],\n  \"definitions\": {\n    \"Person\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"pet\": {\n          \"$ref\": \"#/definitions/Animal\"\n        }\n      }\n    },\n    \"Animal\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"age\": {\n          \"type\": \"integer\"\n        },\n        \"owners\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/definitions/Person\"\n          }\n        }\n      }\n    }\n  }\n}"
         }
@@ -162,15 +124,6 @@
       ],
       "doc:location": "file://amf-client/shared/src/test/resources/resolution/recursive-tuple/example.json",
       "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "#11": "[(1,0)-(1,0)]"
-        },
-        "local-element": {
-          "#11": ""
-        },
         "tracked-element": {
           "#11": "amf://id#9"
         }
@@ -194,21 +147,7 @@
           "@id": "#24"
         }
       ],
-      "shacl:name": "Person",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#21": "amf://id#33"
-        },
-        "lexical": {
-          "#21": "[(9,4)-(18,5)]"
-        },
-        "resolved-link-target": {
-          "#21": "amf://id#21"
-        }
-      }
+      "shacl:name": "Person"
     },
     {
       "@id": "#25",
@@ -232,22 +171,7 @@
         }
       ],
       "doc:recursive": true,
-      "shacl:name": "Animal",
-      "smaps": {
-        "synthesized-field": {
-          "doc:recursive": "true",
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#25": "amf://id#34"
-        },
-        "lexical": {
-          "#25": "[(19,4)-(34,5)]"
-        },
-        "resolved-link-target": {
-          "#25": "amf://id#25"
-        }
-      }
+      "shacl:name": "Animal"
     },
     {
       "@id": "#12",
@@ -262,15 +186,7 @@
           "@id": "#13"
         }
       ],
-      "core:name": "array_1",
-      "smaps": {
-        "parsed-json-example": {
-          "#12": "[{\n  \"name\": \"Astro\",\n  \"pet\": {\n    \"name\": \"Netwon\",\n    \"age\": 55,\n    \"owners\": [\"Astro\", \"Boy\"]\n  }\n}]"
-        },
-        "lexical": {
-          "#12": "[(1,0)-(8,2)]"
-        }
-      }
+      "core:name": "array_1"
     },
     {
       "@id": "#22",
@@ -289,15 +205,7 @@
         "@id": "#23"
       },
       "shacl:minCount": 0,
-      "shacl:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#22": "[(11,8)-(13,9)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#24",
@@ -316,15 +224,7 @@
         "@id": "#25"
       },
       "shacl:minCount": 0,
-      "shacl:name": "pet",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#24": "[(14,8)-(16,9)]"
-        }
-      }
+      "shacl:name": "pet"
     },
     {
       "@id": "#26",
@@ -343,15 +243,7 @@
         "@id": "#27"
       },
       "shacl:minCount": 0,
-      "shacl:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#26": "[(21,8)-(23,9)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#28",
@@ -370,15 +262,7 @@
         "@id": "#29"
       },
       "shacl:minCount": 0,
-      "shacl:name": "age",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#28": "[(24,8)-(26,9)]"
-        }
-      }
+      "shacl:name": "age"
     },
     {
       "@id": "#30",
@@ -397,15 +281,7 @@
         "@id": "#31"
       },
       "shacl:minCount": 0,
-      "shacl:name": "owners",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#30": "[(27,8)-(32,9)]"
-        }
-      }
+      "shacl:name": "owners"
     },
     {
       "@id": "#13",
@@ -420,17 +296,7 @@
       "data:pet": {
         "@id": "#15"
       },
-      "core:name": "object_2",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:pet": "[(3,2)-(7,3)]",
-          "#13": "[(1,1)-(8,1)]",
-          "data:name": "[(2,2)-(2,17)]"
-        }
-      }
+      "core:name": "object_2"
     },
     {
       "@id": "#23",
@@ -446,16 +312,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#23": "[(12,10)-(12,16)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(12,10)-(12,26)]",
-          "#23": "[(11,8)-(13,9)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#27",
@@ -471,16 +328,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#27": "[(22,10)-(22,16)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(22,10)-(22,26)]",
-          "#27": "[(21,8)-(23,9)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#29",
@@ -496,16 +344,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "shacl:name": "age",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#29": "[(25,10)-(25,16)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(25,10)-(25,27)]",
-          "#29": "[(24,8)-(26,9)]"
-        }
-      }
+      "shacl:name": "age"
     },
     {
       "@id": "#31",
@@ -519,15 +358,7 @@
       "raml-shapes:items": {
         "@id": "#32"
       },
-      "shacl:name": "owners",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#31": "[(28,10)-(28,16)]"
-        },
-        "lexical": {
-          "#31": "[(27,8)-(32,9)]"
-        }
-      }
+      "shacl:name": "owners"
     },
     {
       "@id": "#14",
@@ -542,16 +373,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#14": "[(2,10)-(2,17)]"
-        }
-      }
+      "core:name": "name"
     },
     {
       "@id": "#15",
@@ -569,18 +391,7 @@
       "data:owners": {
         "@id": "#18"
       },
-      "core:name": "pet",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:owners": "[(6,4)-(6,30)]",
-          "data:name": "[(4,4)-(4,20)]",
-          "#15": "[(3,9)-(7,3)]",
-          "data:age": "[(5,4)-(5,13)]"
-        }
-      }
+      "core:name": "pet"
     },
     {
       "@id": "#32",
@@ -596,21 +407,7 @@
         }
       ],
       "doc:recursive": true,
-      "shacl:name": "Person",
-      "smaps": {
-        "synthesized-field": {
-          "doc:recursive": "true"
-        },
-        "resolved-link": {
-          "#32": "amf://id#33"
-        },
-        "lexical": {
-          "#32": "[(9,4)-(18,5)]"
-        },
-        "resolved-link-target": {
-          "#32": "amf://id#21"
-        }
-      }
+      "shacl:name": "Person"
     },
     {
       "@id": "#16",
@@ -625,16 +422,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#16": "[(4,12)-(4,20)]"
-        }
-      }
+      "core:name": "name"
     },
     {
       "@id": "#17",
@@ -649,16 +437,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "core:name": "age",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#17": "[(5,11)-(5,13)]"
-        }
-      }
+      "core:name": "age"
     },
     {
       "@id": "#18",
@@ -676,12 +455,7 @@
           "@id": "#20"
         }
       ],
-      "core:name": "owners",
-      "smaps": {
-        "lexical": {
-          "#18": "[(6,14)-(6,30)]"
-        }
-      }
+      "core:name": "owners"
     },
     {
       "@id": "#19",
@@ -696,16 +470,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_8",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#19": "[(6,15)-(6,22)]"
-        }
-      }
+      "core:name": "scalar_8"
     },
     {
       "@id": "#20",
@@ -720,16 +485,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_9",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#20": "[(6,24)-(6,29)]"
-        }
-      }
+      "core:name": "scalar_9"
     },
     {
       "@id": "",
@@ -786,12 +542,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"type\": \"array\",\n  \"items\": [{\n    \"$ref\": \"#/definitions/Person\"\n  },{\n    \"$ref\": \"#/definitions/Animal\"\n  }],\n  \"definitions\": {\n    \"Person\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"pet\": {\n          \"$ref\": \"#/definitions/Animal\"\n        }\n      }\n    },\n    \"Animal\": {\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"age\": {\n          \"type\": \"integer\"\n        },\n        \"owners\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/definitions/Person\"\n          }\n        }\n      }\n    }\n  }\n}",
-      "core:mediaType": "application/json",
-      "smaps": {
-        "lexical": {
-          "#2": "[(1,0)-(36,1)]"
-        }
-      }
+      "core:mediaType": "application/json"
     },
     {
       "@id": "#4",
@@ -800,12 +551,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "[{\n  \"name\": \"Astro\",\n  \"pet\": {\n    \"name\": \"Netwon\",\n    \"age\": 55,\n    \"owners\": [\"Astro\", \"Boy\"]\n  }\n}]",
-      "core:mediaType": "application/json",
-      "smaps": {
-        "lexical": {
-          "#4": "[(1,0)-(8,2)]"
-        }
-      }
+      "core:mediaType": "application/json"
     }
   ],
   "@context": {

@@ -192,44 +192,16 @@
                                                       {
                                                         "@value": "scalar_1"
                                                       }
-                                                    ],
-                                                    "smaps": {
-                                                      "synthesized-field": {
-                                                        "core:name": "true",
-                                                        "shacl:datatype": "true"
-                                                      },
-                                                      "lexical": {
-                                                        "#19": "[(40,29)-(40,42)]"
-                                                      }
-                                                    }
+                                                    ]
                                                   }
                                                 ],
                                                 "doc:raw": [
                                                   {
                                                     "@value": "12 Oxford St."
                                                   }
-                                                ],
-                                                "smaps": {
-                                                  "synthesized-field": {
-                                                    "doc:raw": "true",
-                                                    "doc:strict": "true"
-                                                  },
-                                                  "lexical": {
-                                                    "#18": "[(40,29)-(40,42)]"
-                                                  }
-                                                }
+                                                ]
                                               }
-                                            ],
-                                            "smaps": {
-                                              "type-property-lexical-info": {
-                                                "#17": "[(41,20)-(41,24)]"
-                                              },
-                                              "lexical": {
-                                                "apiContract:examples": "[(40,20)-(41,0)]",
-                                                "#17": "[(39,18)-(42,0)]",
-                                                "shacl:datatype": "[(41,20)-(42,0)]"
-                                              }
-                                            }
+                                            ]
                                           }
                                         ],
                                         "shacl:minCount": [
@@ -241,13 +213,7 @@
                                           {
                                             "@value": "street"
                                           }
-                                        ],
-                                        "smaps": {
-                                          "lexical": {
-                                            "shacl:minCount": "[(36,20)-(36,26)]",
-                                            "#16": "[(39,18)-(42,0)]"
-                                          }
-                                        }
+                                        ]
                                       },
                                       {
                                         "@id": "#20",
@@ -281,16 +247,7 @@
                                               {
                                                 "@value": "city"
                                               }
-                                            ],
-                                            "smaps": {
-                                              "type-property-lexical-info": {
-                                                "#21": "[(43,20)-(43,24)]"
-                                              },
-                                              "lexical": {
-                                                "shacl:datatype": "[(43,20)-(44,0)]",
-                                                "#21": "[(42,18)-(44,0)]"
-                                              }
-                                            }
+                                            ]
                                           }
                                         ],
                                         "shacl:minCount": [
@@ -302,29 +259,14 @@
                                           {
                                             "@value": "city"
                                           }
-                                        ],
-                                        "smaps": {
-                                          "lexical": {
-                                            "shacl:minCount": "[(37,20)-(37,24)]",
-                                            "#20": "[(42,18)-(44,0)]"
-                                          }
-                                        }
+                                        ]
                                       }
                                     ],
                                     "shacl:name": [
                                       {
                                         "@value": "address"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#15": "[(33,16)-(33,20)]"
-                                      },
-                                      "lexical": {
-                                        "shacl:closed": "[(34,16)-(35,0)]",
-                                        "#15": "[(32,14)-(44,0)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "shacl:minCount": [
@@ -336,13 +278,7 @@
                                   {
                                     "@value": "address"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "shacl:minCount": "[(28,16)-(28,23)]",
-                                    "#14": "[(32,14)-(44,0)]"
-                                  }
-                                }
+                                ]
                               },
                               {
                                 "@id": "#22",
@@ -381,17 +317,7 @@
                                       {
                                         "@value": "id"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#23": "[(45,16)-(45,20)]"
-                                      },
-                                      "lexical": {
-                                        "raml-shapes:format": "[(46,16)-(47,0)]",
-                                        "#23": "[(44,14)-(47,0)]",
-                                        "shacl:datatype": "[(45,16)-(46,0)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "shacl:minCount": [
@@ -403,13 +329,7 @@
                                   {
                                     "@value": "id"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "shacl:minCount": "[(29,16)-(29,18)]",
-                                    "#22": "[(44,14)-(47,0)]"
-                                  }
-                                }
+                                ]
                               },
                               {
                                 "@id": "#24",
@@ -443,16 +363,7 @@
                                       {
                                         "@value": "name"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "type-property-lexical-info": {
-                                        "#25": "[(48,16)-(48,20)]"
-                                      },
-                                      "lexical": {
-                                        "shacl:datatype": "[(48,16)-(48,28)]",
-                                        "#25": "[(47,14)-(48,28)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "shacl:minCount": [
@@ -464,13 +375,7 @@
                                   {
                                     "@value": "name"
                                   }
-                                ],
-                                "smaps": {
-                                  "lexical": {
-                                    "shacl:minCount": "[(30,16)-(30,20)]",
-                                    "#24": "[(47,14)-(48,28)]"
-                                  }
-                                }
+                                ]
                               }
                             ],
                             "shacl:name": [
@@ -528,16 +433,7 @@
                                               {
                                                 "@value": "street"
                                               }
-                                            ],
-                                            "smaps": {
-                                              "synthesized-field": {
-                                                "core:name": "true",
-                                                "shacl:datatype": "true"
-                                              },
-                                              "lexical": {
-                                                "#10": "[(21,26)-(21,39)]"
-                                              }
-                                            }
+                                            ]
                                           }
                                         ],
                                         "data:city": [
@@ -562,33 +458,14 @@
                                               {
                                                 "@value": "city"
                                               }
-                                            ],
-                                            "smaps": {
-                                              "synthesized-field": {
-                                                "core:name": "true",
-                                                "shacl:datatype": "true"
-                                              },
-                                              "lexical": {
-                                                "#11": "[(22,24)-(22,30)]"
-                                              }
-                                            }
+                                            ]
                                           }
                                         ],
                                         "core:name": [
                                           {
                                             "@value": "address"
                                           }
-                                        ],
-                                        "smaps": {
-                                          "synthesized-field": {
-                                            "core:name": "true"
-                                          },
-                                          "lexical": {
-                                            "data:city": "[(22,18)-(23,0)]",
-                                            "#9": "[(21,0)-(23,0)]",
-                                            "data:street": "[(21,18)-(22,0)]"
-                                          }
-                                        }
+                                        ]
                                       }
                                     ],
                                     "data:id": [
@@ -613,16 +490,7 @@
                                           {
                                             "@value": "id"
                                           }
-                                        ],
-                                        "smaps": {
-                                          "synthesized-field": {
-                                            "core:name": "true",
-                                            "shacl:datatype": "true"
-                                          },
-                                          "lexical": {
-                                            "#12": "[(23,20)-(23,24)]"
-                                          }
-                                        }
+                                        ]
                                       }
                                     ],
                                     "data:name": [
@@ -647,34 +515,14 @@
                                           {
                                             "@value": "name"
                                           }
-                                        ],
-                                        "smaps": {
-                                          "synthesized-field": {
-                                            "core:name": "true",
-                                            "shacl:datatype": "true"
-                                          },
-                                          "lexical": {
-                                            "#13": "[(24,22)-(24,29)]"
-                                          }
-                                        }
+                                        ]
                                       }
                                     ],
                                     "core:name": [
                                       {
                                         "@value": "object_1"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "synthesized-field": {
-                                        "core:name": "true"
-                                      },
-                                      "lexical": {
-                                        "data:name": "[(24,16)-(25,0)]",
-                                        "data:address": "[(20,16)-(23,0)]",
-                                        "#8": "[(20,0)-(25,0)]",
-                                        "data:id": "[(23,16)-(24,0)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "doc:raw": [
@@ -683,84 +531,22 @@
                                   }
                                 ],
                                 "smaps": {
-                                  "synthesized-field": {
-                                    "doc:raw": "true"
-                                  },
-                                  "lexical": {
-                                    "doc:structuredValue": "[(19,14)-(25,0)]",
-                                    "#7": "[(17,12)-(25,0)]",
-                                    "doc:strict": "[(18,14)-(19,0)]"
-                                  },
                                   "tracked-element": {
                                     "#7": "amf://id#5"
                                   }
                                 }
                               }
-                            ],
-                            "smaps": {
-                              "parameter-binding-in-body-lexical-info": {
-                                "#6": "[(14,10)-(15,0)]"
-                              },
-                              "lexical": {
-                                "apiContract:examples": "[(17,12)-(25,0)]",
-                                "shacl:closed": "[(26,12)-(27,0)]",
-                                "#6": "[(16,10)-(48,28)]",
-                                "shacl:name": "[(15,10)-(16,0)]"
-                              },
-                              "type-property-lexical-info": {
-                                "#6": "[(25,12)-(25,16)]"
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "body-parameter": {
-                            "#5": "true"
-                          },
-                          "lexical": {
-                            "raml-shapes:schema": "[(16,10)-(48,28)]",
-                            "core:name": "[(15,10)-(16,0)]",
-                            "#5": "[(12,9)-(48,28)]",
-                            "core:mediaType": "[(13,10)-(14,0)]"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "apiContract:payload": "[(11,6)-(48,28)]",
-                        "#4": "[(11,0)-(48,28)]"
-                      }
-                    }
+                    ]
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "apiContract:expects": "[(11,0)-(48,28)]",
-                    "#3": "[(10,4)-(48,28)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "#2": "[(9,2)-(48,28)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#1": "OAS 2.0"
-          },
-          "lexical": {
-            "apiContract:endpoint": "[(8,0)-(48,28)]",
-            "core:description": "[(5,2)-(6,0)]",
-            "#1": "[(1,0)-(48,28)]",
-            "core:name": "[(4,2)-(5,0)]",
-            "core:version": "[(6,2)-(8,0)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [

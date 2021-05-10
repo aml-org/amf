@@ -15,12 +15,7 @@
         }
       ],
       "http://a.ml/vocabularies/core#version": "1.0.0",
-      "http://a.ml/vocabularies/apiContract#endpoint": [],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/apiContract#endpoint": []
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com",
@@ -53,39 +48,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/source-vendor/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/lexical/element_4"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/lexical/element_3"
-        }
       ]
     },
     {
@@ -97,11 +59,6 @@
       "http://a.ml/vocabularies/security#schemes": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/source-map"
         }
       ]
     },
@@ -118,11 +75,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/source-map"
-        }
       ]
     },
     {
@@ -134,11 +86,6 @@
       "http://a.ml/vocabularies/security#schemes": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/source-map"
         }
       ]
     },
@@ -152,11 +99,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/source-map"
-        }
       ]
     },
     {
@@ -168,11 +110,6 @@
       "http://a.ml/vocabularies/security#schemes": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/source-map"
         }
       ]
     },
@@ -186,11 +123,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/source-map"
-        }
       ]
     },
     {
@@ -203,62 +135,7 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "ASYNC 2.0"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(79,25)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(6,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#server",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(67,0)-(79,25)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword",
@@ -269,23 +146,7 @@
       "http://a.ml/vocabularies/core#name": "userPassword",
       "http://a.ml/vocabularies/security#scheme": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/source-map/lexical/element_0"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey",
@@ -296,12 +157,7 @@
       "http://a.ml/vocabularies/core#name": "apiKey",
       "http://a.ml/vocabularies/security#scheme": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey",
@@ -312,23 +168,7 @@
       "http://a.ml/vocabularies/core#name": "httpApiKey",
       "http://a.ml/vocabularies/security#scheme": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/source-map/lexical/element_0"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509",
@@ -339,23 +179,7 @@
       "http://a.ml/vocabularies/core#name": "X509",
       "http://a.ml/vocabularies/security#scheme": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/source-map/lexical/element_0"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption",
@@ -366,23 +190,7 @@
       "http://a.ml/vocabularies/core#name": "symmetricEncryption",
       "http://a.ml/vocabularies/security#scheme": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/source-map/lexical/element_0"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http",
@@ -393,23 +201,7 @@
       "http://a.ml/vocabularies/core#name": "http",
       "http://a.ml/vocabularies/security#scheme": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/source-map/lexical/element_0"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2",
@@ -423,23 +215,7 @@
       },
       "http://a.ml/vocabularies/security#settings": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/source-map/lexical/element_0"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect",
@@ -453,43 +229,7 @@
       },
       "http://a.ml/vocabularies/security#settings": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/settings/open-id-connect"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#protocol",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(70,4)-(71,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(69,4)-(70,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#security",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(71,4)-(79,25)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(68,2)-(79,25)]"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword",
@@ -499,28 +239,7 @@
       ],
       "http://a.ml/vocabularies/core#name": "userPassword",
       "http://a.ml/vocabularies/security#type": "userPassword",
-      "http://a.ml/vocabularies/core#description": "userPassword security scheme",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(72,8)-(73,0)]"
+      "http://a.ml/vocabularies/core#description": "userPassword security scheme"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey",
@@ -533,23 +252,7 @@
       "http://a.ml/vocabularies/core#description": "apiKey security scheme",
       "http://a.ml/vocabularies/security#settings": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/apiKey/settings/api-key"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/source-map/lexical/element_0"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey",
@@ -562,28 +265,7 @@
       "http://a.ml/vocabularies/core#description": "httpApiKey security scheme",
       "http://a.ml/vocabularies/security#settings": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(73,8)-(75,0)]"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509",
@@ -593,28 +275,7 @@
       ],
       "http://a.ml/vocabularies/core#name": "X509",
       "http://a.ml/vocabularies/security#type": "X509",
-      "http://a.ml/vocabularies/core#description": "X509 security scheme",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(75,8)-(76,0)]"
+      "http://a.ml/vocabularies/core#description": "X509 security scheme"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption",
@@ -624,28 +285,7 @@
       ],
       "http://a.ml/vocabularies/core#name": "symmetricEncryption",
       "http://a.ml/vocabularies/security#type": "symmetricEncryption",
-      "http://a.ml/vocabularies/core#description": "symmetricEncryption security scheme",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(76,8)-(77,0)]"
+      "http://a.ml/vocabularies/core#description": "symmetricEncryption security scheme"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http",
@@ -658,28 +298,7 @@
       "http://a.ml/vocabularies/core#description": "http security scheme",
       "http://a.ml/vocabularies/security#settings": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(77,8)-(78,0)]"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2",
@@ -692,12 +311,7 @@
       "http://a.ml/vocabularies/core#description": "oauth2 security scheme",
       "http://a.ml/vocabularies/security#settings": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2",
@@ -710,28 +324,7 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(78,8)-(79,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect",
@@ -744,12 +337,7 @@
       "http://a.ml/vocabularies/core#description": "openIdConnect security scheme",
       "http://a.ml/vocabularies/security#settings": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/openIdConnect/settings/open-id-connect"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/settings/open-id-connect",
@@ -758,58 +346,7 @@
         "http://a.ml/vocabularies/security#Settings",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/security#scope": [],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/settings/open-id-connect/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(79,8)-(79,25)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(72,8)-(73,0)]"
+      "http://a.ml/vocabularies/security#scope": []
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/apiKey/settings/api-key",
@@ -818,45 +355,7 @@
         "http://a.ml/vocabularies/security#Settings",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/security#in": "user",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/apiKey/settings/api-key/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/lexical/element_4"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/lexical/element_3"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(73,8)-(74,0)]"
+      "http://a.ml/vocabularies/security#in": "user"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key",
@@ -866,105 +365,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "apiKeyHeader",
-      "http://a.ml/vocabularies/security#in": "header",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/lexical/element_4"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/lexical/element_3"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(74,8)-(75,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(75,8)-(76,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(76,8)-(77,0)]"
+      "http://a.ml/vocabularies/security#in": "header"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http",
@@ -974,45 +375,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/security#scheme": "bearer",
-      "http://a.ml/vocabularies/security#bearerFormat": "this is mainly for documentation",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/lexical/element_4"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/lexical/element_3"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(77,8)-(78,0)]"
+      "http://a.ml/vocabularies/security#bearerFormat": "this is mainly for documentation"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2",
@@ -1034,39 +397,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/lexical/element_4"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/lexical/element_3"
-        }
       ]
     },
     {
@@ -1079,28 +409,7 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/write%3Apets"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(78,8)-(79,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/openIdConnect/settings/open-id-connect",
@@ -1109,269 +418,7 @@
         "http://a.ml/vocabularies/security#Settings",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/security#openIdConnectUrl": "https://a.ml/",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/openIdConnect/settings/open-id-connect/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/lexical/element_4"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/lexical/element_3"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/settings/open-id-connect/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/settings/open-id-connect/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(79,8)-(79,25)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(10,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(8,16)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(11,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_1/userPassword/userPassword",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(11,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/apiKey/settings/api-key/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/apiKey/settings/api-key/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/apiKey/settings/api-key/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,6)-(14,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,4)-(15,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#settings",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,0)-(15,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,6)-(13,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/apiKey/apiKey/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,4)-(11,10)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key/source-map/lexical/element_1"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(26,6)-(27,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(24,4)-(29,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#settings",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(25,0)-(29,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(25,6)-(26,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_2/httpApiKey/httpApiKey/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(24,4)-(24,14)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,6)-(17,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(15,4)-(15,8)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(17,6)-(18,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_3/X509/X509",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(15,4)-(18,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(19,6)-(20,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,4)-(18,23)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(20,6)-(21,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_4/symmetricEncryption/symmetricEncryption",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,4)-(21,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http/source-map/lexical/element_1"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,6)-(32,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(29,4)-(34,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#settings",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(30,0)-(34,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(30,6)-(31,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_5/http/http/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(29,4)-(29,8)]"
+      "http://a.ml/vocabularies/security#openIdConnectUrl": "https://a.ml/"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit",
@@ -1388,11 +435,6 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/read%3Apets"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map"
         }
       ]
     },
@@ -1412,11 +454,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/read%3Apets"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map"
-        }
       ]
     },
     {
@@ -1434,11 +471,6 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/read%3Apets"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map"
         }
       ]
     },
@@ -1459,56 +491,7 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/read%3Apets"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(36,6)-(37,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(34,4)-(63,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#settings",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(35,0)-(63,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(35,6)-(36,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/oauth2/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(34,4)-(34,10)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/write%3Apets",
@@ -1516,117 +499,7 @@
         "http://a.ml/vocabularies/security#Scope",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/core#name": "write:pets",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/write%3Apets/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(78,8)-(79,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/openIdConnect/settings/open-id-connect/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/openIdConnect/settings/open-id-connect/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/openIdConnect/settings/open-id-connect/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(65,6)-(66,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(63,4)-(67,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#settings",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(64,0)-(67,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(64,6)-(65,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/openIdConnect/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(63,4)-(63,17)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_7/openIdConnect/settings/open-id-connect/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scope",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(79,23)-(79,25)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/apiKey/settings/api-key/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/apiKey/settings/api-key",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,0)-(15,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/apiKey/settings/api-key/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#in",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,6)-(15,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(27,6)-(28,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#in",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(28,6)-(29,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/httpApiKey/settings/http-api-key",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(25,0)-(29,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scheme",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(32,6)-(33,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#bearerFormat",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(33,6)-(34,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/http/settings/http",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(30,0)-(34,0)]"
+      "http://a.ml/vocabularies/core#name": "write:pets"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/write%3Apets",
@@ -1635,12 +508,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "write:pets",
-      "http://a.ml/vocabularies/core#description": "modify pets in your account",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/write%3Apets/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#description": "modify pets in your account"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/read%3Apets",
@@ -1649,35 +517,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "read:pets",
-      "http://a.ml/vocabularies/core#description": "read your pets",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/read%3Apets/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map/lexical/element_4"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map/lexical/element_3"
-        }
-      ]
+      "http://a.ml/vocabularies/core#description": "read your pets"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/write%3Apets",
@@ -1686,12 +526,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "write:pets",
-      "http://a.ml/vocabularies/core#description": "modify pets in your account",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/write%3Apets/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#description": "modify pets in your account"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/read%3Apets",
@@ -1700,35 +535,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "read:pets",
-      "http://a.ml/vocabularies/core#description": "read your pets",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/read%3Apets/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map/lexical/element_4"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map/lexical/element_3"
-        }
-      ]
+      "http://a.ml/vocabularies/core#description": "read your pets"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/write%3Apets",
@@ -1737,12 +544,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "write:pets",
-      "http://a.ml/vocabularies/core#description": "modify pets in your account",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/write%3Apets/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#description": "modify pets in your account"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/read%3Apets",
@@ -1751,35 +553,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "read:pets",
-      "http://a.ml/vocabularies/core#description": "read your pets",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/read%3Apets/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map/lexical/element_4"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map/lexical/element_3"
-        }
-      ]
+      "http://a.ml/vocabularies/core#description": "read your pets"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/write%3Apets",
@@ -1788,12 +562,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "write:pets",
-      "http://a.ml/vocabularies/core#description": "modify pets in your account",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/write%3Apets/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#description": "modify pets in your account"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/read%3Apets",
@@ -1802,312 +571,7 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#name": "read:pets",
-      "http://a.ml/vocabularies/core#description": "read your pets",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/read%3Apets/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_5"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_4"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(35,0)-(63,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#flows",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(37,12)-(63,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/write%3Apets/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/write%3Apets/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scope",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(78,8)-(79,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/openIdConnect/settings/open-id-connect/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/openIdConnect/settings/open-id-connect",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(64,0)-(67,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/openIdConnect/settings/open-id-connect/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#openIdConnectUrl",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(66,6)-(67,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/write%3Apets/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/write%3Apets/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/read%3Apets/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/read%3Apets/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#refreshUri",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(40,10)-(41,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(38,8)-(44,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scope",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(41,10)-(44,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#flow",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(38,8)-(38,16)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#authorizationUri",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(39,10)-(40,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/write%3Apets/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/write%3Apets/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/read%3Apets/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/read%3Apets/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#refreshUri",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(46,10)-(47,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(44,8)-(50,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scope",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(47,10)-(50,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#flow",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(44,8)-(44,16)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#accessTokenUri",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(45,10)-(46,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/write%3Apets/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/write%3Apets/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/read%3Apets/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/read%3Apets/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#refreshUri",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(52,10)-(53,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(50,8)-(56,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scope",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(53,10)-(56,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#flow",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(50,8)-(50,25)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#accessTokenUri",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(51,10)-(52,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/write%3Apets/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/write%3Apets/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/read%3Apets/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/read%3Apets/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_5",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#refreshUri",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(59,10)-(60,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(56,8)-(63,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#flow",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(56,8)-(56,25)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#scope",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(60,10)-(63,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#authorizationUri",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(57,10)-(58,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#accessTokenUri",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(58,10)-(59,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/write%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/async-api/https%3A%2F%2Fgoogle.com/requirement_6/oauth2/settings/oauth2/default-flow/write%3Apets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(78,17)-(78,29)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/write%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/write%3Apets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(42,12)-(43,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/read%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/implicit/read%3Apets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(43,12)-(44,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/write%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/write%3Apets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(48,12)-(49,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/read%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/password/read%3Apets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(49,12)-(50,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/write%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/write%3Apets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(54,12)-(55,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/read%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/clientCredentials/read%3Apets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(55,12)-(56,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/write%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/write%3Apets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(61,12)-(62,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/read%3Apets/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/oauth2/settings/oauth2/authorizationCode/read%3Apets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(62,12)-(63,0)]"
+      "http://a.ml/vocabularies/core#description": "read your pets"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml",
@@ -2160,62 +624,7 @@
       ],
       "http://a.ml/vocabularies/core#name": "asymmetricEncryption",
       "http://a.ml/vocabularies/security#type": "asymmetricEncryption",
-      "http://a.ml/vocabularies/core#description": "asymmetricEncryption security scheme",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/security#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(22,6)-(23,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(21,4)-(21,24)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#description",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(23,6)-(24,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/security-schemes.yaml#/declarations/securitySchemes/asymmetricEncryption",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(21,4)-(24,0)]"
+      "http://a.ml/vocabularies/core#description": "asymmetricEncryption security scheme"
     }
   ]
 }

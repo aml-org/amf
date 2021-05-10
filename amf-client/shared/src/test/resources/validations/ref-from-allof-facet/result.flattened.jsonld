@@ -11,19 +11,7 @@
       "core:name": "AES Key Synchronisation",
       "core:description": "A REST API for the exchange and synchronisation of AES Keys following the OpenAPI 3.0 specification",
       "core:version": "0.1",
-      "apiContract:endpoint": [],
-      "smaps": {
-        "source-vendor": {
-          "#9": "OAS 3.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(8,2)-(8,13)]",
-          "core:description": "[(6,4)-(6,120)]",
-          "#9": "[(1,0)-(34,1)]",
-          "core:name": "[(5,4)-(5,38)]",
-          "core:version": "[(4,4)-(4,20)]"
-        }
-      }
+      "apiContract:endpoint": []
     },
     {
       "@id": "",
@@ -63,17 +51,7 @@
         {
           "@id": "#6"
         }
-      ],
-      "smaps": {
-        "declared-element": {
-          "#1": ""
-        },
-        "lexical": {
-          "shacl:and": "[(12,8)-(23,9)]",
-          "#1": "[(11,6)-(24,7)]",
-          "shacl:name": "[(11,6)-(11,14)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#2",
@@ -90,25 +68,7 @@
           "@id": "#3"
         }
       ],
-      "shacl:name": "NewOmsKey",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "resolved-link": {
-          "#2": "amf://id#5"
-        },
-        "lexical": {
-          "shacl:name": "[(25,6)-(25,17)]",
-          "#2": "[(25,6)-(31,7)]"
-        },
-        "declared-element": {
-          "#2": ""
-        },
-        "resolved-link-target": {
-          "#2": "amf://id#2"
-        }
-      }
+      "shacl:name": "NewOmsKey"
     },
     {
       "@id": "#6",
@@ -125,15 +85,7 @@
           "@id": "#7"
         }
       ],
-      "shacl:name": "item1",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "lexical": {
-          "#6": "[(16,10)-(22,11)]"
-        }
-      }
+      "shacl:name": "item1"
     },
     {
       "@id": "#3",
@@ -152,15 +104,7 @@
         "@id": "#4"
       },
       "shacl:minCount": 0,
-      "shacl:name": "deviceId",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#3": "[(27,10)-(29,11)]"
-        }
-      }
+      "shacl:name": "deviceId"
     },
     {
       "@id": "#7",
@@ -179,15 +123,7 @@
         "@id": "#8"
       },
       "shacl:minCount": 0,
-      "shacl:name": "id",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true"
-        },
-        "lexical": {
-          "#7": "[(18,14)-(20,15)]"
-        }
-      }
+      "shacl:name": "id"
     },
     {
       "@id": "#4",
@@ -203,16 +139,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "deviceId",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#4": "[(28,12)-(28,18)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(28,12)-(28,28)]",
-          "#4": "[(27,10)-(29,11)]"
-        }
-      }
+      "shacl:name": "deviceId"
     },
     {
       "@id": "#8",
@@ -228,16 +155,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "shacl:name": "id",
-      "smaps": {
-        "type-property-lexical-info": {
-          "#8": "[(19,16)-(19,22)]"
-        },
-        "lexical": {
-          "shacl:datatype": "[(19,16)-(19,33)]",
-          "#8": "[(18,14)-(20,15)]"
-        }
-      }
+      "shacl:name": "id"
     }
   ],
   "@context": {

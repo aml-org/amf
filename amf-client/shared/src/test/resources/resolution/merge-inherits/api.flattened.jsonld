@@ -17,17 +17,7 @@
         {
           "@id": "#44"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#31": "RAML 1.0"
-        },
-        "lexical": {
-          "core:version": "[(3,0)-(5,0)]",
-          "#31": "[(2,0)-(51,0)]",
-          "core:name": "[(2,0)-(3,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#32",
@@ -40,13 +30,7 @@
         {
           "@id": "#33"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:path": "[(34,0)-(34,23)]",
-          "#32": "[(34,0)-(43,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#44",
@@ -64,13 +48,7 @@
         {
           "@id": "#45"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:path": "[(43,0)-(43,30)]",
-          "#44": "[(43,0)-(51,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#33",
@@ -88,14 +66,7 @@
         {
           "@id": "#34"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "doc:extends": "[(36,4)-(37,0)]",
-          "#33": "[(35,2)-(43,0)]",
-          "apiContract:returns": "[(37,4)-(43,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#46",
@@ -108,13 +79,7 @@
         {
           "@id": "#47"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(46,4)-(51,0)]",
-          "#46": "[(45,2)-(51,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#45",
@@ -126,12 +91,6 @@
       "core:name": "employeeResourceType",
       "doc:target": {
         "@id": "#10"
-      },
-      "smaps": {
-        "lexical": {
-          "core:name": "[(44,8)-(44,28)]",
-          "#45": "[(44,8)-(44,28)]"
-        }
       }
     },
     {
@@ -147,13 +106,7 @@
         {
           "@id": "#36"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(39,8)-(43,0)]",
-          "#35": "[(38,6)-(43,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#34",
@@ -165,12 +118,6 @@
       "core:name": "employeeTrait",
       "doc:target": {
         "@id": "#21"
-      },
-      "smaps": {
-        "lexical": {
-          "core:name": "[(36,9)-(36,22)]",
-          "#34": "[(36,9)-(36,22)]"
-        }
       }
     },
     {
@@ -186,13 +133,7 @@
         {
           "@id": "#48"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(48,8)-(51,0)]",
-          "#47": "[(47,6)-(51,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#10",
@@ -204,22 +145,6 @@
       "core:name": "employeeResourceType",
       "doc:dataNode": {
         "@id": "#11"
-      },
-      "smaps": {
-        "resolved-link-target": {
-          "#10": "amf://id#10"
-        },
-        "declared-element": {
-          "#10": ""
-        },
-        "lexical": {
-          "doc:dataNode": "[(26,4)-(34,0)]",
-          "#10": "[(25,2)-(34,0)]",
-          "core:name": "[(25,2)-(25,22)]"
-        },
-        "resolved-link": {
-          "#10": "amf://id#20"
-        }
       }
     },
     {
@@ -231,11 +156,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#37"
-      },
-      "smaps": {
-        "lexical": {
-          "#36": "[(40,10)-(43,0)]"
-        }
       }
     },
     {
@@ -248,22 +168,6 @@
       "core:name": "employeeTrait",
       "doc:dataNode": {
         "@id": "#22"
-      },
-      "smaps": {
-        "resolved-link-target": {
-          "#21": "amf://id#21"
-        },
-        "declared-element": {
-          "#21": ""
-        },
-        "lexical": {
-          "doc:dataNode": "[(18,4)-(24,0)]",
-          "#21": "[(17,2)-(24,0)]",
-          "core:name": "[(17,2)-(17,15)]"
-        },
-        "resolved-link": {
-          "#21": "amf://id#30"
-        }
       }
     },
     {
@@ -275,11 +179,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#49"
-      },
-      "smaps": {
-        "lexical": {
-          "#48": "[(49,10)-(51,0)]"
-        }
       }
     },
     {
@@ -292,16 +191,7 @@
       "data:post": {
         "@id": "#12"
       },
-      "core:name": "object_1",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:post": "[(26,4)-(34,0)]",
-          "#11": "[(26,4)-(34,0)]"
-        }
-      }
+      "core:name": "object_1"
     },
     {
       "@id": "#37",
@@ -324,27 +214,7 @@
           "@id": "#40"
         }
       ],
-      "shacl:name": "Employee",
-      "smaps": {
-        "inheritance-provenance": {
-          "shacl:name": "amf://id#4"
-        },
-        "inherited-shapes": {
-          "#37": "amf://id#41,amf://id#42,amf://id#43"
-        },
-        "type-property-lexical-info": {
-          "#37": "[(41,12)-(41,16)]"
-        },
-        "lexical": {
-          "#37": "[(40,10)-(43,0)]"
-        },
-        "auto-generated-name": {
-          "#37": ""
-        },
-        "synthesized-field": {
-          "shacl:closed": "true"
-        }
-      }
+      "shacl:name": "Employee"
     },
     {
       "@id": "#22",
@@ -356,16 +226,7 @@
       "data:responses": {
         "@id": "#23"
       },
-      "core:name": "object_1",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:responses": "[(18,4)-(24,0)]",
-          "#22": "[(18,4)-(24,0)]"
-        }
-      }
+      "core:name": "object_1"
     },
     {
       "@id": "#49",
@@ -388,27 +249,7 @@
           "@id": "#40"
         }
       ],
-      "shacl:name": "Employee",
-      "smaps": {
-        "inheritance-provenance": {
-          "shacl:name": "amf://id#4"
-        },
-        "inherited-shapes": {
-          "#49": "amf://id#41,amf://id#42,amf://id#43"
-        },
-        "type-property-lexical-info": {
-          "#49": "[(50,12)-(50,16)]"
-        },
-        "lexical": {
-          "#49": "[(49,10)-(51,0)]"
-        },
-        "auto-generated-name": {
-          "#49": ""
-        },
-        "synthesized-field": {
-          "shacl:closed": "true"
-        }
-      }
+      "shacl:name": "Employee"
     },
     {
       "@id": "#12",
@@ -420,16 +261,7 @@
       "data:responses": {
         "@id": "#13"
       },
-      "core:name": "post",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:responses": "[(27,6)-(34,0)]",
-          "#12": "[(27,0)-(34,0)]"
-        }
-      }
+      "core:name": "post"
     },
     {
       "@id": "#38",
@@ -448,20 +280,7 @@
         "@id": "#9"
       },
       "shacl:minCount": 1,
-      "shacl:name": "engineeringSkill",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(14,24)-(14,30)]",
-          "#38": "[(14,6)-(16,0)]"
-        },
-        "inheritance-provenance": {
-          "#38": "amf://id#7"
-        }
-      }
+      "shacl:name": "engineeringSkill"
     },
     {
       "@id": "#39",
@@ -480,20 +299,7 @@
         "@id": "#3"
       },
       "shacl:minCount": 1,
-      "shacl:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(8,12)-(8,18)]",
-          "#39": "[(8,6)-(9,0)]"
-        },
-        "inheritance-provenance": {
-          "#39": "amf://id#1"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#40",
@@ -512,20 +318,7 @@
         "@id": "#6"
       },
       "shacl:minCount": 1,
-      "shacl:name": "employeeId",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(11,18)-(11,24)]",
-          "#40": "[(11,6)-(12,0)]"
-        },
-        "inheritance-provenance": {
-          "#40": "amf://id#4"
-        }
-      }
+      "shacl:name": "employeeId"
     },
     {
       "@id": "#23",
@@ -537,16 +330,7 @@
       "data:500": {
         "@id": "#24"
       },
-      "core:name": "responses",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:500": "[(19,6)-(24,0)]",
-          "#23": "[(19,0)-(24,0)]"
-        }
-      }
+      "core:name": "responses"
     },
     {
       "@id": "#13",
@@ -558,16 +342,7 @@
       "data:500": {
         "@id": "#14"
       },
-      "core:name": "responses",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:500": "[(28,8)-(34,0)]",
-          "#13": "[(28,0)-(34,0)]"
-        }
-      }
+      "core:name": "responses"
     },
     {
       "@id": "#9",
@@ -583,13 +358,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "engineeringSkill",
-      "smaps": {
-        "lexical": {
-          "shacl:datatype": "[(14,24)-(14,30)]",
-          "#9": "[(14,6)-(16,0)]"
-        }
-      }
+      "shacl:name": "engineeringSkill"
     },
     {
       "@id": "#3",
@@ -605,13 +374,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "name",
-      "smaps": {
-        "lexical": {
-          "shacl:datatype": "[(8,12)-(8,18)]",
-          "#3": "[(8,6)-(9,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#6",
@@ -627,13 +390,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "employeeId",
-      "smaps": {
-        "lexical": {
-          "shacl:datatype": "[(11,18)-(11,24)]",
-          "#6": "[(11,6)-(12,0)]"
-        }
-      }
+      "shacl:name": "employeeId"
     },
     {
       "@id": "#24",
@@ -645,16 +402,7 @@
       "data:body": {
         "@id": "#25"
       },
-      "core:name": "500",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:body": "[(20,8)-(24,0)]",
-          "#24": "[(20,0)-(24,0)]"
-        }
-      }
+      "core:name": "500"
     },
     {
       "@id": "#14",
@@ -666,16 +414,7 @@
       "data:body": {
         "@id": "#15"
       },
-      "core:name": "500",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:body": "[(29,10)-(34,0)]",
-          "#14": "[(29,0)-(34,0)]"
-        }
-      }
+      "core:name": "500"
     },
     {
       "@id": "#25",
@@ -687,16 +426,7 @@
       "data:application%2Fjson": {
         "@id": "#26"
       },
-      "core:name": "body",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:application%2Fjson": "[(21,10)-(24,0)]",
-          "#25": "[(21,0)-(24,0)]"
-        }
-      }
+      "core:name": "body"
     },
     {
       "@id": "#15",
@@ -708,16 +438,7 @@
       "data:application%2Fjson": {
         "@id": "#16"
       },
-      "core:name": "body",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:application%2Fjson": "[(30,12)-(34,0)]",
-          "#15": "[(30,0)-(34,0)]"
-        }
-      }
+      "core:name": "body"
     },
     {
       "@id": "#26",
@@ -729,16 +450,7 @@
       "data:type": {
         "@id": "#27"
       },
-      "core:name": "application/json",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:type": "[(22,12)-(24,0)]",
-          "#26": "[(22,0)-(24,0)]"
-        }
-      }
+      "core:name": "application/json"
     },
     {
       "@id": "#16",
@@ -750,16 +462,7 @@
       "data:type": {
         "@id": "#17"
       },
-      "core:name": "application/json",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:type": "[(31,14)-(34,0)]",
-          "#16": "[(31,0)-(34,0)]"
-        }
-      }
+      "core:name": "application/json"
     },
     {
       "@id": "#27",
@@ -777,12 +480,7 @@
           "@id": "#29"
         }
       ],
-      "core:name": "type",
-      "smaps": {
-        "lexical": {
-          "#27": "[(22,18)-(22,36)]"
-        }
-      }
+      "core:name": "type"
     },
     {
       "@id": "#17",
@@ -800,12 +498,7 @@
           "@id": "#19"
         }
       ],
-      "core:name": "type",
-      "smaps": {
-        "lexical": {
-          "#17": "[(31,20)-(31,38)]"
-        }
-      }
+      "core:name": "type"
     },
     {
       "@id": "#28",
@@ -820,16 +513,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_7",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#28": "[(22,19)-(22,27)]"
-        }
-      }
+      "core:name": "scalar_7"
     },
     {
       "@id": "#29",
@@ -844,16 +528,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_8",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#29": "[(22,29)-(22,35)]"
-        }
-      }
+      "core:name": "scalar_8"
     },
     {
       "@id": "#18",
@@ -868,16 +543,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_8",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#18": "[(31,21)-(31,29)]"
-        }
-      }
+      "core:name": "scalar_8"
     },
     {
       "@id": "#19",
@@ -892,16 +558,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "scalar_9",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#19": "[(31,31)-(31,37)]"
-        }
-      }
+      "core:name": "scalar_9"
     },
     {
       "@id": "",
@@ -949,19 +606,7 @@
           "@id": "#2"
         }
       ],
-      "shacl:name": "Person",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "lexical": {
-          "shacl:name": "[(6,2)-(6,8)]",
-          "#1": "[(6,2)-(9,0)]"
-        },
-        "declared-element": {
-          "#1": ""
-        }
-      }
+      "shacl:name": "Person"
     },
     {
       "@id": "#4",
@@ -978,19 +623,7 @@
           "@id": "#5"
         }
       ],
-      "shacl:name": "Employee",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "lexical": {
-          "shacl:name": "[(9,2)-(9,10)]",
-          "#4": "[(9,2)-(12,0)]"
-        },
-        "declared-element": {
-          "#4": ""
-        }
-      }
+      "shacl:name": "Employee"
     },
     {
       "@id": "#7",
@@ -1007,19 +640,7 @@
           "@id": "#8"
         }
       ],
-      "shacl:name": "Engineer",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "lexical": {
-          "shacl:name": "[(12,2)-(12,10)]",
-          "#7": "[(12,2)-(16,0)]"
-        },
-        "declared-element": {
-          "#7": ""
-        }
-      }
+      "shacl:name": "Engineer"
     },
     {
       "@id": "#2",
@@ -1038,17 +659,7 @@
         "@id": "#3"
       },
       "shacl:minCount": 1,
-      "shacl:name": "name",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(8,12)-(8,18)]",
-          "#2": "[(8,6)-(9,0)]"
-        }
-      }
+      "shacl:name": "name"
     },
     {
       "@id": "#5",
@@ -1067,17 +678,7 @@
         "@id": "#6"
       },
       "shacl:minCount": 1,
-      "shacl:name": "employeeId",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(11,18)-(11,24)]",
-          "#5": "[(11,6)-(12,0)]"
-        }
-      }
+      "shacl:name": "employeeId"
     },
     {
       "@id": "#8",
@@ -1096,17 +697,7 @@
         "@id": "#9"
       },
       "shacl:minCount": 1,
-      "shacl:name": "engineeringSkill",
-      "smaps": {
-        "synthesized-field": {
-          "shacl:minCount": "true",
-          "shacl:path": "true"
-        },
-        "lexical": {
-          "raml-shapes:range": "[(14,24)-(14,30)]",
-          "#8": "[(14,6)-(16,0)]"
-        }
-      }
+      "shacl:name": "engineeringSkill"
     }
   ],
   "@context": {

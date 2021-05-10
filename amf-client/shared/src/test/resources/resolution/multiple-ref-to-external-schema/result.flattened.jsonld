@@ -20,19 +20,7 @@
         {
           "@id": "#17"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#3": "OAS 2.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(10,2)-(43,3)]",
-          "apiContract:scheme": "[(7,2)-(9,3)]",
-          "#3": "[(1,0)-(44,1)]",
-          "core:name": "[(4,4)-(4,30)]",
-          "core:version": "[(5,4)-(5,19)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#4",
@@ -45,12 +33,7 @@
         {
           "@id": "#5"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#4": "[(11,4)-(26,5)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#17",
@@ -63,12 +46,7 @@
         {
           "@id": "#18"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#17": "[(27,4)-(42,5)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#5",
@@ -85,14 +63,7 @@
         {
           "@id": "#6"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(14,8)-(21,9)]",
-          "#5": "[(12,6)-(25,7)]",
-          "core:description": "[(13,8)-(13,101)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#18",
@@ -109,14 +80,7 @@
         {
           "@id": "#19"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(30,8)-(37,9)]",
-          "#18": "[(28,6)-(41,7)]",
-          "core:description": "[(29,8)-(29,273)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#6",
@@ -132,14 +96,7 @@
         {
           "@id": "#7"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "core:description": "[(16,12)-(16,76)]",
-          "#6": "[(15,10)-(20,11)]",
-          "core:name": "[(15,10)-(15,15)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#19",
@@ -155,14 +112,7 @@
         {
           "@id": "#20"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "core:description": "[(32,12)-(32,116)]",
-          "#19": "[(31,10)-(36,11)]",
-          "core:name": "[(31,10)-(31,15)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#7",
@@ -202,22 +152,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "type-property-lexical-info": {
-          "#8": "[(4,6)-(4,12)]"
-        },
-        "lexical": {
-          "apiContract:examples": "[(5,6)-(14,7)]",
-          "#8": "[(3,4)-(15,5)]"
-        },
-        "auto-generated-name": {
-          "#8": ""
-        }
-      }
+      ]
     },
     {
       "@id": "#21",
@@ -235,22 +170,7 @@
         {
           "@id": "#22"
         }
-      ],
-      "smaps": {
-        "synthesized-field": {
-          "shacl:closed": "true"
-        },
-        "type-property-lexical-info": {
-          "#21": "[(4,6)-(4,12)]"
-        },
-        "lexical": {
-          "apiContract:examples": "[(5,6)-(14,7)]",
-          "#21": "[(3,4)-(15,5)]"
-        },
-        "auto-generated-name": {
-          "#21": ""
-        }
-      }
+      ]
     },
     {
       "@id": "#9",
@@ -264,13 +184,6 @@
       },
       "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
       "smaps": {
-        "synthesized-field": {
-          "doc:raw": "true",
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "#9": "[(5,6)-(14,7)]"
-        },
         "tracked-element": {
           "#9": "amf://id#7"
         }
@@ -288,13 +201,6 @@
       },
       "doc:raw": "\"errors\":\n  -\n    \"code\": 400\n    \"message\": \"Bad Request\"\n    \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\"\n    \"help\": \"http://www.correos.es/docs/errors/PSI-012\"",
       "smaps": {
-        "synthesized-field": {
-          "doc:raw": "true",
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "#22": "[(5,6)-(14,7)]"
-        },
         "tracked-element": {
           "#22": "amf://id#20"
         }
@@ -310,16 +216,7 @@
       "data:errors": {
         "@id": "#11"
       },
-      "core:name": "object_1",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:errors": "[(6,8)-(13,9)]",
-          "#10": "[(5,17)-(14,7)]"
-        }
-      }
+      "core:name": "object_1"
     },
     {
       "@id": "#11",
@@ -334,12 +231,7 @@
           "@id": "#12"
         }
       ],
-      "core:name": "errors",
-      "smaps": {
-        "lexical": {
-          "#11": "[(6,18)-(13,9)]"
-        }
-      }
+      "core:name": "errors"
     },
     {
       "@id": "#12",
@@ -360,19 +252,7 @@
       "data:help": {
         "@id": "#16"
       },
-      "core:name": "object_3",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:help": "[(11,12)-(11,63)]",
-          "data:message": "[(9,12)-(9,36)]",
-          "#12": "[(7,10)-(12,11)]",
-          "data:code": "[(8,12)-(8,23)]",
-          "data:more_info": "[(10,12)-(10,116)]"
-        }
-      }
+      "core:name": "object_3"
     },
     {
       "@id": "#13",
@@ -387,16 +267,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "core:name": "code",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#13": "[(8,20)-(8,23)]"
-        }
-      }
+      "core:name": "code"
     },
     {
       "@id": "#14",
@@ -411,16 +282,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "message",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#14": "[(9,23)-(9,36)]"
-        }
-      }
+      "core:name": "message"
     },
     {
       "@id": "#15",
@@ -435,16 +297,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "more_info",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#15": "[(10,25)-(10,116)]"
-        }
-      }
+      "core:name": "more_info"
     },
     {
       "@id": "#16",
@@ -459,16 +312,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "help",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#16": "[(11,20)-(11,63)]"
-        }
-      }
+      "core:name": "help"
     },
     {
       "@id": "",
@@ -509,12 +353,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "{\n  \"definitions\": {\n    \"error400\": {\n      \"type\": \"object\",\n      \"example\": {\n        \"errors\": [\n          {\n            \"code\": 400,\n            \"message\": \"Bad Request\",\n            \"more_info\": \"The parameters are not valid.Authentication failed due to incorrect username or password.\",\n            \"help\": \"http://www.correos.es/docs/errors/PSI-012\"\n          }\n        ]\n      }\n    }\n  }\n}\n",
-      "core:mediaType": "application/json",
-      "smaps": {
-        "lexical": {
-          "#2": "[(1,0)-(18,0)]"
-        }
-      }
+      "core:mediaType": "application/json"
     }
   ],
   "@context": {

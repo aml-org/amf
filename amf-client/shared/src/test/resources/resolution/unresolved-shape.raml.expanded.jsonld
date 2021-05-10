@@ -15,15 +15,7 @@
           "apiContract:API",
           "doc:RootDomainElement",
           "doc:DomainElement"
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#6": "RAML 1.0"
-          },
-          "lexical": {
-            "#6": "[(2,0)-(6,18)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -78,18 +70,7 @@
                   {
                     "@value": "booolean"
                   }
-                ],
-                "smaps": {
-                  "resolved-link-target": {
-                    "#3": "amf://id#3"
-                  },
-                  "lexical": {
-                    "#3": "[(6,10)-(6,18)]"
-                  },
-                  "resolved-link": {
-                    "#3": "amf://id#4"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -101,35 +82,14 @@
               {
                 "@value": "ok"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true",
-                "shacl:path": "true"
-              },
-              "lexical": {
-                "raml-shapes:range": "[(6,10)-(6,18)]",
-                "#2": "[(6,6)-(6,18)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "A"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "shacl:closed": "true"
-          },
-          "lexical": {
-            "#1": "[(4,10)-(4,13)]"
-          },
-          "inherited-shapes": {
-            "#1": "amf://id#5"
-          }
-        }
+        ]
       }
     ],
     "@context": {

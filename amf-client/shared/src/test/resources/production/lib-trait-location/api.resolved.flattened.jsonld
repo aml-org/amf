@@ -13,16 +13,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#8": "RAML 1.0"
-        },
-        "lexical": {
-          "core:name": "[(2,0)-(4,0)]",
-          "#8": "[(2,0)-(8,14)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#9",
@@ -40,13 +31,7 @@
         {
           "@id": "#10"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:path": "[(7,0)-(7,9)]",
-          "#9": "[(7,0)-(8,14)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#11",
@@ -59,12 +44,7 @@
         {
           "@id": "#12"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "#11": "[(4,4)-(6,12)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#10",
@@ -76,12 +56,6 @@
       "core:name": "lib.rt",
       "doc:target": {
         "@id": "#2"
-      },
-      "smaps": {
-        "lexical": {
-          "core:name": "[(8,8)-(8,14)]",
-          "#10": "[(8,8)-(8,14)]"
-        }
       }
     },
     {
@@ -95,12 +69,7 @@
         {
           "@id": "#13"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:parameter": "[(5,6)-(6,12)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#2",
@@ -112,22 +81,6 @@
       "core:name": "rt",
       "doc:dataNode": {
         "@id": "#3"
-      },
-      "smaps": {
-        "resolved-link-target": {
-          "#2": "amf://id#2"
-        },
-        "declared-element": {
-          "#2": ""
-        },
-        "lexical": {
-          "doc:dataNode": "[(4,4)-(6,12)]",
-          "#2": "[(3,2)-(6,12)]",
-          "core:name": "[(3,2)-(3,4)]"
-        },
-        "resolved-link": {
-          "#2": "amf://id#7"
-        }
       }
     },
     {
@@ -142,15 +95,6 @@
       "apiContract:binding": "query",
       "raml-shapes:schema": {
         "@id": "#14"
-      },
-      "smaps": {
-        "synthesized-field": {
-          "apiContract:binding": "true"
-        },
-        "lexical": {
-          "raml-shapes:schema": "[(6,8)-(6,12)]",
-          "#13": "[(6,8)-(6,12)]"
-        }
       }
     },
     {
@@ -163,16 +107,7 @@
       "data:post": {
         "@id": "#4"
       },
-      "core:name": "object_1",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:post": "[(4,4)-(6,12)]",
-          "#3": "[(4,4)-(6,12)]"
-        }
-      }
+      "core:name": "object_1"
     },
     {
       "@id": "#14",
@@ -188,12 +123,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "shacl:name": "schema",
-      "smaps": {
-        "lexical": {
-          "#14": "[(6,8)-(6,12)]"
-        }
-      }
+      "shacl:name": "schema"
     },
     {
       "@id": "#4",
@@ -205,16 +135,7 @@
       "data:queryParameters": {
         "@id": "#5"
       },
-      "core:name": "post",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:queryParameters": "[(5,6)-(6,12)]",
-          "#4": "[(5,0)-(6,12)]"
-        }
-      }
+      "core:name": "post"
     },
     {
       "@id": "#5",
@@ -226,16 +147,7 @@
       "data:qp1": {
         "@id": "#6"
       },
-      "core:name": "queryParameters",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:qp1": "[(6,8)-(6,12)]",
-          "#5": "[(6,0)-(6,12)]"
-        }
-      }
+      "core:name": "queryParameters"
     },
     {
       "@id": "#6",
@@ -250,16 +162,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#nil"
         }
       ],
-      "core:name": "qp1",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#6": "[(6,12)-(6,12)]"
-        }
-      }
+      "core:name": "qp1"
     },
     {
       "@id": "",
@@ -278,12 +181,7 @@
         "@id": "#8"
       },
       "doc:version": "3.1.0",
-      "doc:root": true,
-      "smaps": {
-        "aliases-array": {
-          "": "lib->amf://id#1::lib.raml"
-        }
-      }
+      "doc:root": true
     },
     {
       "@id": "#1",
@@ -297,15 +195,7 @@
         }
       ],
       "doc:version": "3.1.0",
-      "doc:root": false,
-      "smaps": {
-        "source-vendor": {
-          "#1": "RAML 1.0"
-        },
-        "lexical": {
-          "#1": "[(1,0)-(6,12)]"
-        }
-      }
+      "doc:root": false
     }
   ],
   "@context": {

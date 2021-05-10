@@ -14,18 +14,7 @@
         {
           "@id": "#/async-api/end-points/aChannel"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#/async-api": "ASYNC 2.0"
-        },
-        "lexical": {
-          "apiContract:endpoint": "[(5,0)-(15,0)]",
-          "core:name": "[(3,2)-(4,0)]",
-          "#/async-api": "[(1,0)-(22,24)]",
-          "core:version": "[(4,2)-(5,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#/async-api/end-points/aChannel",
@@ -38,13 +27,7 @@
         {
           "@id": "#/async-api/end-points/aChannel/publish"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:supportedOperation": "[(7,0)-(15,0)]",
-          "#/async-api/end-points/aChannel": "[(6,2)-(15,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#/async-api/end-points/aChannel/publish",
@@ -57,13 +40,7 @@
         {
           "@id": "#/async-api/end-points/aChannel/publish/request"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:expects": "[(8,6)-(15,0)]",
-          "#/async-api/end-points/aChannel/publish": "[(7,4)-(15,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#/async-api/end-points/aChannel/publish/request",
@@ -79,12 +56,7 @@
       ],
       "core:displayName": "secondMessage",
       "core:title": "secondTitle",
-      "core:summary": "firstSummary",
-      "smaps": {
-        "lexical": {
-          "#/async-api/end-points/aChannel/publish/request": "[(9,0)-(15,0)]"
-        }
-      }
+      "core:summary": "firstSummary"
     },
     {
       "@id": "#/async-api/end-points/aChannel/publish/request/baseContentType",
@@ -92,13 +64,7 @@
         "apiContract:Payload",
         "doc:DomainElement"
       ],
-      "core:mediaType": "baseContentType",
-      "smaps": {
-        "lexical": {
-          "core:mediaType": "[(11,8)-(12,0)]",
-          "#/async-api/end-points/aChannel/publish/request/baseContentType": "[(9,0)-(15,0)]"
-        }
-      }
+      "core:mediaType": "baseContentType"
     },
     {
       "@id": "",

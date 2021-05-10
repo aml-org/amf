@@ -31,19 +31,7 @@
             "@value": "0.1"
           }
         ],
-        "apiContract:endpoint": [],
-        "smaps": {
-          "source-vendor": {
-            "#9": "OAS 3.0"
-          },
-          "lexical": {
-            "apiContract:endpoint": "[(8,2)-(8,13)]",
-            "core:description": "[(6,4)-(6,120)]",
-            "#9": "[(1,0)-(34,1)]",
-            "core:name": "[(5,4)-(5,38)]",
-            "core:version": "[(4,4)-(4,20)]"
-          }
-        }
+        "apiContract:endpoint": []
       }
     ],
     "doc:version": [
@@ -118,16 +106,7 @@
                       {
                         "@value": "deviceId"
                       }
-                    ],
-                    "smaps": {
-                      "type-property-lexical-info": {
-                        "#4": "[(28,12)-(28,18)]"
-                      },
-                      "lexical": {
-                        "shacl:datatype": "[(28,12)-(28,28)]",
-                        "#4": "[(27,10)-(29,11)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:minCount": [
@@ -139,40 +118,14 @@
                   {
                     "@value": "deviceId"
                   }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "shacl:minCount": "true"
-                  },
-                  "lexical": {
-                    "#3": "[(27,10)-(29,11)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:name": [
               {
                 "@value": "NewOmsKey"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:closed": "true"
-              },
-              "resolved-link": {
-                "#2": "amf://id#5"
-              },
-              "lexical": {
-                "shacl:name": "[(25,6)-(25,17)]",
-                "#2": "[(25,6)-(31,7)]"
-              },
-              "declared-element": {
-                "#2": ""
-              },
-              "resolved-link-target": {
-                "#2": "amf://id#2"
-              }
-            }
+            ]
           },
           {
             "@id": "#6",
@@ -221,16 +174,7 @@
                       {
                         "@value": "id"
                       }
-                    ],
-                    "smaps": {
-                      "type-property-lexical-info": {
-                        "#8": "[(19,16)-(19,22)]"
-                      },
-                      "lexical": {
-                        "shacl:datatype": "[(19,16)-(19,33)]",
-                        "#8": "[(18,14)-(20,15)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:minCount": [
@@ -242,42 +186,16 @@
                   {
                     "@value": "id"
                   }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "shacl:minCount": "true"
-                  },
-                  "lexical": {
-                    "#7": "[(18,14)-(20,15)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:name": [
               {
                 "@value": "item1"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:closed": "true"
-              },
-              "lexical": {
-                "#6": "[(16,10)-(22,11)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "declared-element": {
-            "#1": ""
-          },
-          "lexical": {
-            "shacl:and": "[(12,8)-(23,9)]",
-            "#1": "[(11,6)-(24,7)]",
-            "shacl:name": "[(11,6)-(11,14)]"
-          }
-        }
+        ]
       },
       {
         "@id": "#2",
@@ -326,16 +244,7 @@
                   {
                     "@value": "deviceId"
                   }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "#4": "[(28,12)-(28,18)]"
-                  },
-                  "lexical": {
-                    "shacl:datatype": "[(28,12)-(28,28)]",
-                    "#4": "[(27,10)-(29,11)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -347,40 +256,14 @@
               {
                 "@value": "deviceId"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true"
-              },
-              "lexical": {
-                "#3": "[(27,10)-(29,11)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "NewOmsKey"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "shacl:closed": "true"
-          },
-          "resolved-link": {
-            "#2": "amf://id#5"
-          },
-          "lexical": {
-            "shacl:name": "[(25,6)-(25,17)]",
-            "#2": "[(25,6)-(31,7)]"
-          },
-          "declared-element": {
-            "#2": ""
-          },
-          "resolved-link-target": {
-            "#2": "amf://id#2"
-          }
-        }
+        ]
       }
     ],
     "@context": {

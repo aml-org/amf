@@ -20,16 +20,7 @@
           {
             "@value": "API"
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#9": "RAML 1.0"
-          },
-          "lexical": {
-            "core:name": "[(2,0)-(3,0)]",
-            "#9": "[(2,0)-(9,16)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -104,39 +95,14 @@
                       {
                         "@value": "Child"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "doc:recursive": "true"
-                      },
-                      "resolved-link-target": {
-                        "#4": "amf://id#1"
-                      },
-                      "declared-element": {
-                        "#4": ""
-                      },
-                      "lexical": {
-                        "#4": "[(4,2)-(8,0)]"
-                      },
-                      "resolved-link": {
-                        "#4": "amf://id#5"
-                      },
-                      "inherited-shapes": {
-                        "#4": "amf://id#6"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:name": [
                   {
                     "@value": "children"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#3": "[(6,6)-(7,0)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -148,17 +114,7 @@
               {
                 "@value": "children"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true",
-                "shacl:path": "true"
-              },
-              "lexical": {
-                "raml-shapes:range": "[(6,16)-(6,23)]",
-                "#2": "[(6,6)-(7,0)]"
-              }
-            }
+            ]
           },
           {
             "@id": "#7",
@@ -192,13 +148,7 @@
                   {
                     "@value": "name"
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "shacl:datatype": "[(7,12)-(7,18)]",
-                    "#8": "[(7,6)-(8,0)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -210,42 +160,14 @@
               {
                 "@value": "name"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true",
-                "shacl:path": "true"
-              },
-              "lexical": {
-                "raml-shapes:range": "[(7,12)-(7,18)]",
-                "#7": "[(7,6)-(8,0)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "Person"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "shacl:closed": "true"
-          },
-          "resolved-link": {
-            "#1": "amf://id#5"
-          },
-          "lexical": {
-            "shacl:name": "[(4,2)-(4,8)]",
-            "#1": "[(4,2)-(8,0)]"
-          },
-          "declared-element": {
-            "#1": ""
-          },
-          "resolved-link-target": {
-            "#1": "amf://id#1"
-          }
-        }
+        ]
       },
       {
         "@id": "#4",
@@ -269,27 +191,7 @@
           {
             "@value": "Child"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "doc:recursive": "true"
-          },
-          "resolved-link-target": {
-            "#4": "amf://id#1"
-          },
-          "declared-element": {
-            "#4": ""
-          },
-          "lexical": {
-            "#4": "[(4,2)-(8,0)]"
-          },
-          "resolved-link": {
-            "#4": "amf://id#5"
-          },
-          "inherited-shapes": {
-            "#4": "amf://id#6"
-          }
-        }
+        ]
       }
     ],
     "@context": {

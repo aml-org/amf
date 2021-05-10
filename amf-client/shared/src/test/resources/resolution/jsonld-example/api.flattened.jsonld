@@ -19,18 +19,7 @@
         {
           "@id": "#4"
         }
-      ],
-      "smaps": {
-        "source-vendor": {
-          "#3": "RAML 1.0"
-        },
-        "lexical": {
-          "core:version": "[(4,0)-(5,0)]",
-          "core:name": "[(3,0)-(4,0)]",
-          "#3": "[(2,0)-(11,51)]",
-          "apiContract:server": "[(2,0)-(3,0)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#13",
@@ -38,15 +27,7 @@
         "apiContract:Server",
         "doc:DomainElement"
       ],
-      "core:urlTemplate": "https://jorge.uri.com",
-      "smaps": {
-        "lexical": {
-          "core:urlTemplate": "[(2,0)-(3,0)]"
-        },
-        "synthesized-field": {
-          "#13": "true"
-        }
-      }
+      "core:urlTemplate": "https://jorge.uri.com"
     },
     {
       "@id": "#4",
@@ -59,13 +40,7 @@
         {
           "@id": "#5"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:path": "[(5,0)-(5,14)]",
-          "#4": "[(5,0)-(11,51)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#5",
@@ -78,13 +53,7 @@
         {
           "@id": "#6"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:returns": "[(7,4)-(11,51)]",
-          "#5": "[(6,2)-(11,51)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#6",
@@ -99,13 +68,7 @@
         {
           "@id": "#7"
         }
-      ],
-      "smaps": {
-        "lexical": {
-          "apiContract:payload": "[(9,8)-(11,51)]",
-          "#6": "[(8,6)-(11,51)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#7",
@@ -116,11 +79,6 @@
       "core:mediaType": "application/json",
       "raml-shapes:schema": {
         "@id": "#8"
-      },
-      "smaps": {
-        "lexical": {
-          "#7": "[(10,10)-(11,51)]"
-        }
       }
     },
     {
@@ -136,16 +94,7 @@
         {
           "@id": "#9"
         }
-      ],
-      "smaps": {
-        "auto-generated-name": {
-          "#8": ""
-        },
-        "lexical": {
-          "apiContract:examples": "[(11,12)-(11,51)]",
-          "#8": "[(10,10)-(11,51)]"
-        }
-      }
+      ]
     },
     {
       "@id": "#9",
@@ -164,12 +113,6 @@
       ],
       "doc:location": "file://amf-client/shared/src/test/resources/resolution/jsonld-example/examples/dialect.json",
       "smaps": {
-        "synthesized-field": {
-          "doc:strict": "true"
-        },
-        "lexical": {
-          "#9": "[(1,0)-(1,0)]"
-        },
         "tracked-element": {
           "#9": "amf://id#7"
         }
@@ -188,15 +131,7 @@
           "@id": "#11"
         }
       ],
-      "core:name": "array_1",
-      "smaps": {
-        "parsed-json-example": {
-          "#10": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
-        },
-        "lexical": {
-          "#10": "[(1,0)-(5,1)]"
-        }
-      }
+      "core:name": "array_1"
     },
     {
       "@id": "#11",
@@ -208,16 +143,7 @@
       "data:%40id": {
         "@id": "#12"
       },
-      "core:name": "object_2",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true"
-        },
-        "lexical": {
-          "data:%40id": "[(3,4)-(3,73)]",
-          "#11": "[(2,2)-(4,3)]"
-        }
-      }
+      "core:name": "object_2"
     },
     {
       "@id": "#12",
@@ -232,16 +158,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "core:name": "@id",
-      "smaps": {
-        "synthesized-field": {
-          "core:name": "true",
-          "shacl:datatype": "true"
-        },
-        "lexical": {
-          "#12": "[(3,11)-(3,73)]"
-        }
-      }
+      "core:name": "@id"
     },
     {
       "@id": "",
@@ -282,12 +199,7 @@
         "doc:DomainElement"
       ],
       "doc:raw": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n",
-      "core:mediaType": "application/json",
-      "smaps": {
-        "lexical": {
-          "#2": "[(1,0)-(6,0)]"
-        }
-      }
+      "core:mediaType": "application/json"
     }
   ],
   "@context": {

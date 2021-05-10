@@ -14,11 +14,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map"
-        }
       ]
     },
     {
@@ -30,37 +25,7 @@
       "http://a.ml/vocabularies/apiContract#path": "some-channel",
       "http://a.ml/vocabularies/apiBinding#binding": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map/source-vendor/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map/lexical/element_2"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings",
@@ -72,51 +37,7 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/source-map"
-        }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "ASYNC 2.0"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(6,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(21,29)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(21,29)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel",
@@ -133,36 +54,7 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema"
       },
       "http://a.ml/vocabularies/apiBinding#bindingVersion": "3.4.3",
-      "http://a.ml/vocabularies/apiBinding#type": "ws",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(21,29)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#binding",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(21,29)]"
+      "http://a.ml/vocabularies/apiBinding#type": "ws"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema",
@@ -179,12 +71,7 @@
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "schema",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "schema"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema",
@@ -201,48 +88,7 @@
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "schema",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_5"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_4"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,0)-(21,29)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindings",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,0)-(21,29)]"
+      "http://www.w3.org/ns/shacl#name": "schema"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some",
@@ -261,36 +107,7 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
-      "http://www.w3.org/ns/shacl#name": "some",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "some"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some",
@@ -309,66 +126,7 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some"
       },
       "http://www.w3.org/ns/shacl#minCount": 0,
-      "http://www.w3.org/ns/shacl#name": "some",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/type-property-lexical-info/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_5",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#bindingVersion",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(21,8)-(21,29)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(21,29)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#headers",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,8)-(21,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(9,8)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#method",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(11,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/source-map/lexical/element_4",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiBinding#query",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,8)-(16,0)]"
+      "http://www.w3.org/ns/shacl#name": "some"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some",
@@ -384,48 +142,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "some",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,14)-(16,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(13,21)-(16,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,10)-(12,14)]"
+      "http://www.w3.org/ns/shacl#name": "some"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some",
@@ -441,136 +158,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "some",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,16)-(21,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,21)-(21,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(17,10)-(17,14)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,12)-(16,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(19,12)-(21,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(15,14)-(15,18)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,12)-(16,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/query/schema/property/some/scalar/some/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(15,14)-(16,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(20,14)-(20,18)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(19,12)-(21,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml#/async-api/end-points/some-channel/channel-bindings/web-socket-channel/headers/schema/property/some/scalar/some/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(20,14)-(21,0)]"
+      "http://www.w3.org/ns/shacl#name": "some"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/ws-channel-binding.yaml",

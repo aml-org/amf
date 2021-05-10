@@ -26,18 +26,7 @@
             "@value": "v1"
           }
         ],
-        "apiContract:endpoint": [],
-        "smaps": {
-          "source-vendor": {
-            "#10": "OAS 2.0"
-          },
-          "lexical": {
-            "apiContract:endpoint": "[(5,0)-(6,0)]",
-            "core:name": "[(4,2)-(5,0)]",
-            "#10": "[(1,0)-(20,71)]",
-            "core:version": "[(3,2)-(4,0)]"
-          }
-        }
+        "apiContract:endpoint": []
       }
     ],
     "doc:version": [
@@ -156,27 +145,7 @@
                                   {
                                     "@value": "Something.DataContracts.Push.PushOption"
                                   }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "doc:recursive": "true"
-                                  },
-                                  "resolved-link": {
-                                    "#7": "amf://id#8"
-                                  },
-                                  "type-property-lexical-info": {
-                                    "#7": "[(8,4)-(8,8)]"
-                                  },
-                                  "lexical": {
-                                    "#7": "[(7,2)-(14,0)]"
-                                  },
-                                  "declared-element": {
-                                    "#7": ""
-                                  },
-                                  "resolved-link-target": {
-                                    "#7": "amf://id#1"
-                                  }
-                                }
+                                ]
                               }
                             ],
                             "shacl:property": [],
@@ -184,18 +153,7 @@
                               {
                                 "@value": "properties"
                               }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "shacl:closed": "true"
-                              },
-                              "lexical": {
-                                "#6": "[(17,6)-(20,71)]"
-                              },
-                              "type-property-lexical-info": {
-                                "#6": "[(18,8)-(18,12)]"
-                              }
-                            }
+                            ]
                           }
                         ],
                         "shacl:minCount": [
@@ -207,58 +165,21 @@
                           {
                             "@value": "properties"
                           }
-                        ],
-                        "smaps": {
-                          "synthesized-field": {
-                            "shacl:minCount": "true"
-                          },
-                          "lexical": {
-                            "#5": "[(17,6)-(20,71)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "shacl:name": [
                       {
                         "@value": "Something.DataContracts.Push.PushOptionChoice"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "shacl:closed": "true"
-                      },
-                      "resolved-link": {
-                        "#4": "amf://id#9"
-                      },
-                      "type-property-lexical-info": {
-                        "#4": "[(15,4)-(15,8)]"
-                      },
-                      "lexical": {
-                        "shacl:name": "[(14,2)-(14,47)]",
-                        "#4": "[(14,2)-(20,71)]"
-                      },
-                      "declared-element": {
-                        "#4": ""
-                      },
-                      "resolved-link-target": {
-                        "#4": "amf://id#4"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:name": [
                   {
                     "@value": "options"
                   }
-                ],
-                "smaps": {
-                  "type-property-lexical-info": {
-                    "#3": "[(11,8)-(11,12)]"
-                  },
-                  "lexical": {
-                    "#3": "[(10,6)-(14,0)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -270,15 +191,7 @@
               {
                 "@value": "options"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true"
-              },
-              "lexical": {
-                "#2": "[(10,6)-(14,0)]"
-              }
-            }
+            ]
           }
         ],
         "doc:recursive": [
@@ -290,29 +203,7 @@
           {
             "@value": "Something.DataContracts.Push.PushOption"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "doc:recursive": "true",
-            "shacl:closed": "true"
-          },
-          "resolved-link": {
-            "#1": "amf://id#8"
-          },
-          "type-property-lexical-info": {
-            "#1": "[(8,4)-(8,8)]"
-          },
-          "lexical": {
-            "shacl:name": "[(7,2)-(7,41)]",
-            "#1": "[(7,2)-(14,0)]"
-          },
-          "declared-element": {
-            "#1": ""
-          },
-          "resolved-link-target": {
-            "#1": "amf://id#1"
-          }
-        }
+        ]
       },
       {
         "@id": "#4",
@@ -380,27 +271,7 @@
                       {
                         "@value": "Something.DataContracts.Push.PushOption"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "doc:recursive": "true"
-                      },
-                      "resolved-link": {
-                        "#7": "amf://id#8"
-                      },
-                      "type-property-lexical-info": {
-                        "#7": "[(8,4)-(8,8)]"
-                      },
-                      "lexical": {
-                        "#7": "[(7,2)-(14,0)]"
-                      },
-                      "declared-element": {
-                        "#7": ""
-                      },
-                      "resolved-link-target": {
-                        "#7": "amf://id#1"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "shacl:property": [],
@@ -408,18 +279,7 @@
                   {
                     "@value": "properties"
                   }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "shacl:closed": "true"
-                  },
-                  "lexical": {
-                    "#6": "[(17,6)-(20,71)]"
-                  },
-                  "type-property-lexical-info": {
-                    "#6": "[(18,8)-(18,12)]"
-                  }
-                }
+                ]
               }
             ],
             "shacl:minCount": [
@@ -431,43 +291,14 @@
               {
                 "@value": "properties"
               }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "shacl:minCount": "true"
-              },
-              "lexical": {
-                "#5": "[(17,6)-(20,71)]"
-              }
-            }
+            ]
           }
         ],
         "shacl:name": [
           {
             "@value": "Something.DataContracts.Push.PushOptionChoice"
           }
-        ],
-        "smaps": {
-          "synthesized-field": {
-            "shacl:closed": "true"
-          },
-          "resolved-link": {
-            "#4": "amf://id#9"
-          },
-          "type-property-lexical-info": {
-            "#4": "[(15,4)-(15,8)]"
-          },
-          "lexical": {
-            "shacl:name": "[(14,2)-(14,47)]",
-            "#4": "[(14,2)-(20,71)]"
-          },
-          "declared-element": {
-            "#4": ""
-          },
-          "resolved-link-target": {
-            "#4": "amf://id#4"
-          }
-        }
+        ]
       }
     ],
     "@context": {

@@ -8,46 +8,7 @@
         "http://a.ml/vocabularies/document#RootDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://a.ml/vocabularies/core#name": "test",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(5,57)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(4,0)]"
+      "http://a.ml/vocabularies/core#name": "test"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml",
@@ -102,12 +63,7 @@
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema-lib.xsd#/external/address"
         }
       ],
-      "http://a.ml/vocabularies/document#location": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema-lib.xsd",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/document#location": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema-lib.xsd"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema-lib.xsd#/external",
@@ -116,60 +72,6 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#raw": "<xs:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n    <xs:element name=\"office\" type=\"officeType\" />\n    <xs:complexType name=\"officeType\">\n        <xs:sequence>\n            <xs:element name=\"address\">\n                <xs:complexType>\n                    <xs:simpleContent>\n                        <xs:extension base=\"xs:string\">\n                            <xs:attribute type=\"xs:string\" name=\"street\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"number\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"other\"/>\n                            <xs:attribute type=\"xs:string\" name=\"city\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"zipCode\" use=\"required\"/>\n                        </xs:extension>\n                    </xs:simpleContent>\n                </xs:complexType>\n            </xs:element>\n            <xs:element name=\"phoneNumbers\">\n                <xs:complexType>\n                    <xs:sequence>\n                        <xs:element name=\"phoneNumber\">\n                            <xs:complexType>\n                                <xs:simpleContent>\n                                    <xs:extension base=\"xs:string\">\n                                        <xs:attribute type=\"xs:string\" name=\"areaCode\" use=\"required\"/>\n                                        <xs:attribute type=\"xs:string\" name=\"number\" use=\"required\"/>\n                                    </xs:extension>\n                                </xs:simpleContent>\n                            </xs:complexType>\n                        </xs:element>\n                    </xs:sequence>\n                </xs:complexType>\n            </xs:element>\n        </xs:sequence>\n        <xs:attribute type=\"xs:string\" name=\"name\" use=\"required\"/>\n        <xs:attribute type=\"xs:short\" name=\"capacity\"/>\n    </xs:complexType>\n</xs:schema>"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map/external-fragment-ref/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map/synthesized-field/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,11)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map/external-fragment-ref/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema",
-      "http://a.ml/vocabularies/document-source-maps#value": "address"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#mediaType",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#location",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     }
   ]
 }

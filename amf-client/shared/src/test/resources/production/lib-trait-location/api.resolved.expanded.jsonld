@@ -99,37 +99,13 @@
                               {
                                 "@value": "schema"
                               }
-                            ],
-                            "smaps": {
-                              "lexical": {
-                                "#14": "[(6,8)-(6,12)]"
-                              }
-                            }
+                            ]
                           }
-                        ],
-                        "smaps": {
-                          "synthesized-field": {
-                            "apiContract:binding": "true"
-                          },
-                          "lexical": {
-                            "raml-shapes:schema": "[(6,8)-(6,12)]",
-                            "#13": "[(6,8)-(6,12)]"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "apiContract:parameter": "[(5,6)-(6,12)]"
-                      }
-                    }
+                    ]
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#11": "[(4,4)-(6,12)]"
-                  }
-                }
+                ]
               }
             ],
             "doc:extends": [
@@ -204,109 +180,36 @@
                                       {
                                         "@value": "qp1"
                                       }
-                                    ],
-                                    "smaps": {
-                                      "synthesized-field": {
-                                        "core:name": "true",
-                                        "shacl:datatype": "true"
-                                      },
-                                      "lexical": {
-                                        "#6": "[(6,12)-(6,12)]"
-                                      }
-                                    }
+                                    ]
                                   }
                                 ],
                                 "core:name": [
                                   {
                                     "@value": "queryParameters"
                                   }
-                                ],
-                                "smaps": {
-                                  "synthesized-field": {
-                                    "core:name": "true"
-                                  },
-                                  "lexical": {
-                                    "data:qp1": "[(6,8)-(6,12)]",
-                                    "#5": "[(6,0)-(6,12)]"
-                                  }
-                                }
+                                ]
                               }
                             ],
                             "core:name": [
                               {
                                 "@value": "post"
                               }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "core:name": "true"
-                              },
-                              "lexical": {
-                                "data:queryParameters": "[(5,6)-(6,12)]",
-                                "#4": "[(5,0)-(6,12)]"
-                              }
-                            }
+                            ]
                           }
                         ],
                         "core:name": [
                           {
                             "@value": "object_1"
                           }
-                        ],
-                        "smaps": {
-                          "synthesized-field": {
-                            "core:name": "true"
-                          },
-                          "lexical": {
-                            "data:post": "[(4,4)-(6,12)]",
-                            "#3": "[(4,4)-(6,12)]"
-                          }
-                        }
+                        ]
                       }
-                    ],
-                    "smaps": {
-                      "resolved-link-target": {
-                        "#2": "amf://id#2"
-                      },
-                      "declared-element": {
-                        "#2": ""
-                      },
-                      "lexical": {
-                        "doc:dataNode": "[(4,4)-(6,12)]",
-                        "#2": "[(3,2)-(6,12)]",
-                        "core:name": "[(3,2)-(3,4)]"
-                      },
-                      "resolved-link": {
-                        "#2": "amf://id#7"
-                      }
-                    }
+                    ]
                   }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "core:name": "[(8,8)-(8,14)]",
-                    "#10": "[(8,8)-(8,14)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "lexical": {
-                "apiContract:path": "[(7,0)-(7,9)]",
-                "#9": "[(7,0)-(8,14)]"
-              }
-            }
+            ]
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#8": "RAML 1.0"
-          },
-          "lexical": {
-            "core:name": "[(2,0)-(4,0)]",
-            "#8": "[(2,0)-(8,14)]"
-          }
-        }
+        ]
       }
     ],
     "doc:version": [
@@ -319,11 +222,6 @@
         "@value": true
       }
     ],
-    "smaps": {
-      "aliases-array": {
-        "": "lib->amf://id#1::lib.raml"
-      }
-    },
     "doc:references": [
       {
         "@id": "#1",
@@ -390,82 +288,30 @@
                               {
                                 "@value": "qp1"
                               }
-                            ],
-                            "smaps": {
-                              "synthesized-field": {
-                                "core:name": "true",
-                                "shacl:datatype": "true"
-                              },
-                              "lexical": {
-                                "#6": "[(6,12)-(6,12)]"
-                              }
-                            }
+                            ]
                           }
                         ],
                         "core:name": [
                           {
                             "@value": "queryParameters"
                           }
-                        ],
-                        "smaps": {
-                          "synthesized-field": {
-                            "core:name": "true"
-                          },
-                          "lexical": {
-                            "data:qp1": "[(6,8)-(6,12)]",
-                            "#5": "[(6,0)-(6,12)]"
-                          }
-                        }
+                        ]
                       }
                     ],
                     "core:name": [
                       {
                         "@value": "post"
                       }
-                    ],
-                    "smaps": {
-                      "synthesized-field": {
-                        "core:name": "true"
-                      },
-                      "lexical": {
-                        "data:queryParameters": "[(5,6)-(6,12)]",
-                        "#4": "[(5,0)-(6,12)]"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "core:name": [
                   {
                     "@value": "object_1"
                   }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "core:name": "true"
-                  },
-                  "lexical": {
-                    "data:post": "[(4,4)-(6,12)]",
-                    "#3": "[(4,4)-(6,12)]"
-                  }
-                }
+                ]
               }
-            ],
-            "smaps": {
-              "resolved-link-target": {
-                "#2": "amf://id#2"
-              },
-              "declared-element": {
-                "#2": ""
-              },
-              "lexical": {
-                "doc:dataNode": "[(4,4)-(6,12)]",
-                "#2": "[(3,2)-(6,12)]",
-                "core:name": "[(3,2)-(3,4)]"
-              },
-              "resolved-link": {
-                "#2": "amf://id#7"
-              }
-            }
+            ]
           }
         ],
         "doc:version": [
@@ -477,15 +323,7 @@
           {
             "@value": false
           }
-        ],
-        "smaps": {
-          "source-vendor": {
-            "#1": "RAML 1.0"
-          },
-          "lexical": {
-            "#1": "[(1,0)-(6,12)]"
-          }
-        }
+        ]
       }
     ],
     "@context": {

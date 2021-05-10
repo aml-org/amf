@@ -10,62 +10,7 @@
       ],
       "http://a.ml/vocabularies/core#name": "name",
       "http://a.ml/vocabularies/core#version": "1.0",
-      "http://a.ml/vocabularies/apiContract#endpoint": [],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map/lexical/element_2"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(5,20)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(4,19)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(7,13)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(65,1)]"
+      "http://a.ml/vocabularies/apiContract#endpoint": []
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json",
@@ -112,12 +57,7 @@
       "http://www.w3.org/ns/shacl#name": "scalarString",
       "http://www.w3.org/ns/shacl#in": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/list"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber",
@@ -136,12 +76,7 @@
       "http://www.w3.org/ns/shacl#name": "scalarNumber",
       "http://www.w3.org/ns/shacl#in": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/list"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType",
@@ -164,12 +99,7 @@
       "http://www.w3.org/ns/shacl#name": "objectType",
       "http://www.w3.org/ns/shacl#in": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/list"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType",
@@ -186,12 +116,7 @@
       "http://www.w3.org/ns/shacl#name": "arrayType",
       "http://www.w3.org/ns/shacl#in": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/list"
-      },
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map"
-        }
-      ]
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/list",
@@ -204,36 +129,6 @@
       }
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/lexical/element_2"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/type-property-lexical-info/element_0"
-        }
-      ]
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/list",
       "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
       "http://www.w3.org/2000/01/rdf-schema#_1": {
@@ -242,36 +137,6 @@
       "http://www.w3.org/2000/01/rdf-schema#_2": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2"
       }
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/lexical/element_2"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/type-property-lexical-info/element_0"
-        }
-      ]
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1",
@@ -290,12 +155,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
-      "http://www.w3.org/ns/shacl#name": "value1",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "value1"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2",
@@ -314,12 +174,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2"
       },
       "http://www.w3.org/ns/shacl#minCount": 1,
-      "http://www.w3.org/ns/shacl#name": "value2",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "value2"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/list",
@@ -330,41 +185,6 @@
       "http://www.w3.org/2000/01/rdf-schema#_2": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4"
       }
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/lexical/element_2"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/declared-element/element_0"
-        }
-      ]
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items",
@@ -380,12 +200,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "items",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items/source-map"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "items"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/list",
@@ -396,36 +211,6 @@
       "http://www.w3.org/2000/01/rdf-schema#_2": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4"
       }
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/declared-element/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/lexical/element_3"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/lexical/element_2"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/type-property-lexical-info/element_0"
-        }
-      ]
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_1",
@@ -440,12 +225,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_1/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "scalar_1"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_2",
@@ -460,42 +240,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_2",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_2/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(9,18)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,6)-(14,22)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#in",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,6)-(13,7)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(15,5)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,6)-(14,12)]"
+      "http://a.ml/vocabularies/core#name": "scalar_2"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_1",
@@ -510,12 +255,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_1/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "scalar_1"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2",
@@ -530,42 +270,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#integer"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_2",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,4)-(16,18)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(21,6)-(21,23)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#in",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(17,6)-(20,7)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(16,4)-(22,5)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(21,6)-(21,12)]"
+      "http://a.ml/vocabularies/core#name": "scalar_2"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1",
@@ -581,26 +286,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "value1",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/source-map/lexical/element_0"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "value1"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2",
@@ -616,26 +302,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://www.w3.org/ns/shacl#name": "value2",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/source-map/lexical/element_0"
-        }
-      ]
+      "http://www.w3.org/ns/shacl#name": "value2"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1",
@@ -650,12 +317,7 @@
       "http://a.ml/vocabularies/data#value2": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3"
       },
-      "http://a.ml/vocabularies/core#name": "object_1",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "object_1"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4",
@@ -670,66 +332,7 @@
       "http://a.ml/vocabularies/data#value2": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6"
       },
-      "http://a.ml/vocabularies/core#name": "object_4",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#closed",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(34,6)-(34,12)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(23,4)-(23,16)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(39,20)-(46,7)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#in",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(24,6)-(33,7)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(23,4)-(47,5)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items/source-map/lexical/element_0"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "object_4"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1",
@@ -747,12 +350,7 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "array_1",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "array_1"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4",
@@ -770,176 +368,7 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "array_4",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/lexical/element_3",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(48,4)-(48,15)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/shapes#items",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(60,6)-(62,7)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#in",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(49,6)-(58,7)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(48,4)-(63,5)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(59,6)-(59,12)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_1/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_1/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_1/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_1/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_2/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_2/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_2/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_1/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_1/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_1/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_1/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(40,8)-(42,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(36,8)-(36,16)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2/source-map/type-property-lexical-info/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2/source-map/lexical/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(43,8)-(45,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(37,8)-(37,16)]"
+      "http://a.ml/vocabularies/core#name": "array_4"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_2",
@@ -954,12 +383,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "value1",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_2/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "value1"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3",
@@ -974,34 +398,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "value2",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/source-map/lexical/element_1"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "value2"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_5",
@@ -1016,12 +413,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "value1",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_5/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "value1"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6",
@@ -1036,49 +428,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "value2",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/source-map/lexical/element_2"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/source-map/lexical/element_1"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(61,8)-(61,14)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(60,6)-(62,7)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/scalar/items/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(61,8)-(61,24)]"
+      "http://a.ml/vocabularies/core#name": "value2"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_2",
@@ -1093,12 +443,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_2",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_2/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "scalar_2"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3",
@@ -1113,23 +458,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_3",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/source-map/lexical/element_0"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "scalar_3"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_5",
@@ -1144,12 +473,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_5",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_5/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#name": "scalar_5"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6",
@@ -1164,435 +488,7 @@
           "@id": "http://www.w3.org/2001/XMLSchema#string"
         }
       ],
-      "http://a.ml/vocabularies/core#name": "scalar_6",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_1/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_1/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,8)-(11,11)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_2/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_2/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarString/enum/scalar_2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,8)-(12,11)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_1/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_1/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,8)-(18,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/scalar/scalarNumber/enum/scalar_2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(19,8)-(19,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(41,10)-(41,16)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(40,8)-(42,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value1/scalar/value1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(41,10)-(41,26)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(44,10)-(44,16)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(43,8)-(45,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/property/value2/scalar/value2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(44,10)-(44,26)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_2/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_2/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_2/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#value1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(26,10)-(26,23)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#value2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(27,10)-(27,23)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(25,8)-(28,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_5/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_5/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_5/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_5/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#value1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(30,10)-(30,23)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#value2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,10)-(31,23)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(29,8)-(32,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_2/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_2/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_2/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_2/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(50,8)-(53,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_5/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_5/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_5/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_5/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6/source-map/synthesized-field/element_1"
-        },
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6/source-map/synthesized-field/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(54,8)-(57,9)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_2/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_2/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(26,20)-(26,23)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_1/scalar_3",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(27,20)-(27,23)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_5/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_5/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_5/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_5",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(30,20)-(30,23)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/objectType/enum/object_4/scalar_6",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(31,20)-(31,23)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_2/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_2/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_2/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_2",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(51,10)-(51,13)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_1/scalar_3",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(52,10)-(52,13)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_5/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_5/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_5/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_5",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(55,10)-(55,13)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6/source-map/synthesized-field/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/enums/enums.json#/declarations/types/array/arrayType/enum/array_4/scalar_6",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(56,10)-(56,13)]"
+      "http://a.ml/vocabularies/core#name": "scalar_6"
     }
   ]
 }
