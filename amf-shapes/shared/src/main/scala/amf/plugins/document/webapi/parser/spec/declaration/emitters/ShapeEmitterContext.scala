@@ -24,15 +24,12 @@ trait SpecAwareEmitterContext {
 }
 
 trait ShapeEmitterContext extends SpecAwareEmitterContext {
-  def externalReference(reference: Linkable): PartEmitter
 
   def externalLink(shape: Shape, references: Seq[BaseUnit]): Option[BaseUnit]
 
   def toOasNext: ShapeEmitterContext
 
   def ramlTypePropertyEmitter(value: String, shape: Shape): Option[EntryEmitter]
-
-  def localReferenceEntryEmitter(str: String, shape: Shape): Emitter
 
   def localReference(shape: Shape): PartEmitter
 
