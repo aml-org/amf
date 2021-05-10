@@ -38,7 +38,8 @@ trait DeclarationEmissionDecorator {
 
 abstract class SpecEmitterContext(val eh: ErrorHandler,
                                   private val refEmitter: RefEmitter,
-                                  val options: ShapeRenderOptions) {
+                                  val options: ShapeRenderOptions)
+    extends DeclarationEmissionDecorator {
 
   def ref(b: PartBuilder, url: String): Unit = refEmitter.ref(url, b)
 

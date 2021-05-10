@@ -1,14 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters
 
 import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.emitter.BaseEmitters.pos
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.parser.FieldEntry
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
@@ -20,8 +19,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
 import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.oas.emitters.OasLikeExampleEmitters
 import amf.plugins.document.webapi.parser.spec.toOas
-import amf.plugins.domain.shapes.models.{Example, TypeDef}
-import org.yaml.model.YDocument.PartBuilder
+import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.{YDocument, YNode}
 
 case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends ShapeEmitterContext {
