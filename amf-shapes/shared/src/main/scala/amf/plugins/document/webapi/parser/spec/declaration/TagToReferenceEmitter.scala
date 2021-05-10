@@ -15,7 +15,6 @@ import org.yaml.model.YType
 /**
   *
   */
-
 trait TagToReferenceEmitter extends PartEmitter {
   val link: DomainElement
 
@@ -65,7 +64,7 @@ trait ShapeReferenceEmitter extends TagToReferenceEmitter {
 }
 
 case class OasShapeReferenceEmitter(link: DomainElement)(implicit val shapeSpec: ShapeEmitterContext)
-  extends ShapeReferenceEmitter {
+    extends ShapeReferenceEmitter {
 
   override def position(): Position = pos(link.annotations)
 }
@@ -73,7 +72,7 @@ case class OasShapeReferenceEmitter(link: DomainElement)(implicit val shapeSpec:
 object ReferenceEmitterHelper {
 
   def emitLinkOr(l: DomainElement with Linkable, b: PartBuilder, refs: Seq[BaseUnit] = Nil)(fallback: => Unit)(
-    implicit spec: ShapeEmitterContext): Unit = {
+      implicit spec: ShapeEmitterContext): Unit = {
     if (l.isLink)
       spec.tagToReferenceEmitter(l, refs).emit(b)
     else
@@ -86,8 +85,8 @@ trait RefEmitter {
 }
 
 case class RamlTagToReferenceEmitter(link: DomainElement, references: Seq[BaseUnit])(
-  implicit val spec: ShapeEmitterContext)
-  extends PartEmitter
+    implicit val spec: ShapeEmitterContext)
+    extends PartEmitter
     with TagToReferenceEmitter {
 
   override def emit(b: PartBuilder): Unit = {
@@ -119,7 +118,7 @@ case class RamlTagToReferenceEmitter(link: DomainElement, references: Seq[BaseUn
 }
 
 class RamlLocalReferenceEntryEmitter(override val key: String, reference: Linkable)
-  extends EntryPartEmitter(key, RamlLocalReferenceEmitter(reference))
+    extends EntryPartEmitter(key, RamlLocalReferenceEmitter(reference))
 
 case class RamlLocalReferenceEmitter(reference: Linkable) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = reference.linkLabel.option() match {

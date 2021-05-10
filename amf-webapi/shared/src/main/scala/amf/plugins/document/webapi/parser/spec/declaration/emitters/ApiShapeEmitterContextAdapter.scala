@@ -1,13 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters
 
 import amf.client.remod.amfcore.config.ShapeRenderOptions
+import amf.core.emitter.BaseEmitters.pos
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
-import amf.core.parser.FieldEntry
+import amf.core.parser.{FieldEntry, Position}
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
@@ -20,6 +21,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter,
 import amf.plugins.document.webapi.parser.spec.oas.emitters.OasLikeExampleEmitters
 import amf.plugins.document.webapi.parser.spec.toOas
 import amf.plugins.domain.shapes.models.{Example, TypeDef}
+import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YNode}
 
 case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends ShapeEmitterContext {
@@ -116,11 +118,6 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
 
   override def factoryIsAsync: Boolean = spec.factory.isInstanceOf[AsyncSpecEmitterFactory]
 
-  override def externalReference(reference: Linkable): PartEmitter = spec match {
-    case ramlSpec: RamlSpecEmitterContext => ramlSpec.externalReference(reference)
-    case _                                => throw new Exception("Render - can only be called from RAML")
-  }
-
   override def externalLink(shape: Shape, references: Seq[BaseUnit]): Option[BaseUnit] =
     spec.externalLink(shape, references)
 
@@ -128,11 +125,6 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
 
   override def ramlTypePropertyEmitter(value: String, shape: Shape): Option[EntryEmitter] =
     spec.ramlTypePropertyEmitter(value, shape)
-
-  override def localReferenceEntryEmitter(str: String, shape: Shape): Emitter = spec match {
-    case ramlSpec: RamlSpecEmitterContext => ramlSpec.localReferenceEntryEmitter(str, shape)
-    case _                                => throw new Exception("Render - can only be called from RAML")
-  }
 
   override def localReference(shape: Shape): PartEmitter = spec match {
     case ramlSpec: RamlSpecEmitterContext => ramlSpec.localReference(shape)
