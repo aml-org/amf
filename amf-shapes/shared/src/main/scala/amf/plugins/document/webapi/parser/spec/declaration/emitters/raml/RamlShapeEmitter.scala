@@ -9,8 +9,17 @@ import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, DataNodeEmitter, FacetsEmitter}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{EnumValuesEmitter, ShapeEmitterContext, XMLSerializerEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
+  AnnotationsEmitter,
+  DataNodeEmitter,
+  FacetsEmitter
+}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  EnumValuesEmitter,
+  RamlTypeFacetEmitter,
+  ShapeEmitterContext,
+  XMLSerializerEmitter
+}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YType
@@ -21,8 +30,8 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
     implicit spec: ShapeEmitterContext) {
 
   val typeName: Option[String]
-  var typeEmitted                                      = false
-  protected val valuesTag: YType                       = YType.Str
+  var typeEmitted                = false
+  protected val valuesTag: YType = YType.Str
 
   def emitters(): Seq[EntryEmitter] = {
 
@@ -65,7 +74,7 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
     fs.entry(ShapeModel.Inherits)
       .fold(
         typeName.foreach { value =>
-          spec.ramlTypePropertyEmitter(value, shape) match {
+          RamlTypeFacetEmitter(value, shape) match {
             case Some(emitter) =>
               typeEmitted = true
               result += emitter

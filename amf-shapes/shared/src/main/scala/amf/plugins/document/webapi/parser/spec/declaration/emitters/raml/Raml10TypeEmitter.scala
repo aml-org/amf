@@ -13,6 +13,7 @@ import amf.plugins.document.webapi.annotations.{
   ForceEntry,
   ParsedJSONSchema
 }
+import amf.plugins.document.webapi.parser.spec.declaration.common.ExternalLinkQuery.queryResidenceUnitOfLinkTarget
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.domain.shapes.models._
@@ -81,7 +82,7 @@ case class Raml10TypeEmitter(shape: Shape,
 
   private def shouldEmitExternalRef(l: Shape) = {
     l.annotations.contains(classOf[ExternalFragmentRef]) ||
-    spec.externalLink(shape, references).exists(_.isInstanceOf[EncodesModel])
+    queryResidenceUnitOfLinkTarget(shape, references).exists(_.isInstanceOf[EncodesModel])
   }
 
   private def hasExternalReferenceUrl(shape: Shape) = shape.annotations.contains(classOf[ExternalReferenceUrl])
