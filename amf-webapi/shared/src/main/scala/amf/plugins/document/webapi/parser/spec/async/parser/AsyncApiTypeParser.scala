@@ -38,7 +38,7 @@ object AsyncSchemaFormats {
   def getSchemaVersion(value: Option[String])(implicit errorHandler: ErrorHandler): SchemaVersion =
     value match {
       case Some(format) if oas30Schema.contains(format) => OAS30SchemaVersion(Schema)
-      case Some(format) if ramlSchema.contains(format)  => RAML10SchemaVersion()
+      case Some(format) if ramlSchema.contains(format)  => RAML10SchemaVersion
       // async20 schemas are handled with draft 7. Avro schema is not supported
       case _ => JSONSchemaDraft7SchemaVersion
     }
@@ -48,8 +48,8 @@ case class AsyncApiTypeParser(entry: YMapEntry, adopt: Shape => Unit, version: S
     implicit val ctx: OasLikeWebApiContext) {
 
   def parse(): Option[Shape] = version match {
-    case RAML10SchemaVersion() => CustomRamlReferenceParser(YMapEntryLike(entry), adopt).parse()
-    case _                     => OasTypeParser(entry, adopt, version)(WebApiShapeParserContextAdapter(ctx)).parse()
+    case RAML10SchemaVersion => CustomRamlReferenceParser(YMapEntryLike(entry), adopt).parse()
+    case _                   => OasTypeParser(entry, adopt, version)(WebApiShapeParserContextAdapter(ctx)).parse()
   }
 }
 

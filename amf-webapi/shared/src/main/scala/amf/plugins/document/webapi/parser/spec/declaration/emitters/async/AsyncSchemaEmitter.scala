@@ -24,8 +24,8 @@ case class AsyncSchemaEmitter(key: String,
   override def emit(b: EntryBuilder): Unit = {
     val schemaVersion = AsyncSchemaFormats.getSchemaVersion(mediaType)(spec.eh)
     schemaVersion match {
-      case RAML10SchemaVersion() => emitAsRaml(b)
-      case _                     => emitAsOas(b, schemaVersion)
+      case RAML10SchemaVersion => emitAsRaml(b)
+      case _                   => emitAsOas(b, schemaVersion)
     }
   }
 

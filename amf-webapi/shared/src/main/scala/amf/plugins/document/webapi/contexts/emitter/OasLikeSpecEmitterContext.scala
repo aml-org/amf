@@ -56,7 +56,7 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
                                          refEmitter: RefEmitter = OasRefEmitter,
                                          options: ShapeRenderOptions = ShapeRenderOptions())
     extends SpecEmitterContext(eh, refEmitter, options) {
-  def schemaVersion: SchemaVersion
+  override def schemaVersion: SchemaVersion
   def schemasDeclarationsPath: String
 
   override def localReference(reference: Linkable): PartEmitter =
@@ -66,8 +66,6 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
     ArrayEmitter(key, f, ordering, forceMultiple = true, valuesTag)
 
   val factory: OasLikeSpecEmitterFactory
-
-  val jsonPointersMap: mutable.Map[String, String] = mutable.Map() // id -> pointer
 
   val anyOfKey: String = "union".asOasExtension
 }

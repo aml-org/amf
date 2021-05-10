@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
 import amf.core.emitter.BaseEmitters.{MapEntryEmitter, RawValueEmitter, pos}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
+import amf.plugins.document.webapi.parser.CommonOasTypeDefMatcher._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.emitter.ContentEmitters
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
@@ -18,7 +19,7 @@ case class OasScalarShapeEmitter(scalar: ScalarShape,
                                  ordering: SpecOrdering,
                                  references: Seq[BaseUnit],
                                  isHeader: Boolean = false)(override implicit val spec: ShapeEmitterContext)
-  extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
+    extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 
   override def typeDef: Option[TypeDef] = scalar.dataType.option().map(TypeDefXsdMapping.typeDef)
@@ -26,11 +27,11 @@ case class OasScalarShapeEmitter(scalar: ScalarShape,
   override def emitters(): Seq[EntryEmitter] = {
 
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
-    val fs = scalar.fields
+    val fs                               = scalar.fields
 
     fs.entry(ScalarShapeModel.DataType)
       .foreach { f =>
-        val typeDefStr = spec.oasMatchType(typeDef.get)
+        val typeDefStr = matchType(typeDef.get)
         scalar.annotations.find(classOf[TypePropertyLexicalInfo]) match {
           case Some(lexicalInfo) =>
             result += MapEntryEmitter("type", typeDefStr, YType.Str, lexicalInfo.range.start)
@@ -39,12 +40,15 @@ case class OasScalarShapeEmitter(scalar: ScalarShape,
         }
       }
 
-    result ++= ContentEmitters.emitters(scalar, spec.schemaVersion, (key, version) => OasEntryShapeEmitter(key, version, ordering, references, Seq(), Seq()))
+    result ++= ContentEmitters.emitters(
+      scalar,
+      spec.schemaVersion,
+      (key, version) => OasEntryShapeEmitter(key, version, ordering, references, Seq(), Seq()))
 
     fs.entry(ScalarShapeModel.Format) match {
       case Some(_) => // ignore, this will be set with the explicit information
       case None =>
-        spec.oasMatchFormat(typeDef.getOrElse(UndefinedType)) match {
+        matchFormat(typeDef.getOrElse(UndefinedType)) match {
           case Some(format) =>
             result += RawValueEmitter("format", ScalarShapeModel.Format, checkRamlFormats(format))
           case None => // ignore

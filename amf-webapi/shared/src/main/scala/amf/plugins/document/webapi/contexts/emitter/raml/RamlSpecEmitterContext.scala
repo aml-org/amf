@@ -274,6 +274,8 @@ class Raml10SpecEmitterContext(eh: ErrorHandler,
     extends RamlSpecEmitterContext(eh, refEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml10
+
+  override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
 
 class XRaml10SpecEmitterContext(eh: ErrorHandler,
@@ -285,6 +287,8 @@ class XRaml10SpecEmitterContext(eh: ErrorHandler,
 
   val oasFactory: OasSpecEmitterFactory = new Oas2SpecEmitterFactory(
     new Oas2SpecEmitterContext(eh, refEmitter, options))
+
+  override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
 
 class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = ShapeRenderOptions())
@@ -292,6 +296,7 @@ class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = S
   override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml08
 
+  override def schemaVersion: SchemaVersion = RAML08SchemaVersion
 }
 
 abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
@@ -303,8 +308,4 @@ abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
 
   val factory: RamlEmitterVersionFactory
 
-}
-
-object RamlRefEmitter extends RefEmitter {
-  override def ref(url: String, b: PartBuilder): Unit = b += YNode.include(url)
 }
