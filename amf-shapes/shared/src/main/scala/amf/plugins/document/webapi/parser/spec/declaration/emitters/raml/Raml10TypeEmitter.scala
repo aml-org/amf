@@ -7,7 +7,12 @@ import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
 import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.parser.Position
-import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ExternalSchemaWrapper, ForceEntry, ParsedJSONSchema}
+import amf.plugins.document.webapi.annotations.{
+  ExternalReferenceUrl,
+  ExternalSchemaWrapper,
+  ForceEntry,
+  ParsedJSONSchema
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.domain.shapes.models._
@@ -31,7 +36,7 @@ case class Raml10TypeEmitter(shape: Shape,
         val isForceEntry = forceEntry || l.annotations.contains(classOf[ForceEntry])
         val refEmitter =
           if (l.annotations.contains(classOf[ExternalFragmentRef]) ||
-            spec.externalLink(shape, references).exists(_.isInstanceOf[EncodesModel])) spec.externalReference(shape)
+              spec.externalLink(shape, references).exists(_.isInstanceOf[EncodesModel])) RamlExternalRefEmitter(shape)
           else spec.localReference(shape)
         if (isForceEntry) Seq(EntryPartEmitter("type", refEmitter))
         else Seq(refEmitter)
@@ -77,7 +82,7 @@ case class Raml10TypeEmitter(shape: Shape,
   private def shapeWasParsedFromAnExternalFragment(shape: AnyShape) = {
     shape.fromExternalSource && references.exists {
       case e: ExternalFragment => e.encodes.id.equals(shape.asInstanceOf[AnyShape].externalSourceID.getOrElse(""))
-      case _ => false
+      case _                   => false
     }
   }
 

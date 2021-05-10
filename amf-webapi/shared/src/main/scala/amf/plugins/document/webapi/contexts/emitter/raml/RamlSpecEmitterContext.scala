@@ -30,7 +30,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
   RamlCustomFacetsEmitter,
   ShapeEmitterContext
 }
-import amf.plugins.document.webapi.parser.spec.domain.{RamlParameterEmitter, _}
+import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.emitters.{
   Raml08NamedSecuritySchemeEmitter,
   Raml10NamedSecuritySchemeEmitter,
@@ -299,19 +299,7 @@ abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
                                       options: ShapeRenderOptions = ShapeRenderOptions())
     extends SpecEmitterContext(eh, refEmitter, options) {
 
-  import BaseEmitters._
-
   override def localReference(reference: Linkable): PartEmitter = RamlLocalReferenceEmitter(reference)
-
-  def localReferenceEntryEmitter(key: String, reference: Linkable): EntryEmitter =
-    new RamlLocalReferenceEntryEmitter(key, reference)
-
-  def externalReference(reference: Linkable): PartEmitter =
-    new PartEmitter {
-      override def emit(b: PartBuilder): Unit =
-        b += YNode.include(reference.linkLabel.option().getOrElse(reference.location().get))
-      override def position(): Position = pos(reference.annotations)
-    }
 
   val factory: RamlEmitterVersionFactory
 
