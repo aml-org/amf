@@ -25,6 +25,7 @@ import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YNode}
 
 case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends ShapeEmitterContext {
+
   override def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter =
     spec.factory.tagToReferenceEmitter(l, refs)
 
@@ -35,16 +36,6 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
     case _                                 => throw new Exception("Render - can only be called from OAS")
   }
 
-  override def oasMatchType(get: TypeDef): String = spec match {
-    case oasCtx: OasLikeSpecEmitterContext => oasCtx.typeDefMatcher.matchType(get)
-    case _                                 => throw new Exception("Render - can only be called from OAS")
-  }
-
-  override def oasMatchFormat(typeDef: TypeDef): Option[String] = spec match {
-    case oasCtx: OasLikeSpecEmitterContext => oasCtx.typeDefMatcher.matchFormat(typeDef)
-    case _                                 => throw new Exception("Render - can only be called from OAS")
-  }
-
   override def schemasDeclarationsPath: String = spec match {
     case oasCtx: OasLikeSpecEmitterContext => oasCtx.schemasDeclarationsPath
     case _                                 => throw new Exception("Render - can only be called from OAS")
@@ -52,9 +43,6 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
 
   override def arrayEmitter(asOasExtension: String, f: FieldEntry, ordering: SpecOrdering): EntryEmitter =
     spec.arrayEmitter(asOasExtension, f, ordering)
-
-  override def oasTypePropertyEmitter(str: String, shape: Shape): EntryEmitter =
-    spec.oasTypePropertyEmitter(str, shape)
 
   override def customFacetsEmitter(f: FieldEntry,
                                    ordering: SpecOrdering,
@@ -118,13 +106,7 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
 
   override def factoryIsAsync: Boolean = spec.factory.isInstanceOf[AsyncSpecEmitterFactory]
 
-  override def externalLink(shape: Shape, references: Seq[BaseUnit]): Option[BaseUnit] =
-    spec.externalLink(shape, references)
-
   override def toOasNext: ShapeEmitterContext = copy(toOas(spec))
-
-  override def ramlTypePropertyEmitter(value: String, shape: Shape): Option[EntryEmitter] =
-    spec.ramlTypePropertyEmitter(value, shape)
 
   override def localReference(shape: Shape): PartEmitter = spec match {
     case ramlSpec: RamlSpecEmitterContext => ramlSpec.localReference(shape)

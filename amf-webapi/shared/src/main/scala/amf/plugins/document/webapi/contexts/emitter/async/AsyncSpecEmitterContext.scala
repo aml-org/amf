@@ -22,7 +22,6 @@ import amf.plugins.document.webapi.parser.spec.domain.{
   ParametrizedSecuritySchemeEmitter
 }
 import amf.plugins.document.webapi.parser.spec.oas.emitters.OasSecurityRequirementEmitter
-import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, OasTypeDefStringValueMatcher}
 import amf.plugins.domain.webapi.models.Parameter
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement}
 import org.yaml.model.YDocument.PartBuilder
@@ -76,8 +75,6 @@ abstract class AsyncSpecEmitterContext(eh: ErrorHandler,
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
 
   override val factory: AsyncSpecEmitterFactory
-
-  val typeDefMatcher: OasTypeDefStringValueMatcher = CommonOasTypeDefMatcher
 }
 
 class Async20SpecEmitterContext(eh: ErrorHandler,
