@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasTypeFacetEmitter, ShapeEmitterContext}
 import amf.plugins.domain.shapes.metamodel.FileShapeModel
 import amf.plugins.domain.shapes.models.{FileShape, TypeDef}
 
@@ -13,7 +13,7 @@ case class OasFileShapeEmitter(scalar: FileShape,
                                ordering: SpecOrdering,
                                references: Seq[BaseUnit],
                                isHeader: Boolean)(override implicit val spec: ShapeEmitterContext)
-  extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
+    extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 
   override def typeDef: Option[TypeDef] = None
@@ -24,7 +24,7 @@ case class OasFileShapeEmitter(scalar: FileShape,
 
     val fs = scalar.fields
 
-    result += spec.oasTypePropertyEmitter("file", scalar)
+    result += OasTypeFacetEmitter("file", scalar)
 
     emitCommonFields(fs, result)
 

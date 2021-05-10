@@ -11,7 +11,7 @@ import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.parser.CommonOasTypeDefMatcher
-import amf.plugins.document.webapi.parser.spec.declaration.common.ExternalLinkQuery.queryResidenceUnitOfLinked
+import amf.plugins.document.webapi.parser.spec.declaration.common.ExternalLinkQuery.queryResidenceUnitOfLinkTarget
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.oas.emitters.OasLikeExampleEmitters
@@ -30,25 +30,7 @@ trait SpecAwareEmitterContext {
 
 trait ShapeEmitterContext extends SpecAwareEmitterContext {
 
-  def externalLink(link: Linkable, refs: Seq[BaseUnit]): Option[BaseUnit] = queryResidenceUnitOfLinked(link, refs)
-
   def toOasNext: ShapeEmitterContext
-
-  def ramlTypePropertyEmitter(typeName: String, shape: Shape): Option[MapEntryEmitter] = {
-    shape.fields.?(NodeShapeModel.Inherits) match {
-      case None =>
-        // If the type is union and anyOf is empty it isn't resolved and type will be emitted in the UnionEmitter
-        if (typeName == "union" && shape.asInstanceOf[UnionShape].anyOf.nonEmpty) None
-        else {
-          shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
-            case Some(lexicalInfo) =>
-              Some(MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start))
-            case _ => None
-          }
-        }
-      case _ => None
-    }
-  }
 
   def localReference(shape: Shape): PartEmitter
 
@@ -58,22 +40,9 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext {
                             ordering: SpecOrdering,
                             schemaPath: Seq[(String, String)]): Emitter
 
-  def oasMatchType(get: TypeDef): String = CommonOasTypeDefMatcher.matchType(get)
-
-  def oasMatchFormat(typeDef: TypeDef): Option[String] = CommonOasTypeDefMatcher.matchFormat(typeDef)
-
   def schemasDeclarationsPath: String
 
   def arrayEmitter(asOasExtension: String, f: FieldEntry, ordering: SpecOrdering): EntryEmitter
-
-  def oasTypePropertyEmitter(typeName: String, shape: Shape): EntryEmitter = {
-    shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
-      case Some(lexicalInfo) =>
-        MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start)
-      case None =>
-        MapEntryEmitter("type", typeName)
-    }
-  }
 
   def customFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): CustomFacetsEmitter
 

@@ -5,7 +5,7 @@ import amf.core.model.domain.Linkable
 
 object ExternalLinkQuery {
 
-  def queryResidenceUnitOfLinked(link: Linkable, refs: Seq[BaseUnit]): Option[BaseUnit] = {
+  def queryResidenceUnitOfLinkTarget(link: Linkable, refs: Seq[BaseUnit]): Option[BaseUnit] = {
     link.linkTarget match {
       case Some(element) =>
         val linkTarget = element.id
