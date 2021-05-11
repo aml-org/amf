@@ -50,10 +50,10 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
   override def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter =
     spec.factory.facetsInstanceEmitter(extension, ordering)
 
-  override def eh: ErrorHandler = spec.eh
-
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
     spec.factory.annotationEmitter(e, default)
+
+  override def eh: ErrorHandler = spec.eh
 
   override def vendor: Vendor = spec.vendor
 
@@ -94,7 +94,7 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
     case _ => throw new Exception("Render - can only be called from OAS")
   }
 
-  override def factoryIsOas3: Boolean = spec.factory.isInstanceOf[Oas3SpecEmitterFactory]
+  override def isOas3: Boolean = spec.factory.isInstanceOf[Oas3SpecEmitterFactory]
 
   override def isOasLike: Boolean = spec.isInstanceOf[OasLikeSpecEmitterContext]
 
@@ -102,7 +102,7 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
 
   override def isJsonSchema: Boolean = spec.isInstanceOf[JsonSchemaEmitterContext]
 
-  override def factoryIsAsync: Boolean = spec.factory.isInstanceOf[AsyncSpecEmitterFactory]
+  override def isAsync: Boolean = spec.factory.isInstanceOf[AsyncSpecEmitterFactory]
 
   override def toOasNext: ShapeEmitterContext = copy(toOas(spec))
 

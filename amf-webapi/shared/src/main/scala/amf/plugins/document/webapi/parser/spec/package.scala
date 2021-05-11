@@ -46,14 +46,14 @@ package object spec {
 
     def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
         implicit spec: SpecAwareEmitterContext): String = {
-      if (spec.factoryIsOas3 || spec.factoryIsAsync)
+      if (spec.isOas3 || spec.isAsync)
         appendOas3ComponentsPrefix(url, "parameters")
       else
         appendPrefix(parameterDefinitionsPrefix, url)
     }
 
     def appendResponsesDefinitionsPrefix(url: String)(implicit spec: SpecAwareEmitterContext): String = {
-      if (spec.factoryIsOas3)
+      if (spec.isOas3)
         appendOas3ComponentsPrefix(url, "responses")
       else
         appendPrefix(responsesDefinitionsPrefix, url)
