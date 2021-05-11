@@ -1,6 +1,5 @@
 package amf.client.environment
 
-import amf.ProfileName
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
@@ -17,15 +16,7 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
   Raml08CompatibilityPipeline,
   Raml10CompatibilityPipeline
 }
-import amf.plugins.document.webapi.validation.ApiValidationProfiles
-import amf.plugins.document.webapi.validation.ApiValidationProfiles.{
-  AmfValidationProfile,
-  Async20ValidationProfile,
-  Oas20ValidationProfile,
-  Oas30ValidationProfile,
-  Raml08ValidationProfile,
-  Raml10ValidationProfile
-}
+import amf.plugins.document.webapi.validation.ApiValidationProfiles._
 
 sealed trait APIConfigurationBuilder {
 
@@ -41,6 +32,15 @@ sealed trait APIConfigurationBuilder {
       .withPlugins(List(ExternalJsonYamlRefsParsePlugin, PayloadParsePlugin, JsonSchemaParsePlugin))
   }
 }
+
+/**
+  * {@link APIConfigurationBuilder.common common()} configuration with all configurations needed for RAML like:
+  * <ul>
+  *   <li>Validation rules</li>
+  *   <li>Parse and emit plugins</li>
+  *   <li>Transformation Pipelines</li>
+  * </ul>
+  */
 object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML10(): AMFConfiguration =
     common()
@@ -69,6 +69,14 @@ object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML(): AMFConfiguration = RAML08().merge(RAML10())
 }
 
+/**
+  * {@link APIConfigurationBuilder.common common()} configuration with all configurations needed for OAS like:
+  * <ul>
+  *   <li>Validation rules</li>
+  *   <li>Parse and emit plugins</li>
+  *   <li>Transformation Pipelines</li>
+  * </ul>
+  */
 object OASConfiguration extends APIConfigurationBuilder {
   def OAS20(): AMFConfiguration =
     common()
@@ -95,10 +103,19 @@ object OASConfiguration extends APIConfigurationBuilder {
   def OAS(): AMFConfiguration = OAS20().merge(OAS30())
 }
 
+/** Merged {@link OASConfiguration} and {@link RAMLConfiguration} configurations */
 object WebAPIConfiguration {
   def WebAPI(): AMFConfiguration = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
 }
 
+/**
+  * {@link APIConfigurationBuilder.common common()} configuration with all configurations needed for AsyncApi like:
+  * <ul>
+  *   <li>Validation rules</li>
+  *   <li>Parse and emit plugins</li>
+  *   <li>Transformation Pipelines</li>
+  * </ul>
+  */
 object AsyncAPIConfiguration extends APIConfigurationBuilder {
   def Async20(): AMFGraphConfiguration =
     common()
@@ -112,6 +129,11 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
         ))
 }
 
+/**
+  * The AMFConfiguration lets you customize all AMF-specific configurations.
+  * Its immutable and created through builders. An instance is needed to use AMF.
+  * @see {@link AMFClient}
+  */
 class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                      override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
                                      override private[amf] val registry: AMFRegistry,
@@ -146,11 +168,7 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMFConfiguration =
     super._withTransformationPipeline(pipeline)
 
-  /**
-    * AMF internal method just to facilitate the construction
-    * @param pipelines
-    * @return
-    */
+  /** AMF internal method just to facilitate the construction */
   override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): AMFConfiguration =
     super._withTransformationPipelines(pipelines)
 
