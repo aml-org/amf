@@ -3,8 +3,13 @@ package amf.plugins.document.webapi.parser.spec.declaration.emitters.oas
 import amf.core.emitter.BaseEmitters.ValueEmitter
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
-import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
+import amf.plugins.document.webapi.parser.spec.async.emitters.Draft6ExamplesEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft6SchemaVersion,
+  JSONSchemaDraft7SchemaVersion
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.oas.emitters.OasExampleEmitters
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}
 import amf.plugins.domain.shapes.models.{AnyShape, Example}
 
@@ -49,5 +54,7 @@ class OasAnyShapeEmitter(shape: AnyShape,
   }
 
   private def examplesEmitters(main: Option[Example], extensions: Seq[Example], isHeader: Boolean) =
-    spec.exampleEmitter(isHeader, main, ordering, extensions, references).emitters()
+    if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft6SchemaVersion))
+      Draft6ExamplesEmitter(main.toSeq ++ extensions, ordering).emitters()
+    else OasExampleEmitters.apply(isHeader, main, ordering, extensions, references).emitters()
 }

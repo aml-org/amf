@@ -28,7 +28,6 @@ class JsonSchemaEmitterContext(override val eh: ErrorHandler,
 
   override val vendor: Vendor = Vendor.JSONSCHEMA
 
-  //  override def schemasDeclarationsPath: String = "/definitions/"
   override def schemasDeclarationsPath: String = schemaVersion match {
     case jsonVersion: JSONSchemaVersion =>
       if (jsonVersion < JSONSchemaDraft201909SchemaVersion) "/definitions/"

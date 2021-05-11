@@ -13,11 +13,13 @@ case class OasNamedTypeEmitter(shape: Shape,
                                references: Seq[BaseUnit],
                                pointer: Seq[String] = Nil,
                                customName: Option[String] = None)(implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val name = customName.getOrElse(shape.name.option().getOrElse("schema")) // this used to throw an exception, but with the resolution optimizacion, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
+    val name = computeName
     b.entry(name, OasTypePartEmitter(shape, ordering, references = references, pointer = pointer :+ name).emit(_))
   }
+
+  private def computeName = customName.orElse(shape.name.option()).getOrElse("schema")
 
   override def position(): Position = pos(shape.annotations)
 }
