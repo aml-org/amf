@@ -9,9 +9,14 @@ import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote.Vendor
+import amf.plugins.document.webapi.parser.spec.async.emitters.Draft6ExamplesEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
-import amf.plugins.document.webapi.parser.spec.oas.emitters.OasLikeExampleEmitters
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  CustomFacetsEmitter,
+  JSONSchemaDraft6SchemaVersion,
+  SchemaVersion
+}
+import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasExampleEmitters, OasLikeExampleEmitters}
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.{YDocument, YNode}
 
@@ -50,12 +55,6 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext {
   def vendor: Vendor
 
   def ref(b: YDocument.PartBuilder, url: String): Unit
-
-  def exampleEmitter(isHeader: Boolean,
-                     main: Option[Example],
-                     ordering: SpecOrdering,
-                     extensions: Seq[Example],
-                     references: Seq[BaseUnit]): OasLikeExampleEmitters
 
   def schemaVersion: SchemaVersion
 

@@ -42,13 +42,6 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
 
   def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter
 
-  def exampleEmitter: (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters =
-    (isHeader, exampleOption, ordering, extensions, references) =>
-      if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft6SchemaVersion))
-        Draft6ExamplesEmitter(exampleOption.toSeq ++ extensions, ordering)
-      else
-        OasExampleEmitters.apply(isHeader, exampleOption, ordering, extensions, references)
-
   override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
 }
 
