@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters
 
 import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.emitter.BaseEmitters.MapEntryEmitter
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
@@ -10,22 +9,18 @@ import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote.Vendor
-import amf.plugins.document.webapi.parser.CommonOasTypeDefMatcher
-import amf.plugins.document.webapi.parser.spec.declaration.common.ExternalLinkQuery.queryResidenceUnitOfLinkTarget
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.oas.emitters.OasLikeExampleEmitters
-import amf.plugins.domain.shapes.metamodel.NodeShapeModel
-import amf.plugins.domain.shapes.models.{Example, TypeDef, UnionShape}
-import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import org.yaml.model.{YDocument, YNode, YType}
+import amf.plugins.domain.shapes.models.Example
+import org.yaml.model.{YDocument, YNode}
 
 trait SpecAwareEmitterContext {
-  def factoryIsOas3: Boolean
+  def isOas3: Boolean
   def isOasLike: Boolean
   def isRaml: Boolean
   def isJsonSchema: Boolean
-  def factoryIsAsync: Boolean
+  def isAsync: Boolean
 }
 
 trait ShapeEmitterContext extends SpecAwareEmitterContext {
@@ -48,9 +43,9 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext {
 
   def facetsInstanceEmitter(extension: ShapeExtension, ordering: SpecOrdering): FacetsInstanceEmitter
 
-  def eh: ErrorHandler
-
   def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter
+
+  def eh: ErrorHandler
 
   def vendor: Vendor
 

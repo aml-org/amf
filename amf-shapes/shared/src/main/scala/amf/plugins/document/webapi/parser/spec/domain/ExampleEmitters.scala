@@ -32,7 +32,7 @@ case class OasResponseExamplesEmitter(key: String, examples: Seq[Example], order
 
   override def emit(b: EntryBuilder): Unit =
     if (examples.nonEmpty) {
-      if (spec.factoryIsOas3) {
+      if (spec.isOas3) {
         b.entry(key, _.obj(traverse(ordering.sorted(examples.map(Oas3ExampleValuesEmitter(_, ordering)(spec))), _)))
       } else {
         b.entry(key, _.obj(traverse(ordering.sorted(examples.map(OasResponseExampleEmitter(_, ordering)(spec))), _)))
@@ -110,11 +110,8 @@ case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(i
   }
 
   protected def keyName(example: Example) = {
-    if (spec.factoryIsOas3) {
-      example.name.value()
-    } else {
-      example.mediaType.value()
-    }
+    if (spec.isOas3) example.name.value()
+    else example.mediaType.value()
   }
 
   override def position(): Position = pos(example.annotations)
