@@ -4,13 +4,13 @@ import amf.core.emitter.BaseEmitters.pos
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument.EntryBuilder
 
 case class RamlSchemaEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+    implicit spec: RamlShapeEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     f.value.value match {
       case shape: AnyShape =>

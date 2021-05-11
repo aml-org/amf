@@ -7,7 +7,11 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.FieldEntry
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasTypeFacetEmitter, ShapeEmitterContext}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  OasLikeShapeEmitterContext,
+  OasTypeFacetEmitter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{
   Draft2019DependenciesEmitter,
   Draft4DependenciesEmitter,
@@ -38,7 +42,7 @@ case class OasNodeShapeEmitter(node: NodeShape,
                                references: Seq[BaseUnit],
                                pointer: Seq[String] = Nil,
                                schemaPath: Seq[(String, String)] = Nil,
-                               isHeader: Boolean = false)(implicit spec: ShapeEmitterContext)
+                               isHeader: Boolean = false)(implicit spec: OasLikeShapeEmitterContext)
     extends OasAnyShapeEmitter(node, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
     val isOas3 = spec.schemaVersion.isInstanceOf[OAS30SchemaVersion]

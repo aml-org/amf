@@ -113,7 +113,7 @@ abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrde
     extends PartEmitter {
 
   protected val baseUriParameterKey: String
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ApiShapeEmitterContextAdapter = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit = {
     val fs = operation.fields

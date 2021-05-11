@@ -30,7 +30,7 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit = {
     sourceOr(

@@ -7,14 +7,14 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Position
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YNode, YScalar, YType}
 
 case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+    implicit spec: RamlShapeEmitterContext)
+    extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val fs = property.fields
@@ -51,7 +51,7 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
             key,
             pb => {
               Raml10TypePartEmitter(range, ordering, None, references = references).emitter match {
-                case Left(p) => p.emit(pb)
+                case Left(p)        => p.emit(pb)
                 case Right(entries) => pb.obj(traverse(ordering.sorted(entries ++ additionalEmitters), _))
               }
             }

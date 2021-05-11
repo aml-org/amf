@@ -12,8 +12,8 @@ case class RamlCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, refere
     implicit spec: RamlSpecEmitterContext)
     extends CustomFacetsEmitter(f, ordering, references) {
 
-  private implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
-  override val key: String                           = "facets"
+  private implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  override val key: String      = "facets"
 
   override def shapeEmitter: (PropertyShape, SpecOrdering, Seq[BaseUnit]) => EntryEmitter =
     RamlPropertyShapeEmitter.apply

@@ -31,7 +31,7 @@ import scala.collection.mutable
 
 abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterContext) extends SpecEmitterFactory {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   def typeEmitters(shape: Shape,
                    ordering: SpecOrdering,

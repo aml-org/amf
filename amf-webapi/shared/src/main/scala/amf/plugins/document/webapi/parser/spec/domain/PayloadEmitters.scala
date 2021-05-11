@@ -37,7 +37,7 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(b: EntryBuilder): Unit = {
     val fs = payload.fields
@@ -129,7 +129,7 @@ case class Raml10PayloadPartEmitter(payload: Payload, ordering: SpecOrdering, re
 
 case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implicit spec: RamlSpecEmitterContext) {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   def emitters: Seq[Emitter] = {
     payload.fields.entry(PayloadModel.MediaType) match {
@@ -192,7 +192,7 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
@@ -263,7 +263,7 @@ case class Raml10PayloadsEmitter(key: String, f: FieldEntry, ordering: SpecOrder
 case class Raml10Payloads(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext) {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   def emitters(): Seq[Emitter] = {
     if (payload.fields.entry(PayloadModel.MediaType).isDefined) {

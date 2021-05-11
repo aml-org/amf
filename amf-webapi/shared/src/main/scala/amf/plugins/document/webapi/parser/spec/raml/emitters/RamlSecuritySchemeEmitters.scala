@@ -13,6 +13,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{Raml10TypePartEmitter, RamlNamedTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
   ApiShapeEmitterContextAdapter,
+  RamlShapeEmitterContext,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -309,7 +310,7 @@ abstract class DescribedByEmitter(key: String,
                                   references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: RamlShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
 
   def entries(fs: Fields): Seq[EntryEmitter] = {
     val results = ListBuffer[EntryEmitter]()

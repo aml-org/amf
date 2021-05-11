@@ -23,7 +23,7 @@ case class CompactOasTypeEmitter(shape: Shape,
                                  pointer: Seq[String],
                                  schemaPath: Seq[(String, String)])(implicit spec: OasSpecEmitterContext) {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   def emitters(): Seq[Emitter] = {
     val definitionQueue = spec.definitionsQueue

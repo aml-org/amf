@@ -88,7 +88,7 @@ object Raml08EmitterFactory {
 trait RamlEmitterFactory extends DomainElementEmitterFactory {
 
   implicit val ctx: RamlSpecEmitterContext
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(ctx)
+  protected implicit val shapeCtx: ApiShapeEmitterContextAdapter = ApiShapeEmitterContextAdapter(ctx)
 
   override def exampleEmitter(example: Example): Option[PartEmitter] =
     Some(RamlExampleValuesEmitter(example, SpecOrdering.Lexical))

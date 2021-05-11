@@ -57,7 +57,7 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   override def emit(p: PartBuilder): Unit = {
     val fs = response.fields

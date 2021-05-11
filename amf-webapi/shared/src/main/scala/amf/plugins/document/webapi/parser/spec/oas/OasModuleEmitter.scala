@@ -17,6 +17,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
   ApiShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContext,
   ShapeEmitterContext,
   oas
 }
@@ -109,8 +110,8 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
-    override val header: OasHeaderEmitter                = OasHeaderEmitter(OasHeader.Oas20DataType)
+    protected implicit val shapeCtx: OasLikeShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+    override val header: OasHeaderEmitter                       = OasHeaderEmitter(OasHeader.Oas20DataType)
 
     val emitters: Seq[EntryEmitter] =
       oas.OasTypeEmitter(dataType.encodes, ordering, references = dataType.references).entries()

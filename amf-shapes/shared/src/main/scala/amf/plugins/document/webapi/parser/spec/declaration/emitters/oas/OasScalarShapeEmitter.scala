@@ -4,7 +4,7 @@ import amf.core.emitter.BaseEmitters.{MapEntryEmitter, RawValueEmitter, pos}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.webapi.parser.CommonOasTypeDefMatcher._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasLikeShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.emitter.ContentEmitters
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.TypeDef.UndefinedType
@@ -18,7 +18,7 @@ import scala.collection.mutable.ListBuffer
 case class OasScalarShapeEmitter(scalar: ScalarShape,
                                  ordering: SpecOrdering,
                                  references: Seq[BaseUnit],
-                                 isHeader: Boolean = false)(override implicit val spec: ShapeEmitterContext)
+                                 isHeader: Boolean = false)(override implicit val spec: OasLikeShapeEmitterContext)
     extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 

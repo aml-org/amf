@@ -151,7 +151,7 @@ trait OasEmitterFactory extends OasLikeEmitterFactory {
 trait OasLikeEmitterFactory extends DomainElementEmitterFactory {
 
   implicit val ctx: OasLikeSpecEmitterContext
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(ctx)
+  protected implicit val shapeCtx: ApiShapeEmitterContextAdapter = ApiShapeEmitterContextAdapter(ctx)
 
   override def typeEmitter(s: Shape): Option[PartEmitter] =
     Some(oas.OasTypePartEmitter(s, SpecOrdering.Lexical, references = Nil))

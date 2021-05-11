@@ -7,7 +7,11 @@ import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, FieldEntry, Position}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ShapeEmitterContext, oas}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  OasLikeShapeEmitterContext,
+  ShapeEmitterContext,
+  oas
+}
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel}
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument
@@ -27,7 +31,7 @@ class UnevaluatedEmitter(private val shape: AnyShape,
                          ordering: SpecOrdering,
                          references: Seq[BaseUnit],
                          pointer: Seq[String] = Nil,
-                         schemaPath: Seq[(String, String)] = Nil)(implicit spec: ShapeEmitterContext)
+                         schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
     extends EntryEmitter {
 
   private val fs                                              = shape.fields
@@ -38,7 +42,9 @@ class UnevaluatedEmitter(private val shape: AnyShape,
       case Some(f) => ValueEmitter(key, f).emit(b)
       case _ =>
         fs.entry(schemaField).foreach { f =>
-          oas.OasEntryShapeEmitter(key, f.element.asInstanceOf[Shape], ordering, references, pointer, schemaPath).emit(b)
+          oas
+            .OasEntryShapeEmitter(key, f.element.asInstanceOf[Shape], ordering, references, pointer, schemaPath)
+            .emit(b)
         }
     }
   }

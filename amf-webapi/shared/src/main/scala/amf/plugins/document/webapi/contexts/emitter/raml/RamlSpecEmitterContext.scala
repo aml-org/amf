@@ -54,7 +54,7 @@ import scala.collection.mutable.ListBuffer
 trait RamlEmitterVersionFactory extends SpecEmitterFactory {
 
   implicit val spec: RamlSpecEmitterContext
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
 
   def retrieveHeader(document: BaseUnit): Option[String]
 

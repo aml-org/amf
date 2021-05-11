@@ -17,12 +17,13 @@ import amf.plugins.document.webapi.contexts.emitter.oas.Oas3SpecEmitterFactory
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
-import amf.plugins.document.webapi.parser.spec.oas.emitters.OasLikeExampleEmitters
 import amf.plugins.document.webapi.parser.spec.toOas
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.{YDocument, YNode}
 
-case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends ShapeEmitterContext {
+case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext)
+    extends RamlShapeEmitterContext
+    with OasLikeShapeEmitterContext {
 
   override def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter =
     spec.factory.tagToReferenceEmitter(l, refs)
@@ -94,7 +95,7 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
 
   override def isAsync: Boolean = spec.factory.isInstanceOf[AsyncSpecEmitterFactory]
 
-  override def toOasNext: ShapeEmitterContext = copy(toOas(spec))
+  override def toOasNext: OasLikeShapeEmitterContext = copy(toOas(spec))
 
   override def localReference(shape: Shape): PartEmitter = spec match {
     case ramlSpec: RamlSpecEmitterContext => ramlSpec.localReference(shape)

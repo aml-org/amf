@@ -6,27 +6,28 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfElement
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasLikeShapeEmitterContext, ShapeEmitterContext}
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasPropertiesShapeEmitter(f: FieldEntry,
-                                     ordering: SpecOrdering,
-                                     references: Seq[BaseUnit],
-                                     pointer: Seq[String] = Nil,
-                                     schemaPath: Seq[(String, String)] = Nil)(implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+case class OasPropertiesShapeEmitter(
+    f: FieldEntry,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val properties = f.array.values.partition(_.asInstanceOf[PropertyShape].patternName.option().isDefined)
 
     // If properties not empty, emit it
     properties._2 match {
-      case Nil =>
+      case Nil  =>
       case some => emitProperties(some, "properties", b)
     }
 
     // If patternProperties not empty, emit it
     properties._1 match {
-      case Nil =>
+      case Nil  =>
       case some => emitProperties(some, "patternProperties", b)
     }
   }
@@ -41,11 +42,11 @@ case class OasPropertiesShapeEmitter(f: FieldEntry,
           properties.map(
             v =>
               OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape],
-                ordering,
-                references,
-                propertiesKey,
-                pointer,
-                schemaPath))
+                                      ordering,
+                                      references,
+                                      propertiesKey,
+                                      pointer,
+                                      schemaPath))
         traverse(ordering.sorted(result), b)
       }
     )
