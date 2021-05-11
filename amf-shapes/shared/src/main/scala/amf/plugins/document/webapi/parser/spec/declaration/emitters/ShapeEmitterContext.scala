@@ -40,6 +40,7 @@ trait OasLikeShapeEmitterContext extends ShapeEmitterContext {
                    references: Seq[BaseUnit],
                    pointer: Seq[String],
                    schemaPath: Seq[(String, String)]): Seq[Emitter]
+  def anyOfKey: YNode
 }
 
 trait ShapeEmitterContext extends SpecAwareEmitterContext {
@@ -65,5 +66,4 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext {
   def filterLocal(examples: Seq[Example]): Seq[Example]
 
   def options: ShapeRenderOptions
-  def anyOfKey: YNode
 }

@@ -13,8 +13,9 @@ import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
   RamlShapeEmitterContext,
+  RamlShapeEmitterContextAdapter,
   ShapeEmitterContext,
   raml
 }
@@ -30,7 +31,7 @@ import org.yaml.model.YDocument
   *
   */
 case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterContext) {
-  protected implicit val shapeCtx: RamlShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: RamlShapeEmitterContext = RamlShapeEmitterContextAdapter(spec)
   def emitModule(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, module.annotations)
@@ -51,7 +52,7 @@ case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterC
 
 class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitterContext) {
 
-  protected implicit val shapeCtx: RamlShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: RamlShapeEmitterContext = RamlShapeEmitterContextAdapter(spec)
 
   def emitFragment(): YDocument = {
 
@@ -165,7 +166,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
   case class FragmentNamedExampleEmitter(example: NamedExampleFragment, ordering: SpecOrdering)
       extends RamlFragmentTypeEmitter {
 
-    protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+    protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10NamedExample
 

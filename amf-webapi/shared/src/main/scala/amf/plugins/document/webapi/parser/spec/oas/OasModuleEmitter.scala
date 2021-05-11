@@ -16,8 +16,9 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
   OasLikeShapeEmitterContext,
+  OasLikeShapeEmitterContextAdapter,
   ShapeEmitterContext,
   oas
 }
@@ -101,7 +102,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class DocumentationItemFragmentEmitter(documentationItem: DocumentationItemFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+    protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
     override val header: EntryEmitter                    = OasHeaderEmitter(OasHeader.Oas20DocumentationItem)
 
     val emitters: Seq[EntryEmitter] = OasCreativeWorkItemsEmitter(documentationItem.encodes, ordering).emitters()
@@ -110,7 +111,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class DataTypeFragmentEmitter(dataType: DataTypeFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    protected implicit val shapeCtx: OasLikeShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+    protected implicit val shapeCtx: OasLikeShapeEmitterContext = OasLikeShapeEmitterContextAdapter(spec)
     override val header: OasHeaderEmitter                       = OasHeaderEmitter(OasHeader.Oas20DataType)
 
     val emitters: Seq[EntryEmitter] =
@@ -171,7 +172,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class NamedExampleFragmentEmitter(namedExample: NamedExampleFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+    protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
     override val header: EntryEmitter                    = OasHeaderEmitter(OasHeader.Oas20NamedExample)
 
     val emitters: Seq[EntryEmitter] = Seq(NamedExampleEmitter(namedExample.encodes, ordering))

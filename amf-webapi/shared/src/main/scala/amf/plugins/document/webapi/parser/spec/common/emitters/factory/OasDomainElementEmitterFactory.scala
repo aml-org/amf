@@ -14,7 +14,8 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
 }
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContextAdapter,
   ShapeEmitterContext,
   oas
 }
@@ -151,7 +152,7 @@ trait OasEmitterFactory extends OasLikeEmitterFactory {
 trait OasLikeEmitterFactory extends DomainElementEmitterFactory {
 
   implicit val ctx: OasLikeSpecEmitterContext
-  protected implicit val shapeCtx: ApiShapeEmitterContextAdapter = ApiShapeEmitterContextAdapter(ctx)
+  protected implicit val shapeCtx: OasLikeShapeEmitterContextAdapter = OasLikeShapeEmitterContextAdapter(ctx)
 
   override def typeEmitter(s: Shape): Option[PartEmitter] =
     Some(oas.OasTypePartEmitter(s, SpecOrdering.Lexical, references = Nil))

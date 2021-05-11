@@ -10,7 +10,8 @@ import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
@@ -23,7 +24,7 @@ case class CompactOasTypeEmitter(shape: Shape,
                                  pointer: Seq[String],
                                  schemaPath: Seq[(String, String)])(implicit spec: OasSpecEmitterContext) {
 
-  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   def emitters(): Seq[Emitter] = {
     val definitionQueue = spec.definitionsQueue

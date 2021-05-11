@@ -20,7 +20,8 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContextAdapter,
   ShapeEmitterContext,
   oas
 }
@@ -57,7 +58,7 @@ case class OasResponsePartEmitter(response: Response, ordering: SpecOrdering, re
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   override def emit(p: PartBuilder): Unit = {
     val fs = response.fields

@@ -19,7 +19,8 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
   OasAnnotationEmitter
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft6SchemaVersion, RefEmitter, SchemaVersion}
@@ -31,7 +32,7 @@ import scala.collection.mutable
 
 abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterContext) extends SpecEmitterFactory {
 
-  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   def typeEmitters(shape: Shape,
                    ordering: SpecOrdering,

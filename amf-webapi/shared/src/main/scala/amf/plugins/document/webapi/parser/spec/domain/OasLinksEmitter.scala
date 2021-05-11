@@ -8,7 +8,7 @@ import amf.core.parser.{Annotations, Position}
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.ExternalReferenceUrlEmitter.handleInlinedRefOr
@@ -47,7 +47,7 @@ case class OasLinkPartEmitter(link: TemplatedLink, ordering: SpecOrdering, refer
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   override def emit(p: PartBuilder): Unit =
     handleInlinedRefOr(p, link) {

@@ -6,7 +6,7 @@ import amf.core.parser.{Fields, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
@@ -41,7 +41,7 @@ abstract class OasLikeOperationEmitter(operation: Operation, ordering: SpecOrder
 abstract class OasLikeOperationPartEmitter(operation: Operation, ordering: SpecOrdering)(
     implicit val spec: SpecEmitterContext)
     extends PartEmitter {
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   def commonEmitters: Seq[EntryEmitter] = {
     val fs     = operation.fields

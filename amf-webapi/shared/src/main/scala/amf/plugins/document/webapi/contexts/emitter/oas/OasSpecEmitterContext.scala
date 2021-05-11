@@ -13,7 +13,10 @@ import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitter
 import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  AgnosticShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContextAdapter
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
   AnnotationTypeEmitter,
   FacetsInstanceEmitter,
@@ -32,7 +35,7 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
     extends OasLikeSpecEmitterFactory
     with OasCompactEmitterFactory {
 
-  protected override implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected override implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   override def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter =
     (link, _) => OasTagToReferenceEmitter(link)
