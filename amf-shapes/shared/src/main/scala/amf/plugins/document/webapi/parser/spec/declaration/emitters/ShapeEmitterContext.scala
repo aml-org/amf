@@ -9,9 +9,14 @@ import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote.Vendor
+import amf.plugins.document.webapi.parser.spec.async.emitters.Draft6ExamplesEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
-import amf.plugins.document.webapi.parser.spec.oas.emitters.OasLikeExampleEmitters
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  CustomFacetsEmitter,
+  JSONSchemaDraft6SchemaVersion,
+  SchemaVersion
+}
+import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasExampleEmitters, OasLikeExampleEmitters}
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.{YDocument, YNode}
 
@@ -55,7 +60,11 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext {
                      main: Option[Example],
                      ordering: SpecOrdering,
                      extensions: Seq[Example],
-                     references: Seq[BaseUnit]): OasLikeExampleEmitters
+                     references: Seq[BaseUnit]): OasLikeExampleEmitters =
+    if (schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft6SchemaVersion))
+      Draft6ExamplesEmitter(main.toSeq ++ extensions, ordering)(this)
+    else
+      OasExampleEmitters.apply(isHeader, main, ordering, extensions, references)(this)
 
   def schemaVersion: SchemaVersion
 

@@ -59,16 +59,6 @@ case class ApiShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
 
   override def ref(b: YDocument.PartBuilder, url: String): Unit = spec.ref(b, url)
 
-  override def exampleEmitter(isHeader: Boolean,
-                              main: Option[Example],
-                              ordering: SpecOrdering,
-                              extensions: Seq[Example],
-                              references: Seq[BaseUnit]): OasLikeExampleEmitters = spec match {
-    case oasCtx: OasLikeSpecEmitterContext =>
-      oasCtx.factory.exampleEmitter(isHeader, main, ordering, extensions, references)
-    case _ => throw new Exception("Render - can only be called from OAS")
-  }
-
   override def schemaVersion: SchemaVersion = spec match {
     case oasCtx: OasLikeSpecEmitterContext => oasCtx.schemaVersion
     case _                                 => throw new Exception("Render - can only be called from OAS")
