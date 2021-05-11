@@ -10,7 +10,11 @@ import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.ExternalJsonSchemaShape
 import amf.plugins.document.webapi.parser.spec.declaration.OasShapeReferenceEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ShapeEmitterContext, oas}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  OasLikeShapeEmitterContext,
+  ShapeEmitterContext,
+  oas
+}
 import amf.plugins.domain.shapes.models._
 import org.yaml.model.{YDocument, YNode}
 
@@ -20,7 +24,7 @@ case class OasTypeEmitter(shape: Shape,
                           references: Seq[BaseUnit],
                           pointer: Seq[String] = Nil,
                           schemaPath: Seq[(String, String)] = Nil,
-                          isHeader: Boolean = false)(implicit spec: ShapeEmitterContext) {
+                          isHeader: Boolean = false)(implicit spec: OasLikeShapeEmitterContext) {
   def emitters(): Seq[Emitter] = {
 
     // Adjusting JSON Schema  pointer
@@ -53,11 +57,13 @@ case class OasTypeEmitter(shape: Shape,
         OasUnionShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath).emitters()
       case array: ArrayShape =>
         val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
-        oas.OasArrayShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath, isHeader)
+        oas
+          .OasArrayShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath, isHeader)
           .emitters()
       case matrix: MatrixShape =>
         val copiedMatrix = matrix.copy(fields = matrix.fields.filter(f => !ignored.contains(f._1))).withId(matrix.id)
-        oas.OasArrayShapeEmitter(copiedMatrix.toArrayShape, ordering, references, pointer, updatedSchemaPath, isHeader)
+        oas
+          .OasArrayShapeEmitter(copiedMatrix.toArrayShape, ordering, references, pointer, updatedSchemaPath, isHeader)
           .emitters()
       case array: TupleShape =>
         val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))

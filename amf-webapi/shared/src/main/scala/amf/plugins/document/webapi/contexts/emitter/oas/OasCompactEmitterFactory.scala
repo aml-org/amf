@@ -4,7 +4,10 @@ import amf.core.emitter.{Emitter, EntryEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{RecursiveShape, Shape}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  AgnosticShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContextAdapter
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasRecursiveShapeEmitter, OasTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.{CompactOasTypesEmitters, OasDeclaredTypesEmitters}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
@@ -15,7 +18,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.schema.json.
 
 trait OasCompactEmitterFactory {
   implicit val spec: OasSpecEmitterContext
-  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
     if (spec.compactEmission)

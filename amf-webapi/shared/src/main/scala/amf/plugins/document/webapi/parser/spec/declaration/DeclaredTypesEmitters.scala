@@ -14,7 +14,8 @@ import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitter
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContextAdapter,
   ShapeEmitterContext,
   oas
 }
@@ -31,7 +32,7 @@ case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
     implicit spec: RamlSpecEmitterContext)
     extends DeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering) {
 
-  private implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  private implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   override def emitTypes(b: EntryBuilder): Unit = {
     b.entry(
@@ -60,7 +61,7 @@ case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
 case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
     implicit spec: OasLikeSpecEmitterContext)
     extends DeclaredTypesEmitters(types, references, ordering) {
-  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
   override def emitTypes(b: EntryBuilder): Unit = {
     if (types.nonEmpty)
       b.entry(
@@ -86,7 +87,7 @@ case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit],
     implicit spec: OasSpecEmitterContext)
     extends DeclaredTypesEmitters(types, references, ordering) {
 
-  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   override def emitTypes(b: EntryBuilder): Unit = {
     if (types.nonEmpty || spec.definitionsQueue.nonEmpty)

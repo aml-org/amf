@@ -4,15 +4,15 @@ import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ValueEmitter}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel, ScalarShapeModel}
 import amf.plugins.domain.shapes.models.FileShape
 
 import scala.collection.mutable.ListBuffer
 
 case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends RamlAnyShapeEmitter(scalar, ordering, references)
+    implicit spec: RamlShapeEmitterContext)
+    extends RamlAnyShapeEmitter(scalar, ordering, references)
     with RamlCommonOASFieldsEmitter {
   override def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)

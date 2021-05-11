@@ -4,15 +4,15 @@ import amf.core.annotations.ExplicitField
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.domain.shapes.metamodel.ArrayShapeModel
 import amf.plugins.domain.shapes.models.TupleShape
 
 import scala.collection.mutable.ListBuffer
 
 case class RamlTupleShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends RamlAnyShapeEmitter(tuple, ordering, references) {
+    implicit spec: RamlShapeEmitterContext)
+    extends RamlAnyShapeEmitter(tuple, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 

@@ -6,18 +6,18 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.domain.shapes.models.{AnyShape, ShapeHelpers, UnionShape}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+    implicit spec: RamlShapeEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
 
     val values: Seq[Shape] = f.array.values.map(_.asInstanceOf[Shape])
-    val multiple = values.size > 1
+    val multiple           = values.size > 1
 
     b.entry(
       "type",
@@ -39,11 +39,11 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
       Raml10TypePartEmitter(s, ordering, None, references = references).emit(b)
     case other =>
       spec.eh.violation(ResolutionValidation,
-        other.id,
-        None,
-        "Cannot emit for type shapes without WebAPI Shape support",
-        other.position(),
-        other.location())
+                        other.id,
+                        None,
+                        "Cannot emit for type shapes without WebAPI Shape support",
+                        other.position(),
+                        other.location())
   }
 
   private def emitDeclared(shape: Shape with ShapeHelpers, b: PartBuilder): Unit =

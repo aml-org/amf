@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.spec.async.emitters.bindings.{
   AsyncApiServerBindingsEmitter
 }
 import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.OrphanAnnotationsEmitter
 import amf.plugins.domain.webapi.models.bindings._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -45,7 +45,7 @@ case class AsyncApiBindingsPartEmitter(bindings: AmfElement, ordering: SpecOrder
     implicit val spec: OasLikeSpecEmitterContext)
     extends PartEmitter {
 
-  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
 
   def emit(b: PartBuilder): Unit = {
     val emitters: Seq[EntryEmitter] = obtainBindings(bindings)

@@ -5,18 +5,19 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasLikeShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, TupleShapeModel}
 import amf.plugins.domain.shapes.models.TupleShape
 import org.yaml.model.YDocument.EntryBuilder
 
-case class OasTupleItemsShapeEmitter(array: TupleShape,
-                                     ordering: SpecOrdering,
-                                     references: Seq[BaseUnit],
-                                     additionalEntry: Option[ValueEmitter],
-                                     pointer: Seq[String] = Nil,
-                                     schemaPath: Seq[(String, String)] = Nil)(implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+case class OasTupleItemsShapeEmitter(
+    array: TupleShape,
+    ordering: SpecOrdering,
+    references: Seq[BaseUnit],
+    additionalEntry: Option[ValueEmitter],
+    pointer: Seq[String] = Nil,
+    schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+    extends EntryEmitter {
 
   val itemEmitters: Seq[OasTypeEmitter] = {
     array.items.zipWithIndex.map {
@@ -48,7 +49,7 @@ case class OasTupleItemsShapeEmitter(array: TupleShape,
   override def position(): Position = {
     Option(array.fields.getValue(ArrayShapeModel.Items)) match {
       case Some(value) => pos(value.annotations)
-      case _ => ZERO
+      case _           => ZERO
     }
   }
 }

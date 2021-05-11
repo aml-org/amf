@@ -26,8 +26,10 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
   RamlTypePartEmitter
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
   RamlCustomFacetsEmitter,
+  RamlShapeEmitterContext,
+  RamlShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -54,7 +56,7 @@ import scala.collection.mutable.ListBuffer
 trait RamlEmitterVersionFactory extends SpecEmitterFactory {
 
   implicit val spec: RamlSpecEmitterContext
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeContext: RamlShapeEmitterContext = RamlShapeEmitterContextAdapter(spec)
 
   def retrieveHeader(document: BaseUnit): Option[String]
 
@@ -237,6 +239,8 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter = {
     (property: CustomDomainProperty, ordering: SpecOrdering) =>
       new AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering) {
+
+        override protected implicit val shapeCtx: ShapeEmitterContext = shapeContext
 
         override def emitters(): Either[Seq[EntryEmitter], PartEmitter] =
           Left(shapeEmitters.asInstanceOf[Seq[EntryEmitter]])

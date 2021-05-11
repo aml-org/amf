@@ -9,14 +9,8 @@ import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote.Vendor
-import amf.plugins.document.webapi.parser.spec.async.emitters.Draft6ExamplesEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  CustomFacetsEmitter,
-  JSONSchemaDraft6SchemaVersion,
-  SchemaVersion
-}
-import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasExampleEmitters, OasLikeExampleEmitters}
+import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.{YDocument, YNode}
 
@@ -28,19 +22,30 @@ trait SpecAwareEmitterContext {
   def isAsync: Boolean
 }
 
-trait ShapeEmitterContext extends SpecAwareEmitterContext {
-
-  def toOasNext: ShapeEmitterContext
+trait RamlShapeEmitterContext extends ShapeEmitterContext {
 
   def localReference(shape: Shape): PartEmitter
+  def toOasNext: OasLikeShapeEmitterContext
+}
 
-  def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter
-
+trait OasLikeShapeEmitterContext extends ShapeEmitterContext {
   def recursiveShapeEmitter(recursive: RecursiveShape,
                             ordering: SpecOrdering,
                             schemaPath: Seq[(String, String)]): Emitter
 
   def schemasDeclarationsPath: String
+  def typeEmitters(shape: Shape,
+                   ordering: SpecOrdering,
+                   ignored: Seq[Field],
+                   references: Seq[BaseUnit],
+                   pointer: Seq[String],
+                   schemaPath: Seq[(String, String)]): Seq[Emitter]
+  def anyOfKey: YNode
+}
+
+trait ShapeEmitterContext extends SpecAwareEmitterContext {
+
+  def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter
 
   def arrayEmitter(asOasExtension: String, f: FieldEntry, ordering: SpecOrdering): EntryEmitter
 
@@ -61,12 +66,4 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext {
   def filterLocal(examples: Seq[Example]): Seq[Example]
 
   def options: ShapeRenderOptions
-  def anyOfKey: YNode
-  def typeEmitters(shape: Shape,
-                   ordering: SpecOrdering,
-                   ignored: Seq[Field],
-                   references: Seq[BaseUnit],
-                   pointer: Seq[String],
-                   schemaPath: Seq[(String, String)]): Seq[Emitter]
-
 }

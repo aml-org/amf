@@ -1,26 +1,21 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters.raml
 
-import amf.core.emitter.BaseEmitters.{MapEntryEmitter, pos}
-import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.emitter.BaseEmitters.MapEntryEmitter
+import amf.core.emitter.{Emitter, SpecOrdering}
 import amf.core.model.domain.Shape
-import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ForceEntry, ParsedJSONSchema}
 import amf.plugins.document.webapi.parser.spec.declaration.RamlLocalReferenceEntryEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
   CommentEmitter,
-  ExamplesEmitter,
-  ShapeEmitterContext,
+  RamlShapeEmitterContext,
   SimpleTypeEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 
-import scala.collection.mutable
-
-case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec: ShapeEmitterContext) {
+case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec: RamlShapeEmitterContext) {
 
   def emitters(): Seq[Emitter] = {
     shape match {
