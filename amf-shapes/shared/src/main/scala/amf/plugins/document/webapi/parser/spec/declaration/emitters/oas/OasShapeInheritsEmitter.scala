@@ -7,12 +7,12 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.parser.spec.OasShapeDefinitions
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasLikeShapeEmitterContext, ShapeEmitterContext}
 import org.yaml.model.YDocument.EntryBuilder
 
 case class OasShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+    implicit spec: OasLikeShapeEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val inherits = f.array.values.map(_.asInstanceOf[Shape])
     b.entry(
@@ -24,7 +24,7 @@ case class OasShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refere
           else if (s.linkTarget.isDefined)
             spec.ref(b, OasShapeDefinitions.appendSchemasPrefix(s.name.value(), Some(spec.vendor)))
           else OasTypePartEmitter(s, ordering, references = references).emit(b)
-        })
+      })
     )
   }
 

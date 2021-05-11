@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.annotations.{
   ParsedJSONSchema
 }
 import amf.plugins.document.webapi.parser.spec.declaration.common.ExternalLinkQuery.queryResidenceUnitOfLinkTarget
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.domain.shapes.models._
 import org.yaml.model.YDocument.EntryBuilder
@@ -24,7 +24,7 @@ case class Raml10TypeEmitter(shape: Shape,
                              ordering: SpecOrdering,
                              ignored: Seq[Field] = Nil,
                              references: Seq[BaseUnit],
-                             forceEntry: Boolean = false)(implicit spec: ShapeEmitterContext) {
+                             forceEntry: Boolean = false)(implicit spec: RamlShapeEmitterContext) {
   def emitters(): Seq[Emitter] = {
     shape match {
       case shape: AnyShape if shape.annotations.contains(classOf[ExternalSchemaWrapper]) =>

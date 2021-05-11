@@ -5,7 +5,11 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.webapi.annotations.CollectionFormatFromItems
 import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasTypeFacetEmitter, ShapeEmitterContext}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  OasLikeShapeEmitterContext,
+  OasTypeFacetEmitter,
+  ShapeEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.emitter.UnevaluatedEmitter.unevaluatedItemsInfo
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.emitter.{
@@ -23,7 +27,7 @@ case class OasArrayShapeEmitter(shape: ArrayShape,
                                 references: Seq[BaseUnit],
                                 pointer: Seq[String] = Nil,
                                 schemaPath: Seq[(String, String)] = Nil,
-                                isHeader: Boolean = false)(implicit spec: ShapeEmitterContext)
+                                isHeader: Boolean = false)(implicit spec: OasLikeShapeEmitterContext)
     extends OasAnyShapeEmitter(shape, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter](super.emitters(): _*)

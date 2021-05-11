@@ -8,8 +8,11 @@ import amf.core.model.domain.Shape
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.RamlTypeEntryEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{Draft4DependenciesEmitter, TypeEmitterFactory}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{
+  Draft4DependenciesEmitter,
+  TypeEmitterFactory
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel.Dependencies
@@ -19,11 +22,11 @@ import org.yaml.model.YType
 import scala.collection.mutable.ListBuffer
 
 case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends RamlAnyShapeEmitter(node, ordering, references) {
+    implicit spec: RamlShapeEmitterContext)
+    extends RamlAnyShapeEmitter(node, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
-    val fs = node.fields
+    val fs                               = node.fields
 
     fs.entry(NodeShapeModel.MinProperties).map(f => result += RamlScalarEmitter("minProperties", f))
     fs.entry(NodeShapeModel.MaxProperties).map(f => result += RamlScalarEmitter("maxProperties", f))
@@ -34,9 +37,9 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
         val closed = node.closed.value()
         if (!hasPatternProperties && (closed || f.value.annotations.contains(classOf[ExplicitField]))) {
           result += MapEntryEmitter("additionalProperties",
-            (!closed).toString,
-            YType.Bool,
-            position = pos(f.value.annotations))
+                                    (!closed).toString,
+                                    YType.Bool,
+                                    position = pos(f.value.annotations))
         }
       }
 

@@ -4,13 +4,13 @@ import amf.core.emitter.BaseEmitters.{pos, traverse}
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Position
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.models.UnionShape
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 abstract class AnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: ShapeEmitterContext)
+    implicit spec: RamlShapeEmitterContext)
     extends Emitter {
 
   def emitUnionExpanded(b: EntryBuilder): Unit = {
@@ -29,7 +29,7 @@ abstract class AnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refe
 }
 
 case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: ShapeEmitterContext)
+    implicit spec: RamlShapeEmitterContext)
     extends AnyOfShapeEmitter(shape, ordering, references)
     with EntryEmitter {
 
@@ -42,7 +42,7 @@ case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refe
 }
 
 case class RamlInlinedAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: ShapeEmitterContext)
+    implicit spec: RamlShapeEmitterContext)
     extends AnyOfShapeEmitter(shape, ordering, references)
     with PartEmitter {
 

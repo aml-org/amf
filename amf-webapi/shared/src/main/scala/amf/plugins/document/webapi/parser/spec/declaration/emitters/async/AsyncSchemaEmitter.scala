@@ -8,7 +8,12 @@ import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.async.parser.AsyncSchemaFormats
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ApiShapeEmitterContextAdapter, oas}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  AgnosticShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContextAdapter,
+  RamlShapeEmitterContextAdapter,
+  oas
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypePartEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.{RAML10SchemaVersion, SchemaVersion}
@@ -31,7 +36,7 @@ case class AsyncSchemaEmitter(key: String,
 
   private def emitAsRaml(b: EntryBuilder): Unit = {
     val emitters =
-      Raml10TypeEmitter(shape, ordering, references = references)(ApiShapeEmitterContextAdapter(toRaml(spec)))
+      Raml10TypeEmitter(shape, ordering, references = references)(RamlShapeEmitterContextAdapter(toRaml(spec)))
         .entries()
     b.entry(
       key,
@@ -44,7 +49,9 @@ case class AsyncSchemaEmitter(key: String,
       key,
       b => {
         val newCtx = new Async20SpecEmitterContext(spec.eh, schemaVersion = schemaVersion)
-        oas.OasTypePartEmitter(shape, ordering, references = references)(ApiShapeEmitterContextAdapter(newCtx)).emit(b)
+        oas
+          .OasTypePartEmitter(shape, ordering, references = references)(OasLikeShapeEmitterContextAdapter(newCtx))
+          .emit(b)
       }
     )
   }

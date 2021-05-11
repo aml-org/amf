@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.parser.spec.OasDefinitions.{
 }
 import amf.plugins.document.webapi.parser.spec.OasShapeDefinitions.appendOas3ComponentsPrefix
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.oas.emitters.OasSpecEmitter
@@ -21,7 +21,7 @@ case class OasTagToReferenceEmitter(link: DomainElement)(implicit val specContex
     extends OasSpecEmitter
     with ShapeReferenceEmitter {
 
-  implicit val shapeSpec = ApiShapeEmitterContextAdapter(specContext)
+  implicit val shapeSpec = AgnosticShapeEmitterContextAdapter(specContext)
 
   override protected def getRefUrlFor(element: DomainElement, default: String = referenceLabel) = element match {
     case _: Parameter                        => appendParameterDefinitionsPrefix(referenceLabel)

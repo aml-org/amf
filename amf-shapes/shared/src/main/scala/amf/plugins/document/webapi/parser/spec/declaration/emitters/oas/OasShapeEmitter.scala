@@ -11,8 +11,17 @@ import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, FieldEntry, Value}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{EnumValuesEmitter, ShapeEmitterContext, XMLSerializerEmitter}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{AnnotationsEmitter, DataNodeEmitter, FacetsEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  EnumValuesEmitter,
+  OasLikeShapeEmitterContext,
+  ShapeEmitterContext,
+  XMLSerializerEmitter
+}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
+  AnnotationsEmitter,
+  DataNodeEmitter,
+  FacetsEmitter
+}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.models.CreativeWork
 
@@ -22,7 +31,7 @@ abstract class OasShapeEmitter(shape: Shape,
                                ordering: SpecOrdering,
                                references: Seq[BaseUnit],
                                pointer: Seq[String] = Nil,
-                               schemaPath: Seq[(String, String)] = Nil)(implicit spec: ShapeEmitterContext) {
+                               schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
 
     val emitDocumentation = spec.options.isWithDocumentation

@@ -8,8 +8,17 @@ import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{NumberTypeToYTypeConverter, ShapeEmitterContext}
-import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher, TypeName}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  NumberTypeToYTypeConverter,
+  RamlShapeEmitterContext,
+  ShapeEmitterContext
+}
+import amf.plugins.document.webapi.parser.{
+  OasTypeDefMatcher,
+  RamlTypeDefMatcher,
+  RamlTypeDefStringValueMatcher,
+  TypeName
+}
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping}
@@ -18,11 +27,11 @@ import org.yaml.model.YType
 import scala.collection.mutable.ListBuffer
 
 case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends RamlAnyShapeEmitter(scalar, ordering, references)
+    implicit spec: RamlShapeEmitterContext)
+    extends RamlAnyShapeEmitter(scalar, ordering, references)
     with RamlCommonOASFieldsEmitter {
 
-  private val rawTypeDef: TypeDef = TypeDefXsdMapping.typeDef(scalar.dataType.value())
+  private val rawTypeDef: TypeDef       = TypeDefXsdMapping.typeDef(scalar.dataType.value())
   private val TypeName(typeDef, format) = RamlTypeDefStringValueMatcher.matchType(rawTypeDef, scalar.format.option())
 
   override protected val valuesTag: YType = TypeDefYTypeMapping(rawTypeDef)
@@ -87,7 +96,7 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
 
     val annotations = fs.entry(ScalarShapeModel.Format) match {
       case Some(entry) if entry.value.value.isInstanceOf[AmfScalar] => entry.value.annotations
-      case _ => Annotations()
+      case _                                                        => Annotations()
     }
 
     val isExplicit = explicitFormatOption.isDefined

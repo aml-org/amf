@@ -16,6 +16,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
   EnumValuesEmitter,
+  RamlShapeEmitterContext,
   RamlTypeFacetEmitter,
   ShapeEmitterContext,
   XMLSerializerEmitter
@@ -27,7 +28,7 @@ import org.yaml.model.YType
 import scala.collection.mutable.ListBuffer
 
 abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: ShapeEmitterContext) {
+    implicit spec: RamlShapeEmitterContext) {
 
   val typeName: Option[String]
   var typeEmitted                = false

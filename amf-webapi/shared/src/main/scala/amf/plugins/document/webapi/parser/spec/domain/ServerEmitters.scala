@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
   EnumValuesEmitter,
   ShapeEmitterContext
 }
@@ -32,7 +32,7 @@ import scala.collection.mutable.ListBuffer
 case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext) {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   def emitters(): Seq[EntryEmitter] = {
     val servers = Servers(f)
@@ -70,7 +70,7 @@ abstract class OasServersEmitter(elem: DomainElement,
                                  ordering: SpecOrdering,
                                  references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[EntryEmitter]
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   protected def asExtension(key: String, servers: Seq[Server], result: ListBuffer[EntryEmitter]): Unit =
     if (servers.nonEmpty) result += ServersEmitters(key, servers, ordering)
@@ -193,7 +193,7 @@ private case class ServersEmitters(key: String, servers: Seq[Server], ordering: 
 case class OasServerEmitter(server: Server, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   override def emit(b: YDocument.PartBuilder): Unit = {
     val result = ListBuffer[EntryEmitter]()
@@ -240,7 +240,7 @@ private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecO
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(

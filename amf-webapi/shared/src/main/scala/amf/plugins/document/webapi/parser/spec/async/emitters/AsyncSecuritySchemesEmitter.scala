@@ -4,7 +4,7 @@ import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ValueEmitter, pos, traver
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.Oas3OAuth2SettingsEmitters
 import amf.plugins.domain.webapi.metamodel.security._
@@ -65,7 +65,7 @@ case class AsyncSingleSchemePartEmitter(scheme: SecurityScheme, ordering: SpecOr
 class AsyncSecuritySettingsEmitter(settings: Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
 
   def emitters: Seq[EntryEmitter] = emittersFor(settings)
-  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
 
   private def emittersFor(settings: Settings) = {
     val particularEmitters = settings match {

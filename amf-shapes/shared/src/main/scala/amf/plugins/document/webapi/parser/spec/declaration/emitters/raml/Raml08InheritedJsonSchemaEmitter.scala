@@ -5,14 +5,19 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.Shape
 import amf.core.parser.Position
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ExamplesEmitter, ShapeEmitterContext}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  ExamplesEmitter,
+  RamlShapeEmitterContext,
+  ShapeEmitterContext
+}
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
 
-case class Raml08InheritedJsonSchemaEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec: ShapeEmitterContext)
+case class Raml08InheritedJsonSchemaEmitter(shape: Shape, ordering: SpecOrdering)(
+    implicit spec: RamlShapeEmitterContext)
     extends EntryEmitter
     with ExamplesEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {

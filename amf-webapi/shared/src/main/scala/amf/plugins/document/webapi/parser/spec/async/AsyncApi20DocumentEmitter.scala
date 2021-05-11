@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.spec.async.emitters.{
   AsyncDeclarationsEmitters
 }
 import amf.plugins.document.webapi.parser.spec.common.DeclarationsEmitterWrapper
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.AgnosticShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
 import amf.plugins.document.webapi.parser.spec.domain.SecurityRequirementsEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.{InfoEmitter, TagsEmitter}
@@ -29,7 +29,7 @@ import scala.collection.mutable
 
 class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpecEmitterContext) {
 
-  protected implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = AgnosticShapeEmitterContextAdapter(spec)
 
   def emitWebApi(ordering: SpecOrdering): Seq[EntryEmitter] = {
     val model  = retrieveWebApi()

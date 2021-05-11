@@ -5,12 +5,12 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
 import org.yaml.model.YDocument.EntryBuilder
 
 case class RamlPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+    implicit spec: RamlShapeEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       "properties",

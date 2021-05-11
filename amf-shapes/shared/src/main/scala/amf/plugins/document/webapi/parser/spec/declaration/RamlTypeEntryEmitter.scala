@@ -6,12 +6,16 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.Position
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.Raml10TypeEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{ShapeEmitterContext, raml}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  RamlShapeEmitterContext,
+  ShapeEmitterContext,
+  raml
+}
 import org.yaml.model.YDocument.EntryBuilder
 
 case class RamlTypeEntryEmitter(key: String, shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+    implicit spec: RamlShapeEmitterContext)
+    extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(key, _.obj { b =>

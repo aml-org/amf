@@ -23,7 +23,7 @@ import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overla
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
@@ -74,7 +74,7 @@ case class EndPointPartEmitter(endpoint: EndPoint, ordering: SpecOrdering, refer
     implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit = {
     val fs = endpoint.fields
@@ -150,7 +150,7 @@ object EndPointEmitter {
 abstract class OasDocumentEmitter(document: BaseUnit)(implicit val spec: OasSpecEmitterContext)
     extends OasSpecEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   private def retrieveWebApi(): WebApi = document match {
     case document: Document => document.encodes.asInstanceOf[WebApi]
@@ -304,7 +304,7 @@ case class Oas3RequestBodyPartEmitter(request: Request, ordering: SpecOrdering, 
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit =
     handleInlinedRefOr(b, request) {

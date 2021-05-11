@@ -7,7 +7,7 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.OrphanAnnotationsEmitter
@@ -21,7 +21,7 @@ class ResponsesEmitter(key: String,
                        references: Seq[BaseUnit],
                        orphanAnnotations: Seq[DomainExtension])(implicit val spec: OasSpecEmitterContext)
     extends EntryEmitter {
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
   override def emit(b: EntryBuilder): Unit = {
     val emitters = responses(f, ordering) ++ responsesElementsAnnotations()
     sourceOr(

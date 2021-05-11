@@ -4,13 +4,13 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.RecursiveShape
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasLikeShapeEmitterContext, ShapeEmitterContext}
 import org.yaml.model.YDocument.EntryBuilder
 
 case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
                                     ordering: SpecOrdering,
-                                    schemaPath: Seq[(String, String)])(implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+                                    schemaPath: Seq[(String, String)])(implicit spec: OasLikeShapeEmitterContext)
+    extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val pointer = recursive.fixpoint.option() match {
@@ -26,7 +26,7 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
         })
       case _ => None
     }
-    for {p <- pointer} b.entry("$ref", p)
+    for { p <- pointer } b.entry("$ref", p)
   }
 
   private def findInPath(id: String): Option[String] = {
@@ -34,9 +34,9 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
     // Pointers with these keys must be ignored
     val extraneousChars = Seq('^')
     schemaPath.reverse.find(_._1 == id) match {
-      case Some((_, pointer)) if pointer.equals("#") && !spec.isJsonSchema => None
+      case Some((_, pointer)) if pointer.equals("#") && !spec.isJsonSchema    => None
       case Some((_, pointer)) if !extraneousChars.forall(pointer.contains(_)) => Some(pointer)
-      case _ => None
+      case _                                                                  => None
     }
   }
 

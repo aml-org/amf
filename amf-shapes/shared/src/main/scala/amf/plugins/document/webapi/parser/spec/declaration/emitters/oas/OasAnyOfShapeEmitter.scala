@@ -5,7 +5,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.Position
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasLikeShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.domain.shapes.models.UnionShape
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -13,8 +13,8 @@ case class OasAnyOfShapeEmitter(shape: UnionShape,
                                 ordering: SpecOrdering,
                                 references: Seq[BaseUnit],
                                 pointer: Seq[String] = Nil,
-                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: ShapeEmitterContext)
-  extends EntryEmitter {
+                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+    extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
@@ -23,11 +23,11 @@ case class OasAnyOfShapeEmitter(shape: UnionShape,
         val emitters = shape.anyOf.zipWithIndex map {
           case (s: Shape, i: Int) =>
             OasTypePartEmitter(s,
-              ordering,
-              ignored = Nil,
-              references,
-              pointer = pointer ++ Seq("anyOf", s"$i"),
-              schemaPath)
+                               ordering,
+                               ignored = Nil,
+                               references,
+                               pointer = pointer ++ Seq("anyOf", s"$i"),
+                               schemaPath)
         }
         traverse(ordering.sorted(emitters), b)
       }
