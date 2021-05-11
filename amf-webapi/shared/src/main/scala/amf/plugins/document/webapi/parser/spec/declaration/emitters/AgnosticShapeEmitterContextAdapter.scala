@@ -19,7 +19,11 @@ import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter,
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YDocument
 
-case class AgnosticShapeEmitterContextAdapter(spec: SpecEmitterContext) extends ShapeEmitterContext {
+object AgnosticShapeEmitterContextAdapter {
+  def apply(spec: SpecEmitterContext) = new AgnosticShapeEmitterContextAdapter(spec)
+}
+
+class AgnosticShapeEmitterContextAdapter(spec: SpecEmitterContext) extends ShapeEmitterContext {
 
   override def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter =
     spec.factory.tagToReferenceEmitter(l, refs)

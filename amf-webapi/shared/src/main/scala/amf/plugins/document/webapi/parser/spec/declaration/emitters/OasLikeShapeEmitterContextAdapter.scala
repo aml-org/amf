@@ -18,9 +18,9 @@ import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter,
 import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.{YDocument, YNode}
 
-case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext) extends OasLikeShapeEmitterContext {
-  override def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter =
-    spec.factory.tagToReferenceEmitter(l, refs)
+case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext)
+    extends AgnosticShapeEmitterContextAdapter(spec)
+    with OasLikeShapeEmitterContext {
 
   override def recursiveShapeEmitter(recursive: RecursiveShape,
                                      ordering: SpecOrdering,
@@ -28,9 +28,6 @@ case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext) ex
     spec.factory.recursiveShapeEmitter(recursive, ordering, schemaPath)
 
   override def schemasDeclarationsPath: String = spec.schemasDeclarationsPath
-
-  override def arrayEmitter(asOasExtension: String, f: FieldEntry, ordering: SpecOrdering): EntryEmitter =
-    spec.arrayEmitter(asOasExtension, f, ordering)
 
   override def customFacetsEmitter(f: FieldEntry,
                                    ordering: SpecOrdering,
@@ -43,18 +40,6 @@ case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext) ex
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
     spec.factory.annotationEmitter(e, default)
 
-  override def eh: ErrorHandler = spec.eh
-
-  override def vendor: Vendor = spec.vendor
-
-  override def ref(b: YDocument.PartBuilder, url: String): Unit = spec.ref(b, url)
-
-  override def schemaVersion: SchemaVersion = spec.schemaVersion
-
-  override def filterLocal(examples: Seq[Example]): Seq[Example] = spec.filterLocal(examples)
-
-  override def options: ShapeRenderOptions = spec.options
-
   override def anyOfKey: YNode = spec.anyOfKey
 
   override def typeEmitters(shape: Shape,
@@ -64,14 +49,4 @@ case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext) ex
                             pointer: Seq[String],
                             schemaPath: Seq[(String, String)]): Seq[Emitter] =
     spec.factory.typeEmitters(shape, ordering, ignored, references, pointer, schemaPath)
-
-  override def isOas3: Boolean = spec.factory.isInstanceOf[Oas3SpecEmitterFactory]
-
-  override def isOasLike: Boolean = spec.isInstanceOf[OasLikeSpecEmitterContext]
-
-  override def isRaml: Boolean = false
-
-  override def isJsonSchema: Boolean = spec.isInstanceOf[JsonSchemaEmitterContext]
-
-  override def isAsync: Boolean = spec.factory.isInstanceOf[AsyncSpecEmitterFactory]
 }
