@@ -56,16 +56,6 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext {
 
   def ref(b: YDocument.PartBuilder, url: String): Unit
 
-  def exampleEmitter(isHeader: Boolean,
-                     main: Option[Example],
-                     ordering: SpecOrdering,
-                     extensions: Seq[Example],
-                     references: Seq[BaseUnit]): OasLikeExampleEmitters =
-    if (schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft6SchemaVersion))
-      Draft6ExamplesEmitter(main.toSeq ++ extensions, ordering)(this)
-    else
-      OasExampleEmitters.apply(isHeader, main, ordering, extensions, references)(this)
-
   def schemaVersion: SchemaVersion
 
   def filterLocal(examples: Seq[Example]): Seq[Example]

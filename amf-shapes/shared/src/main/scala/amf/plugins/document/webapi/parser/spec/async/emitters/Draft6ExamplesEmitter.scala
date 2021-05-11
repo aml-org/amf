@@ -11,10 +11,10 @@ import org.yaml.model.YDocument
 
 import scala.collection.mutable.ListBuffer
 
-case class Draft6ExamplesEmitter(examples: Seq[Example], ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
+case class Draft6ExamplesEmitter(examples: Seq[Example], ordering: SpecOrdering)(implicit spec: ShapeEmitterContext)
     extends OasLikeExampleEmitters
     with EntryEmitter {
+
   private def entryEmitter: EntryEmitter =
     EntryPartEmitter("examples",
                      ExamplesArrayPartEmitter(examples, ordering),
@@ -27,13 +27,11 @@ case class Draft6ExamplesEmitter(examples: Seq[Example], ordering: SpecOrdering)
   override def position(): Position = examples.headOption.map(ex => pos(ex.annotations)).getOrElse(Position.ZERO)
 }
 
-case class ExamplesArrayPartEmitter(examples: Seq[Example], ordering: SpecOrdering)(
-    implicit spec: ShapeEmitterContext)
+case class ExamplesArrayPartEmitter(examples: Seq[Example], ordering: SpecOrdering)(implicit spec: ShapeEmitterContext)
     extends PartEmitter {
   override def emit(b: YDocument.PartBuilder): Unit = {
     b.list { listBuilder =>
-      examples.foreach(ex =>
-        ExampleDataNodePartEmitter(ex, ordering).emit(listBuilder))
+      examples.foreach(ex => ExampleDataNodePartEmitter(ex, ordering).emit(listBuilder))
     }
   }
   override def position(): Position = examples.headOption.map(ex => pos(ex.annotations)).getOrElse(Position.ZERO)
