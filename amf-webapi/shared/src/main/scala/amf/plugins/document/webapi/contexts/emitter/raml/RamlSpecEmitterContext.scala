@@ -12,7 +12,6 @@ import amf.core.remote.{Raml08, Raml10, Vendor}
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterContext,
   Oas2SpecEmitterFactory,
-  OasRefEmitter,
   OasSpecEmitterFactory
 }
 import amf.plugins.document.webapi.contexts.{SpecEmitterContext, SpecEmitterFactory}
