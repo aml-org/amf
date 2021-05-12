@@ -36,7 +36,7 @@ case class CompactOasTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit],
           while (definitionsQueue.nonEmpty()) {
             val labeledShape = definitionsQueue.dequeue()
             // used to force shape to be emitted with OasTypeEmitter, and not as a ref
-            spec.forceEmission = Some(labeledShape.shape.id)
+            spec.setForceEmission(Some(labeledShape.shape.id))
             OasNamedTypeEmitter(labeledShape.shape,
                                 ordering,
                                 references,

@@ -7,6 +7,7 @@ import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.oas.{DefinitionsQueue, OasSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.CustomFacetsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasRecursiveShapeEmitter
@@ -22,6 +23,25 @@ case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext)
 
 //  override def recursiveShapeEmitter(recursive: RecursiveShape, ordering: SpecOrdering, schemaPath: Seq[(String, String)]): EntryEmitter = OasRecursiveShapeEmitter(recursive, ordering, schemaPath)
 
+  override def forceEmission: Option[String] = spec match {
+    case oasCtx: OasSpecEmitterContext => oasCtx.forceEmission
+    case _                             => super.forceEmission
+  }
+
+  override def setForceEmission(id: Option[String]): Unit = spec match {
+    case oasCtx: OasSpecEmitterContext => oasCtx.setForceEmission(id)
+    case _                             => super.setForceEmission(id)
+  }
+
+  override def removeForceEmission: Unit = spec match {
+    case oasCtx: OasSpecEmitterContext => oasCtx.removeForceEmission
+    case _                             => super.removeForceEmission
+  }
+
+  override val definitionsQueue: DefinitionsQueue = spec match {
+    case oasCtx: OasSpecEmitterContext => oasCtx.definitionsQueue
+    case _                             => DefinitionsQueue()(this)
+  }
   override protected implicit val shapeCtx: OasLikeShapeEmitterContext = this
 
   override def schemasDeclarationsPath: String = spec.schemasDeclarationsPath
@@ -47,5 +67,8 @@ case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext)
                             schemaPath: Seq[(String, String)]): Seq[Emitter] =
     spec.factory.typeEmitters(shape, ordering, ignored, references, pointer, schemaPath)
 
-  override def compactEmission: Boolean = spec.options.isWithCompactedEmission
+  override def compactEmission: Boolean = spec match {
+    case oasCtx: OasSpecEmitterContext => oasCtx.compactEmission
+    case _                             => options.compactedEmission
+  }
 }

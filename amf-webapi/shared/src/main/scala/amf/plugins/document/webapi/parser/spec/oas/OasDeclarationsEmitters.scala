@@ -15,6 +15,8 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContext,
+  OasLikeShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -26,9 +28,9 @@ import scala.collection.mutable.ListBuffer
 
 object OasDeclaredShapesEmitter {
   def apply(shapes: Seq[Shape], ordering: SpecOrdering, references: Seq[BaseUnit] = Seq())(
-      implicit spec: OasSpecEmitterContext): Option[EntryEmitter] = {
+      implicit spec: OasLikeShapeEmitterContext): Option[EntryEmitter] = {
     if (shapes.nonEmpty || spec.definitionsQueue.nonEmpty())
-      Some(spec.factory.declaredTypesEmitter(shapes, references, ordering))
+      Some(spec.declaredTypesEmitter(shapes, references, ordering))
     else None
   }
 }
@@ -44,7 +46,8 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
     val declarations = WebApiDeclarations(declares, UnhandledParserErrorHandler, EmptyFutureDeclarations())
 
     val result = ListBuffer[EntryEmitter]()
-    result ++= OasDeclaredShapesEmitter(declarations.shapes.values.toSeq, ordering, references)
+    result ++= OasDeclaredShapesEmitter(declarations.shapes.values.toSeq, ordering, references)(
+      OasLikeShapeEmitterContextAdapter(spec))
 
     if (declarations.annotations.nonEmpty)
       result += OasAnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)

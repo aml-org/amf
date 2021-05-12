@@ -13,7 +13,16 @@ trait CompactableEmissionContext {
 
   val definitionsQueue: DefinitionsQueue = DefinitionsQueue()(this)
 
-  var forceEmission: Option[String] = None
+  var _forceEmission: Option[String] = None
+  def forceEmission: Option[String]  = _forceEmission
+
+  def setForceEmission(id: Option[String]): Unit = {
+    _forceEmission = id
+  }
+
+  def removeForceEmission = {
+    _forceEmission = None
+  }
 
   // oas emission emits schemas to the definitions, so we need the schemas to emit all their examples
   def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] = elements

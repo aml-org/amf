@@ -22,7 +22,7 @@ case class CompactOasTypeEmitter(shape: Shape,
   def emitters(): Seq[Emitter] = {
     val definitionQueue = spec.definitionsQueue
     if (spec.forceEmission.contains(shape.id) || emitInlined()) {
-      spec.forceEmission = None
+      spec.removeForceEmission
       OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
     } else {
       val label = definitionQueue.enqueue(shape)
