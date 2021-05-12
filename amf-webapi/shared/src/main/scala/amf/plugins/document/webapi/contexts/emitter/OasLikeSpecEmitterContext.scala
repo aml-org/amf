@@ -20,6 +20,8 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
 import amf.plugins.document.webapi.parser.spec.declaration.{RefEmitter, SchemaVersion}
 import org.yaml.model.YType
 
+import scala.util.matching.Regex
+
 abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterContext) extends SpecEmitterFactory {
 
   protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
@@ -31,7 +33,9 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
                    pointer: Seq[String] = Nil,
                    schemaPath: Seq[(String, String)] = Nil): Seq[Emitter]
 
-  def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter
+  def recursiveShapeEmitter(shape: RecursiveShape,
+                            ordering: SpecOrdering,
+                            schemaPath: Seq[(String, String)]): EntryEmitter
 
   override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
 }
@@ -42,6 +46,8 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
     extends SpecEmitterContext(eh, refEmitter, options) {
   override def schemaVersion: SchemaVersion
   def schemasDeclarationsPath: String
+
+  def nameRegex: Regex
 
   override def localReference(reference: Linkable): PartEmitter =
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)

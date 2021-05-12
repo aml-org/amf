@@ -21,21 +21,6 @@ import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, Se
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
 
-trait DeclarationEmissionDecorator {
-  private var emittingDeclarations: Boolean = false
-
-  def runAsDeclarations(fn: () => Unit): Unit = {
-    emittingDeclarations = true
-    fn()
-    emittingDeclarations = false
-  }
-
-  def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] = {
-    if (!emittingDeclarations) elements
-    else elements.filter(!_.fromLocal())
-  }
-}
-
 abstract class SpecEmitterContext(val eh: ErrorHandler,
                                   private val refEmitter: RefEmitter,
                                   val options: ShapeRenderOptions)

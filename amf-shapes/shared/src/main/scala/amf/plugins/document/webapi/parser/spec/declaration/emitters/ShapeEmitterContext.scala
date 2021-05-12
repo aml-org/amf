@@ -9,9 +9,15 @@ import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote.Vendor
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
+import amf.plugins.document.webapi.contexts.DeclarationEmissionDecorator
+import amf.plugins.document.webapi.contexts.emitter.oas.{CompactableEmissionContext, OasCompactEmitterFactory}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
+  AnnotationsEmitter,
+  FacetsInstanceEmitter
+}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.RamlTypePartEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
-import amf.plugins.domain.shapes.models.Example
+import amf.plugins.domain.shapes.models.{AnyShape, Example}
 import org.yaml.model.{YDocument, YNode}
 
 trait SpecAwareEmitterContext {
@@ -23,12 +29,21 @@ trait SpecAwareEmitterContext {
 }
 
 trait RamlShapeEmitterContext extends ShapeEmitterContext {
+  def typesEmitter
+    : (AnyShape, SpecOrdering, Option[AnnotationsEmitter], Seq[Field], Seq[BaseUnit]) => RamlTypePartEmitter
+  def typesKey: YNode
 
   def localReference(shape: Shape): PartEmitter
   def toOasNext: OasLikeShapeEmitterContext
 }
 
-trait OasLikeShapeEmitterContext extends ShapeEmitterContext {
+trait OasLikeShapeEmitterContext
+    extends ShapeEmitterContext
+    with CompactableEmissionContext
+    with OasCompactEmitterFactory {
+
+  def compactEmission: Boolean
+
   def recursiveShapeEmitter(recursive: RecursiveShape,
                             ordering: SpecOrdering,
                             schemaPath: Seq[(String, String)]): Emitter
@@ -41,9 +56,12 @@ trait OasLikeShapeEmitterContext extends ShapeEmitterContext {
                    pointer: Seq[String],
                    schemaPath: Seq[(String, String)]): Seq[Emitter]
   def anyOfKey: YNode
+
+  override def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] =
+    super[CompactableEmissionContext].filterLocal(elements)
 }
 
-trait ShapeEmitterContext extends SpecAwareEmitterContext {
+trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissionDecorator {
 
   def tagToReferenceEmitter(l: DomainElement with Linkable, refs: Seq[BaseUnit]): PartEmitter
 
@@ -62,8 +80,6 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext {
   def ref(b: YDocument.PartBuilder, url: String): Unit
 
   def schemaVersion: SchemaVersion
-
-  def filterLocal(examples: Seq[Example]): Seq[Example]
 
   def options: ShapeRenderOptions
 }

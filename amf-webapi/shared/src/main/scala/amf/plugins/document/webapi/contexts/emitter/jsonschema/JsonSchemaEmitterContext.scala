@@ -24,7 +24,7 @@ class JsonSchemaEmitterContext(override val eh: ErrorHandler,
     extends Oas2SpecEmitterContext(eh = eh, options = options) {
 
   override val anyOfKey: String = "anyOf"
-  override val nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
+  override def nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
 
   override val vendor: Vendor = Vendor.JSONSCHEMA
 
