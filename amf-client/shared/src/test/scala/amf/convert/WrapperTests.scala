@@ -43,7 +43,7 @@ import amf.core.emitter.{RenderOptions => InternalRenderOptions, ShapeRenderOpti
 import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.remod.ClientJsonSchemaShapeSerializer.{buildJsonSchema, toJsonSchema}
-import amf.remod.{ClientJsonSchemaShapeSerializer, JsonSchemaShapeSerializer}
+import amf.remod.{ClientJsonSchemaShapeSerializer, ClientShapePayloadValidatorFactory, JsonSchemaShapeSerializer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -1336,22 +1336,24 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     assert(responses.head.statusCode.is("200"))
   }
 
-  // TODO: Shapes REMOD Uncomment
-//  test("Test validate payload with invalid iri") {
-//    val payload = """test payload""".stripMargin
-//    for {
-//      _ <- AMF.init().asFuture
-//      shape <- Future {
-//        new ScalarShape()
-//          .withDataType("http://www.w3.org/2001/XMLSchema#string")
-//          .withName("test")
-//          .withId("api.raml/#/webapi/schema1")
-//      }
-//      report <- shape.asInstanceOf[AnyShape].validate(payload).asFuture
-//    } yield {
-//      assert(report.conforms)
-//    }
-//  }
+  test("Test validate payload with invalid iri") {
+    val payload = """test payload""".stripMargin
+    for {
+      _ <- AMF.init().asFuture
+      shape <- Future {
+        new ScalarShape()
+          .withDataType("http://www.w3.org/2001/XMLSchema#string")
+          .withName("test")
+          .withId("api.raml/#/webapi/schema1")
+      }
+      report <- ClientShapePayloadValidatorFactory
+        .createPayloadValidator(shape)
+        .validate("application/yaml", payload)
+        .asFuture
+    } yield {
+      assert(report.conforms)
+    }
+  }
 
   test("Generate unit with source maps") {
     val options = new RenderOptions().withSourceMaps

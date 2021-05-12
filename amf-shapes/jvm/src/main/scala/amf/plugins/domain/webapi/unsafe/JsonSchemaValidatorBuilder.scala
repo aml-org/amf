@@ -3,7 +3,7 @@ package amf.plugins.domain.webapi.unsafe
 import amf.client.plugins.ValidationMode
 import amf.core.model.domain.Shape
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.validation.remote._
+import amf.plugins.document.webapi.validation.remote.{JvmPayloadValidator, PlatformPayloadValidator}
 
 object JsonSchemaValidatorBuilder {
 
