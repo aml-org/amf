@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.oas
 import amf.core.emitter.BaseEmitters.{EntryPartEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
@@ -24,6 +24,15 @@ import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer
 
+object OasDeclaredShapesEmitter {
+  def apply(shapes: Seq[Shape], ordering: SpecOrdering, references: Seq[BaseUnit] = Seq())(
+      implicit spec: OasSpecEmitterContext): Option[EntryEmitter] = {
+    if (shapes.nonEmpty || spec.definitionsQueue.nonEmpty())
+      Some(spec.factory.declaredTypesEmitter(shapes, references, ordering))
+    else None
+  }
+}
+
 case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
     extends PlatformSecrets {
@@ -35,8 +44,7 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
     val declarations = WebApiDeclarations(declares, UnhandledParserErrorHandler, EmptyFutureDeclarations())
 
     val result = ListBuffer[EntryEmitter]()
-    if (declarations.shapes.nonEmpty || spec.definitionsQueue.nonEmpty())
-      result += spec.factory.declaredTypesEmitter(declarations.shapes.values.toSeq, references, ordering)
+    result ++= OasDeclaredShapesEmitter(declarations.shapes.values.toSeq, ordering, references)
 
     if (declarations.annotations.nonEmpty)
       result += OasAnnotationsTypesEmitter(declarations.annotations.values.toSeq, ordering)

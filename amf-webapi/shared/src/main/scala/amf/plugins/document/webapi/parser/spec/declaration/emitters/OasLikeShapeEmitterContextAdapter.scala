@@ -1,22 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters
 
-import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.emitter.{Emitter, EntryEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
-import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
+import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
-import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.contexts.emitter.async.AsyncSpecEmitterFactory
-import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitterContext
-import amf.plugins.document.webapi.contexts.emitter.oas.Oas3SpecEmitterFactory
+import amf.plugins.document.webapi.parser.spec.declaration.CustomFacetsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
-import amf.plugins.domain.shapes.models.Example
-import org.yaml.model.{YDocument, YNode}
+import org.yaml.model.YNode
 
 case class OasLikeShapeEmitterContextAdapter(spec: OasLikeSpecEmitterContext)
     extends AgnosticShapeEmitterContextAdapter(spec)
