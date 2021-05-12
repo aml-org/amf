@@ -1,8 +1,9 @@
 package amf.plugins.document.webapi.validation.remote
+
 import amf.ProfileName
 import amf.core.model.domain.DomainElement
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
-import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
+import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 
 trait ValidationProcessor {
   type Return
