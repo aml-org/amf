@@ -8,40 +8,41 @@ import amf.client.model.domain.ScalarShape
 import amf.client.parse.{DefaultParserErrorHandler, Oas20YamlParser, RamlParser}
 import amf.client.resolve.ClientErrorHandlerConverter.ErrorHandlerConverter
 import amf.client.resolve.{Oas20Resolver, Raml10Resolver}
+import amf.client.validation.PayloadValidationUtils
 import amf.core.client.ParsingOptions
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.AMFValidationResult
+import amf.remod.ShapePayloadValidatorFactory
 import amf.{AMFStyle, Oas20Profile, Raml10Profile}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with NativeOps {
+trait YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with NativeOps with PayloadValidationUtils {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  // TODO: Shapes REMOD Uncomment
-//  test("payload validation") {
-//    AMF.init().asFuture flatMap { _ =>
-//      val validator =
-//        new ScalarShape().payloadValidator("application/yaml", Environment.empty().setMaxYamlReferences(50)).asOption
-//      val report = validator.get
-//        .validate(
-//          "application/yaml",
-//          """
-//            |a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
-//            |b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
-//            |c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
-//            |d: &d [*c,*c,*c,*c,*c,*c,*c,*c,*c]
-//            |e: &e [*d,*d,*d,*d,*d,*d,*d,*d,*d]
-//            |f: &f [*e,*e,*e,*e,*e,*e,*e,*e,*e]
-//            |g: &g [*f,*f,*f,*f,*f,*f,*f,*f,*f]
-//            |""".stripMargin
-//        )
-//        .asFuture
-//      report.map { r =>
-//        assertThresholdViolation(r.results.asSeq.map(_._internal))
-//      }
-//    }
-//  }
+  test("payload validation") {
+    AMF.init().asFuture flatMap { _ =>
+      val validator = payloadValidator(new ScalarShape(), Environment.empty().setMaxYamlReferences(50))
+
+      val report = validator
+        .validate(
+          "application/yaml",
+          """
+            |a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
+            |b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
+            |c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
+            |d: &d [*c,*c,*c,*c,*c,*c,*c,*c,*c]
+            |e: &e [*d,*d,*d,*d,*d,*d,*d,*d,*d]
+            |f: &f [*e,*e,*e,*e,*e,*e,*e,*e,*e]
+            |g: &g [*f,*f,*f,*f,*f,*f,*f,*f,*f]
+            |""".stripMargin
+        )
+        .asFuture
+      report.map { r =>
+        assertThresholdViolation(r.results.asSeq.map(_._internal))
+      }
+    }
+  }
 
   test("parsing and resolution violation - raml resolution with examples") {
     val api           = """#%RAML 1.0

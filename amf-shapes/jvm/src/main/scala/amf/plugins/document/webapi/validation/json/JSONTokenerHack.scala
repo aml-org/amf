@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.validation.json
 
-import java.lang
-import org.json.{JSONTokener}
+import org.json.JSONTokener
 
+import java.lang
 import scala.util.matching.Regex
 
 class JSONTokenerHack(text: String) extends JSONTokener(text) {

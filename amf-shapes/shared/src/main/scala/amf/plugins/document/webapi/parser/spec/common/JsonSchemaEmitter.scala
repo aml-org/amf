@@ -6,22 +6,9 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.Position
-import amf.plugins.document.webapi.contexts.emitter.jsonschema.{
-  InlinedJsonSchemaEmitterContext,
-  JsonSchemaEmitterContext
-}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  InlineJsonSchemaShapeEmitterContext,
-  JsonSchemaShapeEmitterContext,
-  OasLikeShapeEmitterContext
-}
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaUnspecifiedVersion,
-  JSONSchemaVersion,
-  SchemaVersion
-}
-import amf.plugins.document.webapi.parser.spec.oas.{OasDeclarationsEmitter, OasDeclaredShapesEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{InlineJsonSchemaShapeEmitterContext, JsonSchemaShapeEmitterContext, OasLikeShapeEmitterContext}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, JSONSchemaUnspecifiedVersion, JSONSchemaVersion, SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.oas.OasDeclaredShapesEmitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -66,7 +53,7 @@ case class JsonSchemaEmitter(root: Shape,
       case s: Shape => s
     })
     ordering.sorted(OasDeclaredShapesEmitter(shapes, SpecOrdering.Lexical, Seq())(ctx).toSeq)
-  } // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
+  }
 
 }
 

@@ -18,31 +18,11 @@ object PayloadValidations extends Validations {
     "Cannot validate example with unsupported media type"
   )
 
-  val ExampleValidationErrorSpecification = validation(
-    "example-validation-error",
-    "Example does not validate type"
-  )
-
-  val SchemaException = validation(
-    "schema-exception",
-    "Schema exception"
-  )
-
   override val levels: Map[String, Map[ProfileName, String]] = Map(
-    UnsupportedExampleMediaTypeWarningSpecification.id -> all(WARNING),
-    ExampleValidationErrorSpecification.id -> Map(
-      Raml10Profile -> VIOLATION,
-      Raml08Profile -> VIOLATION,
-      Oas20Profile  -> WARNING,
-      Oas30Profile  -> WARNING,
-      AmfProfile    -> VIOLATION
-    ),
-    SchemaException.id -> all(VIOLATION),
+    UnsupportedExampleMediaTypeWarningSpecification.id -> all(WARNING)
   )
 
   override val validations: List[ValidationSpecification] = List(
     UnsupportedExampleMediaTypeWarningSpecification,
-    ExampleValidationErrorSpecification,
-    SchemaException
   )
 }

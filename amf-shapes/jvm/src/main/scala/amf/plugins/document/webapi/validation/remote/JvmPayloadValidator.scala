@@ -7,15 +7,10 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.validation.json.{
-  InvalidJSONValueException,
-  JSONObject,
-  JSONTokenerHack,
-  ScalarTokenerHack
-}
+import amf.plugins.document.webapi.validation.json.{InvalidJSONValueException, JSONObject, JSONTokenerHack, ScalarTokenerHack}
 import amf.plugins.domain.shapes.models.ScalarShape
-import amf.validations.PayloadValidations
-import amf.validations.PayloadValidations._
+import amf.validations.ShapePayloadValidations
+import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 import org.everit.json.schema.internal._
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
@@ -186,7 +181,7 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName,
       level = SeverityLevels.VIOLATION,
       targetNode = element.map(_.id).getOrElse(""),
       targetProperty = None,
-      validationId = PayloadValidations.SchemaException.id,
+      validationId = ShapePayloadValidations.SchemaException.id,
       position = element.flatMap(_.position()),
       location = element.flatMap(_.location()),
       source = e

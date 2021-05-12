@@ -5,7 +5,7 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.internal.environment.Environment
-import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
+import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 
 import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}

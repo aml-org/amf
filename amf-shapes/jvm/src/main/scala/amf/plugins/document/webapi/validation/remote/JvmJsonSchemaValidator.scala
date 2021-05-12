@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.validation.remote
 
-import java.util.Optional
-
 import org.everit.json.schema.FormatValidator
+
+import java.util.Optional
 
 class Rfc2616Attribute extends FormatValidator {
 

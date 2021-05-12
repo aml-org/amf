@@ -11,6 +11,9 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
+import amf.remod.ShapePayloadValidatorFactory
+import amf.core.utils.MediaTypeMatcher
+import amf.remod.ShapePayloadValidatorFactory._
 import org.scalatest.AsyncFunSuite
 import org.scalatest.Matchers._
 
@@ -114,20 +117,24 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
     )
   )
 
-  // TODO: Shapes REMOD Uncomment
-//  fixtureTest.foreach { si =>
-//    si.examples.foreach { ei =>
-//      test(s"Test ${si.shape.name} with example ${ei.name}") {
-//        if (si.mode == StrictValidationMode)
-//          si.shape.validate(ei.example).map { r =>
-//            r.conforms should be(ei.valid)
-//          } else
-//          si.shape.validateParameter(ei.example).map { r =>
-//            r.conforms should be(ei.valid)
-//          }
-//      }
-//    }
-//  }
+  fixtureTest.foreach { si =>
+    si.examples.foreach { ei =>
+      test(s"Test ${si.shape.name} with example ${ei.name}") {
+        if (si.mode == StrictValidationMode) {
+          createPayloadValidator(si.shape)
+            .validate(ei.example.guessMediaType(false), ei.example)
+            .map { r =>
+              r.conforms should be(ei.valid)
+            }
+        } else
+          createParameterValidator(si.shape)
+            .validate(ei.example.guessMediaType(false), ei.example)
+            .map { r =>
+              r.conforms should be(ei.valid)
+            }
+      }
+    }
+  }
 
 }
 

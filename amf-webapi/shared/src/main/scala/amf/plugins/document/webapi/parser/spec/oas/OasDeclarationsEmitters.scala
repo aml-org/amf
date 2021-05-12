@@ -26,15 +26,6 @@ import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer
 
-object OasDeclaredShapesEmitter {
-  def apply(shapes: Seq[Shape], ordering: SpecOrdering, references: Seq[BaseUnit] = Seq())(
-      implicit spec: OasLikeShapeEmitterContext): Option[EntryEmitter] = {
-    if (shapes.nonEmpty || spec.definitionsQueue.nonEmpty())
-      Some(spec.declaredTypesEmitter(shapes, references, ordering))
-    else None
-  }
-}
-
 case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
     extends PlatformSecrets {
