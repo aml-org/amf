@@ -87,3 +87,8 @@ trait RefEmitter {
 object RamlRefEmitter extends RefEmitter {
   override def ref(url: String, b: PartBuilder): Unit = b += YNode.include(url)
 }
+
+object OasRefEmitter extends RefEmitter {
+
+  override def ref(url: String, b: PartBuilder): Unit = b.obj(MapEntryEmitter("$ref", url).emit(_))
+}

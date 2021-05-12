@@ -10,14 +10,13 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.emitter.oas.OasRefEmitter
 import amf.plugins.document.webapi.contexts.{SpecEmitterContext, SpecEmitterFactory}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.OasLikeShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
   AnnotationEmitter,
   OasAnnotationEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.{RefEmitter, SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{OasRefEmitter, RefEmitter, SchemaVersion}
 import org.yaml.model.YType
 
 import scala.util.matching.Regex

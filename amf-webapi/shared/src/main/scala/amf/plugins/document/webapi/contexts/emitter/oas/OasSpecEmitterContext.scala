@@ -181,8 +181,3 @@ class Oas2SpecEmitterContext(eh: ErrorHandler,
   override val vendor: Vendor                  = Oas20
   override def schemasDeclarationsPath: String = "/definitions/"
 }
-
-object OasRefEmitter extends RefEmitter {
-
-  override def ref(url: String, b: PartBuilder): Unit = b.obj(MapEntryEmitter("$ref", url).emit(_))
-}
