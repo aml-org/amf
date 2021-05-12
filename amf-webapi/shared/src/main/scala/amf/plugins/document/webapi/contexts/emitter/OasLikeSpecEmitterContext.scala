@@ -12,23 +12,13 @@ import amf.core.parser.FieldEntry
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.emitter.oas.OasRefEmitter
 import amf.plugins.document.webapi.contexts.{SpecEmitterContext, SpecEmitterFactory}
-import amf.plugins.document.webapi.parser.OasTypeDefStringValueMatcher
-import amf.plugins.document.webapi.parser.spec.async.emitters.Draft6ExamplesEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.OasLikeShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
   AnnotationEmitter,
   OasAnnotationEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContextAdapter,
-  ShapeEmitterContext
-}
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft6SchemaVersion, RefEmitter, SchemaVersion}
-import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasExampleEmitters, OasLikeExampleEmitters}
-import amf.plugins.domain.shapes.models.Example
+import amf.plugins.document.webapi.parser.spec.declaration.{RefEmitter, SchemaVersion}
 import org.yaml.model.YType
-
-import scala.collection.mutable
 
 abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterContext) extends SpecEmitterFactory {
 
