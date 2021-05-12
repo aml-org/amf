@@ -7,7 +7,7 @@ import amf.client.environment.DefaultEnvironment
 import amf.client.model.document.{Document, Module}
 import amf.client.model.domain.{Api, NodeShape}
 import amf.client.parse.RamlParser
-import amf.client.reference.{CachedReference, ReferenceResolver}
+import amf.client.reference.{CachedReference, UnitCache}
 import amf.client.resolve.Raml10Resolver
 import amf.client.resource.ResourceNotFound
 import amf.client.{AMF, reference}
@@ -17,11 +17,11 @@ import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
+trait UnitCacheTest extends AsyncFunSuite with Matchers with NativeOps {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  case class CustomReferenceResolver(references: Seq[CachedReference]) extends ReferenceResolver {
+  case class CustomUnitCache(references: Seq[CachedReference]) extends UnitCache {
 
     /** If the resource not exists, you should return a future failed with an ResourceNotFound exception. */
     override def fetch(url: String): ClientFuture[reference.CachedReference] =
@@ -45,7 +45,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
       environment <- {
         val references = Seq(new CachedReference(libraryPath, library, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
@@ -72,7 +72,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         val references = Seq(new CachedReference(libraryPath, library, resolved = false),
                              new CachedReference(type1Path, datatype1, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
@@ -96,7 +96,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
       environment <- {
         val references = Seq(new CachedReference(rtPath, rt, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
@@ -119,7 +119,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
       environment <- {
         val references = Seq(new CachedReference(traitPath, tr, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
@@ -143,7 +143,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
       environment <- {
         val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
@@ -186,7 +186,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
       environment <- {
         val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
@@ -233,7 +233,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false),
                              new CachedReference(typePath, typeResolved, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
@@ -260,7 +260,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false),
                              new CachedReference(traitPath, traitResolved, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
@@ -283,7 +283,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
       environment <- {
         val references = Seq(new CachedReference(refPath, libraryResolved, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
@@ -310,7 +310,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
         val references = Seq(new CachedReference(type1Path, type1Resolved, resolved = false),
                              new CachedReference(type2Path, type2Resolved, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
@@ -333,7 +333,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
       environment <- {
         val references = Seq(new CachedReference(type1Path, type1Resolved, resolved = false))
         Future.successful(
-          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+          DefaultEnvironment().withResolver(CustomUnitCache(references).asInstanceOf[ClientReference])
         )
       }
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
