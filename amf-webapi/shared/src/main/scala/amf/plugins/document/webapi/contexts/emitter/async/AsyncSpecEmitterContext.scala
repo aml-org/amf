@@ -26,14 +26,18 @@ import amf.plugins.domain.webapi.models.Parameter
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement}
 import org.yaml.model.YDocument.PartBuilder
 
+import scala.util.matching.Regex
+
 abstract class AsyncSpecEmitterFactory(override implicit val spec: AsyncSpecEmitterContext)
     extends OasLikeSpecEmitterFactory {
 
   override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
     AsyncDeclaredTypesEmitters.obtainEmitter
 
-  def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter =
-    OasRecursiveShapeEmitter.apply
+  def recursiveShapeEmitter(shape: RecursiveShape,
+                            ordering: SpecOrdering,
+                            schemaPath: Seq[(String, String)]): EntryEmitter =
+    OasRecursiveShapeEmitter(shape, ordering, schemaPath)
 
   def typeEmitters(shape: Shape,
                    ordering: SpecOrdering,
@@ -82,6 +86,9 @@ class Async20SpecEmitterContext(eh: ErrorHandler,
                                 options: ShapeRenderOptions = ShapeRenderOptions(),
                                 val schemaVersion: SchemaVersion = JSONSchemaDraft7SchemaVersion)
     extends AsyncSpecEmitterContext(eh, refEmitter, options) {
+
+  override val nameRegex: Regex = """^[a-zA-Z0-9\.\-_]+$""".r
+
   override val factory: AsyncSpecEmitterFactory = Async20SpecEmitterFactory(this)
   override val vendor: Vendor                   = AsyncApi20
   override def schemasDeclarationsPath: String  = "/definitions/"

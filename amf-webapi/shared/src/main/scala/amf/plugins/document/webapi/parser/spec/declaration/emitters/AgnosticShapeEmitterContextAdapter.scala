@@ -16,7 +16,6 @@ import amf.plugins.document.webapi.contexts.emitter.oas.Oas3SpecEmitterFactory
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.FacetsInstanceEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.{CustomFacetsEmitter, SchemaVersion}
-import amf.plugins.domain.shapes.models.Example
 import org.yaml.model.YDocument
 
 object AgnosticShapeEmitterContextAdapter {
@@ -52,8 +51,6 @@ class AgnosticShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
     case oasCtx: OasLikeSpecEmitterContext => oasCtx.schemaVersion
     case _                                 => throw new Exception("Render - can only be called from OAS")
   }
-
-  override def filterLocal(examples: Seq[Example]): Seq[Example] = spec.filterLocal(examples)
 
   override def options: ShapeRenderOptions = spec.options
 

@@ -7,9 +7,9 @@ import amf.plugins.document.webapi.contexts.emitter.oas.AliasDefinitions.{Id, La
 import scala.collection.mutable
 import scala.util.matching.Regex
 
-trait CompactEmissionContext {
+trait CompactableEmissionContext {
   //  regex used to validate if the name of the shape is a valid label for referencing and declaring in definitions
-  val nameRegex: Regex = """^[^/]+$""".r
+  def nameRegex: Regex = """^[^/]+$""".r
 
   val definitionsQueue: DefinitionsQueue = DefinitionsQueue()(this)
 
@@ -21,7 +21,7 @@ trait CompactEmissionContext {
 
 case class DefinitionsQueue(
     pendingEmission: mutable.Queue[LabeledShape] = new mutable.Queue(),
-    queuedIdsWithLabel: mutable.Map[Id, Label] = mutable.Map[String, String]())(ctx: CompactEmissionContext) {
+    queuedIdsWithLabel: mutable.Map[Id, Label] = mutable.Map[String, String]())(ctx: CompactableEmissionContext) {
 
   def enqueue(shape: Shape): String =
     queuedIdsWithLabel.getOrElse( // if the shape has already been queued the assigned label is returned
