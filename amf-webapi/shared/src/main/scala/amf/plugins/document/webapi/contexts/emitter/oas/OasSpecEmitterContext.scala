@@ -31,6 +31,8 @@ import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, Se
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import org.yaml.model.YDocument.PartBuilder
 
+import scala.util.matching.Regex
+
 abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterContext)
     extends OasLikeSpecEmitterFactory
     with OasCompactEmitterFactory {
@@ -144,7 +146,7 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler,
                                      options: ShapeRenderOptions = ShapeRenderOptions(),
                                      val compactEmission: Boolean = true)
     extends OasLikeSpecEmitterContext(eh, refEmitter, options)
-    with CompactEmissionContext {
+    with CompactableEmissionContext {
 
   def schemasDeclarationsPath: String
 
@@ -154,7 +156,7 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler,
   override val factory: OasSpecEmitterFactory
 
   override def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] =
-    super[CompactEmissionContext].filterLocal(elements)
+    super[CompactableEmissionContext].filterLocal(elements)
 }
 
 class Oas3SpecEmitterContext(eh: ErrorHandler,

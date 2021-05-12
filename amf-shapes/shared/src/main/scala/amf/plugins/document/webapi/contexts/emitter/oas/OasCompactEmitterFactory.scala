@@ -4,24 +4,17 @@ import amf.core.emitter.{Emitter, EntryEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{RecursiveShape, Shape}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContextAdapter
-}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasRecursiveShapeEmitter, OasTypeEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration.{CompactOasTypesEmitters, OasDeclaredTypesEmitters}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.schema.json.{
-  CompactOasRecursiveShapeEmitter,
-  CompactOasTypeEmitter
-}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.OasLikeShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.{OasRecursiveShapeEmitter, OasTypeEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.schema.json.{CompactOasRecursiveShapeEmitter, CompactOasTypeEmitter}
 
 trait OasCompactEmitterFactory {
-  implicit val spec: OasSpecEmitterContext
-  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
+
+  protected implicit val shapeCtx: OasLikeShapeEmitterContext
 
   def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
-    if (spec.compactEmission)
+    if (shapeCtx.compactEmission)
       CompactOasTypesEmitters.apply
     else
       OasDeclaredTypesEmitters.apply
@@ -32,17 +25,16 @@ trait OasCompactEmitterFactory {
                    references: Seq[BaseUnit],
                    pointer: Seq[String],
                    schemaPath: Seq[(String, String)]): Seq[Emitter] = {
-    if (spec.compactEmission)
+    if (shapeCtx.compactEmission)
       CompactOasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
     else
       OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
   }
 
-  def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter =
-    (shape, ordering, list) =>
-      if (spec.compactEmission)
-        new CompactOasRecursiveShapeEmitter(shape, ordering, list)
+  def recursiveShapeEmitter(shape: RecursiveShape, ordering: SpecOrdering, schemaPath: Seq[(String, String)]):EntryEmitter =
+      if (shapeCtx.compactEmission)
+        new CompactOasRecursiveShapeEmitter(shape, ordering, schemaPath)
       else
-        OasRecursiveShapeEmitter(shape, ordering, list)
+        OasRecursiveShapeEmitter(shape, ordering, schemaPath)
 
 }

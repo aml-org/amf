@@ -7,13 +7,8 @@ import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.parser.Position
-import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContextAdapter,
-  ShapeEmitterContext
-}
+import amf.plugins.document.webapi.parser.spec.OasShapeDefinitions
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.OasLikeShapeEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
 import org.yaml.model.YDocument
 
@@ -22,18 +17,16 @@ case class CompactOasTypeEmitter(shape: Shape,
                                  ignored: Seq[Field],
                                  references: Seq[BaseUnit],
                                  pointer: Seq[String],
-                                 schemaPath: Seq[(String, String)])(implicit spec: OasSpecEmitterContext) {
-
-  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
+                                 schemaPath: Seq[(String, String)])(implicit spec: OasLikeShapeEmitterContext) {
 
   def emitters(): Seq[Emitter] = {
     val definitionQueue = spec.definitionsQueue
     if (spec.forceEmission.contains(shape.id) || emitInlined()) {
-      spec.forceEmission = None
+      spec.removeForceEmission
       OasTypeEmitter(shape, ordering, ignored, references, pointer, schemaPath).emitters()
     } else {
       val label = definitionQueue.enqueue(shape)
-      val tag   = OasDefinitions.appendSchemasPrefix(label, Some(spec.vendor))
+      val tag   = OasShapeDefinitions.appendSchemasPrefix(label, Some(spec.vendor))
       Seq(refEmitter(tag))
     }
   }

@@ -185,9 +185,9 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val spec: OasSpec
     val ordering = SpecOrdering.ordering(Oas20, doc.encodes.annotations)
 
     val references = ReferencesEmitter(document, ordering)
+    val api        = emitWebApi(ordering, document.references)
     def declares: Seq[EntryEmitter] =
       wrapDeclarations(OasDeclarationsEmitter(doc.declares, ordering, document.references).emitters, ordering)
-    val api       = emitWebApi(ordering, document.references)
     val extension = extensionEmitter()
     val usage: Option[ValueEmitter] =
       doc.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage".asOasExtension, f))
