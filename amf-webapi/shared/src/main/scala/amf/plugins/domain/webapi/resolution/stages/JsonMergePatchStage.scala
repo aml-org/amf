@@ -17,11 +17,11 @@ class JsonMergePatchStage(isEditing: Boolean) extends TransformationStep() {
 
   private lazy val merger = AsyncJsonMergePatch()
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val webApi = doc.encodes.asInstanceOf[Api]
       resolve(webApi)
-      doc.asInstanceOf[T]
+      doc
     case _ => model
   }
 

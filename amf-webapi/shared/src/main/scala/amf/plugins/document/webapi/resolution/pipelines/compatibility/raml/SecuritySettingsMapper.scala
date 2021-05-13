@@ -40,7 +40,7 @@ class SecuritySettingsMapper() extends TransformationStep {
     case _                        => // ignore
   }
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
     case d: DeclaresModel =>
       try {
         fixSettings(d)

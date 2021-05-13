@@ -6,7 +6,7 @@ import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.Operation
 
 class CleanRepeatedOperationIds() extends TransformationStep {
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit =
     try {
       val operations           = getOperationsFromModel(model)
       val repeatedOperationIds = operationsWithRepeatedIds(operations)

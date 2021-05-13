@@ -19,7 +19,7 @@ class CleanIdenticalExamples() extends TransformationStep {
     shape.setArrayWithoutId(AnyShapeModel.Examples, uniqueExamples.toSeq)
   }
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
     try {
       model.iterator().foreach {
         case shape: AnyShape => cleanExamples(shape)

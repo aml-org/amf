@@ -38,7 +38,7 @@ import scala.collection.mutable.ListBuffer
 class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean, val fromOverlay: Boolean = false)
     extends TransformationStep()
     with PlatformSecrets {
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit =
     new ExtendsResolution(profile, keepEditingInfo, fromOverlay)(errorHandler).resolve(model)
 
   class ExtendsResolution(profile: ProfileName,

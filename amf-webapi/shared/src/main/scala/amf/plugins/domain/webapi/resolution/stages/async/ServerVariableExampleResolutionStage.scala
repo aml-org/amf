@@ -8,11 +8,11 @@ import amf.plugins.domain.webapi.resolution.stages.common.ExamplePropagationHelp
 
 class ServerVariableExampleResolutionStage() extends TransformationStep with ExamplePropagationHelper {
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       propagateInServerVariables(doc.encodes.asInstanceOf[Api])
-      doc.asInstanceOf[T]
-    case _ => model.asInstanceOf[T]
+      doc
+    case _ => model
   }
 
   private def propagateInServerVariables(api: Api): Unit = {

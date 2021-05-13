@@ -8,7 +8,7 @@ import amf.core.resolution.stages.elements.resolution.ReferenceResolution
 import amf.core.resolution.stages.selectors.{LinkSelector, Selector}
 import amf.plugins.domain.webapi.models.Request
 object RequestParamsLinkStage extends TransformationStep {
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit =
     new RequestParamsLinkStage(errorHandler).resolve(model)
 }
 

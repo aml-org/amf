@@ -20,7 +20,7 @@ import scala.collection.mutable.ListBuffer
   *  - All type references have been replaced by their expanded forms
   */
 class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean) extends TransformationStep {
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit =
     new ShapeNormalization(profile, keepEditingInfo)(errorHandler).resolve(model)
 
   private class ShapeNormalization(profile: ProfileName, val keepEditingInfo: Boolean)(

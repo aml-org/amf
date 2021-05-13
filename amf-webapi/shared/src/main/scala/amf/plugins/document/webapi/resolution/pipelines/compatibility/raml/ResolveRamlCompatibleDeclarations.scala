@@ -10,7 +10,7 @@ import amf.core.vocabulary.Namespace.ApiContract
 import amf.plugins.domain.webapi.models.{Response, Payload}
 
 object ResolveRamlCompatibleDeclarationsStage extends TransformationStep {
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit =
     new ResolveRamlCompatibleDeclarations(errorHandler).resolve(model)
 }
 

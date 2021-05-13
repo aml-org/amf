@@ -6,7 +6,7 @@ import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.resolution.stages.TransformationStep
 
 class SanitizeCustomTypeNames() extends TransformationStep {
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
     model match {
       case doc: Document =>
         doc.declares.collect {

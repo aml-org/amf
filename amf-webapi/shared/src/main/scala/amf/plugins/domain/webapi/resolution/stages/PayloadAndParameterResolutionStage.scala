@@ -19,8 +19,8 @@ class PayloadAndParameterResolutionStage(profile: ProfileName) extends Transform
 
   private type SchemaContainerWithId = SchemaContainer with AmfObject
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
-    if (appliesTo(profile)) resolveExamples(model).asInstanceOf[T]
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit =
+    if (appliesTo(profile)) resolveExamples(model)
     else model
 
   protected def appliesTo(profile: ProfileName) = profile match {

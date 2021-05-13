@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.annotations.{ExternalJsonSchemaShape, Externa
 
 class AnnotationRemovalStage() extends TransformationStep() {
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
     case d: Document =>
       d.iterator(fieldsFilter = FieldsFilter.All, visited = InstanceCollector())
         .foreach(_.annotations.reject(eliminationCriteria))
