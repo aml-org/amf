@@ -18,10 +18,10 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)
     extends TransformationStep() {
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
     profile match {
       // TODO should run for Amf too
-      case Oas30Profile | Async20Profile => normalizeDescriptions(model).asInstanceOf[T]
+      case Oas30Profile | Async20Profile => normalizeDescriptions(model)
       case _                             => model
     }
   }

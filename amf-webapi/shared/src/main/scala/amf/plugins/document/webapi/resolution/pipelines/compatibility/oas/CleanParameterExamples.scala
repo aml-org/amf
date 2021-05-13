@@ -8,7 +8,7 @@ import amf.plugins.domain.webapi.models.Parameter
 
 class CleanParameterExamples() extends TransformationStep {
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
     try {
       model.iterator().foreach {
         case param: Parameter =>

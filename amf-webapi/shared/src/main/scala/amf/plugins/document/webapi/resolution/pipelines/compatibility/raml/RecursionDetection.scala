@@ -11,7 +11,7 @@ import scala.collection.mutable.ListBuffer
 
 class RecursionDetection() extends TransformationStep {
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
     model match {
       case doc: Document => doc.fields.fields().foreach(f => advance(f.element, ListBuffer[String](), Set.empty))
       case _             => // Nothing
