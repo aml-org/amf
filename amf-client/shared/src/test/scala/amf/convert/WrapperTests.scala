@@ -1337,7 +1337,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   test("Test validate payload with invalid iri") {
-    val payload = """test payload""".stripMargin
+    val payload          = """test payload""".stripMargin
+    val APPLICATION_YAML = "application/yaml"
     for {
       _ <- AMF.init().asFuture
       shape <- Future {
@@ -1347,8 +1348,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
           .withId("api.raml/#/webapi/schema1")
       }
       report <- ClientShapePayloadValidatorFactory
-        .createPayloadValidator(shape)
-        .validate("application/yaml", payload)
+        .createPayloadValidator(shape, APPLICATION_YAML)
+        .validate(payload)
         .asFuture
     } yield {
       assert(report.conforms)

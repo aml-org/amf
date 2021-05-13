@@ -40,24 +40,22 @@ object ClientPayloadPluginConverter {
       override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] =
         new ClientFutureOps(clientPlugin.init())(AMFPluginConverter, executionContext).asInternal
 
-      override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator = {
+      override def validator(s: Shape,
+                             mediaType: String,
+                             env: Environment,
+                             validationMode: ValidationMode): PayloadValidator = {
         val validator = clientPlugin.validator(s, ClientEnvironment(env), validationMode)
         new PayloadValidator {
-          override val shape: Shape                   = validator.shape
-          override val defaultSeverity: String        = validator.defaultSeverity
-          override val validationMode: ValidationMode = validator.validationMode
-          override val env: Environment               = validator.env._internal
-          override def validate(payload: String, mediaType: String)(
+          override def validate(payload: String)(
               implicit executionContext: ExecutionContext): Future[AMFValidationReport] =
-            validator.validate(payload, mediaType).asInternal
+            validator.validate(payload).asInternal
           override def validate(payloadFragment: InternalPayloadFragment)(
               implicit executionContext: ExecutionContext): Future[AMFValidationReport] =
             validator.validate(payloadFragment).asInternal
-          override def isValid(payload: String, mediaType: String)(
-              implicit executionContext: ExecutionContext): Future[Boolean] =
-            validator.isValid(payload, mediaType).asInternal
-          override def syncValidate(mediaType: String, payload: String): AMFValidationReport =
-            validator.syncValidate(mediaType, payload)
+          override def isValid(payload: String)(implicit executionContext: ExecutionContext): Future[Boolean] =
+            validator.isValid(payload).asInternal
+          override def syncValidate(payload: String): AMFValidationReport =
+            validator.syncValidate(payload)
         }
       }
     }

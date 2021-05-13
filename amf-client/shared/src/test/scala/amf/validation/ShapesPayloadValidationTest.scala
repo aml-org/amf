@@ -121,14 +121,14 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
     si.examples.foreach { ei =>
       test(s"Test ${si.shape.name} with example ${ei.name}") {
         if (si.mode == StrictValidationMode) {
-          createPayloadValidator(si.shape)
-            .validate(ei.example.guessMediaType(false), ei.example)
+          createPayloadValidator(si.shape, ei.example.guessMediaType(false))
+            .validate(ei.example)
             .map { r =>
               r.conforms should be(ei.valid)
             }
         } else
-          createParameterValidator(si.shape)
-            .validate(ei.example.guessMediaType(false), ei.example)
+          createParameterValidator(si.shape, ei.example.guessMediaType(false))
+            .validate(ei.example)
             .map { r =>
               r.conforms should be(ei.valid)
             }

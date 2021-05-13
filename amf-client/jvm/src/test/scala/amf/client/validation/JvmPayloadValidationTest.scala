@@ -18,7 +18,7 @@ class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOp
 
       val test = new ScalarShape().withDataType(DataTypes.String)
 
-      val report = payloadValidator(test).syncValidate("application/json", "1234")
+      val report = payloadValidator(test, "application/json").syncValidate("1234")
       report.conforms shouldBe false
       report.results.asSeq.head.message shouldBe "expected type: String, found: Integer" // APIKit compatibility
     }
@@ -32,8 +32,8 @@ class JvmPayloadValidationTest extends ClientPayloadValidationTest with NativeOp
         .withDataType(DataTypes.String)
         .withPattern(
           "^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$")
-      val validator = payloadValidator(shape)
-      val report    = validator.syncValidate("application/json", """"irrelevant text"""")
+      val validator = payloadValidator(shape, "application/json")
+      val report    = validator.syncValidate(""""irrelevant text"""")
       report.conforms shouldBe false
       report.results.asSeq.head.message shouldBe "Regex defined in schema could not be processed"
     }

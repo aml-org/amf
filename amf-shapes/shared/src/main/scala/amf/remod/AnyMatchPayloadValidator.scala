@@ -1,20 +1,14 @@
-package amf.plugins.domain.shapes.validation
+package amf.remod
 
 import amf.ProfileName
-import amf.client.plugins.{AMFPlugin, StrictValidationMode, ValidationMode}
+import amf.client.plugins.{AMFPlugin, ValidationMode}
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
-import amf.core.validation.{
-  AMFPayloadValidationPlugin,
-  AMFValidationReport,
-  AMFValidationResult,
-  PayloadValidator,
-  SeverityLevels
-}
+import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
-import amf.validations.ParserSideValidations
-import amf.validations.PayloadValidations.UnsupportedExampleMediaTypeWarningSpecification
+import amf.validations.ShapeParserSideValidations.{UnsupportedExampleMediaTypeErrorSpecification}
+import amf.validations.ShapePayloadValidations.UnsupportedExampleMediaTypeWarningSpecification
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -30,13 +24,12 @@ private case class AnyMatchPayloadPlugin(defaultSeverity: String) extends AMFPay
   override def dependencies(): Seq[AMFPlugin] = Nil
 
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
-  override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator =
-    AnyMathPayloadValidator(s, defaultSeverity)
+  override def validator(s: Shape, mediaType: String, env: Environment, validationMode: ValidationMode): PayloadValidator =
+    AnyMathPayloadValidator(s, mediaType, defaultSeverity)
 }
 
-case class AnyMathPayloadValidator(shape: Shape, defaultSeverity: String) extends PayloadValidator {
-  override def validate(payload: String, mediaType: String)(
-      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+case class AnyMathPayloadValidator(shape: Shape, mediaType: String, defaultSeverity: String) extends PayloadValidator {
+  override def validate(payload: String)(implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
 
     val results = AMFValidationResult(
       s"Unsupported validation for mediatype: $mediaType and shape ${shape.id}",
@@ -44,7 +37,7 @@ case class AnyMathPayloadValidator(shape: Shape, defaultSeverity: String) extend
       "",
       Some((Namespace.Document + "value").iri()),
       if (defaultSeverity == SeverityLevels.VIOLATION)
-        ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id
+        UnsupportedExampleMediaTypeErrorSpecification.id
       else UnsupportedExampleMediaTypeWarningSpecification.id,
       None,
       None,
@@ -61,7 +54,7 @@ case class AnyMathPayloadValidator(shape: Shape, defaultSeverity: String) extend
       payloadFragment.encodes.id,
       Some((Namespace.Document + "value").iri()),
       if (defaultSeverity == SeverityLevels.VIOLATION)
-        ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id
+        UnsupportedExampleMediaTypeErrorSpecification.id
       else UnsupportedExampleMediaTypeWarningSpecification.id,
       payloadFragment.encodes.position(),
       payloadFragment.encodes.location(),
@@ -69,11 +62,7 @@ case class AnyMathPayloadValidator(shape: Shape, defaultSeverity: String) extend
     )
     Future(AMFValidationReport("", ProfileName(""), Seq(results)))
   }
-  override def syncValidate(mediaType: String, payload: String): AMFValidationReport =
-    AMFValidationReport("", ProfileName(""), Seq())
-  override def isValid(mediaType: String, payload: String)(
-      implicit executionContext: ExecutionContext): Future[Boolean] =
-    validate(mediaType, payload).map(_.conforms)
-  override val validationMode: ValidationMode = StrictValidationMode
-  override val env: Environment               = Environment()
+  override def syncValidate(payload: String): AMFValidationReport = AMFValidationReport("", ProfileName(""), Seq())
+  override def isValid(payload: String)(implicit executionContext: ExecutionContext): Future[Boolean] =
+    validate(payload).map(_.conforms)
 }

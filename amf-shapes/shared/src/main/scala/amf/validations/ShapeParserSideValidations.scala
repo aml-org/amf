@@ -292,6 +292,12 @@ object ShapeParserSideValidations extends Validations {
     "'schemas' and 'types' properties are mutually exclusive"
   )
 
+  // Used also in validation
+  val UnsupportedExampleMediaTypeErrorSpecification = validation(
+    "unsupported-example-media-type",
+    "Cannot validate example with unsupported media type"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     InvalidShapeFormat.id           -> all(WARNING),
     JsonSchemaInheritanceWarning.id -> all(WARNING),
@@ -321,6 +327,7 @@ object ShapeParserSideValidations extends Validations {
     MissingRequiredUserDefinedFacet,
     UnableToParseShapeExtensions,
     ExceededMaxYamlReferences,
-    InvalidJsonSchemaType
+    InvalidJsonSchemaType,
+    UnsupportedExampleMediaTypeErrorSpecification
   )
 }

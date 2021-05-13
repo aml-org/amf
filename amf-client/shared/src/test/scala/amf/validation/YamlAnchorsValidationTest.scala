@@ -20,13 +20,15 @@ import scala.concurrent.{ExecutionContext, Future}
 trait YamlAnchorsValidationTest extends AsyncFunSuite with Matchers with NativeOps with PayloadValidationUtils {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
+  val APPLICATION_YAML = "application/yaml"
+
   test("payload validation") {
     AMF.init().asFuture flatMap { _ =>
-      val validator = payloadValidator(new ScalarShape(), Environment.empty().setMaxYamlReferences(50))
+      val validator =
+        payloadValidator(new ScalarShape(), APPLICATION_YAML, Environment.empty().setMaxYamlReferences(50))
 
       val report = validator
         .validate(
-          "application/yaml",
           """
             |a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
             |b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]

@@ -16,13 +16,20 @@ import org.scalatest.{AsyncFunSuite, Matchers}
 import scala.concurrent.ExecutionContext
 
 trait PayloadValidationUtils {
-  protected def parameterValidator(s: Shape, environment: Environment = Environment.empty()): PayloadValidator =
-    ClientShapePayloadValidatorFactory.createParameterValidator(s, environment)
-  protected def payloadValidator(s: Shape, environment: Environment = Environment.empty()): PayloadValidator =
-    ClientShapePayloadValidatorFactory.createPayloadValidator(s, environment)
+  protected def parameterValidator(s: Shape,
+                                   mediaType: String,
+                                   environment: Environment = Environment.empty()): PayloadValidator =
+    ClientShapePayloadValidatorFactory.createParameterValidator(s, mediaType, environment)
+  protected def payloadValidator(s: Shape,
+                                 mediaType: String,
+                                 environment: Environment = Environment.empty()): PayloadValidator =
+    ClientShapePayloadValidatorFactory.createPayloadValidator(s, mediaType, environment)
 }
 
 trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers with PayloadValidationUtils {
+
+  val APPLICATION_YAML = "application/yaml"
+  val APPLICATION_JSON = "application/json"
 
   test("Test parameter validator int payload") {
     AMF.init().flatMap { _ =>
@@ -30,8 +37,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
 
       val test = new ScalarShape().withDataType(DataTypes.String).withName("test")
 
-      parameterValidator(test)
-        .validate("application/yaml", "1234")
+      parameterValidator(test, APPLICATION_YAML)
+        .validate("1234")
         .asFuture
         .map(r => assert(r.conforms))
     }
@@ -43,8 +50,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
 
       val test = new ScalarShape().withDataType(DataTypes.String).withName("test")
 
-      parameterValidator(test)
-        .validate("application/yaml", "true")
+      parameterValidator(test, APPLICATION_YAML)
+        .validate("true")
         .asFuture
         .map(r => assert(r.conforms))
     }
@@ -65,8 +72,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
           |}
         """.stripMargin
 
-      payloadValidator(shape)
-        .validate("application/json", payload)
+      payloadValidator(shape, APPLICATION_JSON)
+        .validate(payload)
         .asFuture
         .map(r => assert(!r.conforms))
     }
@@ -85,8 +92,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
           |["trailing", "comma",]
         """.stripMargin
 
-      payloadValidator(array)
-        .validate("application/json", payload)
+      payloadValidator(array, APPLICATION_JSON)
+        .validate(payload)
         .asFuture
         .map(r => assert(!r.conforms))
     }
@@ -98,8 +105,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
 
       val test = new ScalarShape().withDataType(DataTypes.String).withName("test")
 
-      val report = parameterValidator(test)
-        .syncValidate("application/yaml", "1234")
+      val report = parameterValidator(test, APPLICATION_YAML)
+        .syncValidate("1234")
       report.conforms shouldBe true
     }
   }
@@ -109,8 +116,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
       amf.Core.registerPlugin(PayloadValidatorPlugin)
       val payload   = "null"
       val shape     = new ScalarShape().withDataType(DataTypes.String)
-      val validator = payloadValidator(shape)
-      validator.validate("application/yaml", payload).asFuture.map(r => r.conforms shouldBe false)
+      val validator = payloadValidator(shape, APPLICATION_YAML)
+      validator.validate(payload).asFuture.map(r => r.conforms shouldBe false)
     }
   }
 
@@ -119,8 +126,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
       amf.Core.registerPlugin(PayloadValidatorPlugin)
       val payload   = "null"
       val shape     = new ScalarShape().withDataType(DataTypes.Nil)
-      val validator = payloadValidator(shape)
-      validator.validate("application/yaml", payload).asFuture.map(r => r.conforms shouldBe true)
+      val validator = payloadValidator(shape, APPLICATION_YAML)
+      validator.validate(payload).asFuture.map(r => r.conforms shouldBe true)
     }
   }
 
@@ -129,8 +136,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
       amf.Core.registerPlugin(PayloadValidatorPlugin)
       val payload   = "22337203685477999090"
       val shape     = new ScalarShape().withDataType(DataTypes.Number)
-      val validator = payloadValidator(shape)
-      validator.validate("application/json", payload).asFuture.map(r => r.conforms shouldBe true)
+      val validator = payloadValidator(shape, APPLICATION_YAML)
+      validator.validate(payload).asFuture.map(r => r.conforms shouldBe true)
     }
   }
 
@@ -139,8 +146,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
       amf.Core.registerPlugin(PayloadValidatorPlugin)
       val payload   = "22e20000"
       val shape     = new ScalarShape().withDataType(DataTypes.Number)
-      val validator = payloadValidator(shape)
-      validator.validate("application/json", payload).asFuture.map(r => r.conforms shouldBe true)
+      val validator = payloadValidator(shape, APPLICATION_JSON)
+      validator.validate(payload).asFuture.map(r => r.conforms shouldBe true)
     }
   }
 
@@ -158,9 +165,9 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
         .withRange(new ScalarShape().withDataType(DataTypes.Number))
       val shape = new NodeShape()
         .withProperties(Seq(properties._internal).asClient)
-      val validator = payloadValidator(shape)
+      val validator = payloadValidator(shape, APPLICATION_JSON)
 
-      validator.validate("application/json", payload).asFuture.map(r => r.conforms shouldBe true)
+      validator.validate(payload).asFuture.map(r => r.conforms shouldBe true)
     }
   }
 
@@ -174,8 +181,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
       val shape = new AnyShape()
         .withId("someId")
         .withOr(Seq(stringShape._internal).asClient)
-      val validator = payloadValidator(shape)
-      validator.validate("application/json", payload).asFuture.map(r => r.conforms shouldBe false)
+      val validator = payloadValidator(shape, APPLICATION_JSON)
+      validator.validate(payload).asFuture.map(r => r.conforms shouldBe false)
     }
   }
 
@@ -185,7 +192,7 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
 
       val test = new ScalarShape().withDataType(DataTypes.Integer)
 
-      val report = payloadValidator(test).syncValidate("application/json", "123\n1234")
+      val report = payloadValidator(test, APPLICATION_JSON).syncValidate("123\n1234")
       report.conforms shouldBe false
     }
   }
@@ -196,7 +203,7 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
 
       val test = new AnyShape()
 
-      val report = payloadValidator(test).syncValidate("application/json", "any example")
+      val report = payloadValidator(test, APPLICATION_JSON).syncValidate("any example")
       report.conforms shouldBe true
     }
   }
@@ -206,9 +213,9 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
       amf.Core.registerPlugin(PayloadValidatorPlugin)
       val innerShape     = InternalScalarShape().withDataType(DataTypes.Number)
       val recursiveShape = RecursiveShape(InternalRecursiveShape(innerShape))
-      val validator      = payloadValidator(recursiveShape)
-      validator.syncValidate("application/json", "5").conforms shouldBe true
-      validator.syncValidate("application/json", "true").conforms shouldBe false
+      val validator      = payloadValidator(recursiveShape, APPLICATION_JSON)
+      validator.syncValidate("5").conforms shouldBe true
+      validator.syncValidate("true").conforms shouldBe false
     }
   }
 
@@ -216,8 +223,8 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
     amf.Core.init().asFuture.flatMap { _ =>
       amf.Core.registerPlugin(PayloadValidatorPlugin)
       val shape     = new ScalarShape().withDataType(DataTypes.Long).withFormat("int64")
-      val validator = payloadValidator(shape)
-      validator.syncValidate("application/json", "0.1").conforms shouldBe false
+      val validator = payloadValidator(shape, APPLICATION_JSON)
+      validator.syncValidate("0.1").conforms shouldBe false
     }
   }
 
@@ -231,9 +238,9 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
         .withName("b")
         .withRange(new ScalarShape().withDataType(DataTypes.String))
       val shape     = new NodeShape().withProperties(Seq(propertyA._internal, propertyB._internal).asClient)
-      val validator = payloadValidator(shape)
+      val validator = payloadValidator(shape, APPLICATION_JSON)
       validator
-        .syncValidate("application/json", """{"a": "aaaa", "b": "bbb"}asdfgh""")
+        .syncValidate("""{"a": "aaaa", "b": "bbb"}asdfgh""")
         .conforms shouldBe false
     }
   }
@@ -241,16 +248,10 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
   test("Json payload with trailing characters should throw error - Array test") {
     amf.Core.init().asFuture.flatMap { _ =>
       amf.Core.registerPlugin(PayloadValidatorPlugin)
-      val propertyA = new PropertyShape()
-        .withName("a")
-        .withRange(new ScalarShape().withDataType(DataTypes.String))
-      val propertyB = new PropertyShape()
-        .withName("b")
-        .withRange(new ScalarShape().withDataType(DataTypes.String))
-      val shape     = new NodeShape().withProperties(Seq(propertyA._internal, propertyB._internal).asClient)
-      val validator = payloadValidator(shape)
+      val shape     = new ArrayShape().withItems(new ScalarShape().withDataType(DataTypes.String))
+      val validator = payloadValidator(shape, APPLICATION_JSON)
       validator
-        .syncValidate("application/json", """["a", "aaaa", "b", "bbb"]asdfgh""")
+        .syncValidate("""["a", "aaaa", "b", "bbb"]asdfgh""")
         .conforms shouldBe false
     }
   }
@@ -259,9 +260,9 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
     amf.Core.init().asFuture.flatMap { _ =>
       amf.Core.registerPlugin(PayloadValidatorPlugin)
       val shape     = new ScalarShape().withDataType(DataTypes.DateTimeOnly)
-      val validator = payloadValidator(shape)
-      validator.syncValidate("application/json", """"22021-06-05T00:00:00"""").conforms shouldBe false
-      validator.syncValidate("application/json", """"2021-06-05T00:00:00"""").conforms shouldBe true
+      val validator = payloadValidator(shape, APPLICATION_JSON)
+      validator.syncValidate(""""22021-06-05T00:00:00"""").conforms shouldBe false
+      validator.syncValidate(""""2021-06-05T00:00:00"""").conforms shouldBe true
     }
   }
 

@@ -10,8 +10,11 @@ import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecificati
 import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
 
-class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode, val env: Environment)
-    extends PlatformPayloadValidator(shape, env) {
+class JsPayloadValidator(val shape: Shape,
+                         val validationMode: ValidationMode,
+                         val env: Environment,
+                         val mediaType: String)
+    extends PlatformPayloadValidator(shape, env, mediaType) {
 
   override type LoadedObj    = js.Dynamic
   override type LoadedSchema = Dictionary[js.Dynamic]

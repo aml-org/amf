@@ -10,30 +10,11 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.core.validation._
 import amf.internal.environment.Environment
+import amf.remod.PayloadValidationPluginFinder
 import org.mulesoft.common.core.CachedFunction
 import org.mulesoft.common.functional.MonadInstances.identityMonad
 
 import scala.concurrent.{ExecutionContext, Future}
-
-trait PayloadValidationPluginFinder {
-
-  protected def lookupPluginFor(candidate: ValidationCandidate,
-                                env: Environment,
-                                defaultSeverity: String): AMFPayloadValidationPlugin =
-    lookupPluginFor(candidate.payload.mediaType.value(), candidate.shape, env)
-      .getOrElse(AnyMatchPayloadPlugin(defaultSeverity))
-
-  protected def lookupPluginFor(mediaType: String,
-                                shape: Shape,
-                                env: Environment,
-                                defaultSeverity: String): AMFPayloadValidationPlugin =
-    lookupPluginFor(mediaType, shape, env).getOrElse(AnyMatchPayloadPlugin(defaultSeverity))
-
-  protected def lookupPluginFor(mediaType: String,
-                                shape: Shape,
-                                env: Environment): Option[AMFPayloadValidationPlugin] =
-    AMFPluginsRegistry.dataNodeValidatorPluginForMediaType(mediaType).find(_.canValidate(shape, env))
-}
 
 object CandidateValidator extends PayloadValidationPluginFinder {
   def validateAll(candidates: Seq[ValidationCandidate], severity: String, env: Environment)(
@@ -41,7 +22,7 @@ object CandidateValidator extends PayloadValidationPluginFinder {
 
     val pluginLookupFunc = (candidate: ValidationCandidate) =>
       lookupPluginFor(candidate, env, severity)
-        .validator(candidate.shape, env)
+        .validator(candidate.shape, candidate.payload.mediaType.value(), env)
 
     val validatorLookup = CachedFunction.from(pluginLookupFunc)
 
@@ -69,7 +50,7 @@ object PayloadValidationPluginsHandler extends PlatformSecrets with PayloadValid
     implicit val executionContext: ExecutionContext = exec.executionContext
     val p                                           = lookupPluginFor(fragment.mediaType.value(), shape, env, severity)
 
-    p.validator(shape, env, validationMode).validate(fragment)
+    p.validator(shape, fragment.mediaType.value(), env, validationMode).validate(fragment)
   }
 
   def validateWithGuessing(
@@ -91,12 +72,12 @@ object PayloadValidationPluginsHandler extends PlatformSecrets with PayloadValid
     implicit val executionContext: ExecutionContext = exec.executionContext
     val p                                           = lookupPluginFor(mediaType, shape, env, severity)
 
-    p.validator(shape, env, validationMode).validate(mediaType, payload)
+    p.validator(shape, mediaType, env, validationMode).validate(payload)
   }
 
   def payloadValidator(shape: Shape,
                        mediaType: String,
                        env: Environment,
                        validationMode: ValidationMode): Option[PayloadValidator] =
-    lookupPluginFor(mediaType, shape, env).map(_.validator(shape, env, validationMode))
+    searchPlugin(mediaType, shape, env).map(_.validator(shape, mediaType, env, validationMode))
 }

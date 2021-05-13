@@ -8,12 +8,13 @@ import amf.core.validation._
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
-import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
-import amf.remod.ShapePayloadValidatorFactory
+import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler.searchPlugin
+import amf.plugins.domain.webapi.unsafe.JsonSchemaValidatorBuilder
+import amf.remod.{PayloadValidationPluginFinder, ShapePayloadValidatorFactory}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
+object PayloadValidatorPlugin extends AMFPayloadValidationPlugin with PayloadValidationPluginFinder {
 
   override def canValidate(shape: Shape, env: Environment): Boolean = {
     shape match {
@@ -33,6 +34,9 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
 
   val defaultCtx = new PayloadContext("", Nil, ParserContext(eh = DefaultParserErrorHandler.withRun()))
 
-  override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator =
-    ShapePayloadValidatorFactory.createValidator(s, env, validationMode)
+  override def validator(s: Shape,
+                         mediaType: String,
+                         env: Environment,
+                         validationMode: ValidationMode): PayloadValidator =
+    JsonSchemaValidatorBuilder.payloadValidator(s, mediaType, env, validationMode)
 }

@@ -13,7 +13,6 @@ import amf.plugins.domain.webapi.metamodel.{CorrelationIdModel, IriTemplateMappi
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.{
   ParserSideValidations,
-  PayloadValidations,
   RenderSideValidations,
   ResolutionSideValidations,
   ShapeParserSideValidations,
@@ -250,9 +249,8 @@ object WebApiRegister {
 
     platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
     platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
-//    platform.registerValidations(ShapeParserSideValidations.validations, ShapeParserSideValidations.levels)
-    platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
-//    platform.registerValidations(ShapePayloadValidations.validations, ShapePayloadValidations.levels)
+    platform.registerValidations(ShapePayloadValidations.validations, ShapePayloadValidations.levels)
+    platform.registerValidations(ShapeParserSideValidations.validations, ShapeParserSideValidations.levels)
     platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
     platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
 

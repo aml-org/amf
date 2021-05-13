@@ -10,13 +10,15 @@ object ClientShapePayloadValidatorFactory extends PlatformSecrets {
 
   def createPayloadValidator(
       shape: Shape,
+      mediaType: String,
       env: Environment = Environment.empty(platform.defaultExecutionEnvironment)): PayloadValidator = {
-    ShapePayloadValidatorFactory.createPayloadValidator(shape, env._internal)
+    ShapePayloadValidatorFactory.createPayloadValidator(shape, mediaType, env._internal)
   }
 
   def createParameterValidator(
       shape: Shape,
+      mediaType: String,
       env: Environment = Environment.empty(platform.defaultExecutionEnvironment)): PayloadValidator = {
-    ShapePayloadValidatorFactory.createParameterValidator(shape, env._internal)
+    ShapePayloadValidatorFactory.createParameterValidator(shape, mediaType, env._internal)
   }
 }

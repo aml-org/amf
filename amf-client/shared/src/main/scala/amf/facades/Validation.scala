@@ -21,7 +21,13 @@ import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import amf.plugins.features.validation.custom.model.ValidationDialectText
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.validation.DialectValidations
-import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations, ShapeParserSideValidations, ShapePayloadValidations}
+import amf.validations.{
+  ParserSideValidations,
+  RenderSideValidations,
+  ResolutionSideValidations,
+  ShapeParserSideValidations,
+  ShapePayloadValidations
+}
 import amf.{MessageStyle, ProfileName, RAMLStyle, Raml10Profile}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -32,7 +38,6 @@ class Validation(platform: Platform) {
     platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
     platform.registerValidations(DialectValidations.validations, DialectValidations.levels)
     platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
-    platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
     platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
     platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
     platform.registerValidations(ShapePayloadValidations.validations, ShapePayloadValidations.levels)

@@ -7,6 +7,9 @@ import amf.plugins.document.webapi.validation.remote.{JvmPayloadValidator, Platf
 
 object JsonSchemaValidatorBuilder {
 
-  def payloadValidator(shape: Shape, env: Environment, validationMode: ValidationMode): PlatformPayloadValidator =
-    new JvmPayloadValidator(shape, validationMode, env)
+  def payloadValidator(shape: Shape,
+                       mediaType: String,
+                       env: Environment,
+                       validationMode: ValidationMode): PlatformPayloadValidator =
+    new JvmPayloadValidator(shape, validationMode, env, mediaType)
 }

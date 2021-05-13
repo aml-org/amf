@@ -80,17 +80,17 @@ class ScalarValidationTest extends AsyncFunSuite with Matchers with PayloadValid
   }
 
   private def validateWithYamlParameter(toValidate: Any, shape: AnyShape) = {
-    val validator = parameterValidator(AnyShapeMatcher.asClient(shape))
-    validator.syncValidate(APPLICATION_YAML, toValidate.toString).conforms
+    val validator = parameterValidator(AnyShapeMatcher.asClient(shape), APPLICATION_YAML)
+    validator.syncValidate(toValidate.toString).conforms
   }
 
   private def validateWithJsonPayload(scalarType: String, toValidate: Any, shape: AnyShape) = {
-    val validator = payloadValidator(AnyShapeMatcher.asClient(shape))
+    val validator = payloadValidator(AnyShapeMatcher.asClient(shape), APPLICATION_JSON)
     val valueForJson = converters
       .get(scalarType)
       .map(c => c.format(toValidate.toString))
       .getOrElse(toValidate.toString)
-    validator.syncValidate(APPLICATION_JSON, valueForJson).conforms
+    validator.syncValidate(valueForJson).conforms
   }
 
   private def formatDataType(dataType: String) = dataType.split("#").last

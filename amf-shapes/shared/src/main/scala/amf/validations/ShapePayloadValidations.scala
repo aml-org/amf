@@ -1,12 +1,12 @@
 package amf.validations
 
+import amf._
 import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
 import amf.core.validation.core.ValidationSpecification
 import amf.core.validation.core.ValidationSpecification.PAYLOAD_VALIDATION
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.AmfValidation
 import amf.plugins.features.validation.Validations
-import amf._
 
 // noinspection TypeAnnotation
 object ShapePayloadValidations extends Validations {
@@ -28,6 +28,11 @@ object ShapePayloadValidations extends Validations {
     "Schema exception"
   )
 
+  val UnsupportedExampleMediaTypeWarningSpecification = validation(
+    "unsupported-example-media-type-warning",
+    "Cannot validate example with unsupported media type"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     UntranslatableDraft2019Fields.id -> all(WARNING),
     ExampleValidationErrorSpecification.id -> Map(
@@ -37,12 +42,14 @@ object ShapePayloadValidations extends Validations {
       Oas30Profile  -> WARNING,
       AmfProfile    -> VIOLATION
     ),
-    SchemaException.id -> all(VIOLATION)
+    SchemaException.id                                 -> all(VIOLATION),
+    UnsupportedExampleMediaTypeWarningSpecification.id -> all(WARNING)
   )
 
   override val validations: List[ValidationSpecification] = List(
     UntranslatableDraft2019Fields,
     ExampleValidationErrorSpecification,
-    SchemaException
+    SchemaException,
+    UnsupportedExampleMediaTypeWarningSpecification
   )
 }
