@@ -1,5 +1,6 @@
 package amf.client.environment
 
+import amf.client.exported.config.{AMFEventListener, AMFLogger}
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.registry.AMFRegistry

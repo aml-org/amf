@@ -1,12 +1,13 @@
 package amf.event
 
-import amf.client.remod.amfcore.config.{AMFEventListener, AMFEvent, AMFEventNames}
+import amf.client.exported.config.{AMFEvent, AMFEventListener, AMFEventNames}
 import amf.core.remote.{Cache, Context, Raml10}
 import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalatest.{Assertion, Matchers}
+
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.{ExecutionContext, Future}
 
