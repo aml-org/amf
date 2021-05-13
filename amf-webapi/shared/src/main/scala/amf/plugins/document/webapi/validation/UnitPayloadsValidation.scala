@@ -7,9 +7,8 @@ import amf.core.model.domain.{ArrayNode, DataNode, ObjectNode}
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels, ValidationCandidate}
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.validation.collector.{CollectorsRunner, ValidationCandidateCollector}
-import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
-import amf.validations.ShapePayloadValidations
-import amf.validations.ShapePayloadValidations.SchemaException
+import amf.plugins.domain.shapes.validation.CandidateValidator
+import amf.validations.ShapePayloadValidations._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -30,7 +29,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
 
   def validate(env: Environment)(implicit executionContext: ExecutionContext): Future[Seq[AMFValidationResult]] = {
     ExecutionLog.log(s"UnitPayloadsValidation#validate: Validating all candidates ${candidates.size}")
-    PayloadValidationPluginsHandler.validateAll(candidates, SeverityLevels.WARNING, env).map(groupResults)
+    CandidateValidator.validateAll(candidates, SeverityLevels.WARNING, env).map(groupResults)
   }
 
   private def groupResults(report: AMFValidationReport): Seq[AMFValidationResult] = {
@@ -45,7 +44,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
       .filter {
         case (_, validations) =>
           validations.exists(v =>
-            v.validationId == SchemaException.id || v.validationId == ShapePayloadValidations.UntranslatableDraft2019Fields.id)
+            v.validationId == SchemaException.id || v.validationId == UntranslatableDraft2019Fields.id)
       }
       .flatMap(_._2)
     payloadResults ++ schemaResults

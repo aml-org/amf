@@ -9,7 +9,7 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.emitter.EmbeddedJsonLdEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
-import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
+import amf.plugins.domain.shapes.validation.{CandidateValidator, PayloadValidationPluginsHandler}
 import amf.{AmfProfile, PayloadProfile}
 import org.scalatest.AsyncFunSuite
 import org.yaml.builder.JsonOutputBuilder
@@ -88,7 +88,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
       }
 
       candidates flatMap { c =>
-        PayloadValidationPluginsHandler.validateAll(c, SeverityLevels.VIOLATION, Environment())
+        CandidateValidator.validateAll(c, SeverityLevels.VIOLATION, Environment())
       } map { report =>
         report.results.foreach { result =>
           assert(result.position.isDefined)
