@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformation
 
 import scala.concurrent.{ExecutionContext, Future}
 
-sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
+sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val basePath: String
@@ -76,11 +76,11 @@ sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTes
   protected def processGolden(g: String): String
 }
 
-trait UniquePlatformReportGenTest extends ValidationReportGenTest {
+trait UniquePlatformReportGenTest extends AMFValidationReportGenTest {
   override protected def processGolden(g: String): String = g
 }
 
-trait MultiPlatformReportGenTest extends ValidationReportGenTest {
+trait MultiPlatformReportGenTest extends AMFValidationReportGenTest {
   override protected def processGolden(g: String): String = g + s".${platform.name}"
 }
 

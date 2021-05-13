@@ -10,7 +10,7 @@ import amf.client.parse._
 import amf.client.plugins.{AMFPlugin, ClientAMFPayloadValidationPlugin, ClientAMFPlugin}
 import amf.client.render._
 import amf.client.resolve._
-import amf.client.validate.ValidationReport
+import amf.client.validate.AMFValidationReport
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.{Vocabularies, WebApi}
@@ -53,14 +53,16 @@ object AMF extends PlatformSecrets {
   @JSExport def amfGraphGenerator(): AmfGraphRenderer = new AmfGraphRenderer()
 
   @JSExport
-  def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): ClientFuture[ValidationReport] =
+  def validate(model: BaseUnit,
+               profileName: ProfileName,
+               messageStyle: MessageStyle): ClientFuture[AMFValidationReport] =
     Core.validate(model, profileName, messageStyle)
 
   @JSExport
   def validate(model: BaseUnit,
                profileName: ProfileName,
                messageStyle: MessageStyle,
-               env: Environment): ClientFuture[ValidationReport] =
+               env: Environment): ClientFuture[AMFValidationReport] =
     Core.validate(model, profileName, messageStyle, env)
 
   /**
@@ -69,7 +71,7 @@ object AMF extends PlatformSecrets {
   @JSExport
   def validateResolved(model: BaseUnit,
                        profileName: ProfileName,
-                       messageStyle: MessageStyle): ClientFuture[ValidationReport] =
+                       messageStyle: MessageStyle): ClientFuture[AMFValidationReport] =
     Core.validateResolved(model, profileName, messageStyle)
 
   /**
@@ -79,7 +81,7 @@ object AMF extends PlatformSecrets {
   def validateResolved(model: BaseUnit,
                        profileName: ProfileName,
                        messageStyle: MessageStyle,
-                       env: Environment): ClientFuture[ValidationReport] =
+                       env: Environment): ClientFuture[AMFValidationReport] =
     Core.validateResolved(model, profileName, messageStyle, env)
 
   @JSExport def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
@@ -125,13 +127,13 @@ object CoreWrapper {
 
   def validate(model: BaseUnit,
                profileName: ProfileName,
-               messageStyle: MessageStyle = AMFStyle): ClientFuture[ValidationReport] =
+               messageStyle: MessageStyle = AMFStyle): ClientFuture[AMFValidationReport] =
     Core.validate(model, profileName, messageStyle)
 
   def validate(model: BaseUnit,
                profileName: ProfileName,
                messageStyle: MessageStyle,
-               env: Environment): ClientFuture[ValidationReport] =
+               env: Environment): ClientFuture[AMFValidationReport] =
     Core.validate(model, profileName, messageStyle, env)
 
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
