@@ -47,7 +47,6 @@ AMF Model Documentation
 * [Example](#example)
 * [Extension](#extension)
 * [ExtensionLike](#extensionlike)
-* [ExtensionMapping](#extensionmapping)
 * [External](#external)
 * [ExternalContextFields](#externalcontextfields)
 * [ExternalDomainElement](#externaldomainelement)
@@ -114,6 +113,7 @@ AMF Model Documentation
 * [SecurityRequirement](#securityrequirement)
 * [SecurityScheme](#securityscheme)
 * [SecuritySchemeFragment](#securityschemefragment)
+* [SemanticExtension](#semanticextension)
 * [Server](#server)
 * [ServerBinding](#serverbinding)
 * [ServerBindings](#serverbindings)
@@ -518,6 +518,7 @@ Definition of an AML dialect, mapping AST nodes from dialect documents into an o
  | ------ | ------ | ------ | ------ |
  | name | string | Name of the dialect | http://a.ml/vocabularies/core#name |
  | version | string | Version of the dialect | http://a.ml/vocabularies/core#version |
+ | extensions | [[SemanticExtension](#semanticextension)] | Extensions mappings derived from annotation mappings declarations in a dialect | http://a.ml/vocabularies/meta#extensions |
  | externals | [[External](#external)] |  | http://a.ml/vocabularies/meta#externals |
  | documents | [Documents](#documents) | Document mapping for the the dialect | http://a.ml/vocabularies/meta#documents |
  | location | string | Location of the metadata document that generated this base unit | http://a.ml/vocabularies/document#location |
@@ -786,15 +787,6 @@ A Document that extends a target document, overwriting part of the information o
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
-
-## ExtensionMapping
-Mapping a particular extension name to an extension definition
-
- | Name | Value | Documentation | Namespace |
- | ------ | ------ | ------ | ------ |
- | name | string | Name that identifies an extension in the target document | http://a.ml/vocabularies/core#name |
- | extensionMappingDefinition | url | Extension mapping (annotation mapping) definition used to parse a certain extension identified with the ExtensionName | http://a.ml/vocabularies/meta#extensionMappingDefinition |
- | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## External
 
@@ -1829,6 +1821,15 @@ Fragment encoding a RAML security scheme
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+
+## SemanticExtension
+Mapping a particular extension name to an extension definition
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name that identifies an extension in the target document | http://a.ml/vocabularies/core#name |
+ | extensionMappingDefinition | url | Extension mapping (annotation mapping) definition used to parse a certain extension identified with the ExtensionName | http://a.ml/vocabularies/meta#extensionMappingDefinition |
+ | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## Server
 Information about the network accessible locations where the API is available
