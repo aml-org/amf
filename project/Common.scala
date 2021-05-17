@@ -20,7 +20,8 @@ object Common {
     fork in Test := false,
     scalacOptions ++= Seq("-unchecked", "-target:jvm-1.8", "-feature", "-deprecation", "-Xfatal-warnings"),
     scalacOptions ++= Seq("-encoding", "utf-8"),
-    javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
+    javacOptions ++= Seq("-source", "1.8", "-target", "1.8"),
+    Compile / doc / scalacOptions ++= Seq("-groups", "-implicits", "-no-link-warnings")
   )
 
   val publish: Seq[Def.Setting[_]] = Seq(
