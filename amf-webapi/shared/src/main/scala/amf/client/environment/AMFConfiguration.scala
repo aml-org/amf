@@ -1,6 +1,6 @@
 package amf.client.environment
 
-import amf.client.exported.config.{AMFEventListener, AMFLogger}
+import amf.client.exported.config.AMFLogger
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
@@ -118,7 +118,7 @@ object WebAPIConfiguration {
   * </ul>
   */
 object AsyncAPIConfiguration extends APIConfigurationBuilder {
-  def Async20(): AMFGraphConfiguration =
+  def Async20(): AMFConfiguration =
     common()
       .withPlugins(List(Async20ParsePlugin, Async20RenderPlugin))
       .withValidationProfile(Async20ValidationProfile)
@@ -178,6 +178,10 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration =
     super._withErrorHandlerProvider(provider)
+
+  override def withEventListener(listener: AMFEventListener): AMFConfiguration = super._withEventListener(listener)
+
+  override def withLogger(logger: AMFLogger): AMFConfiguration = super._withLogger(logger)
 
   def merge(other: AMFConfiguration): AMFConfiguration = super._merge(other)
 
