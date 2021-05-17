@@ -19,10 +19,10 @@ case class ExamplesValidationStep(override val validationContext: ValidationCont
   override protected def validate()(implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     val collectors = Seq(PayloadsInApiCollector, EnumInShapesCollector, ShapeFacetsCollector, ExtensionsCollector)
     UnitPayloadsValidation(validationContext.baseUnit, collectors)
-      .validate(validationContext.env)
+      .validate(validationContext.configuration)
       .map { results =>
         val mappedSeverityResults = results.flatMap { buildValidationWithCustomLevelForProfile }
-        AMFValidationReport(validationContext.baseUnit.id, validationContext.profile, mappedSeverityResults)
+        AMFValidationReport(validationContext.baseUnit.id, validationContext.profileName, mappedSeverityResults)
       }
   }
 

@@ -16,7 +16,7 @@ case class ModelValidationStep(override val validationContext: ValidationContext
     with ShaclReportAdaptation {
 
   override protected def validate()(implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
-    val baseOptions                = FilterDataNodeOptions().withMessageStyle(validationContext.messageStyle)
+    val baseOptions                = FilterDataNodeOptions().withMessageStyle(validationContext.profileName.messageStyle)
     val options: ValidationOptions = computeValidationExtent(baseOptions)
     log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
     RuntimeValidator
@@ -26,15 +26,14 @@ case class ModelValidationStep(override val validationContext: ValidationContext
                        options)
       .map { report =>
         adaptToAmfReport(validationContext.baseUnit,
-                         validationContext.profile,
+                         validationContext.profileName,
                          report,
-                         validationContext.messageStyle,
                          validationContext.validations)
       }
   }
 
   private def computeValidationExtent(baseOptions: ValidationOptions) = {
-    val options = validationContext.profile match {
+    val options = validationContext.profileName match {
       case Raml10Profile | Raml08Profile | Oas20Profile | Oas30Profile | AsyncProfile | Async20Profile | AmfProfile =>
         baseOptions.withPartialValidation()
       case _ =>

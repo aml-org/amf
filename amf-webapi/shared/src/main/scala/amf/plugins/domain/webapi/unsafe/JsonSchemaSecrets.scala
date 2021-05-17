@@ -1,13 +1,13 @@
 package amf.plugins.domain.webapi.unsafe
 
-import amf.client.execution.BaseExecutionEnvironment
-import amf.client.plugins.{StrictValidationMode, ValidationMode}
+import amf.client.plugins.ValidationMode
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.domain.Shape
-import amf.internal.environment.Environment
 import amf.plugins.document.webapi.validation.remote.PlatformPayloadValidator
 
 trait JsonSchemaSecrets {
   protected def payloadValidator(shape: Shape,
-                                 executionEnvironment: BaseExecutionEnvironment): PlatformPayloadValidator =
-    JsonSchemaValidatorBuilder.payloadValidator(shape, Environment(executionEnvironment), StrictValidationMode)
+                                 config: ValidationConfiguration,
+                                 validationMode: ValidationMode): PlatformPayloadValidator =
+    JsonSchemaValidatorBuilder.payloadValidator(shape, validationMode, config)
 }
