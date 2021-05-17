@@ -7,7 +7,7 @@ import scala.concurrent.Future
 import scala.scalajs.js
 import scala.language.implicitConversions
 
-class JsReferenceResolverTest extends ReferenceResolverTest with NativeOpsFromJs
+class JsUnitCacheTest extends UnitCacheTest with NativeOpsFromJs
 
 private[amf] trait NativeOpsFromJs extends NativeOps {
 

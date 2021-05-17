@@ -19,11 +19,11 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
   */
 abstract class ParametersNormalizationStage(profile: ProfileName) extends TransformationStep() {
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = model match {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val api = doc.encodes.asInstanceOf[Api]
       resolve(api)
-      doc.asInstanceOf[T]
+      doc
     case _ => model
   }
 

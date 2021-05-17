@@ -1,6 +1,7 @@
 package amf.client.convert
 
 import amf.client.convert.shapeconverters.ShapesBaseConverter
+import amf.client.environment.{AMFConfiguration, AMFDocumentResult, AMFLibraryResult}
 import amf.client.model.domain.{
   Amqp091ChannelBinding => ClientAmqp091ChannelBinding,
   Amqp091ChannelExchange => ClientAmqp091ChannelExchange,
@@ -54,6 +55,11 @@ import amf.client.model.domain.{
   TemplatedLink => ClientTemplatedLink,
   Trait => ClientTrait,
   WebSocketsChannelBinding => ClientWebSocketsChannelBinding
+}
+import amf.client.exported.{
+  AMFConfiguration => ClientAMFConfiguration,
+  AMFDocumentResult => ClientAMFDocumentResult,
+  AMFLibraryResult => ClientAMFLibraryResult
 }
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.domain.webapi.models._
@@ -113,6 +119,9 @@ trait WebApiBaseConverter
     with OperationBindingConverter
     with MessageBindingConverter
     with ServerBindingConverter
+    with AMFConfigurationConverter
+    with AMFDocumentResultConverter
+    with AMFLibraryResultConverter
 
 trait ChannelBindingConverter extends PlatformSecrets {
   implicit object ChannelBindingMatcher extends BidirectionalMatcher[ChannelBinding, ClientChannelBinding] {
@@ -522,5 +531,26 @@ trait TemplatedLinkConverter extends PlatformSecrets {
   implicit object TemplatedLinkConverter extends BidirectionalMatcher[TemplatedLink, ClientTemplatedLink] {
     override def asClient(from: TemplatedLink): ClientTemplatedLink   = platform.wrap[ClientTemplatedLink](from)
     override def asInternal(from: ClientTemplatedLink): TemplatedLink = from._internal
+  }
+}
+
+trait AMFConfigurationConverter {
+  implicit object AMFConfigurationMatcher extends BidirectionalMatcher[AMFConfiguration, ClientAMFConfiguration] {
+    override def asClient(from: AMFConfiguration): ClientAMFConfiguration   = new ClientAMFConfiguration(from)
+    override def asInternal(from: ClientAMFConfiguration): AMFConfiguration = from._internal
+  }
+}
+
+trait AMFLibraryResultConverter {
+  implicit object AMFLibraryResultMatcher extends BidirectionalMatcher[AMFLibraryResult, ClientAMFLibraryResult] {
+    override def asClient(from: AMFLibraryResult): ClientAMFLibraryResult   = new ClientAMFLibraryResult(from)
+    override def asInternal(from: ClientAMFLibraryResult): AMFLibraryResult = from._internal
+  }
+}
+
+trait AMFDocumentResultConverter {
+  implicit object AMFDocumentResultMatcher extends BidirectionalMatcher[AMFDocumentResult, ClientAMFDocumentResult] {
+    override def asClient(from: AMFDocumentResult): ClientAMFDocumentResult   = new ClientAMFDocumentResult(from)
+    override def asInternal(from: ClientAMFDocumentResult): AMFDocumentResult = from._internal
   }
 }

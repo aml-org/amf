@@ -11,7 +11,7 @@ import amf.plugins.domain.webapi.models.Operation
 
 class CleanNullSecurity() extends TransformationStep {
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
     try {
       model.iterator().foreach {
         case op: Operation =>

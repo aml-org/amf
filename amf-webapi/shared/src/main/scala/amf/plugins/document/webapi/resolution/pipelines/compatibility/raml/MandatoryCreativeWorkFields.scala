@@ -6,7 +6,7 @@ import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.models.CreativeWork
 
 class MandatoryCreativeWorkFields() extends TransformationStep {
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
     try {
       model.iterator().foreach {
         case work: CreativeWork => fillMandatoryFields(work)

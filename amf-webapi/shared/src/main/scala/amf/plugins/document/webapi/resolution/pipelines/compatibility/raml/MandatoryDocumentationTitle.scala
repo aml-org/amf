@@ -12,7 +12,7 @@ class MandatoryDocumentationTitle() extends TransformationStep {
 
   var tagCounter = 0
 
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
     // Have to filter for null documentations as the documentation method of domainElements does not return Option. It can return null
     // TODO: keeping separate treatment for Tags to keep backwards compatibility.
     extractDocumentedElements(model).foreach {
