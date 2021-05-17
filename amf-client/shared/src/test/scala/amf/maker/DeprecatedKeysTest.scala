@@ -1,5 +1,7 @@
 package amf.maker
 
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.compiler.CompilerTestBuilder
 import amf.core.remote.{Raml08YamlHint, Raml10YamlHint}
 import amf.core.validation.SeverityLevels
@@ -45,7 +47,9 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
         model <- build(basePath + f.file,
                        if (f.profileName == Raml08Profile) Raml08YamlHint else Raml10YamlHint,
                        validation = Option(validation))
-        report <- validation.validate(model, f.profileName)
+        report <- validation.validate(model,
+                                      f.profileName,
+                                      new ValidationConfiguration(AMFGraphConfiguration.predefined()))
       } yield {
         assert(report.conforms)
         assert(report.results.lengthCompare(f.results.length) == 0)

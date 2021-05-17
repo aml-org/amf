@@ -12,6 +12,8 @@ import amf.core.validation.AMFValidationReport
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
 import amf._
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
 
@@ -48,7 +50,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
         val targetHint = hint(vendor = to)
         val toProfile  = profile(to)
         for {
-          origin   <- build(config, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true)
+          origin   <- build(config, Some(DefaultParserErrorHandler()), useAmfJsonldSerialisation = true)
           resolved <- successful(transform(origin, config))
           rendered <- render(resolved, config, useAmfJsonldSerialization = true)
           tmp      <- writeTemporaryFile(path)(rendered)
@@ -76,9 +78,11 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
                        target: Vendor): Future[AMFValidationReport] =
     Validation(platform)
       .flatMap { validation =>
-        val config = CycleConfig(source.path, source.path, hint, target, "", None, None)
-        build(config, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true).flatMap { unit =>
-          validation.validate(unit, profileName)
+        val config  = CycleConfig(source.path, source.path, hint, target, "", None, None)
+        val handler = DefaultParserErrorHandler()
+
+        build(config, Some(handler), useAmfJsonldSerialisation = true).flatMap { unit =>
+          validation.validate(unit, profileName, new ValidationConfiguration(AMFGraphConfiguration.fromEH(handler)))
         }
       }
 

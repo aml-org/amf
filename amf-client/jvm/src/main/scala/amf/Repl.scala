@@ -1,13 +1,14 @@
 package amf
 
-import java.io.{InputStream, PrintStream}
-import java.util.Scanner
-
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.model.document.{BaseUnit, Document}
-import amf.client.parse._
+import amf.client.remod.AMFResult
 import amf.client.render._
 import amf.convert.NativeOpsFromJvm
 import amf.core.remote._
+
+import java.io.{InputStream, PrintStream}
+import java.util.Scanner
 import scala.concurrent.ExecutionContext.Implicits.global
 class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
 
@@ -46,38 +47,28 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
   }
 
   private def remote(vendor: Vendor, url: String, callback: (Option[Document]) => Unit): Unit = {
-    parser(vendor)
-      .parseFileAsync(url)
-      .asFuture
+    val client = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).createClient()
+
+    client
+      .parse(url, vendor.mediaType)
       .map({
-        case d: Document => callback(Some(d))
-        case _           => callback(None)
+        case AMFResult(d: Document, _) => callback(Some(d))
+        case _                         => callback(None)
       })
   }
 
   private object Parse {
     def unapply(line: String): Option[(Vendor, String)] = {
       line match {
-        case s if s.startsWith(":raml10 ") => Some((Raml10, s.stripPrefix(":raml10 ")))
-        case s if s.startsWith(":raml08 ") => Some((Raml08, s.stripPrefix(":raml08 ")))
-        case s if s.startsWith(":oas20 ")  => Some((Oas20, s.stripPrefix(":oas20 ")))
-        case s if s.startsWith(":oas30 ")  => Some((Oas30, s.stripPrefix(":oas30 ")))
-        case s if s.startsWith(":async ")  => Some((AsyncApi, s.stripPrefix(":async ")))
-        case s if s.startsWith(":amf ")    => Some((Amf, s.stripPrefix(":amf ")))
-        case _                             => None
+        case s if s.startsWith(":application/raml10 ") => Some((Raml10, s.stripPrefix(":application/raml10 ")))
+        case s if s.startsWith(":application/raml08 ") => Some((Raml08, s.stripPrefix(":application/raml08 ")))
+        case s if s.startsWith(":application/oas20 ")  => Some((Oas20, s.stripPrefix(":application/oas20 ")))
+        case s if s.startsWith(":application/oas30 ")  => Some((Oas30, s.stripPrefix(":application/oas30 ")))
+        case s if s.startsWith(":application/async ")  => Some((AsyncApi, s.stripPrefix(":application/async ")))
+        case s if s.startsWith(":application/amf ")    => Some((Amf, s.stripPrefix(":application/amf ")))
+        case _                                         => None
       }
     }
-  }
-
-  private def parser(vendor: Vendor) = vendor match {
-    case Raml10     => new Raml10Parser
-    case Raml08     => new Raml08Parser
-    case Oas30      => new Oas30Parser
-    case Oas20      => new Oas20Parser
-    case AsyncApi20 => new Async20Parser
-    case Amf        => new AmfGraphParser
-    case Payload    => throw new Exception("Cannot find a parser for Payload vendor")
-    case _          => throw new Exception("Cannot find a parser for Unknown vendor")
   }
 
   private object Generate {

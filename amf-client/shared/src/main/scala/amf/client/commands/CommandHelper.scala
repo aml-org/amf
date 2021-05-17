@@ -1,6 +1,7 @@
 package amf.client.commands
 
 import amf.client.convert.WebApiRegister
+import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
 import amf.core.client.ParserConfig
 import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
@@ -17,7 +18,8 @@ import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import scala.concurrent.{ExecutionContext, Future}
 
 trait CommandHelper {
-  implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+  val configuration: AMFGraphConfiguration
+  implicit val executionContext: ExecutionContext = configuration.getExecutionContext
   val platform: Platform
 
   def AMFInit(): Future[Unit] = {
@@ -44,13 +46,12 @@ trait CommandHelper {
   }
 
   protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
-    var inputFile = ensureUrl(config.input.get)
+    val inputFile = ensureUrl(config.input.get)
     val parsed = RuntimeCompiler(
-      inputFile,
       Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
-      config.inputFormat,
       Context(platform),
-      cache = Cache()
+      cache = Cache(),
+      new ParseConfiguration(configuration, inputFile)
     )
     val vendor = effectiveVendor(config.inputFormat)
     if (config.resolve)
@@ -62,13 +63,12 @@ trait CommandHelper {
   protected def resolve(config: ParserConfig, unit: BaseUnit): Future[BaseUnit] = {
     val vendor = effectiveVendor(config.inputFormat)
     if (config.resolve && config.validate) {
-      var inputFile = ensureUrl(config.input.get)
+      val inputFile = ensureUrl(config.input.get)
       val parsed = RuntimeCompiler(
-        inputFile,
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
-        config.inputFormat,
         Context(platform),
-        cache = Cache()
+        cache = Cache(),
+        new ParseConfiguration(configuration, inputFile)
       )
       parsed map { parsed =>
         RuntimeResolver.resolve(vendor, parsed, TransformationPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)

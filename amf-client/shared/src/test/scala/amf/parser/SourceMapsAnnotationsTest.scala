@@ -1,5 +1,7 @@
 package amf.parser
 
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.remod.ParseConfiguration
 import amf.core.annotations.{Inferred, SourceAST, SynthesizedField, VirtualNode}
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.DocumentModel
@@ -43,7 +45,9 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
 
   private def build(file: String, hint: Hint): Future[BaseUnit] =
     Validation(platform).flatMap { _ =>
-      RuntimeCompiler(s"file://$directory$file", None, None, Context(platform), Cache())
+      val url           = s"file://$directory$file"
+      val configuration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+      RuntimeCompiler(None, Context(platform), Cache(), new ParseConfiguration(configuration, url))
     }
 
   private def runTest(file: String, hint: Hint): Future[Assertion] =

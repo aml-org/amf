@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.client.parse.DefaultErrorHandler
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
@@ -215,7 +216,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    RuntimeResolver.resolve(Vendor.RAML10.name, unit, TransformationPipeline.DEFAULT_PIPELINE, unit.errorHandler())
+    RuntimeResolver.resolve(Vendor.RAML10.name, unit, TransformationPipeline.DEFAULT_PIPELINE, DefaultErrorHandler())
   }
 
   val errorExamples = Seq(

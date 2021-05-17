@@ -1,5 +1,6 @@
 package amf.cycle
 
+import amf.client.remod.AMFGraphConfiguration
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
@@ -40,12 +41,10 @@ trait FromRdfCycleTest extends AsyncFunSuite with FileAssertionTest with AsyncBe
   private def build(path: String, baseUnitId: String): Option[BaseUnit] = {
     val fullPath     = basePath + path
     val content      = fs.syncFile(fullPath).read()
-    val plugins      = PluginContext()
-    val ctx          = ParserContext(eh = UnhandledParserErrorHandler, plugins = plugins)
     val rdfFramework = platform.rdfFramework.get
     rdfFramework
       .syntaxToRdfModel("text/n3", content)
-      .map(modelDoc => BaseUnit.fromNativeRdfModel(baseUnitId, modelDoc.model, ctx))
+      .map(modelDoc => BaseUnit.fromNativeRdfModel(baseUnitId, modelDoc.model, AMFGraphConfiguration.predefined()))
   }
 
   private def cycle(path: String, baseUnitId: String): Future[Assertion] = {

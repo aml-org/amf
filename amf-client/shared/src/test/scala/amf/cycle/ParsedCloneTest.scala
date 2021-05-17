@@ -41,6 +41,6 @@ class ParsedCloneTest extends FunSuiteCycleTests {
 
     override def handlerAmfResult(result: AMFValidationResult): Boolean = false
 
-    override private[amf] val parserRun = -1
+    override def results(): List[AMFValidationResult] = ???
   }
 }

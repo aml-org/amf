@@ -206,7 +206,7 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonL
           hint,
           target.vendor,
           syntax = Some(target.syntax),
-          eh = Some(DefaultParserErrorHandler.withRun()),
+          eh = Some(DefaultParserErrorHandler()),
           renderOptions = renderOptions)
   }
 }

@@ -1,6 +1,8 @@
 package amf.client.commands
 
 import amf.ProfileName
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
@@ -12,9 +14,10 @@ import amf.plugins.document.vocabularies.model.document.DialectInstance
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class TranslateCommand(override val platform: Platform) extends CommandHelper {
+class TranslateCommand(override val platform: Platform, override val configuration: AMFGraphConfiguration)
+    extends CommandHelper {
 
-  val validationCommand = new ValidateCommand(platform)
+  val validationCommand = new ValidateCommand(platform, configuration)
 
   def run(config: ParserConfig): Future[Any] = {
     val res: Future[Any] = for {
@@ -59,16 +62,17 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       }
     }
     customProfileLoaded flatMap { profileName =>
-      RuntimeValidator(model, profileName) map { report =>
-        if (!report.conforms) {
-          config.stderr.print(report.toString)
-          config.proc.exit(ExitCodes.FailingValidation)
-        }
+      RuntimeValidator(model, profileName, resolved = false, new ValidationConfiguration(configuration)) map {
+        report =>
+          if (!report.conforms) {
+            config.stderr.print(report.toString)
+            config.proc.exit(ExitCodes.FailingValidation)
+          }
       }
     }
   }
 }
 
 object TranslateCommand {
-  def apply(platform: Platform) = new TranslateCommand(platform)
+  def apply(platform: Platform, configuration: AMFGraphConfiguration) = new TranslateCommand(platform, configuration)
 }

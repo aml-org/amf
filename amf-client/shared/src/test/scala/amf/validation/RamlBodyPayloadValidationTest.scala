@@ -2,6 +2,8 @@ package amf.validation
 
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{StrictValidationMode, ValidationMode}
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
@@ -64,13 +66,20 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/validations/body-payload/"
 
-  override def transform(unit: BaseUnit): BaseUnit =
+  override def transform(unit: BaseUnit): BaseUnit = {
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
       case Some(Raml08) =>
-        RuntimeResolver.resolve(Raml08.name, unit, TransformationPipeline.DEFAULT_PIPELINE, unit.errorHandler())
+        RuntimeResolver.resolve(Raml08.name,
+                                unit,
+                                TransformationPipeline.DEFAULT_PIPELINE,
+                                DefaultParserErrorHandler())
       case _ =>
-        RuntimeResolver.resolve(Raml10.name, unit, TransformationPipeline.DEFAULT_PIPELINE, unit.errorHandler())
+        RuntimeResolver.resolve(Raml10.name,
+                                unit,
+                                TransformationPipeline.DEFAULT_PIPELINE,
+                                DefaultParserErrorHandler())
     }
+  }
 }
 
 trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with PlatformSecrets {
@@ -96,10 +105,11 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
   protected def validate(api: String,
                          payload: String,
                          mediaType: Option[String],
-                         givenHint: Hint): Future[AMFValidationReport] =
+                         givenHint: Hint): Future[AMFValidationReport] = {
+    val eh = DefaultParserErrorHandler()
     for {
       _ <- Validation(platform)
-      model <- AMFCompiler(api, platform, givenHint, eh = DefaultParserErrorHandler.withRun())
+      model <- AMFCompiler(api, platform, givenHint, eh = eh)
         .build()
         .map(transform)
       result <- {
@@ -107,14 +117,25 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
         mediaType
           .map(mediaTypeVal => {
             PayloadValidationPluginsHandler
-              .validate(shape, mediaTypeVal, payload, SeverityLevels.VIOLATION, validationMode = validationMode)
+              .validate(shape,
+                        mediaTypeVal,
+                        payload,
+                        SeverityLevels.VIOLATION,
+                        validationMode = validationMode,
+                        config = new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
           })
-          .getOrElse(PayloadValidationPluginsHandler
-            .validateWithGuessing(shape, payload, SeverityLevels.VIOLATION, validationMode = validationMode))
+          .getOrElse(
+            PayloadValidationPluginsHandler
+              .validateWithGuessing(shape,
+                                    payload,
+                                    SeverityLevels.VIOLATION,
+                                    validationMode = validationMode,
+                                    config = new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh))))
       }
     } yield {
       result
     }
+  }
 
   fixtureList.foreach { f =>
     test("Test " + f.name) {

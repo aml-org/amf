@@ -1,5 +1,6 @@
 package amf.cycle
 
+import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
@@ -37,14 +38,10 @@ class ToRdfCycleTest
 
   private def build(path: String): Future[BaseUnit] = {
     val fullPath = basePath + path
-    val ctx      = ParserContext(eh = UnhandledParserErrorHandler, plugins = PluginContext())
-    RuntimeCompiler.apply(fullPath,
-                          None,
-                          None,
+    RuntimeCompiler.apply(None,
                           Context(platform),
                           Cache(),
-                          ctx = Some(ctx),
-                          errorHandler = UnhandledParserErrorHandler)
+                          new ParseConfiguration(AMFGraphConfiguration.fromEH(UnhandledParserErrorHandler), fullPath))
   }
 
   private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {

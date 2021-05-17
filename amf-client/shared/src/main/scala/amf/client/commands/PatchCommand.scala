@@ -1,4 +1,5 @@
 package amf.client.commands
+import amf.client.remod.AMFGraphConfiguration
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
@@ -7,10 +8,12 @@ import amf.plugins.document.vocabularies.model.document.DialectInstancePatch
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class PatchCommand(override val platform: Platform) extends TranslateCommand(platform) {
+class PatchCommand(override val platform: Platform, override val configuration: AMFGraphConfiguration)
+    extends TranslateCommand(platform, configuration) {
 
   override def run(origConfig: ParserConfig): Future[Any] = {
-    val config = origConfig.copy(outputFormat = Some("AML 1.0"), outputMediaType = Some("application/yaml"), resolve = true)
+    val config =
+      origConfig.copy(outputFormat = Some("AML 1.0"), outputMediaType = Some("application/yaml"), resolve = true)
     val res = for {
       _         <- AMFInit()
       _         <- processDialects(config)
@@ -40,9 +43,9 @@ class PatchCommand(override val platform: Platform) extends TranslateCommand(pla
         config.patchTarget match {
           case Some(location) =>
             patchInstance.withExtendsModel(platform.resolvePath(location))
-          case _              => patchInstance
+          case _ => patchInstance
         }
-      case _                                   =>
+      case _ =>
         model
     }
   }
@@ -50,5 +53,5 @@ class PatchCommand(override val platform: Platform) extends TranslateCommand(pla
 }
 
 object PatchCommand {
-  def apply(platform: Platform) = new PatchCommand(platform)
+  def apply(platform: Platform, configuration: AMFGraphConfiguration) = new PatchCommand(platform, configuration)
 }

@@ -3,6 +3,8 @@ package amf.validation
 import _root_.org.scalatest.AsyncFunSuite
 import amf._
 import amf.client.parse.DefaultParserErrorHandler
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.remote._
@@ -39,13 +41,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   //what is speciy testing?? should be partitioned in a some new of tests? extract to tckUtor?
   ignore("Trailing spaces validation") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(productionPath + "americanflightapi.raml",
-                             platform,
-                             Raml10YamlHint,
-                             eh = DefaultParserErrorHandler.withRun()).build()
-      report <- validation.validate(library, Raml10Profile)
+      library    <- AMFCompiler(productionPath + "americanflightapi.raml", platform, Raml10YamlHint, eh = eh).build()
+      report <- validation.validate(library,
+                                    Raml10Profile,
+                                    new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(report.conforms)
     }
@@ -53,7 +56,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // this is not a validation test
   ignore("Can parse a recursive API") {
-    val eh = DefaultParserErrorHandler.withRun()
+    val eh = DefaultParserErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -66,13 +69,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // is testing that the api has no errors. Should be in Platform?
   test("Some production api with includes") {
+    val eh = DefaultParserErrorHandler()
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(productionPath + "includes-api/api.raml",
-                             platform,
-                             Raml10YamlHint,
-                             eh = DefaultParserErrorHandler.withRun()).build()
-      report <- validation.validate(library, Raml10Profile)
+      library    <- AMFCompiler(productionPath + "includes-api/api.raml", platform, Raml10YamlHint, eh = eh).build()
+      report <- validation.validate(library,
+                                    Raml10Profile,
+                                    new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       val (violations, others) =
         report.results.partition(r => r.severityLevel.equals(SeverityLevels.VIOLATION))
@@ -85,14 +88,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // tck examples?! for definition this name its wrong. What it's testing? the name makes reference to an external fragment exception, but the golden its a normal and small api.
   test("Test validate external fragment cast exception") {
+    val eh = DefaultParserErrorHandler()
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/tck-examples/cast-external-exception.raml",
                          platform,
                          Raml10YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+                         eh = eh)
         .build()
-      report <- validation.validate(doc, Raml10Profile)
+      report <- validation.validate(doc, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(report.conforms)
     }
@@ -101,15 +105,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   // the reported null pointer case could not be reproduced. This test was added with the whole api to prove that there is any null pointer.
   // should we delete this case?
   test("Raml 0.8 Null pointer tck case APIMF-429") {
-
+    val eh = DefaultParserErrorHandler()
     for {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/tck-examples/nullpointer-spec-example.raml",
                              platform,
                              Raml08YamlHint,
-                             eh = DefaultParserErrorHandler.withRun())
+                             eh = eh)
         .build()
-      report <- validation.validate(library, Raml08Profile)
+      report <- validation.validate(library,
+                                    Raml08Profile,
+                                    new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(report.results.isEmpty)
     }
@@ -117,14 +123,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // this is a real case, recursion in json schema??
   test("Test stackoverflow case from Platform") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/stackoverflow/api.raml",
-                             platform,
-                             Raml08YamlHint,
-                             eh = DefaultParserErrorHandler.withRun())
+      library <- AMFCompiler(validationsPath + "/stackoverflow/api.raml", platform, Raml08YamlHint, eh = eh)
         .build()
-      report <- validation.validate(library, Raml08Profile)
+      report <- validation.validate(library,
+                                    Raml08Profile,
+                                    new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(!report.results.exists(_.validationId != CoreValidations.RecursiveShapeSpecification.id))
     }
@@ -132,14 +139,15 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // same than the previous one
   test("Test stackoverflow case 0.8 from Platform") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(validationsPath + "/stackoverflow2/api.raml",
-                             platform,
-                             Raml08YamlHint,
-                             eh = DefaultParserErrorHandler.withRun())
+      library <- AMFCompiler(validationsPath + "/stackoverflow2/api.raml", platform, Raml08YamlHint, eh = eh)
         .build()
-      report <- validation.validate(library, Raml08Profile)
+      report <- validation.validate(library,
+                                    Raml08Profile,
+                                    new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(report.conforms)
       assert(report.results.isEmpty)
@@ -147,7 +155,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 // why the generation???? Move to MovelValidationReportTest?
   test("Security scheme and traits test") {
-    val eh = DefaultParserErrorHandler.withRun()
+    val eh = DefaultParserErrorHandler()
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/security-schemes/security1.raml", platform, Raml10YamlHint, eh = eh)
@@ -156,7 +164,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         RuntimeResolver.resolve(Raml10.name, doc, TransformationPipeline.DEFAULT_PIPELINE, eh)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report    <- validation.validate(doc, Raml10Profile)
+      report    <- validation.validate(doc, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 2)
@@ -165,18 +173,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Custom validaton problems 1") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/missing-annotation-types/api.raml",
-                         platform,
-                         Raml10YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+      doc <- AMFCompiler(validationsPath + "/missing-annotation-types/api.raml", platform, Raml10YamlHint, eh = eh)
         .build()
       resolved <- Future {
-        RuntimeResolver.resolve(Raml10.name, doc, TransformationPipeline.DEFAULT_PIPELINE, doc.errorHandler())
+        RuntimeResolver.resolve(Raml10.name, doc, TransformationPipeline.DEFAULT_PIPELINE, eh)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report    <- validation.validate(doc, Raml10Profile)
+      report    <- validation.validate(doc, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -184,7 +191,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Custom validation problems 2 (RAML)") {
-    val eh = DefaultParserErrorHandler.withRun()
+    val eh = DefaultParserErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -194,14 +201,14 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         RuntimeResolver.resolve(Raml10.name, doc, TransformationPipeline.DEFAULT_PIPELINE, eh)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
-      report    <- validation.validate(doc, Raml10Profile)
+      report    <- validation.validate(doc, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(report.conforms)
     }
   }
 
   test("Custom validation problems 2 (OAS)") {
-    val eh = DefaultParserErrorHandler.withRun()
+    val eh = DefaultParserErrorHandler()
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, Raml10YamlHint, eh = eh)
@@ -210,7 +217,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         RuntimeResolver.resolve(Raml10.name, doc, TransformationPipeline.DEFAULT_PIPELINE, eh)
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", Amf.name, RenderOptions().withoutSourceMaps).renderToString
-      report    <- validation.validate(doc, Oas20Profile)
+      report    <- validation.validate(doc, Oas20Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 2)
@@ -218,14 +225,16 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Matrix tests") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/types/arrays/matrix_type_expression.raml",
                          platform,
                          Raml10YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+                         eh = eh)
         .build()
-      report <- validation.validate(doc, Raml10Profile)
+      report <- validation.validate(doc, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -233,14 +242,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Patterned properties tests") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/types/patterned_properties.raml",
-                         platform,
-                         Raml10YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+      doc <- AMFCompiler(validationsPath + "/types/patterned_properties.raml", platform, Raml10YamlHint, eh = eh)
         .build()
-      report <- validation.validate(doc, Raml10Profile)
+      report <- validation.validate(doc, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -248,14 +256,13 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Recursive array test") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/types/recursive_array.raml",
-                         platform,
-                         Raml10YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+      doc <- AMFCompiler(validationsPath + "/types/recursive_array.raml", platform, Raml10YamlHint, eh = eh)
         .build()
-      report <- validation.validate(doc, Raml10Profile)
+      report <- validation.validate(doc, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 1)
@@ -263,42 +270,39 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("oas example error in shape becomes warning") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(validationsPath + "/production/oas_example1.yaml",
-                         platform,
-                         Oas20YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+      doc <- AMFCompiler(validationsPath + "/production/oas_example1.yaml", platform, Oas20YamlHint, eh = eh)
         .build()
-      report <- validation.validate(doc, Oas20Profile)
+      report <- validation.validate(doc, Oas20Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(report.conforms)
     }
   }
 
   test("Null super-array items test") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "/null_superarray_items/api.raml",
-                         platform,
-                         Raml10YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+      doc <- AMFCompiler(productionPath + "/null_superarray_items/api.raml", platform, Raml10YamlHint, eh = eh)
         .build()
-      report <- validation.validate(doc, Raml10Profile)
+      report <- validation.validate(doc, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(report.conforms)
     }
   }
 
   test("0.8 'id' identifiers in JSON Schema shapes test") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "/id_json_schema_locations.raml",
-                         platform,
-                         Raml08YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+      doc <- AMFCompiler(productionPath + "/id_json_schema_locations.raml", platform, Raml08YamlHint, eh = eh)
         .build()
-      report <- validation.validate(doc, Raml08Profile)
+      report <- validation.validate(doc, Raml08Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 2)
@@ -306,42 +310,39 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Erroneous JSON schema in ResourceType test") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "/resource_type_failing_schema/api.raml",
-                         platform,
-                         Raml10YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+      doc <- AMFCompiler(productionPath + "/resource_type_failing_schema/api.raml", platform, Raml10YamlHint, eh = eh)
         .build()
-      report <- validation.validate(doc, Raml10Profile)
+      report <- validation.validate(doc, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(report.conforms)
     }
   }
 
   test("Nested XML Schema test") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "/nested_xml_schema/api.raml",
-                         platform,
-                         Raml10YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+      doc <- AMFCompiler(productionPath + "/nested_xml_schema/api.raml", platform, Raml10YamlHint, eh = eh)
         .build()
-      report <- validation.validate(doc, Raml10Profile)
+      report <- validation.validate(doc, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(report.conforms)
     }
   }
 
   test("Recursion introduced after resource type application test") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "/recursion_after_resource_type/api.raml",
-                         platform,
-                         Raml08YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+      doc <- AMFCompiler(productionPath + "/recursion_after_resource_type/api.raml", platform, Raml08YamlHint, eh = eh)
         .build()
-      report <- validation.validate(doc, Raml08Profile)
+      report <- validation.validate(doc, Raml08Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -349,30 +350,33 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Numeric status codes in OAS responses") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "/oas_numeric_resources.yaml",
-                         platform,
-                         Oas20YamlHint,
-                         eh = DefaultParserErrorHandler.withRun())
+      doc <- AMFCompiler(productionPath + "/oas_numeric_resources.yaml", platform, Oas20YamlHint, eh = eh)
         .build()
-      report <- validation.validate(doc, Oas20Profile)
+      report <- validation.validate(doc, Oas20Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
     } yield {
       assert(report.conforms)
     }
   }
 
   ignore("emilio performance") {
+    val eh = DefaultParserErrorHandler()
+
     for {
       validation <- Validation(platform)
       // Path should point to the main api file.
-      model <- AMFCompiler(
-        productionPath + "sys-sabre-air-api-1.0.3-fat-raml/ha-sys-sabre-air-api.raml",
-        platform,
-        Raml10YamlHint,
-        eh = DefaultParserErrorHandler.withRun()) // Change hint here for a different syntax parsing.
+      model <- AMFCompiler(productionPath + "sys-sabre-air-api-1.0.3-fat-raml/ha-sys-sabre-air-api.raml",
+                           platform,
+                           Raml10YamlHint,
+                           eh = eh) // Change hint here for a different syntax parsing.
         .build()
-      report <- validation.validate(model, Raml10Profile) // Change profile name here to validate for a different spec.
+      report <- validation.validate(
+        model,
+        Raml10Profile,
+        new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh))) // Change profile name here to validate for a different spec.
     } yield {
       //RAML10Plugin.resolve(model) // Change plugin here to resolve for a different spec.
       assert(report.results.isEmpty)

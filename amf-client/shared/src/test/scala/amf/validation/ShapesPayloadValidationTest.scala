@@ -1,6 +1,8 @@
 package amf.validation
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.AMFSerializer
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.services.RuntimeValidator
@@ -125,13 +127,13 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
     si.examples.foreach { ei =>
       test(s"Test ${si.shape.name} with example ${ei.name}") {
         if (si.mode == StrictValidationMode) {
-          createPayloadValidator(si.shape)
+          createPayloadValidator(si.shape, new ValidationConfiguration(AMFGraphConfiguration.predefined()))
             .validate(ei.example.guessMediaType(false), ei.example)
             .map { r =>
               r.conforms should be(ei.valid)
             }
         } else
-          createParameterValidator(si.shape)
+          createParameterValidator(si.shape, new ValidationConfiguration(AMFGraphConfiguration.predefined()))
             .validate(ei.example.guessMediaType(false), ei.example)
             .map { r =>
               r.conforms should be(ei.valid)

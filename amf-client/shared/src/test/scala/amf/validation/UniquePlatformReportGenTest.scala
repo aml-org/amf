@@ -3,6 +3,8 @@ package amf.validation
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 import amf._
 import amf.client.parse.DefaultParserErrorHandler
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.errorhandling.AmfReportBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Yaml
@@ -54,15 +56,15 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
                          profileFile: Option[String] = None,
                          overridedHint: Option[Hint] = None,
                          directory: String = basePath): Future[Assertion] = {
-    val eh        = DefaultParserErrorHandler.withRun()
+    val eh        = DefaultParserErrorHandler()
     val finalHint = overridedHint.getOrElse(hint)
     for {
       validation <- Validation(platform)
       _ <- if (profileFile.isDefined)
-        validation.loadValidationProfile(directory + profileFile.get, DefaultParserErrorHandler.withRun())
+        validation.loadValidationProfile(directory + profileFile.get, DefaultParserErrorHandler())
       else Future.unit
       model  <- parse(directory + api, eh, finalHint)
-      report <- validation.validate(model, profile)
+      report <- validation.validate(model, profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
       r      <- handleReport(report, golden.map(processGolden))
     } yield {
       r
@@ -90,13 +92,13 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
                             golden: Option[String] = None,
                             profile: ProfileName = defaultProfile,
                             profileFile: Option[String] = None): Future[Assertion] = {
-    val errorHandler = DefaultParserErrorHandler.withRun()
+    val errorHandler = DefaultParserErrorHandler()
     for {
       validation <- Validation(platform)
       model      <- AMFCompiler(basePath + api, platform, profileToHint(profile), eh = errorHandler).build()
       report <- {
         TransformationPipelineRunner(errorHandler).run(model, new ValidationTransformationPipeline(profile))
-        val results = errorHandler.getErrors
+        val results = errorHandler.results
         val report  = new AmfReportBuilder(model, profile).buildReport(results)
         handleReport(report, golden)
       }

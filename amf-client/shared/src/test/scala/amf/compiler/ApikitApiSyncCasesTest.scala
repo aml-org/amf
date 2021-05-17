@@ -1,7 +1,10 @@
 package amf.compiler
 
+import amf.client.environment.WebAPIConfiguration
 import amf.client.parse.DefaultParserErrorHandler
+import amf.client.remod.{ErrorHandlerProvider, ParseConfiguration}
 import amf.client.remote.Content
+import amf.core.errorhandling.AmfResultErrorHandler
 import amf.core.remote.{Cache, Context, FileNotFound}
 import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
@@ -31,11 +34,12 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
       "libraries/resourceTypes.raml" -> "file://amf-client/shared/src/test/resources/compiler/apikit-apisync/ref-base-not-absolute/libraries/resourceTypes.raml",
     )
     val url = "resource::really-cool-urn:1.0.0:raml:zip:main.raml"
-    val errorHandler = DefaultParserErrorHandler()
-    val loaders = Seq(new URNResourceLoader(mappings))
-    val env = Environment().withLoaders(loaders)
-    RuntimeCompiler.apply(url, None, None, base = Context(platform), cache = Cache(), errorHandler = errorHandler, env = env).map { unit =>
-      errorHandler.getErrors should have size 0
+    val eh = DefaultParserErrorHandler()
+    val ehp =  new ErrorHandlerProvider {
+      override def errorHandler(): AmfResultErrorHandler = eh
+    }
+    RuntimeCompiler.apply(None, base = Context(platform), cache = Cache(), new ParseConfiguration(WebAPIConfiguration.WebAPI().withResourceLoaders(List(new URNResourceLoader(mappings))).withErrorHandlerProvider(ehp), url) ).map { unit =>
+      eh.results should have size 0
     }
   }
 

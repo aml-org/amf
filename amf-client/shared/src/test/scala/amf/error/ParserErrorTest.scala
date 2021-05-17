@@ -26,12 +26,12 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
   protected def validateWithUnit(file: String,
                                  unitAssertion: BaseUnit => Unit,
                                  fixture: Seq[AMFValidationResult => Unit]): Future[Assertion] = {
-    val eh = DefaultParserErrorHandler.withRun()
+    val eh = DefaultParserErrorHandler()
     Validation(platform).flatMap { _ =>
       build(eh, basePath + file)
         .map { u =>
           unitAssertion(u)
-          val report = eh.getErrors
+          val report = eh.results
           if (report.size != fixture.size) {
             report.foreach(println)
             fail(s"Expected results has length of ${fixture.size} while actual results are ${report.size}")

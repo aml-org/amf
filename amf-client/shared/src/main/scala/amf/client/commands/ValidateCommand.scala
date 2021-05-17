@@ -1,6 +1,8 @@
 package amf.client.commands
 
 import amf.ProfileName
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
@@ -14,7 +16,8 @@ import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class ValidateCommand(override val platform: Platform) extends CommandHelper {
+class ValidateCommand(override val platform: Platform, override val configuration: AMFGraphConfiguration)
+    extends CommandHelper {
 
   def run(config: ParserConfig): Future[Any] = {
     val res = for {
@@ -59,7 +62,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
       }
     }
     customProfileLoaded flatMap { profileName =>
-      RuntimeValidator(model, profileName)
+      RuntimeValidator(model, profileName, resolved = false, new ValidationConfiguration(configuration))
     }
   }
 
@@ -77,5 +80,5 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
 }
 
 object ValidateCommand {
-  def apply(platform: Platform) = new ValidateCommand(platform)
+  def apply(platform: Platform, configuration: AMFGraphConfiguration) = new ValidateCommand(platform, configuration)
 }
