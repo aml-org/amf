@@ -1,6 +1,7 @@
 package amf.event
 
-import amf.client.exported.config.{AMFEvent, AMFEventListener, AMFEventNames}
+import amf.client.exported.config.AMFEventNames
+import amf.client.remod.amfcore.config.{AMFEvent, AMFEventListener}
 import amf.core.remote.{Cache, Context, Raml10}
 import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
