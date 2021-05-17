@@ -1,8 +1,9 @@
 package amf.client.convert
 
 import amf.client.convert.WebApiClientConverters._
-import amf.client.environment.{Environment => ClientEnvironment}
+import amf.client.environment.{DefaultEnvironment, Environment => ClientEnvironment}
 import amf.client.plugins._
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.document.{PayloadFragment => InternalPayloadFragment}
 import amf.core.model.domain.Shape
 import amf.core.validation.{AMFPayloadValidationPlugin, AMFValidationReport, PayloadValidator}
@@ -29,8 +30,10 @@ object ClientPayloadPluginConverter {
 
       override val payloadMediaType: Seq[String] = clientPlugin.payloadMediaType.asInternal
 
-      override def canValidate(shape: Shape, env: Environment): Boolean =
-        clientPlugin.canValidate(ShapeMatcher.asClient(shape), ClientEnvironment(env))
+      override def canValidate(shape: Shape, config: ValidationConfiguration): Boolean = {
+        // TODO ARM change env for conf when is done
+        clientPlugin.canValidate(ShapeMatcher.asClient(shape), DefaultEnvironment())
+      }
 
       override val ID: String = clientPlugin.ID
 
@@ -40,13 +43,15 @@ object ClientPayloadPluginConverter {
       override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] =
         new ClientFutureOps(clientPlugin.init())(AMFPluginConverter, executionContext).asInternal
 
-      override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator = {
-        val validator = clientPlugin.validator(s, ClientEnvironment(env), validationMode)
+      override def validator(s: Shape,
+                             config: ValidationConfiguration,
+                             validationMode: ValidationMode): PayloadValidator = {
+        // TODO ARM change for config interface
+        val validator = clientPlugin.validator(s, DefaultEnvironment(), validationMode)
         new PayloadValidator {
           override val shape: Shape                   = validator.shape
           override val defaultSeverity: String        = validator.defaultSeverity
           override val validationMode: ValidationMode = validator.validationMode
-          override val env: Environment               = validator.env._internal
           override def validate(payload: String, mediaType: String)(
               implicit executionContext: ExecutionContext): Future[AMFValidationReport] =
             validator.validate(payload, mediaType).asInternal
@@ -58,6 +63,9 @@ object ClientPayloadPluginConverter {
             validator.isValid(payload, mediaType).asInternal
           override def syncValidate(mediaType: String, payload: String): AMFValidationReport =
             validator.syncValidate(mediaType, payload)
+
+          // TODO ARM implement client config when is done
+          override val configuration: ValidationConfiguration = ???
         }
       }
     }

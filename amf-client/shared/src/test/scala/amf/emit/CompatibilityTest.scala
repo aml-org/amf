@@ -1,6 +1,11 @@
 package amf.emit
 import amf.ProfileName
+import amf.client.environment.WebAPIConfiguration
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
+import amf.client.remod.{ErrorHandlerProvider, ParseConfiguration}
 import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.AmfResultErrorHandler
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.facades.Validation
@@ -44,17 +49,21 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
       case Raml10YamlHint | Oas20YamlHint => "application/yaml"
       case _                              => "application/json"
     }
-
+    val eh = DefaultErrorHandler()
+    val conf = WebAPIConfiguration
+      .WebAPI()
+      .withErrorHandlerProvider(new ErrorHandlerProvider {
+        override def errorHandler(): AmfResultErrorHandler = eh
+      })
+      .withResourceLoader(StringResourceLoader("amf://id#", content))
     for {
       unit <- RuntimeCompiler(
-        "amf://id#",
-        Some(mediaType),
-        Some(hint.vendor.name),
+        Some(hint.vendor.mediaType),
         Context(platform),
-        env = Environment(StringResourceLoader("amf://id#", content)),
-        cache = Cache()
+        cache = Cache(),
+        new ParseConfiguration(conf, "amf://id#")
       )
-      _ <- RuntimeValidator(unit, ProfileName(hint.vendor.name))
+      _ <- RuntimeValidator(unit, ProfileName(hint.vendor.name), resolved = false, new ValidationConfiguration(conf))
     } yield unit
   }
 }

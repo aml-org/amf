@@ -1,4 +1,6 @@
 package amf.validation
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.Shape
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
@@ -6,7 +8,6 @@ import amf.core.remote.{PayloadJsonHint, PayloadYamlHint, Raml10YamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, Validation}
-import amf.internal.environment.Environment
 import amf.plugins.document.graph.emitter.EmbeddedJsonLdEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
@@ -75,7 +76,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         payload <- AMFCompiler(payloadsPath + payloadFile, platform, hint, eh = UnhandledParserErrorHandler).build()
       } yield {
         // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
-        ValidationTransformationPipeline(AmfProfile, library)
+        ValidationTransformationPipeline(AmfProfile, library, UnhandledParserErrorHandler)
         val targetType = library
           .asInstanceOf[Module]
           .declares
@@ -88,7 +89,9 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
       }
 
       candidates flatMap { c =>
-        PayloadValidationPluginsHandler.validateAll(c, SeverityLevels.VIOLATION, Environment())
+        PayloadValidationPluginsHandler.validateAll(c,
+                                                    SeverityLevels.VIOLATION,
+                                                    new ValidationConfiguration(AMFGraphConfiguration.predefined()))
       } map { report =>
         report.results.foreach { result =>
           assert(result.position.isDefined)

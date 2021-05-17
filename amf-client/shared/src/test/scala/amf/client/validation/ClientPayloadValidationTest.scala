@@ -5,6 +5,8 @@ import amf.client.convert.{NativeOps, WebApiRegister}
 import amf.client.environment.Environment
 import amf.client.model.DataTypes
 import amf.client.model.domain._
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.plugins.domain.shapes.models.{ScalarShape => InternalScalarShape}
 import amf.core.model.domain.{RecursiveShape => InternalRecursiveShape}
 import amf.client.validate.PayloadValidator
@@ -17,9 +19,9 @@ import scala.concurrent.ExecutionContext
 
 trait PayloadValidationUtils {
   protected def parameterValidator(s: Shape, environment: Environment = Environment.empty()): PayloadValidator =
-    ClientShapePayloadValidatorFactory.createParameterValidator(s, environment)
+    ClientShapePayloadValidatorFactory.createParameterValidator(s, AMFGraphConfiguration.predefined())
   protected def payloadValidator(s: Shape, environment: Environment = Environment.empty()): PayloadValidator =
-    ClientShapePayloadValidatorFactory.createPayloadValidator(s, environment)
+    ClientShapePayloadValidatorFactory.createPayloadValidator(s, AMFGraphConfiguration.predefined())
 }
 
 trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matchers with PayloadValidationUtils {

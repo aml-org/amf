@@ -37,7 +37,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
                     directory: String = basePath): Future[Assertion] = {
 
     val config = EmissionConfig(source, golden, hint, directory)
-    build(config, Some(DefaultParserErrorHandler.withRun()))
+    build(config, Some(DefaultParserErrorHandler()))
       .map(b => extractor(b))
       .flatMap(render)
       .flatMap(writeTemporaryFile(golden))
@@ -62,7 +62,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
   def renderDomainElement(element: Option[DomainElement]): String = {
     val eh     = DefaultErrorHandler()
     val node   = element.map(WebApiDomainElementEmitter.emit(_, vendor, eh)).getOrElse(YNode.Empty)
-    val errors = eh.getErrors
+    val errors = eh.results
     if (errors.nonEmpty)
       errors.map(_.completeMessage).mkString("\n")
     else {

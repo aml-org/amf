@@ -1,5 +1,7 @@
 package amf.event
 
+import amf.client.environment.RAMLConfiguration
+import amf.client.remod.ParseConfiguration
 import amf.client.exported.config.AMFEventNames
 import amf.client.remod.amfcore.config.{AMFEvent, AMFEventListener}
 import amf.core.remote.{Cache, Context, Raml10}
@@ -31,7 +33,10 @@ class AMFEventListenerTest extends AsyncBeforeAndAfterEach with PlatformSecrets 
     )
     val listener = EventAccumulator()
     // TODO set listener in config.
-    RuntimeCompiler(url, Some("application/yaml"), Some(Raml10.name), Context(platform), cache = Cache()) map { _ =>
+    RuntimeCompiler(Some("application/yaml"),
+                    Context(platform),
+                    cache = Cache(),
+                    new ParseConfiguration(RAMLConfiguration.RAML10(), url)) map { _ =>
       assertEventFrequencies(expectedFrequency, listener)
     }
   }

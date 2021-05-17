@@ -1,7 +1,10 @@
 package amf.compiler
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.{RAMLStyle, Raml10Profile}
 import amf.client.plugins.AMFPlugin
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.client.remote.Content
 import amf.core.Root
 import amf.core.model.document.{BaseUnit, Document}
@@ -105,14 +108,16 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Non existing included file") {
+    val eh = DefaultParserErrorHandler()
     Validation(platform)
       .flatMap(v => {
 
         build("file://amf-client/shared/src/test/resources/non-exists-include.raml",
               Raml10YamlHint,
-              validation = Some(v))
+              validation = Some(v),
+              eh = Some(eh))
           .flatMap(bu => {
-            v.validate(bu, Raml10Profile, RAMLStyle)
+            v.validate(bu, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
           })
       })
       .map(r => {

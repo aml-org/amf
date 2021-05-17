@@ -63,7 +63,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
                     renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a)): Future[Assertion] = {
     val ramlDatatype: Future[String] = for {
       _ <- Validation(platform)
-      sourceUnit <- AMFCompiler(basePath + sourceFile, platform, Oas20JsonHint, eh = DefaultParserErrorHandler.withRun())
+      sourceUnit <- AMFCompiler(basePath + sourceFile, platform, Oas20JsonHint, eh = DefaultParserErrorHandler())
         .build()
     } yield {
       findShapeFunc(

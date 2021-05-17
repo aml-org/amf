@@ -1,6 +1,7 @@
 package amf.io
 
 import amf.client.parse.DefaultParserErrorHandler
+import amf.client.remod.AMFGraphConfiguration
 import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
@@ -192,7 +193,7 @@ trait BuildCycleTests extends BuildCycleTestCommon {
     val amfJsonLdSerialization = renderOptions.map(_.isAmfJsonLdSerilization).getOrElse(useAmfJsonldSerialization)
 
     for {
-      parsed   <- build(config, eh.orElse(Some(DefaultParserErrorHandler.withRun())), amfJsonLdSerialization)
+      parsed   <- build(config, eh.orElse(Some(DefaultParserErrorHandler())), amfJsonLdSerialization)
       resolved <- Future.successful(transform(parsed, config))
       actualString <- renderOptions match {
         case Some(options) => render(resolved, config, options)
@@ -261,7 +262,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   /** Method for transforming parsed unit. Override if necessary. */
   def transformThroughRdf(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val rdfModel = unit.toNativeRdfModel(RenderOptions().withSourceMaps)
-    BaseUnit.fromNativeRdfModel(unit.id, rdfModel)
+    BaseUnit.fromNativeRdfModel(unit.id, rdfModel, AMFGraphConfiguration.predefined())
   }
 
   /** Method to render parsed unit. Override if necessary. */

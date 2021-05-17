@@ -1,5 +1,6 @@
 package amf.cycle
 
+import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
 import amf.core.CompilerContextBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.parser.UnspecifiedReference
@@ -38,12 +39,13 @@ class OasRecursiveFilesCycleTest extends FunSuiteCycleTests {
       implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
       val finalPath =
         if (config.sourcePath.startsWith("file://")) config.sourcePath else s"file://${config.sourcePath}"
-      val compilerContextBuilder = new CompilerContextBuilder(s"$finalPath", platform, UnhandledParserErrorHandler)
+      val compilerContextBuilder = new CompilerContextBuilder(
+        platform,
+        new ParseConfiguration(AMFGraphConfiguration.fromEH(UnhandledParserErrorHandler), finalPath))
 
       RuntimeCompiler
         .forContext(
           compilerContextBuilder.build(),
-          None,
           None,
           UnspecifiedReference
         )
