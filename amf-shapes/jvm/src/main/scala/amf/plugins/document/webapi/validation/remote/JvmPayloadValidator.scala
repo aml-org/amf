@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.validation.remote
 
 import amf.ProfileName
 import amf.client.plugins.ValidationMode
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
@@ -20,8 +21,10 @@ import org.json.JSONException
 import java.util.regex.PatternSyntaxException
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
-class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, val env: Environment)
-    extends PlatformPayloadValidator(shape, env) {
+class JvmPayloadValidator(val shape: Shape,
+                          val validationMode: ValidationMode,
+                          val configuration: ValidationConfiguration)
+    extends PlatformPayloadValidator(shape, configuration) {
 
   case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
     override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)

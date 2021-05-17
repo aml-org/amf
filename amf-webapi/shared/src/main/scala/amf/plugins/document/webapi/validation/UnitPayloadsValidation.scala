@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.validation
 
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.benchmark.ExecutionLog
 import amf.core.metamodel.document.PayloadFragmentModel
 import amf.core.model.document.BaseUnit
@@ -28,9 +29,10 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, collectors: Seq[Validation
       .map(_.payload.encodes) ++ candidates.map(_.shape).distinct.flatMap(_.values)
   }
 
-  def validate(env: Environment)(implicit executionContext: ExecutionContext): Future[Seq[AMFValidationResult]] = {
+  def validate(config: ValidationConfiguration)(
+      implicit executionContext: ExecutionContext): Future[Seq[AMFValidationResult]] = {
     ExecutionLog.log(s"UnitPayloadsValidation#validate: Validating all candidates ${candidates.size}")
-    PayloadValidationPluginsHandler.validateAll(candidates, SeverityLevels.WARNING, env).map(groupResults)
+    PayloadValidationPluginsHandler.validateAll(candidates, SeverityLevels.WARNING, config).map(groupResults)
   }
 
   private def groupResults(report: AMFValidationReport): Seq[AMFValidationResult] = {
