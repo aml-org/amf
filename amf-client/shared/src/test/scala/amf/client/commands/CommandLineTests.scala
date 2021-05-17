@@ -1,5 +1,6 @@
 package amf.client.commands
 
+import amf.client.environment.{AMLConfiguration, RAMLConfiguration}
 import amf.core.client.{ParserConfig, Proc, ProcWriter}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
@@ -42,7 +43,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ParseCommand(platform).run(
+    ParseCommand(platform, RAMLConfiguration.RAML10()).run(
       cfg.get.copy(
         stdout = stdout,
         stderr = stderr,
@@ -73,7 +74,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    TranslateCommand(platform).run(
+    TranslateCommand(platform, RAMLConfiguration.RAML10()).run(
       cfg.get.copy(
         stdout = stdout,
         stderr = stderr,
@@ -103,7 +104,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ValidateCommand(platform).run(
+    ValidateCommand(platform, RAMLConfiguration.RAML10()).run(
       cfg.get.copy(
         stdout = stdout,
         stderr = stderr,
@@ -133,7 +134,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ValidateCommand(platform).run(
+    ValidateCommand(platform, RAMLConfiguration.RAML10()).run(
       cfg.get.copy(
         stdout = stdout,
         stderr = stderr,
@@ -163,7 +164,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ValidateCommand(platform).run(
+    ValidateCommand(platform, RAMLConfiguration.RAML10()).run(
       cfg.get.copy(
         stdout = stdout,
         stderr = stderr,
@@ -193,7 +194,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ParseCommand(platform).run(
+    ParseCommand(platform, AMLConfiguration.predefined()).run(
       cfg.get.copy(
         stdout = stdout,
         stderr = stderr,

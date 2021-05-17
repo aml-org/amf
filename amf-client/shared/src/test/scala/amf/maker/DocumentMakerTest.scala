@@ -61,7 +61,7 @@ class DocumentMakerTest extends WebApiMakerTest {
 
     override def handlerAmfResult(result: AMFValidationResult): Boolean = false
 
-    override private[amf] val parserRun = -1
+    override def results(): List[AMFValidationResult] = Nil
   }
 
   private def documentWithTypes(vendor: Vendor): Document = {

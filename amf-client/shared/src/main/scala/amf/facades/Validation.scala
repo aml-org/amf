@@ -1,13 +1,13 @@
 package amf.facades
 
 import amf.client.execution.BaseExecutionEnvironment
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
-import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
@@ -21,8 +21,8 @@ import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import amf.plugins.features.validation.custom.model.ValidationDialectText
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.validation.DialectValidations
-import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations, ShapeParserSideValidations, ShapePayloadValidations}
-import amf.{MessageStyle, ProfileName, RAMLStyle, Raml10Profile}
+import amf.validations._
+import amf.{ProfileName, Raml10Profile}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -83,12 +83,10 @@ class Validation(platform: Platform) {
 
   def validate(model: BaseUnit,
                profileName: ProfileName,
-               messageStyle: MessageStyle = RAMLStyle,
-               env: Environment = Environment(),
-               resolved: Boolean = false,
-               exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
+               configuration: ValidationConfiguration,
+               resolved: Boolean = false): Future[AMFValidationReport] = {
 
-    validator.validate(model, profileName, messageStyle, env, resolved, exec)
+    validator.validate(model, profileName, resolved, configuration)
   }
 
   def computeValidations(profileName: ProfileName): EffectiveValidations = validator.computeValidations(profileName)

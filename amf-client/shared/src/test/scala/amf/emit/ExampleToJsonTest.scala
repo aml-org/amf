@@ -82,7 +82,7 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
       sourceAst match {
         case Some(a) =>
           val ast      = a.ast.asInstanceOf[YDocument].as[YMap]
-          val context  = new Raml10WebApiContext("", Nil, ParserContext(eh = DefaultParserErrorHandler.withRun()))
+          val context  = new Raml10WebApiContext("", Nil, ParserContext(eh = DefaultParserErrorHandler()))
           val anyShape = AnyShape()
           RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(
             WebApiShapeParserContextAdapter(context)).parse()

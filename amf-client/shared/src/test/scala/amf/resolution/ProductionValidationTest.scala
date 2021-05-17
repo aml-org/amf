@@ -18,7 +18,7 @@ class ProductionValidationTest extends RamlResolutionTest {
       AMFCompiler(s"file://${config.sourcePath}",
                   platform,
                   config.hint,
-                  eh = eh.getOrElse(DefaultParserErrorHandler.withRun()))
+                  eh = eh.getOrElse(DefaultParserErrorHandler()))
         .build()
     }
   }

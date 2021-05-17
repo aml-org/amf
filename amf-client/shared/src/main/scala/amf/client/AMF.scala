@@ -34,36 +34,13 @@ object AMF extends PlatformSecrets {
     amf.Core.init(executionEnvironment)
   }
 
-  @JSExport def raml10Parser(): Raml10Parser = new Raml10Parser()
-
-  @JSExport def ramlParser(): RamlParser = new RamlParser()
-
-  @JSExport def raml10Generator(): Raml10Renderer = new Raml10Renderer()
-
-  @JSExport def raml08Parser(): Raml08Parser = new Raml08Parser()
-
-  @JSExport def raml08Generator(): Raml08Renderer = new Raml08Renderer()
-
-  @JSExport def oas20Parser(): Oas20Parser = new Oas20Parser()
-
-  @JSExport def oas20Generator(): Oas20Renderer = new Oas20Renderer()
-
-  @JSExport def amfGraphParser(): AmfGraphParser = new AmfGraphParser()
-
-  @JSExport def amfGraphGenerator(): AmfGraphRenderer = new AmfGraphRenderer()
+  @JSExport
+  def validate(model: BaseUnit, profileName: ProfileName): ClientFuture[AMFValidationReport] =
+    Core.validate(model, profileName)
 
   @JSExport
-  def validate(model: BaseUnit,
-               profileName: ProfileName,
-               messageStyle: MessageStyle): ClientFuture[AMFValidationReport] =
-    Core.validate(model, profileName, messageStyle)
-
-  @JSExport
-  def validate(model: BaseUnit,
-               profileName: ProfileName,
-               messageStyle: MessageStyle,
-               env: Environment): ClientFuture[AMFValidationReport] =
-    Core.validate(model, profileName, messageStyle, env)
+  def validate(model: BaseUnit, profileName: ProfileName, env: Environment): ClientFuture[AMFValidationReport] =
+    Core.validate(model, profileName, env)
 
   /**
     * This method receives a resolved model. Don't use it with an unresolved one.
@@ -78,11 +55,8 @@ object AMF extends PlatformSecrets {
     * This method receives a resolved model. Don't use it with an unresolved one.
     */
   @JSExport
-  def validateResolved(model: BaseUnit,
-                       profileName: ProfileName,
-                       messageStyle: MessageStyle,
-                       env: Environment): ClientFuture[AMFValidationReport] =
-    Core.validateResolved(model, profileName, messageStyle, env)
+  def validateResolved(model: BaseUnit, profileName: ProfileName, env: Environment): ClientFuture[AMFValidationReport] =
+    Core.validateResolved(model, profileName, env)
 
   @JSExport def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 
@@ -104,10 +78,6 @@ object AMF extends PlatformSecrets {
   @JSExport def resolveOas20(unit: BaseUnit): BaseUnit = new Oas20Resolver().resolve(unit)
 
   @JSExport def resolveAmfGraph(unit: BaseUnit): BaseUnit = new AmfGraphResolver().resolve(unit)
-
-  @JSExport def jsonPayloadParser(): JsonPayloadParser = new JsonPayloadParser()
-
-  @JSExport def yamlPayloadParser(): YamlPayloadParser = new YamlPayloadParser()
 }
 
 @JSExportAll
@@ -115,24 +85,18 @@ object AMF extends PlatformSecrets {
 object CoreWrapper {
   def init(): ClientFuture[Unit] = Core.init()
 
-  def parser(vendor: String, mediaType: String): Parser = Core.parser(vendor, mediaType)
-
-  def parser(vendor: String, mediaType: String, env: Environment): Parser = Core.parser(vendor, mediaType, env)
-
   def generator(vendor: String, mediaType: String): Renderer = Core.generator(vendor, mediaType)
 
   def resolver(vendor: String): Resolver = Core.resolver(vendor)
 
-  def validate(model: BaseUnit,
-               profileName: ProfileName,
-               messageStyle: MessageStyle = AMFStyle): ClientFuture[AMFValidationReport] =
-    Core.validate(model, profileName, messageStyle)
+  def validate(model: BaseUnit, profileName: ProfileName): ClientFuture[AMFValidationReport] =
+    Core.validate(model, profileName)
 
   def validate(model: BaseUnit,
                profileName: ProfileName,
                messageStyle: MessageStyle,
                env: Environment): ClientFuture[AMFValidationReport] =
-    Core.validate(model, profileName, messageStyle, env)
+    Core.validate(model, profileName, env)
 
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 

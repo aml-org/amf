@@ -109,10 +109,13 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
     override def validator(s: Shape,
                            config: ValidationConfiguration,
                            validationMode: ValidationMode): PayloadValidator =
-      AnyMathPayloadValidator(s, defaultSeverity)
+      AnyMathPayloadValidator(s, defaultSeverity, config)
   }
 
-  case class AnyMathPayloadValidator(shape: Shape, defaultSeverity: String) extends PayloadValidator {
+  case class AnyMathPayloadValidator(shape: Shape,
+                                     defaultSeverity: String,
+                                     override val configuration: ValidationConfiguration)
+      extends PayloadValidator {
     override def validate(payload: String, mediaType: String)(
         implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
 
@@ -153,6 +156,5 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
         implicit executionContext: ExecutionContext): Future[Boolean] =
       validate(mediaType, payload).map(_.conforms)
     override val validationMode: ValidationMode = StrictValidationMode
-    override val configuration: ValidationConfiguration = ValidationConfiguration.predefined()
   }
 }

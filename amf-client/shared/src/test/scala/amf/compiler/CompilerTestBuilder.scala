@@ -33,5 +33,5 @@ trait CompilerTestBuilder extends PlatformSecrets {
                          validation: Future[Validation],
                          eh: Option[ParserErrorHandler] = None): Future[AMFCompiler] =
     validation.map(v =>
-      AMFCompiler(url, platform, hint, cache = cache, eh = eh.getOrElse(DefaultParserErrorHandler.withRun())))
+      AMFCompiler(url, platform, hint, cache = cache, eh = eh.getOrElse(DefaultParserErrorHandler())))
 }

@@ -79,12 +79,12 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   private def validate(file: String, fixture: (AMFValidationResult => Unit)*) = {
-    val eh = DefaultParserErrorHandler.withRun()
+    val eh = DefaultParserErrorHandler()
     Validation(platform).flatMap { _ =>
       AMFCompiler(file, platform, Raml10YamlHint, eh = eh)
         .build()
         .map { _ =>
-          val report = eh.getErrors.distinct
+          val report = eh.results.distinct
           if (report.size == fixture.size) {
             fixture.zip(report).foreach {
               case (fn, result) => fn(result)

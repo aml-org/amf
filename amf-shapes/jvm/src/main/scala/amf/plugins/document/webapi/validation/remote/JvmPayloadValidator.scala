@@ -8,7 +8,12 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.validation.json.{InvalidJSONValueException, JSONObject, JSONTokenerHack, ScalarTokenerHack}
+import amf.plugins.document.webapi.validation.json.{
+  InvalidJSONValueException,
+  JSONObject,
+  JSONTokenerHack,
+  ScalarTokenerHack
+}
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.validations.ShapePayloadValidations
 import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
@@ -23,7 +28,7 @@ import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
 class JvmPayloadValidator(val shape: Shape,
                           val validationMode: ValidationMode,
-                          val configuration: ValidationConfiguration)
+                          override val configuration: ValidationConfiguration)
     extends PlatformPayloadValidator(shape, configuration) {
 
   case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
