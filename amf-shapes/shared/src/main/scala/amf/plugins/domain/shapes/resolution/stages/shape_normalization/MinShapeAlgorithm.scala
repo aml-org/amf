@@ -11,11 +11,15 @@ import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, Value}
 import amf.core.utils.IdCounter
+import amf.core.validation.AMFValidationResult
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.validations.ShapeResolutionSideValidations.{InvalidTypeInheritanceErrorSpecification, InvalidTypeInheritanceWarningSpecification}
+import amf.validations.ShapeResolutionSideValidations.{
+  InvalidTypeInheritanceErrorSpecification,
+  InvalidTypeInheritanceWarningSpecification
+}
 import org.yaml.model.YError
 
 import scala.collection.mutable
@@ -389,7 +393,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         ctx.cache
       )
     }
-    override val parserRun: Int = AMFCompilerRunCount.NONE
+
+    override def results(): List[AMFValidationResult] = List.empty
   }
   protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
 

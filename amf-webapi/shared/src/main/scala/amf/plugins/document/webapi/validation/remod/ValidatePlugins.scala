@@ -1,7 +1,12 @@
 package amf.plugins.document.webapi.validation.remod
 
 import amf.ProfileName
-import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions, ValidationResult}
+import amf.client.remod.amfcore.plugins.validate.{
+  AMFValidatePlugin,
+  ValidationConfiguration,
+  ValidationOptions,
+  ValidationResult
+}
 import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
@@ -17,10 +22,11 @@ import scala.concurrent.{ExecutionContext, Future}
 
 trait ModelResolution {
 
-  def withResolvedModel[T](unit: BaseUnit, profile: ProfileName)(withResolved: BaseUnit => T): T = {
+  def withResolvedModel[T](unit: BaseUnit, profile: ProfileName, conf: ValidationConfiguration)(
+      withResolved: BaseUnit => T): T = {
     if (unit.resolved) withResolved(unit)
     else {
-      val resolvedUnit = ValidationTransformationPipeline(profile, unit)
+      val resolvedUnit = ValidationTransformationPipeline(profile, unit, conf.eh)
       withResolved(resolvedUnit)
     }
   }
@@ -28,11 +34,7 @@ trait ModelResolution {
 
 trait LegacyContextCreation {
   def legacyContext(unit: BaseUnit, options: ValidationOptions) =
-    ValidationContext(unit,
-                      options.profileName,
-                      messageStyle = options.profileName.messageStyle,
-                      validations = options.validations,
-                      env = options.environment)
+    ValidationContext(unit, options)
 }
 
 case class ValidateStepPluginAdapter(id: String, factory: ValidationContext => ValidationStep)
@@ -42,7 +44,7 @@ case class ValidateStepPluginAdapter(id: String, factory: ValidationContext => V
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
-    withResolvedModel(unit, options.profileName) { resolvedUnit =>
+    withResolvedModel(unit, options.profileName, options.config) { resolvedUnit =>
       val context = legacyContext(resolvedUnit, options)
       factory(context).run.map(report => ValidationResult(resolvedUnit, report))
     }

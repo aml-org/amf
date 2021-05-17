@@ -4,7 +4,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.plugin.PluginContext
+import amf.core.plugin.RegistryContext
 import amf.core.remote.{Cache, Context, Vendor}
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeCompiler

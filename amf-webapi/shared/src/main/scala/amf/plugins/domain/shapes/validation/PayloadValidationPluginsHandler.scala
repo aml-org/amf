@@ -1,8 +1,8 @@
 package amf.plugins.domain.shapes.validation
 
 import amf.ProfileName
-import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins._
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
 import amf.core.registries.AMFPluginsRegistry
@@ -10,16 +10,15 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
-import amf.internal.environment.Environment
+import amf.validations.ParserSideValidations
 import amf.validations.PayloadValidations.UnsupportedExampleMediaTypeWarningSpecification
-import amf.validations.{ParserSideValidations, PayloadValidations, ShapePayloadValidations}
 
 import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
 object PayloadValidationPluginsHandler extends PlatformSecrets {
 
-  def validateAll(candidates: Seq[ValidationCandidate], severity: String, env: Environment)(
+  def validateAll(candidates: Seq[ValidationCandidate], severity: String, config: ValidationConfiguration)(
       implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     val validators: mutable.Map[(Shape, String), PayloadValidator] = mutable.Map()
 
@@ -27,7 +26,10 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
       val validator = validators.get((c.shape, c.payload.mediaType.value())) match {
         case Some(v) => v
         case _ =>
-          val v: PayloadValidator = plugin(c.payload.mediaType.value(), c.shape, env, severity).validator(c.shape, env)
+          val v: PayloadValidator = plugin(c.payload.mediaType.value(),
+                                           c.shape,
+                                           config: ValidationConfiguration,
+                                           severity).validator(c.shape, config)
           validators.put((c.shape, c.payload.mediaType.value()), v)
           v
       }
@@ -42,62 +44,61 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
     }
   }
 
-  def validateFragment(
-      shape: Shape,
-      fragment: PayloadFragment,
-      severity: String,
-      env: Environment = Environment(),
-      validationMode: ValidationMode = StrictValidationMode,
-      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
-    val p                                           = plugin(fragment.mediaType.value(), shape, env, severity)
+  def validateFragment(shape: Shape,
+                       fragment: PayloadFragment,
+                       severity: String,
+                       config: ValidationConfiguration,
+                       validationMode: ValidationMode = StrictValidationMode): Future[AMFValidationReport] = {
+    implicit val executionContext: ExecutionContext = config.executionContext
+    val p                                           = plugin(fragment.mediaType.value(), shape, config, severity)
 
-    p.validator(shape, env, validationMode).validate(fragment)
+    p.validator(shape, config, validationMode).validate(fragment)
   }
 
-  def validateWithGuessing(
-      shape: Shape,
-      payload: String,
-      severity: String,
-      env: Environment = Environment(),
-      validationMode: ValidationMode = StrictValidationMode,
-      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] =
-    validate(shape, payload.guessMediaType(isScalar = false), payload, severity, env, validationMode, exec)
+  def validateWithGuessing(shape: Shape,
+                           payload: String,
+                           severity: String,
+                           config: ValidationConfiguration,
+                           validationMode: ValidationMode = StrictValidationMode): Future[AMFValidationReport] =
+    validate(shape, payload.guessMediaType(isScalar = false), payload, severity, config, validationMode)
 
   def validate(shape: Shape,
                mediaType: String,
                payload: String,
                severity: String,
-               env: Environment = Environment(),
-               validationMode: ValidationMode = StrictValidationMode,
-               exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
-    val p                                           = plugin(mediaType, shape, env, severity)
+               config: ValidationConfiguration,
+               validationMode: ValidationMode = StrictValidationMode): Future[AMFValidationReport] = {
+    implicit val executionContext: ExecutionContext = config.executionContext
+    val p                                           = plugin(mediaType, shape, config, severity)
 
-    p.validator(shape, env, validationMode).validate(mediaType, payload)
+    p.validator(shape, config, validationMode).validate(mediaType, payload)
   }
 
   def payloadValidator(shape: Shape,
                        mediaType: String,
-                       env: Environment,
+                       config: ValidationConfiguration,
                        validationMode: ValidationMode): Option[PayloadValidator] =
-    searchPlugin(mediaType, shape, env).map(_.validator(shape, env, validationMode))
+    searchPlugin(mediaType, shape, config).map(_.validator(shape, config, validationMode))
 
   private def plugin(mediaType: String,
                      shape: Shape,
-                     env: Environment,
+                     config: ValidationConfiguration,
                      defaultSeverity: String): AMFPayloadValidationPlugin =
-    searchPlugin(mediaType, shape, env)
+    searchPlugin(mediaType, shape, config)
       .getOrElse(AnyMatchPayloadPlugin(defaultSeverity))
 
-  private def searchPlugin(mediaType: String, shape: Shape, env: Environment): Option[AMFPayloadValidationPlugin] =
-    AMFPluginsRegistry.dataNodeValidatorPluginForMediaType(mediaType).find(_.canValidate(shape, env))
+  private def searchPlugin(mediaType: String,
+                           shape: Shape,
+                           config: ValidationConfiguration): Option[AMFPayloadValidationPlugin] =
+    AMFPluginsRegistry
+      .dataNodeValidatorPluginForMediaType(mediaType)
+      .find(_.canValidate(shape, config: ValidationConfiguration))
 
   private case class AnyMatchPayloadPlugin(defaultSeverity: String) extends AMFPayloadValidationPlugin {
 
     override val payloadMediaType: Seq[String] = Nil
 
-    override def canValidate(shape: Shape, env: Environment): Boolean =
+    override def canValidate(shape: Shape, config: ValidationConfiguration): Boolean =
       false // this not should be indexed, its the default for not match
 
     override val ID: String = "Any match"
@@ -105,7 +106,9 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
     override def dependencies(): Seq[AMFPlugin] = Nil
 
     override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
-    override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator =
+    override def validator(s: Shape,
+                           config: ValidationConfiguration,
+                           validationMode: ValidationMode): PayloadValidator =
       AnyMathPayloadValidator(s, defaultSeverity)
   }
 
@@ -150,6 +153,6 @@ object PayloadValidationPluginsHandler extends PlatformSecrets {
         implicit executionContext: ExecutionContext): Future[Boolean] =
       validate(mediaType, payload).map(_.conforms)
     override val validationMode: ValidationMode = StrictValidationMode
-    override val env: Environment               = Environment()
+    override val configuration: ValidationConfiguration = ValidationConfiguration.predefined()
   }
 }

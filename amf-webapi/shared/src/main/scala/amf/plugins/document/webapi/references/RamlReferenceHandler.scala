@@ -28,11 +28,11 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends WebApiReferenceHandle
 
   private def handleRamlExternalFragment(reference: ParsedReference, compilerContext: CompilerContext)(
       implicit executionContext: ExecutionContext): Future[ParsedReference] = {
-    resolveUnitDocument(reference, compilerContext.parserContext) match {
+    resolveUnitDocument(reference, compilerContext.parseConfiguration.parserContext) match {
       case Right(document) =>
         val parsed = SyamlParsedDocument(document)
 
-        val refs              = new RamlReferenceHandler(plugin).collect(parsed, compilerContext.parserContext)
+        val refs              = new RamlReferenceHandler(plugin).collect(parsed, compilerContext.parseConfiguration.parserContext)
         val updated           = compilerContext.forReference(reference.origin.url)
         val allowedMediaTypes = plugin.validMediaTypesToReference ++ plugin.mediaTypes
         val externals = refs.toReferences.map((r: Reference) => {
@@ -46,7 +46,7 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends WebApiReferenceHandle
                   r.refs.foreach { refContainer =>
                     refContainer.node match {
                       case mut: MutRef =>
-                        res.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
+                        res.unit.references.foreach(u => compilerContext.parseConfiguration.parserContext.addSonRef(u))
                         mut.target = res.ast
                       case other =>
                         compilerContext.violation(InvalidFragmentType,
@@ -66,7 +66,7 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends WebApiReferenceHandle
         Future.sequence(externals).map(_ => reference.copy(ast = Some(document.node)))
       case Left(raw) =>
         Future.successful {
-          reference.unit.references.foreach(u => compilerContext.parserContext.addSonRef(u))
+          reference.unit.references.foreach(u => compilerContext.parseConfiguration.parserContext.addSonRef(u))
           reference.copy(ast = Some(YNode(raw, reference.unit.location().getOrElse(""))))
         }
     }

@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.{Inferred, LexicalInformation}
+import amf.core.annotations.LexicalInformation
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.errorhandler.ParserErrorHandler
-import amf.core.parser.{FieldEntry, ParserContext, Value}
+import amf.core.parser.{FieldEntry, ParserContext}
+import amf.core.validation.AMFValidationResult
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
@@ -38,7 +39,7 @@ class InferredOverlayTypeExampleTransform(implicit val errorHandler: ErrorHandle
     }).node
     // TODO: should be able to configure wether the DataNodeParser uses a ctx or not. Removing WebApiContext dependency from DataNodeParser is not a simple refactor.
     val dummyCtx =
-      new Raml10WebApiContext("", Seq(), ParserContext(eh = new ParserErrorHandlerAdapter(-1, errorHandler)))
+      new Raml10WebApiContext("", Seq(), ParserContext(eh = new ParserErrorHandlerAdapter(errorHandler)))
     val result = NodeDataNodeParser(node, example.id, quiet = true)(WebApiShapeParserContextAdapter(dummyCtx)).parse()
     result.dataNode.foreach { dataNode =>
       example.set(ExampleModel.StructuredValue, dataNode, example.structuredValue.annotations)
@@ -51,7 +52,7 @@ class InferredOverlayTypeExampleTransform(implicit val errorHandler: ErrorHandle
     case None                       => false
   }
 
-  class ParserErrorHandlerAdapter(val parserRun: Int, errorHandler: ErrorHandler) extends ParserErrorHandler {
+  class ParserErrorHandlerAdapter(errorHandler: ErrorHandler) extends ParserErrorHandler {
     override def reportConstraint(id: String,
                                   node: String,
                                   property: Option[String],
@@ -60,6 +61,8 @@ class InferredOverlayTypeExampleTransform(implicit val errorHandler: ErrorHandle
                                   level: String,
                                   location: Option[String]): Unit =
       errorHandler.reportConstraint(id, node, property, message, lexical, level, location)
+
+    override def results(): List[AMFValidationResult] = errorHandler.results()
   }
 
 }

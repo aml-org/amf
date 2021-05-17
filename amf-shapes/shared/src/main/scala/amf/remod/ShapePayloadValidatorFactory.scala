@@ -1,41 +1,41 @@
 package amf.remod
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.PayloadValidator
-import amf.internal.environment.Environment
 import amf.plugins.domain.webapi.unsafe.JsonSchemaValidatorBuilder
 
 object ShapePayloadValidatorFactory extends PlatformSecrets {
 
   def createPayloadValidator(
       shape: Shape,
-      env: Environment = Environment(platform.defaultExecutionEnvironment)): PayloadValidator = {
-    validator(shape, env, StrictValidationMode)
+      config: ValidationConfiguration): PayloadValidator = {
+    validator(shape, config, StrictValidationMode)
   }
 
   def createParameterValidator(
       shape: Shape,
-      env: Environment = Environment(platform.defaultExecutionEnvironment)): PayloadValidator = {
-    validator(shape, env, ScalarRelaxedValidationMode)
+      config: ValidationConfiguration): PayloadValidator = {
+    validator(shape, config, ScalarRelaxedValidationMode)
   }
 
   def createValidator(shape: Shape,
-                      env: Environment = Environment(platform.defaultExecutionEnvironment),
+                      config: ValidationConfiguration,
                       validationMode: ValidationMode): PayloadValidator = {
-    validator(shape, env, validationMode)
+    validator(shape, config, validationMode)
   }
 
   private def validator(shape: Shape,
-                        env: Environment = Environment(platform.defaultExecutionEnvironment),
+                        config: ValidationConfiguration,
                         mode: ValidationMode): PayloadValidator = {
     shape match {
       case recursive: RecursiveShape =>
         recursive.fixpointTarget
-          .map(target => validator(target, env, mode))
+          .map(target => validator(target, config, mode))
           .getOrElse(throw new Exception("Can't validate RecursiveShape with no fixpointTarget"))
-      case _ => JsonSchemaValidatorBuilder.payloadValidator(shape, env, mode)
+      case _ => JsonSchemaValidatorBuilder.payloadValidator(shape, mode, config)
     }
   }
 }

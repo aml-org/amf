@@ -1,13 +1,12 @@
 package amf.plugins.document.webapi.validation.runner
 
+import amf.ProfileName
+import amf.client.remod.amfcore.plugins.validate.{ValidationConfiguration, ValidationOptions}
 import amf.core.model.document.BaseUnit
-import amf.core.remote.Platform
 import amf.core.validation.EffectiveValidations
-import amf.internal.environment.Environment
-import amf.{MessageStyle, ProfileName}
 
-case class ValidationContext(baseUnit: BaseUnit,
-                             profile: ProfileName,
-                             messageStyle: MessageStyle,
-                             validations: EffectiveValidations,
-                             env: Environment)
+case class ValidationContext(baseUnit: BaseUnit, private val options: ValidationOptions) {
+  val profileName: ProfileName               = options.profileName
+  val validations: EffectiveValidations      = options.validations
+  val configuration: ValidationConfiguration = options.config
+}
