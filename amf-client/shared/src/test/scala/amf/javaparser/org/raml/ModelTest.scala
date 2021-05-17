@@ -15,7 +15,7 @@ import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
-import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
+import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 
 import scala.concurrent.Future
 

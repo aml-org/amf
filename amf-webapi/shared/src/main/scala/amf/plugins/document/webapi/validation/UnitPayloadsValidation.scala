@@ -8,8 +8,8 @@ import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLe
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.validation.collector.{CollectorsRunner, ValidationCandidateCollector}
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
-import amf.validations.PayloadValidations.SchemaException
 import amf.validations.ShapePayloadValidations
+import amf.validations.ShapePayloadValidations.SchemaException
 
 import scala.concurrent.{ExecutionContext, Future}
 

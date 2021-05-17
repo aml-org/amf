@@ -13,7 +13,10 @@ import amf.plugins.document.webapi.contexts.emitter.jsonschema.JsonSchemaEmitter
 import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
 import amf.plugins.document.webapi.parser.spec.declaration.SchemaPosition.Schema
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ApiShapeEmitterContextAdapter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  AgnosticShapeEmitterContextAdapter,
+  OasLikeShapeEmitterContextAdapter
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
   AnnotationTypeEmitter,
   FacetsInstanceEmitter,
@@ -21,19 +24,20 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.
   OasFacetsInstanceEmitter
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.oas.OasTypeEmitter
-import amf.plugins.document.webapi.parser.spec.domain.{OasHeaderEmitter, _}
+import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.emitters._
-import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, OasTypeDefStringValueMatcher}
 import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import org.yaml.model.YDocument.PartBuilder
 
+import scala.util.matching.Regex
+
 abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterContext)
     extends OasLikeSpecEmitterFactory
     with OasCompactEmitterFactory {
 
-  protected override implicit val shapeCtx = ApiShapeEmitterContextAdapter(spec)
+  protected override implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   override def tagToReferenceEmitter: (DomainElement, Seq[BaseUnit]) => TagToReferenceEmitter =
     (link, _) => OasTagToReferenceEmitter(link)
@@ -142,7 +146,7 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler,
                                      options: ShapeRenderOptions = ShapeRenderOptions(),
                                      val compactEmission: Boolean = true)
     extends OasLikeSpecEmitterContext(eh, refEmitter, options)
-    with CompactEmissionContext {
+    with CompactableEmissionContext {
 
   def schemasDeclarationsPath: String
 
@@ -151,10 +155,8 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler,
 
   override val factory: OasSpecEmitterFactory
 
-  val typeDefMatcher: OasTypeDefStringValueMatcher = CommonOasTypeDefMatcher
-
   override def filterLocal[T <: DomainElement](elements: Seq[T]): Seq[T] =
-    super[CompactEmissionContext].filterLocal(elements)
+    super[CompactableEmissionContext].filterLocal(elements)
 }
 
 class Oas3SpecEmitterContext(eh: ErrorHandler,
@@ -178,9 +180,4 @@ class Oas2SpecEmitterContext(eh: ErrorHandler,
   override val factory: OasSpecEmitterFactory  = new Oas2SpecEmitterFactory(this)
   override val vendor: Vendor                  = Oas20
   override def schemasDeclarationsPath: String = "/definitions/"
-}
-
-object OasRefEmitter extends RefEmitter {
-
-  override def ref(url: String, b: PartBuilder): Unit = b.obj(MapEntryEmitter("$ref", url).emit(_))
 }

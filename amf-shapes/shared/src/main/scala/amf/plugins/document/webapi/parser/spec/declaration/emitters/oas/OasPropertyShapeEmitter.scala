@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.RecursiveShape
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Position
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{OasLikeShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YNode, YScalar, YType}
@@ -16,12 +16,12 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
                                    references: Seq[BaseUnit],
                                    propertiesKey: String = "properties",
                                    pointer: Seq[String] = Nil,
-                                   schemaPath: Seq[(String, String)] = Nil)(implicit spec: ShapeEmitterContext)
-  extends OasTypePartCollector(property.range, ordering, Nil, references)
+                                   schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeShapeEmitterContext)
+    extends OasTypePartCollector(property.range, ordering, Nil, references)
     with EntryEmitter {
 
   val propertyName: String = property.patternName.option().getOrElse(property.name.value())
-  val propertyKey: YNode = YNode(YScalar(propertyName), YType.Str)
+  val propertyKey: YNode   = YNode(YScalar(propertyName), YType.Str)
 
   val computedEmitters: Either[PartEmitter, Seq[EntryEmitter]] =
     emitter(pointer ++ Seq(propertiesKey, propertyName), schemaPath)
@@ -33,7 +33,7 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
           propertyKey,
           pb => {
             computedEmitters match {
-              case Left(p) => p.emit(pb)
+              case Left(p)        => p.emit(pb)
               case Right(entries) => pb.obj(traverse(ordering.sorted(entries), _))
             }
           }

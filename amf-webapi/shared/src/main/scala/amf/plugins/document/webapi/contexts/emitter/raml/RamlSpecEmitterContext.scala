@@ -12,7 +12,6 @@ import amf.core.remote.{Raml08, Raml10, Vendor}
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   Oas2SpecEmitterContext,
   Oas2SpecEmitterFactory,
-  OasRefEmitter,
   OasSpecEmitterFactory
 }
 import amf.plugins.document.webapi.contexts.{SpecEmitterContext, SpecEmitterFactory}
@@ -26,11 +25,13 @@ import amf.plugins.document.webapi.parser.spec.declaration.emitters.raml.{
   RamlTypePartEmitter
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
   RamlCustomFacetsEmitter,
+  RamlShapeEmitterContext,
+  RamlShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
-import amf.plugins.document.webapi.parser.spec.domain.{RamlParameterEmitter, _}
+import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.emitters.{
   Raml08NamedSecuritySchemeEmitter,
   Raml10NamedSecuritySchemeEmitter,
@@ -54,7 +55,7 @@ import scala.collection.mutable.ListBuffer
 trait RamlEmitterVersionFactory extends SpecEmitterFactory {
 
   implicit val spec: RamlSpecEmitterContext
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeContext: RamlShapeEmitterContext = RamlShapeEmitterContextAdapter(spec)
 
   def retrieveHeader(document: BaseUnit): Option[String]
 
@@ -238,6 +239,8 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
     (property: CustomDomainProperty, ordering: SpecOrdering) =>
       new AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering) {
 
+        override protected implicit val shapeCtx: ShapeEmitterContext = shapeContext
+
         override def emitters(): Either[Seq[EntryEmitter], PartEmitter] =
           Left(shapeEmitters.asInstanceOf[Seq[EntryEmitter]])
         override protected val shapeEmitters: Seq[Emitter] = Seq(new EntryEmitter {
@@ -274,6 +277,8 @@ class Raml10SpecEmitterContext(eh: ErrorHandler,
     extends RamlSpecEmitterContext(eh, refEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml10
+
+  override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
 
 class XRaml10SpecEmitterContext(eh: ErrorHandler,
@@ -285,6 +290,8 @@ class XRaml10SpecEmitterContext(eh: ErrorHandler,
 
   val oasFactory: OasSpecEmitterFactory = new Oas2SpecEmitterFactory(
     new Oas2SpecEmitterContext(eh, refEmitter, options))
+
+  override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
 
 class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = ShapeRenderOptions())
@@ -292,6 +299,7 @@ class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = S
   override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml08
 
+  override def schemaVersion: SchemaVersion = RAML08SchemaVersion
 }
 
 abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
@@ -299,24 +307,8 @@ abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
                                       options: ShapeRenderOptions = ShapeRenderOptions())
     extends SpecEmitterContext(eh, refEmitter, options) {
 
-  import BaseEmitters._
-
   override def localReference(reference: Linkable): PartEmitter = RamlLocalReferenceEmitter(reference)
-
-  def localReferenceEntryEmitter(key: String, reference: Linkable): EntryEmitter =
-    new RamlLocalReferenceEntryEmitter(key, reference)
-
-  def externalReference(reference: Linkable): PartEmitter =
-    new PartEmitter {
-      override def emit(b: PartBuilder): Unit =
-        b += YNode.include(reference.linkLabel.option().getOrElse(reference.location().get))
-      override def position(): Position = pos(reference.annotations)
-    }
 
   val factory: RamlEmitterVersionFactory
 
-}
-
-object RamlRefEmitter extends RefEmitter {
-  override def ref(url: String, b: PartBuilder): Unit = b += YNode.include(url)
 }

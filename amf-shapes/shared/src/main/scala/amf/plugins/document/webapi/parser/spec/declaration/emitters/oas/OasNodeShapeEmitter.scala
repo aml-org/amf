@@ -7,13 +7,32 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.FieldEntry
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{Draft2019DependenciesEmitter, Draft4DependenciesEmitter, TypeEmitterFactory}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  OasLikeShapeEmitterContext,
+  OasTypeFacetEmitter,
+  ShapeEmitterContext
+}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.{
+  Draft2019DependenciesEmitter,
+  Draft4DependenciesEmitter,
+  TypeEmitterFactory
+}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.emitter.UnevaluatedEmitter.unevaluatedPropertiesInfo
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.emitter.{UnevaluatedEmitter, UntranslatableDraft2019FieldsPresentGuard}
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft201909SchemaVersion, JSONSchemaDraft7SchemaVersion, OAS30SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.emitter.{
+  UnevaluatedEmitter,
+  UntranslatableDraft2019FieldsPresentGuard
+}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft201909SchemaVersion,
+  JSONSchemaDraft7SchemaVersion,
+  OAS30SchemaVersion
+}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
-import amf.plugins.domain.shapes.metamodel.NodeShapeModel.{AdditionalPropertiesSchema, UnevaluatedProperties, UnevaluatedPropertiesSchema}
+import amf.plugins.domain.shapes.metamodel.NodeShapeModel.{
+  AdditionalPropertiesSchema,
+  UnevaluatedProperties,
+  UnevaluatedPropertiesSchema
+}
 import amf.plugins.domain.shapes.models.NodeShape
 
 import scala.collection.mutable.ListBuffer
@@ -23,8 +42,8 @@ case class OasNodeShapeEmitter(node: NodeShape,
                                references: Seq[BaseUnit],
                                pointer: Seq[String] = Nil,
                                schemaPath: Seq[(String, String)] = Nil,
-                               isHeader: Boolean = false)(implicit spec: ShapeEmitterContext)
-  extends OasAnyShapeEmitter(node, ordering, references, isHeader = isHeader) {
+                               isHeader: Boolean = false)(implicit spec: OasLikeShapeEmitterContext)
+    extends OasAnyShapeEmitter(node, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
     val isOas3 = spec.schemaVersion.isInstanceOf[OAS30SchemaVersion]
 
@@ -32,7 +51,7 @@ case class OasNodeShapeEmitter(node: NodeShape,
 
     val fs = node.fields
 
-    result += spec.oasTypePropertyEmitter("object", node)
+    result += OasTypeFacetEmitter("object", node)
 
     fs.entry(NodeShapeModel.MinProperties).map(f => result += ValueEmitter("minProperties", f))
 
@@ -43,11 +62,11 @@ case class OasNodeShapeEmitter(node: NodeShape,
     additionalPropertiesSchema match {
       case Some(f) =>
         result += OasEntryShapeEmitter("additionalProperties",
-          f.element.asInstanceOf[Shape],
-          ordering,
-          references,
-          pointer,
-          schemaPath)
+                                       f.element.asInstanceOf[Shape],
+                                       ordering,
+                                       references,
+                                       pointer,
+                                       schemaPath)
       case None =>
         fs.entry(NodeShapeModel.Closed)
           .filter(f => isExplicit(f) || f.scalar.toBool)
@@ -55,8 +74,8 @@ case class OasNodeShapeEmitter(node: NodeShape,
     }
 
     UntranslatableDraft2019FieldsPresentGuard(node,
-      Seq(UnevaluatedPropertiesSchema, UnevaluatedProperties),
-      Seq("unevaluatedProperties")).evaluateOrRun { () =>
+                                              Seq(UnevaluatedPropertiesSchema, UnevaluatedProperties),
+                                              Seq("unevaluatedProperties")).evaluateOrRun { () =>
       result += new UnevaluatedEmitter(node, unevaluatedPropertiesInfo, ordering, references, pointer, schemaPath)
     }
 

@@ -12,7 +12,9 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, Ram
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
+  AgnosticShapeEmitterContextAdapter,
+  RamlShapeEmitterContext,
+  RamlShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
@@ -113,7 +115,7 @@ abstract class RamlOperationPartEmitter(operation: Operation, ordering: SpecOrde
     extends PartEmitter {
 
   protected val baseUriParameterKey: String
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: RamlShapeEmitterContext = RamlShapeEmitterContextAdapter(spec)
 
   override def emit(b: PartBuilder): Unit = {
     val fs = operation.fields
@@ -231,7 +233,7 @@ case class OasCallbackEmitter(callbacks: Seq[Callback], ordering: SpecOrdering, 
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx: ShapeEmitterContext = AgnosticShapeEmitterContextAdapter(spec)
 
   override def emit(p: PartBuilder): Unit =
     callbacks.headOption foreach { firstCallback =>

@@ -6,15 +6,15 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.domain.shapes.metamodel.ArrayShapeModel
 import amf.plugins.domain.shapes.models.ArrayShape
 
 import scala.collection.mutable.ListBuffer
 
 case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: ShapeEmitterContext)
-  extends RamlAnyShapeEmitter(array, ordering, references) {
+    implicit spec: RamlShapeEmitterContext)
+    extends RamlAnyShapeEmitter(array, ordering, references) {
   override def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 

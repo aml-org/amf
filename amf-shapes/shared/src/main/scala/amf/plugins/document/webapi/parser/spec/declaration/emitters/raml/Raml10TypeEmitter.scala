@@ -7,8 +7,14 @@ import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
 import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.parser.Position
-import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ExternalSchemaWrapper, ForceEntry, ParsedJSONSchema}
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.ShapeEmitterContext
+import amf.plugins.document.webapi.annotations.{
+  ExternalReferenceUrl,
+  ExternalSchemaWrapper,
+  ForceEntry,
+  ParsedJSONSchema
+}
+import amf.plugins.document.webapi.parser.spec.declaration.common.ExternalLinkQuery.queryResidenceUnitOfLinkTarget
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{RamlShapeEmitterContext, ShapeEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.common.RamlExternalReferenceUrlEmitter
 import amf.plugins.domain.shapes.models._
 import org.yaml.model.YDocument.EntryBuilder
@@ -18,7 +24,7 @@ case class Raml10TypeEmitter(shape: Shape,
                              ordering: SpecOrdering,
                              ignored: Seq[Field] = Nil,
                              references: Seq[BaseUnit],
-                             forceEntry: Boolean = false)(implicit spec: ShapeEmitterContext) {
+                             forceEntry: Boolean = false)(implicit spec: RamlShapeEmitterContext) {
   def emitters(): Seq[Emitter] = {
     shape match {
       case shape: AnyShape if shape.annotations.contains(classOf[ExternalSchemaWrapper]) =>
@@ -27,12 +33,9 @@ case class Raml10TypeEmitter(shape: Shape,
         Seq(RamlExternalSourceEmitter(shape.asInstanceOf[AnyShape], references))
       case shape: Shape if hasExternalReferenceUrl(shape) =>
         Seq(RamlExternalReferenceUrlEmitter(shape)())
-      case l: Linkable if l.isLink =>
-        val isForceEntry = forceEntry || l.annotations.contains(classOf[ForceEntry])
-        val refEmitter =
-          if (l.annotations.contains(classOf[ExternalFragmentRef]) ||
-            spec.externalLink(shape, references).exists(_.isInstanceOf[EncodesModel])) spec.externalReference(shape)
-          else spec.localReference(shape)
+      case linkable: Linkable if linkable.isLink =>
+        val isForceEntry = forceEntry || linkable.annotations.contains(classOf[ForceEntry])
+        val refEmitter   = getSuitableRefEmitter(linkable)
         if (isForceEntry) Seq(EntryPartEmitter("type", refEmitter))
         else Seq(refEmitter)
       case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema, ordering, references))
@@ -72,12 +75,22 @@ case class Raml10TypeEmitter(shape: Shape,
     }
   }
 
+  private def getSuitableRefEmitter(linkable: Shape) = {
+    if (shouldEmitExternalRef(linkable)) RamlExternalRefEmitter(shape)
+    else spec.localReference(shape)
+  }
+
+  private def shouldEmitExternalRef(l: Shape) = {
+    l.annotations.contains(classOf[ExternalFragmentRef]) ||
+    queryResidenceUnitOfLinkTarget(shape, references).exists(_.isInstanceOf[EncodesModel])
+  }
+
   private def hasExternalReferenceUrl(shape: Shape) = shape.annotations.contains(classOf[ExternalReferenceUrl])
 
   private def shapeWasParsedFromAnExternalFragment(shape: AnyShape) = {
     shape.fromExternalSource && references.exists {
       case e: ExternalFragment => e.encodes.id.equals(shape.asInstanceOf[AnyShape].externalSourceID.getOrElse(""))
-      case _ => false
+      case _                   => false
     }
   }
 

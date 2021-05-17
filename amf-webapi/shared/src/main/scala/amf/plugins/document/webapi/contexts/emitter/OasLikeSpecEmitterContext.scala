@@ -10,28 +10,20 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{DomainElement, Linkable, RecursiveShape, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.emitter.oas.OasRefEmitter
 import amf.plugins.document.webapi.contexts.{SpecEmitterContext, SpecEmitterFactory}
-import amf.plugins.document.webapi.parser.OasTypeDefStringValueMatcher
-import amf.plugins.document.webapi.parser.spec.async.emitters.Draft6ExamplesEmitter
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.OasLikeShapeEmitterContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.{
   AnnotationEmitter,
   OasAnnotationEmitter
 }
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
-  ApiShapeEmitterContextAdapter,
-  ShapeEmitterContext
-}
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft6SchemaVersion, RefEmitter, SchemaVersion}
-import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasExampleEmitters, OasLikeExampleEmitters}
-import amf.plugins.domain.shapes.models.Example
+import amf.plugins.document.webapi.parser.spec.declaration.{OasRefEmitter, RefEmitter, SchemaVersion}
 import org.yaml.model.YType
 
-import scala.collection.mutable
+import scala.util.matching.Regex
 
 abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterContext) extends SpecEmitterFactory {
 
-  protected implicit val shapeCtx: ShapeEmitterContext = ApiShapeEmitterContextAdapter(spec)
+  protected implicit val shapeCtx = OasLikeShapeEmitterContextAdapter(spec)
 
   def typeEmitters(shape: Shape,
                    ordering: SpecOrdering,
@@ -40,14 +32,9 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
                    pointer: Seq[String] = Nil,
                    schemaPath: Seq[(String, String)] = Nil): Seq[Emitter]
 
-  def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter
-
-  def exampleEmitter: (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters =
-    (isHeader, exampleOption, ordering, extensions, references) =>
-      if (spec.schemaVersion.isBiggerThanOrEqualTo(JSONSchemaDraft6SchemaVersion))
-        Draft6ExamplesEmitter(exampleOption.toSeq ++ extensions, ordering)
-      else
-        OasExampleEmitters.apply(isHeader, exampleOption, ordering, extensions, references)
+  def recursiveShapeEmitter(shape: RecursiveShape,
+                            ordering: SpecOrdering,
+                            schemaPath: Seq[(String, String)]): EntryEmitter
 
   override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
 }
@@ -56,8 +43,10 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
                                          refEmitter: RefEmitter = OasRefEmitter,
                                          options: ShapeRenderOptions = ShapeRenderOptions())
     extends SpecEmitterContext(eh, refEmitter, options) {
-  def schemaVersion: SchemaVersion
+  override def schemaVersion: SchemaVersion
   def schemasDeclarationsPath: String
+
+  def nameRegex: Regex
 
   override def localReference(reference: Linkable): PartEmitter =
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], Nil)
@@ -67,9 +56,5 @@ abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
 
   val factory: OasLikeSpecEmitterFactory
 
-  val jsonPointersMap: mutable.Map[String, String] = mutable.Map() // id -> pointer
-
   val anyOfKey: String = "union".asOasExtension
-
-  def typeDefMatcher: OasTypeDefStringValueMatcher
 }

@@ -48,7 +48,8 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
     "org.scalatest"   %%% "scalatest"         % "3.0.5" % Test,
-    "org.mule.common" %%% "scala-common-test" % "0.0.6" % Test
+    "org.mule.common" %%% "scala-common-test" % "0.0.6" % Test,
+    "org.slf4j" % "slf4j-nop" % "1.7.28" % Test
   ),
   logBuffered in Test := false
 )
@@ -116,8 +117,6 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .dependsOn(shapes)
   .jvmSettings(
     libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
-    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.12.2",
-    libraryDependencies += "org.json"                          % "json"                   % "20201115",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar",
     mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions"
   )
