@@ -43,11 +43,11 @@ object AMFRawValidations {
                     openApiErrorMessage: String = "",
                     severity: String = Severity.VIOLATION): AMFValidation = {
 
-      def iri(s: String) = Namespace.staticAliases.uri(s).iri()
+      def iri(s: String) = Namespace.defaultAliases.uri(s).iri()
       val sameMessage    = message.nonEmpty && ramlErrorMessage.isEmpty && openApiErrorMessage.isEmpty
 
       new AMFValidation(
-        uri = optional(uri).map(Namespace.staticAliases.uri(_).iri()),
+        uri = optional(uri).map(Namespace.defaultAliases.uri(_).iri()),
         message = optional(message),
         owlClass = iri(owlClass),
         owlProperty = iri(owlProperty),
@@ -89,7 +89,7 @@ object AMFRawValidations {
 
     def adaptValue(constraint: String, value: String): String =
       if (constraint.endsWith("pattern")) value
-      else Namespace.staticAliases.uri(value).iri() // this might not be a URI, but trying to expand it is still safe
+      else Namespace.defaultAliases.uri(value).iri() // this might not be a URI, but trying to expand it is still safe
 
     def optional(s: String): Option[String] = if (s.isEmpty) None else Some(s.trim)
   }
