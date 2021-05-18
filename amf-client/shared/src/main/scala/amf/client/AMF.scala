@@ -6,8 +6,7 @@ import amf.client.convert.CoreClientConverters._
 import amf.client.environment.Environment
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.model.document.{BaseUnit, Dialect}
-import amf.client.parse._
-import amf.client.plugins.{AMFPlugin, ClientAMFPayloadValidationPlugin, ClientAMFPlugin}
+import amf.client.plugins.{ClientAMFPayloadValidationPlugin, ClientAMFPlugin}
 import amf.client.render._
 import amf.client.resolve._
 import amf.client.validate.AMFValidationReport
@@ -16,7 +15,7 @@ import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.{Vocabularies, WebApi}
 import amf.plugins.features.AMFCustomValidation
 import amf.plugins.{document, features}
-import amf.{AMFStyle, Core, MessageStyle, ProfileName}
+import amf.{Core, MessageStyle, ProfileName}
 
 import scala.scalajs.js.annotation.{JSExport, JSExportAll, JSExportTopLevel}
 
@@ -46,16 +45,16 @@ object AMF extends PlatformSecrets {
     * This method receives a resolved model. Don't use it with an unresolved one.
     */
   @JSExport
-  def validateResolved(model: BaseUnit,
-                       profileName: ProfileName,
-                       messageStyle: MessageStyle): ClientFuture[AMFValidationReport] =
-    Core.validateResolved(model, profileName, messageStyle)
+  def validateResolved(model: BaseUnit, profileName: ProfileName): ClientFuture[AMFValidationReport] =
+    Core.validateResolved(model, profileName)
 
   /**
     * This method receives a resolved model. Don't use it with an unresolved one.
     */
   @JSExport
-  def validateResolved(model: BaseUnit, profileName: ProfileName, env: Environment): ClientFuture[AMFValidationReport] =
+  def validateResolved(model: BaseUnit,
+                       profileName: ProfileName,
+                       env: Environment): ClientFuture[AMFValidationReport] =
     Core.validateResolved(model, profileName, env)
 
   @JSExport def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)

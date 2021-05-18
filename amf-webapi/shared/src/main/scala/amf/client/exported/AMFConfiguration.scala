@@ -1,10 +1,10 @@
 package amf.client.exported
 import amf.client.environment.{
   AMFConfiguration => InternalAMFConfiguration,
-  RAMLConfiguration => InternalRAMLConfiguration,
+  AsyncAPIConfiguration => InternalAsyncAPIConfiguration,
   OASConfiguration => InternalOASConfiguration,
-  WebAPIConfiguration => InternalWebAPIConfiguration,
-  AsyncAPIConfiguration => InternalAsyncAPIConfiguration
+  RAMLConfiguration => InternalRAMLConfiguration,
+  WebAPIConfiguration => InternalWebAPIConfiguration
 }
 import amf.client.convert.WebApiClientConverters._
 import amf.client.convert.TransformationPipelineConverter._
@@ -12,6 +12,7 @@ import amf.client.resolve.ClientErrorHandlerConverter._
 import amf.client.exported.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
 import amf.client.exported.transform.TransformationPipeline
 import amf.client.reference.UnitCache
+import amf.client.resolve.ClientErrorHandlerConverter
 import amf.client.resource.ResourceLoader
 
 import scala.concurrent.ExecutionContext
@@ -42,8 +43,9 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: Intern
   override def withRenderOptions(renderOptions: RenderOptions): AMFConfiguration =
     _internal.withRenderOptions(renderOptions)
 
-  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration =
-    _internal.withErrorHandlerProvider(() => provider.errorHandler())
+  //TODO FIX EH
+//  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMFConfiguration =
+//    _internal.withErrorHandlerProvider(() => provider.errorHandler())
 
   override def withEventListener(listener: AMFEventListener): AMFConfiguration = _internal.withEventListener(listener)
 
