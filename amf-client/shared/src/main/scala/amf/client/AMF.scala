@@ -92,8 +92,6 @@ object AMF extends PlatformSecrets {
   @JSExport def emitShapesGraph(profileName: ProfileName): String =
     Core.emitShapesGraph(profileName)
 
-  @JSExport def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
-
   @JSExport def registerDialect(url: String): ClientFuture[Dialect] = Vocabularies.registerDialect(url)
 
   @JSExport
@@ -143,8 +141,6 @@ object CoreWrapper {
 
   def emitShapesGraph(profileName: ProfileName): String =
     Core.emitShapesGraph(profileName)
-
-  def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 
   def registerPlugin(plugin: ClientAMFPlugin): Unit = Core.registerPlugin(AMFPluginConverter.asInternal(plugin))
 
