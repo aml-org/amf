@@ -58,13 +58,13 @@ object RawValidationAdapter extends ImportUtils {
     if (constraintHasUriFragment(validation)) {
       val strings = validation.constraint.trim.split("#")
       ValueType(Namespace.find(strings.head).get, strings.last)
-    } else Namespace.staticAliases.expand(validation.constraint)
+    } else Namespace.defaultAliases.expand(validation.constraint)
   }
 
   private def constraintHasUriFragment(validation: AMFValidation) = validation.constraint.trim.contains("#")
 
   private def expandValidationTargetIri(validation: AMFValidation) = {
-    Namespace.staticAliases.expand(validation.target.trim).iri()
+    Namespace.defaultAliases.expand(validation.target.trim).iri()
   }
 
   private def computeValidationId(validation: AMFValidation) = {

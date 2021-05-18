@@ -60,12 +60,12 @@ object ValidationsExporter extends ImportUtils {
       case Some(id) => id
       case _        => validationId(validation)
     }
-    Namespace.staticAliases.compact(id)
+    Namespace.defaultAliases.compact(id)
   }
 
   def uriModel(s: Option[String]): String = {
     s match {
-      case Some(uri) => Namespace.staticAliases.compact(uri)
+      case Some(uri) => Namespace.defaultAliases.compact(uri)
       case _         => ""
     }
   }
