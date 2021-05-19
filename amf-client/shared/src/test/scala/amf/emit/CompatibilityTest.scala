@@ -57,7 +57,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
         Some(hint.vendor.mediaType),
         Context(platform),
         cache = Cache(),
-        new ParseConfiguration(conf, "amf://id#")
+        ParseConfiguration(conf, "amf://id#")
       )
       _ <- RuntimeValidator(unit, ProfileName(hint.vendor.name), resolved = false, new ValidationConfiguration(conf))
     } yield unit

@@ -185,7 +185,7 @@ object Raml08Plugin extends RamlPlugin {
       // Partial raml0.8 fragment with RAML header but linked through !include
       // we need to generate an external fragment and inline it in the parent document
       case Raml08 if root.referenceKind != LinkReference => true
-      case _: RamlFragment                               => true // this is incorrect, should be removed
+      case _: RamlFragment                               => false
       case _                                             => false
     }
   }
