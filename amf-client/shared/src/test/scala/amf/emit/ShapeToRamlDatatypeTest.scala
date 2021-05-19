@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote.{Oas20JsonHint, Vendor}
@@ -10,7 +10,6 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.api.WebApi
-import amf.remod.RamlShapeSerializer
 import amf.remod.RamlShapeSerializer.toRamlDatatype
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -63,7 +62,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
                     renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a)): Future[Assertion] = {
     val ramlDatatype: Future[String] = for {
       _ <- Validation(platform)
-      sourceUnit <- AMFCompiler(basePath + sourceFile, platform, Oas20JsonHint, eh = DefaultParserErrorHandler())
+      sourceUnit <- AMFCompiler(basePath + sourceFile, platform, Oas20JsonHint, eh = DefaultErrorHandler())
         .build()
     } yield {
       findShapeFunc(

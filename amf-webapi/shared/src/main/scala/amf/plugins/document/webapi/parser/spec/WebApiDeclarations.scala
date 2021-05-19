@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec
 
 import amf.core.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfScalar, DataNode, DomainElement, ObjectNode, Shape}
@@ -61,7 +61,7 @@ class WebApiDeclarations(val alias: Option[String],
                          var serverBindings: Map[String, ServerBindings] = Map(),
                          var operationTraits: Map[String, Operation] = Map(),
                          var messageTraits: Map[String, Message] = Map(),
-                         val errorHandler: ErrorHandler,
+                         val errorHandler: AMFErrorHandler,
                          val futureDeclarations: FutureDeclarations,
                          var others: Map[String, BaseUnit] = Map())
     extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
@@ -418,7 +418,7 @@ class WebApiDeclarations(val alias: Option[String],
 object WebApiDeclarations {
 
   def apply(declarations: Seq[DomainElement],
-            errorHandler: ErrorHandler,
+            errorHandler: AMFErrorHandler,
             futureDeclarations: FutureDeclarations): WebApiDeclarations = {
     val result = new WebApiDeclarations(None, errorHandler = errorHandler, futureDeclarations = futureDeclarations)
     declarations.foreach(result += _)
@@ -610,13 +610,13 @@ object WebApiDeclarations {
 
 class OasLikeWebApiDeclarations(val asts: Map[String, YNode],
                                 override val alias: Option[String],
-                                override val errorHandler: ErrorHandler,
+                                override val errorHandler: AMFErrorHandler,
                                 override val futureDeclarations: FutureDeclarations)
     extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {}
 
 class OasWebApiDeclarations(override val asts: Map[String, YNode],
                             override val alias: Option[String],
-                            override val errorHandler: ErrorHandler,
+                            override val errorHandler: AMFErrorHandler,
                             override val futureDeclarations: FutureDeclarations)
     extends OasLikeWebApiDeclarations(asts,
                                       alias,
@@ -645,7 +645,7 @@ object OasWebApiDeclarations {
 
 class AsyncWebApiDeclarations(override val asts: Map[String, YNode],
                               override val alias: Option[String],
-                              override val errorHandler: ErrorHandler,
+                              override val errorHandler: AMFErrorHandler,
                               override val futureDeclarations: FutureDeclarations)
     extends OasLikeWebApiDeclarations(asts,
                                       alias,
@@ -668,7 +668,7 @@ object AsyncWebApiDeclarations {
 class RamlWebApiDeclarations(var externalShapes: Map[String, AnyShape] = Map(),
                              var externalLibs: Map[String, Map[String, AnyShape]] = Map(),
                              override val alias: Option[String],
-                             override val errorHandler: ErrorHandler,
+                             override val errorHandler: AMFErrorHandler,
                              override val futureDeclarations: FutureDeclarations)
     extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {
 
@@ -708,7 +708,7 @@ class ExtensionWebApiDeclarations(externalShapes: Map[String, AnyShape] = Map(),
                                   externalLibs: Map[String, Map[String, AnyShape]] = Map(),
                                   parentDeclarations: RamlWebApiDeclarations,
                                   override val alias: Option[String],
-                                  override val errorHandler: ErrorHandler,
+                                  override val errorHandler: AMFErrorHandler,
                                   override val futureDeclarations: FutureDeclarations)
     extends RamlWebApiDeclarations(externalShapes, externalLibs, alias, errorHandler, futureDeclarations) {
 

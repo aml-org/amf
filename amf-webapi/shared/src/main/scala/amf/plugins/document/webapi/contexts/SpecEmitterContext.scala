@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.contexts
 import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
@@ -21,7 +21,7 @@ import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, Se
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
 
-abstract class SpecEmitterContext(val eh: ErrorHandler,
+abstract class SpecEmitterContext(val eh: AMFErrorHandler,
                                   private val refEmitter: RefEmitter,
                                   val options: ShapeRenderOptions)
     extends DeclarationEmissionDecorator {

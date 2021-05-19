@@ -1,11 +1,11 @@
 package amf.io
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
 import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.rdf.RdfModel
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor}
@@ -125,9 +125,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   }
 
   /** Method to parse unit. Override if necessary. */
-  def build(config: CycleConfig,
-            eh: Option[ParserErrorHandler],
-            useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
+  def build(config: CycleConfig, eh: Option[AMFErrorHandler], useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
     Validation(platform).flatMap { _ =>
       var options =
         if (!useAmfJsonldSerialisation) ParsingOptions().withoutAmfJsonLdSerialization
@@ -138,7 +136,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
       AMFCompiler(s"file://${config.sourcePath}",
                   platform,
                   config.hint,
-                  eh = eh.getOrElse(UnhandledParserErrorHandler),
+                  eh = eh.getOrElse(UnhandledErrorHandler),
                   parsingOptions = options).build()
     }
   }
@@ -187,13 +185,13 @@ trait BuildCycleTests extends BuildCycleTestCommon {
                   syntax: Option[Syntax] = None,
                   pipeline: Option[String] = None,
                   transformWith: Option[Vendor] = None,
-                  eh: Option[ParserErrorHandler] = None): Future[Assertion] = {
+                  eh: Option[AMFErrorHandler] = None): Future[Assertion] = {
 
     val config                 = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
     val amfJsonLdSerialization = renderOptions.map(_.isAmfJsonLdSerilization).getOrElse(useAmfJsonldSerialization)
 
     for {
-      parsed   <- build(config, eh.orElse(Some(DefaultParserErrorHandler())), amfJsonLdSerialization)
+      parsed   <- build(config, eh.orElse(Some(DefaultErrorHandler())), amfJsonLdSerialization)
       resolved <- Future.successful(transform(parsed, config))
       actualString <- renderOptions match {
         case Some(options) => render(resolved, config, options)

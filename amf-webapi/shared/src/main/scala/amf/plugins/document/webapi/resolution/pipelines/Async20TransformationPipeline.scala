@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.Async20Profile
 import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.remote.AsyncApi20
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.resolution.stages.{
@@ -19,7 +19,7 @@ import amf.plugins.domain.webapi.resolution.stages.async.{
   ServerVariableExampleResolutionStage
 }
 
-class Async20TransformationPipeline private(override val name: String) extends TransformationPipeline() {
+class Async20TransformationPipeline private (override val name: String) extends TransformationPipeline() {
   def references = new WebApiReferenceResolutionStage()
 
   override def steps: Seq[TransformationStep] =

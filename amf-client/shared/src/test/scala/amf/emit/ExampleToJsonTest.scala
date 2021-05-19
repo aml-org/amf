@@ -1,10 +1,10 @@
 package amf.emit
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
 import amf.core.annotations.SourceAST
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.parser.ParserContext
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Raml10YamlHint
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
@@ -67,7 +67,7 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
   private def cycle(source: String, golden: String, removeRaw: Boolean = false): Future[Assertion] = {
     for {
       _       <- Validation(platform)
-      unit    <- AMFCompiler(basePath + source, platform, Raml10YamlHint, eh = UnhandledParserErrorHandler).build()
+      unit    <- AMFCompiler(basePath + source, platform, Raml10YamlHint, eh = UnhandledErrorHandler).build()
       example <- findExample(unit, removeRaw)
       temp    <- writeTemporaryFile(golden)(example.toJson)
       r       <- assertDifferences(temp, goldenPath + golden)
@@ -82,7 +82,7 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
       sourceAst match {
         case Some(a) =>
           val ast      = a.ast.asInstanceOf[YDocument].as[YMap]
-          val context  = new Raml10WebApiContext("", Nil, ParserContext(eh = DefaultParserErrorHandler()))
+          val context  = new Raml10WebApiContext("", Nil, ParserContext(eh = DefaultErrorHandler()))
           val anyShape = AnyShape()
           RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(
             WebApiShapeParserContextAdapter(context)).parse()

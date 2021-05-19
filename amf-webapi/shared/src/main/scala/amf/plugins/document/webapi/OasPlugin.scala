@@ -4,7 +4,7 @@ import amf._
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
@@ -42,7 +42,7 @@ import org.yaml.model.{YDocument, YNode}
 
 sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): OasSpecEmitterContext
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): OasSpecEmitterContext
 
   /**
     * Does references in this type of documents be recursive?
@@ -100,7 +100,7 @@ sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
 
 object Oas20Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): OasSpecEmitterContext =
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): OasSpecEmitterContext =
     new Oas2SpecEmitterContext(errorHandler, compactEmission = options.isWithCompactedEmission)
 
   override protected def vendor: Vendor = Oas20
@@ -130,7 +130,7 @@ object Oas20Plugin extends OasPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
       case module: Module => Some(Oas20ModuleEmitter(module)(specContext(renderOptions, errorHandler)).emitModule())
       case document: Document =>
@@ -162,7 +162,7 @@ object Oas20Plugin extends OasPlugin {
 
 object Oas30Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): Oas3SpecEmitterContext =
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): Oas3SpecEmitterContext =
     new Oas3SpecEmitterContext(errorHandler, compactEmission = options.isWithCompactedEmission)
 
   override protected def vendor: Vendor = Oas30
@@ -192,7 +192,7 @@ object Oas30Plugin extends OasPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
       case module: Module => Some(Oas30ModuleEmitter(module)(specContext(renderOptions, errorHandler)).emitModule())
       case document: Document =>

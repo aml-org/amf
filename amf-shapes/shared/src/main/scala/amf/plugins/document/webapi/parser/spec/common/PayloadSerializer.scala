@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.common
 import amf.client.execution.BaseExecutionEnvironment
 import amf.core.AMFSerializer
 import amf.core.emitter.SpecOrdering
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.DataNode
 import amf.core.remote.Payload
@@ -52,7 +52,8 @@ trait PayloadSerializer extends PlatformSecrets {
   }
 }
 
-case class PayloadEmitter(dataNode: DataNode, ordering: SpecOrdering = SpecOrdering.Lexical)(implicit eh: ErrorHandler) {
+case class PayloadEmitter(dataNode: DataNode, ordering: SpecOrdering = SpecOrdering.Lexical)(
+    implicit eh: AMFErrorHandler) {
   def emitDocument(): YDocument = {
     val f: YDocument.PartBuilder => Unit = DataNodeEmitter(dataNode, ordering)(eh).emit
     YDocument(f)

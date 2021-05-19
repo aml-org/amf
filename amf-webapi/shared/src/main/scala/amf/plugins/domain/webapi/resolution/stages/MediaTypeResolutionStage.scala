@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.PropertyShape
@@ -23,7 +23,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
                                isValidation: Boolean = false,
                                val keepEditingInfo: Boolean = false)
     extends TransformationStep() {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         propagatePayloads(doc.encodes.asInstanceOf[Api])
@@ -51,7 +51,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
     }
   }
 
-  def resolveMediaTypes(api: Api)(implicit errorHandler: ErrorHandler): Unit = {
+  def resolveMediaTypes(api: Api)(implicit errorHandler: AMFErrorHandler): Unit = {
     val rootAccepts     = getAndRemove(api, BaseApiModel.Accepts, keepMediaTypesInModel)
     val rootContentType = getAndRemove(api, BaseApiModel.ContentType, keepMediaTypesInModel)
 
@@ -135,7 +135,7 @@ class MediaTypeResolutionStage(profile: ProfileName,
     overrider.orElse(root).filter(_.nonEmpty)
 
   /** Oas 2.0 violation in which all file parameters must comply with specific consumes property */
-  private def validateFilePayloads(request: Request)(implicit errorHandler: ErrorHandler): Unit = {
+  private def validateFilePayloads(request: Request)(implicit errorHandler: AMFErrorHandler): Unit = {
     val filePayloads = request.payloads.filter(_.schema match {
       // another violation is present to make sure all file parameters are NodeShapes
       case node: NodeShape => node.properties.exists(_.range.isInstanceOf[FileShape])
@@ -155,11 +155,12 @@ class MediaTypeResolutionStage(profile: ProfileName,
       }
   }
 
-  private def mediaTypeError(prop: PropertyShape)(implicit errorHandler: ErrorHandler): Unit = errorHandler.violation(
-    InvalidConsumesWithFileParameter,
-    prop.id,
-    "Consumes must be either 'multipart/form-data', 'application/x-www-form-urlencoded', or both when a file parameter is present",
-    prop.range.annotations
-  )
+  private def mediaTypeError(prop: PropertyShape)(implicit errorHandler: AMFErrorHandler): Unit =
+    errorHandler.violation(
+      InvalidConsumesWithFileParameter,
+      prop.id,
+      "Consumes must be either 'multipart/form-data', 'application/x-www-form-urlencoded', or both when a file parameter is present",
+      prop.range.annotations
+    )
 
 }

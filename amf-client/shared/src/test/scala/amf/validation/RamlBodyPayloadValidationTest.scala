@@ -1,19 +1,17 @@
 package amf.validation
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
 import amf.client.plugins.{StrictValidationMode, ValidationMode}
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeResolver
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.document.webapi.{Raml08Plugin, Raml10Plugin}
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.{AsyncFunSuite, Matchers}
@@ -69,15 +67,9 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
   override def transform(unit: BaseUnit): BaseUnit = {
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
       case Some(Raml08) =>
-        RuntimeResolver.resolve(Raml08.name,
-                                unit,
-                                TransformationPipeline.DEFAULT_PIPELINE,
-                                DefaultParserErrorHandler())
+        RuntimeResolver.resolve(Raml08.name, unit, TransformationPipeline.DEFAULT_PIPELINE, DefaultErrorHandler())
       case _ =>
-        RuntimeResolver.resolve(Raml10.name,
-                                unit,
-                                TransformationPipeline.DEFAULT_PIPELINE,
-                                DefaultParserErrorHandler())
+        RuntimeResolver.resolve(Raml10.name, unit, TransformationPipeline.DEFAULT_PIPELINE, DefaultErrorHandler())
     }
   }
 }
@@ -106,7 +98,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                          payload: String,
                          mediaType: Option[String],
                          givenHint: Hint): Future[AMFValidationReport] = {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
     for {
       _ <- Validation(platform)
       model <- AMFCompiler(api, platform, givenHint, eh = eh)

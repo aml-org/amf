@@ -1,13 +1,13 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import amf.validations.ShapeResolutionSideValidations.InvalidTypeInheritanceWarningSpecification
 import amf.{ProfileName, Raml08Profile}
 
-private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler,
+private[plugins] class NormalizationContext(final val errorHandler: AMFErrorHandler,
                                             final val keepEditingInfo: Boolean,
                                             final val profile: ProfileName,
                                             val cache: NormalizationCache = NormalizationCache()) {

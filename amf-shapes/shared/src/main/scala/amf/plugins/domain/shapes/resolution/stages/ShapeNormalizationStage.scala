@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.resolution.stages
 
 import amf.ProfileName
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.MetaModelTypeMapping
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
@@ -20,11 +20,11 @@ import scala.collection.mutable.ListBuffer
   *  - All type references have been replaced by their expanded forms
   */
 class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean) extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit =
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
     new ShapeNormalization(profile, keepEditingInfo)(errorHandler).resolve(model)
 
   private class ShapeNormalization(profile: ProfileName, val keepEditingInfo: Boolean)(
-      implicit val errorHandler: ErrorHandler) {
+      implicit val errorHandler: AMFErrorHandler) {
 
     protected var m: Option[BaseUnit] = None
     protected val context             = new NormalizationContext(errorHandler, keepEditingInfo, profile)

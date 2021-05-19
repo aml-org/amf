@@ -1,8 +1,8 @@
 package amf.resolution
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote.{Amf, Raml10, Raml10YamlHint}
 import amf.facades.{AMFCompiler, Validation}
 
@@ -12,13 +12,10 @@ class ProductionValidationTest extends RamlResolutionTest {
   override val basePath =
     "amf-client/shared/src/test/resources/production/"
   override def build(config: CycleConfig,
-                     eh: Option[ParserErrorHandler],
+                     eh: Option[AMFErrorHandler],
                      useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
     Validation(platform).flatMap { _ =>
-      AMFCompiler(s"file://${config.sourcePath}",
-                  platform,
-                  config.hint,
-                  eh = eh.getOrElse(DefaultParserErrorHandler()))
+      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, eh = eh.getOrElse(DefaultErrorHandler()))
         .build()
     }
   }

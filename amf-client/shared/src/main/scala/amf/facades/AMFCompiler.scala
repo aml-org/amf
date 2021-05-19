@@ -1,11 +1,11 @@
 package amf.facades
 
-import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
 import amf.client.remod.amfcore.config.ParsingOptionsConverter
+import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
 import amf.core.client.ParsingOptions
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Syntax.{Json, PlainText, Yaml}
 import amf.core.remote._
@@ -69,7 +69,7 @@ object AMFCompiler {
             context: Option[Context] = None,
             cache: Option[Cache] = None,
             ctx: Option[ParserContext] = None,
-            eh: ParserErrorHandler,
+            eh: AMFErrorHandler,
             parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext) = {
     val newEnv =
       AMFPluginsRegistry.obtainStaticConfig().withParsingOptions(ParsingOptionsConverter.fromLegacy(parsingOptions))

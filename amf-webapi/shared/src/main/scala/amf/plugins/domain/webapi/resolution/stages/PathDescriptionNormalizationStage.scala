@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf._
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfScalar
@@ -18,7 +18,7 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 class PathDescriptionNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)
     extends TransformationStep() {
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     profile match {
       // TODO should run for Amf too
       case Oas30Profile | Async20Profile => normalizeDescriptions(model)

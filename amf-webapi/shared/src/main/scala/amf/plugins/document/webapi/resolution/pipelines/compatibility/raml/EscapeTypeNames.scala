@@ -1,5 +1,5 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{Linkable, Shape}
 import amf.core.resolution.stages.TransformationStep
@@ -11,7 +11,7 @@ import amf.plugins.domain.webapi.models.api.Api
 import scala.collection.mutable
 
 class EscapeTypeNames() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val replacedNames: mutable.Map[String, String] = mutable.Map.empty

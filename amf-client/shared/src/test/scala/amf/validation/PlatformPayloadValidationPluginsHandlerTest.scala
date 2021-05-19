@@ -5,7 +5,6 @@ import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.client.validation.PayloadValidationUtils
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Module}
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Raml10YamlHint
 import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.unsafe.PlatformSecrets
@@ -39,7 +38,7 @@ class PlatformPayloadValidationPluginsHandlerTest
       library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
                              platform,
                              Raml10YamlHint,
-                             eh = UnhandledParserErrorHandler).build()
+                             eh = UnhandledErrorHandler).build()
       validator <- Future {
         val shape = findShape(library, "A")
         ShapePayloadValidatorFactory.createPayloadValidator(
@@ -60,7 +59,7 @@ class PlatformPayloadValidationPluginsHandlerTest
       library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
                              platform,
                              Raml10YamlHint,
-                             eh = UnhandledParserErrorHandler).build()
+                             eh = UnhandledErrorHandler).build()
       validator <- Future {
         val shape = findShape(library, "B")
         ShapePayloadValidatorFactory.createPayloadValidator(
@@ -79,7 +78,7 @@ class PlatformPayloadValidationPluginsHandlerTest
       library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
                              platform,
                              Raml10YamlHint,
-                             eh = UnhandledParserErrorHandler).build()
+                             eh = UnhandledErrorHandler).build()
       validator <- Future {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")
@@ -99,7 +98,7 @@ class PlatformPayloadValidationPluginsHandlerTest
       library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
                              platform,
                              Raml10YamlHint,
-                             eh = UnhandledParserErrorHandler).build()
+                             eh = UnhandledErrorHandler).build()
       validator <- Future {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")

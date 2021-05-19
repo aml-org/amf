@@ -2,7 +2,7 @@ package amf.facades
 
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
@@ -77,7 +77,7 @@ class Validation(platform: Platform) {
    */
   }
 
-  def loadValidationProfile(validationProfilePath: String, errorHandler: ErrorHandler): Future[ProfileName] = {
+  def loadValidationProfile(validationProfilePath: String, errorHandler: AMFErrorHandler): Future[ProfileName] = {
     validator.loadValidationProfile(validationProfilePath, errorHandler = errorHandler)
   }
 
