@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.core.annotations.TrackedElement
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ExampleTracking}
@@ -16,13 +16,13 @@ import amf.validations.ResolutionSideValidations.{ExamplesWithInvalidMimeType, E
   * for mutate each payload schema
   */
 class ResponseExamplesResolutionStage() extends TransformationStep() {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       d.withEncodes(resolveApi(d.encodes.asInstanceOf[Api])(errorHandler))
     case _ => model
   }
 
-  def resolveApi(webApi: Api)(implicit errorHandler: ErrorHandler): Api = {
+  def resolveApi(webApi: Api)(implicit errorHandler: AMFErrorHandler): Api = {
     val allResponses = webApi.endPoints.flatMap(e => e.operations).flatMap(o => o.responses)
 
     allResponses.zipWithIndex.foreach {
@@ -56,7 +56,7 @@ class ResponseExamplesResolutionStage() extends TransformationStep() {
   }
 
   private def violationForUnmappedExample(example: Example, mediaType: String, payloads: Seq[Payload])(
-      implicit errorHandler: ErrorHandler): Unit = {
+      implicit errorHandler: AMFErrorHandler): Unit = {
     if (payloads.isEmpty)
       errorHandler.violation(
         ExamplesWithNoSchemaDefined,

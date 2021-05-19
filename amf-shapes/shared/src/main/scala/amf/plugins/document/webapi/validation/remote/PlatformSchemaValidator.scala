@@ -1,17 +1,15 @@
 package amf.plugins.document.webapi.validation.remote
 
-import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.client.render.JsonSchemaDraft7
 import amf.core.client.ParsingOptions
-import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.parser.{
   ErrorHandlingContext,
   FragmentRef,
@@ -160,7 +158,7 @@ abstract class PlatformPayloadValidator(shape: Shape, override val configuration
     val emitter =
       JsonSchemaEmitter(shape, declarations, options = renderOptions, errorHandler = configuration.eh)
     val document = SyamlParsedDocument(document = emitter.emitDocument())
-    validationProcessor.keepResults(configuration.eh.results())
+    validationProcessor.keepResults(configuration.eh.getResults)
     SYamlSyntaxPlugin.unparse("application/json", document)
   }
 
@@ -213,11 +211,10 @@ abstract class PlatformPayloadValidator(shape: Shape, override val configuration
   def parsePayloadWithErrorHandler(payload: String, mediaType: String, shape: Shape): PayloadParsingResult = {
 
     val errorHandler = configuration.eh
-    PayloadParsingResult(parsePayload(payload, mediaType, DefaultParserErrorHandler.fromErrorHandler(errorHandler)),
-                         errorHandler.results())
+    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)
   }
 
-  private def parsePayload(payload: String, mediaType: String, errorHandler: AmfParserErrorHandler): PayloadFragment = {
+  private def parsePayload(payload: String, mediaType: String, errorHandler: AMFErrorHandler): PayloadFragment = {
     val options = ParsingOptions()
     configuration.maxYamlReferences.foreach(options.setMaxYamlReferences)
     val ctx = dataNodeParsingCtx(errorHandler, options.getMaxYamlReferences)
@@ -233,7 +230,7 @@ abstract class PlatformPayloadValidator(shape: Shape, override val configuration
     PayloadFragment(parsedNode, mediaType)
   }
 
-  private def dataNodeParsingCtx(errorHandler: AmfParserErrorHandler,
+  private def dataNodeParsingCtx(errorHandler: AMFErrorHandler,
                                  maxYamlRefs: Option[Long]): ErrorHandlingContext with DataNodeParserContext = {
     new ErrorHandlingContext()(errorHandler) with DataNodeParserContext {
       override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =

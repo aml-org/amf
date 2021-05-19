@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.core.emitter.RenderOptions
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
@@ -23,7 +23,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
     for {
       v  <- Validation(platform)
       _  <- v.loadValidationDialect()
-      bu <- AMFCompiler(basePath + exampleFile, platform, hint, None, None, eh = UnhandledParserErrorHandler).build()
+      bu <- AMFCompiler(basePath + exampleFile, platform, hint, None, None, eh = UnhandledErrorHandler).build()
       r  <- AMFRenderer(bu, target, RenderOptions(), Some(syntax)).renderToString
     } yield r
   }

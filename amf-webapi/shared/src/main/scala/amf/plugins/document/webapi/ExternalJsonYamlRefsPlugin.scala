@@ -3,11 +3,11 @@ package amf.plugins.document.webapi
 import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
+import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{
   Annotations,
   CompilerReferenceCollector,
@@ -15,15 +15,12 @@ import amf.core.parser.{
   LinkReference,
   ParsedDocument,
   ParserContext,
-  ReferenceCollector,
   ReferenceHandler,
   SyamlParsedDocument
 }
-import amf.core.remote.Platform
 import amf.core.utils._
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import org.yaml.model._
-import amf.core.exception.UnsupportedParsedDocumentException
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -45,7 +42,7 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
     collect(inputParsed)(ctx.eh)
   }
 
-  private def collect(inputParsed: ParsedDocument)(implicit errorHandler: ParserErrorHandler) = {
+  private def collect(inputParsed: ParsedDocument)(implicit errorHandler: AMFErrorHandler) = {
     inputParsed match {
       case parsed: SyamlParsedDocument =>
         links(parsed.document)
@@ -61,7 +58,7 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
     references
   }
 
-  private def links(part: YPart)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def links(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
     val childrens = part match {
       case map: YMap if map.map.contains("$ref") =>
         collectRef(map)
@@ -71,7 +68,7 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
     childrens.foreach(c => links(c))
   }
 
-  private def collectRef(map: YMap)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def collectRef(map: YMap)(implicit errorHandler: AMFErrorHandler): Unit = {
     val ref = map.map("$ref")
     ref.tagType match {
       case YType.Str =>
@@ -127,7 +124,7 @@ class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
 
   override def canParse(document: Root): Boolean = !document.raw.isXml // for JSON or YAML
 
-  override def referenceHandler(eh: ErrorHandler): ReferenceHandler = new JsonRefsReferenceHandler()
+  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = new JsonRefsReferenceHandler()
 
   override def dependencies(): Seq[AMFPlugin] = Nil
 

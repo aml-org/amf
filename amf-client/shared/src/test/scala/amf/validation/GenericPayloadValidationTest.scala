@@ -1,9 +1,9 @@
 package amf.validation
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.Shape
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.{PayloadJsonHint, PayloadYamlHint, Raml10YamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.{SeverityLevels, ValidationCandidate}
@@ -71,12 +71,12 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
       }
       val candidates: Future[Seq[ValidationCandidate]] = for {
         validation <- Validation(platform)
-        library <- AMFCompiler(payloadsPath + libraryFile, platform, Raml10YamlHint, eh = UnhandledParserErrorHandler)
+        library <- AMFCompiler(payloadsPath + libraryFile, platform, Raml10YamlHint, eh = UnhandledErrorHandler)
           .build()
-        payload <- AMFCompiler(payloadsPath + payloadFile, platform, hint, eh = UnhandledParserErrorHandler).build()
+        payload <- AMFCompiler(payloadsPath + payloadFile, platform, hint, eh = UnhandledErrorHandler).build()
       } yield {
         // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
-        ValidationTransformationPipeline(AmfProfile, library, UnhandledParserErrorHandler)
+        ValidationTransformationPipeline(AmfProfile, library, UnhandledErrorHandler)
         val targetType = library
           .asInstanceOf[Module]
           .declares
@@ -111,17 +111,14 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
     for {
       content    <- platform.resolve(payloadsPath + "b_valid.yaml")
       validation <- Validation(platform)
-      filePayload <- AMFCompiler(payloadsPath + "b_valid.yaml",
-                                 platform,
-                                 PayloadYamlHint,
-                                 eh = UnhandledParserErrorHandler)
+      filePayload <- AMFCompiler(payloadsPath + "b_valid.yaml", platform, PayloadYamlHint, eh = UnhandledErrorHandler)
         .build()
       validationPayload <- Validation(platform)
       textPayload <- AMFCompiler(
         payloadsPath + "b_valid.yaml",
         TrunkPlatform(content.stream.toString, forcedMediaType = Some("application/yaml")),
         PayloadYamlHint,
-        eh = UnhandledParserErrorHandler
+        eh = UnhandledErrorHandler
       ).build()
     } yield {
       val fileJson = render(filePayload)

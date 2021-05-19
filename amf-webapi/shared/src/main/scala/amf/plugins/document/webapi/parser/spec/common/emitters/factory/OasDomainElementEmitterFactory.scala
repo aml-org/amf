@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.common.emitters.factory
 
 import amf.core.annotations.{DeclaredElement, DeclaredHeader, SynthesizedField}
 import amf.core.emitter.{PartEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, Value}
 import amf.plugins.document.webapi.annotations.{FormBodyParameter, RequiredParamPayload}
@@ -89,7 +89,7 @@ case class Oas20EmitterFactory()(implicit val ctx: Oas2SpecEmitterContext) exten
 }
 
 object Oas20EmitterFactory {
-  def apply(eh: ErrorHandler): Oas20EmitterFactory =
+  def apply(eh: AMFErrorHandler): Oas20EmitterFactory =
     Oas20EmitterFactory()(new Oas2SpecEmitterContext(eh, compactEmission = false))
 }
 
@@ -118,7 +118,7 @@ case class Oas30EmitterFactory()(implicit val ctx: Oas3SpecEmitterContext) exten
 }
 
 object Oas30EmitterFactory {
-  def apply(eh: ErrorHandler): Oas30EmitterFactory =
+  def apply(eh: AMFErrorHandler): Oas30EmitterFactory =
     Oas30EmitterFactory()(new Oas3SpecEmitterContext(eh, compactEmission = false))
 }
 

@@ -2,10 +2,10 @@ package amf.resolution
 
 import amf.client.parse.DefaultErrorHandler
 import amf.compiler.CompilerTestBuilder
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
 import amf.core.parser.ParserContext
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.{Raml10, Raml10YamlHint, Vendor}
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeResolver
@@ -13,8 +13,8 @@ import amf.core.vocabulary.Namespace
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
-import amf.plugins.document.webapi.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
+import amf.plugins.document.webapi.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
 import amf.plugins.domain.shapes.models._
 
 class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
@@ -25,7 +25,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         val adopt: Shape => Unit = shape => { shape.adopted("/test") }
 
         val ramlCtx: Raml10WebApiContext =
-          new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledParserErrorHandler))
+          new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledErrorHandler))
 
         implicit val ctx: ShapeParserContext = WebApiShapeParserContextAdapter(ramlCtx)
 

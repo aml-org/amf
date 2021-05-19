@@ -2,14 +2,12 @@ package amf.emit
 import amf.ProfileName
 import amf.client.environment.WebAPIConfiguration
 import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.ParseConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.client.remod.{ErrorHandlerProvider, ParseConfiguration}
 import amf.core.emitter.RenderOptions
-import amf.core.errorhandling.AmfResultErrorHandler
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.facades.Validation
-import amf.internal.environment.Environment
 import amf.internal.resource.StringResourceLoader
 import amf.io.FileAssertionTest
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -52,9 +50,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
     val eh = DefaultErrorHandler()
     val conf = WebAPIConfiguration
       .WebAPI()
-      .withErrorHandlerProvider(new ErrorHandlerProvider {
-        override def errorHandler(): AmfResultErrorHandler = eh
-      })
+      .withErrorHandlerProvider(() => eh)
       .withResourceLoader(StringResourceLoader("amf://id#", content))
     for {
       unit <- RuntimeCompiler(

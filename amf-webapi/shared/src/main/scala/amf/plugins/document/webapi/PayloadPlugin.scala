@@ -5,7 +5,7 @@ import amf.client.plugins.{AMFDocumentPlugin, AMFDomainPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
@@ -56,8 +56,8 @@ object PayloadPlugin extends AMFDocumentPlugin {
     }
   }
 
-  override def canParse(root: Root): Boolean                                   = notRAML(root) && notOAS(root) // any document can be parsed as a Payload
-  override def referenceHandler(eh: ErrorHandler): SimpleReferenceHandler.type = SimpleReferenceHandler
+  override def canParse(root: Root): Boolean                                      = notRAML(root) && notOAS(root) // any document can be parsed as a Payload
+  override def referenceHandler(eh: AMFErrorHandler): SimpleReferenceHandler.type = SimpleReferenceHandler
 
   private def notRAML(root: Root) = root.parsed match {
     case parsed: SyamlParsedDocument => parsed.comment.isEmpty || !parsed.comment.exists(_.startsWith("%"))
@@ -79,7 +79,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
   override def emit[T](unit: BaseUnit,
                        builder: DocBuilder[T],
                        renderOptions: RenderOptions,
-                       errorHandler: ErrorHandler): Boolean =
+                       errorHandler: AMFErrorHandler): Boolean =
     (builder, unit) match {
       case (sb: YDocumentBuilder, p: PayloadFragment) =>
         sb.document = PayloadEmitter(p.encodes)(errorHandler).emitDocument()
@@ -89,7 +89,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
       case p: PayloadFragment =>
         Some(PayloadEmitter(p.encodes)(errorHandler).emitDocument())

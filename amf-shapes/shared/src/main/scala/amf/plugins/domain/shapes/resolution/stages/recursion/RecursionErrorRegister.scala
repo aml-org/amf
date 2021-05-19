@@ -1,13 +1,13 @@
 package amf.plugins.domain.shapes.resolution.stages.recursion
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.traversal.ModelTraversalRegistry
 import amf.plugins.features.validation.CoreValidations.RecursiveShapeSpecification
 
 import scala.collection.mutable.ListBuffer
 
-class RecursionErrorRegister(errorHandler: ErrorHandler) {
+class RecursionErrorRegister(errorHandler: AMFErrorHandler) {
   private val errorRegister = ListBuffer[String]()
 
   private def buildRecursion(base: Option[String], s: Shape): RecursiveShape = {

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.common.emitters.factory
 
 import amf.core.emitter.PartEmitter
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.remote.Vendor
@@ -74,7 +74,7 @@ trait DomainElementEmitterFactory {
 }
 
 object DomainElementEmitterFactory {
-  def apply(vendor: Vendor, eh: ErrorHandler): Option[DomainElementEmitterFactory] = vendor match {
+  def apply(vendor: Vendor, eh: AMFErrorHandler): Option[DomainElementEmitterFactory] = vendor match {
     case Vendor.RAML08  => Some(Raml08EmitterFactory(eh))
     case Vendor.RAML10  => Some(Raml10EmitterFactory(eh))
     case Vendor.OAS20   => Some(Oas20EmitterFactory(eh))

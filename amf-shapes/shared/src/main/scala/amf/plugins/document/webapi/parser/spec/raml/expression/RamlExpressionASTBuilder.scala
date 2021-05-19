@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.raml.expression
 
 import amf.core.annotations.{DeclaredElement, VirtualNode}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, Shape}
 import amf.core.parser.Annotations
@@ -16,7 +16,7 @@ private[expression] class RamlExpressionASTBuilder(
     override val tokens: Seq[Token],
     declarationFinder: DeclarationFinder,
     override val annotations: Annotations = Annotations(),
-    unresolvedRegister: UnresolvedRegister)(implicit val errorHandler: ErrorHandler)
+    unresolvedRegister: UnresolvedRegister)(implicit val errorHandler: AMFErrorHandler)
     extends AbstractParser
     with AnnotationHelper {
 

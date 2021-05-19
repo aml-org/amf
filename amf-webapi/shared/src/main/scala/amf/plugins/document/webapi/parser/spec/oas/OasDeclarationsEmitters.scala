@@ -2,11 +2,11 @@ package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.emitter.BaseEmitters.{EntryPartEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DomainElement, Shape}
+import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, Position}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
@@ -15,7 +15,6 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
   AgnosticShapeEmitterContextAdapter,
-  OasLikeShapeEmitterContext,
   OasLikeShapeEmitterContextAdapter,
   ShapeEmitterContext
 }
@@ -34,7 +33,7 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
 
   val emitters: Seq[EntryEmitter] = {
 
-    val declarations = WebApiDeclarations(declares, UnhandledParserErrorHandler, EmptyFutureDeclarations())
+    val declarations = WebApiDeclarations(declares, UnhandledErrorHandler, EmptyFutureDeclarations())
 
     val result = ListBuffer[EntryEmitter]()
     result ++= OasDeclaredShapesEmitter(declarations.shapes.values.toSeq, ordering, references)(

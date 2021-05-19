@@ -3,7 +3,7 @@ package amf.plugins.domain.webapi.resolution
 import amf.client.parse.IgnoringErrorHandler
 import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
 import amf.core.emitter.SpecOrdering
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, FragmentRef, ParserContext}
@@ -26,7 +26,7 @@ import scala.collection.mutable.ListBuffer
 
 case class ExtendsHelper(profile: ProfileName,
                          keepEditingInfo: Boolean,
-                         errorHandler: ErrorHandler,
+                         errorHandler: AMFErrorHandler,
                          context: Option[RamlWebApiContext] = None) {
   def custom(profile: ProfileName): RamlWebApiContext = profile match {
     case Raml08Profile => new CustomRaml08WebApiContext()

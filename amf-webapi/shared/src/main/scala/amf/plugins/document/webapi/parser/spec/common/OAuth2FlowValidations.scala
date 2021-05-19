@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.webapi.models.security.OAuth2Flow
@@ -28,7 +28,7 @@ object OAuth2FlowValidations {
     ParticularFlow("accessCode", List(authorizationUrl, tokenUrl, scopes))
   ).map(x => (x.name, x)).toMap
 
-  def validateFlowFields(flow: OAuth2Flow, errorHandler: ErrorHandler, ast: YPart): Unit = {
+  def validateFlowFields(flow: OAuth2Flow, errorHandler: AMFErrorHandler, ast: YPart): Unit = {
     val flowName            = flow.flow.value()
     val requiredFlowsOption = requiredFieldsPerFlow.get(flowName)
     if (requiredFlowsOption.nonEmpty) {

@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.resolution.stages
 
 import amf.ProfileName
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.Shape
 import amf.core.resolution.stages.elements.resolution.ElementStageTransformer
 import amf.plugins.domain.shapes.resolution.stages.recursion.RecursionErrorRegister
@@ -23,7 +23,7 @@ class ShapeTransformer(context: NormalizationContext) extends ElementStageTransf
 }
 
 object ShapeTransformer {
-  def apply(errorHandler: ErrorHandler, keepEditingInfo: Boolean, profileName: ProfileName): ShapeTransformer = {
+  def apply(errorHandler: AMFErrorHandler, keepEditingInfo: Boolean, profileName: ProfileName): ShapeTransformer = {
     val context = new NormalizationContext(errorHandler, keepEditingInfo, profileName)
     new ShapeTransformer(context)
   }

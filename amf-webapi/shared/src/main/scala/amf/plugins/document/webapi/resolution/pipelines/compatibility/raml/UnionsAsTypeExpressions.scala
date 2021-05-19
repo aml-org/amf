@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{DomainElement, NamedDomainElement, Shape}
 import amf.core.resolution.stages.TransformationStep
@@ -20,7 +20,7 @@ class UnionsAsTypeExpressions() extends TransformationStep {
 
   val counter = new IdCounter()
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     try {
       val document                                        = model.asInstanceOf[DeclaresModel]
       val declarations: mutable.ListBuffer[DomainElement] = mutable.ListBuffer()

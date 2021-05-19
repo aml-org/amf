@@ -1,10 +1,9 @@
 package amf.resolution
 
 import amf.core.emitter.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote._
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.facades.{AMFCompiler, Validation}
@@ -22,10 +21,10 @@ import scala.concurrent.Future
 class ProductionServiceTest extends RamlResolutionTest {
 
   override def build(config: CycleConfig,
-                     eh: Option[ParserErrorHandler],
+                     eh: Option[AMFErrorHandler],
                      useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
     Validation(platform).flatMap { _ =>
-      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, eh = UnhandledParserErrorHandler).build()
+      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, eh = UnhandledErrorHandler).build()
     }
   }
   private def dummyFunc: (BaseUnit, CycleConfig) => BaseUnit =

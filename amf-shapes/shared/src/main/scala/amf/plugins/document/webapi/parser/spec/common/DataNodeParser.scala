@@ -7,7 +7,6 @@ import amf.core.model.document.{EncodesModel, ExternalFragment}
 import amf.core.model.domain.ScalarNode.forDataType
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.features.validation.CoreValidations.SyamlError

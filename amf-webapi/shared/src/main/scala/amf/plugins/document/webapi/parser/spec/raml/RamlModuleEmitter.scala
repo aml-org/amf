@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{BaseUnit, Module, _}
@@ -137,7 +137,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
   }
 
   case class ResourceTypeFragmentEmitter(fragment: ResourceTypeFragment, ordering: SpecOrdering)(
-      implicit eh: ErrorHandler)
+      implicit eh: AMFErrorHandler)
       extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10ResourceType
@@ -150,7 +150,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
       }
   }
 
-  case class TraitFragmentEmitter(fragment: TraitFragment, ordering: SpecOrdering)(implicit eh: ErrorHandler)
+  case class TraitFragmentEmitter(fragment: TraitFragment, ordering: SpecOrdering)(implicit eh: AMFErrorHandler)
       extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10Trait

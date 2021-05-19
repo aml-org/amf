@@ -1,12 +1,12 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.resolution.stages.TransformationStep
 
 class SanitizeCustomTypeNames() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     model match {
       case doc: Document =>
         doc.declares.collect {

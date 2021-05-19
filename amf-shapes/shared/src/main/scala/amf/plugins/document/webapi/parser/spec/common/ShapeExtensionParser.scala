@@ -4,16 +4,17 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.ShapeExtension
 import amf.core.parser.YMapOps
-import amf.core.parser.errorhandler.ParserErrorHandler
-import amf.core.remote.{Oas, Raml, Vendor}
+import amf.core.remote.{Oas, Raml}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.parser.ShapeParserContext
-import amf.plugins.document.webapi.parser.spec.SpecSyntax
 import amf.plugins.document.webapi.parser.spec.declaration.TypeInfo
-import amf.validations.ShapeParserSideValidations.{MissingRequiredUserDefinedFacet, UnableToParseShapeExtensions, UserDefinedFacetMatchesAncestorsTypeFacets, UserDefinedFacetMatchesBuiltInFacets}
-import org.yaml.model.{IllegalTypeHandler, ParseErrorHandler, YMap}
-
-
+import amf.validations.ShapeParserSideValidations.{
+  MissingRequiredUserDefinedFacet,
+  UnableToParseShapeExtensions,
+  UserDefinedFacetMatchesAncestorsTypeFacets,
+  UserDefinedFacetMatchesBuiltInFacets
+}
+import org.yaml.model.YMap
 
 case class ShapeExtensionParser(shape: Shape,
                                 map: YMap,
@@ -27,12 +28,12 @@ case class ShapeExtensionParser(shape: Shape,
     inheritedDefinitions.foreach { shapeExtensionDefinition =>
       val extensionKey = ctx.vendor match {
         case _: Raml => shapeExtensionDefinition.name.value() // TODO check this.
-        case _: Oas => s"facet-${shapeExtensionDefinition.name.value()}".asOasExtension
+        case _: Oas  => s"facet-${shapeExtensionDefinition.name.value()}".asOasExtension
         case _ =>
           ctx.eh.violation(UnableToParseShapeExtensions,
-            shape.id,
-            s"Cannot parse shape extension for vendor ${ctx.vendor}",
-            map)
+                           shape.id,
+                           s"Cannot parse shape extension for vendor ${ctx.vendor}",
+                           map)
           shapeExtensionDefinition.name.value()
       }
       map.key(extensionKey) match {
@@ -53,12 +54,12 @@ case class ShapeExtensionParser(shape: Shape,
     if (!shape.inherits.exists(s => s.isUnresolved)) { // only validate shapes when the father its resolved, to avoid close shape over custom annotations
       val syntax = overrideSyntax match {
         case Some("anyShape") | Some("shape") => shape.ramlSyntaxKey
-        case Some(other) => other
-        case None => shape.ramlSyntaxKey
+        case Some(other)                      => other
+        case None                             => shape.ramlSyntaxKey
       }
 
       val extensionsNames = inheritedDefinitions.flatMap(_.name.option())
-      val m = YMap(map.entries.filter(e => !extensionsNames.contains(e.key.value.toString)), "")
+      val m               = YMap(map.entries.filter(e => !extensionsNames.contains(e.key.value.toString)), "")
       ctx.closedRamlTypeShape(shape, m, syntax, typeInfo)
       validateCustomFacetDefinitions(syntax)
     }
@@ -70,24 +71,24 @@ case class ShapeExtensionParser(shape: Shape,
     ctx.syntax.nodes
       .get(syntax)
       .foreach(builtInFacets => {
-        val definedCustomFacets = shape.customShapePropertyDefinitions.flatMap(_.name.option())
+        val definedCustomFacets   = shape.customShapePropertyDefinitions.flatMap(_.name.option())
         val inheritedCustomFacets = shape.collectCustomShapePropertyDefinitions(onlyInherited = true).flatten.map(_._1)
         definedCustomFacets.toSet
           .intersect(builtInFacets)
           .foreach(
             name =>
               ctx.eh.violation(UserDefinedFacetMatchesBuiltInFacets,
-                shape.id,
-                s"Custom defined facet '$name' matches built-in type facets",
-                map))
+                               shape.id,
+                               s"Custom defined facet '$name' matches built-in type facets",
+                               map))
         definedCustomFacets
           .intersect(inheritedCustomFacets)
           .foreach(
             name =>
               ctx.eh.violation(UserDefinedFacetMatchesAncestorsTypeFacets,
-                shape.id,
-                s"Custom defined facet '$name' matches custom facet from inherited type",
-                map))
+                               shape.id,
+                               s"Custom defined facet '$name' matches custom facet from inherited type",
+                               map))
       })
   }
 

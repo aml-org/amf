@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
-import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.resolution.pipelines.TransformationPipeline.EDITING_PIPELINE
 import amf.core.resolution.stages.{TransformationStep, UrlShortenerStage}

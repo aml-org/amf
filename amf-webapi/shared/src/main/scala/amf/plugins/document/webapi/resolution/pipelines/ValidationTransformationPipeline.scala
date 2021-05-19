@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.client.remod.AMFGraphConfiguration
 import amf.{Async20Profile, Oas30Profile, ProfileName}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.resolution.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage, TransformationStep}
@@ -34,7 +34,7 @@ class ValidationTransformationPipeline private[amf] (profile: ProfileName,
 }
 
 object ValidationTransformationPipeline {
-  def apply(profile: ProfileName, unit: BaseUnit, eh: ErrorHandler): BaseUnit = {
+  def apply(profile: ProfileName, unit: BaseUnit, eh: AMFErrorHandler): BaseUnit = {
     val pipeline = profile match {
       case Oas30Profile   => Oas30ValidationTransformationPipeline()
       case Async20Profile => Async20CachePipeline()

@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.{Operation, Response}
 
 class DefaultToNumericDefaultResponse() extends TransformationStep {
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     try {
       model.iterator().foreach {
         case operation: Operation =>

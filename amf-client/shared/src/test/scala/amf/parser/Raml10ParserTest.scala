@@ -1,6 +1,6 @@
 package amf.parser
 
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.remote.{Amf, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 
@@ -25,7 +25,7 @@ class Raml10ParserTest extends FunSuiteCycleTests {
       Amf,
       renderOptions = Some(config.renderOptions.withSourceMaps.withPrettyPrint),
       directory = s"${basePath}nillable-type-in-parameter/",
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 }

@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.DomainElement
@@ -12,7 +12,7 @@ import amf.plugins.domain.webapi.models.security.SecurityRequirement
 
 class SecurityResolutionStage() extends TransformationStep() {
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     model match {
       case doc: Document if doc.encodes.isInstanceOf[Api] =>
         resolveSecurity(doc.encodes.asInstanceOf[Api])

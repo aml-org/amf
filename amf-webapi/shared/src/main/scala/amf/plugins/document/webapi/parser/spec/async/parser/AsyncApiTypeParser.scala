@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
 import amf.core.annotations.{DefinedByVendor, SourceVendor}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, SearchScope}
 import amf.core.remote.Raml10
@@ -30,12 +30,12 @@ object AsyncSchemaFormats {
     "application/raml+yaml;version=1.0"
   )
 
-  def getSchemaVersion(payload: Payload)(implicit errorHandler: ErrorHandler): SchemaVersion = {
+  def getSchemaVersion(payload: Payload)(implicit errorHandler: AMFErrorHandler): SchemaVersion = {
     val value = Option(payload.schemaMediaType).map(f => f.value()).orElse(None)
     getSchemaVersion(value)
   }
 
-  def getSchemaVersion(value: Option[String])(implicit errorHandler: ErrorHandler): SchemaVersion =
+  def getSchemaVersion(value: Option[String])(implicit errorHandler: AMFErrorHandler): SchemaVersion =
     value match {
       case Some(format) if oas30Schema.contains(format) => OAS30SchemaVersion(Schema)
       case Some(format) if ramlSchema.contains(format)  => RAML10SchemaVersion

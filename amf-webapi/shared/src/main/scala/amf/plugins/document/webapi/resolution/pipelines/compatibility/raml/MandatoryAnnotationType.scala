@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.resolution.stages.TransformationStep
@@ -10,7 +10,7 @@ class MandatoryAnnotationType() extends TransformationStep {
 
   var annotationCounter = 0
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     try {
       model match {
         case doc: Document =>

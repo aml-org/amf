@@ -1,8 +1,8 @@
 package amf.error
 
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Range
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote.AsyncYamlHint
 import amf.facades.AMFCompiler
 
@@ -12,7 +12,7 @@ class AsyncParserErrorTest extends ParserErrorTest {
 
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/async"
 
-  override protected def build(eh: ParserErrorHandler, file: String): Future[BaseUnit] =
+  override protected def build(eh: AMFErrorHandler, file: String): Future[BaseUnit] =
     AMFCompiler(file, platform, AsyncYamlHint, eh = eh).build()
 
   test("Parameter is not YMap") {

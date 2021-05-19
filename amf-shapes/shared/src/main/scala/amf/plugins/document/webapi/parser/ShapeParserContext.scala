@@ -2,14 +2,13 @@ package amf.plugins.document.webapi.parser
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.Shape
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{
   Annotations,
   Declarations,
   ErrorHandlingContext,
   FutureDeclarations,
-  ParserContext,
   SearchScope,
   UnresolvedComponents
 }
@@ -18,15 +17,15 @@ import amf.plugins.document.webapi.contexts.JsonSchemaRefGuide
 import amf.plugins.document.webapi.parser.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParserContext
-import amf.plugins.document.webapi.parser.spec.declaration.{DefaultType, RamlTypeParser, SchemaVersion, TypeInfo}
 import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.external.raml.RamlExternalTypesParser
+import amf.plugins.document.webapi.parser.spec.declaration.{DefaultType, RamlTypeParser, SchemaVersion, TypeInfo}
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import org.yaml.model.{YMap, YMapEntry, YNode, YPart}
 
 import scala.collection.mutable
 
-abstract class ShapeParserContext(eh: ParserErrorHandler)
+abstract class ShapeParserContext(eh: AMFErrorHandler)
     extends ErrorHandlingContext()(eh)
     with DataNodeParserContext
     with UnresolvedComponents {

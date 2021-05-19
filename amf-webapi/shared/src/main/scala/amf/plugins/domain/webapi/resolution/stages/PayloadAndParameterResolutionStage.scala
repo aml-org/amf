@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfObject
 import amf.core.resolution.stages.TransformationStep
@@ -19,7 +19,7 @@ class PayloadAndParameterResolutionStage(profile: ProfileName) extends Transform
 
   private type SchemaContainerWithId = SchemaContainer with AmfObject
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit =
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
     if (appliesTo(profile)) resolveExamples(model)
     else model
 

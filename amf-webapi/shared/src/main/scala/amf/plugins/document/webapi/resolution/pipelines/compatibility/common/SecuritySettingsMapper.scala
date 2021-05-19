@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.common
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.security.{
@@ -58,7 +58,7 @@ abstract class SecuritySettingsMapper() extends TransformationStep {
     d.withDeclares(filteredDeclarations)
   }
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
     case d: DeclaresModel =>
       try {
         fixSettings(d)

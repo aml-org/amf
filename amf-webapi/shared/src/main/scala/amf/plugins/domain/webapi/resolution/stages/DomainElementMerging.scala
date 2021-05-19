@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.core.annotations.{DeclaredElement, DefaultNode, ExplicitField, Inferred, LexicalInformation, SourceLocation}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
@@ -58,7 +58,9 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     main
   }
 
-  def handleNewFieldEntry[T <: DomainElement](main: T, otherFieldEntry: FieldEntry, errorHandler: ErrorHandler): Unit = {
+  def handleNewFieldEntry[T <: DomainElement](main: T,
+                                              otherFieldEntry: FieldEntry,
+                                              errorHandler: AMFErrorHandler): Unit = {
     val otherField = otherFieldEntry.field
     val otherValue = otherFieldEntry.value
 
@@ -100,7 +102,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
   def handleExistingFieldEntries[T <: DomainElement](main: T,
                                                      mainFieldEntry: FieldEntry,
                                                      otherFieldEntry: FieldEntry,
-                                                     errorHandler: ErrorHandler): Boolean = {
+                                                     errorHandler: AMFErrorHandler): Boolean = {
 
     val otherField = otherFieldEntry.field
     val otherValue = otherFieldEntry.value
@@ -437,7 +439,7 @@ object DataNodeMerging {
 object MergingValidator {
   val reportedMissingParameters: mutable.Map[String, Seq[Parameter]] = mutable.Map.empty
 
-  def validate[T <: DomainElement](main: T, other: T, errorHandler: ErrorHandler): Unit = {
+  def validate[T <: DomainElement](main: T, other: T, errorHandler: AMFErrorHandler): Unit = {
     (main, other) match {
       case (m: Request, o: Request) =>
         validatePayloads(main, errorHandler, m.payloads, o.payloads)
@@ -453,7 +455,7 @@ object MergingValidator {
   }
 
   private def validateEndpoints[T <: DomainElement](main: T,
-                                                    errorHandler: ErrorHandler,
+                                                    errorHandler: AMFErrorHandler,
                                                     m: EndPoint,
                                                     o: EndPoint): Unit = {
 
@@ -489,7 +491,7 @@ object MergingValidator {
   }
 
   private def validatePayloads[T <: DomainElement](main: T,
-                                                   errorHandler: ErrorHandler,
+                                                   errorHandler: AMFErrorHandler,
                                                    m: Seq[Payload],
                                                    o: Seq[Payload]): Unit = {
 

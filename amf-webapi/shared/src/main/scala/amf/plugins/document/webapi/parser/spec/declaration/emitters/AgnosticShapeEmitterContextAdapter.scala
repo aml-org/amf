@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.declaration.emitters
 
 import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable}
@@ -41,7 +41,7 @@ class AgnosticShapeEmitterContextAdapter(spec: SpecEmitterContext) extends Shape
   override def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter =
     spec.factory.annotationEmitter(e, default)
 
-  override def eh: ErrorHandler = spec.eh
+  override def eh: AMFErrorHandler = spec.eh
 
   override def vendor: Vendor = spec.vendor
 

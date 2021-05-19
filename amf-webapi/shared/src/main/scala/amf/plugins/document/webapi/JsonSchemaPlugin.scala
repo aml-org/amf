@@ -4,7 +4,7 @@ import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
@@ -65,7 +65,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
       case d: DeclaresModel =>
         // The root element of the JSON Schema must be identified with the annotation [[JSONSchemaRoot]]
@@ -102,7 +102,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     case _                => None
   }
 
-  override def referenceHandler(eh: ErrorHandler): ReferenceHandler = SimpleReferenceHandler
+  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = SimpleReferenceHandler
 
   override val ID: String = "JSON Schema" // version?
 

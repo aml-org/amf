@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.common.emitters.factory
 
 import amf.core.emitter.{PartEmitter, SpecOrdering}
-import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.domain.DomainElement
 import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.async.emitters.{
@@ -72,6 +72,6 @@ case class AsyncEmitterFactory()(implicit val ctx: Async20SpecEmitterContext) ex
 }
 
 object AsyncEmitterFactory {
-  def apply(eh: ErrorHandler): AsyncEmitterFactory = AsyncEmitterFactory()(new Async20SpecEmitterContext(eh))
+  def apply(eh: AMFErrorHandler): AsyncEmitterFactory = AsyncEmitterFactory()(new Async20SpecEmitterContext(eh))
 
 }

@@ -2,9 +2,9 @@ package amf.cycle
 
 import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
 import amf.core.CompilerContextBuilder
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.UnspecifiedReference
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote.{Amf, Oas30YamlHint}
 import amf.core.services.RuntimeCompiler
 import amf.facades.Validation
@@ -33,7 +33,7 @@ class OasRecursiveFilesCycleTest extends FunSuiteCycleTests {
 
   /** Method to parse unit. Override if necessary. */
   override def build(config: CycleConfig,
-                     eh: Option[ParserErrorHandler],
+                     eh: Option[AMFErrorHandler],
                      useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
     Validation(platform).flatMap { _ =>
       implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
@@ -41,7 +41,7 @@ class OasRecursiveFilesCycleTest extends FunSuiteCycleTests {
         if (config.sourcePath.startsWith("file://")) config.sourcePath else s"file://${config.sourcePath}"
       val compilerContextBuilder = new CompilerContextBuilder(
         platform,
-        new ParseConfiguration(AMFGraphConfiguration.fromEH(UnhandledParserErrorHandler), finalPath))
+        new ParseConfiguration(AMFGraphConfiguration.fromEH(UnhandledErrorHandler), finalPath))
 
       RuntimeCompiler
         .forContext(

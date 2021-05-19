@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models.templates
 
-import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.model.domain.{DomainElement, Linkable}
@@ -22,7 +22,7 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
   /** Get this trait as an operation. No variables will be replaced. Pass the BaseUnit that contains this trait to use its declarations and the profile ProfileNames.RAML08 if this is from a raml08 unit. */
   def asOperation[T <: BaseUnit](unit: T,
                                  profile: ProfileName = Raml10Profile,
-                                 errorHandler: ErrorHandler = UnhandledErrorHandler): Operation = {
+                                 errorHandler: AMFErrorHandler = UnhandledErrorHandler): Operation = {
     linkTarget match {
       case Some(_) =>
         effectiveLinkTarget().asInstanceOf[Trait].asOperation(unit, profile, errorHandler)
@@ -46,7 +46,7 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
                                       entry: YMapEntry,
                                       annotations: Annotations,
                                       profile: ProfileName = Raml10Profile,
-                                      errorHandler: ErrorHandler = UnhandledErrorHandler): Operation = {
+                                      errorHandler: AMFErrorHandler = UnhandledErrorHandler): Operation = {
     val extendsHelper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
     extendsHelper.entryAsOperation(unit, name.option().getOrElse(""), id, entry)
   }

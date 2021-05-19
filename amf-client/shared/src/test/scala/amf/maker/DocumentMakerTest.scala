@@ -1,8 +1,8 @@
 package amf.maker
 
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.Document
 import amf.core.model.domain.AmfArray
-import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.remote._
 import amf.core.validation.AMFValidationResult
 import amf.facades.{AMFCompiler, Validation}
@@ -57,11 +57,11 @@ class DocumentMakerTest extends WebApiMakerTest {
         }
     }
   }
-  object IgnoreErrorHandler extends AmfParserErrorHandler {
+  object IgnoreErrorHandler extends AMFErrorHandler {
 
-    override def handlerAmfResult(result: AMFValidationResult): Boolean = false
+    override def report(result: AMFValidationResult): Unit = {}
 
-    override def results(): List[AMFValidationResult] = Nil
+    override def getResults: List[AMFValidationResult] = Nil
   }
 
   private def documentWithTypes(vendor: Vendor): Document = {

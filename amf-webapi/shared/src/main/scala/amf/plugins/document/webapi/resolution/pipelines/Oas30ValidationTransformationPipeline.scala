@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.Oas30Profile
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.resolution.stages.RequestParamsLinkStage
 

@@ -1,12 +1,12 @@
 package amf.plugins.domain.webapi.resolution.stages.async
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.api.Api
 
 class AsyncContentTypeResolutionStage() extends TransformationStep() {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       val webApi = doc.encodes.asInstanceOf[Api]
       resolve(webApi)

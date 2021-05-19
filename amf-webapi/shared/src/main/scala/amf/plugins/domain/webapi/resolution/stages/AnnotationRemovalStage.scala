@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document, FieldsFilter}
 import amf.core.model.domain.Annotation
 import amf.core.resolution.stages.TransformationStep
@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.annotations.{ExternalJsonSchemaShape, Externa
 
 class AnnotationRemovalStage() extends TransformationStep() {
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
     case d: Document =>
       d.iterator(fieldsFilter = FieldsFilter.All, visited = InstanceCollector())
         .foreach(_.annotations.reject(eliminationCriteria))

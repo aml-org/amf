@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
@@ -19,7 +19,7 @@ class CleanIdenticalExamples() extends TransformationStep {
     shape.setArrayWithoutId(AnyShapeModel.Examples, uniqueExamples.toSeq)
   }
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     try {
       model.iterator().foreach {
         case shape: AnyShape => cleanExamples(shape)

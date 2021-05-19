@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.contexts.emitter.async
 import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.emitter.BaseEmitters.MapEntryEmitter
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{CustomDomainProperty, ShapeExtension}
@@ -68,7 +68,7 @@ case class Async20SpecEmitterFactory(override val spec: AsyncSpecEmitterContext)
   override def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = ???
 }
 
-abstract class AsyncSpecEmitterContext(eh: ErrorHandler,
+abstract class AsyncSpecEmitterContext(eh: AMFErrorHandler,
                                        refEmitter: RefEmitter = AsyncRefEmitter,
                                        options: ShapeRenderOptions = ShapeRenderOptions())
     extends OasLikeSpecEmitterContext(eh, refEmitter, options) {
@@ -81,7 +81,7 @@ abstract class AsyncSpecEmitterContext(eh: ErrorHandler,
   override val factory: AsyncSpecEmitterFactory
 }
 
-class Async20SpecEmitterContext(eh: ErrorHandler,
+class Async20SpecEmitterContext(eh: AMFErrorHandler,
                                 refEmitter: RefEmitter = AsyncRefEmitter,
                                 options: ShapeRenderOptions = ShapeRenderOptions(),
                                 val schemaVersion: SchemaVersion = JSONSchemaDraft7SchemaVersion)

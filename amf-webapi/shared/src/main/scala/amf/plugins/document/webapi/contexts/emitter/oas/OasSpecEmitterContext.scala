@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.contexts.emitter.oas
 import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.emitter.BaseEmitters.MapEntryEmitter
 import amf.core.emitter._
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{CustomDomainProperty, ShapeExtension}
@@ -141,7 +141,7 @@ case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) exte
     new Oas3SecuritySchemesEmitters(securitySchemes, ordering)(spec)
 }
 
-abstract class OasSpecEmitterContext(eh: ErrorHandler,
+abstract class OasSpecEmitterContext(eh: AMFErrorHandler,
                                      refEmitter: RefEmitter = OasRefEmitter,
                                      options: ShapeRenderOptions = ShapeRenderOptions(),
                                      val compactEmission: Boolean = true)
@@ -159,7 +159,7 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler,
     super[CompactableEmissionContext].filterLocal(elements)
 }
 
-class Oas3SpecEmitterContext(eh: ErrorHandler,
+class Oas3SpecEmitterContext(eh: AMFErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
                              options: ShapeRenderOptions = ShapeRenderOptions(),
                              compactEmission: Boolean = true)
@@ -171,7 +171,7 @@ class Oas3SpecEmitterContext(eh: ErrorHandler,
   override def schemasDeclarationsPath: String = "/components/schemas/"
 }
 
-class Oas2SpecEmitterContext(eh: ErrorHandler,
+class Oas2SpecEmitterContext(eh: AMFErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
                              options: ShapeRenderOptions = ShapeRenderOptions(),
                              compactEmission: Boolean = true)

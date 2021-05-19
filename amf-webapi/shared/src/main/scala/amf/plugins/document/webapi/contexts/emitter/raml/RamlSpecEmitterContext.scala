@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.contexts.emitter.raml
 import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.emitter.BaseEmitters.pos
 import amf.core.emitter._
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape, ShapeExtension}
@@ -271,7 +271,7 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
 
 }
 
-class Raml10SpecEmitterContext(eh: ErrorHandler,
+class Raml10SpecEmitterContext(eh: AMFErrorHandler,
                                refEmitter: RefEmitter = RamlRefEmitter,
                                options: ShapeRenderOptions = ShapeRenderOptions())
     extends RamlSpecEmitterContext(eh, refEmitter, options) {
@@ -281,7 +281,7 @@ class Raml10SpecEmitterContext(eh: ErrorHandler,
   override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
 
-class XRaml10SpecEmitterContext(eh: ErrorHandler,
+class XRaml10SpecEmitterContext(eh: AMFErrorHandler,
                                 refEmitter: RefEmitter = OasRefEmitter,
                                 options: ShapeRenderOptions = ShapeRenderOptions())
     extends Raml10SpecEmitterContext(eh, refEmitter, options) {
@@ -294,7 +294,7 @@ class XRaml10SpecEmitterContext(eh: ErrorHandler,
   override def schemaVersion: SchemaVersion = RAML10SchemaVersion
 }
 
-class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = ShapeRenderOptions())
+class Raml08SpecEmitterContext(eh: AMFErrorHandler, options: ShapeRenderOptions = ShapeRenderOptions())
     extends RamlSpecEmitterContext(eh, RamlRefEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml08
@@ -302,7 +302,7 @@ class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = S
   override def schemaVersion: SchemaVersion = RAML08SchemaVersion
 }
 
-abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
+abstract class RamlSpecEmitterContext(override val eh: AMFErrorHandler,
                                       refEmitter: RefEmitter,
                                       options: ShapeRenderOptions = ShapeRenderOptions())
     extends SpecEmitterContext(eh, refEmitter, options) {

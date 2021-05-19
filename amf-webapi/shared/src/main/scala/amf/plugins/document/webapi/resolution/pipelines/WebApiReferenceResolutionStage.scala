@@ -1,5 +1,5 @@
 package amf.plugins.document.webapi.resolution.pipelines
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.resolution.stages.ReferenceResolutionStage

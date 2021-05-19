@@ -1,7 +1,7 @@
 package amf.javaparser.org.raml
 
 import amf._
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.annotations.SourceVendor
@@ -29,7 +29,7 @@ trait ModelValidationTest extends DirectoryTest {
   override def ignorableExtension: String = ".ignore"
 
   override def runDirectory(d: String): Future[(String, Boolean)] = {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
     for {
       validation <- Validation(platform)
       model <- AMFCompiler(s"file://${d + inputFileName}", platform, hint, eh = eh)
@@ -113,7 +113,7 @@ trait ModelResolutionTest extends ModelValidationTest {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        RuntimeResolver.resolve(config.target.name, unit, EDITING_PIPELINE, DefaultParserErrorHandler())
+        RuntimeResolver.resolve(config.target.name, unit, EDITING_PIPELINE, DefaultErrorHandler())
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit

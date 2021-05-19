@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations
 import amf.core.annotations.SourceAST
 import amf.core.emitter.BaseEmitters.{LinkScalaEmitter, NullEmitter, TextScalarEmitter, pos}
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Position}
@@ -18,7 +18,7 @@ import scala.collection.mutable
 case class DataNodeEmitter(dataNode: DataNode,
                            ordering: SpecOrdering,
                            referencesCollector: mutable.Map[String, DomainElement] = mutable.Map())(
-    implicit eh: ErrorHandler,
+    implicit eh: AMFErrorHandler,
     nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
     extends PartEmitter {
   private val xsdString: String  = Namespace.XsdTypes.xsdString.iri()
@@ -145,7 +145,7 @@ private[annotations] case class DataPropertyEmitter(
     value: DataNode,
     ordering: SpecOrdering,
     referencesCollector: mutable.Map[String, DomainElement] = mutable.Map(),
-    propertyAnnotations: Annotations)(implicit eh: ErrorHandler,
+    propertyAnnotations: Annotations)(implicit eh: AMFErrorHandler,
                                       nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
     extends EntryEmitter {
 

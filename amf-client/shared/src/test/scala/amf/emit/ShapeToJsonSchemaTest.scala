@@ -2,13 +2,11 @@ package amf.emit
 
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, Module}
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeResolver
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
-import amf.plugins.document.webapi.Oas20Plugin
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.api.WebApi
 import amf.remod.JsonSchemaShapeSerializer.toJsonSchema
@@ -132,7 +130,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
   private def parse(file: String): Future[BaseUnit] = {
     for {
       _    <- Validation(platform)
-      unit <- AMFCompiler(basePath + file, platform, Raml10YamlHint, eh = UnhandledParserErrorHandler).build()
+      unit <- AMFCompiler(basePath + file, platform, Raml10YamlHint, eh = UnhandledErrorHandler).build()
     } yield {
       unit
     }
@@ -145,7 +143,7 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
                     hint: Hint = Raml10YamlHint): Future[Assertion] = {
     val jsonSchema: Future[String] = for {
       _    <- Validation(platform)
-      unit <- AMFCompiler(basePath + file, platform, hint, eh = UnhandledParserErrorHandler).build()
+      unit <- AMFCompiler(basePath + file, platform, hint, eh = UnhandledErrorHandler).build()
     } yield {
       findShapeFunc(
         RuntimeResolver

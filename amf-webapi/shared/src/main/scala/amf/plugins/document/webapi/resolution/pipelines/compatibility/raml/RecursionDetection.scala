@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, RecursiveShape, Shape}
@@ -11,7 +11,7 @@ import scala.collection.mutable.ListBuffer
 
 class RecursionDetection() extends TransformationStep {
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     model match {
       case doc: Document => doc.fields.fields().foreach(f => advance(f.element, ListBuffer[String](), Set.empty))
       case _             => // Nothing

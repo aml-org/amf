@@ -1,26 +1,22 @@
 package amf.compiler
 
-import amf.client.parse.DefaultParserErrorHandler
-import amf.{RAMLStyle, Raml10Profile}
-import amf.client.plugins.AMFPlugin
+import amf.Raml10Profile
+import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.client.remote.Content
 import amf.core.Root
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.parser.{UnspecifiedReference, _}
 import amf.core.remote.Syntax.{Syntax, Yaml}
 import amf.core.remote._
-import amf.core.services.RuntimeCompiler
 import amf.facades.Validation
 import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YMap, YMapEntry}
 
-import scala.collection.mutable
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
@@ -62,7 +58,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
             build(s"file://amf-client/shared/src/test/resources/reference-itself.raml",
                   Raml10YamlHint,
                   validation = Some(v),
-                  eh = Some(UnhandledParserErrorHandler)))
+                  eh = Some(UnhandledErrorHandler)))
     } map { ex =>
       assert(ex.getMessage.contains(
         s"Cyclic found following references file://amf-client/shared/src/test/resources/reference-itself.raml -> file://amf-client/shared/src/test/resources/reference-itself.raml"))
@@ -108,7 +104,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Non existing included file") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
     Validation(platform)
       .flatMap(v => {
 
@@ -158,7 +154,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
           build(s"file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}",
                 hint,
                 validation = Some(v),
-                eh = Some(UnhandledParserErrorHandler))
+                eh = Some(UnhandledErrorHandler))
         })
     } map { ex =>
       assert(ex.getMessage.contains(

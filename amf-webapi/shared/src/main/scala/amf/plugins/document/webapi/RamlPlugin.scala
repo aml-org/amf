@@ -5,7 +5,7 @@ import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
 import amf.core.model.domain.ExternalDomainElement
@@ -51,7 +51,7 @@ import org.yaml.model.{YDocument, YNode}
 
 sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
 
-  override def referenceHandler(eh: ErrorHandler) = new RamlReferenceHandler(AMFParsePluginAdapter(this))
+  override def referenceHandler(eh: AMFErrorHandler) = new RamlReferenceHandler(AMFParsePluginAdapter(this))
 
   def context(wrapped: ParserContext,
               root: Root,
@@ -67,7 +67,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
     clean
   }
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext
 
   override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
 
@@ -209,7 +209,7 @@ object Raml08Plugin extends RamlPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
       case document: Document =>
         Some(RamlDocumentEmitter(document)(specContext(renderOptions, errorHandler)).emitDocument())
@@ -228,7 +228,7 @@ object Raml08Plugin extends RamlPlugin {
                             ds.map(d => RamlWebApiDeclarations(d)),
                             options = options)
 
-  def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
+  def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext =
     new Raml08SpecEmitterContext(errorHandler)
 
   override val pipelines: Map[String, TransformationPipeline] = Map(
@@ -273,7 +273,7 @@ object Raml10Plugin extends RamlPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
       case module: Module => Some(RamlModuleEmitter(module)(specContext(renderOptions, errorHandler)).emitModule())
       case document: Document =>
@@ -294,7 +294,7 @@ object Raml10Plugin extends RamlPlugin {
                             ds.map(d => RamlWebApiDeclarations(d)),
                             options = options)
 
-  def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
+  def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext =
     new Raml10SpecEmitterContext(errorHandler)
 
   override val pipelines: Map[String, TransformationPipeline] = Map(

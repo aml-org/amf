@@ -3,11 +3,20 @@ package amf.plugins.document.webapi.parser.spec.common
 import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.emitter.BaseEmitters.traverse
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.Position
-import amf.plugins.document.webapi.parser.spec.declaration.emitters.{InlineJsonSchemaShapeEmitterContext, JsonSchemaShapeEmitterContext, OasLikeShapeEmitterContext}
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, JSONSchemaUnspecifiedVersion, JSONSchemaVersion, SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.emitters.{
+  InlineJsonSchemaShapeEmitterContext,
+  JsonSchemaShapeEmitterContext,
+  OasLikeShapeEmitterContext
+}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaUnspecifiedVersion,
+  JSONSchemaVersion,
+  SchemaVersion
+}
 import amf.plugins.document.webapi.parser.spec.oas.OasDeclaredShapesEmitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
@@ -17,7 +26,7 @@ case class JsonSchemaEmitter(root: Shape,
                              declarations: Seq[DomainElement],
                              ordering: SpecOrdering = SpecOrdering.Lexical,
                              options: ShapeRenderOptions,
-                             errorHandler: ErrorHandler) {
+                             errorHandler: AMFErrorHandler) {
 
   def emitDocument(): YDocument = {
     val schemaVersion = SchemaVersion.fromClientOptions(options.schemaVersion)

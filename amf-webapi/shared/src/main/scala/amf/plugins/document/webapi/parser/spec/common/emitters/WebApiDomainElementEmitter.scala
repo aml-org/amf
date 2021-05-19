@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.common.emitters
 
 import amf.core.emitter.DomainElementEmitter
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.remote.Vendor
@@ -16,7 +16,7 @@ object WebApiDomainElementEmitter extends DomainElementEmitter[Vendor] {
     */
   override def emit(element: DomainElement,
                     emissionStructure: Vendor,
-                    eh: ErrorHandler,
+                    eh: AMFErrorHandler,
                     references: Seq[BaseUnit] = Nil): YNode = {
     DomainElementEmitterFactory(emissionStructure, eh) match {
       case Some(factory) =>

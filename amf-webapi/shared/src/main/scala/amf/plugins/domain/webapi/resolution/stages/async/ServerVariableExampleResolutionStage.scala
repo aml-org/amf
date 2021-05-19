@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages.async
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.api.Api
@@ -8,7 +8,7 @@ import amf.plugins.domain.webapi.resolution.stages.common.ExamplePropagationHelp
 
 class ServerVariableExampleResolutionStage() extends TransformationStep with ExamplePropagationHelper {
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
     case doc: Document if doc.encodes.isInstanceOf[Api] =>
       propagateInServerVariables(doc.encodes.asInstanceOf[Api])
       doc

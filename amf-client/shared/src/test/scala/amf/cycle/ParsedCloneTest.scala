@@ -1,8 +1,8 @@
 package amf.cycle
 
 import amf.core.annotations.ErrorDeclaration
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.DeclaresModel
-import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.remote.{Amf, Oas30JsonHint, Raml10YamlHint}
 import amf.core.validation.AMFValidationResult
 import amf.io.FunSuiteCycleTests
@@ -37,10 +37,7 @@ class ParsedCloneTest extends FunSuiteCycleTests {
     }
   }
 
-  object IgnoreError extends AmfParserErrorHandler {
-
-    override def handlerAmfResult(result: AMFValidationResult): Boolean = false
-
-    override def results(): List[AMFValidationResult] = ???
+  object IgnoreError extends AMFErrorHandler {
+    override def report(result: AMFValidationResult): Unit = {}
   }
 }

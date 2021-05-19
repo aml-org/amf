@@ -5,7 +5,7 @@ import amf.client.remod.amfcore.config.{ShapeRenderOptions => ImmutableShapeRend
 import amf.core.AMFSerializer
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, ShapeRenderOptions, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.Document
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.Position

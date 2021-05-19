@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.contexts.emitter
 import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.emitter.BaseEmitters.ArrayEmitter
 import amf.core.emitter._
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.DomainExtension
@@ -39,7 +39,7 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
   override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
 }
 
-abstract class OasLikeSpecEmitterContext(eh: ErrorHandler,
+abstract class OasLikeSpecEmitterContext(eh: AMFErrorHandler,
                                          refEmitter: RefEmitter = OasRefEmitter,
                                          options: ShapeRenderOptions = ShapeRenderOptions())
     extends SpecEmitterContext(eh, refEmitter, options) {

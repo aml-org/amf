@@ -4,7 +4,7 @@ import amf.ProfileName
 import amf.client.plugins._
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.remote.Vendor
@@ -26,7 +26,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with P
 
   override val ID: String = vendor.name
 
-  override def referenceHandler(eh: ErrorHandler) = new WebApiReferenceHandler(ID)
+  override def referenceHandler(eh: AMFErrorHandler) = new WebApiReferenceHandler(ID)
 
   override def dependencies(): Seq[AMFPlugin] = Seq(
     APIDomainPlugin,
@@ -36,7 +36,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with P
 
   def validVendorsToReference: Seq[String] = List(ExternalJsonYamlRefsPlugin.ID)
 
-  def specContext(options: RenderOptions, errorHandler: ErrorHandler): SpecEmitterContext
+  def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): SpecEmitterContext
 
   /**
     * Does references in this type of documents be recursive?

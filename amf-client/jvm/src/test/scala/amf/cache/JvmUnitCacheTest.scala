@@ -1,5 +1,5 @@
-package amf.cache
+//package amf.cache
 
-import amf.client.convert.NativeOpsFromJvm
+//import amf.client.convert.NativeOpsFromJvm
 
-class JvmUnitCacheTest extends UnitCacheTest with NativeOpsFromJvm
+//class JvmUnitCacheTest extends UnitCacheTest with NativeOpsFromJvm

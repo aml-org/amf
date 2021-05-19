@@ -1,8 +1,8 @@
 package amf.compiler
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote.{Cache, Hint}
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
@@ -16,7 +16,7 @@ trait CompilerTestBuilder extends PlatformSecrets {
                       hint: Hint,
                       cache: Option[Cache] = None,
                       validation: Option[Validation] = None,
-                      eh: Option[ParserErrorHandler] = None): Future[BaseUnit] =
+                      eh: Option[AMFErrorHandler] = None): Future[BaseUnit] =
     compiler(url, hint, cache, resolveValidation(validation), eh).flatMap(_.build())
 
   private def resolveValidation(validation: Option[Validation]) = validation match {
@@ -31,7 +31,6 @@ trait CompilerTestBuilder extends PlatformSecrets {
                          hint: Hint,
                          cache: Option[Cache] = None,
                          validation: Future[Validation],
-                         eh: Option[ParserErrorHandler] = None): Future[AMFCompiler] =
-    validation.map(v =>
-      AMFCompiler(url, platform, hint, cache = cache, eh = eh.getOrElse(DefaultParserErrorHandler())))
+                         eh: Option[AMFErrorHandler] = None): Future[AMFCompiler] =
+    validation.map(v => AMFCompiler(url, platform, hint, cache = cache, eh = eh.getOrElse(DefaultErrorHandler())))
 }

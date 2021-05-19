@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility
 
 import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.remote.Oas30
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.resolution.stages.TransformationStep

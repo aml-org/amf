@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, Document}
@@ -23,7 +23,7 @@ class LowercaseSchemes() extends TransformationStep {
     if (s.nonEmpty) element.set(field, s)
   }
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = model match {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = model match {
     case d: Document if d.encodes.isInstanceOf[Api] =>
       try {
         val api = d.encodes.asInstanceOf[Api]

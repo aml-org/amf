@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.common.emitters.factory
 
 import amf.core.emitter.{PartEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.templates.AbstractDeclaration
@@ -56,7 +56,7 @@ case class Raml10EmitterFactory()(implicit val ctx: Raml10SpecEmitterContext) ex
 }
 
 object Raml10EmitterFactory {
-  def apply(eh: ErrorHandler): Raml10EmitterFactory = Raml10EmitterFactory()(new Raml10SpecEmitterContext(eh))
+  def apply(eh: AMFErrorHandler): Raml10EmitterFactory = Raml10EmitterFactory()(new Raml10SpecEmitterContext(eh))
 }
 
 case class Raml08EmitterFactory()(implicit val ctx: Raml08SpecEmitterContext) extends RamlEmitterFactory {
@@ -83,7 +83,7 @@ case class Raml08EmitterFactory()(implicit val ctx: Raml08SpecEmitterContext) ex
 }
 
 object Raml08EmitterFactory {
-  def apply(eh: ErrorHandler): Raml08EmitterFactory = Raml08EmitterFactory()(new Raml08SpecEmitterContext(eh))
+  def apply(eh: AMFErrorHandler): Raml08EmitterFactory = Raml08EmitterFactory()(new Raml08SpecEmitterContext(eh))
 }
 
 trait RamlEmitterFactory extends DomainElementEmitterFactory {
