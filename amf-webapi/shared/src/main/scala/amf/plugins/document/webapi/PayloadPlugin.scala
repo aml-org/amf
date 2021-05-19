@@ -56,7 +56,8 @@ object PayloadPlugin extends AMFDocumentPlugin {
     }
   }
 
-  override def canParse(root: Root): Boolean                                      = notRAML(root) && notOAS(root) // any document can be parsed as a Payload
+  override def canParse(root: Root): Boolean =
+    notRAML(root) && notOAS(root) && notAsync(root) // any document can be parsed as a Payload
   override def referenceHandler(eh: AMFErrorHandler): SimpleReferenceHandler.type = SimpleReferenceHandler
 
   private def notRAML(root: Root) = root.parsed match {
@@ -64,11 +65,17 @@ object PayloadPlugin extends AMFDocumentPlugin {
     case _                           => false
   }
 
-  private def notOAS(root: Root) = root.parsed match {
+  private def notAsync(root: Root) = containsHeader(root, List("asyncapi"))
+  private def notOAS(root: Root)   = containsHeader(root, List("swagger", "openapi"))
+
+  private def containsHeader(root: Root, validHeaders: Seq[String]) = root.parsed match {
     case parsed: SyamlParsedDocument =>
       parsed.document.node.value match {
         case map: YMap =>
-          !map.entries.exists(_.key.value.asInstanceOf[YScalar].text.startsWith("swagger"))
+          !map.entries.exists { entry =>
+            val text = entry.key.value.asInstanceOf[YScalar].text
+            validHeaders.exists(text.startsWith)
+          }
         case _ => true
       }
     case _ =>

@@ -167,7 +167,7 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
       .init()
       .flatMap { _ =>
         val fragment = parseSchema(platform, finalPath, mediatype)
-        emitter.emitSchema(fragment)
+        emitter.emitSchema(fragment.bu.asInstanceOf[DataTypeFragment])
       }
       .flatMap { expected =>
         writeTemporaryFile(finalGolden)(expected).flatMap(s => assertDifferences(s, finalGolden))

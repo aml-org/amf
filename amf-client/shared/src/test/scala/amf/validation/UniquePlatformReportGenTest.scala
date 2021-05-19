@@ -2,8 +2,9 @@ package amf.validation
 
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 import amf._
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
-import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.{AMFGraphConfiguration, AMFResult}
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.errorhandling.{AMFErrorHandler, AmfReportBuilder}
 import amf.core.model.document.BaseUnit
@@ -63,16 +64,25 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
       _ <- if (profileFile.isDefined)
         validation.loadValidationProfile(directory + profileFile.get, DefaultErrorHandler())
       else Future.unit
-      model  <- parse(directory + api, eh, finalHint)
-      report <- validation.validate(model, profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
-      r      <- handleReport(report, golden.map(processGolden))
+      parseResult <- parse(directory + api, eh, finalHint)
+      report <- validation.validate(parseResult.bu,
+                                    profile,
+                                    new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
+      r <- {
+        val finalReport =
+          if (!parseResult.conforms) parseResult.result
+          else if (!report.conforms) report
+          else parseResult.result.merge(report)
+        handleReport(finalReport, golden.map(processGolden))
+      }
     } yield {
       r
     }
   }
 
-  protected def parse(path: String, eh: AMFErrorHandler, finalHint: Hint): Future[BaseUnit] = {
-    AMFCompiler(path, platform, finalHint, eh = eh).build()
+  protected def parse(path: String, eh: AMFErrorHandler, finalHint: Hint): Future[AMFResult] = {
+    val client = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).createClient()
+    client.parse(path)
   }
 
   protected def processGolden(g: String): String

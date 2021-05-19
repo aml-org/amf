@@ -128,7 +128,7 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("Validate ref key in operation object") {
-    validate("invalid-ref-key-operation.json", Some("invalid-ref-key-operation.report"), Oas20Profile)
+    validate("invalid-ref-key-operation.json", Some("invalid-ref-key-operation.report"), Oas30Profile)
   }
 
   test("Unresolved value in discriminator mapping results in warning") {

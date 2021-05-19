@@ -24,7 +24,7 @@ class AMFCompiler private (val url: String,
 
   private val compilerContext: CompilerContext = {
     val builder =
-      new CompilerContextBuilder(remote, new ParseConfiguration(newConfiguration, url)).withCache(cache)
+      new CompilerContextBuilder(remote, ParseConfiguration(newConfiguration, url)).withCache(cache)
     base.foreach(builder.withFileContext)
     builder.build()
   }

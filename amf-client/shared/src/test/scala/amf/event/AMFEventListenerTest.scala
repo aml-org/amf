@@ -36,7 +36,7 @@ class AMFEventListenerTest extends AsyncBeforeAndAfterEach with PlatformSecrets 
     RuntimeCompiler(Some("application/yaml"),
                     Context(platform),
                     cache = Cache(),
-                    new ParseConfiguration(RAMLConfiguration.RAML10(), url)) map { _ =>
+                    ParseConfiguration(RAMLConfiguration.RAML10(), url)) map { _ =>
       assertEventFrequencies(expectedFrequency, listener)
     }
   }

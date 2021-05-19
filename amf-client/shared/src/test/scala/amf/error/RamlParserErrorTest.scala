@@ -612,6 +612,4 @@ trait RamlParserErrorTest extends ParserErrorTest {
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   val hint: Hint
-  override protected def build(eh: AMFErrorHandler, file: String): Future[BaseUnit] =
-    AMFCompiler(file, platform, hint, eh = eh).build()
 }

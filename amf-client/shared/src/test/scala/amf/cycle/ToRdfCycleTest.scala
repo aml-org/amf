@@ -39,7 +39,7 @@ class ToRdfCycleTest
     RuntimeCompiler.apply(None,
                           Context(platform),
                           Cache(),
-                          new ParseConfiguration(AMFGraphConfiguration.fromEH(UnhandledErrorHandler), fullPath))
+                          ParseConfiguration(AMFGraphConfiguration.fromEH(UnhandledErrorHandler), fullPath))
   }
 
   private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {

@@ -39,9 +39,9 @@ trait FromRdfCycleTest extends AsyncFunSuite with FileAssertionTest with AsyncBe
     val fullPath     = basePath + path
     val content      = fs.syncFile(fullPath).read()
     val rdfFramework = platform.rdfFramework.get
-    rdfFramework
-      .syntaxToRdfModel("text/n3", content)
-      .map(modelDoc => BaseUnit.fromNativeRdfModel(baseUnitId, modelDoc.model, AMFGraphConfiguration.predefined()))
+    val modelDoc     = rdfFramework.syntaxToRdfModel("text/n3", content)
+    val result       = BaseUnit.fromNativeRdfModel(baseUnitId, modelDoc.model, AMFGraphConfiguration.predefined())
+    Some(result)
   }
 
   private def cycle(path: String, baseUnitId: String): Future[Assertion] = {

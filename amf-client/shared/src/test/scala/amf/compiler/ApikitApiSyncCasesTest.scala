@@ -37,7 +37,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     val ehp =  new ErrorHandlerProvider {
       override def errorHandler(): AMFErrorHandler = eh
     }
-    RuntimeCompiler.apply(None, base = Context(platform), cache = Cache(), new ParseConfiguration(WebAPIConfiguration.WebAPI().withResourceLoaders(List(new URNResourceLoader(mappings))).withErrorHandlerProvider(ehp), url) ).map { _ =>
+    RuntimeCompiler.apply(None, base = Context(platform), cache = Cache(), ParseConfiguration(WebAPIConfiguration.WebAPI().withResourceLoaders(List(new URNResourceLoader(mappings))).withErrorHandlerProvider(ehp), url) ).map { _ =>
       eh.getResults should have size 0
     }
   }
