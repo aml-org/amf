@@ -2,11 +2,11 @@ package amf.plugins.document.webapi.parser.spec.jsonschema
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.metamodel.domain.ExternalSourceElementModel
-import amf.core.model.document.{EncodesModel, Fragment}
-import amf.core.parser.errorhandler.ParserErrorHandler
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, ParserContext, SyamlParsedDocument}
+import amf.core.model.document.Fragment
+import amf.core.parser.{Annotations, SyamlParsedDocument}
 import amf.plugins.document.webapi.parser.ShapeParserContext
 import amf.plugins.document.webapi.parser.spec.declaration.common.YMapEntryLike
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaVersion, OasTypeParser}
@@ -55,7 +55,7 @@ class JsonSchemaParser {
     }
   }
 
-  private def keyValueOrDefault(rootAst: YMapEntryLike)(implicit errorHandler: ParserErrorHandler) = {
+  private def keyValueOrDefault(rootAst: YMapEntryLike)(implicit errorHandler: AMFErrorHandler) = {
     rootAst.key.map(_.as[String]).getOrElse("schema")
   }
 

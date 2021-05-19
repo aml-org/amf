@@ -1,7 +1,7 @@
 package amf.resolution.stages
 
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.parser.ParserContext
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.models.EndPoint
@@ -104,6 +104,6 @@ class DomainElementMergingTest extends FunSuite {
   }
 
   private def ctx = {
-    new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledParserErrorHandler))
+    new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledErrorHandler))
   }
 }

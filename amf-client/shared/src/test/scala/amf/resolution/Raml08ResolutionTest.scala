@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.remote.{Amf, Raml08, Raml08YamlHint}
 
 class Raml08ResolutionTest extends RamlResolutionTest {
@@ -19,7 +19,7 @@ class Raml08ResolutionTest extends RamlResolutionTest {
 
   test("Test failing with exception") {
     recoverToExceptionIf[Exception] {
-      cycle("wrong-key.raml", "wrong-key.raml", Raml08YamlHint, Raml08, eh = Some(UnhandledParserErrorHandler))
+      cycle("wrong-key.raml", "wrong-key.raml", Raml08YamlHint, Raml08, eh = Some(UnhandledErrorHandler))
     }.map { ex =>
       assert(ex.getMessage.contains(s"Message: Property 'errorKey' not supported in a ${Raml08.name} webApi node"))
     }

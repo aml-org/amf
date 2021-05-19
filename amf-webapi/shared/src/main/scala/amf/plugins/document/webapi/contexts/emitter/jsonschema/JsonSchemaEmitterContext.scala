@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.contexts.emitter.jsonschema
 
 import amf.client.remod.amfcore.config.ShapeRenderOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   InlinedJsonSchemaEmitterFactory,
@@ -19,7 +19,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 
 import scala.util.matching.Regex
 
-class JsonSchemaEmitterContext(override val eh: ErrorHandler,
+class JsonSchemaEmitterContext(override val eh: AMFErrorHandler,
                                override val options: ShapeRenderOptions = ShapeRenderOptions(),
                                override val schemaVersion: SchemaVersion)
     extends Oas2SpecEmitterContext(eh = eh, options = options) {
@@ -33,11 +33,11 @@ class JsonSchemaEmitterContext(override val eh: ErrorHandler,
 }
 
 object JsonSchemaEmitterContext {
-  def apply(eh: ErrorHandler, options: ShapeRenderOptions): JsonSchemaEmitterContext =
+  def apply(eh: AMFErrorHandler, options: ShapeRenderOptions): JsonSchemaEmitterContext =
     new JsonSchemaEmitterContext(eh, options, OAS20SchemaVersion(Schema))
 }
 
-final case class InlinedJsonSchemaEmitterContext(override val eh: ErrorHandler,
+final case class InlinedJsonSchemaEmitterContext(override val eh: AMFErrorHandler,
                                                  override val options: ShapeRenderOptions = ShapeRenderOptions(),
                                                  override val schemaVersion: SchemaVersion)
     extends JsonSchemaEmitterContext(eh = eh, options = options, schemaVersion) {
@@ -45,6 +45,6 @@ final case class InlinedJsonSchemaEmitterContext(override val eh: ErrorHandler,
 }
 
 object InlinedJsonSchemaEmitterContext {
-  def apply(eh: ErrorHandler, options: ShapeRenderOptions): InlinedJsonSchemaEmitterContext =
+  def apply(eh: AMFErrorHandler, options: ShapeRenderOptions): InlinedJsonSchemaEmitterContext =
     InlinedJsonSchemaEmitterContext(eh, options, schemaVersion = OAS20SchemaVersion(Schema))
 }

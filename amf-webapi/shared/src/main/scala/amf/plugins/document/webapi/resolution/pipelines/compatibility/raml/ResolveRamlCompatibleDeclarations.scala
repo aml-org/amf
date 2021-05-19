@@ -1,5 +1,5 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.resolution.stages.TransformationStep
@@ -10,11 +10,11 @@ import amf.core.vocabulary.Namespace.ApiContract
 import amf.plugins.domain.webapi.models.{Response, Payload}
 
 object ResolveRamlCompatibleDeclarationsStage extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit =
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
     new ResolveRamlCompatibleDeclarations(errorHandler).resolve(model)
 }
 
-private class ResolveRamlCompatibleDeclarations(val errorHandler: ErrorHandler) {
+private class ResolveRamlCompatibleDeclarations(val errorHandler: AMFErrorHandler) {
   val domainSelector
     : Selector = ResponseSelector || ParameterSelector || PayloadSelector || CallbackSelector || ExampleSelector
 

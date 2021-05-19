@@ -2,14 +2,14 @@ package amf.cycle
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.parser.{ParserContext, SchemaReference, SyamlParsedDocument}
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote.Platform
 import amf.plugins.document.webapi.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, JSONSchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
 import amf.plugins.document.webapi.parser.spec.jsonschema.JsonSchemaParser
+import amf.plugins.document.webapi.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
 import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.parser.JsonParser
 
@@ -18,7 +18,7 @@ trait JsonSchemaSuite {
   protected def parseSchema(platform: Platform,
                             path: String,
                             mediatype: String,
-                            eh: ParserErrorHandler = UnhandledParserErrorHandler) = {
+                            eh: AMFErrorHandler = UnhandledErrorHandler) = {
     val content  = platform.fs.syncFile(path).read().toString
     val document = JsonParser.withSource(content, path).document()
     val root = Root(
@@ -41,9 +41,7 @@ trait JsonSchemaSuite {
     unit
   }
 
-  private def getBogusParserCtx(location: String,
-                                options: ParsingOptions,
-                                eh: ParserErrorHandler): ShapeParserContext = {
+  private def getBogusParserCtx(location: String, options: ParsingOptions, eh: AMFErrorHandler): ShapeParserContext = {
     val ctx = new JsonSchemaWebApiContext(location,
                                           Seq(),
                                           ParserContext(eh = eh),

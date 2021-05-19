@@ -1,6 +1,6 @@
 package amf.extensions
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
 import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, Document}
@@ -111,7 +111,7 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
     AMFCompiler(url,
                 platform,
                 hint,
-                eh = DefaultParserErrorHandler(),
+                eh = DefaultErrorHandler(),
                 parsingOptions = ParsingOptions().withAmfJsonLdSerialization).build()
   }
 

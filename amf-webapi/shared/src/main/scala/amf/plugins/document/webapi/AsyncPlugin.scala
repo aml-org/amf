@@ -3,7 +3,7 @@ package amf.plugins.document.webapi
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
@@ -32,7 +32,7 @@ sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
 
   override val vendors: Seq[String] = Seq(vendor.name, AsyncApi.name)
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): AsyncSpecEmitterContext
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): AsyncSpecEmitterContext
 
   def context(loc: String,
               refs: Seq[ParsedReference],
@@ -78,7 +78,7 @@ sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
 
 object Async20Plugin extends AsyncPlugin {
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): AsyncSpecEmitterContext =
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): AsyncSpecEmitterContext =
     new Async20SpecEmitterContext(errorHandler)
 
   override protected def vendor: Vendor = AsyncApi20
@@ -108,7 +108,7 @@ object Async20Plugin extends AsyncPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
 
       case document: Document =>

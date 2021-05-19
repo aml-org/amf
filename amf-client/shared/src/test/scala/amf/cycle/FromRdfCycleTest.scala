@@ -2,9 +2,6 @@ package amf.cycle
 
 import amf.client.remod.AMFGraphConfiguration
 import amf.core.model.document.BaseUnit
-import amf.core.parser.ParserContext
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.plugin.RegistryContext
 import amf.facades.Validation
 import amf.io.FileAssertionTest
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach

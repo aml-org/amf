@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models.templates
 
-import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
@@ -21,7 +21,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
 
   def asEndpoint[T <: BaseUnit](unit: T,
                                 profile: ProfileName = Raml10Profile,
-                                errorHandler: ErrorHandler = UnhandledErrorHandler): EndPoint = {
+                                errorHandler: AMFErrorHandler = UnhandledErrorHandler): EndPoint = {
     linkTarget match {
       case Some(_) =>
         effectiveLinkTarget().asInstanceOf[ResourceType].asEndpoint(unit, profile, errorHandler)
@@ -39,7 +39,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
                                      node: DataNode,
                                      entry: YMapEntry,
                                      annotations: Annotations,
-                                     errorHandler: ErrorHandler = UnhandledErrorHandler,
+                                     errorHandler: AMFErrorHandler = UnhandledErrorHandler,
                                      profile: ProfileName = Raml10Profile): EndPoint = {
     val helper = ExtendsHelper(profile, keepEditingInfo = false, errorHandler)
     helper.entryAsEndpoint(unit, node, name.option().getOrElse(""), id, entry)

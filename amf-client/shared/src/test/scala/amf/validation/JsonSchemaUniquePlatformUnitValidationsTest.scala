@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Hint, Oas20YamlHint}
 import amf.cycle.JsonSchemaSuite
@@ -24,7 +24,7 @@ class JsonSchemaUniquePlatformUnitValidationsTest extends UniquePlatformReportGe
     validate("unused-validation-facets.json", Some("unused-validation-facets.report"))
   }
 
-  override protected def parse(path: String, eh: DefaultParserErrorHandler, finalHint: Hint): Future[BaseUnit] = {
+  override protected def parse(path: String, eh: AMFErrorHandler, finalHint: Hint): Future[BaseUnit] = {
     Future.successful(parseSchema(platform, path, "application/json", eh))
   }
 }

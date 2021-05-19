@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration.emitters
 import amf.client.remod.amfcore.config.ShapeRenderOptions
 import amf.core.emitter.BaseEmitters.MultipleValuesArrayEmitter
 import amf.core.emitter.{Emitter, EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{DomainExtension, ShapeExtension}
@@ -60,7 +60,9 @@ object JsonSchemaDeclarationsPath {
   }
 }
 
-class InlineJsonSchemaShapeEmitterContext(eh: ErrorHandler, schemaVersion: SchemaVersion, options: ShapeRenderOptions)
+class InlineJsonSchemaShapeEmitterContext(eh: AMFErrorHandler,
+                                          schemaVersion: SchemaVersion,
+                                          options: ShapeRenderOptions)
     extends JsonSchemaShapeEmitterContext(eh, schemaVersion, options) {
   override def typeEmitters(shape: Shape,
                             ordering: SpecOrdering,
@@ -72,11 +74,11 @@ class InlineJsonSchemaShapeEmitterContext(eh: ErrorHandler, schemaVersion: Schem
 }
 
 object JsonSchemaShapeEmitterContext {
-  def apply(eh: ErrorHandler, schemaVersion: SchemaVersion, options: ShapeRenderOptions) =
+  def apply(eh: AMFErrorHandler, schemaVersion: SchemaVersion, options: ShapeRenderOptions) =
     new JsonSchemaShapeEmitterContext(eh, schemaVersion, options)
 }
 
-class JsonSchemaShapeEmitterContext(val eh: ErrorHandler,
+class JsonSchemaShapeEmitterContext(val eh: AMFErrorHandler,
                                     val schemaVersion: SchemaVersion,
                                     val options: ShapeRenderOptions)
     extends OasLikeShapeEmitterContext {
@@ -159,7 +161,7 @@ trait ShapeEmitterContext extends SpecAwareEmitterContext with DeclarationEmissi
 
   def annotationEmitter(e: DomainExtension, default: SpecOrdering): EntryEmitter
 
-  def eh: ErrorHandler
+  def eh: AMFErrorHandler
 
   def vendor: Vendor
 

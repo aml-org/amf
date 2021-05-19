@@ -2,7 +2,7 @@ package amf.validation
 
 import _root_.org.scalatest.AsyncFunSuite
 import amf._
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.AMFSerializer
@@ -41,7 +41,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   //what is speciy testing?? should be partitioned in a some new of tests? extract to tckUtor?
   ignore("Trailing spaces validation") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -56,7 +56,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // this is not a validation test
   ignore("Can parse a recursive API") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -69,7 +69,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // is testing that the api has no errors. Should be in Platform?
   test("Some production api with includes") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
     for {
       validation <- Validation(platform)
       library    <- AMFCompiler(productionPath + "includes-api/api.raml", platform, Raml10YamlHint, eh = eh).build()
@@ -88,7 +88,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // tck examples?! for definition this name its wrong. What it's testing? the name makes reference to an external fragment exception, but the golden its a normal and small api.
   test("Test validate external fragment cast exception") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/tck-examples/cast-external-exception.raml",
@@ -105,7 +105,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   // the reported null pointer case could not be reproduced. This test was added with the whole api to prove that there is any null pointer.
   // should we delete this case?
   test("Raml 0.8 Null pointer tck case APIMF-429") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
     for {
       validation <- Validation(platform)
       library <- AMFCompiler(validationsPath + "/tck-examples/nullpointer-spec-example.raml",
@@ -123,7 +123,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // this is a real case, recursion in json schema??
   test("Test stackoverflow case from Platform") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -139,7 +139,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // same than the previous one
   test("Test stackoverflow case 0.8 from Platform") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -155,7 +155,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 // why the generation???? Move to MovelValidationReportTest?
   test("Security scheme and traits test") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/security-schemes/security1.raml", platform, Raml10YamlHint, eh = eh)
@@ -173,7 +173,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Custom validaton problems 1") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -191,7 +191,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Custom validation problems 2 (RAML)") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -208,7 +208,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Custom validation problems 2 (OAS)") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
     for {
       validation <- Validation(platform)
       doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, Raml10YamlHint, eh = eh)
@@ -225,7 +225,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Matrix tests") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -242,7 +242,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Patterned properties tests") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -256,7 +256,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Recursive array test") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -270,7 +270,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("oas example error in shape becomes warning") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -283,7 +283,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Null super-array items test") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -296,7 +296,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("0.8 'id' identifiers in JSON Schema shapes test") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -310,7 +310,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Erroneous JSON schema in ResourceType test") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -323,7 +323,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Nested XML Schema test") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -336,7 +336,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Recursion introduced after resource type application test") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -350,7 +350,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Numeric status codes in OAS responses") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)
@@ -363,7 +363,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   ignore("emilio performance") {
-    val eh = DefaultParserErrorHandler()
+    val eh = DefaultErrorHandler()
 
     for {
       validation <- Validation(platform)

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration.types
 
-import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.parser.{YMapOps, YNodeLikeOps}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.domain.shapes.models.TypeDef
@@ -9,7 +9,7 @@ import amf.validations.ShapeParserSideValidations.InvalidJsonSchemaType
 import org.yaml.model.{YMap, YScalar}
 
 object TypeDetector {
-  def detect(map: YMap)(implicit errorHandler: ParserErrorHandler): Option[TypeDef] = {
+  def detect(map: YMap)(implicit errorHandler: AMFErrorHandler): Option[TypeDef] = {
 
     val detectionCriteria = ExplicitTypeCriteria()
       .chain(ObjectCriteria)
@@ -30,7 +30,7 @@ object TypeDetector {
     override def detect(map: YMap): Option[TypeDef] = first.detect(map).orElse(second.detect(map))
   }
 
-  case class ExplicitTypeCriteria()(implicit val errorHandler: ParserErrorHandler) extends TypeCriteria {
+  case class ExplicitTypeCriteria()(implicit val errorHandler: AMFErrorHandler) extends TypeCriteria {
     override def detect(map: YMap): Option[TypeDef] = map.key("type").flatMap { e =>
       val typeText          = e.value.as[YScalar].text
       val formatTextOrEmpty = map.key("format").flatMap(e => e.value.toOption[YScalar].map(_.text)).getOrElse("")

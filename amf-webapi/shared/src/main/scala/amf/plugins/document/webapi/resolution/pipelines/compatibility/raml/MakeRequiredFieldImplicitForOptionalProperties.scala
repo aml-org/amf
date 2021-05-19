@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
 import amf.core.annotations.ExplicitField
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.MetaModelTypeMapping
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.BaseUnit
@@ -18,7 +18,7 @@ class MakeRequiredFieldImplicitForOptionalProperties()
 
   protected var m: Option[BaseUnit] = None
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     m = Some(model)
     model.transform(NodeShapeSelector, transform)(errorHandler)
   }

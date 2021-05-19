@@ -1,35 +1,17 @@
 package amf.plugins.document.webapi.parser.spec.oas.parser.types
 
 import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
-import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.model.DataType
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, Fields, FutureDeclarations, Range, ScalarNode, SearchScope, YMapOps, YNodeLikeOps}
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
-import amf.validations.ShapeParserSideValidations.{
-  DiscriminatorNameRequired,
-  DuplicateRequiredItem,
-  InvalidAdditionalItemsType,
-  InvalidAdditionalPropertiesType,
-  InvalidDisjointUnionType,
-  InvalidJsonSchemaType,
-  InvalidMediaTypeType,
-  InvalidOrType,
-  InvalidRequiredArrayForSchemaVersion,
-  InvalidRequiredBooleanForSchemaVersion,
-  InvalidRequiredValue,
-  InvalidSchemaType,
-  InvalidUnionType,
-  InvalidXoneType,
-  ItemsFieldRequired,
-  ReadOnlyPropertyMarkedRequired
-}
 import amf.plugins.document.webapi.parser.ShapeParserContext
 import amf.plugins.document.webapi.parser.spec.OasShapeDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{
@@ -60,8 +42,8 @@ import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel.{LinkExpression, TemplateVariable}
 import amf.plugins.domain.webapi.models
 import amf.plugins.domain.webapi.models.IriTemplateMapping
+import amf.validations.ShapeParserSideValidations._
 import org.yaml.model._
-import amf.core.utils.AmfStrings
 
 import scala.collection.mutable
 import scala.util.Try
@@ -1038,7 +1020,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
     }
   }
 
-  case class SchemaShapeParser(shape: SchemaShape, map: YMap)(implicit errorHandler: ParserErrorHandler)
+  case class SchemaShapeParser(shape: SchemaShape, map: YMap)(implicit errorHandler: AMFErrorHandler)
       extends AnyShapeParser()
       with CommonScalarParsingLogic {
     super.parse()

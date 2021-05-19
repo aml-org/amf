@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.AmfElement
 import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
 import amf.core.parser.{FieldEntry, Position}
@@ -19,7 +19,7 @@ import scala.collection.mutable.ListBuffer
   *
   */
 case class ExtendsEmitter(field: FieldEntry, ordering: SpecOrdering, oasExtension: Boolean = false)(
-    implicit eh: ErrorHandler) {
+    implicit eh: AMFErrorHandler) {
   def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
 
@@ -37,7 +37,7 @@ case class ExtendsEmitter(field: FieldEntry, ordering: SpecOrdering, oasExtensio
   private def extension(key: String) = if (oasExtension) key.asOasExtension else key
 }
 
-case class TraitExtendsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(implicit eh: ErrorHandler)
+case class TraitExtendsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(implicit eh: AMFErrorHandler)
     extends SingleValueArrayEmitter {
   override type Element = ParametrizedTrait
 
@@ -49,7 +49,7 @@ case class TraitExtendsEmitter(key: String, f: FieldEntry, ordering: SpecOrderin
 }
 
 case class EndPointExtendsEmitter(key: String, resourceTypes: Seq[ParametrizedResourceType], ordering: SpecOrdering)(
-    implicit eh: ErrorHandler)
+    implicit eh: AMFErrorHandler)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
@@ -63,7 +63,7 @@ case class EndPointExtendsEmitter(key: String, resourceTypes: Seq[ParametrizedRe
 }
 
 case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, ordering: SpecOrdering)(
-    implicit eh: ErrorHandler)
+    implicit eh: AMFErrorHandler)
     extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     if (declaration.variables.nonEmpty) {
@@ -85,7 +85,7 @@ case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, 
   override def position(): Position = pos(declaration.annotations)
 }
 
-case class VariableEmitter(variable: VariableValue, ordering: SpecOrdering)(implicit eh: ErrorHandler)
+case class VariableEmitter(variable: VariableValue, ordering: SpecOrdering)(implicit eh: AMFErrorHandler)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
