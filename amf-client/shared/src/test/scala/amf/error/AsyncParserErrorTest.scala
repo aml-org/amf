@@ -12,9 +12,6 @@ class AsyncParserErrorTest extends ParserErrorTest {
 
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/async"
 
-  override protected def build(eh: AMFErrorHandler, file: String): Future[BaseUnit] =
-    AMFCompiler(file, platform, AsyncYamlHint, eh = eh).build()
-
   test("Parameter is not YMap") {
     validate(
       "/error/invalid-single-parameter-parse.yaml",

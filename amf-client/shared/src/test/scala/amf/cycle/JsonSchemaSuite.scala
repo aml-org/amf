@@ -1,10 +1,12 @@
 package amf.cycle
 
+import amf.client.remod.AMFResult
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.parser.{ParserContext, SchemaReference, SyamlParsedDocument}
 import amf.core.remote.Platform
+import amf.core.validation.AMFValidationReport
 import amf.plugins.document.webapi.contexts.parser.oas.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.declaration.JSONSchemaDraft7SchemaVersion
@@ -31,7 +33,8 @@ trait JsonSchemaSuite {
     )
     val options = ParsingOptions()
     val parsed  = new JsonSchemaParser().parse(root, getBogusParserCtx(path, options, eh), options, None)
-    wrapInDataTypeFragment(root, parsed)
+    val unit    = wrapInDataTypeFragment(root, parsed)
+    AMFResult(unit, AMFValidationReport.forModel(unit, eh.getResults))
   }
 
   private def wrapInDataTypeFragment(document: Root, parsed: AnyShape): DataTypeFragment = {
