@@ -47,7 +47,7 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
     Validation(platform).flatMap { _ =>
       val url           = s"file://$directory$file"
       val configuration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
-      RuntimeCompiler(None, Context(platform), Cache(), ParseConfiguration(configuration, url))
+      RuntimeCompiler(url, None, Context(platform), Cache(), ParseConfiguration(configuration))
     }
 
   private def runTest(file: String, hint: Hint): Future[Assertion] =

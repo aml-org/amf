@@ -2,7 +2,6 @@ package amf.plugins.document.webapi
 
 import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.metamodel.Obj
@@ -100,7 +99,7 @@ class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, ctx: ParserContext, options: ParsingOptions): BaseUnit =
+  override def parse(document: Root, ctx: ParserContext): BaseUnit =
     document.parsed match {
       case parsed: SyamlParsedDocument =>
         val result =

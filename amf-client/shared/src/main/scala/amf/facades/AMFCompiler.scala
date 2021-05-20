@@ -24,7 +24,7 @@ class AMFCompiler private (val url: String,
 
   private val compilerContext: CompilerContext = {
     val builder =
-      new CompilerContextBuilder(remote, ParseConfiguration(newConfiguration, url)).withCache(cache)
+      new CompilerContextBuilder(url, remote, ParseConfiguration(newConfiguration)).withCache(cache)
     base.foreach(builder.withFileContext)
     builder.build()
   }
@@ -63,14 +63,15 @@ class AMFCompiler private (val url: String,
 
 object AMFCompiler {
   // interface that is used by all testing classes
-  def apply(url: String,
-            remote: Platform,
-            hint: Hint,
-            context: Option[Context] = None,
-            cache: Option[Cache] = None,
-            ctx: Option[ParserContext] = None,
-            eh: AMFErrorHandler,
-            parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext) = {
+  def apply(
+      url: String,
+      remote: Platform,
+      hint: Hint,
+      context: Option[Context] = None,
+      cache: Option[Cache] = None,
+      ctx: Option[ParserContext] = None,
+      eh: AMFErrorHandler,
+      parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext): AMFCompiler = {
     val newEnv =
       AMFPluginsRegistry.obtainStaticConfig().withParsingOptions(ParsingOptionsConverter.fromLegacy(parsingOptions))
     new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), newEnv)

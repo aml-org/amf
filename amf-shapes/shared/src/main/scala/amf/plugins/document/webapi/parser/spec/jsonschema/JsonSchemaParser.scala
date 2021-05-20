@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.metamodel.domain.ExternalSourceElementModel

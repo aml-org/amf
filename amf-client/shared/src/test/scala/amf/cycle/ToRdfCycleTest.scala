@@ -36,10 +36,11 @@ class ToRdfCycleTest
 
   private def build(path: String): Future[BaseUnit] = {
     val fullPath = basePath + path
-    RuntimeCompiler.apply(None,
+    RuntimeCompiler.apply(fullPath,
+                          None,
                           Context(platform),
                           Cache(),
-                          ParseConfiguration(AMFGraphConfiguration.fromEH(UnhandledErrorHandler), fullPath))
+                          ParseConfiguration(AMFGraphConfiguration.fromEH(UnhandledErrorHandler)))
   }
 
   private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {

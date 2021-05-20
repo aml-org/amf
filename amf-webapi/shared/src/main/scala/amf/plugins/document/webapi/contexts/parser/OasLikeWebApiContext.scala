@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.contexts.parser
 
-import amf.core.client.ParsingOptions
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.model.document.ExternalFragment
 import amf.core.model.domain.Shape
 import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
