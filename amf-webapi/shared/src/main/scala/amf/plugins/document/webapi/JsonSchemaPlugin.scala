@@ -1,9 +1,8 @@
 package amf.plugins.document.webapi
 
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
-import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.config.{ParsingOptions, RenderOptions}
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document._
@@ -40,9 +39,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
-    val ctx    = context(document.location, document.references, options, parentContext)
-    val parsed = new JsonSchemaParser().parse(document, WebApiShapeParserContextAdapter(ctx), options)
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+    val newCtx = context(document.location, document.references, ctx.parsingOptions, ctx)
+    val parsed =
+      new JsonSchemaParser().parse(document, WebApiShapeParserContextAdapter(newCtx), ctx.parsingOptions)
     wrapInDataTypeFragment(document, parsed)
   }
 

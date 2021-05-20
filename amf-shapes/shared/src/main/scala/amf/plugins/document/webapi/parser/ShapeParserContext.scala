@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser
 
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.Shape
 import amf.core.parser.{

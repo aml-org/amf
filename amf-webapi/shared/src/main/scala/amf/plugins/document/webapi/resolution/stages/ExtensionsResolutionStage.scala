@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
+import amf.client.remod.ParseConfiguration
 import amf.core.annotations.Aliases
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Type.Scalar
@@ -88,8 +89,8 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
-    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext(eh = errorHandler))
-    case _             => new Raml10WebApiContext("", Nil, ParserContext(eh = errorHandler))
+    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
+    case _             => new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
   }
 
   def removeExtends(document: Document): BaseUnit = {

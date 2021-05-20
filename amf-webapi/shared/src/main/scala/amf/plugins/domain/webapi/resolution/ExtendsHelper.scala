@@ -1,6 +1,7 @@
 package amf.plugins.domain.webapi.resolution
 
 import amf.client.parse.IgnoringErrorHandler
+import amf.client.remod.ParseConfiguration
 import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.AMFErrorHandler
@@ -240,7 +241,7 @@ case class ExtendsHelper(profile: ProfileName,
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
           case (alias, (fullUrl, _)) if m.id == fullUrl =>
-            val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(eh = ctx.eh))
+            val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(ctx.eh)))
             m.declares.foreach { declaration =>
               extractDeclarationToContextWithLocalAndRootName(declaration, m)(nestedCtx)
             }
@@ -296,5 +297,7 @@ object ExtendsHelper {
   }
 }
 
-class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext(eh = IgnoringErrorHandler()))
-class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext(eh = IgnoringErrorHandler()))
+class CustomRaml08WebApiContext
+    extends Raml08WebApiContext("", Nil, ParserContext(config = ParseConfiguration(IgnoringErrorHandler())))
+class CustomRaml10WebApiContext
+    extends Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(IgnoringErrorHandler())))

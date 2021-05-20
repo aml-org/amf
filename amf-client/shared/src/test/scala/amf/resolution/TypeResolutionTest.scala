@@ -1,6 +1,7 @@
 package amf.resolution
 
 import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.ParseConfiguration
 import amf.compiler.CompilerTestBuilder
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
@@ -25,7 +26,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
         val adopt: Shape => Unit = shape => { shape.adopted("/test") }
 
         val ramlCtx: Raml10WebApiContext =
-          new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledErrorHandler))
+          new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(UnhandledErrorHandler)))
 
         implicit val ctx: ShapeParserContext = WebApiShapeParserContextAdapter(ramlCtx)
 

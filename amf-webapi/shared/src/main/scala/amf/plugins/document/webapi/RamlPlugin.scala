@@ -1,10 +1,9 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.config.{ParsingOptions, RenderOptions}
 import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -18,7 +17,7 @@ import amf.core.parser.{
   RefContainer,
   UnspecifiedReference
 }
-import amf.core.remote.{Platform, Vendor}
+import amf.core.remote.Vendor
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.raml.{
@@ -34,15 +33,8 @@ import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFr
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.RamlReferenceHandler
+import amf.plugins.document.webapi.resolution.pipelines._
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.Raml10CompatibilityPipeline
-import amf.plugins.document.webapi.resolution.pipelines.{
-  Raml08EditingPipeline,
-  Raml08TransformationPipeline,
-  Raml10CachePipeline,
-  Raml10EditingPipeline,
-  Raml10TransformationPipeline
-}
-import amf.plugins.document.webapi.validation.ApiValidationProfiles
 import amf.plugins.document.webapi.validation.ApiValidationProfiles._
 import amf.plugins.domain.webapi.models.api.{Api, WebApi}
 import amf.plugins.features.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
@@ -60,23 +52,22 @@ sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
 
   // context that opens a new context for declarations and copies the global JSON Schema declarations
   def cleanContext(wrapped: ParserContext, root: Root, options: ParsingOptions): RamlWebApiContext = {
-    val cleanNested =
-      ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.eh)
-    val clean = context(cleanNested, root, options)
+    val cleanNested = ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.config)
+    val clean       = context(cleanNested, root, options)
     clean.globalSpace = wrapped.globalSpace
     clean
   }
 
   override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext
 
-  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
+  override def parse(root: Root, ctx: ParserContext): BaseUnit = {
 
-    val updated = context(parentContext, root, options)
+    val updated = context(ctx, root, ctx.parsingOptions)
     restrictCrossSpecReferences(root, updated)
     inlineExternalReferences(root, updated)
-    val clean = cleanContext(parentContext, root, options)
+    val clean = cleanContext(ctx, root, ctx.parsingOptions)
 
-    validateReferences(root.references, parentContext)
+    validateReferences(root.references, ctx)
     RamlHeader(root) match { // todo review this, should we use the raml web api context for get the version parser?
       case Some(Raml08)          => Raml08DocumentParser(root)(updated).parseDocument()
       case Some(Raml10)          => Raml10DocumentParser(root)(updated).parseDocument()

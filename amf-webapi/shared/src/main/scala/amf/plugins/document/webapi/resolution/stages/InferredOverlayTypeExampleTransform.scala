@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
+import amf.client.remod.ParseConfiguration
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.{DomainElement, Shape}
@@ -36,7 +37,7 @@ class InferredOverlayTypeExampleTransform(implicit val errorHandler: AMFErrorHan
     }).node
     // TODO: should be able to configure wether the DataNodeParser uses a ctx or not. Removing WebApiContext dependency from DataNodeParser is not a simple refactor.
     val dummyCtx =
-      new Raml10WebApiContext("", Seq(), ParserContext(eh = errorHandler))
+      new Raml10WebApiContext("", Seq(), ParserContext(config = ParseConfiguration(errorHandler)))
     val result = NodeDataNodeParser(node, example.id, quiet = true)(WebApiShapeParserContextAdapter(dummyCtx)).parse()
     result.dataNode.foreach { dataNode =>
       example.set(ExampleModel.StructuredValue, dataNode, example.structuredValue.annotations)

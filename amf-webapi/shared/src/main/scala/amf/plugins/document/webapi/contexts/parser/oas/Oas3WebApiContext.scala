@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.contexts.parser.oas
-import amf.core.client.ParsingOptions
+
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{Oas30, Vendor}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax

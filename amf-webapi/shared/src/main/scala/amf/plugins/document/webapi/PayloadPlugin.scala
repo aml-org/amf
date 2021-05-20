@@ -1,20 +1,16 @@
 package amf.plugins.document.webapi
 
-import amf.AmfProfile
 import amf.client.plugins.{AMFDocumentPlugin, AMFDomainPlugin, AMFPlugin}
-import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.client.remod.amfcore.config.RenderOptions
+import amf.core.Root
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
-import amf.core.remote.{Payload, Platform}
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.remote.Payload
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.parser.spec.common.PayloadEmitter
-import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}
@@ -46,11 +42,11 @@ object PayloadPlugin extends AMFDocumentPlugin {
     "application/payload+yaml"
   )
 
-  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): PayloadFragment = {
+  override def parse(root: Root, ctx: ParserContext): PayloadFragment = {
     root.parsed match {
       case parsed: SyamlParsedDocument =>
-        implicit val ctx: PayloadContext =
-          new PayloadContext(root.location, parentContext.refs, parentContext, options = options)
+        implicit val newCtx: PayloadContext =
+          new PayloadContext(root.location, ctx.refs, ctx, options = ctx.parsingOptions)
         PayloadParser(parsed.document, root.location, root.mediatype).parseUnit()
       case _ => throw UnsupportedParsedDocumentException
     }

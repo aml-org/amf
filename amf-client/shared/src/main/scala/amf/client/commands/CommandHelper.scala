@@ -48,10 +48,11 @@ trait CommandHelper {
   protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
     val inputFile = ensureUrl(config.input.get)
     val parsed = RuntimeCompiler(
+      inputFile,
       Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
       Context(platform),
       cache = Cache(),
-      ParseConfiguration(configuration, inputFile)
+      ParseConfiguration(configuration)
     )
     val vendor = effectiveVendor(config.inputFormat)
     if (config.resolve)
@@ -65,10 +66,11 @@ trait CommandHelper {
     if (config.resolve && config.validate) {
       val inputFile = ensureUrl(config.input.get)
       val parsed = RuntimeCompiler(
+        inputFile,
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
         Context(platform),
         cache = Cache(),
-        ParseConfiguration(configuration, inputFile)
+        ParseConfiguration(configuration)
       )
       parsed map { parsed =>
         RuntimeResolver.resolve(vendor, parsed, TransformationPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)

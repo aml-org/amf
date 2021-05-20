@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.contexts.parser.oas
-import amf.core.client.ParsingOptions
+
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.model.document.ExternalFragment
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext

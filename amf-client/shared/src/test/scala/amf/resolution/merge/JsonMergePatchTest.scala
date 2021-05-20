@@ -2,6 +2,7 @@ package amf.resolution.merge
 
 import amf.client.convert.BaseUnitConverter
 import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.ParseConfiguration
 import amf.core.emitter.BaseEmitters.traverse
 import amf.core.emitter.{RenderOptions, SpecOrdering}
 import amf.core.model.document.Document
@@ -128,7 +129,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     def getMerger: JsonMergePatch = AsyncJsonMergePatch()
 
     def getBogusParserCtx: AsyncWebApiContext =
-      new Async20WebApiContext("loc", Seq(), ParserContext(eh = DefaultErrorHandler()))
+      new Async20WebApiContext("loc", Seq(), ParserContext(config = ParseConfiguration(DefaultErrorHandler())))
 
     def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): Future[String] =
       new AMFRenderer(document, AMF, renderOptions, None).renderToString
