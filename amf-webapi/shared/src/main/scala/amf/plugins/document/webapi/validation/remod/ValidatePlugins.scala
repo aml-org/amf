@@ -9,6 +9,7 @@ import amf.client.remod.amfcore.plugins.validate.{
 }
 import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
 import amf.core.model.document.BaseUnit
+import amf.core.validation.AMFValidationReport
 import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
 import amf.plugins.document.webapi.validation.runner.ValidationContext
 import amf.plugins.document.webapi.validation.runner.steps.{
@@ -23,11 +24,11 @@ import scala.concurrent.{ExecutionContext, Future}
 trait ModelResolution {
 
   def withResolvedModel[T](unit: BaseUnit, profile: ProfileName, conf: ValidationConfiguration)(
-      withResolved: BaseUnit => T): T = {
-    if (unit.resolved) withResolved(unit)
+      withResolved: (BaseUnit, Option[AMFValidationReport]) => T): T = {
+    if (unit.resolved) withResolved(unit, None)
     else {
       val resolvedUnit = ValidationTransformationPipeline(profile, unit, conf.eh)
-      withResolved(resolvedUnit)
+      withResolved(resolvedUnit, Some(AMFValidationReport.forModel(resolvedUnit, conf.eh.getResults)))
     }
   }
 }
@@ -44,9 +45,12 @@ case class ValidateStepPluginAdapter(id: String, factory: ValidationContext => V
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
-    withResolvedModel(unit, options.profileName, options.config) { resolvedUnit =>
+    withResolvedModel(unit, options.profileName, options.config) { (resolvedUnit, resolutionReport) =>
       val context = legacyContext(resolvedUnit, options)
-      factory(context).run.map(report => ValidationResult(resolvedUnit, report))
+      factory(context).run.map { validationStepReport =>
+        ValidationResult(resolvedUnit,
+                         resolutionReport.map(_.merge(validationStepReport)).getOrElse(validationStepReport))
+      }
     }
   }
 

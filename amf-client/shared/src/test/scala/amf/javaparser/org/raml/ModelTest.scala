@@ -1,6 +1,7 @@
 package amf.javaparser.org.raml
 
 import amf._
+import amf.client.environment.WebAPIConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
@@ -29,21 +30,27 @@ trait ModelValidationTest extends DirectoryTest {
   override def ignorableExtension: String = ".ignore"
 
   override def runDirectory(d: String): Future[(String, Boolean)] = {
-    val eh = DefaultErrorHandler()
     for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(s"file://${d + inputFileName}", platform, hint, eh = eh)
-        .build()
+      validation  <- Validation(platform) // TODO: remove
+      client      <- Future.successful(WebAPIConfiguration.WebAPI().createClient())
+      parseResult <- client.parse(s"file://${d + inputFileName}")
       report <- {
-        validation.validate(model,
-                            profileFromModel(model),
-                            new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
+        validation.validate(parseResult.bu,
+                            profileFromModel(parseResult.bu),
+                            new ValidationConfiguration(client.getConfiguration))
       }
-      output <- { renderOutput(d, model, report) }
+      unifiedReport <- {
+        val r =
+          if (!parseResult.conforms) parseResult.result
+          else if (!report.conforms) report
+          else parseResult.result.merge(report)
+        Future.successful(r)
+      }
+      output <- { renderOutput(d, parseResult.bu, unifiedReport) }
     } yield {
       // we only need to use the platform if there are errors in examples, this is what causes differences due to
       // the different JSON-Schema libraries used in JS and the JVM
-      val usePlatform = !report.conforms && report.results.exists(result =>
+      val usePlatform = !unifiedReport.conforms && unifiedReport.results.exists(result =>
         result.validationId == ExampleValidationErrorSpecification.id || result.validationId == UnresolvedReference.id)
       (output, usePlatform)
     }
@@ -100,19 +107,10 @@ trait ModelResolutionTest extends ModelValidationTest {
   override def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
     transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d, None, None))
 
-  private def profileFromVendor(vendor: Vendor): ProfileName = {
-    vendor match {
-      case Raml08 => Raml08Profile
-      case Raml10 => Raml10Profile
-      case Oas20  => Oas20Profile
-      case Oas30  => Oas30Profile
-      case _      => AmfProfile
-    }
-  }
-
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
+        // TODO: use AMFTransformer
         RuntimeResolver.resolve(config.target.name, unit, EDITING_PIPELINE, DefaultErrorHandler())
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
