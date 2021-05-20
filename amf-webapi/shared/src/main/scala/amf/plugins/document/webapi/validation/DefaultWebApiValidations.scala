@@ -10,7 +10,7 @@ import amf.plugins.features.validation.Validations
 trait ImportUtils {
   protected def validationId(validation: AMFValidation): String =
     validation.uri match {
-      case Some(s) => Namespace.staticAliases.expand(s.trim).iri()
+      case Some(s) => Namespace.defaultAliases.expand(s.trim).iri()
       case None =>
         val classPostfix    = postfix(validation.owlClass, "domain")
         val propertyPostfix = postfix(validation.owlProperty, "property")
