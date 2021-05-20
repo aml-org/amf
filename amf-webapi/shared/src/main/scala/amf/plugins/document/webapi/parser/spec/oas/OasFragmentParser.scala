@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{ExternalDomainElement, Shape}
@@ -46,7 +45,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       case Oas20AnnotationTypeDeclaration => Some(AnnotationFragmentParser(map).parse())
       case Oas20SecurityScheme            => Some(SecuritySchemeFragmentParser(map).parse())
       case Oas20NamedExample              => Some(NamedExampleFragmentParser(map).parse())
-      case Oas20Header | Oas30Header      => Some(new ExternalJsonYamlRefsPlugin().parse(root, ctx, ParsingOptions()))
+      case Oas20Header | Oas30Header      => Some(new ExternalJsonYamlRefsPlugin().parse(root, ctx))
       case _                              => None
     }).getOrElse {
       val fragment = ExternalFragment()

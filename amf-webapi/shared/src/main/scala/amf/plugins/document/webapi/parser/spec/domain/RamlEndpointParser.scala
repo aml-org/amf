@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.client.remod.ParseConfiguration
 import amf.core.annotations.{LexicalInformation, VirtualElement}
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
@@ -124,14 +125,14 @@ abstract class RamlEndpointParser(entry: YMapEntry,
             case _: Raml08WebApiContext =>
               new Raml08WebApiContext(ctx.loc,
                                       ctx.refs,
-                                      ParserContext(eh = ctx.eh),
+                                      ParserContext(config = ParseConfiguration(ctx.eh)),
                                       Some(ctx.declarations),
                                       ctx.contextType,
                                       ctx.options)
             case _ =>
               new Raml10WebApiContext(ctx.loc,
                                       ctx.refs,
-                                      ParserContext(eh = ctx.eh),
+                                      ParserContext(config = ParseConfiguration(ctx.eh)),
                                       Some(ctx.declarations),
                                       ctx.contextType,
                                       ctx.options)

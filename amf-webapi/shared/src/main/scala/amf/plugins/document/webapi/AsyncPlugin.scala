@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi
 
-import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.config.{ParsingOptions, RenderOptions}
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -22,10 +21,9 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   Async20EditingPipeline,
   Async20TransformationPipeline
 }
-import amf.plugins.document.webapi.validation.ApiValidationProfiles
 import amf.plugins.document.webapi.validation.ApiValidationProfiles.Async20ValidationProfile
 import amf.plugins.domain.webapi.models.api.Api
-import amf.{Async20Profile, AsyncProfile, Oas30Profile, ProfileName}
+import amf.{Async20Profile, ProfileName}
 import org.yaml.model.YDocument
 
 sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
@@ -40,11 +38,11 @@ sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
               wrapped: ParserContext,
               ds: Option[AsyncWebApiDeclarations] = None): AsyncWebApiContext
 
-  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
-    implicit val ctx: AsyncWebApiContext = context(document.location, document.references, options, parentContext)
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+    implicit val newCtx: AsyncWebApiContext = context(document.location, document.references, ctx.parsingOptions, ctx)
     restrictCrossSpecReferences(document, ctx)
     val parsed = parseAsyncUnit(document)
-    promoteFragments(parsed, ctx)
+    promoteFragments(parsed, newCtx)
   }
 
   private def parseAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): BaseUnit = {
@@ -126,7 +124,7 @@ object Async20Plugin extends AsyncPlugin {
                        refs: Seq[ParsedReference],
                        options: ParsingOptions,
                        wrapped: ParserContext,
-                       ds: Option[AsyncWebApiDeclarations]) = {
+                       ds: Option[AsyncWebApiDeclarations]): Async20WebApiContext = {
     // ensure unresolved references in external fragments are not resolved with main api definitions
     val cleanContext = wrapped.copy(futureDeclarations = EmptyFutureDeclarations())
     cleanContext.globalSpace = wrapped.globalSpace

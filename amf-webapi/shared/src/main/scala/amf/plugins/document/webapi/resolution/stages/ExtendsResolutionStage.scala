@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.client.parse.IgnoringErrorHandler
+import amf.client.remod.ParseConfiguration
 import amf.core.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.AMFErrorHandler
@@ -49,8 +50,8 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
     /** Default to raml10 context. */
     def ctx(): RamlWebApiContext = profile match {
       case Raml08Profile =>
-        new Raml08WebApiContext("", Nil, ParserContext(eh = errorHandler))
-      case _ => new Raml10WebApiContext("", Nil, ParserContext(eh = errorHandler))
+        new Raml08WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
+      case _ => new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
     }
 
     def resolve[T <: BaseUnit](model: T): T =

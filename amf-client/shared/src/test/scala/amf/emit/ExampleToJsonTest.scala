@@ -1,6 +1,7 @@
 package amf.emit
 
 import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.ParseConfiguration
 import amf.core.annotations.SourceAST
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, ExternalFragment}
@@ -81,8 +82,9 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
       val sourceAst: Option[SourceAST] = unit.annotations.find(_.isInstanceOf[SourceAST])
       sourceAst match {
         case Some(a) =>
-          val ast      = a.ast.asInstanceOf[YDocument].as[YMap]
-          val context  = new Raml10WebApiContext("", Nil, ParserContext(eh = DefaultErrorHandler()))
+          val ast = a.ast.asInstanceOf[YDocument].as[YMap]
+          val context =
+            new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(DefaultErrorHandler())))
           val anyShape = AnyShape()
           RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(
             WebApiShapeParserContextAdapter(context)).parse()

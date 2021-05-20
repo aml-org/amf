@@ -33,10 +33,11 @@ class AMFEventListenerTest extends AsyncBeforeAndAfterEach with PlatformSecrets 
     )
     val listener = EventAccumulator()
     // TODO set listener in config.
-    RuntimeCompiler(Some("application/yaml"),
+    RuntimeCompiler(url,
+                    Some("application/yaml"),
                     Context(platform),
                     cache = Cache(),
-                    ParseConfiguration(RAMLConfiguration.RAML10(), url)) map { _ =>
+                    ParseConfiguration(RAMLConfiguration.RAML10())) map { _ =>
       assertEventFrequencies(expectedFrequency, listener)
     }
   }

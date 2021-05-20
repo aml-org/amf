@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.contexts
 
-import amf.core.client.ParsingOptions
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.CustomDomainProperty
@@ -33,7 +33,7 @@ abstract class ExtensionsContext(val loc: String,
                                  wrapped: ParserContext,
                                  val declarationsOption: Option[WebApiDeclarations] = None,
                                  val nodeRefIds: mutable.Map[YNode, String] = mutable.Map.empty)
-    extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
+    extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.config)
     with DataNodeParserContext {
 
   val declarations: WebApiDeclarations = declarationsOption.getOrElse(
@@ -115,7 +115,7 @@ abstract class WebApiContext(loc: String,
     val referenceUrl = getReferenceUrl(fileUrl)
     obtainFragment(fileUrl) flatMap { fragment =>
       AstFinder.findAst(fragment, referenceUrl)(WebApiShapeParserContextAdapter(ctx)).map { node =>
-        ctx.factory.parameterParser(YMapEntryLike(node), parentId, None, new IdCounter()).parse
+        ctx.factory.parameterParser(YMapEntryLike(node)(ctx.eh), parentId, None, new IdCounter()).parse
       }
     }
   }
@@ -154,7 +154,7 @@ abstract class WebApiContext(loc: String,
     }
   }
 
-  def findJsonPathIn(index: AstIndex, path: String) = index.getNode(normalizeJsonPath(path))
+  def findJsonPathIn(index: AstIndex, path: String): Option[YMapEntryLike] = index.getNode(normalizeJsonPath(path))
 
   def findLocalJSONPath(path: String): Option[YMapEntryLike] = {
     jsonSchemaIndex.flatMap(index => findJsonPathIn(index, path))

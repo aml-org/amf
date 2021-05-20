@@ -1,5 +1,6 @@
 package amf.resolution.stages
 
+import amf.client.remod.ParseConfiguration
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.parser.ParserContext
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
@@ -103,7 +104,7 @@ class DomainElementMergingTest extends FunSuite {
     main.extend.head should be(a)
   }
 
-  private def ctx = {
-    new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledErrorHandler))
+  private def ctx: Raml10WebApiContext = {
+    new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(UnhandledErrorHandler)))
   }
 }

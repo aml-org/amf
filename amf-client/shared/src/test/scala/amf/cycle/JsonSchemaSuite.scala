@@ -1,8 +1,8 @@
 package amf.cycle
 
-import amf.client.remod.AMFResult
+import amf.client.remod.{AMFResult, ParseConfiguration}
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.parser.{ParserContext, SchemaReference, SyamlParsedDocument}
 import amf.core.remote.Platform
@@ -20,7 +20,7 @@ trait JsonSchemaSuite {
   protected def parseSchema(platform: Platform,
                             path: String,
                             mediatype: String,
-                            eh: AMFErrorHandler = UnhandledErrorHandler) = {
+                            eh: AMFErrorHandler = UnhandledErrorHandler): AMFResult = {
     val content  = platform.fs.syncFile(path).read().toString
     val document = JsonParser.withSource(content, path).document()
     val root = Root(
@@ -47,7 +47,7 @@ trait JsonSchemaSuite {
   private def getBogusParserCtx(location: String, options: ParsingOptions, eh: AMFErrorHandler): ShapeParserContext = {
     val ctx = new JsonSchemaWebApiContext(location,
                                           Seq(),
-                                          ParserContext(eh = eh),
+                                          ParserContext(config = ParseConfiguration(eh)),
                                           None,
                                           options,
                                           JSONSchemaDraft7SchemaVersion)

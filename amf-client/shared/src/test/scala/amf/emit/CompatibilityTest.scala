@@ -1,10 +1,12 @@
 package amf.emit
+
 import amf.ProfileName
 import amf.client.environment.WebAPIConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.emitter.RenderOptions
+import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.facades.Validation
@@ -42,11 +44,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
     }
   }
 
-  private def parseBaseUnit(content: String, hint: Hint) = {
-    val mediaType: String = hint match {
-      case Raml10YamlHint | Oas20YamlHint => "application/yaml"
-      case _                              => "application/json"
-    }
+  private def parseBaseUnit(content: String, hint: Hint): Future[BaseUnit] = {
     val eh = DefaultErrorHandler()
     val conf = WebAPIConfiguration
       .WebAPI()
@@ -54,10 +52,11 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
       .withResourceLoader(StringResourceLoader("amf://id#", content))
     for {
       unit <- RuntimeCompiler(
+        "amf://id#",
         Some(hint.vendor.mediaType),
         Context(platform),
         cache = Cache(),
-        ParseConfiguration(conf, "amf://id#")
+        ParseConfiguration(conf)
       )
       _ <- RuntimeValidator(unit, ProfileName(hint.vendor.name), resolved = false, new ValidationConfiguration(conf))
     } yield unit

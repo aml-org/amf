@@ -1,9 +1,8 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.config.{ParsingOptions, RenderOptions}
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
@@ -27,14 +26,7 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
   Oas20CompatibilityPipeline,
   Oas3CompatibilityPipeline
 }
-import amf.plugins.document.webapi.resolution.pipelines.{
-  Oas20CachePipeline,
-  Oas20EditingPipeline,
-  Oas20TransformationPipeline,
-  Oas30TransformationPipeline,
-  Oas3CachePipeline,
-  Oas3EditingPipeline
-}
+import amf.plugins.document.webapi.resolution.pipelines._
 import amf.plugins.document.webapi.validation.ApiValidationProfiles
 import amf.plugins.document.webapi.validation.ApiValidationProfiles.Oas20ValidationProfile
 import amf.plugins.domain.webapi.models.api.Api
@@ -55,15 +47,28 @@ sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
               wrapped: ParserContext,
               ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
 
-  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
-    implicit val ctx: OasWebApiContext = context(document.location, document.references, options, parentContext)
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+    implicit val newCtx: OasWebApiContext = context(document.location, document.references, ctx.parsingOptions, ctx)
     restrictCrossSpecReferences(document, ctx)
     val parsed = document.referenceKind match {
       case LibraryReference => OasModuleParser(document).parseModule()
       case LinkReference    => OasFragmentParser(document).parseFragment()
       case _                => detectOasUnit(document)
     }
-    promoteFragments(parsed, ctx)
+    promoteFragments(parsed, newCtx)
+  }
+
+  override def canUnparse(unit: BaseUnit): Boolean = unit match {
+    case _: Overlay         => true
+    case _: Extension       => true
+    case document: Document => document.encodes.isInstanceOf[Api]
+    case module: Module =>
+      module.declares exists {
+        case _: DomainElement => true
+        case _                => false
+      }
+    case _: Fragment => true
+    case _           => false
   }
 
   private def detectOasUnit(root: Root)(implicit ctx: OasWebApiContext): BaseUnit = {
@@ -115,19 +120,6 @@ object Oas20Plugin extends OasPlugin {
     */
   override def canParse(root: Root): Boolean = OasHeader(root).exists(_ != Oas30Header)
 
-  override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case _: Overlay         => true
-    case _: Extension       => true
-    case document: Document => document.encodes.isInstanceOf[Api]
-    case module: Module =>
-      module.declares exists {
-        case _: DomainElement => true
-        case _                => false
-      }
-    case _: Fragment => true
-    case _           => false
-  }
-
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
                                             errorHandler: AMFErrorHandler): Option[YDocument] =
@@ -176,19 +168,6 @@ object Oas30Plugin extends OasPlugin {
     * the document structure
     */
   override def canParse(root: Root): Boolean = OasHeader(root).contains(Oas30Header)
-
-  override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case _: Overlay         => true
-    case _: Extension       => true
-    case document: Document => document.encodes.isInstanceOf[Api]
-    case module: Module =>
-      module.declares exists {
-        case _: DomainElement => true
-        case _                => false
-      }
-    case _: Fragment => true
-    case _           => false
-  }
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
