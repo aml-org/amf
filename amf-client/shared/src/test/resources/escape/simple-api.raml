@@ -1,31 +1,27 @@
 #%RAML 1.0
 title: Escape Test
+baseUri: localhost/escape
 protocols:
   - http
-baseUri: localhost/escape
 /v1:
   /{uri%Par$am}:
-    uriParameters:
-      uri%Par$am:
-        type: string
-        description: A URI param with problematic characters.
     post:
+      queryParameters:
+        queryParam<1>:
+          description: queryParam<1> description.
+          required: true
+          type: string
+        queryParam??2:
+          required: false
+          type: string
+        quer%yPar^^am3:
+          required: false
+          type: string
       headers:
         head#$%$#er1:
           type: string
         he@a$d@er^^@2#:
           type: integer
-      queryParameters:
-        queryParam<1>:
-          type: string
-          required: true
-          description: queryParam<1> description.
-        queryParam??2:
-          type: string
-          required: false
-        quer%yPar^^am3:
-          type: string
-          required: false
       body:
         application/json:
           type: object
@@ -40,3 +36,7 @@ baseUri: localhost/escape
               type: any
               example:
                 success: true
+    uriParameters:
+      uri%Par$am:
+        description: A URI param with problematic characters.
+        type: string

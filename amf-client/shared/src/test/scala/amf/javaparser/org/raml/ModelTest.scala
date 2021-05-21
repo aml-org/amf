@@ -2,10 +2,9 @@ package amf.javaparser.org.raml
 
 import amf._
 import amf.client.parse.DefaultParserErrorHandler
-import amf.core.annotations.SourceVendor
 import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
+import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline.EDITING_PIPELINE
 import amf.core.resolution.pipelines.TransformationPipelineRunner
@@ -61,7 +60,7 @@ trait ModelValidationTest extends DirectoryTest {
   private def profileFromModel(unit: BaseUnit): ProfileName = {
     val maybeVendor = Option(unit)
       .collect({ case d: Document => d })
-      .flatMap(_.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor))
+      .flatMap(_.sourceVendor)
     maybeVendor match {
       case Some(Raml08)     => Raml08Profile
       case Some(Oas20)      => Oas20Profile
@@ -73,19 +72,7 @@ trait ModelValidationTest extends DirectoryTest {
 
   val defaultTarget: Vendor = Raml10
 
-  def target(model: BaseUnit): Vendor = model match {
-    case d: EncodesModel =>
-      d.encodes.annotations
-        .find(classOf[SourceVendor])
-        .map(_.vendor)
-        .getOrElse(Raml10)
-    case m: Module =>
-      m.annotations
-        .find(classOf[SourceVendor])
-        .map(_.vendor)
-        .getOrElse(Raml10)
-    case _ => Raml10
-  }
+  def target(model: BaseUnit): Vendor = model.sourceVendor.getOrElse(defaultTarget)
 }
 
 trait ModelResolutionTest extends ModelValidationTest {

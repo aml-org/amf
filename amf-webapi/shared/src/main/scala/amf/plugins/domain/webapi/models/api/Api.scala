@@ -1,16 +1,13 @@
 package amf.plugins.domain.webapi.models.api
 
-import amf.core.annotations.{SourceVendor, SynthesizedField}
+import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
-import amf.core.remote.Vendor
 import amf.plugins.domain.shapes.models.{CreativeWork, DocumentedElement}
 import amf.plugins.domain.webapi.metamodel.api.BaseApiModel.{License => WebApiLicense, _}
-import amf.plugins.domain.webapi.models.{EndPoint, License, Organization, SecuredElement, Server, ServerContainer, Tag}
-import amf.plugins.domain.webapi.models.security.SecurityRequirement
-import org.yaml.model.{YMap, YNode}
+import amf.plugins.domain.webapi.models.{License, _}
 
 /**
   * Web Api internal model
@@ -77,10 +74,6 @@ abstract class Api(fields: Fields, annotations: Annotations)
     add(Documentations, result)
     result
   }
-
-  // todo: should source vendor be in the base unit?
-
-  def sourceVendor: Option[Vendor] = annotations.find(classOf[SourceVendor]).map(a => a.vendor)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "#/api"

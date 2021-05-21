@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "AmfParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#5",
       "@type": [
         "apiContract:WebAPI",
@@ -10,9 +32,6 @@
       ],
       "core:name": "New API",
       "smaps": {
-        "source-vendor": {
-          "#5": "RAML 1.0"
-        },
         "lexical": {
           "core:name": "[(2,0)-(3,0)]",
           "#5": "[(2,0)-(5,24)]"
@@ -35,8 +54,10 @@
       "doc:encodes": {
         "@id": "#5"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     },
     {
       "@id": "#1",
@@ -114,6 +135,7 @@
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

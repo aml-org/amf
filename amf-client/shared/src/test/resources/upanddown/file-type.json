@@ -27,21 +27,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/file-type.raml#/web-api/source-map/source-vendor/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/file-type.raml#/web-api"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "RAML 1.0"
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/file-type.raml#/web-api/source-map/lexical/element_1",
@@ -74,14 +59,27 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/meta#unitActions": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/file-type.raml/unitActions",
+        "@type": [
+          "http://a.ml/vocabularies/meta#AmfProcessingData"
+        ],
+        "http://a.ml/vocabularies/meta#version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "http://a.ml/vocabularies/meta#sourceVendor": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document#declares": [

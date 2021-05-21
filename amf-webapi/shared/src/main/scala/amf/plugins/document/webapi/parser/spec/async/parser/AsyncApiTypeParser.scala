@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
-import amf.core.annotations.{DefinedByVendor, SourceVendor}
+import amf.core.annotations.{DefinedByVendor}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, SearchScope}

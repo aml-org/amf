@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "Raml10ParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#20",
       "@type": [
         "apiContract:WebAPI",
@@ -19,9 +41,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#20": "RAML 1.0"
-        },
         "lexical": {
           "core:version": "[(3,0)-(5,0)]",
           "#20": "[(2,0)-(40,0)]",
@@ -822,8 +841,10 @@
       "doc:encodes": {
         "@id": "#20"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     },
     {
       "@id": "#1",
@@ -835,8 +856,10 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "3.1.0",
-      "doc:root": false
+      "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#1/unitActions"
+      }
     },
     {
       "@id": "#2",
@@ -851,6 +874,13 @@
           "#2": "[(1,0)-(22,1)]"
         }
       }
+    },
+    {
+      "@id": "#1/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0"
     }
   ],
   "@context": {
@@ -860,6 +890,7 @@
     "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

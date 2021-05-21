@@ -31,7 +31,7 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
 
   private def assertFixture(rootFile: String, hint: Hint): Future[Assertion] = {
 
-    val rootExpected = UnitsCreator(hint.vendor).usesDataType
+    val rootExpected = UnitsCreator(hint.vendor).usesDataType(hint.vendor)
 
     build(rootFile, hint)
       .map({
@@ -59,8 +59,13 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
       case _      => ("data-type-fragment.json", "person.json", 1, true)
     }
 
-    private val person: NodeShape = {
-      val shape = NodeShape().withName("type").withClosed(false)
+    private val person: Vendor => NodeShape = (vendor) => {
+      var baseId = "file://amf-client/shared/src/test/resources/references/fragments/person.raml#/type"
+      if (vendor.isOas) baseId = baseId.replaceAllLiterally("person.raml", "person.json")
+      val shape = NodeShape()
+        .withId(baseId)
+        .withName("type")
+        .withClosed(false)
       shape
         .withProperty("name")
         .withPath("http://a.ml/vocabularies/data#name")
@@ -70,17 +75,18 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
       shape
     }
 
-    private val dataTypeFragment: Fragment = {
+    private val dataTypeFragment: Vendor => Fragment = vendor => {
       DataTypeFragment()
         .withLocation("file://amf-client/shared/src/test/resources/references/fragments/" + fragmentFile)
         .withId("file://amf-client/shared/src/test/resources/references/fragments/" + fragmentFile)
-        .withEncodes(person)
+        .withEncodes(person(vendor))
         .withRoot(false)
+        .withSourceVendor(vendor.name)
     }
 
-    val usesDataType: Document = {
+    val usesDataType: Vendor => Document = vendor => {
 
-      val personLink = person.link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")
+      val personLink = person(vendor).link("fragments/" + fragmentFile).asInstanceOf[NodeShape].withName("person")
       if (recursive) personLink.withSupportsRecursion(true)
       val api = WebApi()
         .withId("amf-client/shared/src/test/resources/references/" + file + "#/web-api")
@@ -91,8 +97,9 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
         .withId("amf-client/shared/src/test/resources/references/" + file)
         .withLocation("amf-client/shared/src/test/resources/references/" + file)
         .withEncodes(api)
-        .withReferences(Seq(dataTypeFragment))
+        .withReferences(Seq(dataTypeFragment(vendor)))
         .withDeclares(Seq(personLink))
+        .withSourceVendor(vendor.name)
         .withRoot(true)
     }
   }

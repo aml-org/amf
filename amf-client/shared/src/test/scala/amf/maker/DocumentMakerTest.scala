@@ -113,11 +113,11 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    document().withDeclares(Seq(person))
+    document(vendor).withDeclares(Seq(person))
 
   }
 
-  private def document(): Document = {
+  private def document(vendor: Vendor): Document = {
     amf.core.model.domain.extensions.PropertyShape().withScalarSchema("hey")
     val api = WebApi()
       .withName("test types")
@@ -126,6 +126,7 @@ class DocumentMakerTest extends WebApiMakerTest {
     val document = Document()
       .withEncodes(api)
       .withRoot(true)
+      .withSourceVendor(vendor.name)
     document
   }
 
@@ -201,7 +202,7 @@ class DocumentMakerTest extends WebApiMakerTest {
       .withScalarSchema("number")
       .withDataType("http://www.w3.org/2001/XMLSchema#integer")
 
-    document().withDeclares(Seq(human, person))
+    document(vendor).withDeclares(Seq(human, person))
 
   }
 }

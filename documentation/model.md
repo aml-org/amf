@@ -3,6 +3,7 @@ AMF Model Documentation
 ---
 ## Table of Contents
 * [AbstractDeclaration](#abstractdeclaration)
+* [AmfProcessingData](#amfprocessingdata)
 * [Amqp091ChannelBinding](#amqp091channelbinding)
 * [Amqp091ChannelExchange](#amqp091channelexchange)
 * [Amqp091MessageBinding](#amqp091messagebinding)
@@ -150,6 +151,16 @@ It can be extended by any domain element adding bindings for the variables in th
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
+## AmfProcessingData
+Provides information on how a Unit was processed
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | version | string | Version of the current model | http://a.ml/vocabularies/meta#version |
+ | sourceVendor | string | Vendor used to parse the Unit | http://a.ml/vocabularies/meta#sourceVendor |
+ | unitTransformations | [string] | Indicates the transformations that the Unit has gone through | http://a.ml/vocabularies/meta#unitTransformations |
+ | graphDependencies | [url] |  | http://a.ml/vocabularies/meta#graphDependencies |
+
 ## Amqp091ChannelBinding
 
 
@@ -221,11 +232,22 @@ It can be extended by any domain element adding bindings for the variables in th
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | name | string | Name in the source AST for the mapping | http://a.ml/vocabularies/core#name |
+ | path | url | URI for the mapped graph property derived from this mapping | http://www.w3.org/ns/shacl#path |
+ | name | string | Name of the node mappable element | http://a.ml/vocabularies/core#name |
  | datatype | url | Scalar constraint over the type of the mapped graph property | http://www.w3.org/ns/shacl#datatype |
  | node | [url] | Object constraint over the type of the mapped graph property | http://www.w3.org/ns/shacl#node |
- | path | url | URI for the mapped graph property derived from this mapping | http://www.w3.org/ns/shacl#path |
- | target | url | Target node IRI for which a specific annotation mapping can be applied | http://a.ml/vocabularies/document#target |
+ | minCount | int | Minimum count constraint over the mapped property | http://www.w3.org/ns/shacl#minCount |
+ | pattern | string | Pattern constraint over the mapped property | http://www.w3.org/ns/shacl#pattern |
+ | minInclusive | double | Minimum inclusive constraint over the mapped property | http://www.w3.org/ns/shacl#minInclusive |
+ | maxInclusive | double | Maximum inclusive constraint over the mapped property | http://www.w3.org/ns/shacl#maxInclusive |
+ | allowMultiple | boolean | Allows multiple mapped nodes for the property mapping | http://a.ml/vocabularies/meta#allowMultiple |
+ | sorted | boolean | Marks the mapping as requiring order in the mapped collection of nodes | http://a.ml/vocabularies/meta#sorted |
+ | in | [Any] | Enum constraint for the values of the property mapping | http://www.w3.org/ns/shacl#in |
+ | typeDiscriminatorMap | string | Information about the discriminator values in the source AST for the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorMap |
+ | unique | boolean | Marks the values for the property mapping as a primary key for this type of node | http://a.ml/vocabularies/meta#unique |
+ | externallyLinkable | boolean | Marks this object property as supporting external links | http://a.ml/vocabularies/meta#externallyLinkable |
+ | typeDiscriminatorName | string | Information about the field in the source AST to be used as discrimintaro in the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorName |
+ | domain | url | Domain node type IRI for which a specific annotation mapping can be applied. Similar rdfs:domain but at an instance level, rather than schema level. | http://a.ml/vocabularies/amf/aml#domain |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## AnnotationTypeDeclarationFragment
@@ -234,11 +256,11 @@ Fragment encoding a RAML annotation type
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## AnyShape
 Base class for all shapes stored in the graph model
@@ -387,11 +409,11 @@ Base class for every single document model unit. After parsing a document the pa
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## Callback
 Model defining the information for a HTTP callback/ webhook
@@ -494,11 +516,11 @@ Fragment encoding a RAML data type
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## DatatypePropertyTerm
 
@@ -524,11 +546,11 @@ Definition of an AML dialect, mapping AST nodes from dialect documents into an o
  | location | string | Location of the metadata document that generated this base unit | http://a.ml/vocabularies/document#location |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
  | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | http://a.ml/vocabularies/document#declares |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## DialectFragment
 AML dialect mapping fragment that can be included in multiple AML dialects
@@ -538,11 +560,11 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | externals | [[External](#external)] |  | http://a.ml/vocabularies/meta#externals |
  | location | string | Location of the metadata document that generated this base unit | http://a.ml/vocabularies/document#location |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## DialectInstance
 
@@ -550,15 +572,14 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | definedBy | url |  | http://a.ml/vocabularies/meta#definedBy |
- | graphDependencies | [url] |  | http://a.ml/vocabularies/document#graphDependencies |
  | externals | [[External](#external)] |  | http://a.ml/vocabularies/meta#externals |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
  | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | http://a.ml/vocabularies/document#declares |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## DialectInstanceFragment
 
@@ -570,11 +591,11 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | graphDependencies | [url] |  | http://a.ml/vocabularies/document#graphDependencies |
  | externals | [[External](#external)] |  | http://a.ml/vocabularies/meta#externals |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## DialectInstanceLibrary
 
@@ -585,11 +606,11 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | graphDependencies | [url] |  | http://a.ml/vocabularies/document#graphDependencies |
  | externals | [[External](#external)] |  | http://a.ml/vocabularies/meta#externals |
  | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | http://a.ml/vocabularies/document#declares |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## DialectInstancePatch
 
@@ -601,11 +622,11 @@ AML dialect mapping fragment that can be included in multiple AML dialects
  | externals | [[External](#external)] |  | http://a.ml/vocabularies/meta#externals |
  | extends | url | Target base unit being extended by this extension model | http://a.ml/vocabularies/document#extends |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## DialectLibrary
 Library of AML mappings that can be reused in different AML dialects
@@ -615,11 +636,11 @@ Library of AML mappings that can be reused in different AML dialects
  | externals | [[External](#external)] |  | http://a.ml/vocabularies/meta#externals |
  | location | string | Location of the metadata document that generated this base unit | http://a.ml/vocabularies/document#location |
  | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | http://a.ml/vocabularies/document#declares |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## DiscriminatorValueMapping
 Mapping that relates a certain discriminator value to a certain shape
@@ -639,11 +660,11 @@ The main difference is that the Document encoded DomainElement is stand-alone an
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
  | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | http://a.ml/vocabularies/document#declares |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## DocumentMapping
 Mapping for a particular dialect document into a graph base unit
@@ -661,11 +682,11 @@ Fragment encoding a RAML documentation item
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## Documents
 Mapping from different type of dialect documents to base units in the parsed graph
@@ -768,11 +789,11 @@ API spec information designed to be applied and compelement the information of a
  | extends | url | Target base unit being extended by this extension model | http://a.ml/vocabularies/document#extends |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
  | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | http://a.ml/vocabularies/document#declares |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## ExtensionLike
 A Document that extends a target document, overwriting part of the information or overlaying additional information.
@@ -782,11 +803,11 @@ A Document that extends a target document, overwriting part of the information o
  | extends | url | Target base unit being extended by this extension model | http://a.ml/vocabularies/document#extends |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
  | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | http://a.ml/vocabularies/document#declares |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## External
 
@@ -818,11 +839,11 @@ Fragment encoding an external entity
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## ExternalSourceElement
 Inlined fragment of information
@@ -884,11 +905,11 @@ A Fragment is a parsing Unit that encodes a DomainElement
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## HttpApiKeySettings
 Settings for an Http API Key security scheme
@@ -1087,11 +1108,11 @@ It main purpose is to expose the declared references so they can be re-used
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | http://a.ml/vocabularies/document#declares |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## MqttMessageBinding
 
@@ -1143,11 +1164,11 @@ Fragment encoding a RAML named example
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## NilShape
 Data shape representing the null/nil value in the input schema
@@ -1383,11 +1404,11 @@ Model defining a RAML overlay
  | extends | url | Target base unit being extended by this extension model | http://a.ml/vocabularies/document#extends |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
  | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | http://a.ml/vocabularies/document#declares |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## Parameter
 Piece of data required or returned by an Operation
@@ -1475,11 +1496,11 @@ Fragment encoding HTTP payload information
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
  | mediaType | string | HTTP Media type associated to the encoded fragment information | http://a.ml/vocabularies/core#mediaType |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## PropertyDependencies
 Dependency between sets of property shapes
@@ -1638,11 +1659,11 @@ Fragment encoding a RAML resource type
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## Response
 Response information for an operation
@@ -1816,11 +1837,11 @@ Fragment encoding a RAML security scheme
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## SemanticExtension
 Mapping a particular extension name to an extension definition
@@ -1966,11 +1987,11 @@ Fragment encoding a RAML trait
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | encodes | [DomainElement](#domainelement) | The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains. | http://a.ml/vocabularies/document#encodes |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## TupleShape
 Data shape containing a multi-valued collection of shapes
@@ -2084,11 +2105,11 @@ Basic primitives for the declaration of vocabularies.
  | declares | [[DomainElement](#domainelement)] | The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units. URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements. | http://a.ml/vocabularies/document#declares |
  | base | string | Base URI prefix for definitions in this vocabulary | http://a.ml/vocabularies/meta#base |
  | location | string | Location of the metadata document that generated this base unit | http://a.ml/vocabularies/document#location |
- | version | string | Version of the current model | http://a.ml/vocabularies/document#version |
  | references | [[BaseUnit](#baseunit)] | references across base units | http://a.ml/vocabularies/document#references |
  | usage | string | Human readable description of the unit | http://a.ml/vocabularies/document#usage |
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
+ | unitActions | [AmfProcessingData](#amfprocessingdata) | Describes processing information about the Unit | http://a.ml/vocabularies/meta#unitActions |
 
 ## VocabularyReference
 

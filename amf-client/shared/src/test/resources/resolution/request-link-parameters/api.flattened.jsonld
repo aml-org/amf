@@ -1,6 +1,29 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "OAS 3.0",
+      "meta:unitTransformations": [
+        "RequestParamsLinkStage$",
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "OpenApiParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#14",
       "@type": [
         "apiContract:WebAPI",
@@ -16,9 +39,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#14": "OAS 3.0"
-        },
         "lexical": {
           "apiContract:endpoint": "[(42,0)-(59,0)]",
           "core:name": "[(4,2)-(6,0)]",
@@ -558,8 +578,10 @@
       "doc:encodes": {
         "@id": "#14"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     },
     {
       "@id": "#12",
@@ -591,6 +613,7 @@
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

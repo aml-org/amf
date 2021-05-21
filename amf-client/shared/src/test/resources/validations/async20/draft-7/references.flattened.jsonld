@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "ASYNC 2.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#AsyncAPI",
@@ -21,11 +29,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/lexical/element_2"
@@ -37,11 +40,6 @@
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/lexical/element_1"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "ASYNC 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api/source-map/lexical/element_2",
@@ -79,8 +77,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/async-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json",
@@ -92,13 +92,15 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#references": [
         {
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json"
         }
       ],
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema",
@@ -149,8 +151,17 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json/unitActions"
+      }
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/first-level-schema.json/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name",
@@ -251,6 +262,13 @@
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json#/external/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/second-level-schema.json/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/draft-7/references.yaml#/declarations/types/MySchema/property/name/scalar/name",

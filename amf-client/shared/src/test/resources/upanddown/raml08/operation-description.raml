@@ -1,9 +1,9 @@
 #%RAML 0.8
 title: GitHub API
+baseUri: api.github.com/
 version: v3
 protocols:
   - https
-baseUri: api.github.com/
 /users/{userid}/gists:
   get:
     description: List the authenticated user’s gists or if called anonymously, this will return all public gists.

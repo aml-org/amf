@@ -161,9 +161,6 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#9": "RAML 1.0"
-          },
           "lexical": {
             "apiContract:scheme": "[(4,0)-(5,0)]",
             "core:description": "[(3,0)-(4,0)]",
@@ -174,14 +171,65 @@
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "meta:unitActions": [
+      {
+        "@id": "/unitActions",
+        "@type": [
+          "meta:AmfProcessingData"
+        ],
+        "meta:version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "meta:sourceVendor": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ],
+        "meta:unitTransformations": [
+          {
+            "@value": "WebApiReferenceResolutionStage"
+          },
+          {
+            "@value": "ExtensionsResolutionStage"
+          },
+          {
+            "@value": "ShapeNormalizationStage"
+          },
+          {
+            "@value": "SecurityResolutionStage"
+          },
+          {
+            "@value": "AmfParametersNormalizationStage"
+          },
+          {
+            "@value": "ServersNormalizationStage"
+          },
+          {
+            "@value": "PathDescriptionNormalizationStage"
+          },
+          {
+            "@value": "MediaTypeResolutionStage"
+          },
+          {
+            "@value": "ResponseExamplesResolutionStage"
+          },
+          {
+            "@value": "PayloadAndParameterResolutionStage"
+          },
+          {
+            "@value": "AnnotationRemovalStage"
+          },
+          {
+            "@value": "UrlShortenerStage"
+          }
+        ]
       }
     ],
     "doc:references": [
@@ -366,27 +414,37 @@
               "synthesized-field": {
                 "shacl:closed": "true"
               },
-              "type-property-lexical-info": {
-                "#2": "[(2,0)-(2,4)]"
-              },
               "lexical": {
                 "apiContract:examples": "[(5,0)-(6,10)]",
                 "#2": "[(2,0)-(6,10)]"
               },
-              "source-vendor": {
-                "#2": "RAML 1.0"
+              "type-property-lexical-info": {
+                "#2": "[(2,0)-(2,4)]"
               }
             }
-          }
-        ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
           }
         ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#1/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "meta:sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "smaps": {
@@ -573,15 +631,12 @@
           "resolved-link-target": {
             "#8": "amf://id#2"
           },
-          "source-vendor": {
-            "#8": "RAML 1.0"
+          "type-property-lexical-info": {
+            "#8": "[(2,0)-(2,4)]"
           },
           "lexical": {
             "apiContract:examples": "[(5,0)-(6,10)]",
             "#8": "[(2,0)-(6,10)]"
-          },
-          "type-property-lexical-info": {
-            "#8": "[(2,0)-(2,4)]"
           },
           "resolved-link": {
             "#8": "amf://id#8"
@@ -599,7 +654,8 @@
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
-      "core": "http://a.ml/vocabularies/core#"
+      "core": "http://a.ml/vocabularies/core#",
+      "meta": "http://a.ml/vocabularies/meta#"
     }
   }
 ]

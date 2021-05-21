@@ -30,6 +30,13 @@
       ]
     },
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
+    },
+    {
       "http://a.ml/vocabularies/core#extensionName": "foo",
       "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/foo/object_1",
       "@type": [
@@ -295,8 +302,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "1.0.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml/unitActions"
+      }
     }
   ]
 }

@@ -103,7 +103,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 
-      dataType
+      dataType.withSourceVendor(ctx.vendor.name)
       //
     }
   }

@@ -25,7 +25,9 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
       _  <- v.loadValidationDialect()
       bu <- AMFCompiler(basePath + exampleFile, platform, hint, None, None, eh = UnhandledParserErrorHandler).build()
       r  <- AMFRenderer(bu, target, RenderOptions(), Some(syntax)).renderToString
-    } yield r
+    } yield {
+      r
+    }
   }
 
   test("Loading and serializing validations") {

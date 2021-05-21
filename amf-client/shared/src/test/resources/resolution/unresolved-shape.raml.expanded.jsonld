@@ -17,23 +17,71 @@
           "doc:DomainElement"
         ],
         "smaps": {
-          "source-vendor": {
-            "#6": "RAML 1.0"
-          },
           "lexical": {
             "#6": "[(2,0)-(6,18)]"
           }
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "meta:unitActions": [
+      {
+        "@id": "/unitActions",
+        "@type": [
+          "meta:AmfProcessingData"
+        ],
+        "meta:version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "meta:sourceVendor": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ],
+        "meta:unitTransformations": [
+          {
+            "@value": "WebApiReferenceResolutionStage"
+          },
+          {
+            "@value": "ExtensionsResolutionStage"
+          },
+          {
+            "@value": "ShapeNormalizationStage"
+          },
+          {
+            "@value": "SecurityResolutionStage"
+          },
+          {
+            "@value": "AmfParametersNormalizationStage"
+          },
+          {
+            "@value": "ServersNormalizationStage"
+          },
+          {
+            "@value": "PathDescriptionNormalizationStage"
+          },
+          {
+            "@value": "MediaTypeResolutionStage"
+          },
+          {
+            "@value": "ResponseExamplesResolutionStage"
+          },
+          {
+            "@value": "PayloadAndParameterResolutionStage"
+          },
+          {
+            "@value": "AnnotationRemovalStage"
+          },
+          {
+            "@value": "UrlShortenerStage"
+          }
+        ]
       }
     ],
     "doc:declares": [
@@ -137,7 +185,8 @@
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "doc": "http://a.ml/vocabularies/document#",
-      "apiContract": "http://a.ml/vocabularies/apiContract#"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "meta": "http://a.ml/vocabularies/meta#"
     }
   }
 ]

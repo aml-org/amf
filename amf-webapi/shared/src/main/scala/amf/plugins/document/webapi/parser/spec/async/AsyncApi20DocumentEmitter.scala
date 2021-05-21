@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.async
 
-import amf.core.annotations.SourceVendor
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.{BaseUnit, Document}
@@ -33,7 +32,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
 
   def emitWebApi(ordering: SpecOrdering): Seq[EntryEmitter] = {
     val model  = retrieveWebApi()
-    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
+    val vendor = document.sourceVendor
     val api    = WebApiEmitter(model, ordering, vendor, Seq())
     api.emitters
   }
@@ -53,7 +52,7 @@ class AsyncApi20DocumentEmitter(document: BaseUnit)(implicit val spec: AsyncSpec
   def emitDocument(): YDocument = {
     val doc = document.asInstanceOf[Document]
 
-    val ordering = SpecOrdering.ordering(AsyncApi20, doc.encodes.annotations)
+    val ordering = SpecOrdering.ordering(AsyncApi20, doc)
 
 //    val references = ReferencesEmitter(document, ordering)
     val declares =

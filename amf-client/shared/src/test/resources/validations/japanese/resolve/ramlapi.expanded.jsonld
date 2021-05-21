@@ -1854,21 +1854,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "@id": "amf://id#30/source-map/source-vendor/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "amf://id#30"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "RAML 1.0"
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "amf://id#30/source-map/lexical/element_2",
@@ -1914,14 +1899,65 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/meta#unitActions": [
+      {
+        "@id": "amf://id/unitActions",
+        "@type": [
+          "http://a.ml/vocabularies/meta#AmfProcessingData"
+        ],
+        "http://a.ml/vocabularies/meta#version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "http://a.ml/vocabularies/meta#sourceVendor": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ],
+        "http://a.ml/vocabularies/meta#unitTransformations": [
+          {
+            "@value": "WebApiReferenceResolutionStage"
+          },
+          {
+            "@value": "ExtensionsResolutionStage"
+          },
+          {
+            "@value": "ShapeNormalizationStage"
+          },
+          {
+            "@value": "SecurityResolutionStage"
+          },
+          {
+            "@value": "AmfParametersNormalizationStage"
+          },
+          {
+            "@value": "ServersNormalizationStage"
+          },
+          {
+            "@value": "PathDescriptionNormalizationStage"
+          },
+          {
+            "@value": "MediaTypeResolutionStage"
+          },
+          {
+            "@value": "ResponseExamplesResolutionStage"
+          },
+          {
+            "@value": "PayloadAndParameterResolutionStage"
+          },
+          {
+            "@value": "AnnotationRemovalStage"
+          },
+          {
+            "@value": "UrlShortenerStage"
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document#declares": [

@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "testId/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
+    },
+    {
       "@id": "testId/subscribe",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Operation",
@@ -34,8 +41,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "testId/subscribe"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "testId/unitActions"
+      }
     }
   ]
 }

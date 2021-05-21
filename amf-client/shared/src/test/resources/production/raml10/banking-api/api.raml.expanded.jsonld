@@ -10108,34 +10108,32 @@
                   }
                 ]
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/source-map/source-vendor/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "RAML 1.0"
-                  }
-                ]
-              }
             ]
           }
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/meta#unitActions": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml/unitActions",
+        "@type": [
+          "http://a.ml/vocabularies/meta#AmfProcessingData"
+        ],
+        "http://a.ml/vocabularies/meta#version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "http://a.ml/vocabularies/meta#sourceVendor": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -35062,11 +35060,6 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#usage": [
           {
             "@value": "Data shapes for the HTTP API"
@@ -35077,26 +35070,29 @@
             "@value": false
           }
         ],
+        "http://a.ml/vocabularies/meta#unitActions": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/dataTypes/shapes.raml/unitActions",
+            "@type": [
+              "http://a.ml/vocabularies/meta#AmfProcessingData"
+            ],
+            "http://a.ml/vocabularies/meta#version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/dataTypes/shapes.raml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/dataTypes/shapes.raml#/source-map/source-vendor/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/dataTypes/shapes.raml"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "RAML 1.0"
-                  }
-                ]
-              }
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
@@ -35551,11 +35547,6 @@
                 ]
               }
             ]
-          }
-        ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
           }
         ],
         "http://a.ml/vocabularies/document#references": [
@@ -36965,21 +36956,6 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/trait/default-abstract/source-map/source-vendor/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/trait/default-abstract"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "RAML 1.0"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/trait/default-abstract/source-map/lexical/element_1",
@@ -37012,11 +36988,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#version": [
-              {
-                "@value": "3.1.0"
-              }
-            ],
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Apply this trait to a GET method that supports pagination."
@@ -37025,6 +36996,24 @@
             "http://a.ml/vocabularies/document#root": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/meta#unitActions": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/unitActions",
+                "@type": [
+                  "http://a.ml/vocabularies/meta#AmfProcessingData"
+                ],
+                "http://a.ml/vocabularies/meta#version": [
+                  {
+                    "@value": "3.1.0"
+                  }
+                ],
+                "http://a.ml/vocabularies/meta#sourceVendor": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -37448,21 +37437,6 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/sortable.raml#/trait/default-abstract/source-map/source-vendor/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/sortable.raml#/trait/default-abstract"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "RAML 1.0"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/sortable.raml#/trait/default-abstract/source-map/lexical/element_1",
@@ -37495,11 +37469,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#version": [
-              {
-                "@value": "3.1.0"
-              }
-            ],
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Apply this to a method that support sorting."
@@ -37508,6 +37477,24 @@
             "http://a.ml/vocabularies/document#root": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/meta#unitActions": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/sortable.raml#/unitActions",
+                "@type": [
+                  "http://a.ml/vocabularies/meta#AmfProcessingData"
+                ],
+                "http://a.ml/vocabularies/meta#version": [
+                  {
+                    "@value": "3.1.0"
+                  }
+                ],
+                "http://a.ml/vocabularies/meta#sourceVendor": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -39504,21 +39491,6 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/trait/default-abstract/source-map/source-vendor/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/trait/default-abstract"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "RAML 1.0"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/trait/default-abstract/source-map/lexical/element_1",
@@ -39551,11 +39523,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#version": [
-              {
-                "@value": "3.1.0"
-              }
-            ],
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Apply this trait to a GET method that supports content-based caching using ETags"
@@ -39564,6 +39531,24 @@
             "http://a.ml/vocabularies/document#root": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/meta#unitActions": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/unitActions",
+                "@type": [
+                  "http://a.ml/vocabularies/meta#AmfProcessingData"
+                ],
+                "http://a.ml/vocabularies/meta#version": [
+                  {
+                    "@value": "3.1.0"
+                  }
+                ],
+                "http://a.ml/vocabularies/meta#sourceVendor": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -40076,21 +40061,6 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/trait/default-abstract/source-map/source-vendor/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/trait/default-abstract"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "RAML 1.0"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/trait/default-abstract/source-map/lexical/element_1",
@@ -40123,11 +40093,6 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#version": [
-              {
-                "@value": "3.1.0"
-              }
-            ],
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Apply this trait to a metheod that supports returning only specific attributes of the response"
@@ -40136,6 +40101,24 @@
             "http://a.ml/vocabularies/document#root": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/meta#unitActions": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/partial.raml#/unitActions",
+                "@type": [
+                  "http://a.ml/vocabularies/meta#AmfProcessingData"
+                ],
+                "http://a.ml/vocabularies/meta#version": [
+                  {
+                    "@value": "3.1.0"
+                  }
+                ],
+                "http://a.ml/vocabularies/meta#sourceVendor": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -40186,6 +40169,24 @@
             "@value": false
           }
         ],
+        "http://a.ml/vocabularies/meta#unitActions": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/traits.raml/unitActions",
+            "@type": [
+              "http://a.ml/vocabularies/meta#AmfProcessingData"
+            ],
+            "http://a.ml/vocabularies/meta#version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/traits.raml#/source-map",
@@ -40231,21 +40232,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(3,0)-(5,0)]"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/traits.raml#/source-map/source-vendor/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/traits.raml"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "RAML 1.0"
                   }
                 ]
               }
@@ -40900,21 +40886,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#fragment/source-map/source-vendor/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#fragment"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "RAML 1.0"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#fragment/source-map/lexical/element_6",
@@ -41012,14 +40983,27 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/meta#unitActions": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml/unitActions",
+            "@type": [
+              "http://a.ml/vocabularies/meta#AmfProcessingData"
+            ],
+            "http://a.ml/vocabularies/meta#version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -43003,21 +42987,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/trait/default-abstract/source-map/source-vendor/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/trait/default-abstract"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "RAML 1.0"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/trait/default-abstract/source-map/lexical/element_1",
@@ -43050,11 +43019,6 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#usage": [
           {
             "@value": "Apply this trait to a GET method that supports content-based caching using ETags"
@@ -43063,6 +43027,24 @@
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/meta#unitActions": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/unitActions",
+            "@type": [
+              "http://a.ml/vocabularies/meta#AmfProcessingData"
+            ],
+            "http://a.ml/vocabularies/meta#version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

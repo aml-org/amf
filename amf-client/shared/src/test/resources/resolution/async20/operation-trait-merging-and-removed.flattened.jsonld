@@ -1,6 +1,27 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "ASYNC 2.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExternalSourceRemovalStage",
+        "ShapeNormalizationStage",
+        "JsonMergePatchStage",
+        "AsyncContentTypeResolutionStage",
+        "AsyncExamplePropagationResolutionStage",
+        "ServerVariableExampleResolutionStage",
+        "PathDescriptionNormalizationStage",
+        "CleanReferencesStage",
+        "DeclarationsRemovalStage",
+        "AnnotationRemovalStage"
+      ]
+    },
+    {
       "@id": "#/async-api",
       "@type": [
         "apiContract:AsyncAPI",
@@ -16,9 +37,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#/async-api": "ASYNC 2.0"
-        },
         "lexical": {
           "apiContract:endpoint": "[(5,0)-(14,0)]",
           "core:name": "[(3,2)-(4,0)]",
@@ -74,14 +92,17 @@
       "doc:encodes": {
         "@id": "#/async-api"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     }
   ],
   "@context": {
     "@base": "file://amf-client/shared/src/test/resources/resolution/async20/operation-trait-merging.yaml",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

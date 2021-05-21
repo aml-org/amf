@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "OAS 2.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "AmfParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#11",
       "@type": [
         "apiContract:WebAPI",
@@ -16,9 +38,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#11": "OAS 2.0"
-        },
         "lexical": {
           "apiContract:endpoint": "[(6,0)-(30,0)]",
           "core:name": "[(4,2)-(6,0)]",
@@ -548,8 +567,10 @@
       "doc:encodes": {
         "@id": "#11"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     },
     {
       "@id": "#1",
@@ -561,8 +582,17 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "3.1.0",
-      "doc:root": false
+      "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#1/unitActions"
+      }
+    },
+    {
+      "@id": "#1/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0"
     }
   ],
   "@context": {
@@ -571,6 +601,7 @@
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

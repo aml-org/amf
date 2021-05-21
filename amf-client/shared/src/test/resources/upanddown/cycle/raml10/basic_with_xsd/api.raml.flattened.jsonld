@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -99,11 +107,6 @@
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml#/web-api/source-map/lexical/element_5"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml#/web-api/source-map/source-vendor/element_0"
-        }
       ]
     },
     {
@@ -198,11 +201,6 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml#/web-api/source-map/lexical/element_5",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#server",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(8,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml#/web-api/api.example.com%2Fpath/source-map/lexical/element_0",
@@ -452,8 +450,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xsd",
@@ -465,8 +465,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xsd#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xsd/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xml",
@@ -478,8 +480,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xml#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xml/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xsd#/external",
@@ -490,12 +494,26 @@
       "http://a.ml/vocabularies/document#raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n           targetNamespace=\"https://www.w3schools.com\"\n           xmlns=\"https://www.w3schools.com\"\n           elementFormDefault=\"qualified\">\n\n    <xs:element name=\"person\">\n        <xs:complexType>\n            <xs:sequence>\n                <xs:element name=\"name\" type=\"xs:string\"\n                            maxOccurs=\"unbounded\"/>\n            </xs:sequence>\n        </xs:complexType>\n    </xs:element>\n\n</xs:schema>"
     },
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xsd/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xml#/external",
       "@type": [
         "http://a.ml/vocabularies/document#ExternalDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#raw": "<person>\n    <name>A Person</name>\n</person>"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
     }
   ]
 }

@@ -1,6 +1,30 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0",
+      "http://a.ml/vocabularies/meta#unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExternalSourceRemovalStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "AmfParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "CleanReferencesStage",
+        "DeclarationsRemovalStage",
+        "AnnotationRemovalStage"
+      ]
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -105,11 +129,6 @@
       "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/source-map/source-vendor/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -267,11 +286,6 @@
           "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/end-points/%2Fexternal-fragment/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api/source-map/lexical/element_1",
@@ -944,19 +958,14 @@
           "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type/source-map/source-vendor/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type/source-map/lexical/element_0"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type/source-map/type-property-lexical-info/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
@@ -1304,19 +1313,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type/source-map/source-vendor/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type/source-map/type-property-lexical-info/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,4)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(6,10)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,4)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/data-type.raml#/type/source-map/auto-generated-name/element_0",
@@ -1860,8 +1864,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/resolution/links-to-declares-and-references/link-to-declares-and-refs.raml#/source-map"

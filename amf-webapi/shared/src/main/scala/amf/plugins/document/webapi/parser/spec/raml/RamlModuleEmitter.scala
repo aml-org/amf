@@ -34,7 +34,7 @@ case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterC
   protected implicit val shapeCtx: RamlShapeEmitterContext = RamlShapeEmitterContextAdapter(spec)
   def emitModule(): YDocument = {
 
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, module.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, module)
 
     // TODO ordering??
     val emitters = spec.factory
@@ -56,7 +56,7 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
 
   def emitFragment(): YDocument = {
 
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, fragment.encodes.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, fragment)
 
     val typeEmitter: RamlFragmentTypeEmitter = fragment match {
       case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)

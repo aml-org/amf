@@ -124,9 +124,6 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#6": "ASYNC 2.0"
-          },
           "lexical": {
             "apiContract:endpoint": "[(10,0)-(16,0)]",
             "core:name": "[(3,2)-(4,0)]",
@@ -136,14 +133,56 @@
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "meta:unitActions": [
+      {
+        "@id": "/unitActions",
+        "@type": [
+          "meta:AmfProcessingData"
+        ],
+        "meta:version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "meta:sourceVendor": [
+          {
+            "@value": "ASYNC 2.0"
+          }
+        ],
+        "meta:unitTransformations": [
+          {
+            "@value": "WebApiReferenceResolutionStage"
+          },
+          {
+            "@value": "ShapeNormalizationStage"
+          },
+          {
+            "@value": "JsonMergePatchStage"
+          },
+          {
+            "@value": "AsyncContentTypeResolutionStage"
+          },
+          {
+            "@value": "AsyncExamplePropagationResolutionStage"
+          },
+          {
+            "@value": "ServerVariableExampleResolutionStage"
+          },
+          {
+            "@value": "PathDescriptionNormalizationStage"
+          },
+          {
+            "@value": "AnnotationRemovalStage"
+          },
+          {
+            "@value": "UrlShortenerStage"
+          }
+        ]
       }
     ],
     "doc:references": [
@@ -214,14 +253,27 @@
             }
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#1/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "meta:sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "smaps": {
@@ -272,7 +324,8 @@
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
-      "core": "http://a.ml/vocabularies/core#"
+      "core": "http://a.ml/vocabularies/core#",
+      "meta": "http://a.ml/vocabularies/meta#"
     }
   }
 ]

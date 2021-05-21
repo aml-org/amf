@@ -776,9 +776,6 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#3": "OAS 2.0"
-          },
           "lexical": {
             "apiContract:endpoint": "[(10,2)-(43,3)]",
             "apiContract:scheme": "[(7,2)-(9,3)]",
@@ -789,14 +786,65 @@
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "meta:unitActions": [
+      {
+        "@id": "/unitActions",
+        "@type": [
+          "meta:AmfProcessingData"
+        ],
+        "meta:version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "meta:sourceVendor": [
+          {
+            "@value": "OAS 2.0"
+          }
+        ],
+        "meta:unitTransformations": [
+          {
+            "@value": "WebApiReferenceResolutionStage"
+          },
+          {
+            "@value": "ExtensionsResolutionStage"
+          },
+          {
+            "@value": "ShapeNormalizationStage"
+          },
+          {
+            "@value": "SecurityResolutionStage"
+          },
+          {
+            "@value": "OpenApiParametersNormalizationStage"
+          },
+          {
+            "@value": "ServersNormalizationStage"
+          },
+          {
+            "@value": "PathDescriptionNormalizationStage"
+          },
+          {
+            "@value": "MediaTypeResolutionStage"
+          },
+          {
+            "@value": "ResponseExamplesResolutionStage"
+          },
+          {
+            "@value": "PayloadAndParameterResolutionStage"
+          },
+          {
+            "@value": "AnnotationRemovalStage"
+          },
+          {
+            "@value": "UrlShortenerStage"
+          }
+        ]
       }
     ],
     "doc:references": [
@@ -831,14 +879,22 @@
             }
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#1/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ]
       }
@@ -852,6 +908,7 @@
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
       "core": "http://a.ml/vocabularies/core#",
+      "meta": "http://a.ml/vocabularies/meta#",
       "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     }
   }

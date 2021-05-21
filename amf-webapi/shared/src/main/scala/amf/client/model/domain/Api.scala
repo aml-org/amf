@@ -62,9 +62,6 @@ abstract class Api[A](override private[amf] val _internal: InternalApi)
     * 'baseUri', 'host' or 'basePath', instead of a 'servers' annotation.
     */
   def withDefaultServer(url: String): Server = _internal.withDefaultServer(url)
-
-  def sourceVendor: ClientOption[Vendor] = _internal.sourceVendor.asClient
-
 }
 
 trait ApiFieldSetter[T] {

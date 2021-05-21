@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "amf://id/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0",
+      "http://a.ml/vocabularies/meta#unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "Raml10ParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "amf://id#22",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -43,11 +65,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "amf://id#22/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "amf://id#22/source-map/lexical/element_1"
@@ -88,11 +105,6 @@
           "@id": "amf://id#23/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "amf://id#22/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#22",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "amf://id#22/source-map/lexical/element_1",
@@ -942,8 +954,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "amf://id#22"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "amf://id/unitActions"
+      }
     },
     {
       "@id": "amf://id#1",

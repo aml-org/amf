@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "OAS 2.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "OpenApiParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#3",
       "@type": [
         "apiContract:WebAPI",
@@ -22,9 +44,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#3": "OAS 2.0"
-        },
         "lexical": {
           "apiContract:endpoint": "[(10,2)-(43,3)]",
           "apiContract:scheme": "[(7,2)-(9,3)]",
@@ -486,8 +505,10 @@
       "doc:encodes": {
         "@id": "#3"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     },
     {
       "@id": "#1",
@@ -499,8 +520,10 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "3.1.0",
-      "doc:root": false
+      "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#1/unitActions"
+      }
     },
     {
       "@id": "#2",
@@ -515,6 +538,13 @@
           "#2": "[(1,0)-(18,0)]"
         }
       }
+    },
+    {
+      "@id": "#1/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0"
     }
   ],
   "@context": {
@@ -526,6 +556,7 @@
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

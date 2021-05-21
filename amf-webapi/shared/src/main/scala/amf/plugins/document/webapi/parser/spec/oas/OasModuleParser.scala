@@ -18,11 +18,10 @@ case class OasModuleParser(root: Root)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser()(WebApiShapeParserContextAdapter(ctx)) {
 
   def parseModule(): Module = {
-    val sourceVendor = SourceVendor(ctx.vendor)
     val module = Module(Annotations(root.parsed.asInstanceOf[SyamlParsedDocument].document))
       .withLocation(root.location)
       .adopted(root.location)
-      .add(sourceVendor)
+      .withSourceVendor(ctx.vendor.name)
     module.set(BaseUnitModel.Location, root.location)
 
     root.parsed.asInstanceOf[SyamlParsedDocument].document.toOption[YMap].foreach { rootMap =>

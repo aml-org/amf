@@ -1,6 +1,30 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 0.8",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExternalSourceRemovalStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "OpenApiParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "CleanReferencesStage",
+        "DeclarationsRemovalStage",
+        "AnnotationRemovalStage"
+      ]
+    },
+    {
       "@id": "#/web-api",
       "@type": [
         "apiContract:WebAPI",
@@ -45,11 +69,6 @@
       "@id": "#/web-api/source-map",
       "@type": [
         "sourcemaps:SourceMap"
-      ],
-      "sourcemaps:source-vendor": [
-        {
-          "@id": "#/web-api/source-map/source-vendor/element_0"
-        }
       ],
       "sourcemaps:lexical": [
         {
@@ -109,11 +128,6 @@
           "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "#/web-api/source-map/source-vendor/element_0",
-      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api",
-      "sourcemaps:value": "RAML 0.8"
     },
     {
       "@id": "#/web-api/source-map/lexical/element_1",
@@ -584,8 +598,10 @@
       "doc:encodes": {
         "@id": "#/web-api"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     }
   ],
   "@context": {
@@ -595,6 +611,7 @@
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#",
-    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

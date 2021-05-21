@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -71,11 +79,6 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/source-map/source-vendor/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -197,11 +200,6 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/source-map/lexical/element_1"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/source-map/lexical/element_1",
@@ -2826,8 +2824,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml",
@@ -2839,8 +2839,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/source-map"
@@ -2857,8 +2859,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml#/source-map"
@@ -2875,8 +2879,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml#/source-map"
@@ -2934,6 +2940,14 @@
       ]
     },
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -2951,12 +2965,15 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#raw": "#%RAML 1.0 NamedExample\nvalue:\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   ",
-      "http://a.ml/vocabularies/core#mediaType": "application/raml+yaml",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml#/external/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#mediaType": "application/raml+yaml"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml#/source-map",
@@ -2976,12 +2993,15 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#raw": "#%RAML 1.0 NamedExample\nvalue:\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n",
-      "http://a.ml/vocabularies/core#mediaType": "application/raml+yaml",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml#/external/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#mediaType": "application/raml+yaml"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml#/source-map",
@@ -3102,11 +3122,6 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/source-map/type-property-lexical-info/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/source-map/lexical/element_1"
@@ -3115,9 +3130,9 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/source-map/lexical/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+      "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/source-map/source-vendor/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/source-map/type-property-lexical-info/element_0"
         }
       ]
     },
@@ -3127,31 +3142,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(20,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml#/external/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml#/external/source-map/source-vendor/element_0"
-        }
-      ]
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(15,3)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml#/external/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml#/external/source-map/source-vendor/element_0"
-        }
-      ]
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml#/source-map/lexical/element_0",
@@ -3320,11 +3313,6 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/source-map/type-property-lexical-info/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,4)]"
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(20,0)]"
@@ -3335,19 +3323,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,11)-(20,0)]"
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/source-map/source-vendor/element_0",
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/source-map/type-property-lexical-info/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml#/external/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-array-response.raml#/external",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml#/external/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/examples/organization/organization-individual-response.raml#/external",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,4)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/alternate_id%3F/union/default-union",

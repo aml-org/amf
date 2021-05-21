@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -20,11 +28,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/web-api/source-map/lexical/element_1"
@@ -33,11 +36,6 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/web-api/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/web-api/source-map/lexical/element_1",
@@ -70,8 +68,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/unspecified-version-schema-with-draft-7-facets.json",
@@ -83,7 +83,6 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/unspecified-version-schema-with-draft-7-facets.json#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#references": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/another-unspecified-version-schema-with-draft-7-facets.json"
@@ -92,7 +91,10 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/second-level-schema.json"
         }
       ],
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/unspecified-version-schema-with-draft-7-facets.json/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/declarations/types/MyType",
@@ -148,13 +150,15 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/another-unspecified-version-schema-with-draft-7-facets.json#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#references": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/second-level-schema.json"
         }
       ],
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/another-unspecified-version-schema-with-draft-7-facets.json/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/second-level-schema.json",
@@ -166,8 +170,17 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/second-level-schema.json#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/second-level-schema.json/unitActions"
+      }
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/unspecified-version-schema-with-draft-7-facets.json/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/declarations/types/MyType/property/name",
@@ -280,6 +293,13 @@
       ]
     },
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/another-unspecified-version-schema-with-draft-7-facets.json/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/second-level-schema.json#/external",
       "@type": [
         "http://a.ml/vocabularies/document#ExternalDomainElement",
@@ -292,6 +312,13 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/second-level-schema.json#/external/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/second-level-schema.json/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/raml10/raml-default-schema-version.raml#/declarations/types/MyType/property/name/scalar/name",

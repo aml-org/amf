@@ -39,6 +39,13 @@
       ]
     },
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/types.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/types.raml#/web-api/null",
       "@type": [
         "http://a.ml/vocabularies/apiContract#Server",
@@ -965,8 +972,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/types.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "1.0.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/types.raml/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/types.raml#/declarations/types/Person",

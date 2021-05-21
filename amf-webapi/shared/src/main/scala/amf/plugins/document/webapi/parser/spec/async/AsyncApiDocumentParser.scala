@@ -54,9 +54,10 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     val references = AsycnReferencesParser(root.references).parse()
     parseDeclarations(map)
 
-    val api = parseApi(map).add(SourceVendor(ctx.vendor))
+    val api = parseApi(map)
     document
       .set(DocumentModel.Encodes, api, Annotations.inferred())
+      .withSourceVendor(ctx.vendor.name)
       .adopted(root.location)
 
     addDeclarationsToModel(document)

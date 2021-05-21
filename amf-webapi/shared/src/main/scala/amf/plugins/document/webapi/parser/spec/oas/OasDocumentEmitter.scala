@@ -182,7 +182,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val spec: OasSpec
   def emitDocument(): YDocument = {
     val doc = document.asInstanceOf[Document]
 
-    val ordering = SpecOrdering.ordering(Oas20, doc.encodes.annotations)
+    val ordering = SpecOrdering.ordering(Oas20, doc)
 
     val references = ReferencesEmitter(document, ordering)
     val api        = emitWebApi(ordering, document.references)
@@ -205,7 +205,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit val spec: OasSpec
 
   def emitWebApi(ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
     val model  = retrieveWebApi()
-    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
+    val vendor = document.sourceVendor
     val api    = WebApiEmitter(model, ordering, vendor, references)
     api.emitters
   }

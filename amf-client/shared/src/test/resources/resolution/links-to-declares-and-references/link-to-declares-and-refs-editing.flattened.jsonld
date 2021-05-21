@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "AmfParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#29",
       "@type": [
         "apiContract:WebAPI",
@@ -24,9 +46,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#29": "RAML 1.0"
-        },
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
           "#29": "[(2,0)-(44,43)]"
@@ -415,14 +434,11 @@
         "resolved-link": {
           "#15": "amf://id#22"
         },
-        "source-vendor": {
-          "#15": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#15": "[(2,0)-(2,4)]"
         },
         "lexical": {
           "#15": "[(2,0)-(6,10)]"
-        },
-        "type-property-lexical-info": {
-          "#15": "[(2,0)-(2,4)]"
         },
         "auto-generated-name": {
           "#15": ""
@@ -925,8 +941,10 @@
       "doc:encodes": {
         "@id": "#29"
       },
-      "doc:version": "3.1.0",
       "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      },
       "smaps": {
         "aliases-array": {
           "": "lib->amf://id#1::lib.raml"
@@ -944,12 +962,11 @@
           "@id": "#2"
         }
       ],
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#1/unitActions"
+      },
       "smaps": {
-        "source-vendor": {
-          "#1": "RAML 1.0"
-        },
         "lexical": {
           "#1": "[(1,0)-(5,15)]"
         }
@@ -965,8 +982,10 @@
       "doc:encodes": {
         "@id": "#7"
       },
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#6/unitActions"
+      },
       "smaps": {
         "lexical": {
           "#6": "[(1,0)-(18,0)]"
@@ -983,8 +1002,10 @@
       "doc:encodes": {
         "@id": "#15"
       },
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#14/unitActions"
+      },
       "smaps": {
         "lexical": {
           "#14": "[(1,0)-(6,10)]"
@@ -1001,8 +1022,18 @@
       "doc:encodes": {
         "@id": "#24"
       },
-      "doc:version": "3.1.0",
-      "doc:root": false
+      "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#23/unitActions"
+      }
+    },
+    {
+      "@id": "#1/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     },
     {
       "@id": "#7",
@@ -1030,9 +1061,6 @@
         "@id": "#13"
       },
       "smaps": {
-        "source-vendor": {
-          "#7": "RAML 1.0"
-        },
         "lexical": {
           "security:settings": "[(3,0)-(8,0)]",
           "apiContract:parameter": "[(9,2)-(12,0)]",
@@ -1042,6 +1070,22 @@
           "apiContract:response": "[(15,2)-(18,0)]"
         }
       }
+    },
+    {
+      "@id": "#6/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
+    },
+    {
+      "@id": "#14/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     },
     {
       "@id": "#24",
@@ -1056,6 +1100,13 @@
           "#24": "[(1,0)-(16,1)]"
         }
       }
+    },
+    {
+      "@id": "#23/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0"
     },
     {
       "@id": "#8",
@@ -1202,6 +1253,7 @@
     "security": "http://a.ml/vocabularies/security#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

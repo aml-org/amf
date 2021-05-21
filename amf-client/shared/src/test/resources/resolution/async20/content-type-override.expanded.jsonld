@@ -685,9 +685,6 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#1": "ASYNC 2.0"
-          },
           "lexical": {
             "apiContract:endpoint": "[(6,0)-(38,26)]",
             "apiContract:contentType": "[(5,0)-(6,0)]",
@@ -699,14 +696,56 @@
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "meta:unitActions": [
+      {
+        "@id": "/unitActions",
+        "@type": [
+          "meta:AmfProcessingData"
+        ],
+        "meta:version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "meta:sourceVendor": [
+          {
+            "@value": "ASYNC 2.0"
+          }
+        ],
+        "meta:unitTransformations": [
+          {
+            "@value": "WebApiReferenceResolutionStage"
+          },
+          {
+            "@value": "ShapeNormalizationStage"
+          },
+          {
+            "@value": "JsonMergePatchStage"
+          },
+          {
+            "@value": "AsyncContentTypeResolutionStage"
+          },
+          {
+            "@value": "AsyncExamplePropagationResolutionStage"
+          },
+          {
+            "@value": "ServerVariableExampleResolutionStage"
+          },
+          {
+            "@value": "PathDescriptionNormalizationStage"
+          },
+          {
+            "@value": "AnnotationRemovalStage"
+          },
+          {
+            "@value": "UrlShortenerStage"
+          }
+        ]
       }
     ],
     "@context": {
@@ -715,7 +754,8 @@
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
-      "core": "http://a.ml/vocabularies/core#"
+      "core": "http://a.ml/vocabularies/core#",
+      "meta": "http://a.ml/vocabularies/meta#"
     }
   }
 ]

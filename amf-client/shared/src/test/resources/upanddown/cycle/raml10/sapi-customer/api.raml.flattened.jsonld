@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -45,11 +53,6 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/source-map/source-vendor/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -109,11 +112,6 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/source-map/lexical/element_1",
@@ -4177,8 +4175,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml",
@@ -4190,8 +4190,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml#/source-map"
@@ -4208,8 +4210,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml#/source-map"
@@ -4254,12 +4258,15 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#raw": "#%RAML 1.0 NamedExample\n- id: \"1\"\n  name: Michelle Ruiz\n  email: mruiz0@qq.com\n  phone: 1-(951)768-8479\n  billingAddress:\n    line:\n      - Eastlawn 42\n    city: Riverside\n    state: California\n    postalCode: alberto gomez\n    country: USA\n  shippingAddress:\n    line:\n      - South\n      - \"07\"\n    city: Houston\n    state: Texas\n    postalCode: \"77045\"\n    country: USA\n- id: \"2\"\n  name: Jeremy Adams\n  email: jadams1@instagram.com\n  phone: 1-(216)797-9178\n  billingAddress:\n    line:\n      - Eastwood 442\n    city: Cleveland\n    state: Ohio\n    postalCode: \"44191\"\n    country: USA\n  shippingAddress:\n    line:\n      - Menomonie 5\n    city: South Bend\n    state: Indiana\n    postalCode: \"46614\"\n    country: USA\n",
-      "http://a.ml/vocabularies/core#mediaType": "application/raml+yaml",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml#/external/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#mediaType": "application/raml+yaml"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml#/source-map",
@@ -4279,12 +4286,15 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#raw": "#%RAML 1.0 NamedExample\nname: Michelle Ruiz\nemail: mruiz0@qq.com\nphone: 1-(951)768-8479\nbillingAddress:\n  line:\n    - Eastlawn 42\n  city: Riverside\n  state: California\n  postalCode: \"92513\"\n  country: USA\nshippingAddress:\n  line:\n    - South\n    - \"07\"\n  city: Houston\n  state: Texas\n  postalCode: \"77045\"\n  country: USA\n",
-      "http://a.ml/vocabularies/core#mediaType": "application/raml+yaml",
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml#/external/source-map"
-        }
-      ]
+      "http://a.ml/vocabularies/core#mediaType": "application/raml+yaml"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml#/source-map",
@@ -4421,31 +4431,9 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml#/external/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml#/external/source-map/source-vendor/element_0"
-        }
-      ]
-    },
-    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml",
       "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(39,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml#/external/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml#/external/source-map/source-vendor/element_0"
-        }
-      ]
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml#/source-map/lexical/element_0",
@@ -4648,16 +4636,6 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/declarations/types/objectName/source-map/declared-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/declarations/types/objectName",
       "http://a.ml/vocabularies/document-source-maps#value": ""
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml#/external/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_collection_example.raml#/external",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml#/external/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/examples/customer_post_request_example.raml#/external",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/declarations/types/objectName/property/id/scalar/id%3F/source-map",
