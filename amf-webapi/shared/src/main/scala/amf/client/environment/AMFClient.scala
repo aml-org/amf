@@ -8,7 +8,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * The AMF Client contains common AMF operations.
-  * For more complex uses see {@link amf.client.remod.AMFParser} or {@link amf.client.remod.AMFRenderer}
+  * For more complex uses see [[AMFParser]] or [[amf.client.remod.AMFRenderer]]
   */
 class AMFClient private[amf] (override protected val configuration: AMFConfiguration)
     extends AMLClient(configuration) {
@@ -18,9 +18,9 @@ class AMFClient private[amf] (override protected val configuration: AMFConfigura
   override def getConfiguration: AMFConfiguration = configuration
 
   /**
-    * parse a {@link amf.core.model.document.Document}
+    * parse a [[amf.core.model.document.Document]]
     * @param url of the resource to parse
-    * @return a Future{@link amf.client.environment.AMFDocumentResult}
+    * @return a Future [[AMFDocumentResult]]
     */
   def parseDocument(url: String): Future[AMFDocumentResult] = AMFParser.parse(url, configuration).map {
     case AMFResult(d: Document, r) => new AMFDocumentResult(d, r)
@@ -29,9 +29,9 @@ class AMFClient private[amf] (override protected val configuration: AMFConfigura
   }
 
   /**
-    * parse a {@link amf.core.model.document.Module}
+    * parse a [[amf.core.model.document.Module]]
     * @param url of the resource to parse
-    * @return a Future {@link amf.client.environment.AMFLibraryResult}
+    * @return a Future [[AMFLibraryResult]]
     */
   def parseLibrary(url: String): Future[AMFLibraryResult] = AMFParser.parse(url, configuration).map {
     case AMFResult(m: Module, r) => new AMFLibraryResult(m, r)

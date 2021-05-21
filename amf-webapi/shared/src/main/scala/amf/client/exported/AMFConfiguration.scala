@@ -54,11 +54,9 @@ class AMFConfiguration private[amf] (private[amf] override val _internal: Intern
 
 /**
   * common configuration with all configurations needed for RAML like:
-  * <ul>
-  *   <li>Validation rules</li>
-  *   <li>Parse and emit plugins</li>
-  *   <li>Transformation Pipelines</li>
-  * </ul>
+  *   - Validation rules
+  *   - Parse and emit plugins
+  *   - Transformation Pipelines
   */
 @JSExportAll
 @JSExportTopLevel("RAMLConfiguration")
@@ -70,11 +68,9 @@ object RAMLConfiguration {
 
 /**
   * common configuration with all configurations needed for OAS like:
-  * <ul>
-  *   <li>Validation rules</li>
-  *   <li>Parse and emit plugins</li>
-  *   <li>Transformation Pipelines</li>
-  * </ul>
+  *   - Validation rules
+  *   - Parse and emit plugins
+  *   - Transformation Pipelines
   */
 @JSExportAll
 @JSExportTopLevel("OASConfiguration")
@@ -84,7 +80,7 @@ object OASConfiguration {
   def OAS(): AMFConfiguration   = InternalOASConfiguration.OAS()
 }
 
-/** Merged {@link OASConfiguration} and {@link RAMLConfiguration} configurations */
+/** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
 @JSExportAll
 @JSExportTopLevel("WebAPIConfiguration")
 object WebAPIConfiguration {
@@ -93,11 +89,9 @@ object WebAPIConfiguration {
 
 /**
   * common configuration with all configurations needed for AsyncApi like:
-  * <ul>
-  *   <li>Validation rules</li>
-  *   <li>Parse and emit plugins</li>
-  *   <li>Transformation Pipelines</li>
-  * </ul>
+  *   - Validation rules
+  *   - Parse and emit plugins
+  *   - Transformation Pipelines
   */
 @JSExportAll
 @JSExportTopLevel("AsyncAPIConfiguration")

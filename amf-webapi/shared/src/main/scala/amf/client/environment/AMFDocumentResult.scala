@@ -5,17 +5,17 @@ import amf.core.model.document.{Document, Module}
 import amf.core.validation.AMFValidationReport
 
 /**
-  * An {@link amf.client.remod.AMFResult} where the parsing result is a {@link amf.core.model.document.Document}
+  * An [[AMFResult]] where the parsing result is a [[Document]]
   * @param document the Document parsed
-  * @param report The {@link amf.core.validation.AMFValidationReport} from parsing the Document
-  * @see {@linkplain AMFClient.parseDocument parseDocument}
+  * @param report The [[AMFValidationReport]] from parsing the Document
+  * @see [[AMFClient.parseDocument parseDocument]]
   */
 class AMFDocumentResult(val document: Document, report: AMFValidationReport) extends AMFResult(document, report)
 
 /**
-  * An {@link amf.client.remod.AMFResult} where the parsing result is a library a.k.a. {@link amf.core.model.document.Module}
+  * An [[AMFResult]] where the parsing result is a library a.k.a. [[Module]]
   * @param library The library parsed
-  * @param report The {@link amf.core.validation.AMFValidationReport} from parsing the library
-  * @see {@linkplain AMFClient.parseLibrary parseLibrary}
+  * @param report The [[AMFValidationReport]] from parsing the library
+  * @see [[AMFClient.parseLibrary parseLibrary]]
   */
 class AMFLibraryResult(val library: Module, report: AMFValidationReport) extends AMFResult(library, report)
