@@ -73,7 +73,10 @@ object AMFCompiler {
       eh: AMFErrorHandler,
       parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext): AMFCompiler = {
     val newEnv =
-      AMFPluginsRegistry.obtainStaticConfig().withParsingOptions(ParsingOptionsConverter.fromLegacy(parsingOptions))
+      AMFPluginsRegistry
+        .obtainStaticConfig()
+        .withParsingOptions(ParsingOptionsConverter.fromLegacy(parsingOptions))
+        .withErrorHandlerProvider(() => eh)
     new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), newEnv)
   }
 

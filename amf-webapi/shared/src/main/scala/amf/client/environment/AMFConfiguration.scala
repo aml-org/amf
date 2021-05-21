@@ -30,7 +30,7 @@ sealed trait APIConfigurationBuilder {
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
   private[amf] def common(): AMFConfiguration = {
     val configuration = AMLConfiguration.predefined()
-    new AMFConfiguration(
+    val result = new AMFConfiguration(
       configuration.resolvers,
       configuration.errorHandlerProvider,
       // TODO - ARM: move shapes entities and annotations to shape module (?)
@@ -42,6 +42,7 @@ sealed trait APIConfigurationBuilder {
       configuration.listeners,
       configuration.options
     ).withPlugins(List(ExternalJsonYamlRefsParsePlugin, PayloadParsePlugin, JsonSchemaParsePlugin))
+    result
   }
 }
 

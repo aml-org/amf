@@ -1,6 +1,7 @@
 package amf.client.commands
 
 import amf.ProfileName
+import amf.client.environment.AMLConfiguration
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.client.{ExitCodes, ParserConfig}
@@ -11,36 +12,35 @@ import amf.core.services.RuntimeValidator
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class TranslateCommand(override val platform: Platform, override val configuration: AMFGraphConfiguration)
-    extends CommandHelper {
+class TranslateCommand(override val platform: Platform) extends CommandHelper {
 
-  val validationCommand = new ValidateCommand(platform, configuration)
-
-  def run(config: ParserConfig): Future[Any] = {
+  def run(parserConfig: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
+    implicit val context: ExecutionContext = configuration.getExecutionContext
     val res: Future[Any] = for {
-      _         <- AMFInit()
-      model     <- parseInput(config)
-      _         <- checkValidation(config, model)
-      model     <- resolve(config, model)
-      generated <- generateOutput(config, model)
+      _         <- AMFInit(configuration)
+      model     <- parseInput(parserConfig, configuration)
+      _         <- checkValidation(parserConfig, model, configuration)
+      model     <- resolve(parserConfig, model, configuration)
+      generated <- generateOutput(parserConfig, model, configuration)
     } yield {
       generated
     }
 
     res.onComplete {
       case Failure(ex: Throwable) => {
-        config.stderr.print(ex)
-        config.proc.exit(ExitCodes.Exception)
+        parserConfig.stderr.print(ex)
+        parserConfig.proc.exit(ExitCodes.Exception)
       }
       case Success(other) => other
     }
     res
   }
 
-  def checkValidation(config: ParserConfig, model: BaseUnit): Future[Unit] = {
+  def checkValidation(config: ParserConfig, model: BaseUnit, configuration: AMLConfiguration): Future[Unit] = {
+    implicit val context: ExecutionContext = configuration.getExecutionContext
     val customProfileLoaded: Future[ProfileName] = if (config.customProfile.isDefined) {
       RuntimeValidator.loadValidationProfile(config.customProfile.get, errorHandler = UnhandledErrorHandler) map {
         profileName =>
@@ -74,5 +74,5 @@ class TranslateCommand(override val platform: Platform, override val configurati
 }
 
 object TranslateCommand {
-  def apply(platform: Platform, configuration: AMFGraphConfiguration) = new TranslateCommand(platform, configuration)
+  def apply(platform: Platform) = new TranslateCommand(platform)
 }

@@ -42,7 +42,6 @@ trait ModelValidationTest extends DirectoryTest {
       unifiedReport <- {
         val r =
           if (!parseResult.conforms) parseResult.result
-          else if (!report.conforms) report
           else parseResult.result.merge(report)
         Future.successful(r)
       }

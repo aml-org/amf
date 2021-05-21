@@ -1,5 +1,5 @@
 package amf.resolution
-import amf.client.parse.DefaultErrorHandler
+import amf.client.parse.{DefaultErrorHandler, IgnoringErrorHandler}
 import amf.core.annotations.LexicalInformation
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
@@ -66,7 +66,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
 
     for {
       _ <- Validation(platform)
-      u <- build(config, Some(eh), useAmfJsonldSerialisation = true)
+      u <- build(config, Some(IgnoringErrorHandler()), useAmfJsonldSerialisation = true)
       _ <- {
         Future { transform(u, config, eh) }
       }

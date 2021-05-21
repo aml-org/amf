@@ -28,7 +28,7 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
-import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, Raml10Library, Raml10Overlay, _}
+import amf.plugins.document.webapi.parser.RamlHeader.{Raml08, Raml10, Raml10Extension, Raml10Library, Raml10Overlay}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
@@ -230,6 +230,8 @@ object Raml08Plugin extends RamlPlugin {
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Raml08ValidationProfile)
 
   override val vendors: Seq[String] = Seq(vendor.name)
+
+  override def documentSyntaxes: Seq[String] = core.remote.Raml10.mediaType +: super.documentSyntaxes
 }
 
 object Raml10Plugin extends RamlPlugin {
@@ -298,4 +300,10 @@ object Raml10Plugin extends RamlPlugin {
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Raml10ValidationProfile, AmfValidationProfile)
 
   override val vendors: Seq[String] = Seq(vendor.name)
+
+  /**
+    * List of media types used to encode serialisations of
+    * this domain
+    */
+  override def documentSyntaxes: Seq[String] = core.remote.Raml08.mediaType +: super.documentSyntaxes
 }

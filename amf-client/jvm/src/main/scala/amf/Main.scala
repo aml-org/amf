@@ -1,7 +1,7 @@
 package amf
 
 import amf.client.commands._
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.environment.{AMLConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.remod.AMFGraphConfiguration
 import amf.core.benchmark.ExecutionLog
 import amf.core.client.{ExitCodes, ParserConfig}
@@ -55,10 +55,11 @@ object Main extends PlatformSecrets {
     System.err.println("Wrong command")
     System.exit(ExitCodes.WrongInvocation)
   }
-  def runTranslate(config: ParserConfig): Future[Any] = TranslateCommand(platform, configuration).run(config)
-  def runValidate(config: ParserConfig): Future[Any]  = ValidateCommand(platform, configuration).run(config)
-  def runParse(config: ParserConfig): Future[Any]     = ParseCommand(platform, configuration).run(config)
-  def runPatch(config: ParserConfig): Future[Any]     = PatchCommand(platform, configuration).run(config)
+  def runTranslate(config: ParserConfig): Future[Any] = amfConfig.map(TranslateCommand(platform).run(config, _))
+  def runValidate(config: ParserConfig): Future[Any]  = amfConfig.map(ValidateCommand(platform).run(config, _))
+  def runParse(config: ParserConfig): Future[Any]     = amfConfig.map(ParseCommand(platform).run(config, _))
+  def runPatch(config: ParserConfig): Future[Any]     = amfConfig.map(PatchCommand(platform).run(config, _))
 
-  private val configuration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+  private val amfConfig: Future[AMLConfiguration] =
+    WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withCustomValidationsEnabled
 }

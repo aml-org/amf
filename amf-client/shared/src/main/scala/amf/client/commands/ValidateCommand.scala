@@ -1,6 +1,7 @@
 package amf.client.commands
 
 import amf.ProfileName
+import amf.client.environment.AMLConfiguration
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.client.{ExitCodes, ParserConfig}
@@ -13,18 +14,18 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class ValidateCommand(override val platform: Platform, override val configuration: AMFGraphConfiguration)
-    extends CommandHelper {
+class ValidateCommand(override val platform: Platform) extends CommandHelper {
 
-  def run(config: ParserConfig): Future[Any] = {
+  def run(config: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
+    implicit val context: ExecutionContext = configuration.getExecutionContext
     val res = for {
-      _      <- AMFInit()
-      _      <- processDialects(config)
-      model  <- parseInput(config)
-      report <- report(model, config)
+      _        <- AMFInit(configuration)
+      newCofig <- processDialects(config, configuration)
+      model    <- parseInput(config, newCofig)
+      report   <- report(model, config, newCofig)
     } yield {
       processOutput(report, config)
     }
@@ -40,8 +41,12 @@ class ValidateCommand(override val platform: Platform, override val configuratio
     res
   }
 
-  def report(model: BaseUnit, config: ParserConfig): Future[AMFValidationReport] = {
+  def report(model: BaseUnit,
+             config: ParserConfig,
+             configuration: AMFGraphConfiguration): Future[AMFValidationReport] = {
+    implicit val executionContext: ExecutionContext = configuration.getExecutionContext
     val customProfileLoaded: Future[ProfileName] = if (config.customProfile.isDefined) {
+      // TODO: validation profile is present in config, no clear way to obtain the profile name.
       RuntimeValidator.loadValidationProfile(config.customProfile.get, errorHandler = UnhandledErrorHandler) map {
         profileName =>
           profileName
@@ -66,7 +71,7 @@ class ValidateCommand(override val platform: Platform, override val configuratio
     }
   }
 
-  def processOutput(report: AMFValidationReport, config: ParserConfig): Unit = {
+  def processOutput(report: AMFValidationReport, config: ParserConfig)(implicit ec: ExecutionContext): Unit = {
     val json = ValidationReportJSONLDEmitter.emitJSON(report)
     config.output match {
       case Some(f) => platform.write(f, json)
@@ -80,5 +85,5 @@ class ValidateCommand(override val platform: Platform, override val configuratio
 }
 
 object ValidateCommand {
-  def apply(platform: Platform, configuration: AMFGraphConfiguration) = new ValidateCommand(platform, configuration)
+  def apply(platform: Platform) = new ValidateCommand(platform)
 }

@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.client.convert.WebApiRegister
 import amf.client.validation.PayloadValidationUtils
 import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.core.AMF
@@ -99,6 +100,7 @@ class ScalarValidationTest extends AsyncFunSuite with Matchers with PayloadValid
     AMF
       .init()
       .map(_ => {
+        WebApiRegister.register(platform) // not sure why this fixes tests, but this will be deleted.
         AMF.registerPlugin(PayloadValidatorPlugin)
       })
 
