@@ -81,6 +81,12 @@ object Async20Plugin extends AsyncPlugin {
 
   override protected def vendor: Vendor = AsyncApi20
 
+  /**
+    * List of media types used to encode serialisations of
+    * this domain
+    */
+  override def documentSyntaxes: Seq[String] = AsyncApi20.mediaType +: super.documentSyntaxes
+
   override def validVendorsToReference: Seq[String] = super.validVendorsToReference :+ Raml10.name
 
   override val validationProfile: ProfileName = Async20Profile

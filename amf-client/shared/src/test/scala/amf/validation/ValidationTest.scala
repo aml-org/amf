@@ -300,7 +300,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       val unified =
         if (!parseResult.conforms) parseResult.result
-        else if (!report.conforms) report
         else parseResult.result.merge(report)
       unified
     }

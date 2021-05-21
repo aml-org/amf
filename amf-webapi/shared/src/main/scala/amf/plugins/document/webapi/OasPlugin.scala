@@ -150,6 +150,12 @@ object Oas20Plugin extends OasPlugin {
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Oas20ValidationProfile)
 
   override val vendors: Seq[String] = Seq(vendor.name)
+
+  /**
+    * List of media types used to encode serialisations of
+    * this domain
+    */
+  override def documentSyntaxes: Seq[String] = Oas20.mediaType +: super.documentSyntaxes
 }
 
 object Oas30Plugin extends OasPlugin {
@@ -187,6 +193,7 @@ object Oas30Plugin extends OasPlugin {
     * this domain
     */
   override def documentSyntaxes: Seq[String] = Seq(
+    Oas30.mediaType,
     "application/json",
     "application/yaml",
     "application/x-yaml",
