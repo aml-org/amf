@@ -18,9 +18,8 @@ import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
 import amf.plugins.features.validation.CoreValidations
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
-import amf.plugins.features.validation.custom.model.ValidationDialectText
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import amf.validation.DialectValidations
+import amf.validation.{DialectValidations, ValidationDialectText}
 import amf.validations._
 import amf.{ProfileName, Raml10Profile}
 

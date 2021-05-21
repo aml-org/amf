@@ -71,7 +71,6 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
       r <- {
         val finalReport =
           if (!parseResult.conforms) parseResult.result
-          else if (!report.conforms) report
           else parseResult.result.merge(report)
         handleReport(finalReport, golden.map(processGolden))
       }

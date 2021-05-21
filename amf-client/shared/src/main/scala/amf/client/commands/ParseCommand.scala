@@ -1,24 +1,24 @@
 package amf.client.commands
 
-import amf.client.remod.AMFGraphConfiguration
+import amf.client.environment.AMLConfiguration
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.remote.Platform
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class ParseCommand(override val platform: Platform, override val configuration: AMFGraphConfiguration)
-    extends TranslateCommand(platform, configuration) {
+class ParseCommand(override val platform: Platform) extends TranslateCommand(platform) {
 
-  override def run(origConfig: ParserConfig): Future[Any] = {
-    val config = origConfig.copy(outputFormat = Some("AMF Graph"), outputMediaType = Some("application/ld+json"))
+  override def run(origConfig: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
+    implicit val ec: ExecutionContext = configuration.getExecutionContext
+    val parserConfig                  = origConfig.copy(outputFormat = Some("AMF Graph"), outputMediaType = Some("application/ld+json"))
     val res = for {
-      _         <- AMFInit()
-      _         <- processDialects(config)
-      model     <- parseInput(config)
-      _         <- checkValidation(config, model)
-      model     <- resolve(config, model)
-      generated <- generateOutput(config, model)
+      _         <- AMFInit(configuration)
+      newConf   <- processDialects(parserConfig, configuration)
+      model     <- parseInput(parserConfig, newConf)
+      _         <- checkValidation(parserConfig, model, configuration)
+      model     <- resolve(parserConfig, model, configuration)
+      generated <- generateOutput(parserConfig, model, configuration)
     } yield {
       generated
     }
@@ -26,8 +26,8 @@ class ParseCommand(override val platform: Platform, override val configuration: 
     res.onComplete {
 
       case Failure(ex: Throwable) =>
-        config.stderr.print(ex)
-        config.proc.exit(ExitCodes.Exception)
+        parserConfig.stderr.print(ex)
+        parserConfig.proc.exit(ExitCodes.Exception)
       case Success(other) => other
     }
 
@@ -37,5 +37,5 @@ class ParseCommand(override val platform: Platform, override val configuration: 
 }
 
 object ParseCommand {
-  def apply(platform: Platform, configuration: AMFGraphConfiguration) = new ParseCommand(platform, configuration)
+  def apply(platform: Platform) = new ParseCommand(platform)
 }
