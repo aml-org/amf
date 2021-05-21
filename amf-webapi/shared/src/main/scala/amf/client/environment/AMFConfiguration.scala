@@ -35,12 +35,10 @@ sealed trait APIConfigurationBuilder {
 }
 
 /**
-  * {@link APIConfigurationBuilder.common common()} configuration with all configurations needed for RAML like:
-  * <ul>
-  *   <li>Validation rules</li>
-  *   <li>Parse and emit plugins</li>
-  *   <li>Transformation Pipelines</li>
-  * </ul>
+  * [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for RAML like:
+  *   - Validation rules
+  *   - Parse and emit plugins
+  *   - Transformation Pipelines
   */
 object RAMLConfiguration extends APIConfigurationBuilder {
   def RAML10(): AMFConfiguration =
@@ -71,12 +69,10 @@ object RAMLConfiguration extends APIConfigurationBuilder {
 }
 
 /**
-  * {@link APIConfigurationBuilder.common common()} configuration with all configurations needed for OAS like:
-  * <ul>
-  *   <li>Validation rules</li>
-  *   <li>Parse and emit plugins</li>
-  *   <li>Transformation Pipelines</li>
-  * </ul>
+  * [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for OAS like:
+  *  - Validation rules
+  *  - Parse and emit plugins
+  *  - Transformation Pipelines
   */
 object OASConfiguration extends APIConfigurationBuilder {
   def OAS20(): AMFConfiguration =
@@ -104,18 +100,16 @@ object OASConfiguration extends APIConfigurationBuilder {
   def OAS(): AMFConfiguration = OAS20().merge(OAS30())
 }
 
-/** Merged {@link OASConfiguration} and {@link RAMLConfiguration} configurations */
+/** Merged [[OASConfiguration]] and [[RAMLConfiguration]] configurations */
 object WebAPIConfiguration {
   def WebAPI(): AMFConfiguration = OASConfiguration.OAS().merge(RAMLConfiguration.RAML())
 }
 
 /**
-  * {@link APIConfigurationBuilder.common common()} configuration with all configurations needed for AsyncApi like:
-  * <ul>
-  *   <li>Validation rules</li>
-  *   <li>Parse and emit plugins</li>
-  *   <li>Transformation Pipelines</li>
-  * </ul>
+  * [[APIConfigurationBuilder.common common()]] configuration with all configurations needed for AsyncApi like:
+  *   - Validation rules
+  *   - Parse and emit plugins
+  *   - Transformation Pipelines
   */
 object AsyncAPIConfiguration extends APIConfigurationBuilder {
   def Async20(): AMFConfiguration =
@@ -133,7 +127,7 @@ object AsyncAPIConfiguration extends APIConfigurationBuilder {
 /**
   * The AMFConfiguration lets you customize all AMF-specific configurations.
   * Its immutable and created through builders. An instance is needed to use AMF.
-  * @see {@link AMFClient}
+  * @see [[AMFClient]]
   */
 class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                      override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
