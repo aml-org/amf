@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote._
 
 class ParameterResolutionTest extends ResolutionTest {

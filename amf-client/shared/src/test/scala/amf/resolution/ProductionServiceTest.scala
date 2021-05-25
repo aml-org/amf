@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.BaseUnit
@@ -114,7 +114,7 @@ class ProductionServiceTest extends RamlResolutionTest {
 
     val config = CycleConfig(source, golden, hint, target, basePath, None, None)
 
-    build(config, None, renderOptions.forall(_.isAmfJsonLdSerilization))
+    build(config, None, renderOptions.forall(_.isAmfJsonLdSerialization))
       .map(tFn(_, config))
       .flatMap {
         renderOptions match {

@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.{Amf, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
 

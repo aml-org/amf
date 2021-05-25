@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.common
 
 import amf.client.execution.BaseExecutionEnvironment
+import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.config.{ShapeRenderOptions => ImmutableShapeRenderOptions}
 import amf.core.AMFSerializer
 import amf.core.emitter.BaseEmitters._
@@ -29,27 +30,23 @@ trait JsonSchemaSerializer extends PlatformSecrets {
   // todo, check if its resolved?
   // todo lexical ordering?
 
-  protected def toJsonSchema(element: AnyShape, exec: BaseExecutionEnvironment): String = {
+  protected def toJsonSchema(element: AnyShape, config: AMFGraphConfiguration): String = {
     element.annotations.find(classOf[ParsedJSONSchema]) match {
       case Some(a) => a.rawText
       case _ =>
         element.annotations.find(classOf[GeneratedJSONSchema]) match {
           case Some(g) => g.rawText
-          case _       => generateJsonSchema(element, exec = exec)
+          case _       => generateJsonSchema(element, config)
         }
     }
   }
 
-  protected def generateJsonSchema(element: AnyShape,
-                                   options: ShapeRenderOptions = ShapeRenderOptions(),
-                                   exec: BaseExecutionEnvironment): String = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
+  protected def generateJsonSchema(element: AnyShape, config: AMFGraphConfiguration): String = {
 
     // TODO: WE SHOULDN'T HAVE TO CREATE A DOCUMENT TO EMIT A SCHEMA!
-    AMFSerializer.init()
     val originalId = element.id
     val document   = Document().withDeclares(Seq(fixNameIfNeeded(element)))
-    val jsonSchema = RuntimeSerializer(document, "application/schema+json", JsonSchema.name, options)
+    val jsonSchema = new AMFSerializer(document, JsonSchema.mediaType, config.renderConfiguration).render()
     // TODO: why are we stripping annotations??
     element.withId(originalId)
     element.annotations.reject(a =>

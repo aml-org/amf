@@ -2,8 +2,8 @@ package amf.io
 
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.client.ParsingOptions
-import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel
@@ -188,7 +188,7 @@ trait BuildCycleTests extends BuildCycleTestCommon {
                   eh: Option[AMFErrorHandler] = None): Future[Assertion] = {
 
     val config                 = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
-    val amfJsonLdSerialization = renderOptions.map(_.isAmfJsonLdSerilization).getOrElse(useAmfJsonldSerialization)
+    val amfJsonLdSerialization = renderOptions.map(_.isAmfJsonLdSerialization).getOrElse(useAmfJsonldSerialization)
 
     for {
       parsed   <- build(config, eh.orElse(Some(DefaultErrorHandler())), amfJsonLdSerialization)

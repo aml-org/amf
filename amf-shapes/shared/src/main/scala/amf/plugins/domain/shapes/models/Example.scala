@@ -1,6 +1,7 @@
 package amf.plugins.domain.shapes.models
 
 import amf.client.execution.BaseExecutionEnvironment
+import amf.client.remod.AMFGraphConfiguration
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.domain._
@@ -46,13 +47,13 @@ class Example(override val fields: Fields, override val annotations: Annotations
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/example/" + name.option().getOrElse("default-example").urlComponentEncoded
 
-  def toJson: String = toJson(this)
+  def toJson: String = toJson(this, AMFGraphConfiguration.predefined())
 
-  def toYaml: String = toYaml(this)
+  def toYaml: String = toYaml(this, AMFGraphConfiguration.predefined())
 
-  def toJson(exec: BaseExecutionEnvironment): String = toJson(this, exec)
+  def toJson(config: AMFGraphConfiguration): String = toJson(this, config)
 
-  def toYaml(exec: BaseExecutionEnvironment): String = toYaml(this, exec)
+  def toYaml(config: AMFGraphConfiguration): String = toYaml(this, config)
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Example.apply

@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.emit.AMFRenderer
 

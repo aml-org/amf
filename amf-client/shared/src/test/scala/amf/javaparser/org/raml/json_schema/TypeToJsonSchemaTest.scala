@@ -1,11 +1,11 @@
 package amf.javaparser.org.raml.json_schema
 
-import amf.core.emitter.ShapeRenderOptions
+import amf.client.environment.WebAPIConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.remote.{Hint, Oas20JsonHint, Oas20YamlHint, Oas30YamlHint, Vendor}
+import amf.core.remote.{Hint, Oas20YamlHint, Oas30YamlHint, Vendor}
 import amf.javaparser.org.raml.ModelValidationTest
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.remod.JsonSchemaShapeSerializer
 import amf.remod.JsonSchemaShapeSerializer.{buildJsonSchema, toJsonSchema}
 
 import scala.concurrent.Future
@@ -47,7 +47,7 @@ class RamlTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
   override def inputFileName: String  = "input.raml"
   override def outputFileName: String = "compact-output.json"
   override def renderShape(shape: AnyShape): String =
-    buildJsonSchema(shape, ShapeRenderOptions().withCompactedEmission)
+    buildJsonSchema(shape, WebAPIConfiguration.WebAPI().withRenderOptions(RenderOptions().withCompactedEmission))
 }
 
 // Uncomment to add suite
@@ -62,9 +62,10 @@ class RamlTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
 //
 
 trait OasTypeToCompactJsonSchemaTest extends TypeToJsonSchemaTest {
-  override def inputFileName: String                = "input.json"
-  override def outputFileName: String               = "compact-output.json"
-  override def renderShape(shape: AnyShape): String = buildJsonSchema(shape, ShapeRenderOptions().withCompactedEmission)
+  override def inputFileName: String  = "input.json"
+  override def outputFileName: String = "compact-output.json"
+  override def renderShape(shape: AnyShape): String =
+    buildJsonSchema(shape, WebAPIConfiguration.WebAPI().withRenderOptions(RenderOptions().withCompactedEmission))
 }
 
 case class Oas20TypeToCompactJsonSchemaTest() extends OasTypeToCompactJsonSchemaTest {

@@ -1,14 +1,13 @@
 package amf.validation
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.services.RuntimeResolver
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.webapi.resolution.pipelines.{AmfEditingPipeline, ValidationTransformationPipeline}
-import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
+import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 
 class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
 

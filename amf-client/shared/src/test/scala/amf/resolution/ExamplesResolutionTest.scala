@@ -1,6 +1,6 @@
 package amf.resolution
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.{Amf, Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
 
 /**
