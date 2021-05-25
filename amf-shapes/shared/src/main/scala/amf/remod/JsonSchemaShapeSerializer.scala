@@ -1,19 +1,16 @@
 package amf.remod
 
-import amf.client.execution.BaseExecutionEnvironment
-import amf.core.emitter.ShapeRenderOptions
+import amf.client.remod.AMFGraphConfiguration
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
 import amf.plugins.domain.shapes.models.AnyShape
 
 object JsonSchemaShapeSerializer extends JsonSchemaSerializer {
 
-  def toJsonSchema(element: AnyShape): String = super.toJsonSchema(element, platform.defaultExecutionEnvironment)
+  def toJsonSchema(element: AnyShape): String = super.toJsonSchema(element, AMFGraphConfiguration.predefined())
 
-  override def toJsonSchema(element: AnyShape, exec: BaseExecutionEnvironment): String =
-    super.toJsonSchema(element, exec)
+  override def toJsonSchema(element: AnyShape, config: AMFGraphConfiguration): String =
+    super.toJsonSchema(element, config)
 
-  def buildJsonSchema(element: AnyShape,
-                      options: ShapeRenderOptions = ShapeRenderOptions(),
-                      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String =
-    generateJsonSchema(element, options, exec)
+  def buildJsonSchema(element: AnyShape, config: AMFGraphConfiguration): String =
+    generateJsonSchema(element, config)
 }

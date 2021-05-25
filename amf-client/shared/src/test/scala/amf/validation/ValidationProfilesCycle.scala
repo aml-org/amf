@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._

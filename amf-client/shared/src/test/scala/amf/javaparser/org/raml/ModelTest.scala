@@ -4,9 +4,9 @@ import amf._
 import amf.client.environment.WebAPIConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.annotations.SourceVendor
-import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.core.remote._

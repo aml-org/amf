@@ -1,6 +1,7 @@
 package amf.emit
 
 import amf.Core
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.Document
@@ -153,8 +154,12 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
       case _       => ""
     }
 
-    new AMFSerializer(document, mediaType, vendor.name, RenderOptions())
-      .renderAsYDocument()
+    val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+
+    val serializer = new AMFSerializer(document, vendor.mediaType, config.renderConfiguration)
+
+    serializer
+      .renderAsYDocument(serializer.getRenderPlugin)
       .document
       .node
       .as[YMap]

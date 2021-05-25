@@ -84,8 +84,6 @@ object AMF extends PlatformSecrets {
 object CoreWrapper {
   def init(): ClientFuture[Unit] = Core.init()
 
-  def generator(vendor: String, mediaType: String): Renderer = Core.generator(vendor, mediaType)
-
   def resolver(vendor: String): Resolver = Core.resolver(vendor)
 
   def validate(model: BaseUnit, profileName: ProfileName): ClientFuture[AMFValidationReport] =

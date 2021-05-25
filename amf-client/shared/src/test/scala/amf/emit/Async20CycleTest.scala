@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote.{Amf, AsyncApi20, AsyncYamlHint}
 import amf.io.FunSuiteCycleTests

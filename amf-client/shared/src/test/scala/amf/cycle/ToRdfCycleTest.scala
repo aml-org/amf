@@ -1,7 +1,7 @@
 package amf.cycle
 
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
-import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Cache, Context, Vendor}

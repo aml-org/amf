@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.common
 
 import amf.client.execution.BaseExecutionEnvironment
+import amf.client.remod.AMFGraphConfiguration
 import amf.core.AMFSerializer
 import amf.core.emitter.SpecOrdering
 import amf.core.errorhandling.AMFErrorHandler
@@ -18,24 +19,21 @@ import scala.concurrent.ExecutionContext
 
 trait PayloadSerializer extends PlatformSecrets {
 
-  protected def toJson(example: Example,
-                       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
+  protected def toJson(example: Example, config: AMFGraphConfiguration): String = {
+
     example.raw.option().map(_.guessMediaType(false)) match {
       case Some("application/json") => example.raw.value()
       case Some("application/xml")  => ""
-      case _                        => dump(example.structuredValue)
+      case _                        => dump(example.structuredValue, config)
     }
   }
 
-  protected def toYaml(example: Example,
-                       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): String = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
+  protected def toYaml(example: Example, config: AMFGraphConfiguration): String = {
     example.raw.option().map(_.guessMediaType(false)) match {
-      case Some("application/json") => dump(example.structuredValue)
+      case Some("application/json") => dump(example.structuredValue, config)
       case Some("application/xml")  => ""
       case Some(_)                  => example.raw.value()
-      case _                        => dump(example.structuredValue)
+      case _                        => dump(example.structuredValue, config)
     }
   }
 
@@ -46,9 +44,10 @@ trait PayloadSerializer extends PlatformSecrets {
     }
   }
 
-  private def dump(dataNode: DataNode)(implicit executionContext: ExecutionContext): String = {
-    AMFSerializer.init()
-    RuntimeSerializer(PayloadFragment(dataNode, "application/json"), "application/payload+json", Payload.name)
+  private def dump(dataNode: DataNode, config: AMFGraphConfiguration): String = {
+    new AMFSerializer(PayloadFragment(dataNode, "application/json"),
+                      "application/payload+json",
+                      config.renderConfiguration).render()
   }
 }
 

@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.entities
 
 import amf.core.entities.Entities
-import amf.core.metamodel.Obj
+import amf.core.metamodel.{ModelDefaultBuilder, Obj}
 import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.webapi.metamodel.api.{AsyncApiModel, WebApiModel}
@@ -17,7 +17,7 @@ import amf.plugins.domain.webapi.metamodel._
 
 private[amf] object APIEntities extends Entities {
 
-  override protected val innerEntities: Seq[Obj] = Seq(
+  override protected val innerEntities: Seq[ModelDefaultBuilder] = Seq(
     WebApiModel,
     AsyncApiModel,
     CreativeWorkModel,

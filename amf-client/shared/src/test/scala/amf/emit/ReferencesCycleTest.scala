@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
