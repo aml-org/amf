@@ -1,7 +1,7 @@
 package amf.parser
 
 import amf.client.environment.RAMLConfiguration
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.Fragment
 import amf.core.remote.{Raml10, Raml10YamlHint}

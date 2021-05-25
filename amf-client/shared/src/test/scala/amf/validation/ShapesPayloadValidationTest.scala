@@ -28,7 +28,6 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
 
   amf.Core.registerPlugin(PayloadValidatorPlugin)
   RuntimeValidator.register(AMFValidatorPlugin)
-  AMFSerializer.init()
   AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
   AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
 

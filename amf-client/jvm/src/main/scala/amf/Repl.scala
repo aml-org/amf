@@ -1,9 +1,7 @@
 package amf
 
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.exported.{AMFResult, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.model.document.{BaseUnit, Document}
-import amf.client.remod.AMFResult
-import amf.client.render._
 import amf.convert.NativeOpsFromJvm
 import amf.core.remote._
 
@@ -13,7 +11,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
 
   init()
-
+  private val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
   private def init(): Unit = {
     val scanner                = new Scanner(in)
     var unit: Option[Document] = None
@@ -28,22 +26,9 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
     }
   }
 
-  private def generate(unit: BaseUnit, syntax: String): Unit = {
-    val generator: Option[Renderer] = syntax match {
-      case Raml10.name     => Some(new Raml10Renderer)
-      case Raml08.name     => Some(new Raml08Renderer)
-      case Oas30.name      => Some(new Oas30Renderer)
-      case Oas20.name      => Some(new Oas20Renderer)
-      case AsyncApi20.name => Some(new Async20Renderer)
-      case Amf.name        => Some(new AmfGraphRenderer)
-      case _ =>
-        out.println(s"Unsupported generation for: $syntax")
-        None
-    }
-
-    generator.foreach(g => {
-      g.generateString(unit).asFuture.map(out.print)
-    })
+  private def generate(unit: BaseUnit, mediaType: String): Unit = {
+    val client = config.createClient()
+    client.render(unit, mediaType).asFuture.map(out.print)
   }
 
   private def remote(vendor: Vendor, url: String, callback: (Option[Document]) => Unit): Unit = {
@@ -51,9 +36,10 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
 
     client
       .parse(url, vendor.mediaType)
+      .asFuture
       .map({
-        case AMFResult(d: Document, _) => callback(Some(d))
-        case _                         => callback(None)
+        case r: AMFResult if r.baseUnit.isInstanceOf[Document] => callback(Some(r.baseUnit.asInstanceOf[Document]))
+        case _                                                 => callback(None)
       })
   }
 

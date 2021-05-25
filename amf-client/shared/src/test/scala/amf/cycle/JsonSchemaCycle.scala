@@ -1,6 +1,5 @@
 package amf.cycle
 
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.remote.Vendor
 import amf.core.unsafe.PlatformSecrets
 import amf.cycle.JsonSchemaTestEmitters._
@@ -16,7 +15,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 }
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.render.JsonRender
-import amf.client.remod.amfcore.config.{ShapeRenderOptions => ImmutableShapeRenderOptions}
+import amf.client.remod.amfcore.config.{RenderOptions, ShapeRenderOptions => ImmutableShapeRenderOptions}
 import amf.core.errorhandling.UnhandledErrorHandler
 
 import scala.concurrent.{ExecutionContext, Future}

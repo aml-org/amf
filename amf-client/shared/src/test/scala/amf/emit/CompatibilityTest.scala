@@ -4,8 +4,8 @@ import amf.ProfileName
 import amf.client.environment.WebAPIConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}

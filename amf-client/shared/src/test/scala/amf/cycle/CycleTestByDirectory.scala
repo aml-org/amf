@@ -1,6 +1,6 @@
 package amf.cycle
 import amf.client.parse.DefaultErrorHandler
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{AmfJsonHint, Hint}
 import amf.io.{BuildCycleTests, JsonLdSerializationSuite}

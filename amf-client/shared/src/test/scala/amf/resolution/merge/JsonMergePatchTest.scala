@@ -3,8 +3,9 @@ package amf.resolution.merge
 import amf.client.convert.BaseUnitConverter
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.emitter.BaseEmitters.traverse
-import amf.core.emitter.{RenderOptions, SpecOrdering}
+import amf.core.emitter.SpecOrdering
 import amf.core.model.document.Document
 import amf.core.model.domain.{DataNode, ScalarNode}
 import amf.core.parser.{ParserContext, YMapOps}
