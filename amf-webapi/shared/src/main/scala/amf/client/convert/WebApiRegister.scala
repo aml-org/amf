@@ -4,6 +4,7 @@ import amf.client.model.document._
 import amf.client.model.domain._
 import amf.core.metamodel.document.PayloadFragmentModel
 import amf.core.remote.Platform
+import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.model
 import amf.plugins.domain.{shapes, webapi}
@@ -22,7 +23,10 @@ import amf.validations.{
 
 /** Shared WebApi registrations. */
 // TODO: could be renamed to ApiRegister??
-object WebApiRegister {
+object WebApiRegister extends PlatformSecrets {
+
+  // TODO ARM remove when APIMF-3000 is done
+  def register(): Unit = register(platform)
 
   def register(platform: Platform): Unit = {
 

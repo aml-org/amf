@@ -1,17 +1,15 @@
 package amf.client.commands
 
 import amf.ProfileName
-import amf.client.environment.AMLConfiguration
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
+import amf.client.environment.AMFConfiguration
+import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.client.{ExitCodes, ParserConfig}
-import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
-import amf.core.services.RuntimeValidator
 import amf.core.validation.AMFValidationReport
-import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.model.document.DialectInstance
+import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
+import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -19,10 +17,9 @@ import scala.util.{Failure, Success}
 
 class ValidateCommand(override val platform: Platform) extends CommandHelper {
 
-  def run(config: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
+  def run(config: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val res = for {
-      _        <- AMFInit(configuration)
       newCofig <- processDialects(config, configuration)
       model    <- parseInput(config, newCofig)
       report   <- report(model, config, newCofig)
@@ -41,32 +38,41 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  def report(model: BaseUnit, config: ParserConfig, configuration: AMLConfiguration): Future[AMFValidationReport] = {
+  // TODO ARM: move to registry? or to contxt parsng? discuss with tomi
+  def findDialect(configuration: AMFConfiguration, id: String): Option[Dialect] = {
+    configuration.registry.plugins.parsePlugins.collectFirst({
+      case aml: AMLDialectInstanceParsingPlugin if aml.dialect.id == id => aml.dialect
+    })
+  }
+
+  def report(model: BaseUnit, config: ParserConfig, configuration: AMFConfiguration): Future[AMFValidationReport] = {
     implicit val executionContext: ExecutionContext = configuration.getExecutionContext
-    val customProfileLoaded: Future[ProfileName] = if (config.customProfile.isDefined) {
-      val withProfile: Future[AMLConfiguration] =
-        configuration.withCustomValidationsEnabled.flatMap(_.withCustomProfile(config.customProfile.get))
-      withProfile.map { conf =>
-        // TODO: validation profile is present in config, no clear way to obtain the profile name.
-        ProfileName(config.customProfile.get)
+    val customProfileLoaded: Future[(ProfileName, AMFConfiguration)] = if (config.customProfile.isDefined) {
+      for {
+        confCustom    <- configuration.withCustomValidationsEnabled
+        customProfile <- confCustom.createClient().parseDialectInstance(config.customProfile.get)
+      } yield {
+        val profile = ParsedValidationProfile(customProfile.dialectInstance.encodes.asInstanceOf[DialectDomainElement])
+        (profile.name, confCustom.withValidationProfile(profile))
       }
     } else {
       Future {
         model match {
           case dialectInstance: DialectInstance =>
-            AMLPlugin().registry.dialectFor(dialectInstance) match {
+            findDialect(configuration, dialectInstance.definedBy().value()) match {
               case Some(dialect) =>
-                ProfileName(dialect.nameAndVersion())
+                (ProfileName(dialect.nameAndVersion()), configuration)
               case _ =>
-                config.profile
+                (config.profile, configuration)
             }
           case _ =>
-            config.profile
+            (config.profile, configuration)
         }
       }
     }
-    customProfileLoaded flatMap { profileName =>
-      configuration.createClient().validate(model, profileName)
+    customProfileLoaded flatMap {
+      case (profileName, conf) =>
+        conf.createClient().validate(model, profileName)
     }
   }
 

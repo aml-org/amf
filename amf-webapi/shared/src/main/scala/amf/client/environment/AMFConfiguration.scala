@@ -1,5 +1,6 @@
 package amf.client.environment
 
+import amf.client.convert.WebApiRegister
 import amf.client.exported.config.AMFLogger
 import amf.client.remod.ErrorHandlerProvider
 import amf.client.remod.amfcore.config._
@@ -9,6 +10,7 @@ import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
+import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.webapi._
 import amf.plugins.document.webapi.annotations.serializable.WebAPISerializableAnnotations
 import amf.plugins.document.webapi.entities.WebAPIEntities
@@ -20,17 +22,24 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
   Raml10CompatibilityPipeline
 }
 import amf.plugins.document.webapi.validation.ApiValidationProfiles._
+import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.validation.remod.ValidatePlugins
 import amf.plugins.domain.shapes.annotations.serializable.ShapeSerializableAnnotations
 import amf.plugins.domain.shapes.entities.ShapeEntities
 import amf.plugins.domain.webapi.annotations.serializable.APISerializableAnnotations
 import amf.plugins.domain.webapi.entities.APIEntities
+import amf.plugins.features.validation.AMFValidatorPlugin
+
+import scala.concurrent.Future
 
 sealed trait APIConfigurationBuilder {
 
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
   private[amf] def common(): AMFConfiguration = {
     val configuration = AMLConfiguration.predefined()
+    WebApiRegister.register()                       // TODO ARM remove when APIMF-3000 is done
+    amf.core.AMF.registerPlugin(AMFValidatorPlugin) // TODO ARM remove , just for tests, avoid use Validation(platform)
+    amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     val result = new AMFConfiguration(
       configuration.resolvers,
       configuration.errorHandlerProvider,
@@ -44,8 +53,8 @@ sealed trait APIConfigurationBuilder {
       configuration.options
     ).withPlugins(List(
       ExternalJsonYamlRefsParsePlugin,
-      PayloadParsePlugin,
       PayloadRenderPlugin,
+      PayloadParsePlugin,
       JsonSchemaParsePlugin,
       JsonSchemaRenderPlugin,
       ValidatePlugins.MODEL_PLUGIN,
@@ -204,6 +213,14 @@ class AMFConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withLogger(logger: AMFLogger): AMFConfiguration = super._withLogger(logger)
 
+  override def withCustomProfile(instancePath: String): Future[AMFConfiguration] =
+    super.withCustomProfile(instancePath).map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
+
+  override def withCustomValidationsEnabled: Future[AMFConfiguration] =
+    super.withCustomValidationsEnabled.map(_.asInstanceOf[AMFConfiguration])(getExecutionContext)
+
+  override def withDialect(dialect: Dialect): AMFConfiguration =
+    super.withDialect(dialect).asInstanceOf[AMFConfiguration]
   def merge(other: AMFConfiguration): AMFConfiguration = super._merge(other)
 
   override protected def copy(resolvers: AMFResolvers,

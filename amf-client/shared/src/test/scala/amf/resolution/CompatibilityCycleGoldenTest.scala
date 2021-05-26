@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.core.remote.Syntax.Json
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
 
@@ -33,7 +34,8 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
           "cycled-apis/oas30/no-operation-name.json",
           Raml10YamlHint,
           Oas30,
-          transformWith = Some(Oas30))
+          transformWith = Some(Oas30),
+          syntax = Some(Json))
   }
 
   test("RAML operations without names do not generate null_0 operationIds in OAS 2.0") {
@@ -83,7 +85,8 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
           "cycled-apis/oas30/library.json",
           Raml10YamlHint,
           Oas30,
-          transformWith = Some(Oas30))
+          transformWith = Some(Oas30),
+          syntax = Some(Json))
   }
 
   test("Unused OAS 3.0 examples are deleted and used ones inlined") {
@@ -131,7 +134,8 @@ class CompatibilityCycleGoldenTest extends ResolutionTest {
           "cycled-apis/oas30/raml-security-definitions.json",
           Raml10YamlHint,
           Oas30,
-          transformWith = Some(Oas30))
+          transformWith = Some(Oas30),
+          syntax = Some(Json))
   }
 
   test("OAS 3.0 nullable schemas are translated with union expression to raml") {

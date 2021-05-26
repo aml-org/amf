@@ -1,8 +1,6 @@
 package amf.error
 
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
-import amf.client.parse.DefaultErrorHandler
-import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationResult
@@ -25,21 +23,19 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
                                  unitAssertion: BaseUnit => Unit,
                                  fixture: Seq[AMFValidationResult => Unit]): Future[Assertion] = {
     val client = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).createClient()
-    Validation(platform).flatMap { _ =>
-      client
-        .parse(basePath + file)
-        .map { amfResult =>
-          unitAssertion(amfResult.bu)
-          val report = amfResult.report.results
-          if (report.size != fixture.size) {
-            report.foreach(println)
-            fail(s"Expected results has length of ${fixture.size} while actual results are ${report.size}")
-          }
-          fixture.zip(report).foreach {
-            case (fn, result) => fn(result)
-          }
-          Succeeded
+    client
+      .parse(basePath + file)
+      .map { amfResult =>
+        unitAssertion(amfResult.bu)
+        val report = amfResult.report.results
+        if (report.size != fixture.size) {
+          report.foreach(println)
+          fail(s"Expected results has length of ${fixture.size} while actual results are ${report.size}")
         }
-    }
+        fixture.zip(report).foreach {
+          case (fn, result) => fn(result)
+        }
+        Succeeded
+      }
   }
 }

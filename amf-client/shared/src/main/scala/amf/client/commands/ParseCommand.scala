@@ -1,6 +1,6 @@
 package amf.client.commands
 
-import amf.client.environment.AMLConfiguration
+import amf.client.environment.{AMFConfiguration, AMLConfiguration}
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.remote.Platform
 
@@ -9,11 +9,10 @@ import scala.util.{Failure, Success}
 
 class ParseCommand(override val platform: Platform) extends TranslateCommand(platform) {
 
-  override def run(origConfig: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
+  override def run(origConfig: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
     implicit val ec: ExecutionContext = configuration.getExecutionContext
     val parserConfig                  = origConfig.copy(outputFormat = Some("AMF Graph"), outputMediaType = Some("application/ld+json"))
     val res = for {
-      _         <- AMFInit(configuration)
       newConf   <- processDialects(parserConfig, configuration)
       model     <- parseInput(parserConfig, newConf)
       _         <- checkValidation(parserConfig, model, configuration)

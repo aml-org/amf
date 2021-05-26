@@ -2,6 +2,8 @@ package amf.validation
 
 import amf.client.parse.IgnoringErrorHandler
 import amf.client.remod.{AMFGraphConfiguration, AMFResult}
+import amf.client.environment.AMFConfiguration
+import amf.client.remod.AMFResult
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Hint, Oas20YamlHint}
@@ -27,8 +29,9 @@ class JsonSchemaUniquePlatformUnitValidationsTest extends UniquePlatformReportGe
     validate("unused-validation-facets.json", Some("unused-validation-facets.report"))
   }
 
-  override protected def parse(path: String, conf: AMFGraphConfiguration, finalHint: Hint): Future[AMFResult] = {
+  override protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint): Future[AMFResult] = {
     // uses IgnoringErrorHandler as this was the previous (possibly unintentional) behaviour, but now made explicit
-    Future.successful(parseSchema(platform, path, "application/json", IgnoringErrorHandler()))
+    Future.successful(
+      parseSchema(platform, path, "application/json", conf.withErrorHandlerProvider(() => IgnoringErrorHandler)))
   }
 }

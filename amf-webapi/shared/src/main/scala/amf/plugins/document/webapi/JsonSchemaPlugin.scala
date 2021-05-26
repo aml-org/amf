@@ -24,7 +24,7 @@ import org.yaml.model._
 import scala.concurrent.{ExecutionContext, Future}
 
 class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
-  override val vendors: Seq[String] = Seq(JsonSchema.name)
+  override val vendors: Seq[String] = Seq(JsonSchema.mediaType)
 
   override def modelEntities: Seq[Obj] = Nil
 
