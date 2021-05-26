@@ -4,14 +4,12 @@ import _root_.org.scalatest.AsyncFunSuite
 import amf._
 import amf.client.environment.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
+import amf.client.environment.{OASConfiguration, RAMLConfiguration}
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.AMFSerializer
-import amf.core.emitter.RenderOptions
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.services.RuntimeResolver
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.Validation
@@ -283,9 +281,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   private def parseAndValidate(url: String,
                                profileName: ProfileName,
                                config: => AMFGraphConfiguration): Future[AMFValidationReport] = {
+    val client = config.createClient()
     for {
-      validation  <- Validation(platform)
-      client      <- Future.successful(config.createClient())
       parseResult <- client.parse(url)
       report      <- client.validate(parseResult.bu, profileName)
     } yield {

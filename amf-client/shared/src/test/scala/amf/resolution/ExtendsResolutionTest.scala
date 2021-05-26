@@ -19,7 +19,12 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   multiGoldenTest("Simple extends resolution to Amf", "simple-merge.raml.%s") { config =>
-    cycle("simple-merge.raml", config.golden, Raml10YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("simple-merge.raml",
+          config.golden,
+          Raml10YamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions),
+          transformWith = Some(Raml10))
   }
 
   test("Extends resolution with parameters resolution to Raml") {
@@ -27,7 +32,12 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   multiGoldenTest("Extends resolution with parameters resolution to Amf", "parameters.raml.%s") { config =>
-    cycle("parameters.raml", config.golden, Raml10YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("parameters.raml",
+          config.golden,
+          Raml10YamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions),
+          transformWith = Some(Raml10))
   }
 
   test("Extends resolution with parameter and transformation resolution to Raml") {
@@ -50,7 +60,8 @@ trait ExtendsResolutionTest extends ResolutionTest {
           config.golden,
           Raml10YamlHint,
           target = Amf,
-          renderOptions = Some(config.renderOptions))
+          renderOptions = Some(config.renderOptions),
+          transformWith = Some(Raml10))
   }
 
   test("Extends resolution with scalar collection to Raml") {
@@ -66,7 +77,8 @@ trait ExtendsResolutionTest extends ResolutionTest {
           config.golden,
           Raml10YamlHint,
           target = Amf,
-          renderOptions = Some(config.renderOptions))
+          renderOptions = Some(config.renderOptions),
+          transformWith = Some(Raml10))
   }
 
   test("Traits and resourceTypes with complex variables raml to raml test") {
@@ -110,16 +122,20 @@ trait ExtendsResolutionTest extends ResolutionTest {
           "trait-with-quoted-value.resolved.raml",
           Raml08YamlHint,
           Raml08,
-          basePath + "08/")
+          basePath + "08/",
+          transformWith = Some(Raml10))
   }
 
   multiGoldenTest("Trait application with quoted value to jsonld", "trait-with-quoted-value.resolved.%s") { config =>
-    cycle("trait-with-quoted-value.raml",
-          config.golden,
-          Raml08YamlHint,
-          target = Amf,
-          directory = basePath + "08/",
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "trait-with-quoted-value.raml",
+      config.golden,
+      Raml08YamlHint,
+      target = Amf,
+      directory = basePath + "08/",
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10)
+    )
   }
 
   test("Extension with library usage") {
@@ -213,7 +229,8 @@ trait ExtendsResolutionTest extends ResolutionTest {
       target = Amf,
       pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE),
       renderOptions = Some(config.renderOptions.withoutSourceMaps),
-      directory = basePath + "extends-with-references-to-declares/trait/"
+      directory = basePath + "extends-with-references-to-declares/trait/",
+      transformWith = Some(Raml10)
     )
   }
 
@@ -225,7 +242,8 @@ trait ExtendsResolutionTest extends ResolutionTest {
       target = Amf,
       pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE),
       renderOptions = Some(config.renderOptions.withoutSourceMaps),
-      directory = basePath + "extends-with-references-to-declares/resource-type/"
+      directory = basePath + "extends-with-references-to-declares/resource-type/",
+      transformWith = Some(Raml10)
     )
   }
 
@@ -237,7 +255,8 @@ trait ExtendsResolutionTest extends ResolutionTest {
       target = Amf,
       pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE),
       renderOptions = Some(config.renderOptions.withoutSourceMaps),
-      directory = basePath + "extends-with-references-to-declares/merging/"
+      directory = basePath + "extends-with-references-to-declares/merging/",
+      transformWith = Some(Raml10)
     )
   }
 
@@ -246,9 +265,4 @@ trait ExtendsResolutionTest extends ResolutionTest {
   }
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
-
-  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    val target = config.target
-    new AMFRenderer(unit, target, defaultRenderOptions, config.syntax).renderToString
-  }
 }

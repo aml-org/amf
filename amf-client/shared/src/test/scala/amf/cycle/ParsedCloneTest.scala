@@ -16,7 +16,7 @@ class ParsedCloneTest extends FunSuiteCycleTests {
   test("Test error trait clone") {
     val config = CycleConfig("error-trait.raml", "", Raml10YamlHint, Amf, basePath, None, None)
     for {
-      model <- build(config, Some(IgnoreError), useAmfJsonldSerialisation = true)
+      model <- build(config, buildConfig(None, None))
     } yield {
       val element =
         model.cloneUnit().asInstanceOf[DeclaresModel].declares.head.asInstanceOf[Trait].effectiveLinkTarget()
@@ -25,9 +25,10 @@ class ParsedCloneTest extends FunSuiteCycleTests {
   }
 
   test("Test clone http settings of security scheme") {
-    val config = CycleConfig("api-key-name.json", "", Oas30JsonHint, Amf, basePath, None, None)
+    val config    = CycleConfig("api-key-name.json", "", Oas30JsonHint, Amf, basePath, None, None)
+    val amfConfig = buildConfig(None, Some(IgnoreError))
     for {
-      model <- build(config, Some(IgnoreError), useAmfJsonldSerialisation = true)
+      model <- build(config, amfConfig)
     } yield {
       val settings = model.asInstanceOf[DeclaresModel].declares.head.asInstanceOf[SecurityScheme].settings
       val clonedSettings =

@@ -26,12 +26,15 @@ class ExtensionResolutionTest extends ResolutionTest {
   }
 
   multiGoldenTest("Extension with traits to Amf", "output.%s") { config =>
-    cycle("input.raml",
-          config.golden,
-          Raml10YamlHint,
-          target = Amf,
-          directory = s"${basePath}traits/",
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "input.raml",
+      config.golden,
+      Raml10YamlHint,
+      target = Amf,
+      directory = s"${basePath}traits/",
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10)
+    )
   }
 
   test("Extension chain to Raml") {
@@ -43,8 +46,4 @@ class ExtensionResolutionTest extends ResolutionTest {
   }
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
-
-  override def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
-    new AMFRenderer(unit, config.target, options, config.syntax).renderToString
-  }
 }

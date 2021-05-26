@@ -2,15 +2,17 @@ package amf.validation
 
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 import amf._
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.{AMFGraphConfiguration, AMFResult}
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.client.remod.{AMFGraphConfiguration, AMFResult}
 import amf.core.errorhandling.{AMFErrorHandler, AmfReportBuilder}
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.validation.AMFValidationReport
-import amf.facades.{AMFCompiler, Validation}
+import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
 
@@ -58,7 +60,6 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     val initialConfig = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
     val finalHint     = overridedHint.getOrElse(hint)
     for {
-      validation <- Validation(platform) // see AMFPluginRegistry.dataNodeValidatorPluginForMediaType
       withProfile <- if (profileFile.isDefined)
         initialConfig.withCustomValidationsEnabled.flatMap(_.withCustomProfile(directory + profileFile.get))
       else Future.successful(initialConfig)
@@ -75,7 +76,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     }
   }
 
-  protected def parse(path: String, conf: AMFGraphConfiguration, finalHint: Hint): Future[AMFResult] = {
+  protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint): Future[AMFResult] = {
     val client = conf.createClient()
     client.parse(path, finalHint.vendor.mediaType)
   }

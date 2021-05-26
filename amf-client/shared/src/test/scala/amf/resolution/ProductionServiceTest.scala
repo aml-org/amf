@@ -1,14 +1,15 @@
 package amf.resolution
 
+import amf.client.environment.AMFConfiguration
+import amf.client.remod.AMFGraphConfiguration
 import amf.client.environment.RAMLConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.resolution.stages.ReferenceResolutionStage
-import amf.facades.{AMFCompiler, Validation}
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
@@ -22,16 +23,12 @@ import scala.concurrent.Future
   * */
 class ProductionServiceTest extends RamlResolutionTest {
 
-  override def build(config: CycleConfig,
-                     eh: Option[AMFErrorHandler],
-                     useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
-    val amfConfig = RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler)
-    Validation(platform).flatMap { _ =>
-      amfConfig.createClient().parse(s"file://${config.sourcePath}").map(_.bu)
-    }
+  override def build(config: CycleConfig, amfConfig: AMFGraphConfiguration): Future[BaseUnit] = {
+    super.build(config, amfConfig.withErrorHandlerProvider(() => UnhandledErrorHandler))
+
   }
-  private def dummyFunc: (BaseUnit, CycleConfig) => BaseUnit =
-    (u: BaseUnit, _: CycleConfig) => u
+  private def dummyFunc: (BaseUnit, CycleConfig, AMFConfiguration) => BaseUnit =
+    (u: BaseUnit, _: CycleConfig, _: AMFConfiguration) => u
 
   override val basePath =
     "amf-client/shared/src/test/resources/production/resolution-dumpjsonld/"
@@ -100,7 +97,7 @@ class ProductionServiceTest extends RamlResolutionTest {
       "api.raml.jsonld.resolved.raml",
       AmfJsonHint,
       target = Raml10,
-      tFn = (u: BaseUnit, _: CycleConfig) => {
+      tFn = (u: BaseUnit, _: CycleConfig, _: AMFConfiguration) => {
         val resolved = new ReferenceResolutionStage(false).transform(u, UnhandledErrorHandler)
         resolved.fields.removeField(DocumentModel.Declares)
         resolved
@@ -112,21 +109,14 @@ class ProductionServiceTest extends RamlResolutionTest {
           golden: String,
           hint: Hint,
           target: Vendor,
-          tFn: (BaseUnit, CycleConfig) => BaseUnit,
+          tFn: (BaseUnit, CycleConfig, AMFConfiguration) => BaseUnit,
           renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, basePath, None, None)
-
-    build(config, None, renderOptions.forall(_.isAmfJsonLdSerialization))
-      .map(tFn(_, config))
-      .flatMap {
-        renderOptions match {
-          case Some(options) =>
-            render(_, config, options)
-          case None =>
-            render(_, config, useAmfJsonldSerialization = true)
-        }
-      }
+    val config    = CycleConfig(source, golden, hint, target, basePath, None, None)
+    val amfConfig = buildConfig(renderOptions, None)
+    build(config, amfConfig)
+      .map(tFn(_, config, amfConfig))
+      .flatMap { render(_, config, amfConfig) }
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }

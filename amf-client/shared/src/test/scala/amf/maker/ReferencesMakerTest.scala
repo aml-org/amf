@@ -1,5 +1,6 @@
 package amf.maker
 
+import amf.client.environment.WebAPIConfiguration
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.{Document, Fragment}
@@ -32,8 +33,8 @@ class ReferencesMakerTest extends AsyncFunSuite with CompilerTestBuilder with Am
   private def assertFixture(rootFile: String, hint: Hint): Future[Assertion] = {
 
     val rootExpected = UnitsCreator(hint.vendor).usesDataType
-
-    build(rootFile, hint)
+    val amfConfig    = WebAPIConfiguration.WebAPI()
+    build(rootFile, hint, amfConfig, None)
       .map({
         case actual: Document => actual
       })

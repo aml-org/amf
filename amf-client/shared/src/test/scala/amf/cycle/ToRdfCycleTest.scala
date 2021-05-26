@@ -1,13 +1,15 @@
 package amf.cycle
 
 import amf.client.environment.WebAPIConfiguration
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
+import amf.core.AMFCompiler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{Cache, Context, Vendor}
+import amf.core.remote.Vendor
 import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.services.RuntimeCompiler
 import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.resolution.ResolutionCapabilities
@@ -43,7 +45,7 @@ class ToRdfCycleTest
   private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {
     val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
     build(path, config)
-      .map(transform(_, TransformationPipeline.EDITING_PIPELINE, vendor))
+      .map(transform(_, TransformationPipeline.EDITING_PIPELINE, vendor, config))
       .map(_.toNativeRdfModel(RenderOptions().withSourceMaps))
       .map(_.toN3())
   }
