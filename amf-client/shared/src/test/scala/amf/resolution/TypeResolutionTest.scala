@@ -1,7 +1,9 @@
 package amf.resolution
 
+import amf.client.environment.AMFConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.compiler.CompilerTestBuilder
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
@@ -16,163 +18,159 @@ import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.spec.raml.expression.RamlExpressionParser
 import amf.plugins.document.webapi.parser.{ShapeParserContext, WebApiShapeParserContextAdapter}
+import amf.plugins.document.webapi.resolution.pipelines.Raml10TransformationPipeline
 import amf.plugins.domain.shapes.models._
 
 class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
 
   test("TypeExpressions") {
-    Validation(platform)
-      .map(_ => {
-        val adopt: Shape => Unit = shape => { shape.adopted("/test") }
+    val adopt: Shape => Unit = shape => { shape.adopted("/test") }
 
-        val ramlCtx: Raml10WebApiContext =
-          new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(UnhandledErrorHandler)))
+    val ramlCtx: Raml10WebApiContext =
+      new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(UnhandledErrorHandler)))
 
-        implicit val ctx: ShapeParserContext = WebApiShapeParserContextAdapter(ramlCtx)
+    implicit val ctx: ShapeParserContext = WebApiShapeParserContextAdapter(ramlCtx)
 
-        var res = RamlExpressionParser.check(adopt, expression = "integer")
-        assert(res.get.isInstanceOf[ScalarShape])
-        assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
+    var res = RamlExpressionParser.check(adopt, expression = "integer")
+    assert(res.get.isInstanceOf[ScalarShape])
+    assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
-        res = RamlExpressionParser.check(adopt, expression = "(integer)")
-        assert(res.get.isInstanceOf[ScalarShape])
-        assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
+    res = RamlExpressionParser.check(adopt, expression = "(integer)")
+    assert(res.get.isInstanceOf[ScalarShape])
+    assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
-        res = RamlExpressionParser.check(adopt, expression = "((integer))")
-        assert(res.get.isInstanceOf[ScalarShape])
-        assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
+    res = RamlExpressionParser.check(adopt, expression = "((integer))")
+    assert(res.get.isInstanceOf[ScalarShape])
+    assert(res.get.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
 
-        res = RamlExpressionParser.check(adopt, expression = "integer[]")
-        assert(res.get.isInstanceOf[ArrayShape])
-        assert(
-          res.get
-            .asInstanceOf[ArrayShape]
-            .items
-            .asInstanceOf[ScalarShape]
-            .dataType
-            .is((Namespace.Xsd + "integer").iri()))
-        assert(res != null)
+    res = RamlExpressionParser.check(adopt, expression = "integer[]")
+    assert(res.get.isInstanceOf[ArrayShape])
+    assert(
+      res.get
+        .asInstanceOf[ArrayShape]
+        .items
+        .asInstanceOf[ScalarShape]
+        .dataType
+        .is((Namespace.Xsd + "integer").iri()))
+    assert(res != null)
 
-        res = RamlExpressionParser.check(adopt, expression = "(integer)[]")
-        assert(res.get.isInstanceOf[ArrayShape])
-        assert(
-          res.get
-            .asInstanceOf[ArrayShape]
-            .items
-            .asInstanceOf[ScalarShape]
-            .dataType
-            .is((Namespace.Xsd + "integer").iri()))
-        assert(res != null)
+    res = RamlExpressionParser.check(adopt, expression = "(integer)[]")
+    assert(res.get.isInstanceOf[ArrayShape])
+    assert(
+      res.get
+        .asInstanceOf[ArrayShape]
+        .items
+        .asInstanceOf[ScalarShape]
+        .dataType
+        .is((Namespace.Xsd + "integer").iri()))
+    assert(res != null)
 
-        var error = false
-        try {
+    var error = false
+    try {
 
-          val fail = new Raml10WebApiContext("", Nil, ramlCtx)
-          RamlExpressionParser.check(adopt, expression = "[]")(WebApiShapeParserContextAdapter(fail))
-        } catch {
-          case e: Exception => error = true
-        }
-        assert(error)
+      val fail = new Raml10WebApiContext("", Nil, ramlCtx)
+      RamlExpressionParser.check(adopt, expression = "[]")(WebApiShapeParserContextAdapter(fail))
+    } catch {
+      case e: Exception => error = true
+    }
+    assert(error)
 
-        res = RamlExpressionParser.check(adopt, expression = "integer | string")
-        assert(res.get.isInstanceOf[UnionShape])
-        var union = res.get.asInstanceOf[UnionShape]
-        assert(union.anyOf.length == 2)
-        assert(union.anyOf.map { e =>
-          e.asInstanceOf[ScalarShape].dataType.value()
-        } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
-        assert(res != null)
+    res = RamlExpressionParser.check(adopt, expression = "integer | string")
+    assert(res.get.isInstanceOf[UnionShape])
+    var union = res.get.asInstanceOf[UnionShape]
+    assert(union.anyOf.length == 2)
+    assert(union.anyOf.map { e =>
+      e.asInstanceOf[ScalarShape].dataType.value()
+    } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
+    assert(res != null)
 
-        res = RamlExpressionParser.check(adopt, expression = "(integer )| (string)")
-        assert(res.get.isInstanceOf[UnionShape])
-        union = res.get.asInstanceOf[UnionShape]
-        assert(union.anyOf.length == 2)
-        assert(union.anyOf.map { e =>
-          e.asInstanceOf[ScalarShape].dataType.value()
-        } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
-        assert(res != null)
+    res = RamlExpressionParser.check(adopt, expression = "(integer )| (string)")
+    assert(res.get.isInstanceOf[UnionShape])
+    union = res.get.asInstanceOf[UnionShape]
+    assert(union.anyOf.length == 2)
+    assert(union.anyOf.map { e =>
+      e.asInstanceOf[ScalarShape].dataType.value()
+    } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
+    assert(res != null)
 
-        res = RamlExpressionParser.check(adopt, expression = "(integer | string) | number")
+    res = RamlExpressionParser.check(adopt, expression = "(integer | string) | number")
 
-        assert(res.get.isInstanceOf[UnionShape])
-        union = res.get.asInstanceOf[UnionShape]
-        assert(union.anyOf.length == 3)
-        assert(union.anyOf.map { e =>
-          e.asInstanceOf[ScalarShape].dataType.value()
-        } == Seq((Namespace.Xsd + "integer").iri(),
-                 (Namespace.Xsd + "string").iri(),
-                 (Namespace.Shapes + "number").iri()))
-        assert(res != null)
+    assert(res.get.isInstanceOf[UnionShape])
+    union = res.get.asInstanceOf[UnionShape]
+    assert(union.anyOf.length == 3)
+    assert(union.anyOf.map { e =>
+      e.asInstanceOf[ScalarShape].dataType.value()
+    } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri(), (Namespace.Shapes + "number").iri()))
+    assert(res != null)
 
-        res = RamlExpressionParser.check(adopt, expression = "(integer | string)[]")
-        assert(res.get.isInstanceOf[ArrayShape])
-        var array = res.get.asInstanceOf[ArrayShape]
-        assert(array.items.isInstanceOf[UnionShape])
-        union = array.items.asInstanceOf[UnionShape]
-        assert(union.anyOf.map { e =>
-          e.asInstanceOf[ScalarShape].dataType.value()
-        } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
-        assert(res != null)
+    res = RamlExpressionParser.check(adopt, expression = "(integer | string)[]")
+    assert(res.get.isInstanceOf[ArrayShape])
+    var array = res.get.asInstanceOf[ArrayShape]
+    assert(array.items.isInstanceOf[UnionShape])
+    union = array.items.asInstanceOf[UnionShape]
+    assert(union.anyOf.map { e =>
+      e.asInstanceOf[ScalarShape].dataType.value()
+    } == Seq((Namespace.Xsd + "integer").iri(), (Namespace.Xsd + "string").iri()))
+    assert(res != null)
 
-        res = RamlExpressionParser.check(adopt, expression = "(integer | string[])")
-        assert(res != null)
-        assert(res.get.isInstanceOf[UnionShape])
-        union = res.get.asInstanceOf[UnionShape]
-        assert(union.anyOf.length == 2)
-        assert(union.anyOf.head.isInstanceOf[ScalarShape])
-        assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
-        assert(union.anyOf.last.isInstanceOf[ArrayShape])
-        assert(
-          union.anyOf.last
-            .asInstanceOf[ArrayShape]
-            .items
-            .asInstanceOf[ScalarShape]
-            .dataType
-            .is((Namespace.Xsd + "string").iri()))
+    res = RamlExpressionParser.check(adopt, expression = "(integer | string[])")
+    assert(res != null)
+    assert(res.get.isInstanceOf[UnionShape])
+    union = res.get.asInstanceOf[UnionShape]
+    assert(union.anyOf.length == 2)
+    assert(union.anyOf.head.isInstanceOf[ScalarShape])
+    assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
+    assert(union.anyOf.last.isInstanceOf[ArrayShape])
+    assert(
+      union.anyOf.last
+        .asInstanceOf[ArrayShape]
+        .items
+        .asInstanceOf[ScalarShape]
+        .dataType
+        .is((Namespace.Xsd + "string").iri()))
 
-        val caught = intercept[Exception] { // Result type: Assertion
-          res = RamlExpressionParser.check(adopt, expression = "[]string")
-          assert(res != null)
-          assert(res.get.isInstanceOf[UnionShape])
-          union = res.get.asInstanceOf[UnionShape]
-          assert(union.anyOf.length == 2)
-          assert(union.anyOf.head.isInstanceOf[ScalarShape])
-          assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
-          assert(union.anyOf.last.isInstanceOf[ArrayShape])
-          assert(
-            union.anyOf.last
-              .asInstanceOf[ArrayShape]
-              .items
-              .asInstanceOf[ScalarShape]
-              .dataType
-              .is((Namespace.Xsd + "string").iri()))
-        }
+    val caught = intercept[Exception] { // Result type: Assertion
+      res = RamlExpressionParser.check(adopt, expression = "[]string")
+      assert(res != null)
+      assert(res.get.isInstanceOf[UnionShape])
+      union = res.get.asInstanceOf[UnionShape]
+      assert(union.anyOf.length == 2)
+      assert(union.anyOf.head.isInstanceOf[ScalarShape])
+      assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
+      assert(union.anyOf.last.isInstanceOf[ArrayShape])
+      assert(
+        union.anyOf.last
+          .asInstanceOf[ArrayShape]
+          .items
+          .asInstanceOf[ScalarShape]
+          .dataType
+          .is((Namespace.Xsd + "string").iri()))
+    }
 //        assert(caught.getMessage.contains("Error parsing type expression, cannot accept type ScalarShape")
-        res = RamlExpressionParser.check(adopt, expression = "integer | string[]")
-        assert(res != null)
-        assert(res.get.isInstanceOf[UnionShape])
-        union = res.get.asInstanceOf[UnionShape]
-        assert(union.anyOf.length == 2)
-        assert(union.anyOf.head.isInstanceOf[ScalarShape])
-        assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
-        assert(union.anyOf.last.isInstanceOf[ArrayShape])
-        assert(
-          union.anyOf.last
-            .asInstanceOf[ArrayShape]
-            .items
-            .asInstanceOf[ScalarShape]
-            .dataType
-            .is((Namespace.Xsd + "string").iri()))
+    res = RamlExpressionParser.check(adopt, expression = "integer | string[]")
+    assert(res != null)
+    assert(res.get.isInstanceOf[UnionShape])
+    union = res.get.asInstanceOf[UnionShape]
+    assert(union.anyOf.length == 2)
+    assert(union.anyOf.head.isInstanceOf[ScalarShape])
+    assert(union.anyOf.head.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
+    assert(union.anyOf.last.isInstanceOf[ArrayShape])
+    assert(
+      union.anyOf.last
+        .asInstanceOf[ArrayShape]
+        .items
+        .asInstanceOf[ScalarShape]
+        .dataType
+        .is((Namespace.Xsd + "string").iri()))
 
-        res = RamlExpressionParser.check(adopt, expression = "integer[][]")
-        assert(res != null)
-        assert(res.get.isInstanceOf[MatrixShape])
-        var matrix = res.get.asInstanceOf[MatrixShape]
-        assert(matrix.items.isInstanceOf[ArrayShape])
-        array = matrix.items.asInstanceOf[ArrayShape]
-        assert(array.items.isInstanceOf[ScalarShape])
-        assert(array.items.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
-      })
+    res = RamlExpressionParser.check(adopt, expression = "integer[][]")
+    assert(res != null)
+    assert(res.get.isInstanceOf[MatrixShape])
+    var matrix = res.get.asInstanceOf[MatrixShape]
+    assert(matrix.items.isInstanceOf[ArrayShape])
+    array = matrix.items.asInstanceOf[ArrayShape]
+    assert(array.items.isInstanceOf[ScalarShape])
+    assert(array.items.asInstanceOf[ScalarShape].dataType.is((Namespace.Xsd + "integer").iri()))
   }
 
   override val basePath = "amf-client/shared/src/test/resources/resolution/"
@@ -206,18 +204,12 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
 
   examples.foreach { example =>
     test(s"Resolve data types: $example") {
-      Validation(platform)
-        .flatMap(v => {
-          v.loadValidationDialect().map(_ => v)
-        })
-        .flatMap { validation =>
-          cycle(s"$example.raml", s"${example}_canonical.raml", Raml10YamlHint, Raml10, basePath)
-        }
+      cycle(s"$example.raml", s"${example}_canonical.raml", Raml10YamlHint, Raml10, basePath)
     }
   }
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    RuntimeResolver.resolve(Vendor.RAML10.name, unit, TransformationPipeline.DEFAULT_PIPELINE, DefaultErrorHandler())
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
+    amfConfig.createClient().transform(unit, Raml10TransformationPipeline.name).bu
   }
 
   val errorExamples = Seq(
@@ -229,13 +221,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
   // i dont get this test. Trais the fail? how?
   errorExamples.foreach { example =>
     test(s"Fails on erroneous data types: $example") {
-      Validation(platform)
-        .flatMap(v => {
-          v.loadValidationDialect().map(_ => v)
-        })
-        .flatMap { validation =>
-          cycle(s"$example.raml", s"${example}_canonical.raml", Raml10YamlHint, Raml10, basePath)
-        }
+      cycle(s"$example.raml", s"${example}_canonical.raml", Raml10YamlHint, Raml10, basePath)
     }
   }
 }

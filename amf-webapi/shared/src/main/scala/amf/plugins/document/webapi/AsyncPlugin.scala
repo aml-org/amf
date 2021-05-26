@@ -79,15 +79,11 @@ object Async20Plugin extends AsyncPlugin {
   override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): AsyncSpecEmitterContext =
     new Async20SpecEmitterContext(errorHandler)
 
-  override protected def vendor: Vendor = AsyncApi20
+  override val vendors = Seq("application/asyncapi20", "application/asyncapi20+json", "application/asyncapi20+yaml")
 
-  /**
-    * List of media types used to encode serialisations of
-    * this domain
-    */
-  override def documentSyntaxes: Seq[String] = AsyncApi20.mediaType +: super.documentSyntaxes
-
-  override def validVendorsToReference: Seq[String] = super.validVendorsToReference :+ Raml10.name
+  override def validVendorsToReference: Seq[String] =
+    super.validVendorsToReference :+ "application/raml10+yaml" :+
+      "application/raml10"
 
   override val validationProfile: ProfileName = Async20Profile
 
@@ -139,4 +135,6 @@ object Async20Plugin extends AsyncPlugin {
 
   // TODO: Temporary, should be erased until synchronous validation profile building for dialects is implemented
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Async20ValidationProfile)
+
+  override protected def vendor: Vendor = AsyncApi20
 }

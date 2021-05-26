@@ -298,6 +298,6 @@ object ExtendsHelper {
 }
 
 class CustomRaml08WebApiContext
-    extends Raml08WebApiContext("", Nil, ParserContext(config = ParseConfiguration(IgnoringErrorHandler())))
+    extends Raml08WebApiContext("", Nil, ParserContext(config = ParseConfiguration(IgnoringErrorHandler)))
 class CustomRaml10WebApiContext
-    extends Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(IgnoringErrorHandler())))
+    extends Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(IgnoringErrorHandler)))

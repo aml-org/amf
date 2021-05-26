@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.Async20Profile
-import amf.core.remote.{AsyncYamlHint, Hint}
+import amf.core.remote.{Async20YamlHint, Hint}
 
 class ValidAsyncModelParserTest extends ValidModelTest {
 
@@ -106,5 +106,5 @@ class ValidAsyncModelParserTest extends ValidModelTest {
   }
 
   override val basePath: String = "file://amf-client/shared/src/test/resources/validations/async20/"
-  override val hint: Hint       = AsyncYamlHint
+  override val hint: Hint       = Async20YamlHint
 }

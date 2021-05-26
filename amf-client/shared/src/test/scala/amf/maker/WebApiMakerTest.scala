@@ -1,5 +1,6 @@
 package amf.maker
 
+import amf.client.environment.WebAPIConfiguration
 import amf.common.AmfObjectTestMatcher
 import amf.compiler.CompilerTestBuilder
 import amf.core.metamodel.Field
@@ -667,8 +668,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                             file: String,
                             hint: Hint,
                             overridedPath: Option[String] = None): Future[Assertion] = {
-
-    build(overridedPath.getOrElse(basePath) + file, hint)
+    val amfConfig = WebAPIConfiguration.WebAPI()
+    build(overridedPath.getOrElse(basePath) + file, hint, amfConfig, None)
       .map { unit =>
         val actual = unit.asInstanceOf[Document].encodes
         AmfObjectMatcher(expected).assert(actual)

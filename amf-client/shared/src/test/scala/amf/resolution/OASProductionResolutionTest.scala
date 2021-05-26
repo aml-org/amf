@@ -1,11 +1,13 @@
 package amf.resolution
 
+import amf.client.environment.AMFConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeResolver
+import amf.plugins.document.webapi.resolution.pipelines.Oas20TransformationPipeline
 
 class OASProductionResolutionTest extends ResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
@@ -13,10 +15,14 @@ class OASProductionResolutionTest extends ResolutionTest {
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    if (config.target.equals(Amf) && config.transformWith.isEmpty)
-      RuntimeResolver.resolve(Vendor.OAS20.name, unit, TransformationPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
-    else super.transform(unit, config)
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
+    if (config.target.equals(Amf) && config.transformWith.isEmpty) {
+      amfConfig
+        .withErrorHandlerProvider(() => UnhandledErrorHandler)
+        .createClient()
+        .transform(unit, Oas20TransformationPipeline.name)
+        .bu
+    } else super.transform(unit, config, amfConfig)
   }
 
   multiGoldenTest("OAS Response parameters resolution", "oas_response_declaration.resolved.%s") { config =>

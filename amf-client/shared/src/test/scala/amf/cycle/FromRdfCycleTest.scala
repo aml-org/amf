@@ -1,6 +1,7 @@
 package amf.cycle
 
 import amf.client.environment.WebAPIConfiguration
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.remod.AMFGraphConfiguration
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit

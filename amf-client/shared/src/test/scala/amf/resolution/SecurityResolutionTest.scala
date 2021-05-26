@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.{Amf, Oas20JsonHint, Raml10YamlHint}
+import amf.core.remote.{Amf, Oas20, Oas20JsonHint, Raml10, Raml10YamlHint}
 
 class SecurityResolutionTest extends ResolutionTest {
 

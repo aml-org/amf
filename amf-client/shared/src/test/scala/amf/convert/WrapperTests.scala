@@ -1,304 +1,272 @@
-//package amf.convert
-//
-//import _root_.org.scalatest.{Assertion, Matchers}
-//import amf._
-//import amf.client.AMF
-//import amf.client.convert.CoreClientConverters._
-//import amf.client.convert.{CoreClientConverters, NativeOps}
-//import amf.client.environment.{DefaultEnvironment, Environment}
-//import amf.client.model.document._
-//import amf.client.model.domain._
-//import amf.client.parse._
-//import amf.client.remote.Content
-//import amf.client.render.{Renderer, _}
-//import amf.client.resolve._
-//import amf.client.resource.{ResourceLoader, ResourceNotFound}
-//import amf.core.AMFSerializer
-//import amf.core.errorhandling.{ErrorHandler, StaticErrorCollector}
-//import amf.core.exception.UnsupportedVendorException
-//import amf.core.model.document.{Document => InternalDocument}
-//import amf.plugins.domain.webapi.models.api.{WebApi => InternalWebApi}
-//import amf.core.model.domain.{
-//  ArrayNode => InternalArrayNode,
-//  ObjectNode => InternalObjectNode,
-//  ScalarNode => InternalScalarNode,
-//  Shape => InternalShape
-//}
-//import amf.core.parser.Range
-//import amf.core.remote._
-//import amf.core.resolution.pipelines.TransformationPipeline
-//import amf.core.vocabulary.Namespace
-//import amf.core.vocabulary.Namespace.Xsd
-//import amf.internal.environment.{Environment => InternalEnvironment}
-//import amf.internal.resource.StringResourceLoader
-//import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
-//import amf.plugins.document.Vocabularies
-//import amf.plugins.document.webapi.parser.spec.common.emitters.WebApiDomainElementEmitter
-//import amf.plugins.domain.webapi.metamodel.api.WebApiModel
-//import amf.plugins.domain.webapi.models.{CorrelationId => InternalCorrelationId}
-//import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
-//import org.mulesoft.common.test.Diff
-//import org.yaml.builder.JsonOutputBuilder
-//import amf.core.emitter.{RenderOptions => InternalRenderOptions, ShapeRenderOptions => InternalShapeRenderOptions}
-//import amf.plugins.domain.VocabulariesRegister
-//import amf.plugins.domain.shapes.metamodel.NodeShapeModel
-//import amf.remod.ClientJsonSchemaShapeSerializer.{buildJsonSchema, toJsonSchema}
-//import amf.remod.{ClientJsonSchemaShapeSerializer, ClientShapePayloadValidatorFactory, JsonSchemaShapeSerializer}
-//
-//import scala.concurrent.{ExecutionContext, Future}
-//
-//trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps with FileAssertionTest {
-//
-//  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-//
-//  private val banking       = "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml"
-//  private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
-//  private val oas3          = "file://amf-client/shared/src/test/resources/api/oas3.json"
-//  private val async2        = "file://amf-client/shared/src/test/resources/api/async2.yaml"
-//  private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
-//  private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
-//  private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
-//  private val demos2Dialect = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos-2.raml"
-//  private val demosInstance = "file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml"
-//  private val security      = "file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
-//  private val amflight =
-//    "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml.ignore/api.raml"
-//  private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
-//  private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
-//  //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
-//  private val apiWithSpaces =
-//    "file://amf-client/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
-//  private val apiWithIncludesWithSpaces =
-//    "file://amf-client/shared/src/test/resources/api/api-with-includes-with-spaces/api.raml"
-//  private val scalarAnnotations =
-//    "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
-//  private val recursiveAdditionalProperties =
-//    "file://amf-client/shared/src/test/resources/recursive/recursive-additional-properties.yaml"
-//  private val knowledgeGraphServiceApi =
-//    "file://amf-client/shared/src/test/resources/production/knowledge-graph-service-api-1.0.13-raml/kg.raml"
-//
-//  def testVocabulary(file: String, numClasses: Int, numProperties: Int): Future[Assertion] = {
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- amf.Core.parser(Aml.name, "application/yaml").parseFileAsync(file).asFuture
-//    } yield {
-//      val declarations = unit.asInstanceOf[Vocabulary].declares.asSeq
-//
-//      val classes    = declarations.collect { case term: ClassTerm    => term }
-//      val properties = declarations.collect { case prop: PropertyTerm => prop }
-//
-//      assert(classes.size == numClasses)
-//      assert(properties.size == numProperties)
-//    }
-//  }
-//
-//  test("Parsing raml 1.0 test (detect)") {
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new RamlParser().parseFileAsync(zencoder).asFuture
-//    } yield {
-//      assertBaseUnit(unit, zencoder)
-//    }
-//  }
-//
-//  test("Parsing raml 0.8 test (detect)") {
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new Raml08Parser().parseFileAsync(zencoder08).asFuture
-//    } yield {
-//      assertBaseUnit(unit, zencoder08)
-//    }
-//  }
-//
-//  test("Parsing raml 1.0 test") {
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new Raml10Parser().parseFileAsync(zencoder).asFuture
-//    } yield {
-//      assertBaseUnit(unit, zencoder)
-//    }
-//  }
-//
-//  test("Parsing raml 0.8 test") {
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new Raml08Parser().parseFileAsync(zencoder08).asFuture
-//    } yield {
-//      assertBaseUnit(unit, zencoder08)
-//    }
-//  }
-//
-//  test("Parsing default value string") {
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new RamlParser().parseFileAsync(defaultValue).asFuture
-//    } yield {
-//      val declares = unit.asInstanceOf[DeclaresModel].declares.asSeq
-//      assert(declares.size == 1)
-//      assert(declares.head.isInstanceOf[NodeShape])
-//      val shape = declares.head.asInstanceOf[NodeShape]
-//
-//      shape.defaultValueStr.value() shouldBe "name: roman\nlastname: riquelme\nage: 39"
-//      assert(shape.defaultValue.isInstanceOf[ObjectNode])
-//    }
-//  }
-//
-//  test("Node value uses unescaped strings in RAML") {
-//    val expected = "The tag's name. This is typically a version (e.g., \"v0.0.1\")."
-//    val doc =
-//      """
-//        | #%RAML 1.0
-//        | title: 'The tag''s name. This is typically a version (e.g., "v0.0.1").'
-//        | baseUri: https://elmdv.symc.symantec.com/keybank/v1
-//        | version: 1.0
-//        |""".stripMargin
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new RamlParser().parseStringAsync(doc).asFuture
-//    } yield {
-//      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
-//      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
-//    }
-//  }
-//
-//  test("Node value uses unescaped strings in OAS 20 YAML") {
-//    val expected = "The tag's name. This is typically a version (e.g., \"v0.0.1\")."
-//    val doc =
-//      """
-//        | swagger: "2.0"
-//        | info:
-//        |   title: 'The tag''s name. This is typically a version (e.g., "v0.0.1").'
-//        |   version: 1.0
-//        | paths: {}
-//        |""".stripMargin
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new Oas20YamlParser().parseStringAsync(doc).asFuture
-//    } yield {
-//      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
-//      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
-//    }
-//  }
-//
-//  test("Node value with double \\ should be unescaped") {
-//    val expected = """\\"""
-//    val doc =
-//      """
-//        | swagger: "2.0"
-//        | info:
-//        |   title: "\\\\"
-//        |   version: 1.0
-//        | paths: {}
-//        |""".stripMargin
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new Oas20YamlParser().parseStringAsync(doc).asFuture
-//    } yield {
-//      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
-//      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
-//    }
-//  }
-//
-//  test("Render / parse test RAML 0.8") {
-//    for {
-//      _      <- AMF.init().asFuture
-//      unit   <- new Raml08Parser().parseFileAsync(zencoder08).asFuture
-//      output <- new Raml08Renderer().generateString(unit).asFuture
-//      result <- new Raml08Parser().parseStringAsync(output).asFuture
-//    } yield {
-//      assertBaseUnit(result, "http://a.ml/amf/default_document")
-//    }
-//  }
-//
-//  test("Render / parse test RAML 1.0") {
-//    for {
-//      _      <- AMF.init().asFuture
-//      unit   <- new RamlParser().parseFileAsync(zencoder).asFuture
-//      output <- new Raml10Renderer().generateString(unit).asFuture
-//      result <- new Raml10Parser().parseStringAsync(output).asFuture
-//    } yield {
-//      assertBaseUnit(result, "http://a.ml/amf/default_document")
-//    }
-//  }
-//
-//  test("Source vendor RAML 1.0") {
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new RamlParser().parseFileAsync(zencoder).asFuture
-//    } yield {
-//      unit.sourceVendor.asOption should be(Some(Raml10))
-//    }
-//  }
-//
-//  test("Render / parse test OAS 2.0") {
-//    for {
-//      _      <- AMF.init().asFuture
-//      unit   <- new RamlParser().parseFileAsync(zencoder).asFuture
-//      output <- new Oas20Renderer().generateString(unit).asFuture
-//      result <- new Oas20Parser().parseStringAsync(output).asFuture
-//    } yield {
-//      assertBaseUnit(result, "http://a.ml/amf/default_document")
-//    }
-//  }
-//
-//  test("Render / parse test OAS 3.0") {
-//    for {
-//      _      <- AMF.init().asFuture
-//      unit   <- new Oas30Parser().parseFileAsync(oas3).asFuture
-//      output <- new Oas30Renderer().generateString(unit).asFuture
-//    } yield {
-//      output should include("openIdConnectUrl")
-//    }
-//  }
-//
-//  test("Render / parse test Async 2.0") {
-//    for {
-//      _      <- AMF.init().asFuture
-//      unit   <- new Async20Parser().parseFileAsync(async2).asFuture
-//      output <- new Async20Renderer().generateString(unit).asFuture
-//    } yield {
-//      output should include("Correlation ID Example")
-//    }
-//  }
-//
-//  test("Render / parse test AMF") {
-//    for {
-//      _      <- AMF.init().asFuture
-//      unit   <- new RamlParser().parseFileAsync(zencoder).asFuture
-//      output <- new AmfGraphRenderer().generateString(unit).asFuture
-//      result <- new AmfGraphParser().parseStringAsync(output).asFuture
-//    } yield {
-//      assertBaseUnit(result, "http://a.ml/amf/default_document")
-//    }
-//  }
-//
+package amf.convert
+
+import _root_.org.scalatest.{Assertion, Matchers}
+import amf._
+import amf.client.convert.NativeOps
+import amf.client.exported._
+import amf.client.model.document._
+import amf.client.model.domain._
+import amf.core.model.document.{Document => InternalDocument}
+import amf.core.remote._
+import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
+import amf.plugins.document.webapi.resolution.pipelines.Raml10TransformationPipeline
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
+
+import scala.concurrent.{ExecutionContext, Future}
+
+trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps with FileAssertionTest {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  private val banking       = "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml"
+  private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
+  private val oas3          = "file://amf-client/shared/src/test/resources/api/oas3.json"
+  private val async2        = "file://amf-client/shared/src/test/resources/api/async2.yaml"
+  private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
+  private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
+  private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
+  private val demos2Dialect = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos-2.raml"
+  private val demosInstance = "file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml"
+  private val security      = "file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
+  private val amflight =
+    "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml.ignore/api.raml"
+  private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
+  private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
+  //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
+  private val apiWithSpaces =
+    "file://amf-client/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
+  private val apiWithIncludesWithSpaces =
+    "file://amf-client/shared/src/test/resources/api/api-with-includes-with-spaces/api.raml"
+  private val scalarAnnotations =
+    "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
+  private val recursiveAdditionalProperties =
+    "file://amf-client/shared/src/test/resources/recursive/recursive-additional-properties.yaml"
+  private val knowledgeGraphServiceApi =
+    "file://amf-client/shared/src/test/resources/production/knowledge-graph-service-api-1.0.13-raml/kg.raml"
+
+  def config(): AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+  def testVocabulary(file: String, numClasses: Int, numProperties: Int): Future[Assertion] = {
+
+    for {
+      unit <- config().createClient().parseVocabulary(file).asFuture
+    } yield {
+      val declarations = unit.vocabulary.declares.asSeq
+
+      val classes    = declarations.collect { case term: ClassTerm    => term }
+      val properties = declarations.collect { case prop: PropertyTerm => prop }
+
+      assert(classes.size == numClasses)
+      assert(properties.size == numProperties)
+    }
+  }
+
+  test("Parsing raml 1.0 test (detect)") {
+    for {
+      unit <- config().createClient().parse(zencoder).asFuture
+    } yield {
+      assertBaseUnit(unit.baseUnit, zencoder)
+    }
+  }
+
+  test("Parsing raml 0.8 test (detect)") {
+    for {
+      unit <- config().createClient().parse(zencoder08).asFuture
+    } yield {
+      assertBaseUnit(unit.baseUnit, zencoder08)
+    }
+  }
+
+  test("Parsing raml 1.0 test") {
+    for {
+      unit <- config().createClient().parse(zencoder, Raml10.mediaType).asFuture
+    } yield {
+      assertBaseUnit(unit.baseUnit, zencoder)
+    }
+  }
+
+  test("Parsing raml 0.8 test") {
+    for {
+      unit <- config().createClient().parse(zencoder08, Raml08.mediaType).asFuture
+    } yield {
+      assertBaseUnit(unit.baseUnit, zencoder08)
+    }
+  }
+
+  test("Parsing default value string") {
+    for {
+      unit <- RAMLConfiguration.RAML().createClient().parse(defaultValue).asFuture
+    } yield {
+      val declares = unit.baseUnit.asInstanceOf[DeclaresModel].declares.asSeq
+      assert(declares.size == 1)
+      assert(declares.head.isInstanceOf[NodeShape])
+      val shape = declares.head.asInstanceOf[NodeShape]
+
+      shape.defaultValueStr.value() shouldBe "name: roman\nlastname: riquelme\nage: 39"
+      assert(shape.defaultValue.isInstanceOf[ObjectNode])
+    }
+  }
+
+  test("Node value uses unescaped strings in RAML") {
+    val expected = "The tag's name. This is typically a version (e.g., \"v0.0.1\")."
+    val doc =
+      """
+        | #%RAML 1.0
+        | title: 'The tag''s name. This is typically a version (e.g., "v0.0.1").'
+        | baseUri: https://elmdv.symc.symantec.com/keybank/v1
+        | version: 1.0
+        |""".stripMargin
+    for {
+      unit <- AMFParser.parseContent(doc, RAMLConfiguration.RAML()).asFuture
+    } yield {
+      val webApi = unit.baseUnit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
+  test("Node value uses unescaped strings in OAS 20 YAML") {
+    val expected = "The tag's name. This is typically a version (e.g., \"v0.0.1\")."
+    val doc =
+      """
+        | swagger: "2.0"
+        | info:
+        |   title: 'The tag''s name. This is typically a version (e.g., "v0.0.1").'
+        |   version: 1.0
+        | paths: {}
+        |""".stripMargin
+    for {
+      unit <- AMFParser.parseContent(doc, Oas20.mediaType + "+json", OASConfiguration.OAS20()).asFuture
+    } yield {
+      val webApi = unit.baseUnit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
+  test("Node value with double \\ should be unescaped") {
+    val expected = """\\"""
+    val doc =
+      """
+        | swagger: "2.0"
+        | info:
+        |   title: "\\\\"
+        |   version: 1.0
+        | paths: {}
+        |""".stripMargin
+    for {
+      unit <- AMFParser.parseContent(doc, Oas20.mediaType + "+yaml", OASConfiguration.OAS20()).asFuture
+    } yield {
+      val webApi = unit.baseUnit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
+  test("Render / parse test RAML 0.8") {
+    val configuration = RAMLConfiguration.RAML08()
+    val client        = configuration.createClient()
+    for {
+      unit   <- client.parse(zencoder08).asFuture
+      output <- client.render(unit.baseUnit, Raml08.mediaType).asFuture
+      result <- AMFParser.parseContent(output, configuration).asFuture
+    } yield {
+      assertBaseUnit(result.baseUnit, "http://a.ml/amf/default_document")
+    }
+  }
+
+  test("Render / parse test RAML 1.0") {
+    val configuration = RAMLConfiguration.RAML10()
+    val client        = configuration.createClient()
+
+    for {
+      unit   <- client.parse(zencoder).asFuture
+      output <- client.render(unit.baseUnit, Raml10.mediaType).asFuture
+      result <- AMFParser.parseContent(output, configuration).asFuture
+    } yield {
+      assertBaseUnit(result.baseUnit, "http://a.ml/amf/default_document")
+    }
+  }
+
+  test("Source vendor RAML 1.0") {
+    for {
+      unit <- RAMLConfiguration.RAML().createClient().parse(zencoder).asFuture
+    } yield {
+      unit.baseUnit.sourceVendor.asOption should be(Some(Raml10.mediaType))
+    }
+  }
+
+  test("Render / parse test OAS 2.0") {
+    val configuration = config()
+    val client        = configuration.createClient()
+    for {
+      unit   <- client.parse(zencoder).asFuture
+      output <- client.render(unit.baseUnit, Oas20.mediaType).asFuture
+      result <- AMFParser.parseContent(output, configuration).asFuture
+    } yield {
+      assertBaseUnit(result.baseUnit, "http://a.ml/amf/default_document")
+    }
+  }
+
+  test("Render / parse test OAS 3.0") {
+    val client = OASConfiguration.OAS30().createClient()
+    for {
+      unit   <- client.parse(oas3).asFuture
+      output <- client.render(unit.baseUnit, Oas30.mediaType).asFuture
+    } yield {
+      output should include("openIdConnectUrl")
+    }
+  }
+
+  test("Render / parse test Async 2.0") {
+    val client = AsyncAPIConfiguration.Async20().createClient()
+    for {
+      unit   <- client.parse(async2).asFuture
+      output <- client.render(unit.baseUnit, AsyncApi20.mediaType).asFuture
+    } yield {
+      output should include("Correlation ID Example")
+    }
+  }
+
+  test("Render / parse test AMF") {
+    val configuration = RAMLConfiguration.RAML()
+    val client        = configuration.createClient()
+    for {
+      unit   <- client.parse(zencoder).asFuture
+      output <- client.render(unit.baseUnit, Amf.mediaType).asFuture
+      result <- AMFParser.parseContent(output, configuration).asFuture
+    } yield {
+      assertBaseUnit(result.baseUnit, "http://a.ml/amf/default_document")
+    }
+  }
+
+  // TODO ARM: add vlaidaiton profile exported
 //  test("Validation test") {
+//    val config = RAMLConfiguration.RAML10().createClient()
 //    for {
-//      _           <- AMF.init().asFuture
-//      unit        <- new RamlParser().parseFileAsync(zencoder).asFuture
-//      report      <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
-//      profileName <- AMF.loadValidationProfile(profile).asFuture
+//      unit        <- config.parse(zencoder).asFuture
+//      report      <- config.validate(unit.baseUnit, Raml10Profile).asFuture
+//      enabled <- config.getConfiguration.withCustomValidationsEnabled.asFuture
+//      validationProfile <- enabled.createClient().parseValidationProfile(profile).asFuture
+//      customConf <- enabled.with()
+//
+//
 //      custom      <- AMF.validate(unit, profileName, AMFStyle).asFuture
 //    } yield {
 //      assert(report.conforms)
 //      assert(!custom.conforms)
 //    }
 //  }
-//
-//  test("Resolution test") {
-//    for {
-//      _        <- AMF.init().asFuture
-//      unit     <- new RamlParser().parseFileAsync(zencoder).asFuture
-//      resolved <- Future.successful(AMF.resolveRaml10(unit))
-//      report   <- AMF.validate(resolved, Raml10Profile, AMFStyle).asFuture
-//    } yield {
-//      assert(report.conforms)
-//    }
-//  }
-//
+
+  test("Resolution test") {
+    val client = RAMLConfiguration.RAML().createClient()
+    for {
+      unit     <- client.parse(zencoder).asFuture
+      resolved <- Future.successful(client.transform(unit.baseUnit, Raml10TransformationPipeline.name))
+      report   <- client.validate(resolved.baseUnit, Raml10Profile).asFuture
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
 //  test("Raml to oas security scheme after resolution") {
 //    for {
-//      _      <- AMF.init().asFuture
 //      unit   <- new RamlParser().parseFileAsync(security).asFuture
 //      _      <- Future.successful(new Raml10Resolver().resolve(unit))
 //      output <- new Oas20Renderer().generateString(unit).asFuture
@@ -1162,45 +1130,45 @@
 //    }
 //  }
 //
-//  private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
-//    assert(baseUnit.location == expectedLocation)
-//    val api       = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
-//    val endPoints = api.endPoints.asSeq
-//    assert(endPoints.size == 1)
-//
-//    val endpoint = endPoints.head
-//    assert(endpoint.path.is("/v3.5/path"))
-//    val ops = endpoint.operations.asSeq
-//    assert(ops.size == 1)
-//    val post = ops.head
-//    assert(post.method.is("get"))
-//    val payloads = post.request.payloads.asSeq
-//    assert(payloads.size == 1)
-//
-//    val first = payloads.head
-//    assert(first.mediaType.is("application/json"))
-//
-//    val typeIds = first.schema.graph().types().asSeq
-//    assert(typeIds.contains("http://a.ml/vocabularies/shapes#ScalarShape"))
-//    assert(typeIds.contains("http://www.w3.org/ns/shacl#Shape"))
-//    assert(typeIds.contains("http://a.ml/vocabularies/shapes#Shape"))
-//    assert(typeIds.contains("http://a.ml/vocabularies/document#DomainElement"))
-//
-//    val responses = post.responses.asSeq
-//    assert(
-//      responses.head.payloads.asSeq.head.schema
-//        .asInstanceOf[ScalarShape]
-//        .dataType
-//        .is("http://www.w3.org/2001/XMLSchema#string"))
-//
-//    assert(
-//      payloads.head.schema
-//        .asInstanceOf[ScalarShape]
-//        .dataType
-//        .is("http://www.w3.org/2001/XMLSchema#string"))
-//
-//    assert(responses.head.statusCode.is("200"))
-//  }
+  private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
+    assert(baseUnit.location == expectedLocation)
+    val api       = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
+    val endPoints = api.endPoints.asSeq
+    assert(endPoints.size == 1)
+
+    val endpoint = endPoints.head
+    assert(endpoint.path.is("/v3.5/path"))
+    val ops = endpoint.operations.asSeq
+    assert(ops.size == 1)
+    val post = ops.head
+    assert(post.method.is("get"))
+    val payloads = post.request.payloads.asSeq
+    assert(payloads.size == 1)
+
+    val first = payloads.head
+    assert(first.mediaType.is("application/json"))
+
+    val typeIds = first.schema.graph().types().asSeq
+    assert(typeIds.contains("http://a.ml/vocabularies/shapes#ScalarShape"))
+    assert(typeIds.contains("http://www.w3.org/ns/shacl#Shape"))
+    assert(typeIds.contains("http://a.ml/vocabularies/shapes#Shape"))
+    assert(typeIds.contains("http://a.ml/vocabularies/document#DomainElement"))
+
+    val responses = post.responses.asSeq
+    assert(
+      responses.head.payloads.asSeq.head.schema
+        .asInstanceOf[ScalarShape]
+        .dataType
+        .is("http://www.w3.org/2001/XMLSchema#string"))
+
+    assert(
+      payloads.head.schema
+        .asInstanceOf[ScalarShape]
+        .dataType
+        .is("http://www.w3.org/2001/XMLSchema#string"))
+
+    assert(responses.head.statusCode.is("200"))
+  }
 //
 //  test("Test validate payload with invalid iri") {
 //    val payload = """test payload""".stripMargin
@@ -2402,45 +2370,6 @@
 //    }
 //  }
 //
-//  private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
-//    assert(baseUnit.location == expectedLocation)
-//    val api       = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
-//    val endPoints = api.endPoints.asSeq
-//    assert(endPoints.size == 1)
-//
-//    val endpoint = endPoints.head
-//    assert(endpoint.path.is("/v3.5/path"))
-//    val ops = endpoint.operations.asSeq
-//    assert(ops.size == 1)
-//    val post = ops.head
-//    assert(post.method.is("get"))
-//    val payloads = post.request.payloads.asSeq
-//    assert(payloads.size == 1)
-//
-//    val first = payloads.head
-//    assert(first.mediaType.is("application/json"))
-//
-//    val typeIds = first.schema.graph().types().asSeq
-//    assert(typeIds.contains("http://a.ml/vocabularies/shapes#ScalarShape"))
-//    assert(typeIds.contains("http://www.w3.org/ns/shacl#Shape"))
-//    assert(typeIds.contains("http://a.ml/vocabularies/shapes#Shape"))
-//    assert(typeIds.contains("http://a.ml/vocabularies/document#DomainElement"))
-//
-//    val responses = post.responses.asSeq
-//    assert(
-//      responses.head.payloads.asSeq.head.schema
-//        .asInstanceOf[ScalarShape]
-//        .dataType
-//        .is("http://www.w3.org/2001/XMLSchema#string"))
-//
-//    assert(
-//      payloads.head.schema
-//        .asInstanceOf[ScalarShape]
-//        .dataType
-//        .is("http://www.w3.org/2001/XMLSchema#string"))
-//
-//    assert(responses.head.statusCode.is("200"))
-//  }
 //
 //  // TODO: Shapes REMOD Uncomment
 ////  test("Test validate payload with invalid iri") {
@@ -3552,7 +3481,7 @@
 //      assert(eh.getErrors.head.message == "Cannot emit non WebApi shape")
 //    }
 //  }
-//
-//  // todo: move to common (file system)
-//  def getAbsolutePath(path: String): String
-//}
+
+  // todo: move to common (file system)
+  def getAbsolutePath(path: String): String
+}
