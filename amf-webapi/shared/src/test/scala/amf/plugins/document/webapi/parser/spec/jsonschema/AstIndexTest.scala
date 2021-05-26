@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.jsonschema
 
+import amf.client.environment.WebAPIConfiguration
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.parser.{ParserContext, YMapOps}
 import amf.core.unsafe.PlatformSecrets
@@ -166,7 +167,13 @@ trait IndexHelper extends PlatformSecrets {
   def obtainIndex(pathToFile: String, version: JSONSchemaVersion): AstIndex = {
     val content = platform.fs.syncFile(pathToFile).read()
     val doc     = JsonParser(content).document()
-    val ctx     = new Async20WebApiContext("loc", Seq(), ParserContext(eh = UnhandledErrorHandler))
+    val ctx =
+      new Async20WebApiContext(
+        "loc",
+        Seq(),
+        ParserContext(
+          config =
+            WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler).parseConfiguration))
     AstIndexBuilder.buildAst(doc.node, AliasCounter(), version)(WebApiShapeParserContextAdapter(ctx))
   }
 }

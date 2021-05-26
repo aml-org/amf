@@ -49,8 +49,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
     val fragment = PayloadFragment(scalar, "application/yaml")
 
     for {
-      _ <- Validation(platform) // in order to initialize
-      s <- new AMFSerializer(fragment, "application/amf+yaml", WebAPIConfiguration.WebAPI().renderConfiguration).renderToString
+      s <- new AMFSerializer(fragment, "application/payload+yaml", WebAPIConfiguration.WebAPI().renderConfiguration).renderToString
     } yield {
       s should be("1\n") // without cuotes
     }

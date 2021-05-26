@@ -1,7 +1,7 @@
 package amf.resolution
 
 import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.{Amf, Oas20JsonHint, Oas20YamlHint, Raml10YamlHint}
+import amf.core.remote.{Amf, Oas20JsonHint, Oas20YamlHint, Raml10, Raml10YamlHint}
 
 /**
   *
@@ -15,16 +15,20 @@ class ExamplesResolutionTest extends ResolutionTest {
           config.golden,
           Oas20JsonHint,
           target = Amf,
-          renderOptions = Some(config.renderOptions))
+          renderOptions = Some(config.renderOptions),
+          transformWith = Some(Raml10))
   }
 
   multiGoldenTest("Response declarations with multiple media types oas to AMF",
                   "response-declarations-with-multiple-media-types.%s") { config =>
-    cycle("response-declarations-with-multiple-media-types.yaml",
-          config.golden,
-          Oas20YamlHint,
-          target = Amf,
-          renderOptions = Some(config.renderOptions))
+    cycle(
+      "response-declarations-with-multiple-media-types.yaml",
+      config.golden,
+      Oas20YamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      transformWith = Some(Raml10)
+    )
   }
 
   multiGoldenTest("Response examples raml to AMF", "response-examples.raml.%s") { config =>
@@ -32,27 +36,34 @@ class ExamplesResolutionTest extends ResolutionTest {
           config.golden,
           Raml10YamlHint,
           target = Amf,
-          renderOptions = Some(config.renderOptions))
+          renderOptions = Some(config.renderOptions),
+          transformWith = Some(Raml10))
   }
 
   multiGoldenTest("Typed external fragment as included example - Vocabulary", "examples/vocabulary-fragment/api.%s") {
     config =>
-      cycle("examples/vocabulary-fragment/api.raml",
-            config.golden,
-            Raml10YamlHint,
-            target = Amf,
-            directory = validationPath,
-            renderOptions = Some(config.renderOptions))
+      cycle(
+        "examples/vocabulary-fragment/api.raml",
+        config.golden,
+        Raml10YamlHint,
+        target = Amf,
+        directory = validationPath,
+        renderOptions = Some(config.renderOptions),
+        transformWith = Some(Raml10)
+      )
   }
 
   multiGoldenTest("Typed external fragment as included example - Dialect", "examples/dialect-fragment/api.%s") {
     config =>
-      cycle("examples/dialect-fragment/api.raml",
-            config.golden,
-            Raml10YamlHint,
-            target = Amf,
-            directory = validationPath,
-            renderOptions = Some(config.renderOptions))
+      cycle(
+        "examples/dialect-fragment/api.raml",
+        config.golden,
+        Raml10YamlHint,
+        target = Amf,
+        directory = validationPath,
+        renderOptions = Some(config.renderOptions),
+        transformWith = Some(Raml10)
+      )
   }
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint

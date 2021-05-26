@@ -1,10 +1,11 @@
 package amf.emit
 
+import amf.client.environment.AMFConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 import org.mulesoft.common.io.AsyncFile
 import org.mulesoft.common.test.ListAssertions
 import org.mulesoft.common.test.Tests.checkDiff
@@ -47,39 +48,37 @@ class ReferencesCycleTest extends FunSuiteCycleTests with ListAssertions with Co
   fixture.foreach {
     case ((title, (document, hint)), (reference, Amf)) =>
       multiGoldenTest(title, reference) { config =>
-        build(s"file://$basePath$document", hint)
-          .flatMap(renderReference(config.golden, Amf, _, config.renderOptions))
+        val amfConfig = buildConfig(None, None)
+        build(s"file://$basePath$document", hint, amfConfig, None)
+          .flatMap(renderReference(config.golden, Amf, _, amfConfig.withRenderOptions(config.renderOptions)))
           .flatMap(checkDiff(_, fs.asyncFile(s"$basePath${config.golden}")))
       }
     case ((title, (document, AmfJsonHint)), (reference, vendor)) =>
       multiSourceTest(title, document) { config =>
-        build(s"file://$basePath${config.source}", AmfJsonHint)
-          .flatMap(renderReference(reference, vendor, _))
+        val amfConfig = buildConfig(None, None)
+
+        build(s"file://$basePath${config.source}", AmfJsonHint, amfConfig, None)
+          .flatMap(renderReference(reference, vendor, _, amfConfig.withRenderOptions(defaultRenderOptions)))
           .flatMap(checkDiff(_, fs.asyncFile(s"$basePath$reference")))
       }
     case ((title, (document, hint)), (reference, vendor)) =>
       test(title) {
-        build(s"file://$basePath$document", hint)
-          .flatMap(renderReference(reference, vendor, _))
+        val amfConfig = buildConfig(None, None)
+        build(s"file://$basePath$document", hint, amfConfig, None)
+          .flatMap(renderReference(reference, vendor, _, amfConfig.withRenderOptions(defaultRenderOptions)))
           .flatMap(checkDiff(_, fs.asyncFile(basePath + reference)))
       }
-  }
-
-  private def renderReference(reference: String, vendor: Vendor, unit: BaseUnit): Future[AsyncFile] = {
-    val ref    = unit.references.head
-    val actual = fs.asyncFile(tmp(reference.replace("/", "--")))
-    AMFRenderer(ref, vendor, defaultRenderOptions).renderToString
-      .flatMap(actual.write(_))
-      .map(_ => actual)
   }
 
   private def renderReference(reference: String,
                               vendor: Vendor,
                               unit: BaseUnit,
-                              renderOptions: RenderOptions): Future[AsyncFile] = {
+                              amfConfig: AMFConfiguration): Future[AsyncFile] = {
     val ref    = unit.references.head
     val actual = fs.asyncFile(tmp(reference.replace("/", "--")))
-    AMFRenderer(ref, vendor, renderOptions).renderToString
+    amfConfig
+      .createClient()
+      .render(ref, vendor.mediaType)
       .flatMap(actual.write(_))
       .map(_ => actual)
   }

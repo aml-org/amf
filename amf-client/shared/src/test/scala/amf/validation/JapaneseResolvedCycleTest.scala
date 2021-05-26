@@ -1,6 +1,8 @@
 package amf.validation
 
+import amf.client.environment.AMFConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
@@ -46,13 +48,14 @@ class JapaneseResolvedCycleTest extends FunSuiteCycleTests {
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit =
     config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        RuntimeResolver.resolve(config.target.name,
-                                unit,
-                                TransformationPipeline.EDITING_PIPELINE,
-                                UnhandledErrorHandler)
+        amfConfig
+          .withErrorHandlerProvider(() => UnhandledErrorHandler)
+          .createClient()
+          .transform(unit, PipelineName.from(config.target.name, TransformationPipeline.EDITING_PIPELINE))
+          .bu
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
     }

@@ -1,7 +1,10 @@
 package amf.parser
 
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.remod.{AMFParser, ParseConfiguration}
+import amf.core.AMFCompiler
 import amf.client.remod.ParseConfiguration
+import amf.core.AMFCompiler
 import amf.core.annotations.{Inferred, SourceAST, SynthesizedField, VirtualNode}
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.DocumentModel
@@ -9,9 +12,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfElement, AmfObject}
 import amf.core.parser.{Annotations, FieldEntry}
 import amf.core.remote._
-import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
-import amf.facades.Validation
 import amf.plugins.document.webapi.parser.spec.raml.expression.ExpressionMember
 import org.mulesoft.lexer.InputRange
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -40,15 +41,14 @@ class SourceMapsAnnotationsTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("Test Async 2.0 annotations") {
-    runTest("async2.yaml", AsyncYamlHint)
+    runTest("async2.yaml", Async20YamlHint)
   }
 
-  private def build(file: String, hint: Hint): Future[BaseUnit] =
-    Validation(platform).flatMap { _ =>
-      val url           = s"file://$directory$file"
-      val configuration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
-      RuntimeCompiler(url, None, Context(platform), Cache(), ParseConfiguration(configuration))
-    }
+  private def build(file: String, hint: Hint): Future[BaseUnit] = {
+    val url           = s"file://$directory$file"
+    val configuration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    AMFParser.parse(url, configuration).map(_.bu)
+  }
 
   private def runTest(file: String, hint: Hint): Future[Assertion] =
     build(file, hint).map { bu =>

@@ -1,8 +1,11 @@
 package amf.maker
 
+import amf.client.environment.AMFConfiguration
+import amf.client.parse.IgnoringErrorHandler
 import amf.compiler.CompilerTestBuilder
 import amf.core.annotations.SourceAST
 import amf.core.model.document.Document
+import amf.core.remote.{Oas20YamlHint, Raml10YamlHint}
 import amf.core.remote.{Oas20YamlHint, Raml10, Raml10YamlHint}
 import amf.facades.Validation
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorResponse
@@ -19,14 +22,11 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
 
   override val executionContext: ExecutionContext = global
 
-  test("Invalid link to Response with ast") {
-    Validation(platform)
-      .flatMap(v => {
+  override def defaultConfig: AMFConfiguration =
+    super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
 
-        build("file://amf-client/shared/src/test/resources/invalids/error-response.yaml",
-              Oas20YamlHint,
-              validation = Some(v))
-      })
+  test("Invalid link to Response with ast") {
+    build("file://amf-client/shared/src/test/resources/invalids/error-response.oas", Oas20YamlHint)
       .map(unit => {
         val api      = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
         val response = api.endPoints.head.operations.head.responses.head
@@ -38,13 +38,8 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Invalid link to Trait with ast") {
-    Validation(platform)
-      .flatMap(v => {
 
-        build("file://amf-client/shared/src/test/resources/invalids/error-trait.raml",
-              Raml10YamlHint,
-              validation = Some(v))
-      })
+    build("file://amf-client/shared/src/test/resources/invalids/error-trait.raml", Raml10YamlHint)
       .map(unit => {
         val api      = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
         val badTrait = api.endPoints.head.operations.head.extend.head
@@ -62,13 +57,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Invalid link to resource type with ast") {
-    Validation(platform)
-      .flatMap(v => {
-
-        build("file://amf-client/shared/src/test/resources/invalids/error-resource-type.raml",
-              Raml10YamlHint,
-              validation = Some(v))
-      })
+    build("file://amf-client/shared/src/test/resources/invalids/error-resource-type.raml", Raml10YamlHint)
       .map(unit => {
         val api         = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
         val badResource = api.endPoints.head.extend.head
@@ -93,13 +82,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Invalid link to security scheme type with ast") {
-    Validation(platform)
-      .flatMap(v => {
-
-        build("file://amf-client/shared/src/test/resources/invalids/error-security-scheme.raml",
-              Raml10YamlHint,
-              validation = Some(v))
-      })
+    build("file://amf-client/shared/src/test/resources/invalids/error-security-scheme.raml", Raml10YamlHint)
       .map(unit => {
         val declaration = unit.asInstanceOf[Document].declares.head
         assert(declaration.isInstanceOf[SecurityScheme])
@@ -110,13 +93,8 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
       })
   }
   test("Invalid link to named example with ast") {
-    Validation(platform)
-      .flatMap(v => {
 
-        build("file://amf-client/shared/src/test/resources/invalids/error-named-example.raml",
-              Raml10YamlHint,
-              validation = Some(v))
-      })
+    build("file://amf-client/shared/src/test/resources/invalids/error-named-example.raml", Raml10YamlHint)
       .map(unit => {
         val declaration = unit.asInstanceOf[Document].declares.head
         assert(declaration.isInstanceOf[AnyShape])

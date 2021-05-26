@@ -1,5 +1,7 @@
 package amf.compiler
 
+import amf.client.environment.AMFConfiguration
+import amf.client.parse.IgnoringErrorHandler
 import amf.core.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfObject, Shape}
@@ -16,6 +18,8 @@ import scala.concurrent.ExecutionContext
 class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder with Matchers {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
+  override def defaultConfig: AMFConfiguration =
+    super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
   test("test full raml") {
     build("file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml", Raml10YamlHint) map {
       checkAnnotation

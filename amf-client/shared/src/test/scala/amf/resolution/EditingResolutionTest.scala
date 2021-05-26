@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.client.environment.AMFConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
@@ -573,7 +574,7 @@ class EditingResolutionTest extends ResolutionTest {
   multiGoldenTest("References to message definitions", "message-references.%s") { config =>
     cycle("message-references.yaml",
           config.golden,
-          AsyncYamlHint,
+          Async20YamlHint,
           target = Amf,
           resolutionPath + "async20/",
           renderOptions = Some(config.renderOptions))
@@ -806,8 +807,8 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    new AMFRenderer(unit, config.target, defaultRenderOptions, config.syntax).renderToString
+  override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): Future[String] = {
+    super.render(unit, config, amfConfig.withRenderOptions(defaultRenderOptions))
   }
 
   override def defaultRenderOptions: RenderOptions =

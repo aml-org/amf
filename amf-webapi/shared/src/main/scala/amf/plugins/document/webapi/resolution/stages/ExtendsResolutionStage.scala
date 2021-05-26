@@ -143,7 +143,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
         val branches = ListBuffer[BranchContainer]()
 
-        val operationTree = OperationTreeBuilder(operation)(IgnoringErrorHandler()).build()
+        val operationTree = OperationTreeBuilder(operation)(IgnoringErrorHandler).build()
         val branchesObj   = Branches()(extendsContext)
 
         // Method branch

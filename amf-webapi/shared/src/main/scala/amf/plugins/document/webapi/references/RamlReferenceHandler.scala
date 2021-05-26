@@ -96,7 +96,7 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends WebApiReferenceHandle
   }
 
   private def isRamlOrYaml(encodes: ExternalDomainElement) =
-    Raml10Plugin.documentSyntaxes.contains(encodes.mediaType.value())
+    encodes.mediaType.option().exists(_.contains("yaml"))
 
   private def hasDocumentAST(other: BaseUnit) =
     other.annotations.find(classOf[SourceAST]).exists(_.ast.isInstanceOf[YDocument])

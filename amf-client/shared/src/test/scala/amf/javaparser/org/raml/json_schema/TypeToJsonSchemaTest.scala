@@ -1,5 +1,7 @@
 package amf.javaparser.org.raml.json_schema
 
+import amf.client.environment.{AMFConfiguration, WebAPIConfiguration}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.environment.WebAPIConfiguration
 import amf.client.remod.amfcore.config.{RenderOptions, ShapeRenderOptions}
 import amf.core.model.document.{BaseUnit, DeclaresModel}
@@ -20,7 +22,7 @@ trait TypeToJsonSchemaTest extends ModelValidationTest {
 
   override val basePath: String = path
 
-  override def render(model: BaseUnit, d: String, vendor: Vendor): Future[String] = {
+  override def render(model: BaseUnit, d: String, vendor: Vendor, amfConfig: AMFConfiguration): Future[String] = {
     model match {
       case d: DeclaresModel =>
         d.declares.collectFirst { case s: AnyShape if s.name.is("root") => s } match {

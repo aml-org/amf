@@ -1,12 +1,8 @@
 package amf.maker
 
 import amf.client.environment.RAMLConfiguration
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.compiler.CompilerTestBuilder
-import amf.core.remote.{Raml08YamlHint, Raml10YamlHint}
 import amf.core.validation.SeverityLevels
-import amf.facades.Validation
 import amf.{ProfileName, Raml08Profile, Raml10Profile}
 import org.scalatest.AsyncFunSuite
 
@@ -46,7 +42,6 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
       val config = RAMLConfiguration.RAML()
       val client = config.createClient()
       for {
-        validation  <- Validation(platform)
         parseResult <- client.parse(basePath + f.file)
         report      <- client.validate(parseResult.bu, f.profileName)
         unifiedReport <- Future.successful(

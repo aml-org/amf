@@ -149,13 +149,18 @@ object Oas20Plugin extends OasPlugin {
   // TODO: Temporary, should be erased until synchronous validation profile building for dialects is implemented
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Oas20ValidationProfile)
 
-  override val vendors: Seq[String] = Seq(vendor.name)
+  override val vendors: Seq[String] = Seq(
+    "application/oas20+json",
+    "application/oas20+yaml",
+    "application/oas20",
+    "application/swagger+json",
+    "application/swagger20+json",
+    "application/swagger+yaml",
+    "application/swagger20+yaml",
+    "application/swagger",
+    "application/swagger20"
+  )
 
-  /**
-    * List of media types used to encode serialisations of
-    * this domain
-    */
-  override def documentSyntaxes: Seq[String] = Oas20.mediaType +: super.documentSyntaxes
 }
 
 object Oas30Plugin extends OasPlugin {
@@ -224,5 +229,12 @@ object Oas30Plugin extends OasPlugin {
   // TODO: Temporary, should be erased until synchronous validation profile building for dialects is implemented
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(ApiValidationProfiles.Oas30ValidationProfile)
 
-  override val vendors: Seq[String] = Seq(vendor.name)
+  override val vendors: Seq[String] = Seq(
+    "application/oas30+json",
+    "application/oas30+yaml",
+    "application/oas30",
+    "application/openapi30",
+    "application/openapi30+yaml",
+    "application/openapi30+json"
+  )
 }

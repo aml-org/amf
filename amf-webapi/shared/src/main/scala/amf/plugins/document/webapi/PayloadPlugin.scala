@@ -22,7 +22,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
 
   override val ID: String = Payload.name
 
-  val vendors: Seq[String] = Seq(Payload.name)
+  val vendors: Seq[String] = Seq(Payload.mediaType, "application/payload+json", "application/payload+yaml")
 
   override def modelEntities: Nil.type = Nil
 

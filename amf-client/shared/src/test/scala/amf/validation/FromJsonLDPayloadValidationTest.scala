@@ -2,7 +2,7 @@ package amf.validation
 
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
-import amf.plugins.features.validation.PlatformValidator
+import amf.plugins.features.validation.{AMFValidatorPlugin, PlatformValidator}
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ShaclJsonLdShapeGraphEmitter}
 import amf.{AmfProfile, Oas20Profile, Oas30Profile, Raml10Profile}
 import org.scalatest.AsyncFunSuite
@@ -57,8 +57,8 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     platform.resolve(path + file).flatMap { data =>
       val model = data.stream.toString
       Validation(platform).flatMap { validation =>
-        val effectiveValidations = validation.computeValidations(expectedReport.profile)
-        val shapes               = validation.shapesGraph(effectiveValidations)
+        val effectiveValidations = AMFValidatorPlugin.computeValidations(expectedReport.profile)
+        val shapes               = AMFValidatorPlugin.shapesGraph(effectiveValidations)
         val jsLibrary            = new JSLibraryEmitter(None).emitJS(effectiveValidations.effective.values.toSeq)
 
         jsLibrary match {

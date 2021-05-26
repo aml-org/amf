@@ -203,7 +203,7 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
         stderr = stderr,
         proc = proc
       ),
-      AMLConfiguration.predefined()
+      WebAPIConfiguration.WebAPI()
     ) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")

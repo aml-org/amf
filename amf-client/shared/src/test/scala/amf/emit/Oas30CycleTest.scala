@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.core.remote.Syntax.{Json, Yaml}
 import amf.core.remote._
 import amf.io.FunSuiteCycleTests
 
@@ -22,7 +23,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cycleOas2ToOas3.foreach { f =>
     test(s"${f.name} - oas2 to oas3") {
-      cycle(f.apiFrom, f.apiTo, Oas20JsonHint, Oas30)
+      cycle(f.apiFrom, f.apiTo, Oas20JsonHint, Oas30, syntax = Some(Json))
     }
   }
 
@@ -63,7 +64,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cyclesOas3.foreach { f =>
     test(s"${f.name} - oas3 to oas3") {
-      cycle(f.apiFrom, f.apiTo, Oas30JsonHint, Oas30)
+      cycle(f.apiFrom, f.apiTo, Oas30JsonHint, Oas30, syntax = Some(Json))
     }
   }
 
@@ -71,10 +72,11 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   cyclesRamlOas3.foreach { f =>
     test(s"${f.name} - raml to oas3") {
-      cycle(f.apiFrom, f.apiTo, Raml10YamlHint, Oas30)
+      cycle(f.apiFrom, f.apiTo, Raml10YamlHint, Oas30, syntax = Some(Json))
     }
   }
 
+  // TODO: jajaja
   val cyclesOas3Amf: Seq[FixtureData] = Nil
 
   cyclesOas3Amf.foreach { f =>

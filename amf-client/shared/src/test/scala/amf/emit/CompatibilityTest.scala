@@ -3,12 +3,13 @@ package amf.emit
 import amf.ProfileName
 import amf.client.environment.WebAPIConfiguration
 import amf.client.parse.DefaultErrorHandler
-import amf.client.remod.ParseConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
+import amf.core.AMFCompiler
+import amf.client.remod.{AMFParser, AMFValidator}
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.core.services.{RuntimeCompiler, RuntimeValidator}
+import amf.core.services.RuntimeValidator
 import amf.facades.Validation
 import amf.internal.resource.StringResourceLoader
 import amf.io.FileAssertionTest
@@ -34,7 +35,6 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   private def compatibility(source: String, l: Hint, r: Hint): Future[Assertion] = {
     for {
-      _      <- Validation(platform)
       input  <- fs.asyncFile(basePath + source).read()
       left   <- parseBaseUnit(input.toString, l)
       target <- new AMFRenderer(left, r.vendor, RenderOptions(), Some(r.syntax)).renderToString
@@ -51,14 +51,8 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
       .withErrorHandlerProvider(() => eh)
       .withResourceLoader(StringResourceLoader("amf://id#", content))
     for {
-      unit <- RuntimeCompiler(
-        "amf://id#",
-        Some(hint.vendor.mediaType),
-        Context(platform),
-        cache = Cache(),
-        ParseConfiguration(conf)
-      )
-      _ <- RuntimeValidator(unit, ProfileName(hint.vendor.name), resolved = false, new ValidationConfiguration(conf))
-    } yield unit
+      unit <- AMFParser.parse("amf://id#", conf)
+      _    <- AMFValidator.validate(unit.bu, ProfileName(hint.vendor.name), conf)
+    } yield unit.bu
   }
 }

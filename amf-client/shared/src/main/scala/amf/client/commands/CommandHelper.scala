@@ -1,21 +1,19 @@
 package amf.client.commands
 
 import amf.client.convert.WebApiRegister
-import amf.client.environment.AMLConfiguration
+import amf.client.environment.{AMFConfiguration, AMLConfiguration, AMLDialectResult}
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.resolution.PipelineName
 import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
+import amf.core.AMFCompiler
 import amf.core.client.ParserConfig
-import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.services.{RuntimeCompiler, RuntimeResolver, RuntimeSerializer}
-import amf.plugins.document.Vocabularies
 import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi._
+import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 
@@ -44,12 +42,13 @@ trait CommandHelper {
     else if (inputFile.startsWith("/")) s"file:/$inputFile"
     else s"file://$inputFile"
 
-  protected def processDialects(config: ParserConfig, configuration: AMLConfiguration): Future[AMLConfiguration] = {
+  protected def processDialects(config: ParserConfig, configuration: AMFConfiguration): Future[AMFConfiguration] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    val dialectFutures                     = config.dialects.map(dialect => AMLPlugin().registry.registerDialect(dialect))
-    Future.sequence(dialectFutures) map (dialects =>
-      dialects.foldLeft(configuration) {
-        case (conf, dialect) => conf.withDialect(dialect)
+    val dialectFutures: Seq[Future[AMLDialectResult]] =
+      config.dialects.map(dialect => configuration.createClient().parseDialect(dialect))
+    Future.sequence(dialectFutures) map (results =>
+      results.foldLeft(configuration) {
+        case (conf, r) => conf.withDialect(r.dialect)
       })
   }
 
@@ -74,13 +73,13 @@ trait CommandHelper {
     val vendor                             = effectiveVendor(config.inputFormat)
     if (config.resolve && config.validate) {
       val inputFile = ensureUrl(config.input.get)
-      val parsed = RuntimeCompiler(
+      val parsed = AMFCompiler(
         inputFile,
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
         Context(platform),
         cache = Cache(),
         ParseConfiguration(configuration)
-      )
+      ).build()
       parsed map { parsed =>
         configClient.transform(parsed, PipelineName.from(vendor, TransformationPipeline.DEFAULT_PIPELINE)).bu
       }

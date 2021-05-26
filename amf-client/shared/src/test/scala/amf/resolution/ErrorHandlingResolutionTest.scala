@@ -1,4 +1,8 @@
 package amf.resolution
+import amf.ProfileName
+import amf.client.environment.AMFConfiguration
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.client.parse.{DefaultErrorHandler, IgnoringErrorHandler}
 import amf.core.annotations.LexicalInformation
 import amf.core.errorhandling.AMFErrorHandler
@@ -61,14 +65,13 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   }
 
   private def errorCycle(source: String, hint: Hint, errors: List[AMFValidationResult], path: String) = {
-    val config = CycleConfig(source, source, hint, hint.vendor, path, Some(hint.syntax), None)
-    val eh     = DefaultErrorHandler()
-
+    val config    = CycleConfig(source, source, hint, hint.vendor, path, Some(hint.syntax), None)
+    val eh        = DefaultErrorHandler()
+    val amfConfig = buildConfig(None, None) // need to ignore parsing errors, apparently
     for {
-      _ <- Validation(platform)
-      u <- build(config, Some(IgnoringErrorHandler()), useAmfJsonldSerialisation = true)
+      u <- build(config, amfConfig)
       _ <- {
-        Future { transform(u, config, eh) }
+        Future { transform(u, config, amfConfig.withErrorHandlerProvider(() => eh)) }
       }
     } yield {
       assertErrors(errors, eh.getResults)
@@ -90,11 +93,13 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
     // location and position?
   }
 
-  private def transform(unit: BaseUnit, config: CycleConfig, eh: AMFErrorHandler): BaseUnit = {
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        RuntimeResolver.resolve(config.target.name, unit, DEFAULT_PIPELINE, eh)
-      case Amf    => TransformationPipelineRunner(eh).run(unit, AmfTransformationPipeline())
+        amfConfig.createClient().transform(unit, PipelineName.from(config.target.name, DEFAULT_PIPELINE)).bu
+      case Amf =>
+        TransformationPipelineRunner(amfConfig.errorHandlerProvider.errorHandler())
+          .run(unit, AmfTransformationPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }

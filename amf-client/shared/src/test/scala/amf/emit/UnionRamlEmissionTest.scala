@@ -1,5 +1,7 @@
 package amf.emit
 
+import amf.client.environment.AMFConfiguration
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
@@ -14,10 +16,15 @@ class UnionRamlEmissionTest extends FunSuiteCycleTests {
 
   override val basePath = "amf-client/shared/src/test/resources/union/"
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    val res = config.pipeline match {
-      case Some(pipeline) => RuntimeResolver.resolve(Vendor.RAML10.name, unit, pipeline, UnhandledErrorHandler)
-      case None           => unit
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
+    val res: BaseUnit = config.pipeline match {
+      case Some(pipeline) =>
+        amfConfig
+          .withErrorHandlerProvider(() => UnhandledErrorHandler)
+          .createClient()
+          .transform(unit, PipelineName.from(Raml10.name, pipeline))
+          .bu
+      case None => unit
     }
     res
   }

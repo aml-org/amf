@@ -1,14 +1,14 @@
 package amf.validation
 
 import amf.Async20Profile
-import amf.core.remote.{AsyncJsonHint, AsyncYamlHint, Hint}
+import amf.core.remote.{Async20JsonHint, Async20YamlHint, Hint}
 import org.scalatest.Matchers
 
 class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest with Matchers {
   val asyncPath: String            = "file://amf-client/shared/src/test/resources/validations/async20/"
   override val basePath: String    = asyncPath + "validations/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/async20/"
-  override val hint: Hint          = AsyncYamlHint
+  override val hint: Hint          = Async20YamlHint
 
   test("Required channel object") {
     validate("required-channels.yaml", Some("required-channels.report"), Async20Profile)
@@ -245,7 +245,10 @@ class Async20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTe
   }
 
   test("JSON with duplicate keys") {
-    validate("duplicate-keys.json", Some("duplicate-keys.report"), Async20Profile, overridedHint = Some(AsyncJsonHint))
+    validate("duplicate-keys.json",
+             Some("duplicate-keys.report"),
+             Async20Profile,
+             overridedHint = Some(Async20JsonHint))
   }
 
   test("Components must use keys with certain regex") {

@@ -1,5 +1,7 @@
 package amf.compiler
 
+import amf.client.environment.AMFConfiguration
+import amf.client.parse.IgnoringErrorHandler
 import amf.core.annotations.{LexicalInformation, ReferenceTargets, SourceAST}
 import amf.core.model.document.Document
 import amf.core.model.domain.NamedDomainElement
@@ -18,6 +20,8 @@ import scala.concurrent.ExecutionContext
 class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
+  override def defaultConfig: AMFConfiguration =
+    super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
   test("test source and lexical info in response name oas") {
     for {
       unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/oas-responses.yaml",

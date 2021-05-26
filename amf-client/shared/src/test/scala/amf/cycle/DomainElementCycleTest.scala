@@ -48,13 +48,11 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
   override protected def beforeAll(): Unit = WebApiRegister.register(platform)
 
   private def build(config: EmissionConfig, eh: Option[AMFErrorHandler]): Future[BaseUnit] = {
-    Validation(platform).flatMap { _ =>
-      val amfConfig = WebAPIConfiguration
-        .WebAPI()
-        .merge(AsyncAPIConfiguration.Async20())
-        .withErrorHandlerProvider(() => eh.getOrElse(UnhandledErrorHandler))
-      amfConfig.createClient().parse(s"file://${config.sourcePath}").map(_.bu)
-    }
+    val amfConfig = WebAPIConfiguration
+      .WebAPI()
+      .merge(AsyncAPIConfiguration.Async20())
+      .withErrorHandlerProvider(() => eh.getOrElse(UnhandledErrorHandler))
+    amfConfig.createClient().parse(s"file://${config.sourcePath}").map(_.bu)
   }
 
   private def render(element: Option[DomainElement]): Future[String] = {

@@ -1,5 +1,7 @@
 package amf.ls
 
+import amf.client.environment.AMFConfiguration
+import amf.client.parse.DefaultErrorHandler
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.Document
 import amf.core.model.domain.templates.ParametrizedDeclaration
@@ -17,6 +19,8 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   private val file = "file://amf-client/shared/src/test/resources/ls/resource-type-trait.raml"
 
+  override def defaultConfig: AMFConfiguration =
+    super.defaultConfig.withErrorHandlerProvider(() => DefaultErrorHandler())
   test("Parse resource type from model.") {
     build(file, Raml10YamlHint)
       .map(_.asInstanceOf[Document])

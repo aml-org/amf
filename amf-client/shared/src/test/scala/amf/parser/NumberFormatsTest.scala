@@ -36,10 +36,10 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
 
   cases.foreach { ex =>
     test(s"Test data type ${ex.literalType} format ${ex.format}") {
+      val client = RAMLConfiguration.RAML10().createClient()
       for {
-        validation <- Validation(platform)
-        unit       <- RAMLConfiguration.RAML10().createClient().parseContent(ex.api)
-        dumped     <- AMFRenderer(unit.bu, Raml10, RenderOptions()).renderToString
+        unit   <- client.parseContent(ex.api)
+        dumped <- client.render(unit.bu, Raml10.mediaType)
       } yield {
         unit.bu match {
           case f: Fragment =>

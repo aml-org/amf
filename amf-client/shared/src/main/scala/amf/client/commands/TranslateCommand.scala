@@ -1,7 +1,7 @@
 package amf.client.commands
 
 import amf.ProfileName
-import amf.client.environment.AMLConfiguration
+import amf.client.environment.{AMFConfiguration, AMLConfiguration}
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.client.{ExitCodes, ParserConfig}
@@ -17,7 +17,7 @@ import scala.util.{Failure, Success}
 
 class TranslateCommand(override val platform: Platform) extends CommandHelper {
 
-  def run(parserConfig: ParserConfig, configuration: AMLConfiguration): Future[Any] = {
+  def run(parserConfig: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     val res: Future[Any] = for {
       _         <- AMFInit(configuration)
@@ -62,12 +62,11 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       }
     }
     customProfileLoaded flatMap { profileName =>
-      RuntimeValidator(model, profileName, resolved = false, new ValidationConfiguration(configuration)) map {
-        report =>
-          if (!report.conforms) {
-            config.stderr.print(report.toString)
-            config.proc.exit(ExitCodes.FailingValidation)
-          }
+      configuration.createClient().validate(model, profileName) map { report =>
+        if (!report.conforms) {
+          config.stderr.print(report.toString)
+          config.proc.exit(ExitCodes.FailingValidation)
+        }
       }
     }
   }

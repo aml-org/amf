@@ -1,9 +1,10 @@
 package amf.cycle
 
-import amf.client.remod.{AMFResult, ParseConfiguration}
+import amf.client.environment.AMFConfiguration
 import amf.client.remod.amfcore.config.ParsingOptions
+import amf.client.remod.{AMFResult, ParseConfiguration}
 import amf.core.Root
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.parser.{ParserContext, SchemaReference, SyamlParsedDocument}
 import amf.core.remote.Platform
 import amf.core.validation.AMFValidationReport
@@ -20,7 +21,7 @@ trait JsonSchemaSuite {
   protected def parseSchema(platform: Platform,
                             path: String,
                             mediatype: String,
-                            eh: AMFErrorHandler = UnhandledErrorHandler): AMFResult = {
+                            amfConfig: AMFConfiguration): AMFResult = {
     val content  = platform.fs.syncFile(path).read().toString
     val document = JsonParser.withSource(content, path).document()
     val root = Root(
@@ -32,6 +33,7 @@ trait JsonSchemaSuite {
       content
     )
     val options = ParsingOptions()
+    val eh      = amfConfig.errorHandlerProvider.errorHandler()
     val parsed  = new JsonSchemaParser().parse(root, getBogusParserCtx(path, options, eh), options, None)
     val unit    = wrapInDataTypeFragment(root, parsed)
     AMFResult(unit, AMFValidationReport.forModel(unit, eh.getResults))

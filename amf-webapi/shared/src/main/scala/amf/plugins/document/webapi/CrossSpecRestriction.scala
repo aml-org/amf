@@ -14,7 +14,7 @@ trait CrossSpecRestriction { this: AMFDocumentPlugin =>
       implicit errorHandler: AMFErrorHandler): Unit = {
     val possibleReferencedVendors = vendors ++ validVendorsToReference
     optionalReferencedVendor.foreach { referencedVendor =>
-      if (!possibleReferencedVendors.contains(referencedVendor.name)) {
+      if (!possibleReferencedVendors.contains(referencedVendor.mediaType)) {
         referenceNodes(reference).foreach(node =>
           errorHandler.violation(InvalidCrossSpec, "", "Cannot reference fragments of another spec", node))
       }

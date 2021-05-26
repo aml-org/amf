@@ -4,9 +4,9 @@ import amf.client.environment.WebAPIConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.{ErrorHandlerProvider, ParseConfiguration}
 import amf.client.remote.Content
+import amf.core.AMFCompiler
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.remote.{Cache, Context, FileNotFound}
-import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.internal.resource.ResourceLoader
@@ -37,8 +37,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
     val ehp = new ErrorHandlerProvider {
       override def errorHandler(): AMFErrorHandler = eh
     }
-    RuntimeCompiler
-      .apply(
+    AMFCompiler(
         url,
         None,
         base = Context(platform),
@@ -48,7 +47,7 @@ class ApikitApiSyncCasesTest extends AsyncBeforeAndAfterEach with PlatformSecret
             .WebAPI()
             .withResourceLoaders(List(new URNResourceLoader(mappings)))
             .withErrorHandlerProvider(ehp))
-      )
+      ).build()
       .map { _ =>
         eh.getResults should have size 0
       }
