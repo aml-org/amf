@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "AmfParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#19",
       "@type": [
         "apiContract:WebAPI",
@@ -30,9 +52,6 @@
           "core:name": "[(2,0)-(4,0)]",
           "#19": "[(2,0)-(28,47)]",
           "apiContract:accepts": "[(4,0)-(6,0)]"
-        },
-        "source-vendor": {
-          "#19": "RAML 1.0"
         }
       }
     },
@@ -314,14 +333,11 @@
         "resolved-link-target": {
           "#11": "amf://id#2"
         },
-        "source-vendor": {
-          "#11": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#11": "[(2,0)-(2,4)]"
         },
         "lexical": {
           "#11": "[(2,0)-(5,14)]"
-        },
-        "type-property-lexical-info": {
-          "#11": "[(2,0)-(2,4)]"
         },
         "resolved-link": {
           "#11": "amf://id#11"
@@ -755,8 +771,10 @@
       "doc:encodes": {
         "@id": "#19"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     },
     {
       "@id": "#1",
@@ -768,8 +786,10 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#1/unitActions"
+      },
       "smaps": {
         "lexical": {
           "#1": "[(1,0)-(5,14)]"
@@ -786,8 +806,10 @@
       "doc:encodes": {
         "@id": "#8"
       },
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#7/unitActions"
+      },
       "smaps": {
         "lexical": {
           "#7": "[(1,0)-(8,13)]"
@@ -804,8 +826,10 @@
       "doc:encodes": {
         "@id": "#10"
       },
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#9/unitActions"
+      },
       "smaps": {
         "lexical": {
           "#9": "[(1,0)-(4,14)]"
@@ -835,16 +859,21 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#2": "[(2,0)-(2,4)]"
-        },
         "lexical": {
           "#2": "[(2,0)-(5,14)]"
         },
-        "source-vendor": {
-          "#2": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#2": "[(2,0)-(2,4)]"
         }
       }
+    },
+    {
+      "@id": "#1/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     },
     {
       "@id": "#8",
@@ -853,12 +882,15 @@
         "doc:DomainElement"
       ],
       "doc:raw": "#%RAML 1.0 NamedExample\nemployees:\n  -\n    id: 1\n    name: Jhon\n  -\n    id: 2\n    name: Sam",
-      "core:mediaType": "application/raml+yaml",
-      "smaps": {
-        "source-vendor": {
-          "#8": "RAML 1.0"
-        }
-      }
+      "core:mediaType": "application/raml+yaml"
+    },
+    {
+      "@id": "#7/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     },
     {
       "@id": "#10",
@@ -867,12 +899,15 @@
         "doc:DomainElement"
       ],
       "doc:raw": "#%RAML 1.0 NamedExample\nemployee:\n  id: 1\n  name: \"Jhon\"",
-      "core:mediaType": "application/raml+yaml",
-      "smaps": {
-        "source-vendor": {
-          "#10": "RAML 1.0"
-        }
-      }
+      "core:mediaType": "application/raml+yaml"
+    },
+    {
+      "@id": "#9/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     }
   ],
   "@context": {
@@ -884,6 +919,7 @@
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

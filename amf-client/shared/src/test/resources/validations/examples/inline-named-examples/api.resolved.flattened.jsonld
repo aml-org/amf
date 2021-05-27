@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "AmfParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#29",
       "@type": [
         "apiContract:WebAPI",
@@ -18,9 +40,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#29": "RAML 1.0"
-        },
         "lexical": {
           "core:name": "[(3,0)-(6,0)]",
           "#29": "[(3,0)-(37,3)]"
@@ -405,14 +424,11 @@
         "resolved-link-target": {
           "#20": "amf://id#2"
         },
-        "source-vendor": {
-          "#20": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#20": "[(2,0)-(2,4)]"
         },
         "lexical": {
           "#20": "[(2,0)-(20,0)]"
-        },
-        "type-property-lexical-info": {
-          "#20": "[(2,0)-(2,4)]"
         },
         "resolved-link": {
           "#20": "amf://id#20"
@@ -1536,8 +1552,10 @@
       "doc:encodes": {
         "@id": "#29"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     },
     {
       "@id": "#1",
@@ -1549,8 +1567,10 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#1/unitActions"
+      },
       "smaps": {
         "lexical": {
           "#1": "[(1,0)-(20,0)]"
@@ -1567,8 +1587,10 @@
       "doc:encodes": {
         "@id": "#17"
       },
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#16/unitActions"
+      },
       "smaps": {
         "lexical": {
           "#16": "[(1,0)-(15,3)]"
@@ -1585,8 +1607,10 @@
       "doc:encodes": {
         "@id": "#19"
       },
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#18/unitActions"
+      },
       "smaps": {
         "lexical": {
           "#18": "[(1,0)-(9,0)]"
@@ -1619,16 +1643,21 @@
         "synthesized-field": {
           "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#2": "[(2,0)-(2,4)]"
-        },
         "lexical": {
           "#2": "[(2,0)-(20,0)]"
         },
-        "source-vendor": {
-          "#2": "RAML 1.0"
+        "type-property-lexical-info": {
+          "#2": "[(2,0)-(2,4)]"
         }
       }
+    },
+    {
+      "@id": "#1/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     },
     {
       "@id": "#17",
@@ -1637,12 +1666,15 @@
         "doc:DomainElement"
       ],
       "doc:raw": "#%RAML 1.0 NamedExample\nvalue:\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   ",
-      "core:mediaType": "application/raml+yaml",
-      "smaps": {
-        "source-vendor": {
-          "#17": "RAML 1.0"
-        }
-      }
+      "core:mediaType": "application/raml+yaml"
+    },
+    {
+      "@id": "#16/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     },
     {
       "@id": "#19",
@@ -1651,12 +1683,15 @@
         "doc:DomainElement"
       ],
       "doc:raw": "#%RAML 1.0 NamedExample\nvalue:\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n",
-      "core:mediaType": "application/raml+yaml",
-      "smaps": {
-        "source-vendor": {
-          "#19": "RAML 1.0"
-        }
-      }
+      "core:mediaType": "application/raml+yaml"
+    },
+    {
+      "@id": "#18/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     }
   ],
   "@context": {
@@ -1668,6 +1703,7 @@
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
     "core": "http://a.ml/vocabularies/core#",
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

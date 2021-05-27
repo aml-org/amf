@@ -472,34 +472,32 @@
                   }
                 ]
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles2/api.raml#/web-api/source-map/source-vendor/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles2/api.raml#/web-api"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "RAML 0.8"
-                  }
-                ]
-              }
             ]
           }
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/meta#unitActions": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles2/api.raml/unitActions",
+        "@type": [
+          "http://a.ml/vocabularies/meta#AmfProcessingData"
+        ],
+        "http://a.ml/vocabularies/meta#version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "http://a.ml/vocabularies/meta#sourceVendor": [
+          {
+            "@value": "RAML 0.8"
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document#references": [
@@ -552,11 +550,6 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#references": [
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/b.json",
@@ -607,14 +600,22 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document#version": [
-              {
-                "@value": "3.1.0"
-              }
-            ],
             "http://a.ml/vocabularies/document#root": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/meta#unitActions": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/b.json/unitActions",
+                "@type": [
+                  "http://a.ml/vocabularies/meta#AmfProcessingData"
+                ],
+                "http://a.ml/vocabularies/meta#version": [
+                  {
+                    "@value": "3.1.0"
+                  }
+                ]
               }
             ]
           }
@@ -622,6 +623,19 @@
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/meta#unitActions": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/a.json/unitActions",
+            "@type": [
+              "http://a.ml/vocabularies/meta#AmfProcessingData"
+            ],
+            "http://a.ml/vocabularies/meta#version": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ]
       }

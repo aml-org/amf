@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "amf://id/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "OAS 3.0",
+      "http://a.ml/vocabularies/meta#unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "AmfParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "amf://id#47",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -64,11 +86,6 @@
       "@id": "amf://id#47/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "amf://id#47/source-map/source-vendor/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -147,11 +164,6 @@
           "@id": "amf://id#54/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "amf://id#47/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "amf://id#47",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 3.0"
     },
     {
       "@id": "amf://id#47/source-map/lexical/element_3",
@@ -3183,8 +3195,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "amf://id#47"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "amf://id/unitActions"
+      }
     }
   ]
 }

@@ -1116,9 +1116,6 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#5": "RAML 0.8"
-          },
           "lexical": {
             "core:name": "[(2,0)-(4,0)]",
             "#5": "[(2,0)-(11,45)]"
@@ -1126,14 +1123,65 @@
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "meta:unitActions": [
+      {
+        "@id": "/unitActions",
+        "@type": [
+          "meta:AmfProcessingData"
+        ],
+        "meta:version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "meta:sourceVendor": [
+          {
+            "@value": "RAML 0.8"
+          }
+        ],
+        "meta:unitTransformations": [
+          {
+            "@value": "WebApiReferenceResolutionStage"
+          },
+          {
+            "@value": "ExtensionsResolutionStage"
+          },
+          {
+            "@value": "ShapeNormalizationStage"
+          },
+          {
+            "@value": "SecurityResolutionStage"
+          },
+          {
+            "@value": "OpenApiParametersNormalizationStage"
+          },
+          {
+            "@value": "ServersNormalizationStage"
+          },
+          {
+            "@value": "PathDescriptionNormalizationStage"
+          },
+          {
+            "@value": "MediaTypeResolutionStage"
+          },
+          {
+            "@value": "ResponseExamplesResolutionStage"
+          },
+          {
+            "@value": "PayloadAndParameterResolutionStage"
+          },
+          {
+            "@value": "AnnotationRemovalStage"
+          },
+          {
+            "@value": "UrlShortenerStage"
+          }
+        ]
       }
     ],
     "doc:references": [
@@ -1168,14 +1216,22 @@
             }
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#1/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ]
       },
@@ -1210,14 +1266,22 @@
             }
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#3/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ]
       }
@@ -1231,6 +1295,7 @@
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
       "core": "http://a.ml/vocabularies/core#",
+      "meta": "http://a.ml/vocabularies/meta#",
       "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     }
   }

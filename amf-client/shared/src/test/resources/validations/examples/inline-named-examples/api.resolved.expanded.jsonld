@@ -1189,9 +1189,6 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#29": "RAML 1.0"
-          },
           "lexical": {
             "core:name": "[(3,0)-(6,0)]",
             "#29": "[(3,0)-(37,3)]"
@@ -1199,14 +1196,65 @@
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "meta:unitActions": [
+      {
+        "@id": "/unitActions",
+        "@type": [
+          "meta:AmfProcessingData"
+        ],
+        "meta:version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "meta:sourceVendor": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ],
+        "meta:unitTransformations": [
+          {
+            "@value": "WebApiReferenceResolutionStage"
+          },
+          {
+            "@value": "ExtensionsResolutionStage"
+          },
+          {
+            "@value": "ShapeNormalizationStage"
+          },
+          {
+            "@value": "SecurityResolutionStage"
+          },
+          {
+            "@value": "AmfParametersNormalizationStage"
+          },
+          {
+            "@value": "ServersNormalizationStage"
+          },
+          {
+            "@value": "PathDescriptionNormalizationStage"
+          },
+          {
+            "@value": "MediaTypeResolutionStage"
+          },
+          {
+            "@value": "ResponseExamplesResolutionStage"
+          },
+          {
+            "@value": "PayloadAndParameterResolutionStage"
+          },
+          {
+            "@value": "AnnotationRemovalStage"
+          },
+          {
+            "@value": "UrlShortenerStage"
+          }
+        ]
       }
     ],
     "doc:references": [
@@ -1635,26 +1683,36 @@
               "synthesized-field": {
                 "shacl:closed": "true"
               },
-              "type-property-lexical-info": {
-                "#2": "[(2,0)-(2,4)]"
-              },
               "lexical": {
                 "#2": "[(2,0)-(20,0)]"
               },
-              "source-vendor": {
-                "#2": "RAML 1.0"
+              "type-property-lexical-info": {
+                "#2": "[(2,0)-(2,4)]"
               }
             }
-          }
-        ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
           }
         ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#1/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "meta:sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "smaps": {
@@ -1686,22 +1744,30 @@
               {
                 "@value": "application/raml+yaml"
               }
-            ],
-            "smaps": {
-              "source-vendor": {
-                "#17": "RAML 1.0"
-              }
-            }
-          }
-        ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
+            ]
           }
         ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#16/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "meta:sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "smaps": {
@@ -1733,22 +1799,30 @@
               {
                 "@value": "application/raml+yaml"
               }
-            ],
-            "smaps": {
-              "source-vendor": {
-                "#19": "RAML 1.0"
-              }
-            }
-          }
-        ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
+            ]
           }
         ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#18/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "meta:sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "smaps": {
@@ -2405,14 +2479,11 @@
           "resolved-link-target": {
             "#20": "amf://id#2"
           },
-          "source-vendor": {
-            "#20": "RAML 1.0"
+          "type-property-lexical-info": {
+            "#20": "[(2,0)-(2,4)]"
           },
           "lexical": {
             "#20": "[(2,0)-(20,0)]"
-          },
-          "type-property-lexical-info": {
-            "#20": "[(2,0)-(2,4)]"
           },
           "resolved-link": {
             "#20": "amf://id#20"
@@ -2432,6 +2503,7 @@
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
       "core": "http://a.ml/vocabularies/core#",
+      "meta": "http://a.ml/vocabularies/meta#",
       "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     }
   }

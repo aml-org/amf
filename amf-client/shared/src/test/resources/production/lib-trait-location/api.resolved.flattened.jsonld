@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "AmfParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#8",
       "@type": [
         "apiContract:WebAPI",
@@ -15,9 +37,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#8": "RAML 1.0"
-        },
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
           "#8": "[(2,0)-(8,14)]"
@@ -277,8 +296,10 @@
       "doc:encodes": {
         "@id": "#8"
       },
-      "doc:version": "3.1.0",
       "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      },
       "smaps": {
         "aliases-array": {
           "": "lib->amf://id#1::lib.raml"
@@ -296,16 +317,23 @@
           "@id": "#2"
         }
       ],
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#1/unitActions"
+      },
       "smaps": {
-        "source-vendor": {
-          "#1": "RAML 1.0"
-        },
         "lexical": {
           "#1": "[(1,0)-(6,12)]"
         }
       }
+    },
+    {
+      "@id": "#1/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     }
   ],
   "@context": {
@@ -315,6 +343,7 @@
     "data": "http://a.ml/vocabularies/data#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

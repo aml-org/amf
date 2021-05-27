@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "ASYNC 2.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/async-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#AsyncAPI",
@@ -65,11 +73,6 @@
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/async-api/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/async-api/source-map/source-vendor/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -140,11 +143,6 @@
           "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/async-api/end-points/smartylighting%2Fstreetlights%2F1%2F0%2Fevent%2F%7BstreetlightId%7D%2Flighting%2Fmeasured/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/async-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/async-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "ASYNC 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/async-api/source-map/lexical/element_5",
@@ -1588,8 +1586,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml#/async-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/validations/async20/message-obj.yaml/unitActions"
+      }
     }
   ]
 }

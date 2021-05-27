@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0"
+    },
+    {
       "@id": "/scalar/main",
       "@type": [
         "raml-shapes:ScalarShape",
@@ -28,14 +35,17 @@
       "doc:encodes": {
         "@id": "/scalar/main"
       },
-      "doc:version": "3.1.0",
-      "doc:root": false
+      "doc:root": false,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     }
   ],
   "@context": {
     "@base": "file://amf-client/shared/src/test/resources/cycle/jsonschema/draft-7/content.json",
     "shacl": "http://www.w3.org/ns/shacl#",
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
-    "doc": "http://a.ml/vocabularies/document#"
+    "doc": "http://a.ml/vocabularies/document#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

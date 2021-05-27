@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -20,11 +28,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/lexical/element_1"
@@ -33,11 +36,6 @@
           "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api/source-map/lexical/element_1",
@@ -70,8 +68,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema-lib.xsd",
@@ -83,8 +83,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema-lib.xsd#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema-lib.xsd/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema",
@@ -116,6 +118,13 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#raw": "<xs:schema attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n    <xs:element name=\"office\" type=\"officeType\" />\n    <xs:complexType name=\"officeType\">\n        <xs:sequence>\n            <xs:element name=\"address\">\n                <xs:complexType>\n                    <xs:simpleContent>\n                        <xs:extension base=\"xs:string\">\n                            <xs:attribute type=\"xs:string\" name=\"street\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"number\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"other\"/>\n                            <xs:attribute type=\"xs:string\" name=\"city\" use=\"required\"/>\n                            <xs:attribute type=\"xs:string\" name=\"zipCode\" use=\"required\"/>\n                        </xs:extension>\n                    </xs:simpleContent>\n                </xs:complexType>\n            </xs:element>\n            <xs:element name=\"phoneNumbers\">\n                <xs:complexType>\n                    <xs:sequence>\n                        <xs:element name=\"phoneNumber\">\n                            <xs:complexType>\n                                <xs:simpleContent>\n                                    <xs:extension base=\"xs:string\">\n                                        <xs:attribute type=\"xs:string\" name=\"areaCode\" use=\"required\"/>\n                                        <xs:attribute type=\"xs:string\" name=\"number\" use=\"required\"/>\n                                    </xs:extension>\n                                </xs:simpleContent>\n                            </xs:complexType>\n                        </xs:element>\n                    </xs:sequence>\n                </xs:complexType>\n            </xs:element>\n        </xs:sequence>\n        <xs:attribute type=\"xs:string\" name=\"name\" use=\"required\"/>\n        <xs:attribute type=\"xs:short\" name=\"capacity\"/>\n    </xs:complexType>\n</xs:schema>"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema-lib.xsd/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml#/declarations/types/schema/xmlSchema/source-map",

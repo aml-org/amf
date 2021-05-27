@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "OAS 2.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -22,11 +30,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_3"
@@ -41,11 +44,6 @@
           "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_2"
         }
       ]
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "OAS 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api/source-map/lexical/element_3",
@@ -88,8 +86,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/references/data-type-fragment.json/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json",
@@ -101,8 +101,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/source-map"
@@ -153,6 +155,14 @@
           "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/type/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "OAS 2.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/references/fragments/person.json#/source-map",

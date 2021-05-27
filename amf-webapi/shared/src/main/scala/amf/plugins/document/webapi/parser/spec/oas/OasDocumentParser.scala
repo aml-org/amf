@@ -90,8 +90,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     val references = ReferencesParser(document, root.location, "uses".asOasExtension, map, root.references).parse()
     parseDeclarations(root, map)
 
-    val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
-    document.set(DocumentModel.Encodes, api, Annotations.inferred())
+    val api = parseWebApi(map)
+    document
+      .set(DocumentModel.Encodes, api, Annotations.inferred())
+      .withSourceVendor(ctx.vendor.name)
 
     addDeclarationsToModel(document)
     if (references.nonEmpty)

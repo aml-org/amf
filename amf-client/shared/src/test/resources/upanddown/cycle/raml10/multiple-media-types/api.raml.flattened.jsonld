@@ -1,6 +1,14 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#sourceVendor": "RAML 1.0"
+    },
+    {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api",
       "@type": [
         "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -118,11 +126,6 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/source-map/lexical/element_5"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/source-map/source-vendor/element_0"
         }
       ]
     },
@@ -247,11 +250,6 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/source-map/lexical/element_5",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#accepts",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(5,0)]"
-    },
-    {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api",
-      "http://a.ml/vocabularies/document-source-maps#value": "RAML 1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/http%3A%2F%2Flocalhost%3A8081%2Fapi/source-map/lexical/element_0",
@@ -885,8 +883,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/included.raml",
@@ -898,8 +898,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/included.raml#/external"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": false
+      "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/included.raml/unitActions"
+      }
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/declarations/types/jsonSchema",
@@ -960,6 +962,13 @@
       ],
       "http://a.ml/vocabularies/document#raw": "displayName: Transaction Queue\ndescription: A queue that is used to push transactions onto the ESB for processing.\npost:\n  description: Add a new transaction to the queue.\n  body:\n    application/json:\n      type: jsonSchema\n\n    text/xml:\n      type: xmlSchema\n      example: |\n        <saasTxn>\n        <tenant>100</tenant>\n        <objectType>Business Partner</objectType>\n        <objectKey>12345</objectKey>\n        <txnType>Update</txnType>\n        </saasTxn>\n  responses:\n    201:\n      description: A new transaction was created on the queue.\n      body: null\n",
       "http://a.ml/vocabularies/core#mediaType": "application/raml+yaml"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/included.raml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/declarations/types/jsonSchema/property/tenant",

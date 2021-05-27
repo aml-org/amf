@@ -236,13 +236,13 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
   }
   def apiEmitters(ordering: SpecOrdering): Seq[EntryEmitter] = {
     val model  = retrieveWebApi()
-    val vendor = model.annotations.find(classOf[SourceVendor]).map(_.vendor)
+    val vendor = document.sourceVendor
     WebApiEmitter(model, ordering, vendor, document.references).emitters
   }
 
   def emitDocument(): YDocument = {
     val doc                    = document.asInstanceOf[Document]
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, doc.encodes.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, doc)
 
     val content = spec.factory.rootLevelEmitters(doc, ordering).emitters ++ apiEmitters(ordering)
 

@@ -711,21 +711,6 @@
             "@type": [
               "sourcemaps:SourceMap"
             ],
-            "sourcemaps:source-vendor": [
-              {
-                "@id": "#/web-api/source-map/source-vendor/element_0",
-                "sourcemaps:element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api"
-                  }
-                ],
-                "sourcemaps:value": [
-                  {
-                    "@value": "RAML 0.8"
-                  }
-                ]
-              }
-            ],
             "sourcemaps:lexical": [
               {
                 "@id": "#/web-api/source-map/lexical/element_1",
@@ -758,14 +743,71 @@
         ]
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "meta:unitActions": [
+      {
+        "@id": "/unitActions",
+        "@type": [
+          "meta:AmfProcessingData"
+        ],
+        "meta:version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "meta:sourceVendor": [
+          {
+            "@value": "RAML 0.8"
+          }
+        ],
+        "meta:unitTransformations": [
+          {
+            "@value": "WebApiReferenceResolutionStage"
+          },
+          {
+            "@value": "ExternalSourceRemovalStage"
+          },
+          {
+            "@value": "ExtensionsResolutionStage"
+          },
+          {
+            "@value": "ShapeNormalizationStage"
+          },
+          {
+            "@value": "SecurityResolutionStage"
+          },
+          {
+            "@value": "OpenApiParametersNormalizationStage"
+          },
+          {
+            "@value": "ServersNormalizationStage"
+          },
+          {
+            "@value": "PathDescriptionNormalizationStage"
+          },
+          {
+            "@value": "MediaTypeResolutionStage"
+          },
+          {
+            "@value": "ResponseExamplesResolutionStage"
+          },
+          {
+            "@value": "PayloadAndParameterResolutionStage"
+          },
+          {
+            "@value": "CleanReferencesStage"
+          },
+          {
+            "@value": "DeclarationsRemovalStage"
+          },
+          {
+            "@value": "AnnotationRemovalStage"
+          }
+        ]
       }
     ],
     "@context": {
@@ -775,6 +817,7 @@
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
       "core": "http://a.ml/vocabularies/core#",
+      "meta": "http://a.ml/vocabularies/meta#",
       "sourcemaps": "http://a.ml/vocabularies/document-source-maps#"
     }
   }

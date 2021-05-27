@@ -1,6 +1,25 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "ASYNC 2.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ShapeNormalizationStage",
+        "JsonMergePatchStage",
+        "AsyncContentTypeResolutionStage",
+        "AsyncExamplePropagationResolutionStage",
+        "ServerVariableExampleResolutionStage",
+        "PathDescriptionNormalizationStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#4",
       "@type": [
         "apiContract:AsyncAPI",
@@ -16,9 +35,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#4": "ASYNC 2.0"
-        },
         "lexical": {
           "apiContract:endpoint": "[(11,0)-(18,0)]",
           "core:name": "[(3,2)-(4,0)]",
@@ -136,8 +152,10 @@
       "doc:encodes": {
         "@id": "#4"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      }
     },
     {
       "@id": "#1",
@@ -149,8 +167,10 @@
       "doc:encodes": {
         "@id": "#2"
       },
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#1/unitActions"
+      },
       "smaps": {
         "lexical": {
           "#1": "[(1,0)-(4,0)]"
@@ -185,6 +205,14 @@
           "#3": "[(9,6)-(9,10)]"
         }
       }
+    },
+    {
+      "@id": "#1/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     }
   ],
   "@context": {
@@ -193,6 +221,7 @@
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

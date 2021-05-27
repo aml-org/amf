@@ -734,9 +734,6 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#29": "RAML 1.0"
-          },
           "lexical": {
             "core:name": "[(2,0)-(4,0)]",
             "#29": "[(2,0)-(44,43)]"
@@ -744,14 +741,65 @@
         }
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "meta:unitActions": [
+      {
+        "@id": "/unitActions",
+        "@type": [
+          "meta:AmfProcessingData"
+        ],
+        "meta:version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "meta:sourceVendor": [
+          {
+            "@value": "RAML 1.0"
+          }
+        ],
+        "meta:unitTransformations": [
+          {
+            "@value": "WebApiReferenceResolutionStage"
+          },
+          {
+            "@value": "ExtensionsResolutionStage"
+          },
+          {
+            "@value": "ShapeNormalizationStage"
+          },
+          {
+            "@value": "SecurityResolutionStage"
+          },
+          {
+            "@value": "AmfParametersNormalizationStage"
+          },
+          {
+            "@value": "ServersNormalizationStage"
+          },
+          {
+            "@value": "PathDescriptionNormalizationStage"
+          },
+          {
+            "@value": "MediaTypeResolutionStage"
+          },
+          {
+            "@value": "ResponseExamplesResolutionStage"
+          },
+          {
+            "@value": "PayloadAndParameterResolutionStage"
+          },
+          {
+            "@value": "AnnotationRemovalStage"
+          },
+          {
+            "@value": "UrlShortenerStage"
+          }
+        ]
       }
     ],
     "smaps": {
@@ -870,20 +918,30 @@
             }
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
           }
         ],
+        "meta:unitActions": [
+          {
+            "@id": "#1/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "meta:sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
+          }
+        ],
         "smaps": {
-          "source-vendor": {
-            "#1": "RAML 1.0"
-          },
           "lexical": {
             "#1": "[(1,0)-(5,15)]"
           }
@@ -1120,9 +1178,6 @@
               }
             ],
             "smaps": {
-              "source-vendor": {
-                "#7": "RAML 1.0"
-              },
               "lexical": {
                 "security:settings": "[(3,0)-(8,0)]",
                 "apiContract:parameter": "[(9,2)-(12,0)]",
@@ -1134,14 +1189,27 @@
             }
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#6/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "meta:sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "smaps": {
@@ -1365,14 +1433,11 @@
               "resolved-link": {
                 "#15": "amf://id#22"
               },
-              "source-vendor": {
-                "#15": "RAML 1.0"
+              "type-property-lexical-info": {
+                "#15": "[(2,0)-(2,4)]"
               },
               "lexical": {
                 "#15": "[(2,0)-(6,10)]"
-              },
-              "type-property-lexical-info": {
-                "#15": "[(2,0)-(2,4)]"
               },
               "auto-generated-name": {
                 "#15": ""
@@ -1383,14 +1448,27 @@
             }
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#14/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ],
+            "meta:sourceVendor": [
+              {
+                "@value": "RAML 1.0"
+              }
+            ]
           }
         ],
         "smaps": {
@@ -1430,14 +1508,22 @@
             }
           }
         ],
-        "doc:version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "doc:root": [
           {
             "@value": false
+          }
+        ],
+        "meta:unitActions": [
+          {
+            "@id": "#23/unitActions",
+            "@type": [
+              "meta:AmfProcessingData"
+            ],
+            "meta:version": [
+              {
+                "@value": "3.1.0"
+              }
+            ]
           }
         ]
       }
@@ -1556,7 +1642,8 @@
       "security": "http://a.ml/vocabularies/security#",
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
-      "core": "http://a.ml/vocabularies/core#"
+      "core": "http://a.ml/vocabularies/core#",
+      "meta": "http://a.ml/vocabularies/meta#"
     }
   }
 ]

@@ -65,7 +65,7 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/validations/body-payload/"
 
   override def transform(unit: BaseUnit): BaseUnit =
-    unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
+    unit.asInstanceOf[Document].sourceVendor match {
       case Some(Raml08) =>
         RuntimeResolver.resolve(Raml08.name, unit, TransformationPipeline.DEFAULT_PIPELINE, unit.errorHandler())
       case _ =>

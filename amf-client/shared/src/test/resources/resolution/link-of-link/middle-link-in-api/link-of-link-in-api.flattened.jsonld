@@ -1,6 +1,28 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0",
+      "meta:unitTransformations": [
+        "WebApiReferenceResolutionStage",
+        "ExtensionsResolutionStage",
+        "ShapeNormalizationStage",
+        "SecurityResolutionStage",
+        "Raml10ParametersNormalizationStage",
+        "ServersNormalizationStage",
+        "PathDescriptionNormalizationStage",
+        "MediaTypeResolutionStage",
+        "ResponseExamplesResolutionStage",
+        "PayloadAndParameterResolutionStage",
+        "AnnotationRemovalStage",
+        "UrlShortenerStage"
+      ]
+    },
+    {
       "@id": "#10",
       "@type": [
         "apiContract:WebAPI",
@@ -15,9 +37,6 @@
         }
       ],
       "smaps": {
-        "source-vendor": {
-          "#10": "RAML 1.0"
-        },
         "lexical": {
           "core:name": "[(2,0)-(4,0)]",
           "#10": "[(2,0)-(13,30)]"
@@ -209,8 +228,10 @@
       "doc:encodes": {
         "@id": "#10"
       },
-      "doc:version": "3.1.0",
       "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      },
       "smaps": {
         "aliases-array": {
           "": "myTypes->amf://id#1::./library.raml"
@@ -237,12 +258,11 @@
           "@id": "#9"
         }
       ],
-      "doc:version": "3.1.0",
       "doc:root": false,
+      "meta:unitActions": {
+        "@id": "#1/unitActions"
+      },
       "smaps": {
-        "source-vendor": {
-          "#1": "RAML 1.0"
-        },
         "lexical": {
           "#1": "[(1,0)-(16,20)]"
         }
@@ -354,6 +374,14 @@
           "#9": "amf://id#8"
         }
       }
+    },
+    {
+      "@id": "#1/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0",
+      "meta:sourceVendor": "RAML 1.0"
     }
   ],
   "@context": {
@@ -362,6 +390,7 @@
     "raml-shapes": "http://a.ml/vocabularies/shapes#",
     "doc": "http://a.ml/vocabularies/document#",
     "apiContract": "http://a.ml/vocabularies/apiContract#",
-    "core": "http://a.ml/vocabularies/core#"
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }
