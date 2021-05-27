@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.client.environment.WebAPIConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
 import amf.core.annotations.SourceAST
@@ -66,11 +67,12 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   private def cycle(source: String, golden: String, removeRaw: Boolean = false): Future[Assertion] = {
+    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
     for {
       _       <- Validation(platform)
-      unit    <- AMFCompiler(basePath + source, platform, Raml10YamlHint, eh = UnhandledErrorHandler).build()
+      unit    <- config.createClient().parse(basePath + source).map(_.bu)
       example <- findExample(unit, removeRaw)
-      temp    <- writeTemporaryFile(golden)(example.toJson)
+      temp    <- writeTemporaryFile(golden)(example.toJson(config))
       r       <- assertDifferences(temp, goldenPath + golden)
     } yield {
       r

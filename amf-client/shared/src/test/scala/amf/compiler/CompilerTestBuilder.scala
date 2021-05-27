@@ -1,5 +1,6 @@
 package amf.compiler
 
+import amf.client.environment.WebAPIConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
@@ -32,5 +33,8 @@ trait CompilerTestBuilder extends PlatformSecrets {
                          cache: Option[Cache] = None,
                          validation: Future[Validation],
                          eh: Option[AMFErrorHandler] = None): Future[AMFCompiler] =
-    validation.map(v => AMFCompiler(url, platform, hint, cache = cache, eh = eh.getOrElse(DefaultErrorHandler())))
+    validation.map(v => {
+      val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => eh.getOrElse(DefaultErrorHandler()))
+      AMFCompiler(url, platform, hint, cache = cache, config = config)
+    })
 }

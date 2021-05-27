@@ -1,7 +1,8 @@
 package amf.resolution
 
+import amf.client.environment.RAMLConfiguration
 import amf.client.parse.DefaultErrorHandler
-import amf.core.errorhandling.AMFErrorHandler
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Amf, Raml10, Raml10YamlHint}
 import amf.facades.{AMFCompiler, Validation}
@@ -14,8 +15,9 @@ class ProductionValidationTest extends RamlResolutionTest {
   override def build(config: CycleConfig,
                      eh: Option[AMFErrorHandler],
                      useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
+    val amfConfig = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => eh.getOrElse(DefaultErrorHandler()))
     Validation(platform).flatMap { _ =>
-      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, eh = eh.getOrElse(DefaultErrorHandler()))
+      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, config = amfConfig)
         .build()
     }
   }

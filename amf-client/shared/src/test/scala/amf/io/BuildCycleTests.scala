@@ -1,8 +1,9 @@
 package amf.io
 
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.config.{ParsingOptionsConverter, RenderOptions}
 import amf.core.client.ParsingOptions
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.BaseUnit
@@ -132,12 +133,12 @@ trait BuildCycleTestCommon extends FileAssertionTest {
         else ParsingOptions().withAmfJsonLdSerialization
 
       options = options.withBaseUnitUrl("file://" + config.goldenPath)
-
-      AMFCompiler(s"file://${config.sourcePath}",
-                  platform,
-                  config.hint,
-                  eh = eh.getOrElse(UnhandledErrorHandler),
-                  parsingOptions = options).build()
+      val amfConfig = WebAPIConfiguration
+        .WebAPI()
+        .merge(AsyncAPIConfiguration.Async20())
+        .withErrorHandlerProvider(() => eh.getOrElse(UnhandledErrorHandler))
+        .withParsingOptions(ParsingOptionsConverter.fromLegacy(options))
+      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, config = amfConfig).build()
     }
   }
 

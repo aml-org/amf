@@ -36,6 +36,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
   // otherwise, this plugin can become the fallback option.
   // Fallback option should be an external fragment.
   override def documentSyntaxes: Seq[String] = Seq(
+    Payload.mediaType,
     "application/amf+json",
     "application/amf+yaml",
     "application/payload+json",
