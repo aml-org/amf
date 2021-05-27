@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.client.environment.RAMLConfiguration
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.client.validation.PayloadValidationUtils
@@ -33,12 +34,11 @@ class PlatformPayloadValidationPluginsHandlerTest
   }
 
   test("Validation logic, standard shape") {
+    val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    val client = config.createClient()
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
-                             platform,
-                             Raml10YamlHint,
-                             eh = UnhandledErrorHandler).build()
+      library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future {
         val shape = findShape(library, "A")
         ShapePayloadValidatorFactory.createPayloadValidator(
@@ -54,12 +54,11 @@ class PlatformPayloadValidationPluginsHandlerTest
   }
 
   test("Validation logic, file shape always validate") {
+    val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    val client = config.createClient()
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
-                             platform,
-                             Raml10YamlHint,
-                             eh = UnhandledErrorHandler).build()
+      library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future {
         val shape = findShape(library, "B")
         ShapePayloadValidatorFactory.createPayloadValidator(
@@ -73,12 +72,11 @@ class PlatformPayloadValidationPluginsHandlerTest
   }
 
   test("Validation logic, polymorphic shapes") {
+    val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    val client = config.createClient()
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
-                             platform,
-                             Raml10YamlHint,
-                             eh = UnhandledErrorHandler).build()
+      library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")
@@ -93,12 +91,11 @@ class PlatformPayloadValidationPluginsHandlerTest
   }
 
   test("Exception if unsupported media type") {
+    val config = RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    val client = config.createClient()
     for {
       validation <- Validation(platform)
-      library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
-                             platform,
-                             Raml10YamlHint,
-                             eh = UnhandledErrorHandler).build()
+      library    <- client.parse(basePath + "payload_validation_shapes.raml").map(_.bu)
       validator <- Future {
         val resolved = TransformationPipelineRunner(UnhandledErrorHandler).run(library, AmfTransformationPipeline())
         val shape    = findShape(resolved, "D")

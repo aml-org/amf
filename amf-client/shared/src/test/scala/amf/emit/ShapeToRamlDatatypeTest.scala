@@ -1,7 +1,8 @@
 package amf.emit
 
-import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.environment.{AsyncAPIConfiguration, OASConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote.{Oas20JsonHint, Vendor}
@@ -45,7 +46,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
     cycle("json-expression.json",
           "json-expression-new.raml",
           generalFindShapeFunc,
-          (a: AnyShape) => toRamlDatatype(a, getConfig))
+          (a: AnyShape) => toRamlDatatype(a, amfConfig))
   }
 
   // https://github.com/aml-org/amf/issues/441
@@ -59,23 +60,22 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
 
   private val basePath: String   = "file://amf-client/shared/src/test/resources/toraml/toramldatatype/source/"
   private val goldenPath: String = "amf-client/shared/src/test/resources/toraml/toramldatatype/datatypes/"
-  private def getConfig          = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+  private val amfConfig          = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
 
   private def cycle(
       sourceFile: String,
       goldenFile: String,
       findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
-      renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a, getConfig)): Future[Assertion] = {
+      renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a, amfConfig)): Future[Assertion] = {
+    val client = amfConfig.createClient()
     val ramlDatatype: Future[String] = for {
-      _ <- Validation(platform)
-      sourceUnit <- AMFCompiler(basePath + sourceFile, platform, Oas20JsonHint, eh = DefaultErrorHandler())
-        .build()
+      _          <- Validation(platform)
+      sourceUnit <- client.parse(basePath + sourceFile).map(_.bu)
     } yield {
       findShapeFunc(
-        RuntimeResolver.resolve(Vendor.OAS20.name,
-                                sourceUnit,
-                                TransformationPipeline.DEFAULT_PIPELINE,
-                                UnhandledErrorHandler)).map(toRamlDatatype(_, getConfig)).getOrElse("")
+        client.transform(sourceUnit, PipelineName.from(Vendor.OAS20.name, TransformationPipeline.DEFAULT_PIPELINE)).bu)
+        .map(toRamlDatatype(_, amfConfig))
+        .getOrElse("")
     }
     ramlDatatype.flatMap { writeTemporaryFile(goldenFile) }.flatMap(assertDifferences(_, goldenPath + goldenFile))
   }

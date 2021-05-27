@@ -1,5 +1,7 @@
 package amf.resolution
 
+import amf.client.environment.RAMLConfiguration
+import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.metamodel.document.DocumentModel
@@ -23,8 +25,9 @@ class ProductionServiceTest extends RamlResolutionTest {
   override def build(config: CycleConfig,
                      eh: Option[AMFErrorHandler],
                      useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
+    val amfConfig = RAMLConfiguration.RAML().withErrorHandlerProvider(() => UnhandledErrorHandler)
     Validation(platform).flatMap { _ =>
-      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, eh = UnhandledErrorHandler).build()
+      amfConfig.createClient().parse(s"file://${config.sourcePath}").map(_.bu)
     }
   }
   private def dummyFunc: (BaseUnit, CycleConfig) => BaseUnit =
