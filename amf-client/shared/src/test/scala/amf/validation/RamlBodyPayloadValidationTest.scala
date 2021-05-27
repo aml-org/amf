@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.client.environment.RAMLConfiguration
+import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
 import amf.client.plugins.{StrictValidationMode, ValidationMode}
 import amf.client.remod.{AMFGraphClient, AMFGraphConfiguration}
@@ -102,7 +102,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                          mediaType: Option[String],
                          givenHint: Hint): Future[AMFValidationReport] = {
     val eh     = DefaultErrorHandler()
-    val config = RAMLConfiguration.RAML().withErrorHandlerProvider(() => eh)
+    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => eh)
     val client = config.createClient()
     for {
       _ <- Validation(platform)
@@ -120,7 +120,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                         payload,
                         SeverityLevels.VIOLATION,
                         validationMode = validationMode,
-                        config = new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
+                        config = new ValidationConfiguration(config))
           })
           .getOrElse(
             PayloadValidationPluginsHandler
@@ -128,7 +128,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                                     payload,
                                     SeverityLevels.VIOLATION,
                                     validationMode = validationMode,
-                                    config = new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh))))
+                                    config = new ValidationConfiguration(config)))
       }
     } yield {
       result

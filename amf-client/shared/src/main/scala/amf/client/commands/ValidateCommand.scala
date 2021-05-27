@@ -41,15 +41,14 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  def report(model: BaseUnit,
-             config: ParserConfig,
-             configuration: AMFGraphConfiguration): Future[AMFValidationReport] = {
+  def report(model: BaseUnit, config: ParserConfig, configuration: AMLConfiguration): Future[AMFValidationReport] = {
     implicit val executionContext: ExecutionContext = configuration.getExecutionContext
     val customProfileLoaded: Future[ProfileName] = if (config.customProfile.isDefined) {
-      // TODO: validation profile is present in config, no clear way to obtain the profile name.
-      RuntimeValidator.loadValidationProfile(config.customProfile.get, errorHandler = UnhandledErrorHandler) map {
-        profileName =>
-          profileName
+      val withProfile: Future[AMLConfiguration] =
+        configuration.withCustomValidationsEnabled.flatMap(_.withCustomProfile(config.customProfile.get))
+      withProfile.map { conf =>
+        // TODO: validation profile is present in config, no clear way to obtain the profile name.
+        ProfileName(config.customProfile.get)
       }
     } else {
       Future {
@@ -67,7 +66,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
       }
     }
     customProfileLoaded flatMap { profileName =>
-      RuntimeValidator(model, profileName, resolved = false, new ValidationConfiguration(configuration))
+      configuration.createClient().validate(model, profileName)
     }
   }
 

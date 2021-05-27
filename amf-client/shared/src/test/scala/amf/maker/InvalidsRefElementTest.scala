@@ -3,7 +3,7 @@ package amf.maker
 import amf.compiler.CompilerTestBuilder
 import amf.core.annotations.SourceAST
 import amf.core.model.document.Document
-import amf.core.remote.{Oas20YamlHint, Raml10YamlHint}
+import amf.core.remote.{Oas20YamlHint, Raml10, Raml10YamlHint}
 import amf.facades.Validation
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorResponse
 import amf.plugins.domain.shapes.models.AnyShape
@@ -23,7 +23,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
     Validation(platform)
       .flatMap(v => {
 
-        build("file://amf-client/shared/src/test/resources/invalids/error-response.oas",
+        build("file://amf-client/shared/src/test/resources/invalids/error-response.yaml",
               Oas20YamlHint,
               validation = Some(v))
       })

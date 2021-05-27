@@ -20,6 +20,7 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
   Raml10CompatibilityPipeline
 }
 import amf.plugins.document.webapi.validation.ApiValidationProfiles._
+import amf.plugins.document.webapi.validation.remod.ValidatePlugins
 import amf.plugins.domain.shapes.annotations.serializable.ShapeSerializableAnnotations
 import amf.plugins.domain.shapes.entities.ShapeEntities
 import amf.plugins.domain.webapi.annotations.serializable.APISerializableAnnotations
@@ -41,12 +42,15 @@ sealed trait APIConfigurationBuilder {
       configuration.logger,
       configuration.listeners,
       configuration.options
-    ).withPlugins(
-      List(ExternalJsonYamlRefsParsePlugin,
-           PayloadParsePlugin,
-           PayloadRenderPlugin,
-           JsonSchemaParsePlugin,
-           JsonSchemaRenderPlugin))
+    ).withPlugins(List(
+      ExternalJsonYamlRefsParsePlugin,
+      PayloadParsePlugin,
+      PayloadRenderPlugin,
+      JsonSchemaParsePlugin,
+      JsonSchemaRenderPlugin,
+      ValidatePlugins.MODEL_PLUGIN,
+      ValidatePlugins.PAYLOAD_PLUGIN
+    ))
     result
   }
 }
