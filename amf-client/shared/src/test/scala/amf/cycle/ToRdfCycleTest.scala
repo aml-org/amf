@@ -1,5 +1,6 @@
 package amf.cycle
 
+import amf.client.environment.WebAPIConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
 import amf.core.errorhandling.UnhandledErrorHandler
@@ -34,17 +35,14 @@ class ToRdfCycleTest
 
   override protected def beforeEach(): Future[Unit] = Validation(platform).map(_ => Unit)
 
-  private def build(path: String): Future[BaseUnit] = {
+  private def build(path: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
     val fullPath = basePath + path
-    RuntimeCompiler.apply(fullPath,
-                          None,
-                          Context(platform),
-                          Cache(),
-                          ParseConfiguration(AMFGraphConfiguration.fromEH(UnhandledErrorHandler)))
+    config.createClient().parse(fullPath).map(_.bu)
   }
 
   private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {
-    build(path)
+    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    build(path, config)
       .map(transform(_, TransformationPipeline.EDITING_PIPELINE, vendor))
       .map(_.toNativeRdfModel(RenderOptions().withSourceMaps))
       .map(_.toN3())

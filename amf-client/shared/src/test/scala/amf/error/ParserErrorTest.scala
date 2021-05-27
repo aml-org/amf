@@ -30,7 +30,7 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
         .parse(basePath + file)
         .map { amfResult =>
           unitAssertion(amfResult.bu)
-          val report = amfResult.result.results
+          val report = amfResult.report.results
           if (report.size != fixture.size) {
             report.foreach(println)
             fail(s"Expected results has length of ${fixture.size} while actual results are ${report.size}")

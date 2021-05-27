@@ -1,6 +1,8 @@
 package amf.cycle
 
+import amf.client.environment.WebAPIConfiguration
 import amf.client.remod.AMFGraphConfiguration
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.facades.Validation
 import amf.io.FileAssertionTest
@@ -40,7 +42,10 @@ trait FromRdfCycleTest extends AsyncFunSuite with FileAssertionTest with AsyncBe
     val content      = fs.syncFile(fullPath).read()
     val rdfFramework = platform.rdfFramework.get
     val modelDoc     = rdfFramework.syntaxToRdfModel("text/n3", content)
-    val result       = BaseUnit.fromNativeRdfModel(baseUnitId, modelDoc.model, AMFGraphConfiguration.predefined())
+    val result = BaseUnit.fromNativeRdfModel(
+      baseUnitId,
+      modelDoc.model,
+      WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler))
     Some(result)
   }
 

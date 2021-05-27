@@ -113,11 +113,10 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
                                     Raml10Profile,
                                     new ValidationConfiguration(client.getConfiguration))
     } yield {
-      val unified = parseResult.result.merge(report)
-      assert(!transformResult.result.conforms)
-      assert(transformResult.result.results.size == 2)
+      assert(!transformResult.report.conforms)
+      assert(transformResult.report.results.size == 2)
       assert(
-        transformResult.result.results
+        transformResult.report.results
           .exists(_.message.contains("Security scheme 'undefined' not found in declarations.")))
     }
   }
@@ -299,8 +298,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report      <- validation.validate(parseResult.bu, profileName, new ValidationConfiguration(client.getConfiguration))
     } yield {
       val unified =
-        if (!parseResult.conforms) parseResult.result
-        else parseResult.result.merge(report)
+        if (!parseResult.conforms) parseResult.report
+        else parseResult.report.merge(report)
       unified
     }
   }
