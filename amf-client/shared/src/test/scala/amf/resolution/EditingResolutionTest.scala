@@ -1123,6 +1123,19 @@ class EditingResolutionTest extends ResolutionTest {
       )
     }
 
+    multiGoldenTest("OAS 3.0 discriminators from JSON-LD", "api.target.%s") { config =>
+      cycle(
+        "api.source.flattened.jsonld",
+        config.golden,
+        AmfJsonHint,
+        target = Amf,
+        directory = resolutionPath + "oas30-discriminator-json-ld/",
+        transformWith = Some(Oas30),
+        renderOptions = Some(config.renderOptions),
+        eh = Some(UnhandledParserErrorHandler)
+      )
+    }
+
     multiGoldenTest("OAS 3.0 discriminators invalid mapping", "api.%s") { config =>
       cycle(
         "api.yaml",
