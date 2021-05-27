@@ -1,5 +1,7 @@
 package amf.resolution
 
+import amf.client.environment.WebAPIConfiguration
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.FieldsFilter.All
 import amf.core.model.domain.{AmfObject, RecursiveShape}
@@ -30,13 +32,15 @@ class RecursiveFixpointTest() extends AsyncFunSuite with PlatformSecrets with Re
 
   testCases.foreach { data =>
     test(s"Test fixpoint values in ${data.path}") {
+      val client = WebAPIConfiguration.WebAPI().createClient()
       for {
-        _ <- Validation(platform)
-        unit <- AMFCompiler(s"file://$basePath${data.path}", platform, data.hint, eh = UnhandledErrorHandler)
-          .build()
-        _ <- Future(transform(unit, TransformationPipeline.EDITING_PIPELINE, data.hint.vendor))
+        _           <- Validation(platform)
+        parseResult <- client.parse(s"file://$basePath${data.path}")
+        _ <- Future(
+          client.transform(parseResult.bu,
+                           PipelineName.from(data.hint.vendor.name, TransformationPipeline.EDITING_PIPELINE)))
       } yield {
-        val elements                    = unit.iterator(fieldsFilter = All).toList
+        val elements                    = parseResult.bu.iterator(fieldsFilter = All).toList
         val fixpointValues: Seq[String] = elements.filterType[RecursiveShape].map(_.fixpoint.value())
         val allIds                      = elements.collect { case o: AmfObject => o.id }.toSet
         allIds should contain allElementsOf (fixpointValues)

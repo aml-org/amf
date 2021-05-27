@@ -34,7 +34,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     * List of media types used to encode serialisations of
     * this domain
     */
-  override def documentSyntaxes: Seq[String] = Seq("application/schema+json", "application/payload+json")
+  override def documentSyntaxes: Seq[String] = Seq(JsonSchema.mediaType, "application/payload+json")
 
   /**
     * Parses an accepted document returning an optional BaseUnit

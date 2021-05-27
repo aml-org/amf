@@ -1,6 +1,7 @@
 package amf.cycle
 
 import amf.client.convert.WebApiRegister
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
@@ -48,8 +49,11 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
 
   private def build(config: EmissionConfig, eh: Option[AMFErrorHandler]): Future[BaseUnit] = {
     Validation(platform).flatMap { _ =>
-      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, eh = eh.getOrElse(UnhandledErrorHandler))
-        .build()
+      val amfConfig = WebAPIConfiguration
+        .WebAPI()
+        .merge(AsyncAPIConfiguration.Async20())
+        .withErrorHandlerProvider(() => eh.getOrElse(UnhandledErrorHandler))
+      amfConfig.createClient().parse(s"file://${config.sourcePath}").map(_.bu)
     }
   }
 

@@ -35,7 +35,7 @@ trait RamlDatatypeSerializer extends PlatformSecrets {
 
     val ramlDatatype =
       new AMFSerializer(Module().withDeclaredElement(fixNameIfNeeded(element)),
-                        "application/raml10",
+                        Raml10.mediaType,
                         config.renderConfiguration).render()
     element.annotations.reject(_.isInstanceOf[ParsedRamlDatatype])
     element.annotations.reject(_.isInstanceOf[GeneratedRamlDatatype])

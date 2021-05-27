@@ -2,7 +2,8 @@ package amf.extensions
 
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
-import amf.core.client.ParsingOptions
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote._
 import amf.core.{AMF, AMFSerializer}
@@ -109,13 +110,8 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
     new AMFSerializer(unit, mediaType, config.renderConfiguration).renderToString
   }
 
-  private def parse(url: String, vendor: String, hint: Hint): Future[BaseUnit] = {
-    AMFCompiler(url,
-                platform,
-                hint,
-                eh = DefaultErrorHandler(),
-                parsingOptions = ParsingOptions().withAmfJsonLdSerialization).build()
-  }
+  private def parse(url: String, vendor: String, hint: Hint, amfConfig: AMFGraphConfiguration): Future[BaseUnit] =
+    amfConfig.createClient().parse(url).map(_.bu)
 
   private def withBaseUnitPair(url: String, originalVendor: Vendor, otherVendor: Vendor)(
       assertion: List[BaseUnit] => Assertion) = {
@@ -123,12 +119,13 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
     AMF.registerPlugin(Oas30Plugin)
     AMF.registerPlugin(Oas20Plugin)
     AMF.registerPlugin(Raml10Plugin)
+    val config = WebAPIConfiguration.WebAPI().withParsingOptions(ParsingOptions().withAmfJsonLdSerialization)
     for {
       _             <- AMF.init()
-      originalUnit  <- parse(url, originalVendor.mediaType, hint(originalVendor))
+      originalUnit  <- parse(url, originalVendor.mediaType, hint(originalVendor), config)
       emittedApi    <- renderToString(originalUnit, otherVendor.mediaType)
       tmp           <- writeTemporaryFile(fileName)(emittedApi)
-      parsedApiUnit <- parse(s"file://${tmp.path}", otherVendor.name, hint(otherVendor))
+      parsedApiUnit <- parse(s"file://${tmp.path}", otherVendor.name, hint(otherVendor), config)
     } yield {
       assertion(List(originalUnit, parsedApiUnit))
     }

@@ -62,22 +62,15 @@ class AMFCompiler private (val url: String,
 }
 
 object AMFCompiler {
-  // interface that is used by all testing classes
-  def apply(
-      url: String,
-      remote: Platform,
-      hint: Hint,
-      context: Option[Context] = None,
-      cache: Option[Cache] = None,
-      ctx: Option[ParserContext] = None,
-      eh: AMFErrorHandler,
-      parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext): AMFCompiler = {
-    val newEnv =
-      AMFPluginsRegistry
-        .obtainStaticConfig()
-        .withParsingOptions(ParsingOptionsConverter.fromLegacy(parsingOptions))
-        .withErrorHandlerProvider(() => eh)
-    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), newEnv)
+  // interface used by some testing classes, ideally will be removed
+  def apply(url: String,
+            remote: Platform,
+            hint: Hint,
+            context: Option[Context] = None,
+            cache: Option[Cache] = None,
+            ctx: Option[ParserContext] = None,
+            config: AMFGraphConfiguration)(implicit executionContext: ExecutionContext): AMFCompiler = {
+    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), config)
   }
 
 }

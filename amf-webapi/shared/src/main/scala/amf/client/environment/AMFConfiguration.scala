@@ -41,7 +41,12 @@ sealed trait APIConfigurationBuilder {
       configuration.logger,
       configuration.listeners,
       configuration.options
-    ).withPlugins(List(ExternalJsonYamlRefsParsePlugin, PayloadParsePlugin, JsonSchemaParsePlugin))
+    ).withPlugins(
+      List(ExternalJsonYamlRefsParsePlugin,
+           PayloadParsePlugin,
+           PayloadRenderPlugin,
+           JsonSchemaParsePlugin,
+           JsonSchemaRenderPlugin))
     result
   }
 }

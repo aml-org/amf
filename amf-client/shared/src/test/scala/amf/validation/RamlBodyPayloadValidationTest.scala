@@ -1,9 +1,11 @@
 package amf.validation
 
+import amf.client.environment.RAMLConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.plugins.{StrictValidationMode, ValidationMode}
-import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.{AMFGraphClient, AMFGraphConfiguration}
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
 import amf.core.remote._
@@ -64,12 +66,13 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/validations/body-payload/"
 
-  override def transform(unit: BaseUnit): BaseUnit = {
+  override def transform(unit: BaseUnit, client: AMFGraphClient): BaseUnit = {
+
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
       case Some(Raml08) =>
-        RuntimeResolver.resolve(Raml08.name, unit, TransformationPipeline.DEFAULT_PIPELINE, DefaultErrorHandler())
+        client.transform(unit, PipelineName.from(Raml08.name, TransformationPipeline.DEFAULT_PIPELINE)).bu
       case _ =>
-        RuntimeResolver.resolve(Raml10.name, unit, TransformationPipeline.DEFAULT_PIPELINE, DefaultErrorHandler())
+        client.transform(unit, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE)).bu
     }
   }
 }
@@ -90,7 +93,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
 
   protected def findShape(d: Document): Shape
 
-  def transform(unit: BaseUnit): BaseUnit
+  def transform(unit: BaseUnit, config: AMFGraphClient): BaseUnit
 
   protected def fixtureList: Seq[Fixture]
 
@@ -98,12 +101,15 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                          payload: String,
                          mediaType: Option[String],
                          givenHint: Hint): Future[AMFValidationReport] = {
-    val eh = DefaultErrorHandler()
+    val eh     = DefaultErrorHandler()
+    val config = RAMLConfiguration.RAML().withErrorHandlerProvider(() => eh)
+    val client = config.createClient()
     for {
       _ <- Validation(platform)
-      model <- AMFCompiler(api, platform, givenHint, eh = eh)
-        .build()
-        .map(transform)
+      model <- client
+        .parse(api)
+        .map(_.bu)
+        .map(transform(_, client))
       result <- {
         val shape = findShape(model.asInstanceOf[Document])
         mediaType

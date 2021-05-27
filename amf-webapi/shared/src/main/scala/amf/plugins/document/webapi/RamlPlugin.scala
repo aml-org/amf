@@ -231,7 +231,7 @@ object Raml08Plugin extends RamlPlugin {
 
   override val vendors: Seq[String] = Seq(vendor.name)
 
-  override def documentSyntaxes: Seq[String] = core.remote.Raml10.mediaType +: super.documentSyntaxes
+  override def documentSyntaxes: Seq[String] = core.remote.Raml08.mediaType +: super.documentSyntaxes
 }
 
 object Raml10Plugin extends RamlPlugin {
@@ -305,5 +305,5 @@ object Raml10Plugin extends RamlPlugin {
     * List of media types used to encode serialisations of
     * this domain
     */
-  override def documentSyntaxes: Seq[String] = core.remote.Raml08.mediaType +: super.documentSyntaxes
+  override def documentSyntaxes: Seq[String] = core.remote.Raml10.mediaType +: super.documentSyntaxes
 }

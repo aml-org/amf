@@ -1,4 +1,5 @@
 package amf.validation
+import amf.client.environment.RAMLConfiguration
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.errorhandling.UnhandledErrorHandler
@@ -69,11 +70,12 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "json" => PayloadJsonHint
         case "yaml" => PayloadYamlHint
       }
+      val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
+      val client = config.createClient()
       val candidates: Future[Seq[ValidationCandidate]] = for {
         validation <- Validation(platform)
-        library <- AMFCompiler(payloadsPath + libraryFile, platform, Raml10YamlHint, eh = UnhandledErrorHandler)
-          .build()
-        payload <- AMFCompiler(payloadsPath + payloadFile, platform, hint, eh = UnhandledErrorHandler).build()
+        library    <- client.parse(payloadsPath + libraryFile).map(_.bu)
+        payload    <- client.parse(payloadsPath + payloadFile).map(_.bu)
       } yield {
         // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
         ValidationTransformationPipeline(AmfProfile, library, UnhandledErrorHandler)
@@ -107,18 +109,18 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   test("payload parsing test") {
-
+    val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => UnhandledErrorHandler)
     for {
       content    <- platform.resolve(payloadsPath + "b_valid.yaml")
       validation <- Validation(platform)
-      filePayload <- AMFCompiler(payloadsPath + "b_valid.yaml", platform, PayloadYamlHint, eh = UnhandledErrorHandler)
+      filePayload <- AMFCompiler(payloadsPath + "b_valid.yaml", platform, PayloadYamlHint, config = config)
         .build()
       validationPayload <- Validation(platform)
       textPayload <- AMFCompiler(
         payloadsPath + "b_valid.yaml",
         TrunkPlatform(content.stream.toString, forcedMediaType = Some("application/yaml")),
         PayloadYamlHint,
-        eh = UnhandledErrorHandler
+        config = config
       ).build()
     } yield {
       val fileJson = render(filePayload)

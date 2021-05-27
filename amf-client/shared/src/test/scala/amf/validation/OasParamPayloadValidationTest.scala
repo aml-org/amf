@@ -1,6 +1,7 @@
 package amf.validation
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.client.remod.AMFGraphClient
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
 import amf.core.remote.{Hint, Oas20JsonHint}
@@ -37,7 +38,7 @@ class OasParamPayloadValidationTest extends ApiShapePayloadValidationTest {
       .head
       .schema
 
-  override def transform(unit: BaseUnit): BaseUnit = unit
+  override def transform(unit: BaseUnit, client: AMFGraphClient): BaseUnit = unit
 
   override def validationMode: ValidationMode = ScalarRelaxedValidationMode
 }

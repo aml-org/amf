@@ -1,5 +1,8 @@
 package amf.emit
 
+import amf.client.environment.WebAPIConfiguration
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, Module}
 import amf.core.remote.{Hint, Oas20JsonHint, Raml10YamlHint, Vendor}
@@ -109,14 +112,15 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   test("Test shape id preservation") {
-    val file = "shapeIdPreservation.raml"
-    parse(file).map {
+    val file   = "shapeIdPreservation.raml"
+    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    parse(file, config).map {
       case u: Module =>
         assert(
           u.declares.forall {
             case anyShape: AnyShape =>
               val originalId = anyShape.id
-              toJsonSchema(anyShape)
+              toJsonSchema(anyShape, config)
               val newId = anyShape.id
               originalId == newId
           }
@@ -127,10 +131,11 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
   private val basePath: String   = "file://amf-client/shared/src/test/resources/tojson/tojsonschema/source/"
   private val goldenPath: String = "amf-client/shared/src/test/resources/tojson/tojsonschema/schemas/"
 
-  private def parse(file: String): Future[BaseUnit] = {
+  private def parse(file: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
+    val client = config.createClient()
     for {
       _    <- Validation(platform)
-      unit <- AMFCompiler(basePath + file, platform, Raml10YamlHint, eh = UnhandledErrorHandler).build()
+      unit <- client.parse(basePath + file).map(_.bu)
     } yield {
       unit
     }
@@ -141,14 +146,18 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
                     findShapeFunc: BaseUnit => Option[AnyShape],
                     renderFn: AnyShape => String = toJsonSchema,
                     hint: Hint = Raml10YamlHint): Future[Assertion] = {
+    val config = WebAPIConfiguration.WebAPI()
     val jsonSchema: Future[String] = for {
-      _    <- Validation(platform)
-      unit <- AMFCompiler(basePath + file, platform, hint, eh = UnhandledErrorHandler).build()
+      unit <- parse(file, config)
     } yield {
       findShapeFunc(
-        RuntimeResolver
-          .resolve(Vendor.OAS20.name, unit, TransformationPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler))
-        .map(toJsonSchema)
+        config
+          .createClient()
+          .transform(unit, PipelineName.from(Vendor.OAS20.name, TransformationPipeline.DEFAULT_PIPELINE))
+          .bu
+      ).map { element =>
+          toJsonSchema(element, config)
+        }
         .getOrElse("")
     }
 

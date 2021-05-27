@@ -102,9 +102,10 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
                             profile: ProfileName = defaultProfile,
                             profileFile: Option[String] = None): Future[Assertion] = {
     val errorHandler = DefaultErrorHandler()
+    val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => errorHandler)
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(basePath + api, platform, profileToHint(profile), eh = errorHandler).build()
+      model      <- config.createClient().parse(basePath + api).map(_.bu)
       report <- {
         TransformationPipelineRunner(errorHandler).run(model, new ValidationTransformationPipeline(profile))
         val results = errorHandler.getResults
