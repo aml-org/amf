@@ -8,6 +8,7 @@ import amf.plugins.document.webapi.validation.runner.{FilterDataNodeOptions, Val
 import amf.validations.CustomShaclFunctions
 import amf._
 import amf.core.benchmark.ExecutionLog.log
+import amf.plugins.features.validation.AMFValidatorPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -19,7 +20,7 @@ case class ModelValidationStep(override val validationContext: ValidationContext
     val baseOptions                = FilterDataNodeOptions().withMessageStyle(validationContext.profileName.messageStyle)
     val options: ValidationOptions = computeValidationExtent(baseOptions)
     log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
-    RuntimeValidator
+    AMFValidatorPlugin
       .shaclValidation(validationContext.baseUnit,
                        validationContext.validations,
                        CustomShaclFunctions.functions,

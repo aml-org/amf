@@ -2,10 +2,22 @@ package amf.plugins.document.webapi.validation
 
 import amf._
 import amf.core.validation.SeverityLevels
+import amf.core.validation.SeverityLevels.VIOLATION
 import amf.core.validation.core._
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.vocabularies.validation.AMFDialectValidations
+import amf.plugins.document.vocabularies.validation.AMFDialectValidations.ConstraintSeverityOverrides
 import amf.plugins.document.webapi.validation.AMFRawValidations.{AMFValidation, ProfileValidations}
-import amf.plugins.features.validation.Validations
+import amf.plugins.features.validation.CoreValidations
+import amf.validation.DialectValidations
+import amf.validations.{
+  ParserSideValidations,
+  PayloadValidations,
+  RenderSideValidations,
+  ResolutionSideValidations,
+  ShapeParserSideValidations,
+  ShapePayloadValidations
+}
 
 trait ImportUtils {
   protected def validationId(validation: AMFValidation): String =
@@ -53,10 +65,40 @@ object DefaultAMFValidations extends ImportUtils {
     ValidationProfile(
       name = profile,
       baseProfile = if (profile == AmfProfile) None else Some(AmfProfile),
-      validations = infoValidations ++ warningValidations ++ violationValidations ++ Validations.validations,
+      validations = infoValidations ++ warningValidations ++ violationValidations ++ staticValidations,
       severities = severityMapping
     )
   }
+
+  val staticValidations: Seq[ValidationSpecification] = AMFDialectValidations.staticValidations ++
+    ParserSideValidations.validations ++
+    PayloadValidations.validations ++
+    RenderSideValidations.validations ++
+    ResolutionSideValidations.validations ++
+    ShapePayloadValidations.validations ++
+    ShapeParserSideValidations.validations
+
+  private val levels: ConstraintSeverityOverrides = AMFDialectValidations.levels ++
+    ParserSideValidations.levels ++
+    PayloadValidations.levels ++
+    RenderSideValidations.levels ++
+    ResolutionSideValidations.levels ++
+    ShapePayloadValidations.levels ++
+    ShapeParserSideValidations.levels
+
+  def severityLevelOf(id: String, profile: ProfileName): String =
+    severityLevelsOfConstraints
+      .getOrElse(id, default)
+      .getOrElse(profile, VIOLATION)
+
+  protected[amf] lazy val severityLevelsOfConstraints: ConstraintSeverityOverrides =
+    staticValidations.foldLeft(levels) { (acc, validation) =>
+      if (acc.contains(validation.id)) acc
+      else acc + (validation.id -> default)
+    }
+
+  private lazy val default                                 = all(VIOLATION)
+  protected def all(lvl: String): Map[ProfileName, String] = ProfileNames.specProfiles.map(_ -> lvl).toMap
 
   def profiles(): List[ValidationProfile] =
     AMFRawValidations.profileToValidationMap.map {
@@ -64,9 +106,9 @@ object DefaultAMFValidations extends ImportUtils {
     }.toList
 
   private def getValidationsWithSeverity(profile: ProfileName, severity: String) = {
-    Validations.validations
+    staticValidations
       .filter { v =>
-        Validations.severityLevelOf(v.id, profile) == severity
+        severityLevelOf(v.id, profile) == severity
       }
       .map {
         _.copy(severity = ShaclSeverityUris.amfToShaclSeverity(severity))
