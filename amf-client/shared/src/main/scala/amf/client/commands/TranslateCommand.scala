@@ -2,14 +2,12 @@ package amf.client.commands
 
 import amf.ProfileName
 import amf.client.environment.{AMFConfiguration, AMLConfiguration}
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
+import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -50,12 +48,13 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       Future {
         model match {
           case dialectInstance: DialectInstance =>
-            AMLPlugin().registry.dialectFor(dialectInstance) match {
-              case Some(dialect) =>
-                ProfileName(dialect.nameAndVersion())
-              case _ =>
-                config.profile
-            }
+            configuration.registry.plugins.parsePlugins
+              .collect {
+                case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
+              }
+              .find(dialect => dialectInstance.definedBy().value() == dialect.id)
+              .map(dialect => ProfileName(dialect.nameAndVersion()))
+              .getOrElse(config.profile)
           case _ =>
             config.profile
         }
