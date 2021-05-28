@@ -60,7 +60,7 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
     val initialConfig = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
     val finalHint     = overridedHint.getOrElse(hint)
     for {
-      validation <- Validation(platform)
+      validation <- Validation(platform) // see AMFPluginRegistry.dataNodeValidatorPluginForMediaType
       withProfile <- if (profileFile.isDefined)
         initialConfig.withCustomValidationsEnabled.flatMap(_.withCustomProfile(directory + profileFile.get))
       else Future.successful(initialConfig)

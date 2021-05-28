@@ -28,14 +28,14 @@ import scala.concurrent.{ExecutionContext, Future}
 class Validation(platform: Platform) {
 
   def init()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
-    platform.registerValidations(DialectValidations.validations, DialectValidations.levels)
-    platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
-    platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
-    platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
-    platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
-    platform.registerValidations(ShapePayloadValidations.validations, ShapePayloadValidations.levels)
-    platform.registerValidations(ShapeParserSideValidations.validations, ShapeParserSideValidations.levels)
+//    platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
+//    platform.registerValidations(DialectValidations.validations, DialectValidations.levels)
+//    platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
+//    platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
+//    platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
+//    platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
+//    platform.registerValidations(ShapePayloadValidations.validations, ShapePayloadValidations.levels)
+//    platform.registerValidations(ShapeParserSideValidations.validations, ShapeParserSideValidations.levels)
 
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
