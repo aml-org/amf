@@ -101,8 +101,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
                          payload: String,
                          mediaType: Option[String],
                          givenHint: Hint): Future[AMFValidationReport] = {
-    val eh     = DefaultErrorHandler()
-    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => eh)
+    val config = WebAPIConfiguration.WebAPI()
     val client = config.createClient()
     for {
       _ <- Validation(platform)

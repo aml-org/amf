@@ -121,10 +121,10 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
         assert(!r.conforms)
         assert(r.results.lengthCompare(2) == 0)
         assert(
-          r.results.last.message
+          r.results.head.message
             .contains("amf-client/shared/src/test/resources/nonExists.raml"))
         assert(
-          r.results.last.message
+          r.results.head.message
             .contains("such file or directory")) // temp, assert better the message for js and jvm
       })
   }
