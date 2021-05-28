@@ -2,7 +2,7 @@ package amf.validation
 
 import amf.Raml10Profile
 import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
-import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.{AMFGraphConfiguration, AMFValidator}
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.AMFSerializer
 import amf.core.model.document.{Document, Module, PayloadFragment}
@@ -38,9 +38,7 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
 
     for {
       validation <- Validation(platform)
-      report <- validation.validate(module,
-                                    Raml10Profile,
-                                    new ValidationConfiguration(AMFGraphConfiguration.predefined()))
+      report     <- AMFValidator.validate(module, Raml10Profile, RAMLConfiguration.RAML10())
     } yield {
       report.conforms should be(true)
     }
