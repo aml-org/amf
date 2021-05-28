@@ -35,9 +35,7 @@ trait ModelValidationTest extends DirectoryTest {
       client      <- Future.successful(WebAPIConfiguration.WebAPI().createClient())
       parseResult <- client.parse(s"file://${d + inputFileName}")
       report <- {
-        validation.validate(parseResult.bu,
-                            profileFromModel(parseResult.bu),
-                            new ValidationConfiguration(client.getConfiguration))
+        client.validate(parseResult.bu, profileFromModel(parseResult.bu))
       }
       unifiedReport <- {
         val r =

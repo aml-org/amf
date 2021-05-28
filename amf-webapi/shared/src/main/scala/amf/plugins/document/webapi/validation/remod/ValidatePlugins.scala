@@ -46,11 +46,15 @@ case class ValidateStepPluginAdapter(id: String, factory: ValidationContext => V
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
     withResolvedModel(unit, options.profile, options.config) { (resolvedUnit, resolutionReport) =>
-      val context = legacyContext(resolvedUnit, options)
-      factory(context).run.map { validationStepReport =>
-        ValidationResult(resolvedUnit,
-                         resolutionReport.map(_.merge(validationStepReport)).getOrElse(validationStepReport))
+      val report = resolutionReport match {
+        case Some(report) if !report.conforms => Future.successful(report)
+        case _ =>
+          val context = legacyContext(resolvedUnit, options)
+          factory(context).run.map { validationStepReport =>
+            resolutionReport.map(_.merge(validationStepReport)).getOrElse(validationStepReport)
+          }
       }
+      report.map(ValidationResult(resolvedUnit, _))
     }
   }
 

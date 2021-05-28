@@ -5,9 +5,7 @@ import amf._
 import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.{AMFGraphConfiguration, AMFResult}
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.errorhandling.{AMFErrorHandler, AmfReportBuilder}
-import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipelineRunner
