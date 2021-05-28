@@ -2,7 +2,7 @@ package amf.validation
 
 import _root_.org.scalatest.AsyncFunSuite
 import amf._
-import amf.client.environment.{OASConfiguration, RAMLConfiguration}
+import amf.client.environment.{OASConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
@@ -109,9 +109,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       transformResult <- Future {
         client.transform(parseResult.bu, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE))
       }
-      report <- validation.validate(transformResult.bu,
-                                    Raml10Profile,
-                                    new ValidationConfiguration(client.getConfiguration))
+      report <- client.validate(transformResult.bu, Raml10Profile)
     } yield {
       assert(!transformResult.report.conforms)
       assert(transformResult.report.results.size == 2)
@@ -129,9 +127,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       transformResult <- Future {
         client.transform(parseResult.bu, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE))
       }
-      report <- validation.validate(transformResult.bu,
-                                    Raml10Profile,
-                                    new ValidationConfiguration(client.getConfiguration))
+      report <- client.validate(transformResult.bu, Raml10Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
@@ -146,9 +142,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       transformResult <- Future {
         client.transform(parseResult.bu, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE))
       }
-      report <- validation.validate(transformResult.bu,
-                                    Raml10Profile,
-                                    new ValidationConfiguration(client.getConfiguration))
+      report <- client.validate(transformResult.bu, Raml10Profile)
     } yield {
       assert(report.conforms)
     }
@@ -157,14 +151,12 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Custom validation problems 2 (OAS)") {
     for {
       validation  <- Validation(platform)
-      client      <- Future.successful(RAMLConfiguration.RAML10().createClient())
+      client      <- Future.successful(WebAPIConfiguration.WebAPI().createClient())
       parseResult <- client.parse(validationsPath + "/enumeration-arrays/api.raml")
       transformResult <- Future {
         client.transform(parseResult.bu, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE))
       }
-      report <- validation.validate(transformResult.bu,
-                                    Oas20Profile,
-                                    new ValidationConfiguration(client.getConfiguration))
+      report <- client.validate(transformResult.bu, Oas20Profile)
     } yield {
       assert(!report.conforms)
       assert(report.results.length == 2)
@@ -295,7 +287,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation  <- Validation(platform)
       client      <- Future.successful(config.createClient())
       parseResult <- client.parse(url)
-      report      <- validation.validate(parseResult.bu, profileName, new ValidationConfiguration(client.getConfiguration))
+      report      <- client.validate(parseResult.bu, profileName)
     } yield {
       val unified =
         if (!parseResult.conforms) parseResult.report

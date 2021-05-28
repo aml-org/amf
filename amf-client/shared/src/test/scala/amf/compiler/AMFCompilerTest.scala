@@ -1,8 +1,9 @@
 package amf.compiler
 
 import amf.Raml10Profile
+import amf.client.environment.RAMLConfiguration
 import amf.client.parse.DefaultErrorHandler
-import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.{AMFGraphConfiguration, AMFValidator}
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.Root
 import amf.core.errorhandling.UnhandledErrorHandler
@@ -113,17 +114,17 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
               validation = Some(v),
               eh = Some(eh))
           .flatMap(bu => {
-            v.validate(bu, Raml10Profile, new ValidationConfiguration(AMFGraphConfiguration.fromEH(eh)))
+            AMFValidator.validate(bu, Raml10Profile, RAMLConfiguration.RAML10().withErrorHandlerProvider(() => eh))
           })
       })
       .map(r => {
         assert(!r.conforms)
         assert(r.results.lengthCompare(2) == 0)
         assert(
-          r.results.last.message
+          r.results.head.message
             .contains("amf-client/shared/src/test/resources/nonExists.raml"))
         assert(
-          r.results.last.message
+          r.results.head.message
             .contains("such file or directory")) // temp, assert better the message for js and jvm
       })
   }
