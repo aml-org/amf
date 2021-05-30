@@ -2,12 +2,15 @@ package amf.convert
 
 import _root_.org.scalatest.{Assertion, Matchers}
 import amf._
-import amf.client.convert.NativeOps
+import amf.client.convert.{CoreClientConverters, NativeOps}
 import amf.client.exported._
 import amf.client.model.document._
 import amf.client.model.domain._
+import amf.client.remote.Content
 import amf.core.model.document.{Document => InternalDocument}
 import amf.core.remote._
+import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
+import amf.client.resource.{ResourceLoader => ClientResourceLoader}
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.plugins.document.webapi.resolution.pipelines.Raml10TransformationPipeline
 import amf.plugins.domain.webapi.metamodel.api.WebApiModel
@@ -265,174 +268,173 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     }
   }
 
-//  test("Raml to oas security scheme after resolution") {
-//    for {
-//      unit   <- new RamlParser().parseFileAsync(security).asFuture
-//      _      <- Future.successful(new Raml10Resolver().resolve(unit))
-//      output <- new Oas20Renderer().generateString(unit).asFuture
-//    } yield {
-//      assert(!output.isEmpty)
-//    }
-//  }
-//
-//  test("world-music-test") {
-//    for {
-//      _      <- AMF.init().asFuture
-//      unit   <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(music).asFuture
-//      report <- AMF.validate(unit, Raml10Profile, RAMLStyle).asFuture
-//    } yield {
-//      assert(!unit.references().asSeq.map(_.location).contains(null))
-//      assert(report.conforms)
-//    }
-//  }
-//
-//  test("Scalar Annotations") {
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(scalarAnnotations).asFuture
-//    } yield {
-//      val api         = unit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
-//      val annotations = api.name.annotations().custom().asSeq
-//      annotations should have size 1
-//      val annotation = annotations.head
-//      annotation.name.value() should be("foo")
-//      annotation.extension.asInstanceOf[ScalarNode].value.value() should be("annotated title")
-//    }
-//  }
-//
-//  test("Vocabulary generation") {
-//
-////    import amf.client.convert.VocabulariesClientConverter._ //todo uncomment to import *.asClient
-//
-//    val vocab = new Vocabulary()
-//    vocab
-//      .withName("Vocab")
-//      .withBase("http://test.com/vocab#")
-//      .withLocation("test_vocab.raml")
-//      .withUsage("Just a small sample vocabulary")
-//    /*.withExternals(
-//        Seq(
-//          new External()
-//            .withAlias("other")
-//            .withBase("http://test.com/vocabulary/other#")
-//        ).toClient)
-//      .withUsages( // todo withImports?
-//        Seq(
-//          new VocabularyReference()
-//            .withAlias("raml-doc")
-//            .withReference("http://a.ml/vocabularies/doc#")
-//        ).toClient)*/
-//
-//    assert(vocab.base.option.asOption.isDefined)
-//    assert(vocab.base.is("http://test.com/vocab#"))
-//    assert(vocab.description.option.asOption.isDefined)
-//    assert(vocab.description.is("Just a small sample vocabulary"))
-//
-//    val propertyTerm = new DatatypePropertyTerm()
-//      .withId("http://a.ml/vocabularies/doc#test")
-//      .withRange("http://www.w3.org/2001/XMLSchema#string")
-//
-//    val classTerm = new ClassTerm()
-//      .withId("http://test.com/vocab#Class")
-//      .withDescription("A sample class")
-//      .withDisplayName("Class")
-////      .withSubClassOf(Seq("http://test.com/vocabulary/other#Class").asClient)
-////      .withProperties(Seq("http://a.ml/vocabularies/doc#test").asClient)
-//
-//    vocab.withDeclaredElement(classTerm).withDeclaredElement(propertyTerm)
-//
-//    for {
-//      _ <- {
-//        VocabulariesRegister.register(platform)
-//        AMF.init().asFuture
-//      }
-//      render <- amf.Core.generator(Vendor.AML.name, "application/yaml").generateString(vocab).asFuture
-//    } yield {
-//      render should be(
-//        """#%Vocabulary 1.0
-//          |base: http://test.com/vocab#
-//          |vocabulary: Vocab
-//          |usage: Just a small sample vocabulary
-//          |classTerms:
-//          |  Class:
-//          |    displayName: Class
-//          |    description: A sample class
-//          |propertyTerms:
-//          |  test:
-//          |    range: string
-//          |""".stripMargin
-//      )
-//    }
-//    /*
-//      text ==
-//        """#%RAML 1.0 Vocabulary
-//        |base: http://test.com/vocab#
-//        |version: 1.0
-//        |usage: Just a small sample vocabulary
-//        |external:
-//        |  other: http://test.com/vocabulary/other#
-//        |uses:
-//        |  raml-doc: http://a.ml/vocabularies/doc#
-//        |classTerms:
-//        |  Class:
-//        |    displayName: Class
-//        |    description: A sample class
-//        |    extends: other.Class
-//        |    properties: raml-doc.test
-//        |propertyTerms:
-//        |  raml-doc.test:
-//        |    range: string
-//        |""".stripMargin)
-//   */
-//  }
-//
-//  /*
-//  TODO: Fix setters
-//  test("vocabularies parsing ranges") {
-//    amf.plugins.document.Vocabularies.register()
-//    amf.plugins.document.WebApi.register()
-//    amf.Core.init().get()
-//
-//    val parser                               = amf.Core.parser("RAML Vocabularies", "application/yaml")
-//    val parsed                               = parser.parseFileAsync("file://vocabularies/vocabularies/raml_shapes.raml").get()
-//    val vocabulary                           = parsed.asInstanceOf[Vocabulary]
-//    val acc: mutable.HashMap[String, String] = new mutable.HashMap()
-//    for {
-//      objectProperties   <- vocabulary.objectPropertyTerms()
-//      dataTypeProperties <- vocabulary.datatypePropertyTerms()
-//    } yield {
-//      acc.put(property.getId(), range)
-//    }
-//
-//    assert(acc.size == 14)
-//  }
-//   */
-//
-//  test("Parsing text document with base url") {
-//    val baseUrl = "http://test.com/myApp"
-//    testParseStringWithBaseUrl(baseUrl)
-//  }
-//
-//  test("Parsing text document with base url (domain only)") {
-//    val baseUrl = "http://test.com"
-//    testParseStringWithBaseUrl(baseUrl)
-//  }
-//
-//  test("Parsing text document with base url (with include, without trailing slash)") {
-//    val baseUrl = "file://amf-client/shared/src/test/resources/includes"
-//    testParseStringWithBaseUrlAndInclude(baseUrl)
-//  }
-//
-//  test("Parsing text document with base url (with include and trailing slash)") {
-//    val baseUrl = "file://amf-client/shared/src/test/resources/includes/"
-//    testParseStringWithBaseUrlAndInclude(baseUrl)
-//  }
-//
-//  test("Parsing text document with base url (with include and file name)") {
-//    val baseUrl = "file://amf-client/shared/src/test/resources/includes/api.raml"
-//    testParseStringWithBaseUrlAndInclude(baseUrl)
-//  }
-//
+  test("Raml to oas security scheme after resolution") {
+    val client = WebAPIConfiguration.WebAPI().createClient()
+    for {
+      unit     <- client.parse(security).asFuture
+      resolved <- Future.successful(client.transform(unit.baseUnit, Raml10TransformationPipeline.name).baseUnit)
+      output   <- client.render(resolved, Oas20.mediaType).asFuture
+    } yield {
+      assert(!output.isEmpty)
+    }
+  }
+
+  test("world-music-test") {
+    val client = config().createClient()
+    for {
+      parseResult    <- client.parse(music, Raml10.name + "+yaml").asFuture
+      validateResult <- client.validate(parseResult.baseUnit, Raml10Profile).asFuture
+    } yield {
+      val report = parseResult.validationResult._internal.merge(validateResult._internal)
+      assert(!parseResult.baseUnit.references().asSeq.map(_.location).contains(null))
+      assert(report.conforms)
+    }
+  }
+
+  test("Scalar Annotations") {
+    val client = config().createClient()
+    for {
+      unit <- client.parse(scalarAnnotations, Raml10.mediaType + "+yaml").asFuture
+    } yield {
+      val api         = unit.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
+      val annotations = api.name.annotations().custom().asSeq
+      annotations should have size 1
+      val annotation = annotations.head
+      annotation.name.value() should be("foo")
+      annotation.extension.asInstanceOf[ScalarNode].value.value() should be("annotated title")
+    }
+  }
+
+  test("Vocabulary generation") {
+
+//    import amf.client.convert.VocabulariesClientConverter._ //todo uncomment to import *.asClient
+
+    val vocab = new Vocabulary()
+    vocab
+      .withName("Vocab")
+      .withBase("http://test.com/vocab#")
+      .withLocation("test_vocab.raml")
+      .withUsage("Just a small sample vocabulary")
+    /*.withExternals(
+        Seq(
+          new External()
+            .withAlias("other")
+            .withBase("http://test.com/vocabulary/other#")
+        ).toClient)
+      .withUsages( // todo withImports?
+        Seq(
+          new VocabularyReference()
+            .withAlias("raml-doc")
+            .withReference("http://a.ml/vocabularies/doc#")
+        ).toClient)*/
+
+    assert(vocab.base.option.asOption.isDefined)
+    assert(vocab.base.is("http://test.com/vocab#"))
+    assert(vocab.description.option.asOption.isDefined)
+    assert(vocab.description.is("Just a small sample vocabulary"))
+
+    val propertyTerm = new DatatypePropertyTerm()
+      .withId("http://a.ml/vocabularies/doc#test")
+      .withRange("http://www.w3.org/2001/XMLSchema#string")
+
+    val classTerm = new ClassTerm()
+      .withId("http://test.com/vocab#Class")
+      .withDescription("A sample class")
+      .withDisplayName("Class")
+//      .withSubClassOf(Seq("http://test.com/vocabulary/other#Class").asClient)
+//      .withProperties(Seq("http://a.ml/vocabularies/doc#test").asClient)
+
+    vocab.withDeclaredElement(classTerm).withDeclaredElement(propertyTerm)
+
+    val client = config().createClient()
+    for {
+      render <- client.render(vocab, Vendor.AML.mediaType).asFuture
+    } yield {
+      render should be(
+        """#%Vocabulary 1.0
+          |base: http://test.com/vocab#
+          |vocabulary: Vocab
+          |usage: Just a small sample vocabulary
+          |classTerms:
+          |  Class:
+          |    displayName: Class
+          |    description: A sample class
+          |propertyTerms:
+          |  test:
+          |    range: string
+          |""".stripMargin
+      )
+    }
+    /*
+      text ==
+        """#%RAML 1.0 Vocabulary
+        |base: http://test.com/vocab#
+        |version: 1.0
+        |usage: Just a small sample vocabulary
+        |external:
+        |  other: http://test.com/vocabulary/other#
+        |uses:
+        |  raml-doc: http://a.ml/vocabularies/doc#
+        |classTerms:
+        |  Class:
+        |    displayName: Class
+        |    description: A sample class
+        |    extends: other.Class
+        |    properties: raml-doc.test
+        |propertyTerms:
+        |  raml-doc.test:
+        |    range: string
+        |""".stripMargin)
+   */
+  }
+
+  /*
+  TODO: Fix setters
+  test("vocabularies parsing ranges") {
+    amf.plugins.document.Vocabularies.register()
+    amf.plugins.document.WebApi.register()
+    amf.Core.init().get()
+
+    val parser                               = amf.Core.parser("RAML Vocabularies", "application/yaml")
+    val parsed                               = parser.parseFileAsync("file://vocabularies/vocabularies/raml_shapes.raml").get()
+    val vocabulary                           = parsed.asInstanceOf[Vocabulary]
+    val acc: mutable.HashMap[String, String] = new mutable.HashMap()
+    for {
+      objectProperties   <- vocabulary.objectPropertyTerms()
+      dataTypeProperties <- vocabulary.datatypePropertyTerms()
+    } yield {
+      acc.put(property.getId(), range)
+    }
+
+    assert(acc.size == 14)
+  }
+   */
+
+  test("Parsing text document with base url") {
+    val baseUrl = "http://test.com/myApp"
+    testParseStringWithBaseUrl(baseUrl)
+  }
+
+  test("Parsing text document with base url (domain only)") {
+    val baseUrl = "http://test.com"
+    testParseStringWithBaseUrl(baseUrl)
+  }
+
+  test("Parsing text document with base url (with include, without trailing slash)") {
+    val baseUrl = "file://amf-client/shared/src/test/resources/includes"
+    testParseStringWithBaseUrlAndInclude(baseUrl)
+  }
+
+  test("Parsing text document with base url (with include and trailing slash)") {
+    val baseUrl = "file://amf-client/shared/src/test/resources/includes/"
+    testParseStringWithBaseUrlAndInclude(baseUrl)
+  }
+
+  test("Parsing text document with base url (with include and file name)") {
+    val baseUrl = "file://amf-client/shared/src/test/resources/includes/api.raml"
+    testParseStringWithBaseUrlAndInclude(baseUrl)
+  }
+
 //  test("Environment test") {
 //    val include = "amf://types/Person.raml"
 //
@@ -1081,55 +1083,72 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    unit
 //  }
 //
-//  private def testParseStringWithBaseUrl(baseUrl: String) = {
-//    val spec =
-//      """#%RAML 1.0
-//        |
-//        |title: Some title
-//        |version: 0.1
-//        |
-//        |/test:
-//        |  get:
-//        |    responses:
-//        |      200:
-//        |        body:
-//        |          application/json:
-//        |            properties:
-//        |              a: string""".stripMargin
-//
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- amf.Core.parser(Raml10.name, "application/yaml").parseStringAsync(baseUrl, spec).asFuture
-//    } yield {
-//      assert(unit.location.startsWith(baseUrl))
-//      val encodes = unit.asInstanceOf[Document].encodes
-//      assert(encodes.id.startsWith(baseUrl))
-//      assert(encodes.asInstanceOf[Api[_]].name.is("Some title"))
-//    }
-//  }
-//
-//  private def testParseStringWithBaseUrlAndInclude(baseUrl: String) = {
-//    val spec =
-//      """#%RAML 1.0
-//        |title: Some title
-//        |
-//        |/test:
-//        |  get:
-//        |    body:
-//        |      application/json:
-//        |        type: !include include1.json""".stripMargin
-//
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- AMF.raml10Parser().parseStringAsync(baseUrl, spec).asFuture
-//      res  <- Future.successful(AMF.resolveRaml10(unit))
-//      gen  <- AMF.raml10Generator().generateString(res).asFuture
-//    } yield {
-//      gen should not include ("!include")
-//      gen should include("type: string")
-//    }
-//  }
-//
+
+  private def resourceLoaderFor(url: String, content: String): ClientResourceLoader = {
+    val from = new ResourceLoader {
+
+      /** If the resource not exists, you should return a future failed with an ResourceNotFound exception. */
+      override def accepts(resource: String): Boolean = resource == url
+
+      override def fetch(resource: String): Future[Content] = Future {
+        new Content(content, url, None)
+      }
+    }
+    from match {
+      case ResourceLoaderAdapter(adaptee) => adaptee
+    }
+  }
+
+  private def testParseStringWithBaseUrl(baseUrl: String): Future[Assertion] = {
+    val spec =
+      """#%RAML 1.0
+        |
+        |title: Some title
+        |version: 0.1
+        |
+        |/test:
+        |  get:
+        |    responses:
+        |      200:
+        |        body:
+        |          application/json:
+        |            properties:
+        |              a: string""".stripMargin
+
+    val configuration = config().withResourceLoader(resourceLoaderFor(baseUrl, spec))
+
+    for {
+      result <- configuration.createClient().parse(baseUrl, Raml10.mediaType).asFuture
+    } yield {
+      val unit = result.baseUnit
+      assert(unit.location.startsWith(baseUrl))
+      val encodes = unit.asInstanceOf[Document].encodes
+      assert(encodes.id.startsWith(baseUrl))
+      assert(encodes.asInstanceOf[Api[_]].name.is("Some title"))
+    }
+  }
+
+  private def testParseStringWithBaseUrlAndInclude(baseUrl: String) = {
+    val spec =
+      """#%RAML 1.0
+        |title: Some title
+        |
+        |/test:
+        |  get:
+        |    body:
+        |      application/json:
+        |        type: !include include1.json""".stripMargin
+    val client = config().withResourceLoader(resourceLoaderFor(baseUrl, spec)).createClient()
+    for {
+      unit <- client.parse(baseUrl).asFuture
+      res  <- Future.successful(client.transform(unit.baseUnit, Raml10TransformationPipeline.name).baseUnit)
+      gen  <- client.render(res, Raml10.name + "+yaml").asFuture
+    } yield {
+      gen should not include ("!include")
+      gen should include("type: string")
+    }
+  }
+
   private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
     assert(baseUnit.location == expectedLocation)
     val api       = baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
