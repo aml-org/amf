@@ -808,11 +808,10 @@ class EditingResolutionTest extends ResolutionTest {
   }
 
   override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): Future[String] = {
-    super.render(unit, config, amfConfig.withRenderOptions(defaultRenderOptions))
+    val configuration = amfConfig.withRenderOptions(
+      amfConfig.options.renderOptions.withRawSourceMaps.withSourceMaps.withCompactUris.withPrettyPrint)
+    super.render(unit, config, configuration)
   }
-
-  override def defaultRenderOptions: RenderOptions =
-    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint
 
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
