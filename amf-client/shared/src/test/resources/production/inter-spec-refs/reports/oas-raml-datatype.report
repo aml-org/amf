@@ -10,14 +10,13 @@ Level: Violation
   Level: Violation
   Target: 
   Property: 
-  Position: None
-  Location: 
+  Position: Some(LexicalInformation([(4,8)-(4,14)]))
+  Location: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-datatype/datatype.raml
 
 - Source: http://a.ml/vocabularies/amf/core#syaml-error
-  Message: Syntax error : Unexpected '#%RAML 1.0 DataType
-type'
+  Message: YAML map expected
   Level: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(1,0)-(2,4)]))
+  Position: Some(LexicalInformation([(5,12)-(5,18)]))
   Location: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-datatype/datatype.raml

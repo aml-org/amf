@@ -1,7 +1,7 @@
 package amf
 
 import amf.client.commands._
-import amf.client.environment.{AMLConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.environment.{AMFConfiguration, AMLConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.client.remod.AMFGraphConfiguration
 import amf.core.benchmark.ExecutionLog
 import amf.core.client.{ExitCodes, ParserConfig}
@@ -82,6 +82,6 @@ object Main extends PlatformSecrets {
   def runParse(config: ParserConfig): Future[Any]     = amfConfig.map(ParseCommand(platform).run(config, _))
   def runPatch(config: ParserConfig): Future[Any]     = amfConfig.map(PatchCommand(platform).run(config, _))
 
-  private val amfConfig: Future[AMLConfiguration] =
+  private val amfConfig: Future[AMFConfiguration] =
     WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withCustomValidationsEnabled
 }

@@ -26,7 +26,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
     super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
 
   test("Invalid link to Response with ast") {
-    build("file://amf-client/shared/src/test/resources/invalids/error-response.oas", Oas20YamlHint)
+    build("file://amf-client/shared/src/test/resources/invalids/error-response.yaml", Oas20YamlHint)
       .map(unit => {
         val api      = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
         val response = api.endPoints.head.operations.head.responses.head
