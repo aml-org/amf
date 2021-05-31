@@ -102,7 +102,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
 
   private def named(declaration: AbstractDeclaration): Unit = {
     map.key.foreach { key =>
-      val element = ScalarNode(key).string()
+      val element = ScalarNode(key).text()
       declaration.set(AbstractDeclarationModel.Name, element, element.annotations)
     }
   }
