@@ -2,18 +2,27 @@ package amf.convert
 
 import _root_.org.scalatest.{Assertion, Matchers}
 import amf._
+import amf.client.convert.CoreClientConverters.ClientLoader
 import amf.client.convert.{CoreClientConverters, NativeOps}
+import amf.client.convert.CoreClientConverters._
 import amf.client.exported._
+import amf.client.exported.config.RenderOptions
 import amf.client.model.document._
 import amf.client.model.domain._
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.client.remote.Content
 import amf.core.model.document.{Document => InternalDocument}
 import amf.core.remote._
-import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
-import amf.client.resource.{ResourceLoader => ClientResourceLoader}
+import amf.internal.resource.{ClientResourceLoaderAdapter, InternalResourceLoaderAdapter, ResourceLoader}
+import amf.client.resource.{ResourceNotFound, ResourceLoader => ClientResourceLoader}
+import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.vocabulary.Namespace
+import amf.core.vocabulary.Namespace.Xsd
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.plugins.document.webapi.resolution.pipelines.Raml10TransformationPipeline
 import amf.plugins.domain.webapi.metamodel.api.WebApiModel
+import org.mulesoft.common.test.Diff
+import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -119,7 +128,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         | version: 1.0
         |""".stripMargin
     for {
-      unit <- AMFParser.parseContent(doc, RAMLConfiguration.RAML()).asFuture
+      unit <- AMFParser.parseContent(doc, Raml10.mediaType + "+yaml", RAMLConfiguration.RAML()).asFuture
     } yield {
       val webApi = unit.baseUnit._internal.asInstanceOf[InternalDocument].encodes
       webApi.fields.get(WebApiModel.Name).toString shouldBe expected
@@ -137,7 +146,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         | paths: {}
         |""".stripMargin
     for {
-      unit <- AMFParser.parseContent(doc, Oas20.mediaType + "+json", OASConfiguration.OAS20()).asFuture
+      unit <- AMFParser.parseContent(doc, Oas20.mediaType + "+yaml", OASConfiguration.OAS20()).asFuture
     } yield {
       val webApi = unit.baseUnit._internal.asInstanceOf[InternalDocument].encodes
       webApi.fields.get(WebApiModel.Name).toString shouldBe expected
@@ -191,7 +200,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       unit <- RAMLConfiguration.RAML().createClient().parse(zencoder).asFuture
     } yield {
-      unit.baseUnit.sourceVendor.asOption should be(Some(Raml10.mediaType))
+      unit.baseUnit.sourceVendor.asOption should be(Some(Raml10))
     }
   }
 
@@ -282,7 +291,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   test("world-music-test") {
     val client = config().createClient()
     for {
-      parseResult    <- client.parse(music, Raml10.name + "+yaml").asFuture
+      parseResult    <- client.parse(music, Raml10.mediaType).asFuture
       validateResult <- client.validate(parseResult.baseUnit, Raml10Profile).asFuture
     } yield {
       val report = parseResult.validationResult._internal.merge(validateResult._internal)
@@ -416,7 +425,7 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
   }
 
   test("Parsing text document with base url (domain only)") {
-    val baseUrl = "http://test.com"
+    val baseUrl = "http://test.com/"
     testParseStringWithBaseUrl(baseUrl)
   }
 
@@ -435,131 +444,111 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     testParseStringWithBaseUrlAndInclude(baseUrl)
   }
 
-//  test("Environment test") {
-//    val include = "amf://types/Person.raml"
-//
-//    val input = s"""
-//      |#%RAML 1.0
-//      |title: Environment test
-//      |types:
-//      |  Person: !include $include
-//    """.stripMargin
-//
-//    val person = """
-//      |#%RAML 1.0 DataType
-//      |type: object
-//      |properties:
-//      |  name: string
-//    """.stripMargin
-//
-//    case class TestResourceLoader() extends ResourceLoader {
-//
-//      import amf.client.convert.WebApiClientConverters._
-//
-//      override def fetch(resource: String): ClientFuture[Content] =
-//        Future.successful(new Content(person, resource)).asClient
-//
-//      override def accepts(resource: String): Boolean = resource == include
-//    }
-//
-//    val environment = Environment.empty().add(TestResourceLoader().asInstanceOf[ClientLoader])
-//
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new RamlParser(environment).parseStringAsync(input).asFuture
-//    } yield {
-//      unit shouldBe a[Document]
-//      val declarations = unit.asInstanceOf[Document].declares.asSeq
-//      declarations should have size 1
-//    }
-//  }
-//
-//  test("Network error report has position and location") {
-//    val uri = "file://amf-client/shared/src/test/resources/compiler/network-error/api.raml"
-//
-//    case class DummyHttpResourceLoader() extends ResourceLoader {
-//      override def fetch(resource: String): ClientFuture[Content] = {
-//        try {
-//          throw new Exception("Dummy error!")
-//        } catch {
-//          case e: Exception => throw NetworkError(e)
-//        }
-//      }
-//
-//      /** Accepts specified resource. */
-//      override def accepts(resource: String): Boolean = resource.startsWith("http")
-//    }
-//
-//    val fileLoader = platform.loaders().filter(x => x.accepts("file://")).head
-//    val clientLoader: ClientLoader =
-//      CoreClientConverters.ResourceLoaderMatcher.asClient(fileLoader).asInstanceOf[ClientLoader]
-//    val environment = Environment.empty().add(DummyHttpResourceLoader().asInstanceOf[ClientLoader]).add(clientLoader)
-//
-//    for {
-//      _      <- AMF.init().asFuture
-//      unit   <- new Raml08Parser(environment).parseFileAsync(uri).asFuture
-//      report <- AMF.validate(unit, Raml10Profile, MessageStyles.RAML).asFuture
-//    } yield {
-//      report.conforms shouldBe false
-//      val networkError = report.results.asSeq.last
-//      networkError.message should include("Network Error:")
-//      networkError.position should not be None
-//      networkError.location should not be None
-//    }
-//  }
-//
-//  test("Environment returning bad uri test") {
-//    val name = "api.raml"
-//
-//    val input = s"""
-//                   |#%RAML 1.0
-//                   |title: Environment test
-//    """.stripMargin
-//
-//    val name2 = "api2"
-//
-//    case class BadIRIResourceLoader() extends ResourceLoader {
-//
-//      import amf.client.convert.WebApiClientConverters._
-//
-//      override def fetch(resource: String): ClientFuture[Content] =
-//        Future.successful(new Content(input, resource)).asClient
-//
-//      override def accepts(resource: String): Boolean = true
-//    }
-//
-//    val environment = Environment.empty().add(BadIRIResourceLoader().asInstanceOf[ClientLoader])
-//
-//    for {
-//      _     <- AMF.init().asFuture
-//      unit  <- new RamlParser(environment).parseFileAsync(name).asFuture
-//      unit2 <- new RamlParser(environment).parseFileAsync(name2).asFuture
-//    } yield {
-//      unit shouldBe a[Document]
-//      unit.id should be("file://api.raml")
-//      unit2.id should be("file://api2")
-//    }
-//  }
-//
-//  test("Generate to writer and exit") {
-//    val input = s"""
-//                   |#%RAML 1.0
-//                   |title: Environment test
-//                   |version: 32.0.7
-//    """.stripMargin
-//
-//    val buffer = LimitedStringBuffer(600)
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new RamlParser().parseStringAsync(input).asFuture
-//      e    <- new AmfGraphRenderer().generateToWriter(unit, buffer).asFuture.failed
-//    } yield {
-//      e shouldBe a[LimitReachedException]
-//
-//      buffer.toString() should include("http://a.ml/vocabularies/document#RootDomainElement")
-//    }
-//  }
-//
+  test("Environment test") {
+    val include = "amf://types/Person.raml"
+
+    val input = s"""
+      |#%RAML 1.0
+      |title: Environment test
+      |types:
+      |  Person: !include $include
+    """.stripMargin
+
+    val person = """
+      |#%RAML 1.0 DataType
+      |type: object
+      |properties:
+      |  name: string
+    """.stripMargin
+
+    case class TestResourceLoader() extends ClientResourceLoader {
+
+      override def fetch(resource: String): ClientFuture[Content] =
+        Future.successful(new Content(person, resource)).asClient
+
+      override def accepts(resource: String): Boolean = resource == include
+    }
+
+    val config = RAMLConfiguration.RAML10().withResourceLoader(TestResourceLoader().asInstanceOf[ClientLoader])
+    for {
+      unit <- config.createClient().parseContent(input, Raml10.mediaType + "+yaml").asFuture
+    } yield {
+      unit.baseUnit shouldBe a[Document]
+      val declarations = unit.baseUnit.asInstanceOf[Document].declares.asSeq
+      declarations should have size 1
+    }
+  }
+
+  test("Network error report has position and location") {
+    val uri = "file://amf-client/shared/src/test/resources/compiler/network-error/api.raml"
+
+    case class DummyHttpResourceLoader() extends ResourceLoader {
+      override def fetch(resource: String): Future[Content] = {
+        try {
+          throw new Exception("Dummy error!")
+        } catch {
+          case e: Exception => throw NetworkError(e)
+        }
+      }
+
+      /** Accepts specified resource. */
+      override def accepts(resource: String): Boolean = resource.startsWith("http")
+    }
+
+    val fileLoader: ResourceLoader    = platform.loaders().filter(x => x.accepts("file://")).head
+    val loaders: List[ResourceLoader] = List(DummyHttpResourceLoader(), fileLoader)
+    val config = RAMLConfiguration
+      .RAML()
+      .withResourceLoaders(loaders.asClient)
+    val client = config.createClient()
+    for {
+      parseResult <- client.parse(uri).asFuture
+    } yield {
+      parseResult.validationResult.conforms shouldBe false
+      val networkError = parseResult.validationResult.results.asSeq.head
+      networkError.message should include("Network Error:")
+      networkError.position should not be None
+      networkError.location should not be None
+    }
+  }
+
+  test("Environment returning bad uri test") {
+    val name = "api.raml"
+
+    val input = s"""
+                   |#%RAML 1.0
+                   |title: Environment test
+    """.stripMargin
+
+    val name2 = "api2"
+
+    case class BadIRIResourceLoader() extends ResourceLoader {
+
+      import amf.client.convert.WebApiClientConverters._
+
+      override def fetch(resource: String): Future[Content] =
+        Future.successful(new Content(input, resource))
+
+      override def accepts(resource: String): Boolean = true
+    }
+
+    val loaders: List[ResourceLoader] = List(BadIRIResourceLoader())
+    val config = RAMLConfiguration
+      .RAML()
+      .withResourceLoaders(loaders.asClient)
+    val client = config.createClient()
+
+    for {
+      parseResult  <- client.parse(name, Raml10.mediaType + "+yaml").asFuture
+      parseResult2 <- client.parse(name2, Raml10.mediaType + "+yaml").asFuture
+    } yield {
+      parseResult.baseUnit shouldBe a[Document]
+      parseResult.baseUnit.id should be("file://api.raml")
+      parseResult2.baseUnit.id should be("file://api2")
+    }
+  }
+
+//  TODO: APIMF-3100
 //  test("Generate to doc builder") {
 //    val input = s"""
 //                   |#%RAML 1.0
@@ -577,525 +566,500 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    }
 //  }
 //
-//  test("Environment resource not loaded exception") {
-//    val name = "api.raml"
-//
-//    val input = s"""
-//                   |#%RAML 1.0
-//                   |title: Environment test
-//                   |types:
-//                   |  A: !include not-exists.raml
-//    """.stripMargin
-//
-//    case class ForFailResourceLoader() extends ResourceLoader {
-//
-//      import amf.client.convert.WebApiClientConverters._
-//
-//      override def fetch(resource: String): ClientFuture[Content] = {
-//        val f =
-//          if (resource.endsWith("api.raml")) Future.successful(new Content(input, resource))
-//          else
-//            Future.failed(new ResourceNotFound(s"Cannot find resource $resource"))
-//
-//        f.asClient
-//      }
-//
-//      override def accepts(resource: String): Boolean = true
-//    }
-//
-//    val environment = Environment.empty().add(ForFailResourceLoader().asInstanceOf[ClientLoader])
-//
-//    for {
-//      _      <- AMF.init().asFuture
-//      unit   <- new RamlParser(environment).parseFileAsync(name).asFuture
-//      report <- AMF.validate(unit, Raml10Profile, RAMLStyle).asFuture
-//    } yield {
-//      report.conforms should be(false)
-//      report.results.asSeq.exists(_.message.equals("Cannot find resource not-exists.raml")) should be(true)
-//    }
-//  }
-//
-//  test("Environment fallback test") {
-//    val include = "amf://types/Person.raml"
-//
-//    val input = s"""
-//       |#%RAML 1.0
-//       |title: Environment test
-//       |types:
-//       |  Person: !include $include
-//    """.stripMargin
-//
-//    val person = """
-//       |#%RAML 1.0 DataType
-//       |type: object
-//       |properties:
-//       |  name: string
-//     """.stripMargin
-//
-//    import amf.client.convert.WebApiClientConverters._
-//
-//    case class TestResourceLoader() extends ResourceLoader {
-//      override def fetch(resource: String): ClientFuture[Content] =
-//        Future.successful(new Content(person, resource)).asClient
-//
-//      override def accepts(resource: String): Boolean = resource == include
-//    }
-//
-//    case class FailingResourceLoader(msg: String) extends ResourceLoader {
-//      override def fetch(resource: String): ClientFuture[Content] =
-//        Future.failed[Content](new Exception(msg)).asClient
-//    }
-//
-//    val environment = Environment
-//      .empty()
-//      .add(TestResourceLoader().asInstanceOf[ClientLoader])
-//      .add(FailingResourceLoader("Unreachable network").asInstanceOf[ClientLoader])
-//      .add(FailingResourceLoader("Invalid protocol").asInstanceOf[ClientLoader])
-//
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new RamlParser(environment).parseStringAsync(input).asFuture
-//    } yield {
-//      unit shouldBe a[Document]
-//      val declarations = unit.asInstanceOf[Document].declares.asSeq
-//      declarations should have size 1
-//    }
-//  }
-//
-//  test("Missing converter error") {
-//    val options = new RenderOptions().withoutSourceMaps
-//
-//    for {
-//      _        <- AMF.init().asFuture
-//      unit     <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(amflight).asFuture
-//      resolved <- Future.successful(AMF.resolveRaml10(unit))
-//    } yield {
-//      val webapi = resolved.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
-//      webapi.endPoints.asSeq.foreach { ep =>
-//        ep.operations.asSeq.foreach { op =>
-//          op.responses.asSeq.foreach { resp =>
-//            resp.payloads.asSeq.foreach { payload =>
-//              payload.schema
-//            }
-//          }
-//        }
-//      }
-//      assert(true)
-//    }
-//  }
-//
-//  test("Build shape without default value") {
-//
-//    val shape = new ScalarShape()
-//    shape.withDataType("string")
-//    shape.withName("name")
-//
-//    assert(shape.defaultValue == null)
-//  }
-//
-//  test("Remove field and dump") {
-//    val api =
-//      """
-//        |#%RAML 1.0
-//        |title: this should remain
-//        |description: remove
-//        |license:
-//        | url: removeUrl
-//        | name: test
-//        |/endpoint1:
-//        | get:
-//        |   responses:
-//        |     200:
-//      """.stripMargin
-//
-//    val excepted =
-//      """
-//        |#%RAML 1.0
-//        |title: this should remain
-//        |/endpoint1:
-//        | get: {}""".stripMargin
-//    for {
-//      _         <- AMF.init().asFuture
-//      unit      <- new RamlParser().parseStringAsync(api).asFuture
-//      removed   <- removeFields(unit)
-//      generated <- AMF.raml10Generator().generateString(removed).asFuture
-//    } yield {
-//      val deltas = Diff.ignoreAllSpace.diff(excepted, generated)
-//      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
-//      else succeed
-//    }
-//  }
-//
-//  test("Test swagger 2.0 entry generation in yaml") {
-//    val expected =
-//      """
-//        |swagger: "2.0"
-//        |info:
-//        | title: test swagger entry
-//        | version: "1.0"
-//        |paths:
-//        | /endpoint:
-//        |  get:
-//        |    responses:
-//        |      "200":
-//        |       description: a descrip""".stripMargin
-//    for {
-//      _   <- AMF.init().asFuture
-//      doc <- Future { buildBasicApi() }
-//      generated <- new Renderer(Oas20.name, "application/yaml", None)
-//        .generateString(doc)
-//        .asFuture
-//    } yield {
-//      val deltas = Diff.ignoreAllSpace.diff(expected, generated)
-//      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
-//      else succeed
-//    }
-//  }
-//
-//  test("Test swagger ref generation in yaml") {
-//    val expected =
-//      """|swagger: "2.0"
-//         |info:
-//         |  title: test swagger entry
-//         |  version: "1.0"
-//         |paths:
-//         |  /endpoint:
-//         |    get:
-//         |      parameters:
-//         |        -
-//         |          x-amf-mediaType: application/json
-//         |          in: body
-//         |          name: someName
-//         |          schema:
-//         |            $ref: "#/definitions/person"
-//         |      responses:
-//         |        "200":
-//         |          description: a descrip
-//         |definitions:
-//         |  person:
-//         |    type: object
-//         |    properties:
-//         |      name:
-//         |        type: string""".stripMargin
-//    for {
-//      _   <- AMF.init().asFuture
-//      doc <- Future { buildApiWithTypeTarget() }
-//      generated <- new Renderer(Oas20.name, "application/yaml", None)
-//        .generateString(doc)
-//        .asFuture
-//    } yield {
-//      val deltas = Diff.ignoreAllSpace.diff(expected, generated)
-//      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
-//      else succeed
-//    }
-//  }
-//
-//  test("Test any shape default empty") {
-//    val api =
-//      """
-//        |#%RAML 1.0
-//        |title: test swagger entry
-//        |/endpoint:
-//        |   get:
-//        |     body:
-//        |       application/json:
-//        |   post:
-//        |     body:
-//        |       application/json:
-//        |           example: |
-//        |             { "name": "roman", "lastname": "riquelme"}
-//        |   put:
-//        |     body:
-//        |       application/json:
-//        |           type: any
-//        |           example: |
-//        |             { "name": "roman", "lastname": "riquelme"}
-//        |   patch:
-//        |     body:
-//        |       application/json:
-//        |           type: object
-//        |           example: |
-//        |             { "name": "roman", "lastname": "riquelme"}
-//        |   delete:
-//        |     body:
-//        |       application/json:
-//        |           type: string""".stripMargin
-//    for {
-//      _   <- AMF.init().asFuture
-//      doc <- AMF.ramlParser().parseStringAsync(api).asFuture
-//    } yield {
-//
-//      val seq = doc.asInstanceOf[Document].encodes.asInstanceOf[Api[_]].endPoints.asSeq.head.operations.asSeq
-//      def assertDefault(method: String, expected: Boolean) =
-//        seq
-//          .find(_.method.value().equals(method))
-//          .get
-//          .request
-//          .payloads
-//          .asSeq
-//          .head
-//          .schema
-//          .asInstanceOf[AnyShape]
-//          .isDefaultEmpty should be(expected)
-//
-//      assertDefault("get", expected = true)
-//      assertDefault("post", expected = true)
-//      assertDefault("put", expected = false)
-//      assertDefault("patch", expected = false)
-//      assertDefault("delete", expected = false)
-//
-//    }
-//  }
-//
-//  private def buildBasicApi() = {
-//    val api: Api[_] = new WebApi().withName("test swagger entry")
-//
-//    api.withEndPoint("/endpoint").withOperation("get").withResponse("200").withDescription("a descrip")
-//    new Document().withEncodes(api)
-//
-//  }
-//
-//  private def buildApiWithTypeTarget() = {
-//    val doc = buildBasicApi()
-//
-//    val shape     = new ScalarShape().withDataType((Xsd + "string").iri())
-//    val nodeShape = new NodeShape().withName("person")
-//    nodeShape.withProperty("name").withRange(shape)
-//    doc.withDeclaredElement(nodeShape)
-//
-//    val linked: NodeShape = nodeShape.link(Some("#/definitions/person"))
-//    linked.withName("Person")
-//    doc.encodes
-//      .asInstanceOf[Api[_]]
-//      .endPoints
-//      .asSeq
-//      .head
-//      .operations
-//      .asSeq
-//      .head
-//      .withRequest()
-//      .withPayload("application/json")
-//      .withName("someName")
-//      .withSchema(linked)
-//    doc
-//  }
-//
-//  test("Test dynamic types") {
-//    val api =
-//      """
-//        |#%RAML 1.0
-//        |title: this should remain
-//        |description: remove
-//        |license:
-//        | url: removeUrl
-//        | name: test
-//        |/endpoint1:
-//        | get:
-//        |   responses:
-//        |     200:
-//        |       body:
-//        |        application/json:
-//        |           properties:
-//        |             name: string
-//        |             lastname: string
-//        |           example:
-//        |             name: roman
-//        |             lastname: riquelme
-//        |
-//      """.stripMargin
-//
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new RamlParser().parseStringAsync(api).asFuture
-//    } yield {
-//      val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
-//      val dataNode = webApi.endPoints.asSeq.head.operations.asSeq.head.responses.asSeq.head.payloads.asSeq.head.schema
-//        .asInstanceOf[AnyShape]
-//        .examples
-//        .asSeq
-//        .head
-//        .structuredValue
-//      assert(dataNode._internal.meta.`type`.head.iri() == (Namespace.Data + "Object").iri())
-//    }
-//  }
-//
-//  test("Test name in property shape") {
-//    val api =
-//      """
-//        |#%RAML 1.0
-//        |title: this should remain
-//        |
-//        |types:
-//        | person:
-//        |   properties:
-//        |     name: string
-//      """.stripMargin
-//
-//    for {
-//      _    <- AMF.init().asFuture
-//      unit <- new RamlParser().parseStringAsync(api).asFuture
-//    } yield {
-//      val nodeShape = unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[NodeShape]
-//      nodeShape.properties.asSeq.head.name.value() should be("name")
-//    }
-//  }
-//
-//  test("Test order of uri parameter") {
-//    val api =
-//      """
-//        |#%RAML 1.0
-//        |---
-//        |title: RAML 1.0 Uri param
-//        |version: v1
-//        |
-//        |/part:
-//        |  get:
-//        |  /{uriParam1}:
-//        |    uriParameters:
-//        |      uriParam1:
-//        |        type: integer
-//        |    get:
-//        |    /{uriParam2}:
-//        |      uriParameters:
-//        |        uriParam2:
-//        |          type: number
-//        |      get:
-//        |      /{uriParam3}:
-//        |        uriParameters:
-//        |          uriParam3:
-//        |            type: boolean
-//        |        get:
-//      """.stripMargin
-//
-//    for {
-//      _        <- AMF.init().asFuture
-//      unit     <- new RamlParser().parseStringAsync(api).asFuture
-//      resolved <- Future { new Raml10Resolver().resolve(unit) }
-//    } yield {
-//      val pathParamters: List[Parameter] = resolved
-//        .asInstanceOf[Document]
-//        .encodes
-//        .asInstanceOf[Api[_]]
-//        .endPoints
-//        .asSeq
-//        .last
-//        .parameters
-//        .asSeq
-//        .filter(_.binding.value().equals("path"))
-//        .toList
-//
-//      assert(pathParamters.head.name.value().equals("uriParam1"))
-//      assert(pathParamters(1).name.value().equals("uriParam2"))
-//      assert(pathParamters(2).name.value().equals("uriParam3"))
-//
-//    }
-//  }
-//
-//  test("Test order of base uri parameter ") {
-//    val api =
-//      """
-//        |#%RAML 1.0
-//        |---
-//        |title: RAML 1.0 Uri param
-//        |version: v1
-//        |baseUri: https://www.example.com/api/{v1}/{v2}
-//        |
-//        |baseUriParameters:
-//        |  v2:
-//        |  v1:
-//        |    type: string""".stripMargin
-//
-//    for {
-//      _        <- AMF.init().asFuture
-//      unit     <- new RamlParser().parseStringAsync(api).asFuture
-//      resolved <- Future { new Raml10Resolver().resolve(unit) }
-//    } yield {
-//      val baseParameters: Seq[Parameter] =
-//        resolved.asInstanceOf[Document].encodes.asInstanceOf[Api[_]].servers.asSeq.head.variables.asSeq
-//
-//      assert(baseParameters.head.name.value().equals("v1"))
-//      assert(baseParameters(1).name.value().equals("v2"))
-//
-//    }
-//  }
-//
-//  test("Test order of raml 08 form parameters ") {
-//    val api =
-//      """
-//        |#%RAML 0.8
-//        |---
-//        |title: RAML 1.0 Uri param
-//        |version: v1
-//        |
-//        |/multipart:
-//        |  post:
-//        |    body:
-//        |      multipart/form-data:
-//        |        formParameters:
-//        |          first:
-//        |            type: string
-//        |            required: true
-//        |          second:
-//        |            type: string
-//        |            default: segundo
-//        |          third:
-//        |            type: boolean
-//        |    responses:
-//        |      201: ~
-//      """.stripMargin
-//
-//    for {
-//      _        <- AMF.init().asFuture
-//      unit     <- new Raml08Parser().parseStringAsync(api).asFuture
-//      resolved <- Future { new Raml08Resolver().resolve(unit) }
-//    } yield {
-//      val shape: Shape = unit
-//        .asInstanceOf[Document]
-//        .encodes
-//        .asInstanceOf[Api[_]]
-//        .endPoints
-//        .asSeq
-//        .head
-//        .operations
-//        .asSeq
-//        .head
-//        .request
-//        .payloads
-//        .asSeq
-//        .head
-//        .schema
-//
-//      assert(shape.isInstanceOf[NodeShape])
-//      val properties = shape.asInstanceOf[NodeShape].properties.asSeq
-//      assert(properties.head.name.value().equals("first"))
-//      assert(properties(1).name.value().equals("second"))
-//      assert(properties(2).name.value().equals("third"))
-//    }
-//  }
-//
-//  private def removeFields(unit: BaseUnit): Future[BaseUnit] = Future {
-//    val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
-//    webApi.description.remove()
-//    val operation: Operation = webApi.endPoints.asSeq.head.operations.asSeq.head
-//    operation.graph().remove("http://a.ml/vocabularies/apiContract#returns")
-//
-//    webApi.graph().remove("http://a.ml/vocabularies/core#license")
-//    unit
-//  }
-//
+  test("Environment resource not loaded exception") {
+    val name = "api.raml"
 
-  private def resourceLoaderFor(url: String, content: String): ClientResourceLoader = {
-    val from = new ResourceLoader {
+    val input = s"""
+                   |#%RAML 1.0
+                   |title: Environment test
+                   |types:
+                   |  A: !include not-exists.raml
+    """.stripMargin
 
-      /** If the resource not exists, you should return a future failed with an ResourceNotFound exception. */
-      override def accepts(resource: String): Boolean = resource == url
+    case class ForFailResourceLoader() extends ResourceLoader {
 
-      override def fetch(resource: String): Future[Content] = Future {
-        new Content(content, url, None)
+      override def fetch(resource: String): Future[Content] = {
+        val f =
+          if (resource.endsWith("api.raml")) Future.successful(new Content(input, resource))
+          else
+            Future.failed(new ResourceNotFound(s"Cannot find resource $resource"))
+
+        f
       }
+
+      override def accepts(resource: String): Boolean = true
     }
-    from match {
-      case ResourceLoaderAdapter(adaptee) => adaptee
+    val loaders: List[ResourceLoader] = List(ForFailResourceLoader())
+    val config                        = RAMLConfiguration.RAML().withResourceLoaders(loaders.asClient)
+
+    for {
+      parseResult <- config.createClient().parse(name).asFuture
+    } yield {
+      parseResult.validationResult.conforms should be(false)
+      parseResult.validationResult.results.asSeq
+        .exists(_.message.equals("Cannot find resource not-exists.raml")) should be(true)
+    }
+  }
+
+  test("Environment fallback test") {
+    val include = "amf://types/Person.raml"
+
+    val input = s"""
+       |#%RAML 1.0
+       |title: Environment test
+       |types:
+       |  Person: !include $include
+    """.stripMargin
+
+    val person = """
+       |#%RAML 1.0 DataType
+       |type: object
+       |properties:
+       |  name: string
+     """.stripMargin
+
+    case class TestResourceLoader() extends ResourceLoader {
+      override def fetch(resource: String): Future[Content] =
+        Future.successful(new Content(person, resource))
+
+      override def accepts(resource: String): Boolean = resource == include
+    }
+
+    case class FailingResourceLoader(msg: String) extends ResourceLoader {
+      override def fetch(resource: String): Future[Content] =
+        Future.failed[Content](new Exception(msg))
+
+      override def accepts(resource: String): Boolean = true
+    }
+
+    val loaders: List[ResourceLoader] = List(TestResourceLoader(),
+                                             FailingResourceLoader("Unreachable network"),
+                                             FailingResourceLoader("Invalid protocol"))
+    val config = RAMLConfiguration.RAML10().withResourceLoaders(loaders.asClient)
+
+    for {
+      unit <- config.createClient().parseContent(input, Raml10.mediaType + "+yaml").asFuture
+    } yield {
+      unit.baseUnit shouldBe a[Document]
+      val declarations = unit.baseUnit.asInstanceOf[Document].declares.asSeq
+      declarations should have size 1
+    }
+  }
+
+  test("Missing converter error") {
+    val client = RAMLConfiguration.RAML().createClient()
+    for {
+      unit     <- client.parse(amflight).asFuture
+      resolved <- Future.successful(client.transform(unit.baseUnit, PipelineName.from(Raml10.mediaType)))
+    } yield {
+      val webapi = resolved.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
+      webapi.endPoints.asSeq.foreach { ep =>
+        ep.operations.asSeq.foreach { op =>
+          op.responses.asSeq.foreach { resp =>
+            resp.payloads.asSeq.foreach { payload =>
+              payload.schema
+            }
+          }
+        }
+      }
+      assert(true)
+    }
+  }
+
+  test("Build shape without default value") {
+
+    val shape = new ScalarShape()
+    shape.withDataType("string")
+    shape.withName("name")
+
+    assert(shape.defaultValue == null)
+  }
+
+  test("Remove field and dump") {
+    val api =
+      """
+        |#%RAML 1.0
+        |title: this should remain
+        |description: remove
+        |license:
+        | url: removeUrl
+        | name: test
+        |/endpoint1:
+        | get:
+        |   responses:
+        |     200:
+      """.stripMargin
+
+    val excepted =
+      """
+        |#%RAML 1.0
+        |title: this should remain
+        |/endpoint1:
+        | get: {}""".stripMargin
+    val client = RAMLConfiguration.RAML().createClient()
+    for {
+      unit      <- client.parseContent(api, Raml10.mediaType + "+yaml").asFuture
+      removed   <- removeFields(unit.baseUnit)
+      generated <- client.render(removed, Raml10.mediaType).asFuture
+    } yield {
+      val deltas = Diff.ignoreAllSpace.diff(excepted, generated)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
+  test("Test swagger 2.0 entry generation in yaml") {
+    val expected =
+      """
+        |swagger: "2.0"
+        |info:
+        | title: test swagger entry
+        | version: "1.0"
+        |paths:
+        | /endpoint:
+        |  get:
+        |    responses:
+        |      "200":
+        |       description: a descrip""".stripMargin
+    val client = OASConfiguration.OAS20().createClient()
+    for {
+      doc       <- Future { buildBasicApi() }
+      generated <- client.render(doc, Oas20.mediaType + "+yaml").asFuture
+    } yield {
+      val deltas = Diff.ignoreAllSpace.diff(expected, generated)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
+  test("Test swagger ref generation in yaml") {
+    val expected =
+      """|swagger: "2.0"
+         |info:
+         |  title: test swagger entry
+         |  version: "1.0"
+         |paths:
+         |  /endpoint:
+         |    get:
+         |      parameters:
+         |        -
+         |          x-amf-mediaType: application/json
+         |          in: body
+         |          name: someName
+         |          schema:
+         |            $ref: "#/definitions/person"
+         |      responses:
+         |        "200":
+         |          description: a descrip
+         |definitions:
+         |  person:
+         |    type: object
+         |    properties:
+         |      name:
+         |        type: string""".stripMargin
+    val client = OASConfiguration.OAS20().createClient()
+    for {
+      doc       <- Future { buildApiWithTypeTarget() }
+      generated <- client.render(doc, Oas20.mediaType + "+yaml").asFuture
+    } yield {
+      val deltas = Diff.ignoreAllSpace.diff(expected, generated)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
+  test("Test any shape default empty") {
+    val api =
+      """
+        |#%RAML 1.0
+        |title: test swagger entry
+        |/endpoint:
+        |   get:
+        |     body:
+        |       application/json:
+        |   post:
+        |     body:
+        |       application/json:
+        |           example: |
+        |             { "name": "roman", "lastname": "riquelme"}
+        |   put:
+        |     body:
+        |       application/json:
+        |           type: any
+        |           example: |
+        |             { "name": "roman", "lastname": "riquelme"}
+        |   patch:
+        |     body:
+        |       application/json:
+        |           type: object
+        |           example: |
+        |             { "name": "roman", "lastname": "riquelme"}
+        |   delete:
+        |     body:
+        |       application/json:
+        |           type: string""".stripMargin
+    for {
+      doc <- RAMLConfiguration.RAML10().createClient().parseContent(api, Raml10.mediaType + "+yaml").asFuture
+    } yield {
+
+      val seq = doc.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]].endPoints.asSeq.head.operations.asSeq
+      def assertDefault(method: String, expected: Boolean) =
+        seq
+          .find(_.method.value().equals(method))
+          .get
+          .request
+          .payloads
+          .asSeq
+          .head
+          .schema
+          .asInstanceOf[AnyShape]
+          .isDefaultEmpty should be(expected)
+
+      assertDefault("get", expected = true)
+      assertDefault("post", expected = true)
+      assertDefault("put", expected = false)
+      assertDefault("patch", expected = false)
+      assertDefault("delete", expected = false)
+
+    }
+  }
+
+  private def buildBasicApi() = {
+    val api: Api[_] = new WebApi().withName("test swagger entry")
+
+    api.withEndPoint("/endpoint").withOperation("get").withResponse("200").withDescription("a descrip")
+    new Document().withEncodes(api)
+
+  }
+
+  private def buildApiWithTypeTarget() = {
+    val doc = buildBasicApi()
+
+    val shape     = new ScalarShape().withDataType((Xsd + "string").iri())
+    val nodeShape = new NodeShape().withName("person")
+    nodeShape.withProperty("name").withRange(shape)
+    doc.withDeclaredElement(nodeShape)
+
+    val linked: NodeShape = nodeShape.link(Some("#/definitions/person"))
+    linked.withName("Person")
+    doc.encodes
+      .asInstanceOf[Api[_]]
+      .endPoints
+      .asSeq
+      .head
+      .operations
+      .asSeq
+      .head
+      .withRequest()
+      .withPayload("application/json")
+      .withName("someName")
+      .withSchema(linked)
+    doc
+  }
+
+  test("Test dynamic types") {
+    val api =
+      """
+        |#%RAML 1.0
+        |title: this should remain
+        |description: remove
+        |license:
+        | url: removeUrl
+        | name: test
+        |/endpoint1:
+        | get:
+        |   responses:
+        |     200:
+        |       body:
+        |        application/json:
+        |           properties:
+        |             name: string
+        |             lastname: string
+        |           example:
+        |             name: roman
+        |             lastname: riquelme
+        |
+      """.stripMargin
+
+    for {
+      parseResult <- RAMLConfiguration.RAML10().createClient().parseContent(api, Raml10.mediaType + "+yaml").asFuture
+    } yield {
+      val webApi = parseResult.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
+      val dataNode = webApi.endPoints.asSeq.head.operations.asSeq.head.responses.asSeq.head.payloads.asSeq.head.schema
+        .asInstanceOf[AnyShape]
+        .examples
+        .asSeq
+        .head
+        .structuredValue
+      assert(dataNode._internal.meta.`type`.head.iri() == (Namespace.Data + "Object").iri())
+    }
+  }
+
+  test("Test name in property shape") {
+    val api =
+      """
+        |#%RAML 1.0
+        |title: this should remain
+        |
+        |types:
+        | person:
+        |   properties:
+        |     name: string
+      """.stripMargin
+
+    for {
+      parseResult <- RAMLConfiguration.RAML10().createClient().parseContent(api, Raml10.mediaType + "+yaml").asFuture
+    } yield {
+      val nodeShape = parseResult.baseUnit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[NodeShape]
+      nodeShape.properties.asSeq.head.name.value() should be("name")
+    }
+  }
+
+  test("Test order of uri parameter") {
+    val api =
+      """
+        |#%RAML 1.0
+        |---
+        |title: RAML 1.0 Uri param
+        |version: v1
+        |
+        |/part:
+        |  get:
+        |  /{uriParam1}:
+        |    uriParameters:
+        |      uriParam1:
+        |        type: integer
+        |    get:
+        |    /{uriParam2}:
+        |      uriParameters:
+        |        uriParam2:
+        |          type: number
+        |      get:
+        |      /{uriParam3}:
+        |        uriParameters:
+        |          uriParam3:
+        |            type: boolean
+        |        get:
+      """.stripMargin
+    val client = RAMLConfiguration.RAML10().createClient()
+    for {
+      parseResult     <- client.parseContent(api, Raml10.mediaType + "+yaml").asFuture
+      transformResult <- Future { client.transform(parseResult.baseUnit, PipelineName.from(Raml10.mediaType)) }
+    } yield {
+      val pathParamters: List[Parameter] = transformResult.baseUnit
+        .asInstanceOf[Document]
+        .encodes
+        .asInstanceOf[Api[_]]
+        .endPoints
+        .asSeq
+        .last
+        .parameters
+        .asSeq
+        .filter(_.binding.value().equals("path"))
+        .toList
+
+      assert(pathParamters.head.name.value().equals("uriParam1"))
+      assert(pathParamters(1).name.value().equals("uriParam2"))
+      assert(pathParamters(2).name.value().equals("uriParam3"))
+
+    }
+  }
+
+  test("Test order of base uri parameter ") {
+    val api =
+      """
+        |#%RAML 1.0
+        |---
+        |title: RAML 1.0 Uri param
+        |version: v1
+        |baseUri: https://www.example.com/api/{v1}/{v2}
+        |
+        |baseUriParameters:
+        |  v2:
+        |  v1:
+        |    type: string""".stripMargin
+    val client = RAMLConfiguration.RAML().createClient()
+    for {
+      unit     <- client.parseContent(api, Raml10.mediaType + "+yaml").asFuture
+      resolved <- Future { client.transform(unit.baseUnit, PipelineName.from(Raml10.mediaType)) }
+    } yield {
+      val baseParameters: Seq[Parameter] =
+        resolved.baseUnit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]].servers.asSeq.head.variables.asSeq
+
+      assert(baseParameters.head.name.value().equals("v1"))
+      assert(baseParameters(1).name.value().equals("v2"))
+
+    }
+  }
+
+  test("Test order of raml 08 form parameters ") {
+    val api =
+      """
+        |#%RAML 0.8
+        |---
+        |title: RAML 1.0 Uri param
+        |version: v1
+        |
+        |/multipart:
+        |  post:
+        |    body:
+        |      multipart/form-data:
+        |        formParameters:
+        |          first:
+        |            type: string
+        |            required: true
+        |          second:
+        |            type: string
+        |            default: segundo
+        |          third:
+        |            type: boolean
+        |    responses:
+        |      201: ~
+      """.stripMargin
+    val client = RAMLConfiguration.RAML08().createClient()
+    for {
+      parseResult <- client.parseContent(api, Raml08.mediaType + "+yaml").asFuture
+      _           <- Future { client.transform(parseResult.baseUnit, PipelineName.from(Raml08.mediaType)) }
+    } yield {
+      val shape: Shape = parseResult.baseUnit
+        .asInstanceOf[Document]
+        .encodes
+        .asInstanceOf[Api[_]]
+        .endPoints
+        .asSeq
+        .head
+        .operations
+        .asSeq
+        .head
+        .request
+        .payloads
+        .asSeq
+        .head
+        .schema
+
+      assert(shape.isInstanceOf[NodeShape])
+      val properties = shape.asInstanceOf[NodeShape].properties.asSeq
+      assert(properties.head.name.value().equals("first"))
+      assert(properties(1).name.value().equals("second"))
+      assert(properties(2).name.value().equals("third"))
+    }
+  }
+
+  private def removeFields(unit: BaseUnit): Future[BaseUnit] = Future {
+    val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[Api[_]]
+    webApi.description.remove()
+    val operation: Operation = webApi.endPoints.asSeq.head.operations.asSeq.head
+    operation.graph().remove("http://a.ml/vocabularies/apiContract#returns")
+
+    webApi.graph().remove("http://a.ml/vocabularies/core#license")
+    unit
+  }
+
+  private def resourceLoaderFor(url: String, content: String): ResourceLoader = {
+    new ResourceLoader {
+      override def fetch(resource: String): Future[Content] =
+        Future.successful(new Content(content, url, None))
+      override def accepts(resource: String): Boolean = resource == url
     }
   }
 
@@ -1114,8 +1078,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |          application/json:
         |            properties:
         |              a: string""".stripMargin
-
-    val configuration = config().withResourceLoader(resourceLoaderFor(baseUrl, spec))
+    val loaders: List[ResourceLoader] = List(resourceLoaderFor(baseUrl, spec))
+    val configuration                 = config().withResourceLoaders(loaders.asClient)
 
     for {
       result <- configuration.createClient().parse(baseUrl, Raml10.mediaType).asFuture
@@ -1138,11 +1102,12 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
         |    body:
         |      application/json:
         |        type: !include include1.json""".stripMargin
-    val client = config().withResourceLoader(resourceLoaderFor(baseUrl, spec)).createClient()
+    val client =
+      config().withResourceLoader(ClientResourceLoaderAdapter(resourceLoaderFor(baseUrl, spec))).createClient()
     for {
       unit <- client.parse(baseUrl).asFuture
       res  <- Future.successful(client.transform(unit.baseUnit, Raml10TransformationPipeline.name).baseUnit)
-      gen  <- client.render(res, Raml10.name + "+yaml").asFuture
+      gen  <- client.render(res, Raml10.mediaType + "+yaml").asFuture
     } yield {
       gen should not include ("!include")
       gen should include("type: string")
