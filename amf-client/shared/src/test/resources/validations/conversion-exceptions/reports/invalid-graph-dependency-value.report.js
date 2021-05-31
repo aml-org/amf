@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/conversion-exceptions/invalid-graph-dependency-value.jsonld
-Profile: AMF Graph
+Profile: 
 Conforms? false
 Number of results: 2
 

@@ -1,23 +1,32 @@
 Model: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json
 Profile: OAS 2.0
 Conforms? false
-Number of results: 2
+Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
-  Message: YAML map expected
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'settings' not supported in a OAS 2.0 securityScheme node
   Level: Violation
-  Target: 
+  Target: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json#/declarations/securitySchemes/oauth20
   Property: 
-  Position: None
-  Location: 
-
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
-  Message: Syntax error : Unexpected '#%RAML 1.0 SecurityScheme
-type'
-  Level: Violation
-  Target: 
-  Property: 
-  Position: Some(LexicalInformation([(1,0)-(2,4)]))
+  Position: Some(LexicalInformation([(3,0)-(12,0)]))
   Location: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/securityScheme.raml
+
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property 'describedBy' not supported in a OAS 2.0 securityScheme node
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json#/declarations/securitySchemes/oauth20
+  Property: 
+  Position: Some(LexicalInformation([(12,0)-(22,39)]))
+  Location: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/securityScheme.raml
+
+Level: Warning
+
+- Source: http://a.ml/vocabularies/amf/parser#cross-security-warning
+  Message: RAML 1.0 security scheme type detected in OAS 2.0 spec
+  Level: Warning
+  Target: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json#/declarations/securitySchemes/oauth20
+  Property: http://a.ml/vocabularies/security#type
+  Position: Some(LexicalInformation([(2,6)-(2,15)]))
+  Location: file://amf-client/shared/src/test/resources/production/inter-spec-refs/oas-raml-securityScheme/api.json

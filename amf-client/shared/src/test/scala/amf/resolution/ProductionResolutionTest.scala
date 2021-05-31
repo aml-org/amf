@@ -56,7 +56,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
       Raml10YamlHint,
       renderOptions = Some(config.renderOptions),
       target = Amf,
-      transformWith = Some(Raml10)
+      transformWith = Some(Amf)
     )
   }
 

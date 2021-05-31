@@ -959,7 +959,12 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#raw": "displayName: Transaction Queue\ndescription: A queue that is used to push transactions onto the ESB for processing.\npost:\n  description: Add a new transaction to the queue.\n  body:\n    application/json:\n      type: jsonSchema\n\n    text/xml:\n      type: xmlSchema\n      example: |\n        <saasTxn>\n        <tenant>100</tenant>\n        <objectType>Business Partner</objectType>\n        <objectKey>12345</objectKey>\n        <txnType>Update</txnType>\n        </saasTxn>\n  responses:\n    201:\n      description: A new transaction was created on the queue.\n      body: null\n",
-      "http://a.ml/vocabularies/core#mediaType": "application/raml+yaml"
+      "http://a.ml/vocabularies/core#mediaType": "application/yaml",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/included.raml#/external/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/declarations/types/jsonSchema/property/tenant",
@@ -1116,6 +1121,17 @@
       "http://a.ml/vocabularies/document-source-maps#declared-element": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/declarations/types/schema/xmlSchema/source-map/declared-element/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/included.raml#/external/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/included.raml#/external/source-map/lexical/element_0"
         }
       ]
     },
@@ -1322,6 +1338,11 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/declarations/types/schema/xmlSchema/source-map/declared-element/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/declarations/types/schema/xmlSchema",
       "http://a.ml/vocabularies/document-source-maps#value": ""
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/included.raml#/external/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/included.raml#/external",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(1,0)-(22,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/declarations/types/jsonSchema/property/tenant/scalar/tenant/source-map",
