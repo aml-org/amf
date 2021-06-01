@@ -16,6 +16,7 @@ import amf.core.remote._
 import amf.internal.resource.{ClientResourceLoaderAdapter, InternalResourceLoaderAdapter, ResourceLoader}
 import amf.client.resource.{ResourceNotFound, ResourceLoader => ClientResourceLoader}
 import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.validation.AMFValidationReport
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
@@ -294,7 +295,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
       parseResult    <- client.parse(music, Raml10.mediaType).asFuture
       validateResult <- client.validate(parseResult.baseUnit, Raml10Profile).asFuture
     } yield {
-      val report = parseResult.validationResult._internal.merge(validateResult._internal)
+      val parseReport = AMFValidationReport.unknownProfile(parseResult._internal)
+      val report      = parseReport.merge(validateResult._internal)
       assert(!parseResult.baseUnit.references().asSeq.map(_.location).contains(null))
       assert(report.conforms)
     }
@@ -501,8 +503,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       parseResult <- client.parse(uri).asFuture
     } yield {
-      parseResult.validationResult.conforms shouldBe false
-      val networkError = parseResult.validationResult.results.asSeq.head
+      parseResult.conforms shouldBe false
+      val networkError = parseResult.results.asSeq.head
       networkError.message should include("Network Error:")
       networkError.position should not be None
       networkError.location should not be None
@@ -592,8 +594,8 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
     for {
       parseResult <- config.createClient().parse(name).asFuture
     } yield {
-      parseResult.validationResult.conforms should be(false)
-      parseResult.validationResult.results.asSeq
+      parseResult.conforms should be(false)
+      parseResult.results.asSeq
         .exists(_.message.equals("Cannot find resource not-exists.raml")) should be(true)
     }
   }

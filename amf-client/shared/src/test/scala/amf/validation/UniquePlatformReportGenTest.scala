@@ -66,9 +66,10 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
       parseResult <- parse(directory + api, withProfile, finalHint)
       report      <- withProfile.createClient().validate(parseResult.bu, profile)
       r <- {
+        val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val finalReport =
-          if (!parseResult.conforms) parseResult.report
-          else parseResult.report.merge(report)
+          if (!parseResult.conforms) parseReport
+          else parseReport.merge(report)
         handleReport(finalReport, golden.map(processGolden))
       }
     } yield {
