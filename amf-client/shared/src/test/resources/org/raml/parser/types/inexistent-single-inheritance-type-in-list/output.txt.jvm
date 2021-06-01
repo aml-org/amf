@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/inexistent-single-inheritance-type-in-list/input.raml
-Profile: RAML 1.0
+Profile: 
 Conforms? false
 Number of results: 1
 

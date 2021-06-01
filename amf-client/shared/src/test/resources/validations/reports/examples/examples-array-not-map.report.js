@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/examples/examples-array-not-map.raml
-Profile: RAML 1.0
+Profile: 
 Conforms? false
 Number of results: 1
 

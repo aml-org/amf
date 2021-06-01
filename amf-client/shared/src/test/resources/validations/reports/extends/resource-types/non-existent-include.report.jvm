@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/resource_types/non-existent-include.raml
-Profile: RAML 1.0
+Profile: 
 Conforms? false
 Number of results: 2
 

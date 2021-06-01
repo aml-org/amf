@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/examples/pattern-properties/pattern_properties4.raml
-Profile: RAML 1.0
+Profile: 
 Conforms? false
 Number of results: 1
 
