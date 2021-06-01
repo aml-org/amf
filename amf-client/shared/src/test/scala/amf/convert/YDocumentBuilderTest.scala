@@ -53,14 +53,11 @@ abstract class DocBuilderTest extends FunSuiteCycleTests {
 
 class YDocumentBuilderTest extends DocBuilderTest {
 
-  override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
     val builder: YDocumentBuilder = new YDocumentBuilder()
     val renderer                  = new AMFSerializer(unit, "application/graph+ldjson", amfConfig.renderConfiguration)
-    renderer
-      .renderToBuilder(builder)
-      .map(_ => {
-        val document = builder.result.asInstanceOf[YDocument]
-        JsonRender.render(document)
-      })
+    renderer.renderToBuilder(builder)
+    val document = builder.result.asInstanceOf[YDocument]
+    JsonRender.render(document)
   }
 }

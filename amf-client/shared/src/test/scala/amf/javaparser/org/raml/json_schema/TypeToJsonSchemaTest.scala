@@ -22,11 +22,11 @@ trait TypeToJsonSchemaTest extends ModelValidationTest {
 
   override val basePath: String = path
 
-  override def render(model: BaseUnit, d: String, vendor: Vendor, amfConfig: AMFConfiguration): Future[String] = {
+  override def render(model: BaseUnit, d: String, vendor: Vendor, amfConfig: AMFConfiguration): String = {
     model match {
       case d: DeclaresModel =>
         d.declares.collectFirst { case s: AnyShape if s.name.is("root") => s } match {
-          case Some(anyShape: AnyShape) => Future { renderShape(anyShape) }
+          case Some(anyShape: AnyShape) => renderShape(anyShape)
           case Some(other)              => throw new AssertionError("Wrong type declared $other")
           case None                     => throw new AssertionError("Model with empty declarations")
         }

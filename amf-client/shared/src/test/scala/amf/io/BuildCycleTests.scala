@@ -140,7 +140,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   }
 
   /** Method to render parsed unit. Override if necessary. */
-  def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): Future[String] = {
+  def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
     amfConfig.createClient().render(unit, config.targetMediaType)
   }
   def renderOptions(): RenderOptions = RenderOptions()
@@ -191,7 +191,7 @@ trait BuildCycleTests extends BuildCycleTestCommon {
     for {
       parsed       <- build(config, amfConfig)
       resolved     <- Future.successful(transform(parsed, config, amfConfig))
-      actualString <- render(resolved, config, amfConfig)
+      actualString <- Future.successful(render(resolved, config, amfConfig))
       actualFile   <- writeTemporaryFile(golden)(actualString)
       assertion    <- assertDifferences(actualFile, config.goldenPath)
     } yield {
@@ -217,7 +217,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
     val amfConfig = buildConfig(None, None)
     build(config, amfConfig)
       .map(transformThroughRdf(_, config))
-      .flatMap { render(_, config, amfConfig) }
+      .map { render(_, config, amfConfig) }
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }

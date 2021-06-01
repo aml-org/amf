@@ -51,7 +51,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
         for {
           origin   <- build(config, amfConfig)
           resolved <- successful(transform(origin, config, amfConfig))
-          rendered <- render(resolved, config, amfConfig)
+          rendered <- successful(render(resolved, config, amfConfig))
           tmp      <- writeTemporaryFile(path)(rendered)
           report   <- validate(tmp, targetHint, toProfile, to)
         } yield {

@@ -7,6 +7,8 @@ import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 
+import scala.concurrent.Future
+
 class ProductionResolutionTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
@@ -199,11 +201,11 @@ class ProductionResolutionTest extends RamlResolutionTest {
     for {
       simpleModel <- build(config, amfConfig).map(
         TransformationPipelineRunner(UnhandledErrorHandler).run(_, AmfEditingPipeline()))
-      a <- render(simpleModel, config, amfConfig)
+      a <- Future.successful(render(simpleModel, config, amfConfig))
       doubleModel <- build(config, amfConfig).map(
         TransformationPipelineRunner(UnhandledErrorHandler).run(_, AmfEditingPipeline()))
-      _ <- render(doubleModel, config, amfConfig)
-      b <- render(doubleModel, config, amfConfig)
+      _ <- Future.successful(render(doubleModel, config, amfConfig))
+      b <- Future.successful(render(doubleModel, config, amfConfig))
     } yield {
       val simpleDeclares =
         simpleModel.asInstanceOf[Document].declares

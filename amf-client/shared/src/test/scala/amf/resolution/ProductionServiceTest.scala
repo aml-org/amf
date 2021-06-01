@@ -116,7 +116,7 @@ class ProductionServiceTest extends RamlResolutionTest {
     val amfConfig = buildConfig(renderOptions, None)
     build(config, amfConfig)
       .map(tFn(_, config, amfConfig))
-      .flatMap { render(_, config, amfConfig) }
+      .map { render(_, config, amfConfig) }
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }

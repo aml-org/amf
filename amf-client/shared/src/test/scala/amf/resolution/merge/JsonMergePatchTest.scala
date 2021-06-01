@@ -112,7 +112,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     val document = fixture.handler.build(fixture.target, fixture.patch)
     for {
       _ <- Validation(platform)
-      f <- {
+      f <- Future.successful {
         renderOptions match {
           case Some(ro) => fixture.handler.renderToString(document, ro)
           case _        => fixture.handler.renderToString(document)
@@ -132,7 +132,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
     def getBogusParserCtx: AsyncWebApiContext =
       new Async20WebApiContext("loc", Seq(), ParserContext(config = ParseConfiguration(DefaultErrorHandler())))
 
-    def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): Future[String] =
+    def renderToString(document: Document, renderOptions: RenderOptions = defaultRenderOptions): String =
       new AMFRenderer(document, AMF, renderOptions, None).renderToString
 
     def defaultRenderOptions: RenderOptions = new RenderOptions().withPrettyPrint
@@ -195,7 +195,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
         .get
     }
 
-    override def renderToString(document: Document, renderOptions: RenderOptions): Future[String] = {
+    override def renderToString(document: Document, renderOptions: RenderOptions): String = {
       val emitters =
         DataNodeEmitter(document.encodes.asInstanceOf[DataNode], SpecOrdering.Default)(getBogusParserCtx.eh).emitters()
       val ydocument = YDocument {
@@ -208,7 +208,7 @@ class JsonMergePatchTest extends MultiJsonldAsyncFunSuite with Matchers with Fil
           )
         }
       }
-      Future.successful { YamlRender.render(ydocument) }
+      YamlRender.render(ydocument)
     }
 
     override def getMerger: JsonMergePatch =
