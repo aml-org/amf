@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Ra
 import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
-import amf.plugins.features.validation.CoreValidations
+import amf.plugins.features.validation.{AMFValidatorPlugin, CoreValidations}
 import amf.plugins.features.validation.emitters.ShaclJsonLdShapeGraphEmitter
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.validation.DialectValidations
@@ -23,31 +23,22 @@ import scala.concurrent.{ExecutionContext, Future}
 class Validation(platform: Platform) {
 
   def init()(implicit executionContext: ExecutionContext): Future[Unit] = {
-//    platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
-//    platform.registerValidations(DialectValidations.validations, DialectValidations.levels)
-//    platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
-//    platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
-//    platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
-//    platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
-//    platform.registerValidations(ShapePayloadValidations.validations, ShapePayloadValidations.levels)
-//    platform.registerValidations(ShapeParserSideValidations.validations, ShapeParserSideValidations.levels)
-
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     // Remod registering
     VocabulariesRegister.register(platform)
-    amf.core.AMF.init().map { _ =>
-      amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Async20Plugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
-    }
+    amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Async20Plugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
+    amf.core.registries.AMFPluginsRegistry.registerFeaturePlugin(AMFValidatorPlugin)
+    amf.core.AMF.init()
   }
 
   def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = Raml10Profile): String =
