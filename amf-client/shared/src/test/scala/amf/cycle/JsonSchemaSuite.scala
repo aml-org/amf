@@ -36,7 +36,7 @@ trait JsonSchemaSuite {
     val eh      = amfConfig.errorHandlerProvider.errorHandler()
     val parsed  = new JsonSchemaParser().parse(root, getBogusParserCtx(path, options, eh), options, None)
     val unit    = wrapInDataTypeFragment(root, parsed)
-    AMFResult(unit, AMFValidationReport.forModel(unit, eh.getResults))
+    AMFResult(unit, eh.getResults)
   }
 
   private def wrapInDataTypeFragment(document: Root, parsed: AnyShape): DataTypeFragment = {

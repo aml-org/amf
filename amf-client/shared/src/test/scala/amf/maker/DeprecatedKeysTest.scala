@@ -2,7 +2,7 @@ package amf.maker
 
 import amf.client.environment.RAMLConfiguration
 import amf.compiler.CompilerTestBuilder
-import amf.core.validation.SeverityLevels
+import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.{ProfileName, Raml08Profile, Raml10Profile}
 import org.scalatest.AsyncFunSuite
 
@@ -44,10 +44,13 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
       for {
         parseResult <- client.parse(basePath + f.file)
         report      <- client.validate(parseResult.bu, f.profileName)
-        unifiedReport <- Future.successful(
-          if (!parseResult.conforms) parseResult.report
-          else parseResult.report.merge(report)
-        )
+        unifiedReport <- {
+          val parseReport = AMFValidationReport.unknownProfile(parseResult)
+          Future.successful(
+            if (!parseResult.conforms) parseReport
+            else parseReport.merge(report)
+          )
+        }
       } yield {
         assert(unifiedReport.conforms)
         assert(unifiedReport.results.lengthCompare(f.results.length) == 0)

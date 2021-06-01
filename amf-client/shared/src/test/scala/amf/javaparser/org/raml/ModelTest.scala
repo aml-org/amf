@@ -33,9 +33,10 @@ trait ModelValidationTest extends DirectoryTest {
       parseResult <- client.parse(s"file://${d + inputFileName}")
       report      <- client.validate(parseResult.bu, profileFromModel(parseResult.bu))
       unifiedReport <- {
+        val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val r =
-          if (!parseResult.conforms) parseResult.report
-          else parseResult.report.merge(report)
+          if (!parseResult.conforms) parseReport
+          else parseReport.merge(report)
         Future.successful(r)
       }
     } yield {

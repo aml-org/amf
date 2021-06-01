@@ -5,7 +5,6 @@ import amf.client.remod.AMFGraphConfiguration
 import amf.core.AMFSerializer
 import amf.core.model.document.Module
 import amf.core.remote.Raml10
-import amf.core.services.RuntimeSerializer
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.{GeneratedRamlDatatype, ParsedRamlDatatype}
 import amf.plugins.domain.shapes.models.AnyShape

@@ -11,7 +11,6 @@ import amf.core.model.document.Document
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.Position
 import amf.core.remote.JsonSchema
-import amf.core.services.RuntimeSerializer
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
 import amf.plugins.document.webapi.parser.spec.declaration.{
