@@ -37,8 +37,7 @@ sealed trait APIConfigurationBuilder {
 //  will also define APIDomainPlugin, DataShapesDomainPlugin
   private[amf] def common(): AMFConfiguration = {
     val configuration = AMLConfiguration.predefined()
-    WebApiRegister.register()                       // TODO ARM remove when APIMF-3000 is done
-    amf.core.AMF.registerPlugin(AMFValidatorPlugin) // TODO ARM remove , just for tests, avoid use Validation(platform)
+    WebApiRegister.register() // TODO ARM remove when APIMF-3000 is done
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     val result = new AMFConfiguration(
       configuration.resolvers,

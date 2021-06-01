@@ -7,13 +7,11 @@ import amf.client.environment.Environment
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.model.document.{BaseUnit, Dialect}
 import amf.client.plugins.{ClientAMFPayloadValidationPlugin, ClientAMFPlugin}
-import amf.client.render._
 import amf.client.resolve._
 import amf.client.validate.AMFValidationReport
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.{Vocabularies, WebApi}
-import amf.plugins.features.AMFCustomValidation
 import amf.plugins.{document, features}
 import amf.{Core, MessageStyle, ProfileName}
 
@@ -28,7 +26,6 @@ object AMF extends PlatformSecrets {
   def init(executionEnvironment: BaseExecutionEnvironment): ClientFuture[Unit] = {
     WebApi.register(executionEnvironment)
     Vocabularies.register()
-    AMFCustomValidation.register()
     amf.Core.registerPlugin(PayloadValidatorPlugin)
     amf.Core.init(executionEnvironment)
   }
@@ -64,11 +61,6 @@ object AMF extends PlatformSecrets {
 
   @JSExport def emitShapesGraph(profileName: ProfileName): String =
     Core.emitShapesGraph(profileName)
-
-  @JSExport def registerDialect(url: String): ClientFuture[Dialect] = Vocabularies.registerDialect(url)
-
-  @JSExport
-  def registerDialect(url: String, env: Environment): ClientFuture[Dialect] = Vocabularies.registerDialect(url, env)
 
   @JSExport def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
 
@@ -112,15 +104,9 @@ object CoreWrapper {
 
 object PluginsWrapper {
   val document: DocumentPluginsWrapper.type = DocumentPluginsWrapper
-  val features: FeaturesPluginsWrapper.type = FeaturesPluginsWrapper
 }
 
 object DocumentPluginsWrapper {
   val WebApi: document.WebApi.type             = document.WebApi
   val Vocabularies: document.Vocabularies.type = document.Vocabularies
-}
-
-object FeaturesPluginsWrapper {
-  val AMFValidation: features.AMFValidation.type             = features.AMFValidation
-  val AMFCustomValidation: features.AMFCustomValidation.type = features.AMFCustomValidation
 }

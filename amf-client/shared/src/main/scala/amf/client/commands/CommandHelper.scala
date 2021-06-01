@@ -1,7 +1,7 @@
 package amf.client.commands
 
 import amf.client.convert.WebApiRegister
-import amf.client.environment.{AMFConfiguration, AMLConfiguration, AMLDialectResult}
+import amf.client.environment.{AMFConfiguration, AMLConfiguration}
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.resolution.PipelineName
 import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
@@ -11,11 +11,9 @@ import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi._
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.VocabulariesRegister
-import amf.plugins.features.validation.custom.AMFValidatorPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -26,13 +24,11 @@ trait CommandHelper {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     WebApiRegister.register(platform)
     VocabulariesRegister.register(platform) // validation dialect was not being parsed by static config.
-    amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(Raml10Plugin)
     amf.core.AMF.registerPlugin(Raml08Plugin)
     amf.core.AMF.registerPlugin(Oas20Plugin)
     amf.core.AMF.registerPlugin(Oas30Plugin)
     amf.core.AMF.registerPlugin(Async20Plugin)
-    amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     amf.core.AMF.init()
   }
@@ -44,11 +40,10 @@ trait CommandHelper {
 
   protected def processDialects(config: ParserConfig, configuration: AMFConfiguration): Future[AMFConfiguration] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    val dialectFutures: Seq[Future[AMLDialectResult]] =
-      config.dialects.map(dialect => configuration.createClient().parseDialect(dialect))
+    val dialectFutures = config.dialects.map(dialect => configuration.createClient().parseDialect(dialect))
     Future.sequence(dialectFutures) map (results =>
       results.foldLeft(configuration) {
-        case (conf, r) => conf.withDialect(r.dialect)
+        case (conf, result) => conf.withDialect(result.dialect)
       })
   }
 
