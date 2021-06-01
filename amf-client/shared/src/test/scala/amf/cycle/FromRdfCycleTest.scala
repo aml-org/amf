@@ -16,7 +16,7 @@ import scala.concurrent.{ExecutionContext, Future}
  * TODO: implement test also in JS.
  *  It isn't currently implemented there because of some strange errors when loading text/n3 rdf
  */
-trait FromRdfCycleTest extends AsyncFunSuite with FileAssertionTest with AsyncBeforeAndAfterEach with Matchers {
+trait FromRdfCycleTest extends AsyncBeforeAndAfterEach with FileAssertionTest with Matchers {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
