@@ -807,7 +807,7 @@ class EditingResolutionTest extends ResolutionTest {
     )
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
     val configuration = amfConfig.withRenderOptions(
       amfConfig.options.renderOptions.withRawSourceMaps.withSourceMaps.withCompactUris.withPrettyPrint)
     super.render(unit, config, configuration)

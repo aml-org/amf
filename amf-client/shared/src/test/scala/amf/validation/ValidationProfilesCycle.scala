@@ -25,7 +25,7 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
       v                    <- Validation(platform)
       clientWithValidation <- config.withCustomValidationsEnabled.map(_.createClient())
       bu                   <- clientWithValidation.parse(basePath + exampleFile).map(_.bu)
-      r                    <- clientWithValidation.render(bu, target.mediaType)
+      r                    <- Future.successful(clientWithValidation.render(bu, target.mediaType))
     } yield r
   }
 

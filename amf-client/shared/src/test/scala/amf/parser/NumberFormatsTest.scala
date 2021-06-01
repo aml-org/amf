@@ -16,7 +16,7 @@ import org.mulesoft.common.test.Diff.makeString
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
   implicit override def executionContext: ExecutionContext =
@@ -39,7 +39,7 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
       val client = RAMLConfiguration.RAML10().createClient()
       for {
         unit   <- client.parseContent(ex.api)
-        dumped <- client.render(unit.bu, Raml10.mediaType)
+        dumped <- Future.successful(client.render(unit.bu, Raml10.mediaType))
       } yield {
         unit.bu match {
           case f: Fragment =>

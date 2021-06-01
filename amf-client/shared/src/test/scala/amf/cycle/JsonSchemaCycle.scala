@@ -165,16 +165,14 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
     val finalGolden = basePath + golden
     val fragment =
       parseSchema(platform, finalPath, mediatype, WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()))
-    emitter
+    val expected = emitter
       .emitSchema(fragment.bu.asInstanceOf[DataTypeFragment])
-      .flatMap { expected =>
-        writeTemporaryFile(finalGolden)(expected).flatMap(s => assertDifferences(s, finalGolden))
-      }
+    writeTemporaryFile(finalGolden)(expected).flatMap(s => assertDifferences(s, finalGolden))
   }
 }
 
 sealed trait SchemaEmitter {
-  def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): Future[String]
+  def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String
 }
 
 object JsonLdEmitter extends SchemaEmitter {
@@ -183,7 +181,7 @@ object JsonLdEmitter extends SchemaEmitter {
     RenderOptions().withCompactUris.withoutSourceMaps.withoutRawSourceMaps.withFlattenedJsonLd.withPrettyPrint
   lazy private val vendor = Vendor.AMF
 
-  override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): Future[String] = {
+  override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
     AMFRenderer(fragment, vendor, options).renderToString
   }
 }
@@ -198,10 +196,10 @@ case class JsonSchemaTestEmitter(to: JSONSchemaVersion) extends SchemaEmitter {
   private val options =
     ImmutableShapeRenderOptions().withSchemaVersion(SchemaVersion.toClientOptions(to)).withCompactedEmission
 
-  override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): Future[String] = {
+  override def emitSchema(fragment: DataTypeFragment)(implicit executionContext: ExecutionContext): String = {
     val shape     = fragment.encodes
     val emitter   = JsonSchemaEmitter(shape, Seq(shape), options = options, errorHandler = UnhandledErrorHandler)
     val goldenDoc = emitter.emitDocument()
-    Future.successful { JsonRender.render(goldenDoc) }
+    JsonRender.render(goldenDoc)
   }
 }

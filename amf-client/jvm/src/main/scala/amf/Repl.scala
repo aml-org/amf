@@ -28,7 +28,7 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
 
   private def generate(unit: BaseUnit, mediaType: String): Unit = {
     val client = config.createClient()
-    client.render(unit, mediaType).asFuture.map(out.print)
+    out.print(client.render(unit, mediaType))
   }
 
   private def remote(vendor: Vendor, url: String, callback: (Option[Document]) => Unit): Unit = {
