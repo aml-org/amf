@@ -10,7 +10,7 @@ import amf.io.FunSuiteCycleTests
 import amf.plugins.document.apicontract.resolution.pipelines.Raml10EditingPipeline
 import org.scalatest.Assertion
 import org.yaml.builder.YDocumentBuilder
-import org.yaml.model.YDocument
+import org.yaml.model.{YDocument, YPart}
 import org.yaml.render.JsonRender
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -51,9 +51,8 @@ class YDocumentBuilderTest extends DocBuilderTest {
 
   override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
     val builder: YDocumentBuilder = new YDocumentBuilder()
-    val renderer                  = new AMFSerializer(unit, "application/graph+ldjson", amfConfig.renderConfiguration)
-    renderer.renderToBuilder(builder)
-    val document = builder.result.asInstanceOf[YDocument]
+    val result: YPart             = amfConfig.createClient().renderGraphToBuilder(unit, builder)
+    val document                  = result.asInstanceOf[YDocument]
     JsonRender.render(document)
   }
 }

@@ -15,11 +15,9 @@ class JsOutputBuilderTest extends DocBuilderTest {
 
   override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): String = {
     val builder: JsOutputBuilder = new JsOutputBuilder()
-    val renderer                 = new AMFSerializer(unit, "application/graph+ldjson", amfConfig.renderConfiguration)
-    renderer
-      .renderToBuilder(builder)
-    val parser: JsonParser  = JsonParser(js.JSON.stringify(builder.result))
-    val document: YDocument = parser.documents()(0)
+    val result: js.Any           = amfConfig.createClient().renderGraphToBuilder(unit, builder)
+    val parser: JsonParser       = JsonParser(js.JSON.stringify(result))
+    val document: YDocument      = parser.documents()(0)
     JsonRender.render(document)
   }
 }

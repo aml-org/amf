@@ -26,40 +26,41 @@ import amf.core.client.platform.model.domain.{ObjectNode, ScalarNode}
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.client.scala.vocabulary.Namespace.Xsd
+import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps with FileAssertionTest {}
-//
-//  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-//
-//  private val banking       = "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/api.raml"
-//  private val zencoder      = "file://amf-cli/shared/src/test/resources/api/zencoder.raml"
-//  private val oas3          = "file://amf-cli/shared/src/test/resources/api/oas3.json"
-//  private val async2        = "file://amf-cli/shared/src/test/resources/api/async2.yaml"
-//  private val zencoder08    = "file://amf-cli/shared/src/test/resources/api/zencoder08.raml"
-//  private val music         = "file://amf-cli/shared/src/test/resources/production/world-music-api/api.raml"
-//  private val demosDialect  = "file://amf-cli/shared/src/test/resources/api/dialects/eng-demos.raml"
-//  private val demos2Dialect = "file://amf-cli/shared/src/test/resources/api/dialects/eng-demos-2.raml"
-//  private val demosInstance = "file://amf-cli/shared/src/test/resources/api/examples/libraries/demo.raml"
-//  private val security      = "file://amf-cli/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
-//  private val amflight =
-//    "file://amf-cli/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml.ignore/api.raml"
-//  private val defaultValue = "file://amf-cli/shared/src/test/resources/api/shape-default.raml"
-//  private val profile      = "file://amf-cli/shared/src/test/resources/api/validation/custom-profile.raml"
-//  //  private val banking       = "file://amf-cli/shared/src/test/resources/api/banking.raml"
-//  private val apiWithSpaces =
-//    "file://amf-cli/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
-//  private val apiWithIncludesWithSpaces =
-//    "file://amf-cli/shared/src/test/resources/api/api-with-includes-with-spaces/api.raml"
-//  private val scalarAnnotations =
-//    "file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
-//  private val recursiveAdditionalProperties =
-//    "file://amf-cli/shared/src/test/resources/recursive/recursive-additional-properties.yaml"
-//  private val knowledgeGraphServiceApi =
-//    "file://amf-cli/shared/src/test/resources/production/knowledge-graph-service-api-1.0.13-raml/kg.raml"
-//
-//  def config(): AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps with FileAssertionTest {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  private val banking       = "file://amf-cli/shared/src/test/resources/production/raml10/banking-api/api.raml"
+  private val zencoder      = "file://amf-cli/shared/src/test/resources/api/zencoder.raml"
+  private val oas3          = "file://amf-cli/shared/src/test/resources/api/oas3.json"
+  private val async2        = "file://amf-cli/shared/src/test/resources/api/async2.yaml"
+  private val zencoder08    = "file://amf-cli/shared/src/test/resources/api/zencoder08.raml"
+  private val music         = "file://amf-cli/shared/src/test/resources/production/world-music-api/api.raml"
+  private val demosDialect  = "file://amf-cli/shared/src/test/resources/api/dialects/eng-demos.raml"
+  private val demos2Dialect = "file://amf-cli/shared/src/test/resources/api/dialects/eng-demos-2.raml"
+  private val demosInstance = "file://amf-cli/shared/src/test/resources/api/examples/libraries/demo.raml"
+  private val security      = "file://amf-cli/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
+  private val amflight =
+    "file://amf-cli/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml.ignore/api.raml"
+  private val defaultValue = "file://amf-cli/shared/src/test/resources/api/shape-default.raml"
+  private val profile      = "file://amf-cli/shared/src/test/resources/api/validation/custom-profile.raml"
+  //  private val banking       = "file://amf-cli/shared/src/test/resources/api/banking.raml"
+  private val apiWithSpaces =
+    "file://amf-cli/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
+  private val apiWithIncludesWithSpaces =
+    "file://amf-cli/shared/src/test/resources/api/api-with-includes-with-spaces/api.raml"
+  private val scalarAnnotations =
+    "file://amf-cli/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
+  private val recursiveAdditionalProperties =
+    "file://amf-cli/shared/src/test/resources/recursive/recursive-additional-properties.yaml"
+  private val knowledgeGraphServiceApi =
+    "file://amf-cli/shared/src/test/resources/production/knowledge-graph-service-api-1.0.13-raml/kg.raml"
+
+  def config(): AMFConfiguration = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
 //  def testVocabulary(file: String, numClasses: Int, numProperties: Int): Future[Assertion] = {
 //
 //    for {
@@ -547,23 +548,22 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //    }
 //  }
 //
-////  TODO: APIMF-3100
-////  test("Generate to doc builder") {
-////    val input = s"""
-////                   |#%RAML 1.0
-////                   |title: Environment test
-////                   |version: 32.0.7
-////    """.stripMargin
-////
-////    val builder = JsonOutputBuilder()
-////    for {
-////      _    <- AMF.init().asFuture
-////      unit <- new RamlParser().parseStringAsync(input).asFuture
-////      e    <- new AmfGraphRenderer().generateToBuilder(unit, builder).asFuture
-////    } yield {
-////      builder.result.toString should include("\"http://a.ml/vocabularies/core#version\"")
-////    }
-////  }
+  test("Generate to doc builder") {
+      val input = s"""
+                       |#%RAML 1.0
+                       |title: Environment test
+                       |version: 32.0.7
+        """.stripMargin
+
+      val builder = JsonOutputBuilder()
+      val client  = RAMLConfiguration.RAML10().createClient()
+      for {
+      unit   <- client.parseContent(input, Raml10.mediaType + "+yaml").asFuture
+      result <- Future.successful(client.renderGraphToBuilder(unit.baseUnit, builder))
+    } yield {
+      result.toString should include("\"http://a.ml/vocabularies/core#version\"")
+    }
+  }
 ////
 //  test("Environment resource not loaded exception") {
 //    val name = "api.raml"
@@ -3461,4 +3461,4 @@ trait WrapperTests extends MultiJsonldAsyncFunSuite with Matchers with NativeOps
 //
 //  // todo: move to common (file system)
 //  def getAbsolutePath(path: String): String
-//}
+}
