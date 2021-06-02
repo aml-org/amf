@@ -27,10 +27,7 @@ trait ReportValidationProcessor extends ValidationProcessor {
   override type Return = AMFValidationReport
   override def processResults(r: Seq[AMFValidationResult]): AMFValidationReport = {
     val results = r ++ intermediateResults
-    AMFValidationReport(!results.exists(_.severityLevel == SeverityLevels.VIOLATION),
-                        "http://test.com/payload#validations",
-                        profileName,
-                        results)
+    AMFValidationReport("http://test.com/payload#validations", profileName, results)
   }
 
   protected def processCommonException(r: Throwable, element: Option[DomainElement]): Seq[AMFValidationResult] = {
