@@ -37,13 +37,15 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
   /** Print ast to string. */
-  def renderToString(implicit executionContext: ExecutionContext): Future[String] = render()
+  def renderToString(implicit executionContext: ExecutionContext): String = render()
 
   /** Print ast to file. */
-  def renderToFile(remote: Platform, path: String)(implicit executionContext: ExecutionContext): Future[Unit] =
-    render().flatMap(s => remote.write(path, s))
+  def renderToFile(remote: Platform, path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
+    val result = render()
+    remote.write(path, result)
+  }
 
-  private def render()(implicit executionContext: ExecutionContext): Future[String] = {
+  private def render()(implicit executionContext: ExecutionContext): String = {
     val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withRenderOptions(options)
     new AMFSerializer(unit, vendor.mediaType, config.renderConfiguration).renderToString
   }

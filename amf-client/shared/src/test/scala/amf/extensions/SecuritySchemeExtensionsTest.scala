@@ -105,7 +105,7 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
     }
   }
 
-  private def renderToString(unit: BaseUnit, mediaType: String): Future[String] = {
+  private def renderToString(unit: BaseUnit, mediaType: String): String = {
     val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
     new AMFSerializer(unit, mediaType, config.renderConfiguration).renderToString
   }
@@ -123,7 +123,7 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
     for {
       _             <- AMF.init()
       originalUnit  <- parse(url, originalVendor.mediaType, hint(originalVendor), config)
-      emittedApi    <- renderToString(originalUnit, otherVendor.mediaType)
+      emittedApi    <- Future.successful(renderToString(originalUnit, otherVendor.mediaType))
       tmp           <- writeTemporaryFile(fileName)(emittedApi)
       parsedApiUnit <- parse(s"file://${tmp.path}", otherVendor.name, hint(otherVendor), config)
     } yield {

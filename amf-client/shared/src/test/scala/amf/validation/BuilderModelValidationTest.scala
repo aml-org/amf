@@ -48,11 +48,10 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
     val scalar   = ScalarNode("1", Some("http://a.ml/vocabularies/shapes#number")).withName("prop")
     val fragment = PayloadFragment(scalar, "application/yaml")
 
-    for {
-      s <- new AMFSerializer(fragment, "application/payload+yaml", WebAPIConfiguration.WebAPI().renderConfiguration).renderToString
-    } yield {
-      s should be("1\n") // without cuotes
-    }
+    val s =
+      new AMFSerializer(fragment, "application/payload+yaml", WebAPIConfiguration.WebAPI().renderConfiguration).renderToString
+    s should be("1\n") // without cuotes
+
   }
 
   test("Build number type with format") {
@@ -66,13 +65,9 @@ class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest wi
         | myType:
         |   type: number
         |   format: int""".stripMargin
-    for {
-      _ <- Validation(platform) // in order to initialize
-      s <- new AMFSerializer(m, "application/raml+yaml", RAMLConfiguration.RAML().renderConfiguration).renderToString
-    } yield {
-      val diffs = Diff.ignoreAllSpace.diff(s, e)
-      if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")
-      succeed
-    }
+    val s     = new AMFSerializer(m, "application/raml+yaml", RAMLConfiguration.RAML().renderConfiguration).renderToString
+    val diffs = Diff.ignoreAllSpace.diff(s, e)
+    if (diffs.nonEmpty) fail(s"\ndiff: \n\n${makeString(diffs)}")
+    succeed
   }
 }

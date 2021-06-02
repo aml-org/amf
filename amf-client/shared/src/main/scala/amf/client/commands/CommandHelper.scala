@@ -98,14 +98,12 @@ trait CommandHelper {
     }
     val vendor    = effectiveVendor(config.outputFormat)
     val mediaType = effectiveMediaType(config.outputMediaType, config.outputFormat) // TODO: media type not taken into account!
-    configuration.withRenderOptions(generateOptions).createClient().render(unit, Vendor(vendor).mediaType).map {
-      result =>
-        config.output match {
-          case Some(f) =>
-            platform.write(f, result)
-          case None =>
-            config.stdout.print(result)
-        }
+    val result    = configuration.withRenderOptions(generateOptions).createClient().render(unit, Vendor(vendor).mediaType)
+    config.output match {
+      case Some(f) =>
+        platform.write(f, result)
+      case None =>
+        Future.successful(config.stdout.print(result))
     }
   }
 

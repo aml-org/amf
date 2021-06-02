@@ -33,13 +33,14 @@ trait ModelValidationTest extends DirectoryTest {
       parseResult <- client.parse(s"file://${d + inputFileName}")
       report      <- client.validate(parseResult.bu, profileFromModel(parseResult.bu))
       unifiedReport <- {
+        val parseReport = AMFValidationReport.unknownProfile(parseResult)
         val r =
-          if (!parseResult.conforms) parseResult.report
-          else parseResult.report.merge(report)
+          if (!parseResult.conforms) parseReport
+          else parseReport.merge(report)
         Future.successful(r)
       }
-      output <- { renderOutput(d, parseResult.bu, unifiedReport, configuration) }
     } yield {
+      val output = renderOutput(d, parseResult.bu, unifiedReport, configuration)
       // we only need to use the platform if there are errors in examples, this is what causes differences due to
       // the different JSON-Schema libraries used in JS and the JVM
       val usePlatform = !unifiedReport.conforms && unifiedReport.results.exists(result =>
@@ -51,17 +52,17 @@ trait ModelValidationTest extends DirectoryTest {
   private def renderOutput(d: String,
                            model: BaseUnit,
                            report: AMFValidationReport,
-                           amfConfig: AMFConfiguration): Future[String] = {
+                           amfConfig: AMFConfiguration): String = {
     if (report.conforms) {
       val vendor = target(model)
       render(model, d, vendor, amfConfig)
     } else {
       val ordered = report.results.sorted
-      Future.successful(report.copy(results = ordered).toString)
+      report.copy(results = ordered).toString
     }
   }
 
-  def render(model: BaseUnit, d: String, vendor: Vendor, amfConfig: AMFConfiguration): Future[String] =
+  def render(model: BaseUnit, d: String, vendor: Vendor, amfConfig: AMFConfiguration): String =
     AMFRenderer(transform(model, d, vendor, amfConfig), vendor, RenderOptions()).renderToString
 
   def transform(unit: BaseUnit, d: String, vendor: Vendor, amfConfig: AMFConfiguration): BaseUnit =

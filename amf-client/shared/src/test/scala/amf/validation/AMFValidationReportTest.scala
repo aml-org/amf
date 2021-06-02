@@ -10,7 +10,6 @@ class AMFValidationReportTest extends FunSuite {
 
     //noinspection ScalaStyle
     AMFValidationReport(
-      conforms = true,
       null,
       Raml10Profile,
       Seq(

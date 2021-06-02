@@ -28,7 +28,6 @@ import amf.plugins.document.webapi.validation.plugins.{
   FullShaclModelValidationPlugin,
   PayloadValidationPlugin
 }
-import amf.plugins.document.webapi.validation.remod.ValidatePlugins
 import amf.plugins.domain.shapes.annotations.serializable.ShapeSerializableAnnotations
 import amf.plugins.domain.shapes.entities.ShapeEntities
 import amf.plugins.domain.webapi.annotations.serializable.APISerializableAnnotations

@@ -37,7 +37,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
     for {
       input  <- fs.asyncFile(basePath + source).read()
       left   <- parseBaseUnit(input.toString, l)
-      target <- new AMFRenderer(left, r.vendor, RenderOptions(), Some(r.syntax)).renderToString
+      target <- Future.successful(new AMFRenderer(left, r.vendor, RenderOptions(), Some(r.syntax)).renderToString)
       _      <- parseBaseUnit(target, r)
     } yield {
       succeed

@@ -8,7 +8,6 @@ import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.DataNode
 import amf.core.remote.Payload
-import amf.core.services.RuntimeSerializer
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter

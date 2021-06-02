@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/missing-includes/in-trait-def.raml
-Profile: RAML 0.8
+Profile: 
 Conforms? false
 Number of results: 2
 

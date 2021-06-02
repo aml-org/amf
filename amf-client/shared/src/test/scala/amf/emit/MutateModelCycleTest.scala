@@ -32,7 +32,7 @@ class MutateModelCycleTest extends FunSuiteCycleTests {
     val amfConfig = buildConfig(None, None)
     build(config, amfConfig)
       .map(transform(_))
-      .flatMap(render(_, config, amfConfig))
+      .map(render(_, config, amfConfig))
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }
