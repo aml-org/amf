@@ -23,6 +23,11 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
 }
 import amf.plugins.document.webapi.validation.ApiValidationProfiles._
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
+import amf.plugins.document.webapi.validation.plugins.{
+  CustomShaclModelValidationPlugin,
+  FullShaclModelValidationPlugin,
+  PayloadValidationPlugin
+}
 import amf.plugins.document.webapi.validation.remod.ValidatePlugins
 import amf.plugins.domain.shapes.annotations.serializable.ShapeSerializableAnnotations
 import amf.plugins.domain.shapes.entities.ShapeEntities
@@ -56,8 +61,9 @@ sealed trait APIConfigurationBuilder {
       PayloadParsePlugin,
       JsonSchemaParsePlugin,
       JsonSchemaRenderPlugin,
-      ValidatePlugins.MODEL_PLUGIN,
-      ValidatePlugins.PAYLOAD_PLUGIN
+      CustomShaclModelValidationPlugin(),
+      FullShaclModelValidationPlugin(),
+      PayloadValidationPlugin()
     ))
     result
   }

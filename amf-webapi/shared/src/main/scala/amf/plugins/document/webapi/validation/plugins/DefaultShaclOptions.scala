@@ -1,9 +1,9 @@
-package amf.plugins.document.webapi.validation.runner
+package amf.plugins.document.webapi.validation.plugins
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.DataNodeModel
-import amf.core.services.ValidationOptions
+import amf.core.services.ShaclValidationOptions
 
-case class FilterDataNodeOptions() extends ValidationOptions {
+case class DefaultShaclOptions() extends ShaclValidationOptions {
   override val filterFields: Field => Boolean = (f: Field) => f.`type` == DataNodeModel
 }
