@@ -14,7 +14,6 @@ import amf.plugins.document.webapi.annotations.serializable.WebAPISerializableAn
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.entities.WebAPIEntities
 import amf.plugins.document.webapi.references.WebApiReferenceHandler
-import amf.plugins.document.webapi.validation.remod.ValidatePlugins.{MODEL_PLUGIN, PARSER_PLUGIN, PAYLOAD_PLUGIN}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
 
@@ -56,7 +55,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with P
   override def domainValidationProfiles: Seq[ValidationProfile]
 
   override protected[amf] def getRemodValidatePlugins(): Seq[AMFValidatePlugin] =
-    Seq(PARSER_PLUGIN, MODEL_PLUGIN, PAYLOAD_PLUGIN)
+    Seq()
 
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
 

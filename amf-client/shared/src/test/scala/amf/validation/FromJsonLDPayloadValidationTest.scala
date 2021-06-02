@@ -60,13 +60,14 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
         val effectiveValidations = AMFValidatorPlugin.computeValidations(expectedReport.profile)
         val shapes               = AMFValidatorPlugin.shapesGraph(effectiveValidations)
         val jsLibrary            = new JSLibraryEmitter(None).emitJS(effectiveValidations.effective.values.toSeq)
+        val validator            = PlatformValidator.instance()
 
         jsLibrary match {
           case Some(code) =>
-            PlatformValidator.instance.registerLibrary(ShaclJsonLdShapeGraphEmitter.validationLibraryUrl, code)
+            validator.registerLibrary(ShaclJsonLdShapeGraphEmitter.validationLibraryUrl, code)
           case _ => // ignore
         }
-        PlatformValidator.instance.report(
+        validator.report(
           model,
           "application/ld+json",
           shapes,
