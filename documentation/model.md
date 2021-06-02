@@ -221,11 +221,22 @@ It can be extended by any domain element adding bindings for the variables in th
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | name | string | Name in the source AST for the mapping | http://a.ml/vocabularies/core#name |
+ | path | url | URI for the mapped graph property derived from this mapping | http://www.w3.org/ns/shacl#path |
+ | name | string | Name of the node mappable element | http://a.ml/vocabularies/core#name |
  | datatype | url | Scalar constraint over the type of the mapped graph property | http://www.w3.org/ns/shacl#datatype |
  | node | [url] | Object constraint over the type of the mapped graph property | http://www.w3.org/ns/shacl#node |
- | path | url | URI for the mapped graph property derived from this mapping | http://www.w3.org/ns/shacl#path |
- | target | url | Target node IRI for which a specific annotation mapping can be applied | http://a.ml/vocabularies/document#target |
+ | minCount | int | Minimum count constraint over the mapped property | http://www.w3.org/ns/shacl#minCount |
+ | pattern | string | Pattern constraint over the mapped property | http://www.w3.org/ns/shacl#pattern |
+ | minInclusive | double | Minimum inclusive constraint over the mapped property | http://www.w3.org/ns/shacl#minInclusive |
+ | maxInclusive | double | Maximum inclusive constraint over the mapped property | http://www.w3.org/ns/shacl#maxInclusive |
+ | allowMultiple | boolean | Allows multiple mapped nodes for the property mapping | http://a.ml/vocabularies/meta#allowMultiple |
+ | sorted | boolean | Marks the mapping as requiring order in the mapped collection of nodes | http://a.ml/vocabularies/meta#sorted |
+ | in | [Any] | Enum constraint for the values of the property mapping | http://www.w3.org/ns/shacl#in |
+ | typeDiscriminatorMap | string | Information about the discriminator values in the source AST for the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorMap |
+ | unique | boolean | Marks the values for the property mapping as a primary key for this type of node | http://a.ml/vocabularies/meta#unique |
+ | externallyLinkable | boolean | Marks this object property as supporting external links | http://a.ml/vocabularies/meta#externallyLinkable |
+ | typeDiscriminatorName | string | Information about the field in the source AST to be used as discrimintaro in the property mapping | http://a.ml/vocabularies/meta#typeDiscriminatorName |
+ | domain | url | Domain node type IRI for which a specific annotation mapping can be applied. Similar rdfs:domain but at an instance level, rather than schema level. | http://a.ml/vocabularies/amf/aml#domain |
  | extends | [[DomainElement](#domainelement)] | Entity that is going to be extended overlaying or adding additional information The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model. | http://a.ml/vocabularies/document#extends |
 
 ## AnnotationTypeDeclarationFragment
