@@ -1,8 +1,9 @@
 package amf.parser
 
-import amf.core.emitter.RenderOptions
+import amf.client.environment.RAMLConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.Fragment
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.{Raml10, Raml10YamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.emit.AMFRenderer
@@ -35,12 +36,12 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
 
   cases.foreach { ex =>
     test(s"Test data type ${ex.literalType} format ${ex.format}") {
+      val client = RAMLConfiguration.RAML10().createClient()
       for {
-        validation <- Validation(platform)
-        unit       <- AMFCompiler("", TrunkPlatform(ex.api), Raml10YamlHint, eh = UnhandledParserErrorHandler).build()
-        dumped     <- AMFRenderer(unit, Raml10, RenderOptions()).renderToString
+        unit   <- client.parseContent(ex.api)
+        dumped <- client.render(unit.bu, Raml10.mediaType)
       } yield {
-        unit match {
+        unit.bu match {
           case f: Fragment =>
             f.encodes match {
               case shape: ScalarShape =>

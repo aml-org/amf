@@ -1,9 +1,10 @@
 package amf.javaparser.org.raml
 
 import amf._
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.environment.{AMFConfiguration, WebAPIConfiguration}
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.annotations.SourceVendor
-import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
 import amf.core.remote._
@@ -12,7 +13,6 @@ import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.services.RuntimeResolver
 import amf.core.validation.AMFValidationReport
 import amf.emit.AMFRenderer
-import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
@@ -27,35 +27,44 @@ trait ModelValidationTest extends DirectoryTest {
   override def ignorableExtension: String = ".ignore"
 
   override def runDirectory(d: String): Future[(String, Boolean)] = {
+    val configuration = WebAPIConfiguration.WebAPI()
     for {
-      validation <- Validation(platform)
-      model <- AMFCompiler(s"file://${d + inputFileName}", platform, hint, eh = DefaultParserErrorHandler.withRun())
-        .build()
-      report <- { validation.validate(model, profileFromModel(model)) }
-      output <- { renderOutput(d, model, report) }
+      client      <- Future.successful(configuration.createClient())
+      parseResult <- client.parse(s"file://${d + inputFileName}")
+      report      <- client.validate(parseResult.bu, profileFromModel(parseResult.bu))
+      unifiedReport <- {
+        val r =
+          if (!parseResult.conforms) parseResult.report
+          else parseResult.report.merge(report)
+        Future.successful(r)
+      }
+      output <- { renderOutput(d, parseResult.bu, unifiedReport, configuration) }
     } yield {
       // we only need to use the platform if there are errors in examples, this is what causes differences due to
       // the different JSON-Schema libraries used in JS and the JVM
-      val usePlatform = !report.conforms && report.results.exists(result =>
+      val usePlatform = !unifiedReport.conforms && unifiedReport.results.exists(result =>
         result.validationId == ExampleValidationErrorSpecification.id || result.validationId == UnresolvedReference.id)
       (output, usePlatform)
     }
   }
 
-  private def renderOutput(d: String, model: BaseUnit, report: AMFValidationReport): Future[String] = {
+  private def renderOutput(d: String,
+                           model: BaseUnit,
+                           report: AMFValidationReport,
+                           amfConfig: AMFConfiguration): Future[String] = {
     if (report.conforms) {
       val vendor = target(model)
-      render(model, d, vendor)
+      render(model, d, vendor, amfConfig)
     } else {
       val ordered = report.results.sorted
       Future.successful(report.copy(results = ordered).toString)
     }
   }
 
-  def render(model: BaseUnit, d: String, vendor: Vendor): Future[String] =
-    AMFRenderer(transform(model, d, vendor), vendor, RenderOptions()).renderToString
+  def render(model: BaseUnit, d: String, vendor: Vendor, amfConfig: AMFConfiguration): Future[String] =
+    AMFRenderer(transform(model, d, vendor, amfConfig), vendor, RenderOptions()).renderToString
 
-  def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
+  def transform(unit: BaseUnit, d: String, vendor: Vendor, amfConfig: AMFConfiguration): BaseUnit =
     unit
 
   private def profileFromModel(unit: BaseUnit): ProfileName = {
@@ -90,23 +99,14 @@ trait ModelValidationTest extends DirectoryTest {
 
 trait ModelResolutionTest extends ModelValidationTest {
 
-  override def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
-    transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d, None, None))
+  override def transform(unit: BaseUnit, d: String, vendor: Vendor, amfConfig: AMFConfiguration): BaseUnit =
+    transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d, None, None), amfConfig)
 
-  private def profileFromVendor(vendor: Vendor): ProfileName = {
-    vendor match {
-      case Raml08 => Raml08Profile
-      case Raml10 => Raml10Profile
-      case Oas20  => Oas20Profile
-      case Oas30  => Oas30Profile
-      case _      => AmfProfile
-    }
-  }
-
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val res = config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        RuntimeResolver.resolve(config.target.name, unit, EDITING_PIPELINE, unit.errorHandler())
+        // TODO: use AMFTransformer
+        RuntimeResolver.resolve(config.target.name, unit, EDITING_PIPELINE, DefaultErrorHandler())
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit

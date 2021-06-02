@@ -1,14 +1,14 @@
 package amf.emit
 
 import amf.Core
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.AMFSerializer
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.{Json, Syntax}
+import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
 import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
@@ -33,7 +33,6 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
   amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
 
@@ -45,19 +44,8 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
     render().flatMap(s => remote.write(path, s))
 
   private def render()(implicit executionContext: ExecutionContext): Future[String] = {
-    val mediaType = syntax.fold(vendor match {
-      case Amf                   => "application/ld+json"
-      case Payload               => "application/amf+json"
-      case Raml10 | Raml08 | Aml => "application/yaml"
-      case Oas20 | Oas30         => "application/json"
-      case AsyncApi20 | AsyncApi => "application/json"
-      case _                     => "text/plain"
-    })({
-      case Json => "application/json"
-      case _    => "application/yaml"
-    })
-
-    new AMFSerializer(unit, mediaType, vendor.name, options).renderToString
+    val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withRenderOptions(options)
+    new AMFSerializer(unit, vendor.mediaType, config.renderConfiguration).renderToString
   }
 }
 

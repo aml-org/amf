@@ -1,6 +1,6 @@
 package amf.cycle
 
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.core.remote.Vendor
 import amf.core.unsafe.PlatformSecrets
 import amf.cycle.JsonSchemaTestEmitters._
@@ -16,7 +16,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 }
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.render.JsonRender
-import amf.client.remod.amfcore.config.{ShapeRenderOptions => ImmutableShapeRenderOptions}
+import amf.client.remod.amfcore.config.{RenderOptions, ShapeRenderOptions => ImmutableShapeRenderOptions}
 import amf.core.errorhandling.UnhandledErrorHandler
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -163,12 +163,10 @@ class JsonSchemaCycle extends AsyncFunSuite with PlatformSecrets with FileAssert
                     mediatype: String = JSON): Future[Assertion] = {
     val finalPath   = basePath + path
     val finalGolden = basePath + golden
-    amf.core.AMF
-      .init()
-      .flatMap { _ =>
-        val fragment = parseSchema(platform, finalPath, mediatype)
-        emitter.emitSchema(fragment)
-      }
+    val fragment =
+      parseSchema(platform, finalPath, mediatype, WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()))
+    emitter
+      .emitSchema(fragment.bu.asInstanceOf[DataTypeFragment])
       .flatMap { expected =>
         writeTemporaryFile(finalGolden)(expected).flatMap(s => assertDifferences(s, finalGolden))
       }

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.metamodel.RequestModel
@@ -21,7 +21,7 @@ class PushSingleOperationPathParams() extends TransformationStep {
     } else endpoint
   }
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     try {
       model.iterator().foreach {
         case endpoint: EndPoint =>

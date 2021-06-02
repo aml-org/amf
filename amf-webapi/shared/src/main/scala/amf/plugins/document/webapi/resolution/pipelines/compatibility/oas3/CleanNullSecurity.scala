@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas3
 
 import amf.core.annotations.NullSecurity
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.ScalarNode
@@ -11,7 +11,7 @@ import amf.plugins.domain.webapi.models.Operation
 
 class CleanNullSecurity() extends TransformationStep {
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     try {
       model.iterator().foreach {
         case op: Operation =>

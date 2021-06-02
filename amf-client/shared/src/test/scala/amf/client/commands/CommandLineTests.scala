@@ -1,5 +1,6 @@
 package amf.client.commands
 
+import amf.client.environment.{AMLConfiguration, RAMLConfiguration, WebAPIConfiguration}
 import amf.core.client.{ParserConfig, Proc, ProcWriter}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
@@ -42,12 +43,12 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ParseCommand(platform).run(
-      cfg.get.copy(
-        stdout = stdout,
-        stderr = stderr,
-        proc = proc
-      )) map { _ =>
+    ParseCommand(platform).run(cfg.get.copy(
+                                 stdout = stdout,
+                                 stderr = stderr,
+                                 proc = proc
+                               ),
+                               RAMLConfiguration.RAML10()) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(proc.successful)
@@ -73,12 +74,12 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    TranslateCommand(platform).run(
-      cfg.get.copy(
-        stdout = stdout,
-        stderr = stderr,
-        proc = proc
-      )) map { _ =>
+    TranslateCommand(platform).run(cfg.get.copy(
+                                     stdout = stdout,
+                                     stderr = stderr,
+                                     proc = proc
+                                   ),
+                                   WebAPIConfiguration.WebAPI()) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(proc.successful)
@@ -103,12 +104,12 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ValidateCommand(platform).run(
-      cfg.get.copy(
-        stdout = stdout,
-        stderr = stderr,
-        proc = proc
-      )) map { _ =>
+    ValidateCommand(platform).run(cfg.get.copy(
+                                    stdout = stdout,
+                                    stderr = stderr,
+                                    proc = proc
+                                  ),
+                                  RAMLConfiguration.RAML10()) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(!proc.successful)
@@ -133,12 +134,12 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ValidateCommand(platform).run(
-      cfg.get.copy(
-        stdout = stdout,
-        stderr = stderr,
-        proc = proc
-      )) map { _ =>
+    ValidateCommand(platform).run(cfg.get.copy(
+                                    stdout = stdout,
+                                    stderr = stderr,
+                                    proc = proc
+                                  ),
+                                  RAMLConfiguration.RAML10()) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(!proc.successful)
@@ -163,12 +164,15 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
     val stderr = new TestWriter()
     val proc   = new TestProc()
 
-    ValidateCommand(platform).run(
-      cfg.get.copy(
-        stdout = stdout,
-        stderr = stderr,
-        proc = proc
-      )) map { _ =>
+    for {
+      config <- RAMLConfiguration.RAML10().withCustomValidationsEnabled
+      _ <- ValidateCommand(platform).run(cfg.get.copy(
+                                           stdout = stdout,
+                                           stderr = stderr,
+                                           proc = proc
+                                         ),
+                                         config)
+    } yield {
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(!proc.successful)
@@ -198,7 +202,9 @@ class CommandLineTests extends AsyncFunSuite with PlatformSecrets {
         stdout = stdout,
         stderr = stderr,
         proc = proc
-      )) map { _ =>
+      ),
+      WebAPIConfiguration.WebAPI()
+    ) map { _ =>
       assert(stderr.acc == "")
       assert(stdout.acc != "")
       assert(proc.successful)

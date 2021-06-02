@@ -72,7 +72,7 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends WebApiReferenceHandle
     }
   }
 
-  private def evaluateUnresolvedReference(compilerContext: CompilerContext, r: Reference, e: Throwable) = {
+  private def evaluateUnresolvedReference(compilerContext: CompilerContext, r: Reference, e: Throwable): Unit = {
     if (!r.isInferred) {
       val nodes = r.refs.map(_.node)
       nodes.foreach(compilerContext.violation(UnresolvedReference, r.url, e.getMessage, _))
@@ -96,7 +96,7 @@ class RamlReferenceHandler(plugin: AMFParsePlugin) extends WebApiReferenceHandle
   }
 
   private def isRamlOrYaml(encodes: ExternalDomainElement) =
-    Raml10Plugin.documentSyntaxes.contains(encodes.mediaType.value())
+    encodes.mediaType.option().exists(_.contains("yaml"))
 
   private def hasDocumentAST(other: BaseUnit) =
     other.annotations.find(classOf[SourceAST]).exists(_.ast.isInstanceOf[YDocument])

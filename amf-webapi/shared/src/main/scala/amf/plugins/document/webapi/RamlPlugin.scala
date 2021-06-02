@@ -1,11 +1,10 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.config.{ParsingOptions, RenderOptions}
 import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 import amf.core.Root
-import amf.core.client.ParsingOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
 import amf.core.model.domain.ExternalDomainElement
@@ -18,7 +17,7 @@ import amf.core.parser.{
   RefContainer,
   UnspecifiedReference
 }
-import amf.core.remote.{Platform, Vendor}
+import amf.core.remote.Vendor
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.raml.{
@@ -29,20 +28,13 @@ import amf.plugins.document.webapi.contexts.emitter.raml.{
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
-import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, Raml10Library, Raml10Overlay, _}
+import amf.plugins.document.webapi.parser.RamlHeader.{Raml08, Raml10, Raml10Extension, Raml10Library, Raml10Overlay}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.references.RamlReferenceHandler
+import amf.plugins.document.webapi.resolution.pipelines._
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.Raml10CompatibilityPipeline
-import amf.plugins.document.webapi.resolution.pipelines.{
-  Raml08EditingPipeline,
-  Raml08TransformationPipeline,
-  Raml10CachePipeline,
-  Raml10EditingPipeline,
-  Raml10TransformationPipeline
-}
-import amf.plugins.document.webapi.validation.ApiValidationProfiles
 import amf.plugins.document.webapi.validation.ApiValidationProfiles._
 import amf.plugins.domain.webapi.models.api.{Api, WebApi}
 import amf.plugins.features.validation.CoreValidations.{ExpectedModule, InvalidFragmentRef, InvalidInclude}
@@ -51,7 +43,7 @@ import org.yaml.model.{YDocument, YNode}
 
 sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
 
-  override def referenceHandler(eh: ErrorHandler) = new RamlReferenceHandler(AMFParsePluginAdapter(this))
+  override def referenceHandler(eh: AMFErrorHandler) = new RamlReferenceHandler(AMFParsePluginAdapter(this))
 
   def context(wrapped: ParserContext,
               root: Root,
@@ -60,23 +52,22 @@ sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
 
   // context that opens a new context for declarations and copies the global JSON Schema declarations
   def cleanContext(wrapped: ParserContext, root: Root, options: ParsingOptions): RamlWebApiContext = {
-    val cleanNested =
-      ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.eh)
-    val clean = context(cleanNested, root, options)
+    val cleanNested = ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.config)
+    val clean       = context(cleanNested, root, options)
     clean.globalSpace = wrapped.globalSpace
     clean
   }
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext
 
-  override def parse(root: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
+  override def parse(root: Root, ctx: ParserContext): BaseUnit = {
 
-    val updated = context(parentContext, root, options)
+    val updated = context(ctx, root, ctx.parsingOptions)
     restrictCrossSpecReferences(root, updated)
     inlineExternalReferences(root, updated)
-    val clean = cleanContext(parentContext, root, options)
+    val clean = cleanContext(ctx, root, ctx.parsingOptions)
 
-    validateReferences(root.references, parentContext)
+    validateReferences(root.references, ctx)
     RamlHeader(root) match { // todo review this, should we use the raml web api context for get the version parser?
       case Some(Raml08)          => Raml08DocumentParser(root)(updated).parseDocument()
       case Some(Raml10)          => Raml10DocumentParser(root)(updated).parseDocument()
@@ -157,21 +148,6 @@ sealed trait RamlPlugin extends BaseWebApiPlugin with CrossSpecRestriction {
       }
     }
   }
-
-  /**
-    * List of media types used to encode serialisations of
-    * this domain
-    */
-  override def documentSyntaxes: Seq[String] = Seq(
-    "application/raml",
-    "application/raml+json",
-    "application/raml+yaml",
-    "text/yaml",
-    "text/x-yaml",
-    "application/yaml",
-    "application/x-yaml",
-    "text/vnd.yaml"
-  )
 }
 
 object Raml08Plugin extends RamlPlugin {
@@ -185,7 +161,7 @@ object Raml08Plugin extends RamlPlugin {
       // Partial raml0.8 fragment with RAML header but linked through !include
       // we need to generate an external fragment and inline it in the parent document
       case Raml08 if root.referenceKind != LinkReference => true
-      case _: RamlFragment                               => true // this is incorrect, should be removed
+      case _: RamlFragment                               => false
       case _                                             => false
     }
   }
@@ -209,7 +185,7 @@ object Raml08Plugin extends RamlPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
       case document: Document =>
         Some(RamlDocumentEmitter(document)(specContext(renderOptions, errorHandler)).emitDocument())
@@ -228,7 +204,7 @@ object Raml08Plugin extends RamlPlugin {
                             ds.map(d => RamlWebApiDeclarations(d)),
                             options = options)
 
-  def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
+  def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext =
     new Raml08SpecEmitterContext(errorHandler)
 
   override val pipelines: Map[String, TransformationPipeline] = Map(
@@ -238,7 +214,16 @@ object Raml08Plugin extends RamlPlugin {
 
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Raml08ValidationProfile)
 
-  override val vendors: Seq[String] = Seq(vendor.name)
+  override val vendors: Seq[String] = Seq("application/raml08", "application/raml08+yaml")
+
+  /**
+    * List of media types used to encode serialisations of
+    * this domain
+    */
+  override def documentSyntaxes: Seq[String] = Seq(
+    "application/raml08",
+    "application/raml08+yaml"
+  )
 }
 
 object Raml10Plugin extends RamlPlugin {
@@ -273,7 +258,7 @@ object Raml10Plugin extends RamlPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
       case module: Module => Some(RamlModuleEmitter(module)(specContext(renderOptions, errorHandler)).emitModule())
       case document: Document =>
@@ -294,7 +279,7 @@ object Raml10Plugin extends RamlPlugin {
                             ds.map(d => RamlWebApiDeclarations(d)),
                             options = options)
 
-  def specContext(options: RenderOptions, errorHandler: ErrorHandler): RamlSpecEmitterContext =
+  def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): RamlSpecEmitterContext =
     new Raml10SpecEmitterContext(errorHandler)
 
   override val pipelines: Map[String, TransformationPipeline] = Map(
@@ -306,5 +291,17 @@ object Raml10Plugin extends RamlPlugin {
 
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Raml10ValidationProfile, AmfValidationProfile)
 
-  override val vendors: Seq[String] = Seq(vendor.name)
+  override val vendors: Seq[String] =
+    Seq("application/raml10", "application/raml10+yaml", "application/raml", "application/raml+yaml")
+
+  /**
+    * List of media types used to encode serialisations of
+    * this domain
+    */
+  override def documentSyntaxes: Seq[String] = Seq(
+    "application/raml10",
+    "application/raml10+yaml",
+    "application/raml",
+    "application/raml+yaml"
+  )
 }

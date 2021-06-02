@@ -1,11 +1,11 @@
 package amf.facades
 
-import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.config.ParsingOptionsConverter
+import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
 import amf.core.client.ParsingOptions
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Syntax.{Json, PlainText, Yaml}
 import amf.core.remote._
@@ -19,14 +19,14 @@ class AMFCompiler private (val url: String,
                            val base: Option[Context],
                            hint: Hint,
                            private val cache: Cache,
-                           eh: ParserErrorHandler,
                            newConfiguration: AMFGraphConfiguration)(implicit executionContext: ExecutionContext)
     extends RamlHeaderExtractor {
 
   private val compilerContext: CompilerContext = {
-    val builder = new CompilerContextBuilder(url, remote, eh).withCache(cache)
+    val builder =
+      new CompilerContextBuilder(url, remote, ParseConfiguration(newConfiguration)).withCache(cache)
     base.foreach(builder.withFileContext)
-    builder.withBaseEnvironment(newConfiguration).build()
+    builder.build()
   }
 
   def build(): Future[BaseUnit] = {
@@ -40,8 +40,7 @@ class AMFCompiler private (val url: String,
 
     new ModularCompiler(
       compilerContext,
-      mediaType,
-      Some(hint.vendor.name)
+      mediaType
     ).build()
   }
 
@@ -56,26 +55,23 @@ class AMFCompiler private (val url: String,
 
     new ModularCompiler(
       compilerContext,
-      mediaType,
-      Some(hint.vendor.name)
+      mediaType
     ).root()
   }
 
 }
 
 object AMFCompiler {
-  // interface that is used by all testing classes
+  // interface used by some testing classes, ideally will be removed
+  // TODO ARM NOT use anymore, remove
   def apply(url: String,
             remote: Platform,
             hint: Hint,
             context: Option[Context] = None,
             cache: Option[Cache] = None,
             ctx: Option[ParserContext] = None,
-            eh: ParserErrorHandler,
-            parsingOptions: ParsingOptions = ParsingOptions())(implicit executionContext: ExecutionContext) = {
-    val newEnv =
-      AMFPluginsRegistry.obtainStaticConfig().withParsingOptions(ParsingOptionsConverter.fromLegacy(parsingOptions))
-    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), eh, newEnv)
+            config: AMFGraphConfiguration)(implicit executionContext: ExecutionContext): AMFCompiler = {
+    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), config)
   }
 
 }

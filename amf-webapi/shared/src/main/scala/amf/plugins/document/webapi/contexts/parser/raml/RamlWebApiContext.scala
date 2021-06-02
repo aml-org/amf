@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.contexts.parser.raml
-import amf.core.client.ParsingOptions
+
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.model.domain.Shape
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{Payload, Vendor}

@@ -1,11 +1,11 @@
 package amf.parser
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.environment.RAMLConfiguration
+import amf.client.parse.DefaultErrorHandler
 import amf.core.parser.Range
-import amf.core.remote.Raml10YamlHint
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationResult
-import amf.facades.{AMFCompiler, Validation}
+import amf.facades.Validation
 import org.scalatest.Matchers._
 import org.scalatest.{AsyncFunSuite, Succeeded}
 
@@ -79,12 +79,15 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   private def validate(file: String, fixture: (AMFValidationResult => Unit)*) = {
-    val eh = DefaultParserErrorHandler.withRun()
+    val eh     = DefaultErrorHandler()
+    val config = RAMLConfiguration.RAML10().withErrorHandlerProvider(() => eh)
     Validation(platform).flatMap { _ =>
-      AMFCompiler(file, platform, Raml10YamlHint, eh = eh)
-        .build()
+      config
+        .createClient()
+        .parse(file)
+        .map(_.bu)
         .map { _ =>
-          val report = eh.getErrors.distinct
+          val report = eh.getResults.distinct
           if (report.size == fixture.size) {
             fixture.zip(report).foreach {
               case (fn, result) => fn(result)

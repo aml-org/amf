@@ -1,8 +1,9 @@
 package amf.extensions
 
-import amf.client.parse.DefaultParserErrorHandler
-import amf.core.client.ParsingOptions
-import amf.core.emitter.RenderOptions
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote._
 import amf.core.{AMF, AMFSerializer}
@@ -104,16 +105,13 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
     }
   }
 
-  private def renderToString(unit: BaseUnit, vendor: String): Future[String] =
-    new AMFSerializer(unit, "application/json", vendor, RenderOptions()).renderToString
-
-  private def parse(url: String, vendor: String, hint: Hint): Future[BaseUnit] = {
-    AMFCompiler(url,
-                platform,
-                hint,
-                eh = DefaultParserErrorHandler(),
-                parsingOptions = ParsingOptions().withAmfJsonLdSerialization).build()
+  private def renderToString(unit: BaseUnit, mediaType: String): Future[String] = {
+    val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    new AMFSerializer(unit, mediaType, config.renderConfiguration).renderToString
   }
+
+  private def parse(url: String, vendor: String, hint: Hint, amfConfig: AMFGraphConfiguration): Future[BaseUnit] =
+    amfConfig.createClient().parse(url).map(_.bu)
 
   private def withBaseUnitPair(url: String, originalVendor: Vendor, otherVendor: Vendor)(
       assertion: List[BaseUnit] => Assertion) = {
@@ -121,12 +119,13 @@ class SecuritySchemeExtensionsTest extends AsyncFunSuite with FileAssertionTest 
     AMF.registerPlugin(Oas30Plugin)
     AMF.registerPlugin(Oas20Plugin)
     AMF.registerPlugin(Raml10Plugin)
+    val config = WebAPIConfiguration.WebAPI().withParsingOptions(ParsingOptions().withAmfJsonLdSerialization)
     for {
       _             <- AMF.init()
-      originalUnit  <- parse(url, originalVendor.name, hint(originalVendor))
-      emittedApi    <- renderToString(originalUnit, otherVendor.name)
+      originalUnit  <- parse(url, originalVendor.mediaType, hint(originalVendor), config)
+      emittedApi    <- renderToString(originalUnit, otherVendor.mediaType)
       tmp           <- writeTemporaryFile(fileName)(emittedApi)
-      parsedApiUnit <- parse(s"file://${tmp.path}", otherVendor.name, hint(otherVendor))
+      parsedApiUnit <- parse(s"file://${tmp.path}", otherVendor.name, hint(otherVendor), config)
     } yield {
       assertion(List(originalUnit, parsedApiUnit))
     }

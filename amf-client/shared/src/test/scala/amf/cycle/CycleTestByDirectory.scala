@@ -1,6 +1,6 @@
 package amf.cycle
-import amf.client.parse.DefaultParserErrorHandler
-import amf.core.emitter.RenderOptions
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{AmfJsonHint, Hint}
 import amf.io.{BuildCycleTests, JsonLdSerializationSuite}
@@ -206,7 +206,7 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests with JsonL
           hint,
           target.vendor,
           syntax = Some(target.syntax),
-          eh = Some(DefaultParserErrorHandler.withRun()),
+          eh = Some(DefaultErrorHandler()),
           renderOptions = renderOptions)
   }
 }

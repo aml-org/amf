@@ -1,9 +1,15 @@
 package amf.plugins.document.webapi.validation.remod
 
 import amf.ProfileName
-import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions, ValidationResult}
+import amf.client.remod.amfcore.plugins.validate.{
+  AMFValidatePlugin,
+  ValidationConfiguration,
+  ValidationOptions,
+  ValidationResult
+}
 import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
 import amf.core.model.document.BaseUnit
+import amf.core.validation.AMFValidationReport
 import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
 import amf.plugins.document.webapi.validation.runner.ValidationContext
 import amf.plugins.document.webapi.validation.runner.steps.{
@@ -17,22 +23,19 @@ import scala.concurrent.{ExecutionContext, Future}
 
 trait ModelResolution {
 
-  def withResolvedModel[T](unit: BaseUnit, profile: ProfileName)(withResolved: BaseUnit => T): T = {
-    if (unit.resolved) withResolved(unit)
+  def withResolvedModel[T](unit: BaseUnit, profile: ProfileName, conf: ValidationConfiguration)(
+      withResolved: (BaseUnit, Option[AMFValidationReport]) => T): T = {
+    if (unit.resolved) withResolved(unit, None)
     else {
-      val resolvedUnit = ValidationTransformationPipeline(profile, unit)
-      withResolved(resolvedUnit)
+      val resolvedUnit = ValidationTransformationPipeline(profile, unit, conf.eh)
+      withResolved(resolvedUnit, Some(AMFValidationReport.forModel(resolvedUnit, conf.eh.getResults)))
     }
   }
 }
 
 trait LegacyContextCreation {
   def legacyContext(unit: BaseUnit, options: ValidationOptions) =
-    ValidationContext(unit,
-                      options.profileName,
-                      messageStyle = options.profileName.messageStyle,
-                      validations = options.validations,
-                      env = options.environment)
+    ValidationContext(unit, options)
 }
 
 case class ValidateStepPluginAdapter(id: String, factory: ValidationContext => ValidationStep)
@@ -42,9 +45,16 @@ case class ValidateStepPluginAdapter(id: String, factory: ValidationContext => V
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
-    withResolvedModel(unit, options.profileName) { resolvedUnit =>
-      val context = legacyContext(resolvedUnit, options)
-      factory(context).run.map(report => ValidationResult(resolvedUnit, report))
+    withResolvedModel(unit, options.profile, options.config) { (resolvedUnit, resolutionReport) =>
+      val report = resolutionReport match {
+        case Some(report) if !report.conforms => Future.successful(report)
+        case _ =>
+          val context = legacyContext(resolvedUnit, options)
+          factory(context).run.map { validationStepReport =>
+            resolutionReport.map(_.merge(validationStepReport)).getOrElse(validationStepReport)
+          }
+      }
+      report.map(ValidationResult(resolvedUnit, _))
     }
   }
 

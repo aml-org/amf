@@ -1,6 +1,8 @@
 package amf.resolution
 
-import amf.core.emitter.RenderOptions
+import amf.client.environment.AMFConfiguration
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Raml10, Raml10YamlHint}
 import amf.emit.AMFRenderer
@@ -70,8 +72,9 @@ class OverlayResolutionTest extends ResolutionTest {
     }
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    val target = config.target
-    new AMFRenderer(unit, target, RenderOptions().withSourceMaps.withPrettyPrint, config.syntax).renderToString
+  override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): Future[String] = {
+    super.render(unit,
+                 config,
+                 amfConfig.withRenderOptions(amfConfig.options.renderOptions.withSourceMaps.withPrettyPrint))
   }
 }

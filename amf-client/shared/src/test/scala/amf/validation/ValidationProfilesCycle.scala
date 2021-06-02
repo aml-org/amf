@@ -1,7 +1,8 @@
 package amf.validation
 
-import amf.core.emitter.RenderOptions
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.client.environment.WebAPIConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
@@ -19,12 +20,12 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
   val basePath = "file://amf-client/shared/src/test/resources/vocabularies2/production/validation/"
 
   private def cycle(exampleFile: String, hint: Hint, syntax: Syntax, target: Vendor): Future[String] = {
-
+    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
     for {
-      v  <- Validation(platform)
-      _  <- v.loadValidationDialect()
-      bu <- AMFCompiler(basePath + exampleFile, platform, hint, None, None, eh = UnhandledParserErrorHandler).build()
-      r  <- AMFRenderer(bu, target, RenderOptions(), Some(syntax)).renderToString
+      v                    <- Validation(platform)
+      clientWithValidation <- config.withCustomValidationsEnabled.map(_.createClient())
+      bu                   <- clientWithValidation.parse(basePath + exampleFile).map(_.bu)
+      r                    <- clientWithValidation.render(bu, target.mediaType)
     } yield r
   }
 

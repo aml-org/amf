@@ -3,7 +3,7 @@ package amf.emit
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
 import amf.core.remote._
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.Assertion
 
@@ -28,11 +28,11 @@ class MutateModelCycleTest extends FunSuiteCycleTests {
                            target: Vendor,
                            transform: BaseUnit => BaseUnit,
                            directory: String = basePath): Future[Assertion] = {
-    val config = CycleConfig(source, golden, hint, target, directory, None, None)
-
-    build(config, None, useAmfJsonldSerialisation = true)
+    val config    = CycleConfig(source, golden, hint, target, directory, None, None)
+    val amfConfig = buildConfig(None, None)
+    build(config, amfConfig)
       .map(transform(_))
-      .flatMap(render(_, config, useAmfJsonldSerialization = true))
+      .flatMap(render(_, config, amfConfig))
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
   }

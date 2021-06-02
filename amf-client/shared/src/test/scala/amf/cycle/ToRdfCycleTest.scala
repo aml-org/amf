@@ -1,13 +1,15 @@
 package amf.cycle
 
-import amf.core.emitter.RenderOptions
+import amf.client.environment.WebAPIConfiguration
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
+import amf.core.AMFCompiler
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.ParserContext
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.plugin.PluginContext
-import amf.core.remote.{Cache, Context, Vendor}
+import amf.core.remote.Vendor
 import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.services.RuntimeCompiler
 import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.resolution.ResolutionCapabilities
@@ -35,21 +37,15 @@ class ToRdfCycleTest
 
   override protected def beforeEach(): Future[Unit] = Validation(platform).map(_ => Unit)
 
-  private def build(path: String): Future[BaseUnit] = {
+  private def build(path: String, config: AMFGraphConfiguration): Future[BaseUnit] = {
     val fullPath = basePath + path
-    val ctx      = ParserContext(eh = UnhandledParserErrorHandler, plugins = PluginContext())
-    RuntimeCompiler.apply(fullPath,
-                          None,
-                          None,
-                          Context(platform),
-                          Cache(),
-                          ctx = Some(ctx),
-                          errorHandler = UnhandledParserErrorHandler)
+    config.createClient().parse(fullPath).map(_.bu)
   }
 
   private def rdfFromApi(path: String, vendor: Vendor): Future[String] = {
-    build(path)
-      .map(transform(_, TransformationPipeline.EDITING_PIPELINE, vendor))
+    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
+    build(path, config)
+      .map(transform(_, TransformationPipeline.EDITING_PIPELINE, vendor, config))
       .map(_.toNativeRdfModel(RenderOptions().withSourceMaps))
       .map(_.toN3())
   }

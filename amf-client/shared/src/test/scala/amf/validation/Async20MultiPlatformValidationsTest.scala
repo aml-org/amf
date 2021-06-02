@@ -1,13 +1,13 @@
 package amf.validation
 
 import amf.Async20Profile
-import amf.core.remote.{AsyncYamlHint, Hint}
+import amf.core.remote.{Async20YamlHint, Hint}
 import org.scalatest.Matchers
 
 class Async20MultiPlatformValidationsTest extends MultiPlatformReportGenTest with Matchers {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/async20/validations/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/async20/"
-  override val hint: Hint          = AsyncYamlHint
+  override val hint: Hint          = Async20YamlHint
 
   test("Draft 7 - conditional sub schemas validations") {
     validate("draft-7-validations.yaml", Some("draft-7-validations.report"), Async20Profile)

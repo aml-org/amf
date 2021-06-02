@@ -1,6 +1,8 @@
 package amf.emit
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.environment.{AsyncAPIConfiguration, OASConfiguration, WebAPIConfiguration}
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote.{Oas20JsonHint, Vendor}
@@ -10,7 +12,6 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.api.WebApi
-import amf.remod.RamlShapeSerializer
 import amf.remod.RamlShapeSerializer.toRamlDatatype
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -42,7 +43,10 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   test("Test parsed from json expression forced to build new") {
-    cycle("json-expression.json", "json-expression-new.raml", generalFindShapeFunc, (a: AnyShape) => toRamlDatatype(a))
+    cycle("json-expression.json",
+          "json-expression-new.raml",
+          generalFindShapeFunc,
+          (a: AnyShape) => toRamlDatatype(a, amfConfig))
   }
 
   // https://github.com/aml-org/amf/issues/441
@@ -56,21 +60,22 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
 
   private val basePath: String   = "file://amf-client/shared/src/test/resources/toraml/toramldatatype/source/"
   private val goldenPath: String = "amf-client/shared/src/test/resources/toraml/toramldatatype/datatypes/"
+  private val amfConfig          = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
 
-  private def cycle(sourceFile: String,
-                    goldenFile: String,
-                    findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
-                    renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a)): Future[Assertion] = {
+  private def cycle(
+      sourceFile: String,
+      goldenFile: String,
+      findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
+      renderFn: AnyShape => String = (a: AnyShape) => toRamlDatatype(a, amfConfig)): Future[Assertion] = {
+    val client = amfConfig.createClient()
     val ramlDatatype: Future[String] = for {
-      _ <- Validation(platform)
-      sourceUnit <- AMFCompiler(basePath + sourceFile, platform, Oas20JsonHint, eh = DefaultParserErrorHandler.withRun())
-        .build()
+      _          <- Validation(platform)
+      sourceUnit <- client.parse(basePath + sourceFile).map(_.bu)
     } yield {
       findShapeFunc(
-        RuntimeResolver.resolve(Vendor.OAS20.name,
-                                sourceUnit,
-                                TransformationPipeline.DEFAULT_PIPELINE,
-                                UnhandledErrorHandler)).map(toRamlDatatype).getOrElse("")
+        client.transform(sourceUnit, PipelineName.from(Vendor.OAS20.name, TransformationPipeline.DEFAULT_PIPELINE)).bu)
+        .map(toRamlDatatype(_, amfConfig))
+        .getOrElse("")
     }
     ramlDatatype.flatMap { writeTemporaryFile(goldenFile) }.flatMap(assertDifferences(_, goldenPath + goldenFile))
   }

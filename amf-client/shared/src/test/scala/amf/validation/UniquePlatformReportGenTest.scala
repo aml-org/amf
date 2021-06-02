@@ -2,14 +2,17 @@ package amf.validation
 
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 import amf._
-import amf.client.parse.DefaultParserErrorHandler
-import amf.core.errorhandling.AmfReportBuilder
-import amf.core.model.document.BaseUnit
+import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.{AMFGraphConfiguration, AMFResult}
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
+import amf.client.remod.{AMFGraphConfiguration, AMFResult}
+import amf.core.errorhandling.{AMFErrorHandler, AmfReportBuilder}
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.validation.AMFValidationReport
-import amf.facades.{AMFCompiler, Validation}
+import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.resolution.pipelines.ValidationTransformationPipeline
 
@@ -54,23 +57,28 @@ sealed trait AMFValidationReportGenTest extends AsyncFunSuite with FileAssertion
                          profileFile: Option[String] = None,
                          overridedHint: Option[Hint] = None,
                          directory: String = basePath): Future[Assertion] = {
-    val eh        = DefaultParserErrorHandler.withRun()
-    val finalHint = overridedHint.getOrElse(hint)
+    val initialConfig = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+    val finalHint     = overridedHint.getOrElse(hint)
     for {
-      validation <- Validation(platform)
-      _ <- if (profileFile.isDefined)
-        validation.loadValidationProfile(directory + profileFile.get, DefaultParserErrorHandler.withRun())
-      else Future.unit
-      model  <- parse(directory + api, eh, finalHint)
-      report <- validation.validate(model, profile)
-      r      <- handleReport(report, golden.map(processGolden))
+      withProfile <- if (profileFile.isDefined)
+        initialConfig.withCustomValidationsEnabled.flatMap(_.withCustomProfile(directory + profileFile.get))
+      else Future.successful(initialConfig)
+      parseResult <- parse(directory + api, withProfile, finalHint)
+      report      <- withProfile.createClient().validate(parseResult.bu, profile)
+      r <- {
+        val finalReport =
+          if (!parseResult.conforms) parseResult.report
+          else parseResult.report.merge(report)
+        handleReport(finalReport, golden.map(processGolden))
+      }
     } yield {
       r
     }
   }
 
-  protected def parse(path: String, eh: DefaultParserErrorHandler, finalHint: Hint): Future[BaseUnit] = {
-    AMFCompiler(path, platform, finalHint, eh = eh).build()
+  protected def parse(path: String, conf: AMFConfiguration, finalHint: Hint): Future[AMFResult] = {
+    val client = conf.createClient()
+    client.parse(path, finalHint.vendor.mediaType)
   }
 
   protected def processGolden(g: String): String
@@ -90,13 +98,14 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
                             golden: Option[String] = None,
                             profile: ProfileName = defaultProfile,
                             profileFile: Option[String] = None): Future[Assertion] = {
-    val errorHandler = DefaultParserErrorHandler.withRun()
+    val errorHandler = DefaultErrorHandler()
+    val config       = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => errorHandler)
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(basePath + api, platform, profileToHint(profile), eh = errorHandler).build()
+      model      <- config.createClient().parse(basePath + api).map(_.bu)
       report <- {
         TransformationPipelineRunner(errorHandler).run(model, new ValidationTransformationPipeline(profile))
-        val results = errorHandler.getErrors
+        val results = errorHandler.getResults
         val report  = new AmfReportBuilder(model, profile).buildReport(results)
         handleReport(report, golden)
       }

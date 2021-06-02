@@ -1,10 +1,9 @@
 package amf.plugins.document.webapi
 
 import amf._
-import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.config.{ParsingOptions, RenderOptions}
 import amf.core.Root
-import amf.core.client.ParsingOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
@@ -27,14 +26,7 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
   Oas20CompatibilityPipeline,
   Oas3CompatibilityPipeline
 }
-import amf.plugins.document.webapi.resolution.pipelines.{
-  Oas20CachePipeline,
-  Oas20EditingPipeline,
-  Oas20TransformationPipeline,
-  Oas30TransformationPipeline,
-  Oas3CachePipeline,
-  Oas3EditingPipeline
-}
+import amf.plugins.document.webapi.resolution.pipelines._
 import amf.plugins.document.webapi.validation.ApiValidationProfiles
 import amf.plugins.document.webapi.validation.ApiValidationProfiles.Oas20ValidationProfile
 import amf.plugins.domain.webapi.models.api.Api
@@ -42,7 +34,7 @@ import org.yaml.model.{YDocument, YNode}
 
 sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): OasSpecEmitterContext
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): OasSpecEmitterContext
 
   /**
     * Does references in this type of documents be recursive?
@@ -55,15 +47,28 @@ sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
               wrapped: ParserContext,
               ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
 
-  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
-    implicit val ctx: OasWebApiContext = context(document.location, document.references, options, parentContext)
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+    implicit val newCtx: OasWebApiContext = context(document.location, document.references, ctx.parsingOptions, ctx)
     restrictCrossSpecReferences(document, ctx)
     val parsed = document.referenceKind match {
       case LibraryReference => OasModuleParser(document).parseModule()
       case LinkReference    => OasFragmentParser(document).parseFragment()
       case _                => detectOasUnit(document)
     }
-    promoteFragments(parsed, ctx)
+    promoteFragments(parsed, newCtx)
+  }
+
+  override def canUnparse(unit: BaseUnit): Boolean = unit match {
+    case _: Overlay         => true
+    case _: Extension       => true
+    case document: Document => document.encodes.isInstanceOf[Api]
+    case module: Module =>
+      module.declares exists {
+        case _: DomainElement => true
+        case _                => false
+      }
+    case _: Fragment => true
+    case _           => false
   }
 
   private def detectOasUnit(root: Root)(implicit ctx: OasWebApiContext): BaseUnit = {
@@ -100,7 +105,7 @@ sealed trait OasPlugin extends OasLikePlugin with CrossSpecRestriction {
 
 object Oas20Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): OasSpecEmitterContext =
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): OasSpecEmitterContext =
     new Oas2SpecEmitterContext(errorHandler, compactEmission = options.isWithCompactedEmission)
 
   override protected def vendor: Vendor = Oas20
@@ -115,22 +120,9 @@ object Oas20Plugin extends OasPlugin {
     */
   override def canParse(root: Root): Boolean = OasHeader(root).exists(_ != Oas30Header)
 
-  override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case _: Overlay         => true
-    case _: Extension       => true
-    case document: Document => document.encodes.isInstanceOf[Api]
-    case module: Module =>
-      module.declares exists {
-        case _: DomainElement => true
-        case _                => false
-      }
-    case _: Fragment => true
-    case _           => false
-  }
-
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
       case module: Module => Some(Oas20ModuleEmitter(module)(specContext(renderOptions, errorHandler)).emitModule())
       case document: Document =>
@@ -157,12 +149,23 @@ object Oas20Plugin extends OasPlugin {
   // TODO: Temporary, should be erased until synchronous validation profile building for dialects is implemented
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Oas20ValidationProfile)
 
-  override val vendors: Seq[String] = Seq(vendor.name)
+  override val vendors: Seq[String] = Seq(
+    "application/oas20+json",
+    "application/oas20+yaml",
+    "application/oas20",
+    "application/swagger+json",
+    "application/swagger20+json",
+    "application/swagger+yaml",
+    "application/swagger20+yaml",
+    "application/swagger",
+    "application/swagger20"
+  )
+
 }
 
 object Oas30Plugin extends OasPlugin {
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): Oas3SpecEmitterContext =
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): Oas3SpecEmitterContext =
     new Oas3SpecEmitterContext(errorHandler, compactEmission = options.isWithCompactedEmission)
 
   override protected def vendor: Vendor = Oas30
@@ -177,22 +180,9 @@ object Oas30Plugin extends OasPlugin {
     */
   override def canParse(root: Root): Boolean = OasHeader(root).contains(Oas30Header)
 
-  override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case _: Overlay         => true
-    case _: Extension       => true
-    case document: Document => document.encodes.isInstanceOf[Api]
-    case module: Module =>
-      module.declares exists {
-        case _: DomainElement => true
-        case _                => false
-      }
-    case _: Fragment => true
-    case _           => false
-  }
-
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
       case module: Module => Some(Oas30ModuleEmitter(module)(specContext(renderOptions, errorHandler)).emitModule())
       case document: Document =>
@@ -208,6 +198,7 @@ object Oas30Plugin extends OasPlugin {
     * this domain
     */
   override def documentSyntaxes: Seq[String] = Seq(
+    Oas30.mediaType,
     "application/json",
     "application/yaml",
     "application/x-yaml",
@@ -238,5 +229,12 @@ object Oas30Plugin extends OasPlugin {
   // TODO: Temporary, should be erased until synchronous validation profile building for dialects is implemented
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(ApiValidationProfiles.Oas30ValidationProfile)
 
-  override val vendors: Seq[String] = Seq(vendor.name)
+  override val vendors: Seq[String] = Seq(
+    "application/oas30+json",
+    "application/oas30+yaml",
+    "application/oas30",
+    "application/openapi30",
+    "application/openapi30+yaml",
+    "application/openapi30+json"
+  )
 }

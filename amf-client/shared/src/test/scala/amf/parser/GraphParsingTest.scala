@@ -1,5 +1,5 @@
 package amf.parser
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.{Amf, AmfJsonHint}
 import amf.io.FunSuiteCycleTests
 

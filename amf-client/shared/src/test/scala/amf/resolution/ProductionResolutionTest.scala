@@ -1,5 +1,6 @@
 package amf.resolution
 
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.Document
 import amf.core.remote._
@@ -14,13 +15,17 @@ class ProductionResolutionTest extends RamlResolutionTest {
   val productionRaml10  = "amf-client/shared/src/test/resources/production/raml10/"
   val productionRaml08  = "amf-client/shared/src/test/resources/production/raml08/"
 
+  override def renderOptions() = RenderOptions().withPrettyPrint.withSourceMaps
   multiGoldenTest("Test declared type with facet added", "add-facet.raml.%s") { config =>
-    cycle("add-facet.raml",
-          config.golden,
-          Raml10YamlHint,
-          renderOptions = Some(config.renderOptions),
-          target = Amf,
-          directory = basePath + "inherits-resolution-declares/")
+    cycle(
+      "add-facet.raml",
+      config.golden,
+      Raml10YamlHint,
+      renderOptions = Some(config.renderOptions),
+      target = Amf,
+      directory = basePath + "inherits-resolution-declares/",
+      transformWith = Some(Raml10)
+    )
   }
 
   multiGoldenTest("Test inline type from includes", "test-ramlfragment.raml.%s") { config =>
@@ -30,7 +35,8 @@ class ProductionResolutionTest extends RamlResolutionTest {
       Raml10YamlHint,
       renderOptions = Some(config.renderOptions),
       target = Amf,
-      directory = basePath + "inherits-resolution-declares/"
+      directory = basePath + "inherits-resolution-declares/",
+      transformWith = Some(Raml10)
     )
   }
 
@@ -44,11 +50,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
   // TODO: diff of final result is too slow
   multiGoldenTest("Resolves googleapis.compredictionv1.2swagger.raml to jsonld",
                   "googleapis.compredictionv1.2swagger.raml.resolved.%s") { config =>
-    cycle("googleapis.compredictionv1.2swagger.raml",
-          config.golden,
-          Raml10YamlHint,
-          renderOptions = Some(config.renderOptions),
-          target = Amf)
+    cycle(
+      "googleapis.compredictionv1.2swagger.raml",
+      config.golden,
+      Raml10YamlHint,
+      renderOptions = Some(config.renderOptions),
+      target = Amf,
+      transformWith = Some(Amf)
+    )
   }
 
   multiGoldenTest("azure_blob_service raml to jsonld", "microsoft_azure_blob_service.raml.resolved.%s") { config =>
@@ -56,7 +65,8 @@ class ProductionResolutionTest extends RamlResolutionTest {
           config.golden,
           Raml10YamlHint,
           renderOptions = Some(config.renderOptions),
-          target = Amf)
+          target = Amf,
+          transformWith = Some(Raml10))
   }
 
   test("test definition_loops input") {
@@ -185,15 +195,15 @@ class ProductionResolutionTest extends RamlResolutionTest {
 
     val config                    = CycleConfig(source, golden, hint, target, directory, syntax, None)
     val useAmfJsonldSerialization = true
-
+    val amfConfig                 = buildConfig(None, None)
     for {
-      simpleModel <- build(config, validation, useAmfJsonldSerialization).map(
+      simpleModel <- build(config, amfConfig).map(
         TransformationPipelineRunner(UnhandledErrorHandler).run(_, AmfEditingPipeline()))
-      a <- render(simpleModel, config, useAmfJsonldSerialization)
-      doubleModel <- build(config, validation, useAmfJsonldSerialization).map(
+      a <- render(simpleModel, config, amfConfig)
+      doubleModel <- build(config, amfConfig).map(
         TransformationPipelineRunner(UnhandledErrorHandler).run(_, AmfEditingPipeline()))
-      _ <- render(doubleModel, config, useAmfJsonldSerialization)
-      b <- render(doubleModel, config, useAmfJsonldSerialization)
+      _ <- render(doubleModel, config, amfConfig)
+      b <- render(doubleModel, config, amfConfig)
     } yield {
       val simpleDeclares =
         simpleModel.asInstanceOf[Document].declares
@@ -224,12 +234,24 @@ class ProductionResolutionTest extends RamlResolutionTest {
 
   // TODO migrate to multiGoldenTest
   test("Test complex recursions in type inheritance 1") {
-    cycle("healthcare_reduced_v1.raml", "healthcare_reduced_v1.raml.resolved", Raml10YamlHint, Amf, validationPath)
+    cycle("healthcare_reduced_v1.raml",
+          "healthcare_reduced_v1.raml.resolved",
+          Raml10YamlHint,
+          Amf,
+          validationPath,
+          transformWith = Some(Raml10))
   }
 
   // TODO migrate to multiGoldenTest
   test("Test complex recursions in type inheritance 2") {
-    cycle("healthcare_reduced_v2.raml", "healthcare_reduced_v2.raml.resolved", Raml10YamlHint, Amf, validationPath)
+    cycle(
+      "healthcare_reduced_v2.raml",
+      "healthcare_reduced_v2.raml.resolved",
+      Raml10YamlHint,
+      Amf,
+      validationPath,
+      renderOptions = Some(RenderOptions().withPrettyPrint.withSourceMaps)
+    )
   }
 
   // TODO migrate to multiGoldenTest

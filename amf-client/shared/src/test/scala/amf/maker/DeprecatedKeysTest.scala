@@ -1,13 +1,12 @@
 package amf.maker
 
+import amf.client.environment.RAMLConfiguration
 import amf.compiler.CompilerTestBuilder
-import amf.core.remote.{Raml08YamlHint, Raml10YamlHint}
 import amf.core.validation.SeverityLevels
-import amf.facades.Validation
 import amf.{ProfileName, Raml08Profile, Raml10Profile}
 import org.scalatest.AsyncFunSuite
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
@@ -40,17 +39,20 @@ class DeprecatedKeysTest extends AsyncFunSuite with CompilerTestBuilder {
 
   fixture.foreach { f =>
     test("Test " + f.name) {
+      val config = RAMLConfiguration.RAML()
+      val client = config.createClient()
       for {
-        validation <- Validation(platform)
-        model <- build(basePath + f.file,
-                       if (f.profileName == Raml08Profile) Raml08YamlHint else Raml10YamlHint,
-                       validation = Option(validation))
-        report <- validation.validate(model, f.profileName)
+        parseResult <- client.parse(basePath + f.file)
+        report      <- client.validate(parseResult.bu, f.profileName)
+        unifiedReport <- Future.successful(
+          if (!parseResult.conforms) parseResult.report
+          else parseResult.report.merge(report)
+        )
       } yield {
-        assert(report.conforms)
-        assert(report.results.lengthCompare(f.results.length) == 0)
+        assert(unifiedReport.conforms)
+        assert(unifiedReport.results.lengthCompare(f.results.length) == 0)
         assert(
-          !report.results
+          !unifiedReport.results
             .zip(f.results)
             .map({
               case (result, fResult) =>

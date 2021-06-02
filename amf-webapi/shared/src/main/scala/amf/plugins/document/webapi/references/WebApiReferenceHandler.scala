@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.references
 
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.parser._
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote._
 import amf.core.utils._
 import amf.plugins.document.webapi.parser.RamlHeader
@@ -9,6 +9,7 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Ove
 import amf.plugins.document.webapi.parser.spec.declaration.LibraryLocationParser
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
+
 import scala.util.matching.Regex
 
 class WebApiReferenceHandler(vendor: String) extends ReferenceHandler {
@@ -19,7 +20,7 @@ class WebApiReferenceHandler(vendor: String) extends ReferenceHandler {
     collect(parsed)(ctx.eh)
   }
 
-  private def collect(parsed: ParsedDocument)(implicit errorHandler: ParserErrorHandler): CompilerReferenceCollector = {
+  private def collect(parsed: ParsedDocument)(implicit errorHandler: AMFErrorHandler): CompilerReferenceCollector = {
     val doc = parsed.asInstanceOf[SyamlParsedDocument].document
     libraries(doc)
     links(doc)
@@ -39,7 +40,7 @@ class WebApiReferenceHandler(vendor: String) extends ReferenceHandler {
     }
   }
 
-  private def overlaysAndExtensions(document: YDocument)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def overlaysAndExtensions(document: YDocument)(implicit errorHandler: AMFErrorHandler): Unit = {
     document.node.to[YMap] match {
       case Right(map) =>
         val ext = vendor match {
@@ -63,11 +64,11 @@ class WebApiReferenceHandler(vendor: String) extends ReferenceHandler {
     }
   }
 
-  private def extension(entry: YMapEntry)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def extension(entry: YMapEntry)(implicit errorHandler: AMFErrorHandler): Unit = {
     references += (entry.value.as[YScalar].text, ExtensionReference, entry.value)
   }
 
-  private def links(part: YPart)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def links(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
     vendor match {
       case Raml10.name | Raml08.name => ramlLinks(part)
       case Oas20.name | Oas30.name   => oasLinks(part)
@@ -77,7 +78,7 @@ class WebApiReferenceHandler(vendor: String) extends ReferenceHandler {
     }
   }
 
-  private def libraries(document: YDocument)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def libraries(document: YDocument)(implicit errorHandler: AMFErrorHandler): Unit = {
     document.to[YMap] match {
       case Right(map) =>
         val uses = vendor match {
@@ -101,20 +102,20 @@ class WebApiReferenceHandler(vendor: String) extends ReferenceHandler {
     }
   }
 
-  private def library(entry: YMapEntry)(implicit errorHandler: ParserErrorHandler): Unit =
+  private def library(entry: YMapEntry)(implicit errorHandler: AMFErrorHandler): Unit =
     LibraryLocationParser(entry) match {
       case Some(location) => references += (location, LibraryReference, entry.value)
       case _              => errorHandler.violation(ModuleNotFound, "", "Missing library location", entry)
     }
 
-  private def oasLinks(part: YPart)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def oasLinks(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
     part match {
       case map: YMap if map.entries.size == 1 && isRef(map.entries.head) => oasInclude(map)
       case _                                                             => part.children.foreach(c => oasLinks(c))
     }
   }
 
-  private def oasInclude(map: YMap)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def oasInclude(map: YMap)(implicit errorHandler: AMFErrorHandler): Unit = {
     val ref = map.entries.head
     ref.value.tagType match {
       case YType.Str =>
@@ -131,7 +132,7 @@ class WebApiReferenceHandler(vendor: String) extends ReferenceHandler {
     }
   }
 
-  private def ramlLinks(part: YPart)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def ramlLinks(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
     part match {
       case node: YNode if node.tagType == YType.Include         => ramlInclude(node)
       case scalar: YScalar if scalar.value.isInstanceOf[String] => checkInlined(scalar)
@@ -156,7 +157,7 @@ class WebApiReferenceHandler(vendor: String) extends ReferenceHandler {
     }
   }
 
-  private def ramlInclude(node: YNode)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def ramlInclude(node: YNode)(implicit errorHandler: AMFErrorHandler): Unit = {
     node.value match {
       case scalar: YScalar =>
         references += (scalar.text, LinkReference, node)

@@ -1,17 +1,19 @@
 package amf.validation
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
+import amf.client.parse.DefaultErrorHandler
 import amf.client.plugins.{StrictValidationMode, ValidationMode}
+import amf.client.remod.{AMFGraphClient, AMFGraphConfiguration}
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeResolver
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.document.webapi.{Raml08Plugin, Raml10Plugin}
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.{AsyncFunSuite, Matchers}
@@ -64,13 +66,15 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/validations/body-payload/"
 
-  override def transform(unit: BaseUnit): BaseUnit =
+  override def transform(unit: BaseUnit, client: AMFGraphClient): BaseUnit = {
+
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
       case Some(Raml08) =>
-        RuntimeResolver.resolve(Raml08.name, unit, TransformationPipeline.DEFAULT_PIPELINE, unit.errorHandler())
+        client.transform(unit, PipelineName.from(Raml08.name, TransformationPipeline.DEFAULT_PIPELINE)).bu
       case _ =>
-        RuntimeResolver.resolve(Raml10.name, unit, TransformationPipeline.DEFAULT_PIPELINE, unit.errorHandler())
+        client.transform(unit, PipelineName.from(Raml10.name, TransformationPipeline.DEFAULT_PIPELINE)).bu
     }
+  }
 }
 
 trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with PlatformSecrets {
@@ -89,32 +93,46 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
 
   protected def findShape(d: Document): Shape
 
-  def transform(unit: BaseUnit): BaseUnit
+  def transform(unit: BaseUnit, config: AMFGraphClient): BaseUnit
 
   protected def fixtureList: Seq[Fixture]
 
   protected def validate(api: String,
                          payload: String,
                          mediaType: Option[String],
-                         givenHint: Hint): Future[AMFValidationReport] =
+                         givenHint: Hint): Future[AMFValidationReport] = {
+    val config = WebAPIConfiguration.WebAPI()
+    val client = config.createClient()
     for {
       _ <- Validation(platform)
-      model <- AMFCompiler(api, platform, givenHint, eh = DefaultParserErrorHandler.withRun())
-        .build()
-        .map(transform)
+      model <- client
+        .parse(api)
+        .map(_.bu)
+        .map(transform(_, client))
       result <- {
         val shape = findShape(model.asInstanceOf[Document])
         mediaType
           .map(mediaTypeVal => {
             PayloadValidationPluginsHandler
-              .validate(shape, mediaTypeVal, payload, SeverityLevels.VIOLATION, validationMode = validationMode)
+              .validate(shape,
+                        mediaTypeVal,
+                        payload,
+                        SeverityLevels.VIOLATION,
+                        validationMode = validationMode,
+                        config = new ValidationConfiguration(config))
           })
-          .getOrElse(PayloadValidationPluginsHandler
-            .validateWithGuessing(shape, payload, SeverityLevels.VIOLATION, validationMode = validationMode))
+          .getOrElse(
+            PayloadValidationPluginsHandler
+              .validateWithGuessing(shape,
+                                    payload,
+                                    SeverityLevels.VIOLATION,
+                                    validationMode = validationMode,
+                                    config = new ValidationConfiguration(config)))
       }
     } yield {
       result
     }
+  }
 
   fixtureList.foreach { f =>
     test("Test " + f.name) {

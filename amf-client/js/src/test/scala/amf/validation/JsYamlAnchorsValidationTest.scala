@@ -1,5 +1,5 @@
-package amf.validation
+//package amf.validation
+//
+//import amf.convert.NativeOpsFromJs
 
-import amf.convert.NativeOpsFromJs
-
-class JsYamlAnchorsValidationTest extends YamlAnchorsValidationTest with NativeOpsFromJs
+//class JsYamlAnchorsValidationTest extends YamlAnchorsValidationTest with NativeOpsFromJs

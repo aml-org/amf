@@ -1,8 +1,11 @@
 package amf.resolution
 
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.environment.WebAPIConfiguration
+import amf.client.remod.amfcore.resolution.PipelineName
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.FieldsFilter.All
 import amf.core.model.domain.{AmfObject, RecursiveShape}
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote.{AsyncApi20, Hint, Oas20YamlHint, Raml10YamlHint}
 import amf.core.resolution.pipelines.TransformationPipeline
@@ -30,13 +33,16 @@ class RecursiveFixpointTest() extends AsyncFunSuite with PlatformSecrets with Re
 
   testCases.foreach { data =>
     test(s"Test fixpoint values in ${data.path}") {
+      val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
       for {
-        _ <- Validation(platform)
-        unit <- AMFCompiler(s"file://$basePath${data.path}", platform, data.hint, eh = UnhandledParserErrorHandler)
-          .build()
-        _ <- Future(transform(unit, TransformationPipeline.EDITING_PIPELINE, data.hint.vendor))
+
+        parseResult <- config
+          .withErrorHandlerProvider(() => UnhandledErrorHandler)
+          .createClient()
+          .parse(s"file://$basePath${data.path}")
+        _ <- Future(transform(parseResult.bu, TransformationPipeline.EDITING_PIPELINE, data.hint.vendor, config))
       } yield {
-        val elements                    = unit.iterator(fieldsFilter = All).toList
+        val elements                    = parseResult.bu.iterator(fieldsFilter = All).toList
         val fixpointValues: Seq[String] = elements.filterType[RecursiveShape].map(_.fixpoint.value())
         val allIds                      = elements.collect { case o: AmfObject => o.id }.toSet
         allIds should contain allElementsOf (fixpointValues)

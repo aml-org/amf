@@ -1,11 +1,10 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.{Inferred, LexicalInformation}
+import amf.client.remod.ParseConfiguration
 import amf.core.emitter.SpecOrdering
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.{DomainElement, Shape}
-import amf.core.parser.errorhandler.ParserErrorHandler
-import amf.core.parser.{FieldEntry, ParserContext, Value}
+import amf.core.parser.{FieldEntry, ParserContext}
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.WebApiShapeParserContextAdapter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.DataNodeEmitter
@@ -18,7 +17,7 @@ sealed trait PreMergeTransform {
   def transform(main: DomainElement, overlay: DomainElement): DomainElement
 }
 
-class InferredOverlayTypeExampleTransform(implicit val errorHandler: ErrorHandler) extends PreMergeTransform {
+class InferredOverlayTypeExampleTransform(implicit val errorHandler: AMFErrorHandler) extends PreMergeTransform {
 
   override def transform(main: DomainElement, overlay: DomainElement): DomainElement =
     (main, overlay, overlay.meta) match {
@@ -38,7 +37,7 @@ class InferredOverlayTypeExampleTransform(implicit val errorHandler: ErrorHandle
     }).node
     // TODO: should be able to configure wether the DataNodeParser uses a ctx or not. Removing WebApiContext dependency from DataNodeParser is not a simple refactor.
     val dummyCtx =
-      new Raml10WebApiContext("", Seq(), ParserContext(eh = new ParserErrorHandlerAdapter(-1, errorHandler)))
+      new Raml10WebApiContext("", Seq(), ParserContext(config = ParseConfiguration(errorHandler)))
     val result = NodeDataNodeParser(node, example.id, quiet = true)(WebApiShapeParserContextAdapter(dummyCtx)).parse()
     result.dataNode.foreach { dataNode =>
       example.set(ExampleModel.StructuredValue, dataNode, example.structuredValue.annotations)
@@ -49,17 +48,6 @@ class InferredOverlayTypeExampleTransform(implicit val errorHandler: ErrorHandle
   private def hasSynthesizedType(scalar: ScalarShape) = scalar.fields.entry(ScalarShapeModel.DataType) match {
     case Some(FieldEntry(_, value)) => value.isSynthesized
     case None                       => false
-  }
-
-  class ParserErrorHandlerAdapter(val parserRun: Int, errorHandler: ErrorHandler) extends ParserErrorHandler {
-    override def reportConstraint(id: String,
-                                  node: String,
-                                  property: Option[String],
-                                  message: String,
-                                  lexical: Option[LexicalInformation],
-                                  level: String,
-                                  location: Option[String]): Unit =
-      errorHandler.reportConstraint(id, node, property, message, lexical, level, location)
   }
 
 }

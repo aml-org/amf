@@ -1,9 +1,10 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.client.parse.{DefaultParserErrorHandler, IgnoringErrorHandler}
+import amf.client.parse.IgnoringErrorHandler
+import amf.client.remod.ParseConfiguration
 import amf.core.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.emitter.SpecOrdering
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DataNode, DomainElement, ElementTree}
@@ -38,20 +39,19 @@ import scala.collection.mutable.ListBuffer
 class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean, val fromOverlay: Boolean = false)
     extends TransformationStep()
     with PlatformSecrets {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit =
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit =
     new ExtendsResolution(profile, keepEditingInfo, fromOverlay)(errorHandler).resolve(model)
 
   class ExtendsResolution(profile: ProfileName,
                           val keepEditingInfo: Boolean,
                           val fromOverlay: Boolean = false,
-                          visited: mutable.Set[String] = mutable.Set())(implicit val errorHandler: ErrorHandler) {
+                          visited: mutable.Set[String] = mutable.Set())(implicit val errorHandler: AMFErrorHandler) {
 
     /** Default to raml10 context. */
-    private val parserErrorHandler = DefaultParserErrorHandler.fromErrorHandler(errorHandler)
     def ctx(): RamlWebApiContext = profile match {
       case Raml08Profile =>
-        new Raml08WebApiContext("", Nil, ParserContext(eh = parserErrorHandler))
-      case _ => new Raml10WebApiContext("", Nil, ParserContext(eh = parserErrorHandler))
+        new Raml08WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
+      case _ => new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
     }
 
     def resolve[T <: BaseUnit](model: T): T =
@@ -143,7 +143,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
         val branches = ListBuffer[BranchContainer]()
 
-        val operationTree = OperationTreeBuilder(operation)(IgnoringErrorHandler()).build()
+        val operationTree = OperationTreeBuilder(operation)(IgnoringErrorHandler).build()
         val branchesObj   = Branches()(extendsContext)
 
         // Method branch

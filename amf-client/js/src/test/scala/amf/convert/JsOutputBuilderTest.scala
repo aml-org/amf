@@ -1,7 +1,8 @@
 package amf.convert
 
+import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.AMFSerializer
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import org.yaml.builder.JsOutputBuilder
 import org.yaml.model.YDocument
@@ -13,9 +14,9 @@ import scala.scalajs.js
 
 class JsOutputBuilderTest extends DocBuilderTest {
 
-  override def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
+  override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): Future[String] = {
     val builder: JsOutputBuilder = new JsOutputBuilder()
-    val renderer                 = new AMFSerializer(unit, "application/ld+json", "AMF Graph", options)
+    val renderer                 = new AMFSerializer(unit, "application/graph+ldjson", amfConfig.renderConfiguration)
     renderer
       .renderToBuilder(builder)
       .map(_ => {

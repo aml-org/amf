@@ -1,8 +1,8 @@
 package amf.emit
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.Syntax.Yaml
-import amf.core.remote.{Amf, AsyncApi20, AsyncYamlHint}
+import amf.core.remote.{Amf, AsyncApi20, Async20YamlHint}
 import amf.io.FunSuiteCycleTests
 
 class Async20CycleTest extends FunSuiteCycleTests {
@@ -13,13 +13,13 @@ class Async20CycleTest extends FunSuiteCycleTests {
 
   cyclesAsyncAmf.foreach { f =>
     multiGoldenTest(s"${f.name} - async to amf", f.apiTo) { config =>
-      cycle(f.apiFrom, config.golden, AsyncYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+      cycle(f.apiFrom, config.golden, Async20YamlHint, target = Amf, renderOptions = Some(config.renderOptions))
     }
   }
 
   cyclesAsyncAsync.foreach { f =>
     test(s"${f.name} - async to async") {
-      cycle(f.apiFrom, f.apiTo, AsyncYamlHint, target = AsyncApi20, directory = upanddown, syntax = Some(Yaml))
+      cycle(f.apiFrom, f.apiTo, Async20YamlHint, target = AsyncApi20, directory = upanddown, syntax = Some(Yaml))
     }
   }
 

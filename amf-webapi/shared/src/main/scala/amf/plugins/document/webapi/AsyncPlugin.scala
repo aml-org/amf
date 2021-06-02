@@ -1,9 +1,8 @@
 package amf.plugins.document.webapi
 
-import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.config.{ParsingOptions, RenderOptions}
 import amf.core.Root
-import amf.core.client.ParsingOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
@@ -22,17 +21,16 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   Async20EditingPipeline,
   Async20TransformationPipeline
 }
-import amf.plugins.document.webapi.validation.ApiValidationProfiles
 import amf.plugins.document.webapi.validation.ApiValidationProfiles.Async20ValidationProfile
 import amf.plugins.domain.webapi.models.api.Api
-import amf.{Async20Profile, AsyncProfile, Oas30Profile, ProfileName}
+import amf.{Async20Profile, ProfileName}
 import org.yaml.model.YDocument
 
 sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
 
   override val vendors: Seq[String] = Seq(vendor.name, AsyncApi.name)
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): AsyncSpecEmitterContext
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): AsyncSpecEmitterContext
 
   def context(loc: String,
               refs: Seq[ParsedReference],
@@ -40,11 +38,11 @@ sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
               wrapped: ParserContext,
               ds: Option[AsyncWebApiDeclarations] = None): AsyncWebApiContext
 
-  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
-    implicit val ctx: AsyncWebApiContext = context(document.location, document.references, options, parentContext)
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+    implicit val newCtx: AsyncWebApiContext = context(document.location, document.references, ctx.parsingOptions, ctx)
     restrictCrossSpecReferences(document, ctx)
     val parsed = parseAsyncUnit(document)
-    promoteFragments(parsed, ctx)
+    promoteFragments(parsed, newCtx)
   }
 
   private def parseAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): BaseUnit = {
@@ -78,12 +76,14 @@ sealed trait AsyncPlugin extends OasLikePlugin with CrossSpecRestriction {
 
 object Async20Plugin extends AsyncPlugin {
 
-  override def specContext(options: RenderOptions, errorHandler: ErrorHandler): AsyncSpecEmitterContext =
+  override def specContext(options: RenderOptions, errorHandler: AMFErrorHandler): AsyncSpecEmitterContext =
     new Async20SpecEmitterContext(errorHandler)
 
-  override protected def vendor: Vendor = AsyncApi20
+  override val vendors = Seq("application/asyncapi20", "application/asyncapi20+json", "application/asyncapi20+yaml")
 
-  override def validVendorsToReference: Seq[String] = super.validVendorsToReference :+ Raml10.name
+  override def validVendorsToReference: Seq[String] =
+    super.validVendorsToReference :+ "application/raml10+yaml" :+
+      "application/raml10"
 
   override val validationProfile: ProfileName = Async20Profile
 
@@ -108,7 +108,7 @@ object Async20Plugin extends AsyncPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit,
                                             renderOptions: RenderOptions,
-                                            errorHandler: ErrorHandler): Option[YDocument] =
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
     unit match {
 
       case document: Document =>
@@ -126,7 +126,7 @@ object Async20Plugin extends AsyncPlugin {
                        refs: Seq[ParsedReference],
                        options: ParsingOptions,
                        wrapped: ParserContext,
-                       ds: Option[AsyncWebApiDeclarations]) = {
+                       ds: Option[AsyncWebApiDeclarations]): Async20WebApiContext = {
     // ensure unresolved references in external fragments are not resolved with main api definitions
     val cleanContext = wrapped.copy(futureDeclarations = EmptyFutureDeclarations())
     cleanContext.globalSpace = wrapped.globalSpace
@@ -135,4 +135,6 @@ object Async20Plugin extends AsyncPlugin {
 
   // TODO: Temporary, should be erased until synchronous validation profile building for dialects is implemented
   override def domainValidationProfiles: Seq[ValidationProfile] = Seq(Async20ValidationProfile)
+
+  override protected def vendor: Vendor = AsyncApi20
 }

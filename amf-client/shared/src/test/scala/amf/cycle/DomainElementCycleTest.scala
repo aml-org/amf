@@ -1,18 +1,19 @@
 package amf.cycle
 
 import amf.client.convert.WebApiRegister
-import amf.client.parse.{DefaultErrorHandler, DefaultParserErrorHandler}
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.parse.DefaultErrorHandler
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.parser.SyamlParsedDocument
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote.{Hint, Vendor}
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.parser.spec.common.emitters.WebApiDomainElementEmitter
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models._
-import amf.plugins.domain.webapi.models.api.{Api, WebApi}
+import amf.plugins.domain.webapi.models.api.Api
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
 import org.yaml.model.{YDocument, YNode}
@@ -37,7 +38,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
                     directory: String = basePath): Future[Assertion] = {
 
     val config = EmissionConfig(source, golden, hint, directory)
-    build(config, Some(DefaultParserErrorHandler.withRun()))
+    build(config, Some(DefaultErrorHandler()))
       .map(b => extractor(b))
       .flatMap(render)
       .flatMap(writeTemporaryFile(golden))
@@ -46,13 +47,12 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
 
   override protected def beforeAll(): Unit = WebApiRegister.register(platform)
 
-  private def build(config: EmissionConfig, eh: Option[ParserErrorHandler]): Future[BaseUnit] = {
-    Validation(platform).flatMap { _ =>
-      AMFCompiler(s"file://${config.sourcePath}",
-                  platform,
-                  config.hint,
-                  eh = eh.getOrElse(UnhandledParserErrorHandler)).build()
-    }
+  private def build(config: EmissionConfig, eh: Option[AMFErrorHandler]): Future[BaseUnit] = {
+    val amfConfig = WebAPIConfiguration
+      .WebAPI()
+      .merge(AsyncAPIConfiguration.Async20())
+      .withErrorHandlerProvider(() => eh.getOrElse(UnhandledErrorHandler))
+    amfConfig.createClient().parse(s"file://${config.sourcePath}").map(_.bu)
   }
 
   private def render(element: Option[DomainElement]): Future[String] = {
@@ -62,7 +62,7 @@ trait DomainElementCycleTest extends AsyncFunSuite with FileAssertionTest with B
   def renderDomainElement(element: Option[DomainElement]): String = {
     val eh     = DefaultErrorHandler()
     val node   = element.map(WebApiDomainElementEmitter.emit(_, vendor, eh)).getOrElse(YNode.Empty)
-    val errors = eh.getErrors
+    val errors = eh.getResults
     if (errors.nonEmpty)
       errors.map(_.completeMessage).mkString("\n")
     else {

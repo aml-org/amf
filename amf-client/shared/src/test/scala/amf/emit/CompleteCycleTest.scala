@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.{AmfJsonHint, _}
 import amf.io.FunSuiteCycleTests
 
@@ -254,7 +254,11 @@ class CompleteCycleTest extends FunSuiteCycleTests {
 
   // TODO migrate to multiGoldenTest
   test("File type cycle") {
-    cycle("file-type.raml", "file-type.json", Raml10YamlHint, target = Amf)
+    cycle("file-type.raml",
+          "file-type.json",
+          Raml10YamlHint,
+          target = Amf,
+          renderOptions = Some(RenderOptions().withPrettyPrint.withSourceMaps))
   }
 
   multiTest("Types amf(raml) to amf test", "types.raml.%s", "types.raml.%s") { config =>

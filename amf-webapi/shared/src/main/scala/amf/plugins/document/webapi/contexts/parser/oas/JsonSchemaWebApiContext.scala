@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.contexts.parser.oas
-import amf.core.client.ParsingOptions
+
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{JsonSchema, Vendor}
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, RamlWebApiContext}

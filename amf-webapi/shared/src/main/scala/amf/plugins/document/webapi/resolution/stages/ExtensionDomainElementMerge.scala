@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.core.annotations.{Inferred, SynthesizedField, VirtualNode}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel.Sources
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -20,7 +20,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                                   domainElemdomainElementArrayMergeStrategy: DomainElementArrayMergeStrategy,
                                   extensionId: String,
                                   extensionLocation: Option[String],
-                                  preMergeTransform: PreMergeTransform)(implicit val errorHandler: ErrorHandler)
+                                  preMergeTransform: PreMergeTransform)(implicit val errorHandler: AMFErrorHandler)
     extends InnerAdoption {
 
   def merge(master: DomainElement, overlay: DomainElement, idTracker: IdTracker): DomainElement = {

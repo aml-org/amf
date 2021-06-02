@@ -1,12 +1,12 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas3
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape}
 
 class AddItemsToArrayType() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     try {
       model
         .iterator()

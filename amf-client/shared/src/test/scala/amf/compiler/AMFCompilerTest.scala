@@ -1,28 +1,28 @@
 package amf.compiler
 
-import amf.{RAMLStyle, Raml10Profile}
-import amf.client.plugins.AMFPlugin
-import amf.client.remote.Content
+import amf.Raml10Profile
+import amf.client.environment.{AMFConfiguration, AsyncAPIConfiguration, WebAPIConfiguration}
+import amf.client.parse.{DefaultErrorHandler, IgnoringErrorHandler}
+import amf.client.remod.AMFValidator
 import amf.core.Root
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.parser.{UnspecifiedReference, _}
 import amf.core.remote.Syntax.{Syntax, Yaml}
 import amf.core.remote._
-import amf.core.services.RuntimeCompiler
-import amf.facades.Validation
 import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YMap, YMapEntry}
 
-import scala.collection.mutable
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
+  override def defaultConfig: AMFConfiguration =
+    super.defaultConfig.withErrorHandlerProvider(() => IgnoringErrorHandler)
   test("Api (raml)") {
     build("file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml", Raml10YamlHint) map assertDocument
   }
@@ -53,13 +53,14 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Simple cicle (yaml)") {
     recoverToExceptionIf[Exception] {
-      Validation(platform)
-        .flatMap(
-          v =>
-            build(s"file://amf-client/shared/src/test/resources/reference-itself.raml",
-                  Raml10YamlHint,
-                  validation = Some(v),
-                  eh = Some(UnhandledParserErrorHandler)))
+
+      build(
+        s"file://amf-client/shared/src/test/resources/reference-itself.raml",
+        Raml10YamlHint,
+        defaultConfig
+          .withErrorHandlerProvider(() => UnhandledErrorHandler), // TODO ARM then default should not throw exception?
+        None
+      )
     } map { ex =>
       assert(ex.getMessage.contains(
         s"Cyclic found following references file://amf-client/shared/src/test/resources/reference-itself.raml -> file://amf-client/shared/src/test/resources/reference-itself.raml"))
@@ -83,8 +84,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Libraries (raml)") {
-    compiler("file://amf-client/shared/src/test/resources/modules.raml", Raml10YamlHint)
-      .flatMap(_.root()) map {
+    compiler("file://amf-client/shared/src/test/resources/modules.raml", Raml10YamlHint).root() map {
       case Root(root, _, _, references, UnspecifiedReference, _) =>
         val body = root.asInstanceOf[SyamlParsedDocument].document.as[YMap]
         body.entries.size should be(2)
@@ -94,8 +94,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Libraries (oas)") {
-    compiler("file://amf-client/shared/src/test/resources/modules.json", Oas20JsonHint)
-      .flatMap(_.root()) map {
+    compiler("file://amf-client/shared/src/test/resources/modules.json", Oas20JsonHint).root() map {
       case Root(root, _, _, references, UnspecifiedReference, _) =>
         val body = root.asInstanceOf[SyamlParsedDocument].document.as[YMap]
         body.entries.size should be(3)
@@ -105,24 +104,21 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("Non existing included file") {
-    Validation(platform)
-      .flatMap(v => {
-
-        build("file://amf-client/shared/src/test/resources/non-exists-include.raml",
-              Raml10YamlHint,
-              validation = Some(v))
-          .flatMap(bu => {
-            v.validate(bu, Raml10Profile, RAMLStyle)
-          })
+    val eh = DefaultErrorHandler()
+    val amfConfig =
+      WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).withErrorHandlerProvider(() => eh)
+    build("file://amf-client/shared/src/test/resources/non-exists-include.raml", Raml10YamlHint, amfConfig, None)
+      .flatMap(bu => {
+        AMFValidator.validate(bu, Raml10Profile, amfConfig)
       })
       .map(r => {
         assert(!r.conforms)
         assert(r.results.lengthCompare(2) == 0)
         assert(
-          r.results.last.message
+          r.results.head.message
             .contains("amf-client/shared/src/test/resources/nonExists.raml"))
         assert(
-          r.results.last.message
+          r.results.head.message
             .contains("such file or directory")) // temp, assert better the message for js and jvm
       })
   }
@@ -148,13 +144,12 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   private def assertCycles(syntax: Syntax, hint: Hint) = {
     recoverToExceptionIf[Exception] {
-      Validation(platform)
-        .flatMap(v => {
-          build(s"file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}",
-                hint,
-                validation = Some(v),
-                eh = Some(UnhandledParserErrorHandler))
-        })
+      build(
+        s"file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}",
+        hint,
+        defaultConfig.withErrorHandlerProvider(() => UnhandledErrorHandler),
+        None
+      )
     } map { ex =>
       assert(ex.getMessage.contains(
         s"Cyclic found following references file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension} -> file://amf-client/shared/src/test/resources/includes/include-cycle.${syntax.extension} -> file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}"))

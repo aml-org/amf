@@ -1,8 +1,9 @@
 package amf.maker
 
+import amf.client.environment.{RAMLConfiguration, WebAPIConfiguration}
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.Document
 import amf.core.model.domain.AmfArray
-import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.remote._
 import amf.core.validation.AMFValidationResult
 import amf.facades.{AMFCompiler, Validation}
@@ -47,21 +48,20 @@ class DocumentMakerTest extends WebApiMakerTest {
   }
 
   private def assertFixture(expected: Document, file: String, hint: Hint): Future[Assertion] = {
+    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => IgnoreErrorHandler)
     Validation(platform).flatMap { v =>
-      AMFCompiler(basePath + file, platform, hint, eh = IgnoreErrorHandler)
-        .build()
-        .map { unit =>
-          val actual = unit.asInstanceOf[Document]
-          AmfObjectMatcher(expected).assert(actual)
-          Succeeded
-        }
+      config.createClient().parse(basePath + file).map { unit =>
+        val actual = unit.bu.asInstanceOf[Document]
+        AmfObjectMatcher(expected).assert(actual)
+        Succeeded
+      }
     }
   }
-  object IgnoreErrorHandler extends AmfParserErrorHandler {
+  object IgnoreErrorHandler extends AMFErrorHandler {
 
-    override def handlerAmfResult(result: AMFValidationResult): Boolean = false
+    override def report(result: AMFValidationResult): Unit = {}
 
-    override private[amf] val parserRun = -1
+    override def getResults: List[AMFValidationResult] = Nil
   }
 
   private def documentWithTypes(vendor: Vendor): Document = {

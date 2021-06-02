@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas3
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.domain.webapi.models.api.Api
@@ -9,7 +9,7 @@ class MandatoryDocumentationUrl() extends TransformationStep {
 
   var tagCounter = 0
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     model match {
       case d: Document if d.encodes.isInstanceOf[Api] =>
         try {

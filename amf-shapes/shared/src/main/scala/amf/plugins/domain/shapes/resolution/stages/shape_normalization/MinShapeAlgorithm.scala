@@ -1,22 +1,24 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.AMFCompilerRunCount
 import amf.core.annotations.{Inferred, InheritanceProvenance, LexicalInformation}
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.DataType
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, Value}
 import amf.core.utils.IdCounter
+import amf.core.validation.AMFValidationResult
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.validations.ShapeResolutionSideValidations.{InvalidTypeInheritanceErrorSpecification, InvalidTypeInheritanceWarningSpecification}
-import org.yaml.model.YError
+import amf.validations.ShapeResolutionSideValidations.{
+  InvalidTypeInheritanceErrorSpecification,
+  InvalidTypeInheritanceWarningSpecification
+}
 
 import scala.collection.mutable
 
@@ -365,21 +367,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     clonedProp
   }
 
-  object UnionErrorHandler extends ParserErrorHandler {
+  object UnionErrorHandler extends AMFErrorHandler {
 
-    override def handle[T](error: YError, defaultValue: T): T = {
+    override def report(result: AMFValidationResult): Unit =
       throw new Exception("raising exceptions in union processing")
-    }
-
-    override def reportConstraint(id: String,
-                                  node: String,
-                                  property: Option[String],
-                                  message: String,
-                                  lexical: Option[LexicalInformation],
-                                  level: String,
-                                  location: Option[String]): Unit = {
-      throw new Exception("raising exceptions in union processing")
-    }
 
     def wrapContext(ctx: NormalizationContext): NormalizationContext = {
       new NormalizationContext(
@@ -389,7 +380,6 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         ctx.cache
       )
     }
-    override val parserRun: Int = AMFCompilerRunCount.NONE
   }
   protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
 

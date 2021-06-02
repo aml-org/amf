@@ -1,6 +1,7 @@
 package amf.validation
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
+import amf.core.remote.Syntax.Json
 import amf.core.remote._
 import amf.io.FunSuiteCycleTests
 
@@ -31,7 +32,7 @@ class JapaneseCycleTest extends FunSuiteCycleTests {
   }
 
   multiSourceTest("Json-LD resolves to OAS30", "oas30api.%s") { config =>
-    cycle(config.source, "cycled-oas30api.json", AmfJsonHint, Oas30)
+    cycle(config.source, "cycled-oas30api.json", AmfJsonHint, Oas30, syntax = Some(Json))
   }
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint

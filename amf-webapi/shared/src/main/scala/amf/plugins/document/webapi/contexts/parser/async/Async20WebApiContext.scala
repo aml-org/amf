@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.contexts.parser.async
 
-import amf.core.client.ParsingOptions
+import amf.client.remod.amfcore.config.ParsingOptions
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{AsyncApi20, Vendor}
 import amf.plugins.document.webapi.parser.spec.async.Async20Syntax

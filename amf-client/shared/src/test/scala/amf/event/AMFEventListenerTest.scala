@@ -1,9 +1,11 @@
 package amf.event
 
+import amf.client.environment.RAMLConfiguration
 import amf.client.exported.config.AMFEventNames
+import amf.client.remod.ParseConfiguration
 import amf.client.remod.amfcore.config.{AMFEvent, AMFEventListener}
-import amf.core.remote.{Cache, Context, Raml10}
-import amf.core.services.RuntimeCompiler
+import amf.core.AMFCompiler
+import amf.core.remote.{Cache, Context}
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
@@ -31,7 +33,11 @@ class AMFEventListenerTest extends AsyncBeforeAndAfterEach with PlatformSecrets 
     )
     val listener = EventAccumulator()
     // TODO set listener in config.
-    RuntimeCompiler(url, Some("application/yaml"), Some(Raml10.name), Context(platform), cache = Cache()) map { _ =>
+    AMFCompiler(url,
+                Some("application/yaml"),
+                Context(platform),
+                cache = Cache(),
+                ParseConfiguration(RAMLConfiguration.RAML10())).build() map { _ =>
       assertEventFrequencies(expectedFrequency, listener)
     }
   }

@@ -1,21 +1,31 @@
 package amf.plugins.document.webapi.validation.remote
 
-import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.client.remod.amfcore.config.ShapeRenderOptions
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.client.render.JsonSchemaDraft7
 import amf.core.client.ParsingOptions
-import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.errorhandler.AmfParserErrorHandler
-import amf.core.parser.{ErrorHandlingContext, FragmentRef, JsonParserFactory, ParsedReference, SearchScope, SyamlParsedDocument}
+import amf.core.parser.{
+  ErrorHandlingContext,
+  FragmentRef,
+  JsonParserFactory,
+  ParsedReference,
+  SearchScope,
+  SyamlParsedDocument
+}
 import amf.core.validation._
 import amf.core.validation.core.ValidationSpecification
-import amf.internal.environment.Environment
-import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, DataNodeParserContext, JsonSchemaEmitter, PayloadEmitter}
+import amf.plugins.document.webapi.parser.spec.common.{
+  DataNodeParser,
+  DataNodeParserContext,
+  JsonSchemaEmitter,
+  PayloadEmitter
+}
 import amf.plugins.document.webapi.validation.remote.PlatformPayloadValidator.supportedMediaTypes
 import amf.plugins.domain.shapes.models._
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -36,7 +46,8 @@ object PlatformPayloadValidator {
   val supportedMediaTypes: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 }
 
-abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends PayloadValidator {
+abstract class PlatformPayloadValidator(shape: Shape, override val configuration: ValidationConfiguration)
+    extends PayloadValidator {
 
   override val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
@@ -139,17 +150,15 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
     }
   }
 
-  private def generateSchemaString(shape: Shape,
-                                   validationProcessor: ValidationProcessor): Option[CharSequence] = {
-    val errorHandler = DefaultParserErrorHandler.withRun()
+  private def generateSchemaString(shape: Shape, validationProcessor: ValidationProcessor): Option[CharSequence] = {
     val renderOptions = ShapeRenderOptions().withoutDocumentation.withCompactedEmission
       .withSchemaVersion(JsonSchemaDraft7)
       .withEmitWarningForUnsupportedValidationFacets(true)
     val declarations = List(shape)
     val emitter =
-      JsonSchemaEmitter(shape, declarations, options = renderOptions, errorHandler = errorHandler)
+      JsonSchemaEmitter(shape, declarations, options = renderOptions, errorHandler = configuration.eh)
     val document = SyamlParsedDocument(document = emitter.emitDocument())
-    validationProcessor.keepResults(errorHandler.getErrors)
+    validationProcessor.keepResults(configuration.eh.getResults)
     SYamlSyntaxPlugin.unparse("application/json", document)
   }
 
@@ -199,43 +208,42 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
     }
   }
 
-  def parsePayloadWithErrorHandler(payload: String,
-                                   mediaType: String,
-                                   env: Environment,
-                                   shape: Shape): PayloadParsingResult = {
+  def parsePayloadWithErrorHandler(payload: String, mediaType: String, shape: Shape): PayloadParsingResult = {
 
-    val errorHandler = DefaultParserErrorHandler.withRun()
-    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getErrors)
+    val errorHandler = configuration.eh
+    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getResults)
   }
 
-  private def parsePayload(payload: String, mediaType: String, errorHandler: AmfParserErrorHandler): PayloadFragment = {
+  private def parsePayload(payload: String, mediaType: String, errorHandler: AMFErrorHandler): PayloadFragment = {
     val options = ParsingOptions()
-    env.maxYamlReferences.foreach(options.setMaxYamlReferences)
-    val ctx = dataNodeParsingCtx(errorHandler, env.maxYamlReferences)
+    configuration.maxYamlReferences.foreach(options.setMaxYamlReferences)
+    val ctx = dataNodeParsingCtx(errorHandler, options.getMaxYamlReferences)
 
     val parser = mediaType match {
       case "application/json" => JsonParserFactory.fromChars(payload)(errorHandler)
       case _                  => YamlParser(payload)(errorHandler)
     }
     val node = parser.document().node
-    val parsedNode = if (node.isNull) ScalarNode(payload, None).withDataType(DataType.Nil)
-                      else DataNodeParser(node)(ctx).parse()
+    val parsedNode =
+      if (node.isNull) ScalarNode(payload, None).withDataType(DataType.Nil)
+      else DataNodeParser(node)(ctx).parse()
     PayloadFragment(parsedNode, mediaType)
   }
 
-  private def dataNodeParsingCtx(errorHandler: AmfParserErrorHandler, maxYamlRefs: Option[Long]): ErrorHandlingContext with DataNodeParserContext = {
+  private def dataNodeParsingCtx(errorHandler: AMFErrorHandler,
+                                 maxYamlRefs: Option[Long]): ErrorHandlingContext with DataNodeParserContext = {
     new ErrorHandlingContext()(errorHandler) with DataNodeParserContext {
       override def violation(violationId: ValidationSpecification, node: String, message: String): Unit =
         eh.violation(violationId, node, message, "")
       override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
-      override def refs: Seq[ParsedReference] = Seq.empty
-      override def getMaxYamlReferences: Option[Long] = maxYamlRefs
-      override def fragments: Map[String, FragmentRef] = Map.empty
+      override def refs: Seq[ParsedReference]                                                          = Seq.empty
+      override def getMaxYamlReferences: Option[Long]                                                  = maxYamlRefs
+      override def fragments: Map[String, FragmentRef]                                                 = Map.empty
     }
   }
 
   protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
-    val fixedResult = parsePayloadWithErrorHandler(payload, mediaType, env, shape) match {
+    val fixedResult = parsePayloadWithErrorHandler(payload, mediaType, shape) match {
       case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
         val frag = ScalarPayloadForParam(result.fragment, shape)
         result.copy(fragment = frag)

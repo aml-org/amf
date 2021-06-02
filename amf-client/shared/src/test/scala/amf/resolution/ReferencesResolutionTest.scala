@@ -1,7 +1,7 @@
 package amf.resolution
 
-import amf.core.emitter.RenderOptions
-import amf.core.remote.{Amf, Oas20, Oas20YamlHint, Raml10YamlHint}
+import amf.client.remod.amfcore.config.RenderOptions
+import amf.core.remote.{Amf, Oas20, Oas20YamlHint, Raml10, Raml10YamlHint}
 
 class ReferencesResolutionTest extends ResolutionTest {
   override val basePath: String = "amf-client/shared/src/test/resources/upanddown/"
@@ -12,7 +12,8 @@ class ReferencesResolutionTest extends ResolutionTest {
           config.golden,
           Raml10YamlHint,
           target = Amf,
-          renderOptions = Some(config.renderOptions))
+          renderOptions = Some(config.renderOptions),
+          transformWith = Some(Raml10))
   }
 
   multiGoldenTest("Oas direct type alias - All objects case - Default pipeline", "all-objects-case.%s") { config =>

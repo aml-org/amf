@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
@@ -131,7 +131,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   }
 
   case class ResourceTypeFragmentEmitter(resourceTypeFragment: ResourceTypeFragment, ordering: SpecOrdering)(
-      implicit eh: ErrorHandler)
+      implicit eh: AMFErrorHandler)
       extends OasFragmentTypeEmitter {
 
     override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20ResourceType)
@@ -144,7 +144,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
       }
   }
 
-  case class TraitFragmentEmitter(traitFragment: TraitFragment, ordering: SpecOrdering)(implicit eh: ErrorHandler)
+  case class TraitFragmentEmitter(traitFragment: TraitFragment, ordering: SpecOrdering)(implicit eh: AMFErrorHandler)
       extends OasFragmentTypeEmitter {
 
     override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20Trait)

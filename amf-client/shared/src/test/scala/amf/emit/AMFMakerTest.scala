@@ -1,13 +1,12 @@
 package amf.emit
 
 import amf.Core
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.core.AMFSerializer
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.Document
 import amf.core.parser._
 import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi._
 import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
@@ -139,7 +138,6 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
     amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
@@ -153,8 +151,12 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
       case _       => ""
     }
 
-    new AMFSerializer(document, mediaType, vendor.name, RenderOptions())
-      .renderAsYDocument()
+    val config = WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20())
+
+    val serializer = new AMFSerializer(document, vendor.mediaType, config.renderConfiguration)
+
+    serializer
+      .renderAsYDocument(serializer.getRenderPlugin)
       .document
       .node
       .as[YMap]

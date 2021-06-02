@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.remod.ParseConfiguration
 import amf.core.annotations.Aliases
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Type.Scalar
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.metamodel.domain.common._
@@ -35,7 +35,7 @@ import scala.collection.mutable.ListBuffer
 class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: Boolean)
     extends TransformationStep()
     with PlatformSecrets {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     val extendsStage = new ExtendsResolutionStage(profile, keepEditingInfo)
     val resolvedModel = model match {
       case overlay: Overlay =>
@@ -73,7 +73,7 @@ trait DomainElementArrayMergeStrategy {
 
 abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElement]](
     val profile: ProfileName,
-    val keepEditingInfo: Boolean)(implicit val errorHandler: ErrorHandler)
+    val keepEditingInfo: Boolean)(implicit val errorHandler: AMFErrorHandler)
     extends InnerAdoption {
 
   val restrictions: MergingRestrictions
@@ -87,12 +87,10 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
       setDomainElementArrayValue(target, field, o, extensionId, extensionLocation)
   }
 
-  private val parserEH = DefaultParserErrorHandler.fromErrorHandler(errorHandler)
-
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
-    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext(eh = parserEH))
-    case _             => new Raml10WebApiContext("", Nil, ParserContext(eh = parserEH))
+    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
+    case _             => new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(errorHandler)))
   }
 
   def removeExtends(document: Document): BaseUnit = {
@@ -307,7 +305,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 }
 
 class ExtensionResolutionStage(override val profile: ProfileName, override val keepEditingInfo: Boolean)(
-    override implicit val errorHandler: ErrorHandler)
+    override implicit val errorHandler: AMFErrorHandler)
     extends ExtensionLikeResolutionStage[Extension](profile, keepEditingInfo) {
   override def resolve(model: BaseUnit, entryPoint: Extension): BaseUnit = resolveOverlay(model, entryPoint)
 
@@ -325,7 +323,7 @@ class ExtensionResolutionStage(override val profile: ProfileName, override val k
 }
 
 class OverlayResolutionStage(override val profile: ProfileName, override val keepEditingInfo: Boolean)(
-    override implicit val errorHandler: ErrorHandler)
+    override implicit val errorHandler: AMFErrorHandler)
     extends ExtensionLikeResolutionStage[Overlay](profile, keepEditingInfo) {
   override def resolve(model: BaseUnit, entryPoint: Overlay): BaseUnit = resolveOverlay(model, entryPoint)
 

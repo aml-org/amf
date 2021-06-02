@@ -1,17 +1,19 @@
 package amf.plugins.document.webapi.validation.remote
 import amf.ProfileName
 import amf.client.plugins.ValidationMode
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
-import amf.internal.environment.Environment
 import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 
 import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
 
-class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode, val env: Environment)
-    extends PlatformPayloadValidator(shape, env) {
+class JsPayloadValidator(val shape: Shape,
+                         val validationMode: ValidationMode,
+                         override val configuration: ValidationConfiguration)
+    extends PlatformPayloadValidator(shape, configuration) {
 
   override type LoadedObj    = js.Dynamic
   override type LoadedSchema = Dictionary[js.Dynamic]
@@ -90,6 +92,7 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode, v
     if (pointer.startsWith(".")) pointer = pointer.replaceFirst("\\.", "")
     (pointer + " " + validationResult.message).trim
   }
+
 }
 
 case class JsReportValidationProcessor(override val profileName: ProfileName,

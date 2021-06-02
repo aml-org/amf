@@ -1,10 +1,12 @@
 package amf.emit
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.environment.WebAPIConfiguration
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.ParseConfiguration
 import amf.core.annotations.SourceAST
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.parser.ParserContext
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Raml10YamlHint
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
@@ -65,11 +67,11 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   private def cycle(source: String, golden: String, removeRaw: Boolean = false): Future[Assertion] = {
+    val config = WebAPIConfiguration.WebAPI().withErrorHandlerProvider(() => UnhandledErrorHandler)
     for {
-      _       <- Validation(platform)
-      unit    <- AMFCompiler(basePath + source, platform, Raml10YamlHint, eh = UnhandledParserErrorHandler).build()
+      unit    <- config.createClient().parse(basePath + source).map(_.bu)
       example <- findExample(unit, removeRaw)
-      temp    <- writeTemporaryFile(golden)(example.toJson)
+      temp    <- writeTemporaryFile(golden)(example.toJson(config))
       r       <- assertDifferences(temp, goldenPath + golden)
     } yield {
       r
@@ -81,8 +83,9 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
       val sourceAst: Option[SourceAST] = unit.annotations.find(_.isInstanceOf[SourceAST])
       sourceAst match {
         case Some(a) =>
-          val ast      = a.ast.asInstanceOf[YDocument].as[YMap]
-          val context  = new Raml10WebApiContext("", Nil, ParserContext(eh = DefaultParserErrorHandler.withRun()))
+          val ast = a.ast.asInstanceOf[YDocument].as[YMap]
+          val context =
+            new Raml10WebApiContext("", Nil, ParserContext(config = ParseConfiguration(DefaultErrorHandler())))
           val anyShape = AnyShape()
           RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(
             WebApiShapeParserContextAdapter(context)).parse()

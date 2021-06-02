@@ -1,8 +1,9 @@
 package amf.resolution
 
-import amf.core.emitter.RenderOptions
+import amf.client.environment.AMFConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline
@@ -573,7 +574,7 @@ class EditingResolutionTest extends ResolutionTest {
   multiGoldenTest("References to message definitions", "message-references.%s") { config =>
     cycle("message-references.yaml",
           config.golden,
-          AsyncYamlHint,
+          Async20YamlHint,
           target = Amf,
           resolutionPath + "async20/",
           renderOptions = Some(config.renderOptions))
@@ -742,7 +743,7 @@ class EditingResolutionTest extends ResolutionTest {
       target = Amf,
       directory = resolutionPath,
       renderOptions = Some(config.renderOptions),
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 
@@ -802,16 +803,15 @@ class EditingResolutionTest extends ResolutionTest {
       target = Amf,
       directory = resolutionPath + "binary-fragment/",
       renderOptions = Some(config.renderOptions),
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 
-  override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    new AMFRenderer(unit, config.target, defaultRenderOptions, config.syntax).renderToString
+  override def render(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): Future[String] = {
+    val configuration = amfConfig.withRenderOptions(
+      amfConfig.options.renderOptions.withRawSourceMaps.withSourceMaps.withCompactUris.withPrettyPrint)
+    super.render(unit, config, configuration)
   }
-
-  override def defaultRenderOptions: RenderOptions =
-    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint
 
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
@@ -903,7 +903,7 @@ class EditingResolutionTest extends ResolutionTest {
       directory = resolutionPath + "recursive-tuple/",
       transformWith = Some(Raml08),
       renderOptions = Some(config.renderOptions),
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 
@@ -962,7 +962,7 @@ class EditingResolutionTest extends ResolutionTest {
       directory = resolutionPath + "raml-query-and-header-params/",
       transformWith = Some(Raml10),
       renderOptions = Some(config.renderOptions),
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 
@@ -974,7 +974,7 @@ class EditingResolutionTest extends ResolutionTest {
       Amf,
       directory = resolutionPath + "encoded-uris-in-properties/",
       transformWith = Some(Raml10),
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 
@@ -986,7 +986,7 @@ class EditingResolutionTest extends ResolutionTest {
       Oas30,
       directory = s"$cyclePath/oas3/reffed-additional-properties/",
       transformWith = Some(Oas30),
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 
@@ -999,7 +999,7 @@ class EditingResolutionTest extends ResolutionTest {
       directory = s"$extendsPath/to-jsonld-and-back/",
       transformWith = Some(Raml10),
       renderOptions = Option(config.renderOptions),
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 
@@ -1011,7 +1011,7 @@ class EditingResolutionTest extends ResolutionTest {
       target = Raml10,
       directory = s"$extendsPath/to-jsonld-and-back/",
       transformWith = Some(Raml10),
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 
@@ -1024,7 +1024,7 @@ class EditingResolutionTest extends ResolutionTest {
       directory = resolutionPath + "merge-recursive-json-schemas-raml10/",
       transformWith = Some(Raml10),
       renderOptions = Some(config.renderOptions),
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 
@@ -1037,7 +1037,7 @@ class EditingResolutionTest extends ResolutionTest {
       directory = resolutionPath + "merge-recursive-json-schemas-raml08/",
       transformWith = Some(Raml08),
       renderOptions = Some(config.renderOptions),
-      eh = Some(UnhandledParserErrorHandler)
+      eh = Some(UnhandledErrorHandler)
     )
   }
 
@@ -1053,7 +1053,7 @@ class EditingResolutionTest extends ResolutionTest {
         directory = resolutionPath + "merge-inlined-recursive-json-schemas/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledParserErrorHandler)
+        eh = Some(UnhandledErrorHandler)
       )
     }
 
@@ -1075,7 +1075,7 @@ class EditingResolutionTest extends ResolutionTest {
         directory = resolutionPath + "merge-recursive-json-schema-fragments/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledParserErrorHandler)
+        eh = Some(UnhandledErrorHandler)
       )
     }
 
@@ -1088,7 +1088,7 @@ class EditingResolutionTest extends ResolutionTest {
         directory = resolutionPath + "merge-inherits/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledParserErrorHandler)
+        eh = Some(UnhandledErrorHandler)
       )
     }
 
@@ -1101,7 +1101,7 @@ class EditingResolutionTest extends ResolutionTest {
         directory = resolutionPath + "merge-recursive-inherits/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledParserErrorHandler)
+        eh = Some(UnhandledErrorHandler)
       )
     }
 
@@ -1114,7 +1114,7 @@ class EditingResolutionTest extends ResolutionTest {
         directory = resolutionPath + "merge-inherits-json-schema-fragments/",
         transformWith = Some(Raml10),
         renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledParserErrorHandler)
+        eh = Some(UnhandledErrorHandler)
       )
     }
 
@@ -1127,7 +1127,7 @@ class EditingResolutionTest extends ResolutionTest {
         directory = resolutionPath + "oas30-discriminator/",
         transformWith = Some(Oas30),
         renderOptions = Some(config.renderOptions),
-        eh = Some(UnhandledParserErrorHandler)
+        eh = Some(UnhandledErrorHandler)
       )
     }
 

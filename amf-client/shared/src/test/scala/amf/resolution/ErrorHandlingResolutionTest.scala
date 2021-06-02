@@ -1,15 +1,17 @@
 package amf.resolution
-import amf.client.parse.DefaultParserErrorHandler
-import amf.core.AMFCompilerRunCount
+import amf.ProfileName
+import amf.client.environment.AMFConfiguration
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.amfcore.resolution.PipelineName
+import amf.client.parse.{DefaultErrorHandler, IgnoringErrorHandler}
 import amf.core.annotations.LexicalInformation
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote._
 import amf.core.resolution.pipelines.TransformationPipeline.DEFAULT_PIPELINE
 import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.services.RuntimeResolver
-import amf.core.validation.SeverityLevels
+import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.AmfTransformationPipeline
@@ -18,7 +20,6 @@ import amf.validations.ParserSideValidations.UnknownSecuritySchemeErrorSpecifica
 import org.scalatest.Assertion
 import org.scalatest.Matchers._
 
-import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
 
 class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
@@ -29,14 +30,15 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
       "api.raml",
       Raml10YamlHint,
       List(
-        ErrorContainer(
-          DeclarationNotFound.id,
+        AMFValidationResult(
+          "Cannot find declarations in context 'collectionsTypes",
+          SeverityLevels.VIOLATION,
           "",
           None,
-          "Cannot find declarations in context 'collectionsTypes",
+          DeclarationNotFound.id,
           None,
-          SeverityLevels.VIOLATION,
-          None
+          None,
+          null
         )),
       basePath + "unexisting-include/"
     )
@@ -47,36 +49,36 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
       "api.raml",
       Raml10YamlHint,
       List(
-        ErrorContainer(
-          UnknownSecuritySchemeErrorSpecification.id,
+        AMFValidationResult(
+          "Security scheme 'oauth_2_0' not found in declarations.",
+          SeverityLevels.VIOLATION,
           "file://amf-client/shared/src/test/resources/resolution/error-apis/bad-variable-replace/api.raml#/web-api/end-points/%2Fcatalogs/collection/applied/get/default-requirement_1/oauth_2_0",
           None,
-          "Security scheme 'oauth_2_0' not found in declarations.",
+          UnknownSecuritySchemeErrorSpecification.id,
           None,
-          SeverityLevels.VIOLATION,
-          None
+          None,
+          null
         )
       ),
       basePath + "bad-variable-replace/"
     )
   }
 
-  private def errorCycle(source: String, hint: Hint, errors: List[ErrorContainer], path: String) = {
-    val config = CycleConfig(source, source, hint, hint.vendor, path, Some(hint.syntax), None)
-    val eh     = TestErrorHandler()
-
+  private def errorCycle(source: String, hint: Hint, errors: List[AMFValidationResult], path: String) = {
+    val config    = CycleConfig(source, source, hint, hint.vendor, path, Some(hint.syntax), None)
+    val eh        = DefaultErrorHandler()
+    val amfConfig = buildConfig(None, None) // need to ignore parsing errors, apparently
     for {
-      _ <- Validation(platform)
-      u <- build(config, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true)
+      u <- build(config, amfConfig)
       _ <- {
-        Future { transform(u, config, eh) }
+        Future { transform(u, config, amfConfig.withErrorHandlerProvider(() => eh)) }
       }
     } yield {
-      assertErrors(errors, eh.errors.toList)
+      assertErrors(errors, eh.getResults)
     }
   }
 
-  private def assertErrors(golden: List[ErrorContainer], actual: List[ErrorContainer]): Assertion = {
+  private def assertErrors(golden: List[AMFValidationResult], actual: List[AMFValidationResult]): Assertion = {
     actual.size should be(golden.size)
     golden.zip(actual).foreach {
       case (g, ac) => assertError(g, ac)
@@ -84,18 +86,20 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
     succeed
   }
 
-  private def assertError(golden: ErrorContainer, actual: ErrorContainer): Unit = {
-    assert(golden.id == actual.id)
-    assert(golden.node == actual.node)
+  private def assertError(golden: AMFValidationResult, actual: AMFValidationResult): Unit = {
+    assert(golden.validationId == actual.validationId)
+    assert(golden.targetNode == actual.targetNode)
     assert(golden.message == actual.message)
     // location and position?
   }
 
-  private def transform(unit: BaseUnit, config: CycleConfig, eh: ErrorHandler): BaseUnit = {
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        RuntimeResolver.resolve(config.target.name, unit, DEFAULT_PIPELINE, eh)
-      case Amf    => TransformationPipelineRunner(eh).run(unit, AmfTransformationPipeline())
+        amfConfig.createClient().transform(unit, PipelineName.from(config.target.name, DEFAULT_PIPELINE)).bu
+      case Amf =>
+        TransformationPipelineRunner(amfConfig.errorHandlerProvider.errorHandler())
+          .run(unit, AmfTransformationPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }
@@ -107,20 +111,8 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
                             message: String,
                             lexical: Option[LexicalInformation],
                             level: String,
-                            location: Option[String])
-
-  case class TestErrorHandler() extends ParserErrorHandler {
-    val errors: ListBuffer[ErrorContainer] = ListBuffer()
-
-    override def reportConstraint(id: String,
-                                  node: String,
-                                  property: Option[String],
-                                  message: String,
-                                  lexical: Option[LexicalInformation],
-                                  level: String,
-                                  location: Option[String]): Unit = {
-      errors += ErrorContainer(id, node, property, message, lexical, level, location)
-    }
-    override private[amf] val parserRun = AMFCompilerRunCount.nextRun()
+                            location: Option[String]) {
+    def toResult: AMFValidationResult =
+      AMFValidationResult(message, level, node, property, id, lexical, location, null)
   }
 }

@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.annotations.ExplicitField
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.traversal.ModelTraversalRegistry
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
@@ -29,7 +29,7 @@ trait ShapeHelpers { this: Shape =>
     case _ =>
   }
 
-  def cloneShape(recursionErrorHandler: Option[ErrorHandler],
+  def cloneShape(recursionErrorHandler: Option[AMFErrorHandler],
                  withRecursionBase: Option[String] = None,
                  traversal: ModelTraversalRegistry = ModelTraversalRegistry(),
                  cloneExamples: Boolean = false): this.type = {
@@ -64,7 +64,7 @@ trait ShapeHelpers { this: Shape =>
   protected def buildFixPoint(id: Option[String],
                               name: String,
                               link: Linkable,
-                              recursionErrorHandler: Option[ErrorHandler]): RecursiveShape = {
+                              recursionErrorHandler: Option[AMFErrorHandler]): RecursiveShape = {
     if (recursionErrorHandler.isDefined && link.supportsRecursion.option().isEmpty) {
       recursionErrorHandler.get.violation(
         RecursiveShapeSpecification,

@@ -1,27 +1,28 @@
 package amf.client.commands
 
 import amf.ProfileName
+import amf.client.environment.AMFConfiguration
+import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.client.{ExitCodes, ParserConfig}
-import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
-import amf.core.services.RuntimeValidator
 import amf.core.validation.AMFValidationReport
-import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.model.document.DialectInstance
+import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
+import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 class ValidateCommand(override val platform: Platform) extends CommandHelper {
 
-  def run(config: ParserConfig): Future[Any] = {
+  def run(config: ParserConfig, configuration: AMFConfiguration): Future[Any] = {
+    implicit val context: ExecutionContext = configuration.getExecutionContext
     val res = for {
-      _      <- AMFInit()
-      _      <- processDialects(config)
-      model  <- parseInput(config)
-      report <- report(model, config)
+      newCofig <- processDialects(config, configuration)
+      model    <- parseInput(config, newCofig)
+      report   <- report(model, config, newCofig)
     } yield {
       processOutput(report, config)
     }
@@ -37,33 +38,45 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  def report(model: BaseUnit, config: ParserConfig): Future[AMFValidationReport] = {
-    val customProfileLoaded: Future[ProfileName] = if (config.customProfile.isDefined) {
-      RuntimeValidator.loadValidationProfile(config.customProfile.get, errorHandler = UnhandledErrorHandler) map {
-        profileName =>
-          profileName
+  // TODO ARM: move to registry? or to contxt parsng? discuss with tomi
+  def findDialect(configuration: AMFConfiguration, id: String): Option[Dialect] = {
+    configuration.registry.plugins.parsePlugins.collectFirst({
+      case aml: AMLDialectInstanceParsingPlugin if aml.dialect.id == id => aml.dialect
+    })
+  }
+
+  def report(model: BaseUnit, config: ParserConfig, configuration: AMFConfiguration): Future[AMFValidationReport] = {
+    implicit val executionContext: ExecutionContext = configuration.getExecutionContext
+    val customProfileLoaded: Future[(ProfileName, AMFConfiguration)] = if (config.customProfile.isDefined) {
+      for {
+        confCustom    <- configuration.withCustomValidationsEnabled
+        customProfile <- confCustom.createClient().parseDialectInstance(config.customProfile.get)
+      } yield {
+        val profile = ParsedValidationProfile(customProfile.dialectInstance.encodes.asInstanceOf[DialectDomainElement])
+        (profile.name, confCustom.withValidationProfile(profile))
       }
     } else {
       Future {
         model match {
           case dialectInstance: DialectInstance =>
-            AMLPlugin().registry.dialectFor(dialectInstance) match {
+            findDialect(configuration, dialectInstance.definedBy().value()) match {
               case Some(dialect) =>
-                ProfileName(dialect.nameAndVersion())
+                (ProfileName(dialect.nameAndVersion()), configuration)
               case _ =>
-                config.profile
+                (config.profile, configuration)
             }
           case _ =>
-            config.profile
+            (config.profile, configuration)
         }
       }
     }
-    customProfileLoaded flatMap { profileName =>
-      RuntimeValidator(model, profileName)
+    customProfileLoaded flatMap {
+      case (profileName, conf) =>
+        conf.createClient().validate(model, profileName)
     }
   }
 
-  def processOutput(report: AMFValidationReport, config: ParserConfig): Unit = {
+  def processOutput(report: AMFValidationReport, config: ParserConfig)(implicit ec: ExecutionContext): Unit = {
     val json = ValidationReportJSONLDEmitter.emitJSON(report)
     config.output match {
       case Some(f) => platform.write(f, json)

@@ -1,6 +1,8 @@
 package amf.emit
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf._
+import amf.client.environment.AMFConfiguration
+import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
@@ -9,9 +11,7 @@ import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.validation.AMFValidationReport
-import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
-import amf._
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
 
@@ -47,10 +47,11 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
         val config     = CycleConfig(path, path, from, to, basePath, syntax, pipeline)
         val targetHint = hint(vendor = to)
         val toProfile  = profile(to)
+        val amfConfig  = buildConfig(None, None)
         for {
-          origin   <- build(config, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true)
-          resolved <- successful(transform(origin, config))
-          rendered <- render(resolved, config, useAmfJsonldSerialization = true)
+          origin   <- build(config, amfConfig)
+          resolved <- successful(transform(origin, config, amfConfig))
+          rendered <- render(resolved, config, amfConfig)
           tmp      <- writeTemporaryFile(path)(rendered)
           report   <- validate(tmp, targetHint, toProfile, to)
         } yield {
@@ -73,20 +74,22 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
   private def validate(source: AsyncFile,
                        hint: Hint,
                        profileName: ProfileName,
-                       target: Vendor): Future[AMFValidationReport] =
-    Validation(platform)
-      .flatMap { validation =>
-        val config = CycleConfig(source.path, source.path, hint, target, "", None, None)
-        build(config, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true).flatMap { unit =>
-          validation.validate(unit, profileName)
-        }
-      }
+                       target: Vendor): Future[AMFValidationReport] = {
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    // TODO: ARM change for AMFTransformer.transform
-    val pipeline = AMFPluginsRegistry.staticConfiguration.registry
-      .transformationPipelines(PipelineName.from(config.target.name, TransformationPipeline.COMPATIBILITY_PIPELINE))
-    TransformationPipelineRunner(UnhandledErrorHandler).run(unit, pipeline)
+    val config    = CycleConfig(source.path, source.path, hint, target, "", None, None)
+    val handler   = DefaultErrorHandler()
+    val amfConfig = buildConfig(None, Some(handler))
+    build(config, amfConfig).flatMap { unit =>
+      amfConfig.createClient().validate(unit, profileName)
+    }
+  }
+
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
+    amfConfig
+      .withErrorHandlerProvider(() => UnhandledErrorHandler)
+      .createClient()
+      .transform(unit, PipelineName.from(config.target.name, TransformationPipeline.COMPATIBILITY_PIPELINE))
+      .bu
   }
 
   private def profile(vendor: Vendor): ProfileName = vendor match {

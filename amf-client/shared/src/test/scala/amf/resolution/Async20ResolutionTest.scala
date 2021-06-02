@@ -1,9 +1,9 @@
 package amf.resolution
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{AsyncApi20, AsyncYamlHint, Vendor}
+import amf.core.remote.{AsyncApi20, Async20YamlHint, Vendor}
 import amf.core.remote.Vendor._
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.emit.AMFRenderer
@@ -20,7 +20,7 @@ class Async20ResolutionTest extends ResolutionTest {
     config =>
       cycle("message-example-propagation.yaml",
             config.golden,
-            AsyncYamlHint,
+            Async20YamlHint,
             target = AMF,
             renderOptions = Some(config.renderOptions))
   }
@@ -28,7 +28,7 @@ class Async20ResolutionTest extends ResolutionTest {
   multiGoldenTest("defaultContentType overrides message contentType", "content-type-override.%s") { config =>
     cycle("content-type-override.yaml",
           config.golden,
-          AsyncYamlHint,
+          Async20YamlHint,
           target = AMF,
           renderOptions = Some(config.renderOptions))
   }
@@ -36,7 +36,7 @@ class Async20ResolutionTest extends ResolutionTest {
   multiGoldenTest("Message traits are merged to message", "message-trait-merging.%s") { config =>
     cycle("message-trait-merging.yaml",
           config.golden,
-          AsyncYamlHint,
+          Async20YamlHint,
           target = AMF,
           renderOptions = Some(config.renderOptions))
   }
@@ -44,7 +44,7 @@ class Async20ResolutionTest extends ResolutionTest {
   multiGoldenTest("Operation traits are merged to operation", "operation-trait-merging.%s") { config =>
     cycle("operation-trait-merging.yaml",
           config.golden,
-          AsyncYamlHint,
+          Async20YamlHint,
           target = AMF,
           renderOptions = Some(config.renderOptions))
   }
@@ -54,7 +54,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle(
       "message-trait-merging.yaml",
       config.golden,
-      AsyncYamlHint,
+      Async20YamlHint,
       target = AMF,
       renderOptions = Some(config.renderOptions),
       pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE)
@@ -66,7 +66,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle(
       "operation-trait-merging.yaml",
       config.golden,
-      AsyncYamlHint,
+      Async20YamlHint,
       target = AMF,
       renderOptions = Some(config.renderOptions),
       pipeline = Some(TransformationPipeline.DEFAULT_PIPELINE)
@@ -77,7 +77,7 @@ class Async20ResolutionTest extends ResolutionTest {
     config =>
       cycle("named-parameter-with-ref.yaml",
             config.golden,
-            AsyncYamlHint,
+            Async20YamlHint,
             target = AMF,
             renderOptions = Some(config.renderOptions))
   }
@@ -87,7 +87,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle(
       "include-data-type-at-root-of-payload.yaml",
       config.golden,
-      AsyncYamlHint,
+      Async20YamlHint,
       target = AMF,
       directory = validationsPath + "raml-data-type-references/",
       renderOptions = Some(config.renderOptions)
@@ -99,7 +99,7 @@ class Async20ResolutionTest extends ResolutionTest {
       cycle(
         "include-data-type-with-chained-reference.yaml",
         config.golden,
-        AsyncYamlHint,
+        Async20YamlHint,
         target = AMF,
         directory = validationsPath + "raml-data-type-references/",
         renderOptions = Some(config.renderOptions)
@@ -110,7 +110,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle(
       "ref-data-type-fragment.yaml",
       config.golden,
-      AsyncYamlHint,
+      Async20YamlHint,
       target = AMF,
       directory = validationsPath + "raml-data-type-references/",
       renderOptions = Some(config.renderOptions)
@@ -121,7 +121,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle(
       "ref-type-in-library.yaml",
       config.golden,
-      AsyncYamlHint,
+      Async20YamlHint,
       target = AMF,
       directory = validationsPath + "raml-data-type-references/",
       renderOptions = Some(config.renderOptions)
@@ -133,7 +133,7 @@ class Async20ResolutionTest extends ResolutionTest {
       cycle(
         "ref-external-yaml.yaml",
         config.golden,
-        AsyncYamlHint,
+        Async20YamlHint,
         target = AMF,
         directory = validationsPath + "raml-data-type-references/",
         renderOptions = Some(config.renderOptions)
@@ -145,7 +145,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle(
       "ref-data-type-fragment-invalid.yaml",
       config.golden,
-      AsyncYamlHint,
+      Async20YamlHint,
       target = AMF,
       directory = validationsPath + "raml-data-type-references/",
       renderOptions = Some(config.renderOptions)
@@ -157,7 +157,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle(
       "type-forward-referencing.yaml",
       config.golden,
-      AsyncYamlHint,
+      Async20YamlHint,
       target = AMF,
       renderOptions = Some(config.renderOptions)
     )
@@ -168,7 +168,7 @@ class Async20ResolutionTest extends ResolutionTest {
       cycle(
         "valid-external-ref-message-trait.yaml",
         config.golden,
-        AsyncYamlHint,
+        Async20YamlHint,
         target = AMF,
         directory = validationsPath + "validations/external-reference/",
         renderOptions = Some(config.renderOptions)
@@ -179,7 +179,7 @@ class Async20ResolutionTest extends ResolutionTest {
     cycle(
       "valid-external-ref-operation-trait.yaml",
       config.golden,
-      AsyncYamlHint,
+      Async20YamlHint,
       target = AMF,
       directory = validationsPath + "validations/external-reference/",
       renderOptions = Some(config.renderOptions)
@@ -191,8 +191,4 @@ class Async20ResolutionTest extends ResolutionTest {
 
   override def defaultRenderOptions: RenderOptions =
     RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint
-
-  override def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
-    new AMFRenderer(unit, config.target, options, config.syntax).renderToString
-  }
 }

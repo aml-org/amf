@@ -1,5 +1,7 @@
 package amf.recursive.shapes
 
+import amf.client.environment.AMFConfiguration
+import amf.client.parse.DefaultErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Hint, Oas20, Raml10YamlHint}
 import amf.io.FunSuiteCycleTests
@@ -53,5 +55,5 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = ValidationTransformationPipeline(Raml10Profile, unit)
+  override def transform(unit: BaseUnit, config: CycleConfig, amfConfig:AMFConfiguration): BaseUnit = ValidationTransformationPipeline(Raml10Profile, unit, DefaultErrorHandler())
 }
