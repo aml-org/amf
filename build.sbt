@@ -96,11 +96,11 @@ lazy val shapes = crossProject(JSPlatform, JVMPlatform)
   .disablePlugins(SonarPlugin)
 
 lazy val shapesJVM =
-  shapes.jvm.in(file("./amf-shapes/jvm")).sourceDependency(coreJVMRef, coreLibJVM)
+  shapes.jvm.in(file("./amf-shapes/jvm")).sourceDependency(customValidationJVMRef, customValidationLibJVM)
 lazy val shapesJS =
   shapes.js
     .in(file("./amf-shapes/js"))
-    .sourceDependency(coreJSRef, coreLibJS)
+    .sourceDependency(customValidationJSRef, customValidationLibJS)
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 
@@ -130,11 +130,10 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
 lazy val webapiJVM =
   webapi.jvm
     .in(file("./amf-webapi/jvm"))
-    .sourceDependency(customValidationJVMRef, customValidationLibJVM)
 lazy val webapiJS =
   webapi.js
     .in(file("./amf-webapi/js"))
-    .sourceDependency(customValidationJSRef, customValidationLibJS)
+
     .disablePlugins(SonarPlugin, ScalaJsTypingsPlugin)
 
 /** **********************************************
