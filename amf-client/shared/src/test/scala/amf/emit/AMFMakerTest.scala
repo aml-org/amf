@@ -6,8 +6,6 @@ import amf.core.AMFSerializer
 import amf.core.model.document.Document
 import amf.core.parser._
 import amf.core.remote._
-import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.webapi._
 import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.APIDomainPlugin
@@ -132,15 +130,9 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     // Remod registering
     VocabulariesRegister.register(platform)
     amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml10Plugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
+
     amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(APIDomainPlugin)
     amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
-    amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
 
     val mediaType = vendor match {
       case Aml     => "application/yaml"

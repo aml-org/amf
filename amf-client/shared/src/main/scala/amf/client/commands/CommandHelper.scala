@@ -24,12 +24,6 @@ trait CommandHelper {
     implicit val context: ExecutionContext = configuration.getExecutionContext
     WebApiRegister.register(platform)
     VocabulariesRegister.register(platform) // validation dialect was not being parsed by static config.
-    amf.core.AMF.registerPlugin(Raml10Plugin)
-    amf.core.AMF.registerPlugin(Raml08Plugin)
-    amf.core.AMF.registerPlugin(Oas20Plugin)
-    amf.core.AMF.registerPlugin(Oas30Plugin)
-    amf.core.AMF.registerPlugin(Async20Plugin)
-    amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     amf.core.AMF.init()
   }
 
@@ -40,7 +34,7 @@ trait CommandHelper {
 
   protected def processDialects(config: ParserConfig, configuration: AMFConfiguration): Future[AMFConfiguration] = {
     implicit val context: ExecutionContext = configuration.getExecutionContext
-    val dialectFutures = config.dialects.map(dialect => configuration.createClient().parseDialect(dialect))
+    val dialectFutures                     = config.dialects.map(dialect => configuration.createClient().parseDialect(dialect))
     Future.sequence(dialectFutures) map (results =>
       results.foldLeft(configuration) {
         case (conf, result) => conf.withDialect(result.dialect)

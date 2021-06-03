@@ -7,7 +7,6 @@ import amf.core.annotations.SourceAST
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{ParsedReference, ParserContext, Reference, ReferenceResolutionResult, SyamlParsedDocument}
-import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import amf.validations.ShapeParserSideValidations.InvalidFragmentType
 import org.yaml.model.YNode.MutRef

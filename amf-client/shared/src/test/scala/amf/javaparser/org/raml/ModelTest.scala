@@ -13,7 +13,12 @@ import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.services.RuntimeResolver
 import amf.core.validation.AMFValidationReport
 import amf.emit.AMFRenderer
-import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
+import amf.plugins.document.webapi.resolution.pipelines.{
+  AmfEditingPipeline,
+  Raml08EditingPipeline,
+  Raml10EditingPipeline,
+  Raml10TransformationPipeline
+}
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import amf.validations.ShapePayloadValidations.ExampleValidationErrorSpecification
 
@@ -106,8 +111,7 @@ trait ModelResolutionTest extends ModelValidationTest {
   override def transform(unit: BaseUnit, config: CycleConfig, amfConfig: AMFConfiguration): BaseUnit = {
     val res = config.target match {
       case Raml08 | Raml10 | Oas20 | Oas30 =>
-        // TODO: use AMFTransformer
-        RuntimeResolver.resolve(config.target.name, unit, EDITING_PIPELINE, DefaultErrorHandler())
+        amfConfig.createClient().transform(unit, Raml10EditingPipeline.name).bu
       case Amf    => TransformationPipelineRunner(UnhandledErrorHandler).run(unit, AmfEditingPipeline())
       case target => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit

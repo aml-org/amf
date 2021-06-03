@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.client.environment.{AsyncAPIConfiguration, WebAPIConfiguration}
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.plugins.features.validation.{AMFValidatorPlugin, PlatformValidator}
@@ -57,7 +58,11 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     platform.resolve(path + file).flatMap { data =>
       val model = data.stream.toString
       Validation(platform).flatMap { validation =>
-        val effectiveValidations = AMFValidatorPlugin.computeValidations(expectedReport.profile)
+        val constraints =
+          WebAPIConfiguration.WebAPI().merge(AsyncAPIConfiguration.Async20()).registry.constraintsRules.map {
+            case (key, constraints) => key.p -> constraints
+          }
+        val effectiveValidations = AMFValidatorPlugin.computeValidations(expectedReport.profile, constraints)
         val shapes               = AMFValidatorPlugin.shapesGraph(effectiveValidations)
         val jsLibrary            = new JSLibraryEmitter(None).emitJS(effectiveValidations.effective.values.toSeq)
         val validator            = PlatformValidator.instance()
