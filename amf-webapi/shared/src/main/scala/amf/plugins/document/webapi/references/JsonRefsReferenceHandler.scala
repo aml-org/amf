@@ -1,14 +1,7 @@
-package amf.plugins.document.webapi
+package amf.plugins.document.webapi.references
 
-import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
-import amf.core.Root
 import amf.core.errorhandling.AMFErrorHandler
-import amf.core.exception.UnsupportedParsedDocumentException
-import amf.core.metamodel.Obj
-import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
 import amf.core.parser.{
-  Annotations,
   CompilerReferenceCollector,
   InferredLinkReference,
   LinkReference,
@@ -17,12 +10,8 @@ import amf.core.parser.{
   ReferenceHandler,
   SyamlParsedDocument
 }
-import amf.core.utils._
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
-import amf.plugins.parse.ExternalJsonYamlRefsParsePlugin
 import org.yaml.model._
-
-import scala.concurrent.{ExecutionContext, Future}
 
 class JsonRefsReferenceHandler extends ReferenceHandler {
 
@@ -78,49 +67,3 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
     }
   }
 }
-
-class ExternalJsonYamlRefsPlugin extends JsonSchemaPlugin {
-
-  override val priority: Int = AMFDocumentPluginSettings.PluginPriorities.low
-
-  override val ID: String = "JSON + Refs"
-
-  override val vendors: Seq[String] =
-    Seq("application/json", "application/refs+json", "application/yaml", "application/refs+yaml")
-
-  override def modelEntities: Seq[Obj] = Nil
-
-  override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map.empty
-
-  /**
-    * List of media types used to encode serialisations of
-    * this domain
-    */
-  override def documentSyntaxes: Seq[String] =
-    Seq("application/json", "application/refs+json", "application/yaml", "application/refs+yaml")
-
-  /**
-    * Parses an accepted document returning an optional BaseUnit
-    */
-  override def parse(document: Root, ctx: ParserContext): BaseUnit =
-    ExternalJsonYamlRefsParsePlugin.parse(document, ctx)
-
-  private def docMediaType(doc: Root) = if (doc.raw.isJson) "application/json" else "application/yaml"
-
-  override def canParse(document: Root): Boolean = !document.raw.isXml // for JSON or YAML
-
-  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler = new JsonRefsReferenceHandler()
-
-  override def dependencies(): Seq[AMFPlugin] = Nil
-
-  override val validVendorsToReference: Seq[String] = Nil
-
-  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
-
-  /**
-    * Does references in this type of documents be recursive?
-    */
-  override val allowRecursiveReferences: Boolean = true
-}
-
-object ExternalJsonYamlRefsPlugin extends ExternalJsonYamlRefsPlugin

@@ -9,7 +9,7 @@ import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{Annotations, ParserContext, ReferenceHandler, SyamlParsedDocument}
 import amf.core.utils.MediaTypeMatcher
-import amf.plugins.document.webapi.JsonRefsReferenceHandler
+import amf.plugins.document.webapi.references.JsonRefsReferenceHandler
 
 object ExternalJsonYamlRefsParsePlugin extends AMFParsePlugin {
 

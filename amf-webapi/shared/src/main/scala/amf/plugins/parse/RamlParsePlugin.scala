@@ -6,7 +6,6 @@ import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document.{BaseUnit, ExternalFragment, Module}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{
-  EmptyFutureDeclarations,
   LibraryReference,
   LinkReference,
   ParsedReference,
@@ -16,7 +15,6 @@ import amf.core.parser.{
   UnspecifiedReference
 }
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.parser.RamlHeader.{Raml08, Raml10, Raml10Extension, Raml10Library, Raml10Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.raml._
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}

@@ -5,6 +5,7 @@ import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{EmptyFutureDeclarations, ParsedReference, ParserContext}
 import amf.core.remote.{AsyncApi20, Vendor}
+import amf.plugins.common.Async20MediaTypes
 import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
 import amf.plugins.document.webapi.parser.AsyncHeader
 import amf.plugins.document.webapi.parser.AsyncHeader.Async20Header
@@ -20,11 +21,7 @@ object Async20ParsePlugin extends OasLikeParsePlugin {
   override def validMediaTypesToReference: Seq[String] =
     super.validMediaTypesToReference ++ Raml10ParsePlugin.mediaTypes
 
-  override def mediaTypes: Seq[String] = Seq(
-    "application/asyncapi20",
-    "application/asyncapi20+json",
-    "application/asyncapi20+yaml"
-  )
+  override def mediaTypes: Seq[String] = Async20MediaTypes.mediaTypes
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
     implicit val newCtx: AsyncWebApiContext = context(document.location, document.references, ctx.parsingOptions, ctx)

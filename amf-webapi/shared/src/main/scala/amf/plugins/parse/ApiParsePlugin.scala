@@ -5,7 +5,6 @@ import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.parser.ReferenceHandler
 import amf.core.remote.Vendor
-import amf.plugins.document.webapi.CrossSpecRestriction
 import amf.plugins.document.webapi.references.ApiReferenceHandler
 
 trait ApiParsePlugin extends AMFParsePlugin with CrossSpecRestriction {

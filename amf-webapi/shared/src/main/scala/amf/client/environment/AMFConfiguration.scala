@@ -45,6 +45,15 @@ import amf.plugins.parse.{
   Raml08ParsePlugin,
   Raml10ParsePlugin
 }
+import amf.plugins.render.{
+  Async20RenderPlugin,
+  JsonSchemaRenderPlugin,
+  Oas20RenderPlugin,
+  Oas30RenderPlugin,
+  PayloadRenderPlugin,
+  Raml08RenderPlugin,
+  Raml10RenderPlugin
+}
 
 import scala.concurrent.Future
 

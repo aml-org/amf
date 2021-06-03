@@ -1,10 +1,13 @@
 package amf.plugins.parse
-import amf.client.remod.amfcore.config.ParsingOptions
+import amf.client.remod.amfcore.config.{ParsingOptions, RenderOptions}
 import amf.core.Root
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{Oas30, Vendor}
+import amf.plugins.common.Oas30MediaTypes
+import amf.plugins.document.webapi.contexts.emitter.oas.Oas3SpecEmitterContext
 import amf.plugins.document.webapi.contexts.parser.oas.{Oas3WebApiContext, OasWebApiContext}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.Oas30Header
@@ -17,14 +20,7 @@ object Oas30ParsePlugin extends OasParsePlugin {
 
   override def applies(element: Root): Boolean = OasHeader(element).contains(Oas30Header)
 
-  override def mediaTypes: Seq[String] = Seq(
-    "application/oas30+json",
-    "application/oas30+yaml",
-    "application/oas30",
-    "application/openapi30",
-    "application/openapi30+yaml",
-    "application/openapi30+json"
-  )
+  override def mediaTypes: Seq[String] = Oas30MediaTypes.mediaTypes
 
   override protected def parseSpecificVersion(root: Root)(implicit ctx: OasWebApiContext): BaseUnit =
     OasHeader(root) match {

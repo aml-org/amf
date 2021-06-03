@@ -6,6 +6,7 @@ import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParserContext}
 import amf.core.remote.{Raml10, Vendor}
+import amf.plugins.common.Raml08MediaTypes
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
@@ -30,10 +31,7 @@ object Raml08ParsePlugin extends RamlParsePlugin {
     case _                                                => false
   }
 
-  override def mediaTypes: Seq[String] = Seq(
-    "application/raml08",
-    "application/raml08+yaml"
-  )
+  override def mediaTypes: Seq[String] = Raml08MediaTypes.mediaTypes
 
   override def context(wrapped: ParserContext,
                        root: Root,

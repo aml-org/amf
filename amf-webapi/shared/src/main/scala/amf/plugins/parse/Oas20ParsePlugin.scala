@@ -6,6 +6,7 @@ import amf.core.exception.InvalidDocumentHeaderException
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{Oas20, Vendor}
+import amf.plugins.common.Oas20MediaTypes
 import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, OasWebApiContext}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay, Oas30Header}
@@ -18,17 +19,7 @@ object Oas20ParsePlugin extends OasParsePlugin {
 
   override def applies(element: Root): Boolean = OasHeader(element).exists(_ != Oas30Header)
 
-  override def mediaTypes: Seq[String] = Seq(
-    "application/oas20+json",
-    "application/oas20+yaml",
-    "application/oas20",
-    "application/swagger+json",
-    "application/swagger20+json",
-    "application/swagger+yaml",
-    "application/swagger20+yaml",
-    "application/swagger",
-    "application/swagger20"
-  )
+  override def mediaTypes: Seq[String] = Oas20MediaTypes.mediaTypes
 
   override protected def parseSpecificVersion(root: Root)(implicit ctx: OasWebApiContext): BaseUnit =
     OasHeader(root) match {

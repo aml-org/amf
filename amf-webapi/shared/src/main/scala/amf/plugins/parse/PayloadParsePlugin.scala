@@ -8,6 +8,7 @@ import amf.core.exception.UnsupportedParsedDocumentException
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.parser.{ParserContext, ReferenceHandler, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.{Payload, Vendor}
+import amf.plugins.common.PayloadMediaTypes
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.parser.PayloadParser
 import org.yaml.model.{YMap, YScalar}
@@ -29,11 +30,7 @@ object PayloadParsePlugin extends AMFParsePlugin {
     case _ => throw UnsupportedParsedDocumentException
   }
 
-  override def mediaTypes: Seq[String] = Seq(
-    Payload.mediaType,
-    "application/payload+json",
-    "application/payload+yaml"
-  )
+  override def mediaTypes: Seq[String] = PayloadMediaTypes.mediaTypes
 
   override def validMediaTypesToReference: Seq[String] = Nil
 

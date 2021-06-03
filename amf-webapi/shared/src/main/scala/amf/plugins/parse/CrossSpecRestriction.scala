@@ -1,11 +1,10 @@
-package amf.plugins.document.webapi
+package amf.plugins.parse
 
 import amf.core.Root
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.parser.{ParserContext, Reference}
 import amf.core.remote.Vendor
 import amf.plugins.features.validation.CoreValidations.InvalidCrossSpec
-import amf.plugins.parse.ApiParsePlugin
 
 trait CrossSpecRestriction { this: ApiParsePlugin =>
 
