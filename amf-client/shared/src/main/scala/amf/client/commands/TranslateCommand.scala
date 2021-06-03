@@ -20,7 +20,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
     val res: Future[Any] = for {
       _         <- AMFInit()
       model     <- parseInput(config)
-      _         <- checkValidation(config, model)
+      _         <- if (config.validate) { checkValidation(config, model) } else Future(model)
       model     <- resolve(config, model)
       generated <- generateOutput(config, model)
     } yield {
@@ -62,7 +62,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       RuntimeValidator(model, profileName) map { report =>
         if (!report.conforms) {
           config.stderr.print(report.toString)
-          config.proc.exit(ExitCodes.FailingValidation)
+            config.proc.exit(ExitCodes.FailingValidation)
         }
       }
     }

@@ -53,10 +53,10 @@ trait CommandHelper {
       cache = Cache()
     )
     val vendor = effectiveVendor(config.inputFormat)
-    if (config.resolve)
+    if (config.resolve) {
       parsed map (unit =>
         RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler))
-    else parsed
+    } else parsed
   }
 
   protected def resolve(config: ParserConfig, unit: BaseUnit): Future[BaseUnit] = {
@@ -76,7 +76,9 @@ trait CommandHelper {
     } else if (config.resolve) {
       Future { RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler) }
     } else {
-      Future { unit }
+      Future {
+        unit
+      }
     }
   }
 

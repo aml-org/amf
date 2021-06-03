@@ -14,7 +14,7 @@ class ParseCommand(override val platform: Platform) extends TranslateCommand(pla
       _         <- AMFInit()
       _         <- processDialects(config)
       model     <- parseInput(config)
-      _         <- checkValidation(config, model)
+      _         <- if (config.validate) { checkValidation(config, model) } else Future(model)
       model     <- resolve(config, model)
       generated <- generateOutput(config, model)
     } yield {
@@ -26,7 +26,8 @@ class ParseCommand(override val platform: Platform) extends TranslateCommand(pla
       case Failure(ex: Throwable) =>
         config.stderr.print(ex)
         config.proc.exit(ExitCodes.Exception)
-      case Success(other) => other
+      case Success(other) =>
+        other
     }
 
     res
