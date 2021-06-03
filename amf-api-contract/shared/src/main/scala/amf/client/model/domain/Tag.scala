@@ -1,6 +1,5 @@
 package amf.client.model.domain
 import amf.client.convert.ApiClientConverters._
-import amf.client.model.domain.CreativeWork
 
 import amf.client.model.StrField
 import amf.plugins.domain.apicontract.models.{Tag => InternalTag}

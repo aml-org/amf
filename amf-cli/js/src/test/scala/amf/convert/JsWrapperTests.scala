@@ -1,8 +1,8 @@
 package amf.convert
 
-import amf.cli.convert.NativeOps
-
 import scala.language.implicitConversions
+import amf.client.convert.NativeOps
+import amf.client.convert.VocabulariesClientConverter.{ClientFuture, ClientList, ClientOption}
 
 import scala.concurrent.Future
 import scala.scalajs.js

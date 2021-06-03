@@ -1,5 +1,6 @@
 package amf.client.environment
 
+import amf.client.convert.ApiRegister
 import amf.client.exported.config.AMFLogger
 import amf.client.remod.ErrorHandlerProvider
 import amf.client.remod.amfcore.config._

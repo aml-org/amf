@@ -1,5 +1,4 @@
 package amf
-import amf.client.AMF
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.apicontract.validation.AMFRawValidations.AMFValidation
 import amf.plugins.document.apicontract.validation.{AMFRawValidations, DefaultAMFValidations, ImportUtils}
@@ -9,7 +8,7 @@ object ValidationsExporter extends ImportUtils {
 
   def main(args: Array[String]): Unit = {
 
-    AMF.init() // Needed to load all the validations in the platform
+//    AMF.init() // Needed to load all the validations in the platform
 
     val parserSideVals =
       DefaultAMFValidations.severityLevelsOfConstraints.foldLeft(Map[String, Map[String, String]]()) {
