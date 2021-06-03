@@ -124,7 +124,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       val superTypes = shape.inherits
       val oldInherits: Seq[Shape] = if (context.keepEditingInfo) shape.inherits.collect {
         case rec: RecursiveShape => rec
-        case shape: Shape        => shape.link(shape.name.value()).asInstanceOf[Shape]
+        case shape: Shape        => shape
       } else Nil
       shape.fields.removeField(ShapeModel.Inherits) // i need to remove the resolved type without inhertis, because later it will be added to cache once it will be fully resolved
       var accShape: Shape                             = normalizeWithoutCaching(shape)
