@@ -1,3 +1,0 @@
-package amf.client.convert
-
-trait WebApiBaseClientConverter extends WebApiBaseConverter with CoreBaseClientConverter

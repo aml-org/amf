@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel._
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel}
-import amf.plugins.domain.webapi.models.{DiscriminatorValueMapping, IriTemplateMapping}
+import amf.plugins.domain.apicontract.models.{DiscriminatorValueMapping, IriTemplateMapping}
 import org.yaml.model.YPart
 
 /**

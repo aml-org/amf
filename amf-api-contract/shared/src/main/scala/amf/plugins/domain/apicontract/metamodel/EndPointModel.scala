@@ -1,0 +1,79 @@
+package amf.plugins.domain.apicontract.metamodel
+
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type._
+import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.metamodel.domain.templates.KeyField
+import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
+import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.domain.apicontract.metamodel.bindings.ChannelBindingsModel
+import amf.plugins.domain.apicontract.metamodel.security.SecurityRequirementModel
+import amf.plugins.domain.apicontract.models.EndPoint
+
+/**
+  * EndPoint metaModel
+  *
+  * EndPoint in the API holding a number of executable operations
+  */
+object EndPointModel extends DomainElementModel with KeyField with NameFieldSchema with DescriptionField {
+
+  val Path =
+    Field(Str, ApiContract + "path", ModelDoc(ModelVocabularies.ApiContract, "path", "Path template for an endpoint"))
+
+  val Summary = Field(Str,
+                      Core + "summary",
+                      ModelDoc(ModelVocabularies.Core, "summary", "Human readable short description of the endpoint"))
+
+  val Operations = Field(
+    Array(OperationModel),
+    ApiContract + "supportedOperation",
+    ModelDoc(ModelVocabularies.ApiContract, "supportedOperation", "Operations supported by an endpoint")
+  )
+
+  val Parameters = Field(
+    Array(ParameterModel),
+    ApiContract + "parameter",
+    ModelDoc(ModelVocabularies.ApiContract, "parameter", "Additional data required or returned by an operation")
+  )
+
+  val Payloads = Field(
+    Array(PayloadModel),
+    ApiContract + "payload",
+    ModelDoc(ModelVocabularies.ApiContract, "payload", "Main payload data required or returned by an operation"))
+
+  val Servers = Field(
+    Array(ServerModel),
+    ApiContract + "server",
+    ModelDoc(ModelVocabularies.ApiContract,
+             "servers",
+             "Specific information about the server where the endpoint is accessible")
+  )
+
+  val Security = Field(
+    Array(SecurityRequirementModel),
+    Namespace.Security + "security",
+    ModelDoc(ModelVocabularies.Security, "security", "Textual indication of the kind of security scheme used")
+  )
+
+  val Bindings = Field(
+    ChannelBindingsModel,
+    ApiBinding + "binding",
+    ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this endpoint")
+  )
+
+  override val key: Field = Path
+
+  override val `type`: List[ValueType] = ApiContract + "EndPoint" :: DomainElementModel.`type`
+
+  override val fields: List[Field] =
+    List(Path, Name, Summary, Description, Operations, Parameters, Payloads, Servers, Security, Bindings) ++ DomainElementModel.fields
+
+  override def modelInstance = EndPoint()
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiContract,
+    "EndPoint",
+    "EndPoint in the API holding a number of executable operations"
+  )
+}

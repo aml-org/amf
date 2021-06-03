@@ -7,7 +7,7 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.core.vocabulary.Namespace.{Shacl, Shapes, Document}
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
+import amf.plugins.domain.apicontract.metamodel.IriTemplateMappingModel
 
 /**
   * Node shape metaModel.

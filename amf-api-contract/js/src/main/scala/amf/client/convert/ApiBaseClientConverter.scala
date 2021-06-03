@@ -1,0 +1,3 @@
+package amf.client.convert
+
+trait ApiBaseClientConverter extends ApiBaseConverter with CoreBaseClientConverter

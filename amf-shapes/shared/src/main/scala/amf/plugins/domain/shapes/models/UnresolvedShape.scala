@@ -4,7 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ModelDoc
 import amf.core.model.domain.{AmfScalar, DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields, UnresolvedReference}
-import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
+import amf.plugins.document.apicontract.parser.spec.common.ShapeExtensionParser
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import org.yaml.model.{YNode, YPart}
 

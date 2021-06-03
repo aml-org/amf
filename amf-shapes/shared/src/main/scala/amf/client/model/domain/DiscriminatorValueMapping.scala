@@ -2,7 +2,7 @@ package amf.client.model.domain
 
 import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.client.model.StrField
-import amf.plugins.domain.webapi.models.{DiscriminatorValueMapping => InternalDiscriminatorValueMapping}
+import amf.plugins.domain.apicontract.models.{DiscriminatorValueMapping => InternalDiscriminatorValueMapping}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

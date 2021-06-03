@@ -9,9 +9,9 @@ object Versions {
     val props             = new Properties()
     val sourceModeEnabled = java.lang.Boolean.getBoolean("sbt.sourcemode")
     val versionsFile = if (sourceModeEnabled) {
-      Common.workspaceDirectory / "amf" / "amf-webapi.versions"
+      Common.workspaceDirectory / "amf" / "amf-apicontract.versions"
     } else {
-      file("amf-webapi.versions")
+      file("amf-apicontract.versions")
     }
     props.load(new FileInputStream(versionsFile))
     props.entrySet().asScala.map(e => e.getKey.toString -> e.getValue.toString).toMap

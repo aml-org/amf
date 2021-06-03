@@ -3,7 +3,7 @@ package amf.remod
 import amf.client.convert.shapeconverters.ShapeClientConverters._
 import amf.client.exported.AMFGraphConfiguration
 import amf.client.model.domain.AnyShape
-import amf.plugins.document.webapi.parser.spec.common.RamlDatatypeSerializer
+import amf.plugins.document.apicontract.parser.spec.common.RamlDatatypeSerializer
 
 object ClientRamlShapeSerializer extends RamlDatatypeSerializer {
 

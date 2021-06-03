@@ -4,7 +4,7 @@ PROPERTY_FILE=amf-webapi.versions
 
 function getProperty {
    PROP_KEY=$1
-   PROP_VALUE=`cat ${PROPERTY_FILE} | grep "amf.webapi" | cut -d'=' -f2`
+   PROP_VALUE=`cat ${PROPERTY_FILE} | grep "amf.apicontract" | cut -d'=' -f2`
    echo ${PROP_VALUE}
 }
 
@@ -23,27 +23,27 @@ else
     IS_RC=false
 fi
 
-echo "amf-webapi.versions version: $PROJECT_VERSION"
+echo "amf-apicontract.versions version: $PROJECT_VERSION"
 echo "Is snapshot: $IS_SNAPSHOT"
 echo "Is RC: $IS_RC"
 
 echo "Running fullOpt"
-sbt clientJS/fullOptJS
+sbt cliJS/fullOptJS
 echo "Finished fullOpt"
 
 echo "Running buildjs script"
-./amf-client/js/build-scripts/buildjs.sh
+./amf-cli/js/build-scripts/buildjs.sh
 echo "Finished buildjs script"
 
 echo "Generating typings"
-sbt -Dsbt.sourcemode=true clientJS/generateTypings
+sbt -Dsbt.sourcemode=true cliJS/generateTypings
 echo "Finished generating typings"
 
 echo "Running build-typings script"
-./amf-client/js/build-scripts/build-typings.sh
+./amf-cli/js/build-scripts/build-typings.sh
 echo "Finished build-typings script"
 
-cd amf-client/js
+cd amf-cli/js
 
 if ${IS_SNAPSHOT}; then
     LATEST_SNAPSHOT=`npm v amf-client-js dist-tags.snapshot`
