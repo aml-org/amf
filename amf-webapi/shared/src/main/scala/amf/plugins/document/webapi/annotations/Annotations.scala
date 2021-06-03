@@ -1,7 +1,5 @@
 package amf.plugins.document.webapi.annotations
 
-import amf.core.annotations.LexicalInformation
-import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain._
 import amf.core.parser.Range
 import org.yaml.model.YMapEntry
@@ -145,8 +143,6 @@ case class OperationTraitEntry(range: Range) extends Annotation
 // save original text link?
 case class ReferencedElement(parsedUrl: String, referenced: DomainElement) extends Annotation
 
-case class Inferred() extends Annotation
-
 case class CollectionFormatFromItems() extends Annotation
 
 case class ExternalJsonSchemaShape(original: YMapEntry) extends Annotation
@@ -155,15 +151,5 @@ case class ExternalJsonSchemaShape(original: YMapEntry) extends Annotation
 case class ExternalReferenceUrl(url: String) extends Annotation
 
 case class ForceEntry() extends Annotation
-
-case class DeclarationKeys(keys: List[DeclarationKey]) extends Annotation
-
-case class DeclarationKey(entry: YMapEntry, isAbstract: Boolean)
-
-object DeclarationKey {
-
-  def apply(entry: YMapEntry, isAbstract: Boolean = false): DeclarationKey =
-    new DeclarationKey(entry, isAbstract = isAbstract)
-}
 
 case class ExampleIndex(index: Int) extends Annotation

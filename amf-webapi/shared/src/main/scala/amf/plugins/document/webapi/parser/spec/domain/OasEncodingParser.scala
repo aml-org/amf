@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.metamodel.EncodingModel
 import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
-import amf.plugins.domain.webapi.models.{Parameter, Encoding}
+import amf.plugins.domain.webapi.models.{Encoding, Parameter}
 import org.yaml.model.{YMap, YMapEntry}
 
 case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit ctx: OasWebApiContext)
@@ -14,7 +15,7 @@ case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit c
   private def newEncoding(entry: YMapEntry): Encoding = {
     val keyNode  = ScalarNode(entry.key)
     val encoding = producer(keyNode.text().toString).add(Annotations(entry))
-    encoding.set(EncodingModel.PropertyName, keyNode.string())
+    encoding.set(EncodingModel.PropertyName, keyNode.string(), Annotations(entry.key))
   }
 
   def parse(): Seq[Encoding] = {
@@ -32,7 +33,10 @@ case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit c
                 header.adopted(encoding.id)
                 encoding.add(Headers, header)
               }).parse()
-            encoding.setArray(EncodingModel.Headers, parameters, Annotations(entry))
+            encoding.fields.set(encoding.id,
+                                EncodingModel.Headers,
+                                AmfArray(parameters, Annotations(entry.value)),
+                                Annotations(entry))
           }
         )
 

@@ -24,7 +24,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     extends SpecParserOps {
 
   private def nameAndAdopt(param: Parameter): Parameter = {
-    entryLike.key.foreach(k => param.set(ParameterModel.Name, ScalarNode(k).string()))
+    entryLike.key.foreach(k => param.set(ParameterModel.Name, ScalarNode(k).string(), Annotations(k)))
     param.adopted(parentId).add(entryLike.annotations)
   }
 
@@ -55,7 +55,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
   }
 
   private def inferAsUriParameter(param: Parameter) = {
-    param.set(ParameterModel.Binding, AmfScalar("path"), Annotations() += SynthesizedField())
+    param.set(ParameterModel.Binding, AmfScalar("path"), Annotations.synthesized())
   }
 
   def parseSchema(map: YMap, param: Parameter): Unit = {
@@ -75,7 +75,8 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "parameters")
     ctx.declarations
       .findParameter(label, SearchScope.Named)
-      .map(param => nameAndAdopt(param.link(label)))
+      .map(param =>
+        nameAndAdopt(param.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized())))
       .getOrElse(remote(fullRef, map))
   }
 
@@ -83,7 +84,7 @@ case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(impl
     ctx.obtainRemoteYNode(fullRef) match {
       case Some(paramNode) =>
         val external = AsyncParameterParser(parentId, YMapEntryLike(paramNode)).parse()
-        nameAndAdopt(external.link(fullRef))
+        nameAndAdopt(external.link(AmfScalar(fullRef), Annotations(map), Annotations.synthesized()))
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
         nameAndAdopt(ErrorParameter(fullRef, map).link(fullRef, annotations = Annotations(map)))

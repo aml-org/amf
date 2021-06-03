@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.async
 import amf.core.Root
 import amf.core.annotations.{DeclaredElement, SourceVendor}
+import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
-import amf.plugins.document.webapi.annotations.DeclarationKey
+import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.async.parser._
 import amf.plugins.document.webapi.parser.spec.common._
@@ -53,7 +54,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
     val api = parseApi(map).add(SourceVendor(ctx.vendor))
     document
-      .withEncodes(api)
+      .set(DocumentModel.Encodes, api, Annotations.inferred())
       .adopted(root.location)
 
     addDeclarationsToModel(document)
@@ -112,7 +113,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
   private def parseChannels(entry: YMapEntry, api: AsyncApi): Unit = {
     val paths = entry.value.as[YMap]
     val endpoints = paths.entries.foldLeft(List[EndPoint]())((acc, curr) =>
-      acc ++ ctx.factory.endPointParser(curr, api.withEndPoint, acc).parse())
+      acc ++ ctx.factory.endPointParser(curr, api.id, acc).parse())
     api.set(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
   }
 
@@ -302,7 +303,7 @@ case class IdentifierParser(entry: YMapEntry, webApi: AsyncApi, override implici
     entry.value.tagType match {
       case YType.Str =>
         val id = entry.value.as[String]
-        webApi.set(WebApiModel.Identifier, AmfScalar(id), Annotations(entry))
+        webApi.set(WebApiModel.Identifier, AmfScalar(id, Annotations(entry.value)), Annotations(entry))
       case _ =>
         ctx.eh.violation(InvalidIdentifier, webApi.id, "'id' must be a string", entry.location)
     }

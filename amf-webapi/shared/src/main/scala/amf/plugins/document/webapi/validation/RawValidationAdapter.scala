@@ -105,7 +105,7 @@ object RawValidationAdapter extends ImportUtils {
     FunctionConstraint(
       message = validation.message,
       functionName = None, // i have to ignore the function name so it will be taken from the generated js library
-      code = JsCustomValidations(sh.name),
+      code = Some(JsCustomValidations(sh.name)),
       internalFunction = Some(sh.name)
     )
   }

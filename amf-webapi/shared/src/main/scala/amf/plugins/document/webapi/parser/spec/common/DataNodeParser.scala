@@ -1,8 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.common
 
-import amf.core.annotations.ReferenceId
+import amf.core.annotations.{ReferenceId, ScalarType}
+import amf.core.metamodel.domain.ScalarNodeModel
 import amf.core.model.DataType
 import amf.core.model.document.{EncodesModel, ExternalFragment}
+import amf.core.model.domain.ScalarNode.forDataType
 import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
@@ -72,42 +74,54 @@ class DataNodeParser private (node: YNode,
   }
 
   protected def parseObject(value: YMap): DataNode = {
-    val node = DataObjectNode(Annotations(value)).withName(idCounter.genId("object"))
+    val node = DataObjectNode(Annotations(value)).withSynthesizeName(idCounter.genId("object"))
     parent.foreach(p => node.adopted(p))
-    value.entries.map { ast =>
-      val key = ast.key.as[YScalar].text
-      parameters.parseVariables(key)
-      val value               = ast.value
-      val propertyAnnotations = Annotations(ast)
+    value.entries.map { entry =>
+      parameters.parseVariables(entry.key)
+      val value               = entry.value
+      val propertyAnnotations = Annotations(entry)
 
       val propertyNode =
         new DataNodeParser(value, refsCounter, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addProperty(key, propertyNode, propertyAnnotations)
+      node.addProperty(keyFor(entry), propertyNode, propertyAnnotations)
     }
     node
   }
+
+  private def keyFor(ast: YMapEntry) =
+    ast.key.as[YScalar].text
 }
 
 case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
                             parent: Option[String] = None,
                             idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
 
-  protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
-    val finalDataType = Some(DataType(dataType))
-    val node = ScalarNode(ast.text, finalDataType, Annotations(ast))
-      .withName(idCounter.genId("scalar"))
-    parent.foreach(p => node.adopted(p))
-    parameters.parseVariables(ast)
-    node
+  private def newScalarNode(value: amf.core.parser.ScalarNode,
+                            dataType: String,
+                            annotations: Annotations): ScalarNode = {
+    val scalar = new ScalarNode(Fields(), annotations)
+    annotations += ScalarType(dataType)
+    scalar.set(ScalarNodeModel.DataType, forDataType(dataType), Annotations.synthesized())
+    scalar.set(ScalarNodeModel.Value, value.text(), Annotations.inferred())
+  }
+
+  protected def parseScalar(node: YNode, dataType: String): DataNode = {
+    val finalDataType = DataType(dataType)
+    val scalarNode    = amf.core.parser.ScalarNode(node)
+    val dataNode = newScalarNode(scalarNode, finalDataType, Annotations(node))
+      .withSynthesizeName(idCounter.genId("scalar"))
+    parent.foreach(p => dataNode.adopted(p))
+    parameters.parseVariables(scalarNode.text().toString)
+    dataNode
   }
 
   def parse(node: YNode): DataNode = {
     node.tag.tagType match {
-      case YType.Str       => parseScalar(node.as[YScalar], "string") // Date/time types are evaluated with patterns
-      case YType.Int       => parseScalar(node.as[YScalar], "integer")
-      case YType.Float     => parseScalar(node.as[YScalar], "double")
-      case YType.Bool      => parseScalar(node.as[YScalar], "boolean")
-      case YType.Null      => parseScalar(node.toOption[YScalar].getOrElse(YScalar("null")), "nil")
+      case YType.Str       => parseScalar(node, "string") // Date/time types are evaluated with patterns
+      case YType.Int       => parseScalar(node, "integer")
+      case YType.Float     => parseScalar(node, "double")
+      case YType.Bool      => parseScalar(node, "boolean")
+      case YType.Null      => parseScalar(node, "nil")
       case YType.Timestamp =>
         // TODO add time-only type in syaml and amf
         SimpleDateTime.parse(node.toString()).toOption match {
@@ -115,22 +129,22 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
             try {
               sdt.toDate // This is to validate the parsed timestamp
               if (sdt.timeOfDay.isEmpty)
-                parseScalar(node.as[YScalar], "date")
+                parseScalar(node, "date")
               else if (sdt.zoneOffset.isEmpty)
-                parseScalar(node.as[YScalar], "dateTimeOnly")
+                parseScalar(node, "dateTimeOnly")
               else
-                parseScalar(node.as[YScalar], "dateTime")
+                parseScalar(node, "dateTime")
             } catch {
-              case _: Exception => parseScalar(node.as[YScalar], "string")
+              case _: Exception => parseScalar(node, "string")
             }
-          case None => parseScalar(node.as[YScalar], "string")
+          case None => parseScalar(node, "string")
         }
 
       // Included external fragment
       case _ if node.tagType == YType.Include => parseInclusion(node)
 
       case other =>
-        val parsed = parseScalar(YScalar(other.toString()), "string")
+        val parsed = parseScalar(YNode(other.toString()), "string")
         ctx.eh.violation(SyamlError, parsed.id, None, s"Cannot parse scalar node from AST structure '$other'", node)
         parsed
     }

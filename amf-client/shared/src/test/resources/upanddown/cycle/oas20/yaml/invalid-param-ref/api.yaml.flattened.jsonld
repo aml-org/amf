@@ -111,7 +111,7 @@
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,6)-(11,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(11,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/source-map/lexical/element_2",
@@ -141,12 +141,10 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/source-map/lexical/element_1"
+        },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/source-map/lexical/element_0"
         }
@@ -191,19 +189,27 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(11,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(11,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#expects",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,0)-(11,0)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/parameter/default-binding/parameter_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/parameter/default-binding/parameter_1/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/parameter/default-binding/parameter_1/source-map/synthesized-field/element_0"
+        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -220,6 +226,16 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#parameter",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,6)-(11,0)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/parameter/default-binding/parameter_1/source-map/synthesized-field/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/parameter/default-binding/parameter_1/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-label",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/parameter/default-binding/parameter_1/source-map/lexical/element_0",
@@ -310,9 +326,9 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1/source-map/declared-element/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -324,6 +340,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1/source-map/declared-element/element_0"
         }
       ]
     },
@@ -353,9 +374,9 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2/source-map/declared-element/element_0"
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -367,6 +388,11 @@
         },
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2/source-map/lexical/element_1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#declared-element": [
+        {
+          "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2/source-map/declared-element/element_0"
         }
       ]
     },
@@ -390,9 +416,9 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#required",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1/source-map/lexical/element_2",
@@ -408,6 +434,11 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(15,0)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2/scalar/schema/source-map",
@@ -429,9 +460,9 @@
       ]
     },
     {
-      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2/source-map/declared-element/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2",
-      "http://a.ml/vocabularies/document-source-maps#value": ""
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#required",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2/source-map/lexical/element_2",
@@ -447,6 +478,11 @@
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(15,2)-(17,16)]"
+    },
+    {
+      "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2/source-map/declared-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p2",
+      "http://a.ml/vocabularies/document-source-maps#value": ""
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/default-binding/p1/scalar/schema/source-map/type-property-lexical-info/element_0",

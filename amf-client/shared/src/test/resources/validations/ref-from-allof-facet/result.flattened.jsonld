@@ -11,15 +11,17 @@
       "core:name": "AES Key Synchronisation",
       "core:description": "A REST API for the exchange and synchronisation of AES Keys following the OpenAPI 3.0 specification",
       "core:version": "0.1",
+      "apiContract:endpoint": [],
       "smaps": {
         "source-vendor": {
           "#9": "OAS 3.0"
         },
         "lexical": {
-          "core:version": "[(4,4)-(4,20)]",
-          "core:name": "[(5,4)-(5,38)]",
+          "apiContract:endpoint": "[(8,2)-(8,13)]",
+          "core:description": "[(6,4)-(6,120)]",
           "#9": "[(1,0)-(34,1)]",
-          "core:description": "[(6,4)-(6,120)]"
+          "core:name": "[(5,4)-(5,38)]",
+          "core:version": "[(4,4)-(4,20)]"
         }
       }
     },
@@ -67,7 +69,7 @@
           "#1": ""
         },
         "lexical": {
-          "shacl:and": "[(12,17)-(23,9)]",
+          "shacl:and": "[(12,8)-(23,9)]",
           "#1": "[(11,6)-(24,7)]",
           "shacl:name": "[(11,6)-(11,14)]"
         }
@@ -90,18 +92,21 @@
       ],
       "shacl:name": "NewOmsKey",
       "smaps": {
-        "resolved-link-target": {
-          "#2": "amf://id#2"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#2": ""
+        "resolved-link": {
+          "#2": "amf://id#5"
         },
         "lexical": {
           "shacl:name": "[(25,6)-(25,17)]",
           "#2": "[(25,6)-(31,7)]"
         },
-        "resolved-link": {
-          "#2": "amf://id#5"
+        "declared-element": {
+          "#2": ""
+        },
+        "resolved-link-target": {
+          "#2": "amf://id#2"
         }
       }
     },
@@ -122,6 +127,9 @@
       ],
       "shacl:name": "item1",
       "smaps": {
+        "synthesized-field": {
+          "shacl:closed": "true"
+        },
         "lexical": {
           "#6": "[(16,10)-(22,11)]"
         }
@@ -146,6 +154,9 @@
       "shacl:minCount": 0,
       "shacl:name": "deviceId",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#3": "[(27,10)-(29,11)]"
         }
@@ -170,6 +181,9 @@
       "shacl:minCount": 0,
       "shacl:name": "id",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#7": "[(18,14)-(20,15)]"
         }

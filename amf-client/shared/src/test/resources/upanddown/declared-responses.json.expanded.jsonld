@@ -104,6 +104,21 @@
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
+                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get/200/source-map/synthesized-field/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/document#link-label"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get/200/source-map/lexical/element_1",
@@ -114,7 +129,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(15,10)-(17,11)]"
+                                "@value": "[(16,20)-(16,41)]"
                               }
                             ]
                           },
@@ -313,7 +328,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,11)-(21,3)]"
+                    "@value": "[(8,2)-(21,3)]"
                   }
                 ]
               },
@@ -545,7 +560,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/responses/Default/source-map/lexical/element_3",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/responses/Default/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#description"
@@ -554,19 +569,6 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(24,6)-(24,32)]"
-                  }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/responses/Default/source-map/lexical/element_1",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/core#name"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(23,4)-(23,13)]"
                   }
                 ]
               },
@@ -584,7 +586,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/responses/Default/source-map/lexical/element_2",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/responses/Default/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/responses/Default"

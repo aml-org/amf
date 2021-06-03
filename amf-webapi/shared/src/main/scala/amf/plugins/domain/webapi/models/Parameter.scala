@@ -1,7 +1,8 @@
 package amf.plugins.domain.webapi.models
 
+import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.Field
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
+import amf.core.model.domain.{AmfScalar, DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
@@ -31,7 +32,8 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def schema: Shape              = fields.field(Schema)
   def payloads: Seq[Payload]     = fields.field(Payloads)
 
-  def withParameterName(name: String): this.type               = set(ParameterName, name)
+  def withParameterName(name: String, annots: Annotations = Annotations()): this.type =
+    set(ParameterName, name, annots)
   def withDescription(description: String): this.type          = set(Description, description)
   def withRequired(required: Boolean): this.type               = set(Required, required)
   def withDeprecated(deprecated: Boolean): this.type           = set(Deprecated, deprecated)
@@ -39,9 +41,12 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def withStyle(style: String): this.type                      = set(Style, style)
   def withExplode(explode: Boolean): this.type                 = set(Explode, explode)
   def withAllowReserved(allowReserved: Boolean): this.type     = set(AllowReserved, allowReserved)
-  def withBinding(binding: String): this.type                  = set(Binding, binding)
-  def withSchema(schema: Shape): this.type                     = set(Schema, schema)
-  def withPayloads(payloads: Seq[Payload]): this.type          = setArray(Payloads, payloads)
+  def withBinding(binding: String): this.type =
+    set(Binding, binding)
+  def syntheticBinding(binding: String): this.type =
+    set(Binding, AmfScalar(binding), Annotations.synthesized())
+  def withSchema(schema: Shape): this.type            = set(Schema, schema)
+  def withPayloads(payloads: Seq[Payload]): this.type = setArray(Payloads, payloads)
 
   override def setSchema(shape: Shape): Shape = {
     set(ParameterModel.Schema, shape)
@@ -63,7 +68,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
 
   def withScalarSchema(name: String): ScalarShape = {
     val scalar = ScalarShape().withName(name)
-    set(ParameterModel.Schema, scalar)
+    set(ParameterModel.Schema, scalar, Annotations.synthesized())
     scalar
   }
 
@@ -75,7 +80,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
 
   override def linkCopy(): Parameter = {
     val copy = Parameter().withId(id)
-    binding.option().foreach(copy.withBinding)
+    binding.option().foreach(copy.set(ParameterModel.Binding, _, Annotations.synthesized()))
     copy
   }
 
@@ -90,7 +95,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
           case o        => o
         }
 
-        cloned.set(f, clonedValue, v.annotations)
+        cloned.set(f, clonedValue, Annotations() ++= v.annotations)
     }
 
     cloned.asInstanceOf[this.type]

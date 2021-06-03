@@ -20,7 +20,7 @@
           "#7": "OAS 3.0"
         },
         "lexical": {
-          "apiContract:endpoint": "[(27,11)-(45,3)]",
+          "apiContract:endpoint": "[(27,2)-(45,3)]",
           "core:name": "[(4,4)-(4,30)]",
           "#7": "[(1,0)-(47,1)]",
           "core:version": "[(5,4)-(5,20)]"
@@ -153,12 +153,12 @@
       "doc:raw": "Example defined in payload",
       "smaps": {
         "synthesized-field": {
-          "doc:strict": "true"
+          "doc:raw": "true",
+          "doc:strict": "true",
+          "core:mediaType": "true"
         },
         "lexical": {
-          "doc:raw": "[(38,27)-(38,55)]",
-          "#13": "[(38,27)-(38,55)]",
-          "doc:structuredValue": "[(38,27)-(38,55)]"
+          "#13": "[(38,27)-(38,55)]"
         },
         "tracked-element": {
           "#13": "amf://id#11"
@@ -180,6 +180,10 @@
       ],
       "core:name": "scalar_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#14": "[(38,27)-(38,55)]"
         }
@@ -221,8 +225,10 @@
         "@id": "#2"
       },
       "smaps": {
-        "declared-element": {
-          "#1": ""
+        "synthesized-field": {
+          "apiContract:explode": "true",
+          "apiContract:required": "true",
+          "apiContract:style": "true"
         },
         "lexical": {
           "raml-shapes:schema": "[(13,8)-(16,9)]",
@@ -230,6 +236,9 @@
           "#1": "[(9,6)-(24,7)]",
           "apiContract:paramName": "[(10,8)-(10,23)]",
           "apiContract:binding": "[(11,8)-(11,22)]"
+        },
+        "declared-element": {
+          "#1": ""
         }
       }
     },
@@ -282,12 +291,11 @@
       "doc:raw": "Example defined in schema",
       "smaps": {
         "synthesized-field": {
+          "doc:raw": "true",
           "doc:strict": "true"
         },
         "lexical": {
-          "doc:raw": "[(15,21)-(15,48)]",
-          "#3": "[(15,21)-(15,48)]",
-          "doc:structuredValue": "[(15,21)-(15,48)]"
+          "#3": "[(15,21)-(15,48)]"
         }
       }
     },
@@ -306,12 +314,16 @@
       },
       "doc:raw": "Example defined in parameter examples",
       "smaps": {
+        "synthesized-field": {
+          "doc:raw": "true",
+          "doc:strict": "true"
+        },
         "lexical": {
-          "doc:raw": "[(21,21)-(21,60)]",
-          "core:description": "[(20,12)-(20,55)]",
-          "#5": "[(18,10)-(22,11)]",
+          "doc:structuredValue": "[(21,12)-(21,60)]",
           "apiContract:guiSummary": "[(19,12)-(19,39)]",
-          "doc:structuredValue": "[(21,21)-(21,60)]"
+          "#5": "[(18,10)-(22,11)]",
+          "core:name": "[(18,10)-(18,13)]",
+          "core:description": "[(20,12)-(20,55)]"
         },
         "tracked-element": {
           "#5": "amf://id#1"
@@ -333,6 +345,10 @@
       ],
       "core:name": "scalar_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#4": "[(15,21)-(15,48)]"
         }
@@ -353,6 +369,10 @@
       ],
       "core:name": "scalar_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#6": "[(21,21)-(21,60)]"
         }

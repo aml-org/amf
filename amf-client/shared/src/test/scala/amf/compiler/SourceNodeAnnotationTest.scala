@@ -127,8 +127,8 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
         case Some((id, annotations)) =>
           assertRangeElement(id,
                              annotations,
-                             PositionRange((19, 8), (20, 37)),
-                             Some(PositionRange((19, 16), (20, 37))))
+                             PositionRange((20, 16), (20, 37)),
+                             Some(PositionRange((20, 16), (20, 37))))
         case None => fail("Any response with target found")
       }
       succeed

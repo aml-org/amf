@@ -3,17 +3,12 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.annotations.{DeclaredElement, ExternalFragmentRef}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
-import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.annotations.DeclarationKey
+import amf.plugins.document.vocabularies.parser.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{
-  AbstractVariables,
-  DataNodeParser,
-  DeclarationKeyCollector,
-  YMapEntryLike
-}
+import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser, YMapEntryLike}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.validations.ParserSideValidations.{InvalidAbstractDeclarationType, NullAbstractDeclaration}
 import org.yaml.model._
@@ -63,14 +58,6 @@ object AbstractDeclarationParser {
 
 case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: String, map: YMapEntryLike)(
     implicit ctx: WebApiContext) {
-  val key: String = map.key
-    .map(_.as[YScalar].text)
-    .getOrElse(declaration match {
-      case _: Trait        => "trait"
-      case _: ResourceType => "resourceType"
-      case _               => "abstractDeclaration"
-    })
-  val annotations: Annotations = Annotations(map.annotations)
 
   def parse(): AbstractDeclaration = {
 
@@ -86,32 +73,37 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
       case Left(link) => parseReferenced(declaration, link, entryValue, map.annotations).adopted(parent)
       case Right(value) =>
         val variables = AbstractVariables()
-        val parentUri =
-          if (parent.contains("#")) s"$parent/$key"
-          else s"$parent#/$key"
+        named(declaration)
+        declaration.adopted(parent)
         val filteredNode: YNode = value.tagType match {
           case YType.Map =>
             value
               .as[YMap]
-              .key("usage", { usage =>
-                declaration.set(AbstractDeclarationModel.Description,
-                                AmfScalar(usage.value.as[String], Annotations(usage)))
+              .key("usage", { entry =>
+                val usage = ScalarNode(entry.value)
+                declaration.set(AbstractDeclarationModel.Description, usage.string(), Annotations(entry))
               })
             val fields = value.as[YMap].entries.filter(_.key.as[YScalar].text != "usage")
             YMap(fields, fields.headOption.map(_.sourceName).getOrElse(""))
           case _ =>
             value
         }
-        val dataNode = DataNodeParser(filteredNode, variables, Some(parentUri)).parse()
+        val dataNode = DataNodeParser(filteredNode, variables, Some(declaration.id)).parse()
+        declaration.set(AbstractDeclarationModel.DataNode, dataNode, Annotations(filteredNode))
+
+        variables.ifNonEmpty(
+          p =>
+            declaration
+              .set(AbstractDeclarationModel.Variables, AmfArray(p, Annotations(value.value)), Annotations(value)))
 
         declaration
-          .withName(key, map.key.map(Annotations(_)).getOrElse(annotations))
-          .adopted(parent)
-          .set(AbstractDeclarationModel.DataNode, dataNode, Annotations(filteredNode))
+    }
+  }
 
-        variables.ifNonEmpty(p => declaration.withVariables(p))
-
-        declaration
+  private def named(declaration: AbstractDeclaration): Unit = {
+    map.key.foreach { key =>
+      val element = ScalarNode(key).text()
+      declaration.set(AbstractDeclarationModel.Name, element, element.annotations)
     }
   }
 
@@ -123,9 +115,10 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
       case _: Trait        => ctx.declarations.findTraitOrError(ast)(parsedUrl, SearchScope.Fragments)
       case _: ResourceType => ctx.declarations.findResourceTypeOrError(ast)(parsedUrl, SearchScope.Fragments)
     }
-    val copied: AbstractDeclaration = d.link(parsedUrl, elementAnn)
+    val copied: AbstractDeclaration = d.link(AmfScalar(parsedUrl), elementAnn, Annotations.synthesized())
     copied.add(ExternalFragmentRef(parsedUrl))
     copied.withId(d.id)
-    copied.withName(key, annotations)
+    named(copied)
+    copied
   }
 }

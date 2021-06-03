@@ -25,7 +25,7 @@
           "#3": "OAS 3.0"
         },
         "lexical": {
-          "apiContract:endpoint": "[(19,6)-(34,32)]",
+          "apiContract:endpoint": "[(19,0)-(34,32)]",
           "core:termsOfService": "[(10,2)-(12,0)]",
           "core:description": "[(9,2)-(10,0)]",
           "#3": "[(1,0)-(34,32)]",
@@ -158,14 +158,17 @@
       ],
       "shacl:name": "schema",
       "smaps": {
-        "auto-generated-name": {
-          "#9": ""
+        "synthesized-field": {
+          "shacl:closed": "true"
+        },
+        "type-property-lexical-info": {
+          "#9": "[(29,16)-(29,20)]"
         },
         "lexical": {
           "#9": "[(28,14)-(34,32)]"
         },
-        "type-property-lexical-info": {
-          "#9": "[(29,16)-(29,20)]"
+        "auto-generated-name": {
+          "#9": ""
         }
       }
     },
@@ -188,6 +191,9 @@
       "shacl:minCount": 0,
       "shacl:name": "code",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#10": "[(31,18)-(33,0)]"
         }
@@ -212,6 +218,9 @@
       "shacl:minCount": 0,
       "shacl:name": "msg",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#12": "[(33,18)-(34,32)]"
         }
@@ -304,14 +313,19 @@
         "@id": "#2"
       },
       "smaps": {
-        "declared-element": {
-          "#1": ""
+        "synthesized-field": {
+          "apiContract:explode": "true",
+          "apiContract:required": "true",
+          "apiContract:style": "true"
         },
         "lexical": {
           "raml-shapes:schema": "[(17,6)-(19,0)]",
           "apiContract:paramName": "[(16,6)-(17,0)]",
           "#1": "[(14,4)-(19,0)]",
           "apiContract:binding": "[(15,6)-(16,0)]"
+        },
+        "declared-element": {
+          "#1": ""
         }
       }
     },
@@ -328,14 +342,17 @@
       "shacl:property": [],
       "shacl:name": "query-with-schema",
       "smaps": {
-        "auto-generated-name": {
-          "#2": ""
+        "synthesized-field": {
+          "shacl:closed": "true"
+        },
+        "type-property-lexical-info": {
+          "#2": "[(18,8)-(18,12)]"
         },
         "lexical": {
           "#2": "[(17,6)-(19,0)]"
         },
-        "type-property-lexical-info": {
-          "#2": "[(18,8)-(18,12)]"
+        "auto-generated-name": {
+          "#2": ""
         }
       }
     }

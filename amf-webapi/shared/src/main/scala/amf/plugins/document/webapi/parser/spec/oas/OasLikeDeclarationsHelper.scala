@@ -4,9 +4,8 @@ import amf.core.annotations.DeclaredElement
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, NamedDomainElement}
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.annotations.DeclarationKey
+import amf.plugins.document.vocabularies.parser.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.DeclarationKeyCollector
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.domain.shapes.models.NodeShape
 import amf.validations.ParserSideValidations

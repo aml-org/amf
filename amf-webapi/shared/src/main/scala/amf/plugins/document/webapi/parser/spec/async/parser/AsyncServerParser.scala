@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser._
 import amf.core.parser.Annotations
 import amf.core.utils.IdCounter
@@ -9,6 +9,7 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, YMapEnt
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncServerBindingsParser
 import amf.plugins.document.webapi.parser.spec.domain.{OasLikeSecurityRequirementParser, OasLikeServerParser}
 import amf.plugins.domain.webapi.metamodel.ServerModel
+import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import amf.plugins.domain.webapi.models.api.AsyncApi
 import amf.plugins.domain.webapi.models.Server
 import org.yaml.model.{YMap, YMapEntry, YNode}
@@ -19,7 +20,9 @@ case class AsyncServersParser(map: YMap, api: AsyncApi)(implicit val ctx: AsyncW
     map.entries.map { entry =>
       AsyncServerParser(api.id, entry)
         .parse()
-        .withName(entry.key)
+        .set(ServerModel.Name,
+             AmfScalar(entry.key.asScalar.map(_.text).getOrElse(entry.key.toString), Annotations(entry.key)),
+             Annotations.inferred())
     }
   }
 }
@@ -44,8 +47,8 @@ private case class AsyncServerParser(parent: String, entry: YMapEntry)(implicit 
         val idCounter = new IdCounter()
         val securedBy = entry.value
           .as[Seq[YNode]]
-          .map(s => OasLikeSecurityRequirementParser(s, server.withSecurity, idCounter).parse())
-          .collect { case Some(s) => s }
+          .flatMap(s =>
+            OasLikeSecurityRequirementParser(s, (se: SecurityRequirement) => se.adopted(server.id), idCounter).parse())
 
         server.set(ServerModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
       }

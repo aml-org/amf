@@ -270,6 +270,21 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/link-1996356693/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/document#link-label"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/link-1996356693/source-map/lexical/element_0",
@@ -312,6 +327,21 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/link--465871294/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/link--465871294/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/document#link-label"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
@@ -529,9 +559,37 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/href/source-map/synthesized-field/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/href/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/href/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/href/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/href"
@@ -540,6 +598,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(18,6)-(20,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/href/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(18,11)-(20,0)]"
                       }
                     ]
                   }
@@ -649,9 +720,37 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/result_type/source-map/synthesized-field/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/result_type/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/result_type/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/result_type/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/result_type"
@@ -660,6 +759,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(20,6)-(22,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/property/result_type/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(20,18)-(22,0)]"
                       }
                     ]
                   }
@@ -679,17 +791,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/source-map/declared-element/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype"
+                    "@value": "http://www.w3.org/ns/shacl#closed"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "true"
                   }
                 ]
               }
@@ -704,7 +816,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(17,4)-(22,0)]"
+                    "@value": "[(17,15)-(22,0)]"
                   }
                 ]
               },
@@ -731,6 +843,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(16,2)-(22,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/othertype"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }
@@ -855,9 +982,37 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated/source-map/synthesized-field/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated"
@@ -866,6 +1021,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(24,6)-(26,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(24,17)-(26,0)]"
                       }
                     ]
                   }
@@ -993,9 +1161,37 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated_since/source-map/synthesized-field/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated_since/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated_since/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated_since/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated_since"
@@ -1004,6 +1200,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(26,6)-(29,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/deprecated_since/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(26,23)-(29,0)]"
                       }
                     ]
                   }
@@ -1113,9 +1322,37 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/replaced_by/source-map/synthesized-field/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/replaced_by/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/replaced_by/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/replaced_by/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/replaced_by"
@@ -1124,6 +1361,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(29,6)-(30,20)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/property/replaced_by/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/shapes#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(29,18)-(30,20)]"
                       }
                     ]
                   }
@@ -1143,17 +1393,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/source-map/declared-element/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/source-map/synthesized-field/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype"
+                    "@value": "http://www.w3.org/ns/shacl#closed"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "true"
                   }
                 ]
               }
@@ -1168,7 +1418,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(23,4)-(30,20)]"
+                    "@value": "[(23,15)-(30,20)]"
                   }
                 ]
               },
@@ -1195,6 +1445,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(22,2)-(30,20)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype/source-map/declared-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-inheritance-2/api.raml#/declarations/types/someothertype"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
                   }
                 ]
               }

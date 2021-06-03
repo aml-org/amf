@@ -40,7 +40,8 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   // TODO: diff of final result is too slow
-  multiGoldenTest("Resolves googleapis.compredictionv1.2swagger.raml to jsonld", "googleapis.compredictionv1.2swagger.raml.resolved.%s") { config =>
+  multiGoldenTest("Resolves googleapis.compredictionv1.2swagger.raml to jsonld",
+                  "googleapis.compredictionv1.2swagger.raml.resolved.%s") { config =>
     cycle("googleapis.compredictionv1.2swagger.raml",
           config.golden,
           RamlYamlHint,

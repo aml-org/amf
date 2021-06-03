@@ -32,7 +32,6 @@ traits:
     searchableCollection:
       queryParamName: title
   securedBy: oauth_2_0
-  is: descr
   get:
     is: secured
     protocols: HTTPS
@@ -41,3 +40,5 @@ traits:
     is:
       parameterized:
         tokenName: access_token
+  is:
+    - descr

@@ -35,8 +35,6 @@ traits:
       queryParamName: title
   securedBy:
     - oauth_2_0
-  is:
-    - descr
   get:
     is:
       - secured
@@ -49,3 +47,5 @@ traits:
       -
         parameterized:
           tokenName: access_token
+  is:
+    - descr

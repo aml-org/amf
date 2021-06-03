@@ -1,21 +1,24 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.core.model.domain.AmfScalar
+import amf.core.parser.{Annotations, ScalarNode}
 import amf.core.resolution.VariableReplacer.VariableRegex
-import org.yaml.model.YScalar
+import org.yaml.model.YNode
 
 import scala.collection.mutable
 
 case class AbstractVariables() {
-  val variables: mutable.Set[String] = mutable.Set()
+  private val variables: mutable.Map[String, Annotations] = mutable.Map()
 
-  def parseVariables(scalar: YScalar): this.type = parseVariables(scalar.text)
+  def parseVariables(node: YNode): this.type = parseVariables(ScalarNode(node))
 
-  def parseVariables(s: String): this.type = {
+  def parseVariables(scalarNode: ScalarNode): this.type = {
     VariableRegex
-      .findAllMatchIn(s)
-      .foreach(m => variables += m.group(1))
+      .findAllMatchIn(scalarNode.text().toString)
+      .foreach(m => variables.update(m.group(1), scalarNode.string().annotations))
     this
   }
 
-  def ifNonEmpty(fn: Seq[String] => Unit): Unit = if (variables.nonEmpty) fn(variables.toSeq)
+  def ifNonEmpty(fn: Seq[AmfScalar] => Unit): Unit =
+    if (variables.nonEmpty) fn(variables.map(v => AmfScalar(v._1, v._2)).toSeq)
 }

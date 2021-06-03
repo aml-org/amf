@@ -1,16 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.declaration.emitters
 
-import amf.core.annotations.SynthesizedField
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Annotations
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.domain.{
-  NamedMultipleExampleEmitter,
-  SafeNamedMultipleExampleEmitter,
-  SingleExampleEmitter
-}
+import amf.plugins.document.webapi.parser.spec.domain.{SafeNamedMultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}
 import amf.plugins.domain.shapes.models.{AnyShape, Example}
 
@@ -35,7 +30,7 @@ trait ExamplesEmitter {
           }
         } else {
           val idCounter = new IdCounter()
-          anonymous.foreach(e => e.withName(idCounter.genId("generated"), Annotations(SynthesizedField())))
+          anonymous.foreach(e => e.withName(idCounter.genId("generated"), Annotations.synthesized()))
           results += SafeNamedMultipleExampleEmitter("examples", examples, ordering, references)
         }
       })

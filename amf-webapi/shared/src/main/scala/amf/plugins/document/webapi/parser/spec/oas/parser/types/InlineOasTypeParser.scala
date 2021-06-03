@@ -2,8 +2,8 @@ package amf.plugins.document.webapi.parser.spec.oas.parser.types
 
 import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
-import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.model.DataType
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
@@ -107,7 +107,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           Seq(
             parsed,
             NilShape().withId(union.id + "_nil")
-          )
+          ),
+          Annotations.synthesized()
         )
         union
       case _ =>
@@ -152,7 +153,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
     val exclusiveProps = YMap(finals, finals.headOption.map(_.sourceName).getOrElse(""))
     var i              = 0
-    val parsedTypes: Seq[AmfElement] = map.key("type").get.value.as[YSequence].nodes map { node =>
+    val sequence       = map.key("type").get.value.as[YSequence]
+    val parsedTypes: Seq[AmfElement] = sequence.nodes map { node =>
       i += 1
       if (node.tagType == YType.Str) {
         node.as[String] match {
@@ -191,7 +193,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       }
     } collect { case Some(t: AmfElement) => t }
 
-    if (parsedTypes.nonEmpty) union.setArrayWithoutId(UnionShapeModel.AnyOf, parsedTypes)
+    if (parsedTypes.nonEmpty) union.setArrayWithoutId(UnionShapeModel.AnyOf, parsedTypes, Annotations(sequence))
 
     union
   }
@@ -319,9 +321,15 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       map
         .key("type")
-        .fold(shape
-          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations()))(entry =>
-          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations(entry)))
+        .fold(
+          shape
+            .set(ScalarShapeModel.DataType,
+                 AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)),
+                 Annotations.synthesized()))(
+          entry =>
+            shape.set(ScalarShapeModel.DataType,
+                      AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef), Annotations(entry.value)),
+                      Annotations(entry)))
 
       if (isStringScalar(shape) && version.isBiggerThanOrEqualTo(JSONSchemaDraft7SchemaVersion)) {
         ContentParser(s => s.adopted(shape.id), version).parse(shape, map)
@@ -358,8 +366,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
               val unionNodes = seq.zipWithIndex
                 .map {
                   case (unionNode, index) =>
-                    val entry = YMapEntry(YNode(s"item$index"), unionNode)
-                    OasTypeParser(entry, item => item.adopted(shape.id + "/items/" + index), version).parse()
+                    val name  = s"item$index"
+                    val entry = YMapEntryLike(name, unionNode)
+                    OasTypeParser(entry, name, item => item.adopted(shape.id + "/items/" + index), version).parse()
                 }
                 .filter(_.isDefined)
                 .map(_.get)
@@ -391,7 +400,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArrayWithoutId(ShapeModel.Or, unionNodes, Annotations(entry.value))
+              shape.fields.setWithoutId(ShapeModel.Or,
+                                        AmfArray(unionNodes, Annotations(entry.value)),
+                                        Annotations(entry))
             case _ =>
               ctx.eh.violation(InvalidOrType,
                                shape.id,
@@ -420,7 +431,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArrayWithoutId(ShapeModel.Xone, nodes, Annotations(entry.value))
+              shape.fields.setWithoutId(ShapeModel.Xone, AmfArray(nodes, Annotations(entry.value)), Annotations(entry))
             case _ =>
               ctx.eh.violation(InvalidXoneType,
                                shape.id,
@@ -560,9 +571,12 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         item  <- OasTypeParser(entry, items => items.adopted(shape.id + "/items"), version).parse()
       } yield {
         item match {
-          case array: ArrayShape   => shape.withItems(array).toMatrixShape
-          case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
-          case other: AnyShape     => shape.withItems(other)
+          case array: ArrayShape =>
+            shape.set(ArrayShapeModel.Items, array, Annotations(entry)).toMatrixShape
+          case matrix: MatrixShape =>
+            shape.set(ArrayShapeModel.Items, matrix, Annotations(entry)).toMatrixShape
+          case other: AnyShape =>
+            shape.set(ArrayShapeModel.Items, other, Annotations(entry))
         }
       }
 
@@ -613,7 +627,9 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         .map { entry =>
           val sequence = entry.value.as[YSequence]
           val examples = ExamplesDataParser(sequence, options, shape.id).parse()
-          shape.setArrayWithoutId(AnyShapeModel.Examples, examples, Annotations(entry))
+          shape.fields.setWithoutId(AnyShapeModel.Examples,
+                                    AmfArray(examples, Annotations(entry.value)),
+                                    Annotations(entry))
         }
   }
 
@@ -628,14 +644,14 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       map.key("minProperties", NodeShapeModel.MinProperties in shape)
       map.key("maxProperties", NodeShapeModel.MaxProperties in shape)
 
-      shape.set(NodeShapeModel.Closed, value = false)
+      shape.set(NodeShapeModel.Closed, AmfScalar(value = false), Annotations.synthesized())
 
       map.key("additionalProperties").foreach { entry =>
         entry.value.tagType match {
           case YType.Bool => (NodeShapeModel.Closed in shape).negated.explicit(entry)
           case YType.Map =>
             OasTypeParser(entry, s => s.adopted(shape.id), version).parse().foreach { s =>
-              shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))
+              shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations.synthesized())
             }
           case _ =>
             ctx.eh.violation(InvalidAdditionalPropertiesType,
@@ -683,16 +699,16 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
           case _ => // Empty properties node.
         }
       })
-      val (entryAnnotations, valueAnnotations) = properEntry.map { pe =>
-        Annotations(pe.value) -> Annotations(pe)
+      val valueAnnotations = properEntry.map { pe =>
+        Annotations(pe.value)
       } orElse {
         patternPropEntry.map { pp =>
-          Annotations(pp.value) -> Annotations(pp)
+          Annotations(pp.value)
         }
-      } getOrElse { Annotations() -> Annotations() }
+      } getOrElse { Annotations() }
 
       if (properties.nonEmpty)
-        shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, entryAnnotations), valueAnnotations)
+        shape.set(NodeShapeModel.Properties, AmfArray(properties.values.toSeq, valueAnnotations), valueAnnotations)
       shape.properties.foreach(p => properties += (p.name.value() -> p))
 
       parseShapeDependencies(shape)
@@ -784,8 +800,8 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
       ctx.closedShape(shape.id, map, "discriminator")
     }
 
-    private def parseMappings(mappingEntry: YMapEntry): Unit = {
-      val map = mappingEntry.value.as[YMap]
+    private def parseMappings(mappingsEntry: YMapEntry): Unit = {
+      val map = mappingsEntry.value.as[YMap]
       val mappings = map.entries.map(entry => {
         val mapping  = IriTemplateMapping(Annotations(entry))
         val element  = ScalarNode(entry.key).string()
@@ -793,45 +809,50 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
         mapping.set(TemplateVariable, element, Annotations(entry.key))
         mapping.set(LinkExpression, variable, Annotations(entry.value))
       })
-      shape.setArray(NodeShapeModel.DiscriminatorMapping, mappings, Annotations(mappingEntry))
+      shape.fields.set(shape.id,
+                       NodeShapeModel.DiscriminatorMapping,
+                       AmfArray(mappings, Annotations(mappingsEntry.value)),
+                       Annotations(mappingsEntry))
 
       val discriminatorValueMapping = map.entries.map { entry =>
-        val discriminatorValue = ScalarNode(entry.key).string()
+        val key: YNode         = entry.key
+        val discriminatorValue = ScalarNode(key).string()
         val targetShape = {
           val rawRef: String = entry.value
           val definitionName = OasDefinitions.stripDefinitionsPrefix(rawRef)
           ctx.declarations
             .findType(definitionName, SearchScope.All) match {
             case Some(s) =>
-              s.link(entry.key, Annotations(ast))
+              s.link(AmfScalar(key.toString), Annotations(ast), Annotations.synthesized())
                 .asInstanceOf[AnyShape]
                 .withName(name, nameAnnotations)
                 .withSupportsRecursion(true)
             case _ =>
-              val resultShape = AnyShape(ast).withName(entry.key, Annotations(entry.key))
+              val resultShape = AnyShape(ast).withName(key, Annotations(key))
               val tmpShape = UnresolvedShape(Fields(),
                                              Annotations(entry.value),
                                              entry.value,
                                              None,
                                              Some((k: String) => resultShape.set(LinkableElementModel.TargetId, k)),
                                              shouldLink = false)
-                .withName(entry.key, Annotations())
+                .withName(key, Annotations())
                 .withSupportsRecursion(true)
               tmpShape.unresolved(definitionName, entry.value, "warning")(ctx)
               tmpShape.withContext(ctx)
-              val encodedKey = entry.key.toString.urlComponentEncoded
+              val encodedKey = key.toString.urlComponentEncoded
               tmpShape.withId(s"${shape.id}/discriminator/$encodedKey/unresolved")
               resultShape.withId(s"${shape.id}/discriminator/$encodedKey")
-              resultShape.withLinkTarget(tmpShape).withLinkLabel(entry.key)
+              resultShape.withLinkTarget(tmpShape).withLinkLabel(key)
           }
         }
 
         val discriminatorMapping = models.DiscriminatorValueMapping(Annotations(entry))
-        discriminatorMapping.set(DiscriminatorValue, discriminatorValue, Annotations(entry.key))
+        discriminatorMapping.set(DiscriminatorValue, discriminatorValue, Annotations(key))
         discriminatorMapping.set(DiscriminatorValueTarget, targetShape, Annotations(entry.value))
       }
 
-      shape.setArray(NodeShapeModel.DiscriminatorValueMapping, discriminatorValueMapping, Annotations(mappingEntry))
+      val fieldValue = AmfArray(discriminatorValueMapping, Annotations(mappingsEntry.value))
+      shape.set(NodeShapeModel.DiscriminatorValueMapping, fieldValue, Annotations(mappingsEntry))
     }
   }
 
@@ -851,17 +872,22 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
     def parse(): PropertyShape = {
 
-      val name                = entry.key.as[YScalar].text
-      val required            = requiredFields.contains(name)
-      val requiredAnnotations = requiredFields.get(name).map(node => Annotations(node)).getOrElse(Annotations())
+      val name     = entry.key.as[YScalar].text
+      val required = requiredFields.contains(name)
+      val requiredAnnotations =
+        requiredFields.get(name).map(node => Annotations(node)).getOrElse(Annotations.synthesized())
 
       val property = producer(name)
         .add(Annotations(entry))
-        .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), requiredAnnotations += ExplicitField())
+        .set(PropertyShapeModel.MinCount,
+             AmfScalar(if (required) 1 else 0, Annotations.synthesized()),
+             requiredAnnotations += ExplicitField())
 
       property.set(
         PropertyShapeModel.Path,
-        AmfScalar((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri(), Annotations(entry.key)))
+        AmfScalar((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri(), Annotations(entry.key)),
+        Annotations.inferred()
+      )
 
       if (version.isInstanceOf[OAS20SchemaVersion])
         validateReadOnlyAndRequired(entry.value.toOption[YMap], property, required)
@@ -881,9 +907,11 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
                                  entry)
                 }
                 val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
-                property.set(PropertyShapeModel.MinCount,
-                             AmfScalar(if (required) 1 else 0),
-                             Annotations(entry) += ExplicitField())
+                property.set(
+                  PropertyShapeModel.MinCount,
+                  AmfScalar(if (required) 1 else 0, Annotations.synthesized()), // does this annotation make sense? should parent not be `synthetized`?
+                  Annotations(entry) += ExplicitField()
+                )
               }
             }
           )
@@ -891,7 +919,7 @@ case class InlineOasTypeParser(entryOrNode: YMapEntryLike,
 
       OasTypeParser(entry, shape => shape.adopted(property.id), version)
         .parse()
-        .foreach(property.set(PropertyShapeModel.Range, _))
+        .foreach(property.set(PropertyShapeModel.Range, _, Annotations.inferred()))
 
       if (patterned) property.withPatternName(name)
 

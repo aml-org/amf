@@ -103,15 +103,15 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fuser/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fuser/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fuser"
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(5,0)-(7,0)]"
+                        "@value": "[(5,0)-(5,5)]"
                       }
                     ]
                   },
@@ -125,6 +125,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(6,2)-(7,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fuser/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fuser"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,0)-(7,0)]"
                       }
                     ]
                   }
@@ -156,15 +169,15 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers"
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(7,0)-(14,20)]"
+                        "@value": "[(7,0)-(7,6)]"
                       }
                     ]
                   },
@@ -178,6 +191,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(8,2)-(9,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(7,0)-(14,20)]"
                       }
                     ]
                   }
@@ -325,12 +351,53 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
+                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map/synthesized-field/element_1",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#required"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map/synthesized-field/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#binding"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
+                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map/lexical/element_1",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(12,5)-(14,20)]"
+                          }
+                        ]
+                      },
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/path/userId"
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -367,7 +434,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_2",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_3",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://a.ml/vocabularies/core#name"
@@ -376,6 +443,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(10,3)-(11,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/apiContract#path"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,2)-(9,11)]"
                       }
                     ]
                   },
@@ -393,7 +473,7 @@
                     ]
                   },
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_1",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/define-uri-parameters/api.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D"

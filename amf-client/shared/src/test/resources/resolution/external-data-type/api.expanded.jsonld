@@ -87,7 +87,7 @@
                             ],
                             "raml-shapes:inherits": [
                               {
-                                "@id": "./type.raml#/type/link--1501856539",
+                                "@id": "./type.raml#/type/link-1250261792",
                                 "@type": [
                                   "shacl:NodeShape",
                                   "raml-shapes:AnyShape",
@@ -112,16 +112,16 @@
                                 ],
                                 "sourcemaps:sources": [
                                   {
-                                    "@id": "./type.raml#/type/link--1501856539/source-map",
+                                    "@id": "./type.raml#/type/link-1250261792/source-map",
                                     "@type": [
                                       "sourcemaps:SourceMap"
                                     ],
                                     "sourcemaps:external-fragment-ref": [
                                       {
-                                        "@id": "./type.raml#/type/link--1501856539/source-map/external-fragment-ref/element_0",
+                                        "@id": "./type.raml#/type/link-1250261792/source-map/external-fragment-ref/element_0",
                                         "sourcemaps:element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/link--1501856539"
+                                            "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/link-1250261792"
                                           }
                                         ],
                                         "sourcemaps:value": [
@@ -133,25 +133,25 @@
                                     ],
                                     "sourcemaps:lexical": [
                                       {
-                                        "@id": "./type.raml#/type/link--1501856539/source-map/lexical/element_0",
+                                        "@id": "./type.raml#/type/link-1250261792/source-map/lexical/element_0",
                                         "sourcemaps:element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/link--1501856539"
+                                            "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/link-1250261792"
                                           }
                                         ],
                                         "sourcemaps:value": [
                                           {
-                                            "@value": "[(7,14)-(7,32)]"
+                                            "@value": "[(7,8)-(8,0)]"
                                           }
                                         ]
                                       }
                                     ],
                                     "sourcemaps:auto-generated-name": [
                                       {
-                                        "@id": "./type.raml#/type/link--1501856539/source-map/auto-generated-name/element_0",
+                                        "@id": "./type.raml#/type/link-1250261792/source-map/auto-generated-name/element_0",
                                         "sourcemaps:element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/link--1501856539"
+                                            "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/link-1250261792"
                                           }
                                         ],
                                         "sourcemaps:value": [
@@ -171,17 +171,17 @@
                                 "@type": [
                                   "sourcemaps:SourceMap"
                                 ],
-                                "sourcemaps:type-property-lexical-info": [
+                                "sourcemaps:synthesized-field": [
                                   {
-                                    "@id": "#/web-api/end-points/%2Fhello/get/request/application%2Fjson/schema/source-map/type-property-lexical-info/element_0",
+                                    "@id": "#/web-api/end-points/%2Fhello/get/request/application%2Fjson/schema/source-map/synthesized-field/element_0",
                                     "sourcemaps:element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml#/web-api/end-points/%2Fhello/get/request/application%2Fjson/schema"
+                                        "@value": "shacl:closed"
                                       }
                                     ],
                                     "sourcemaps:value": [
                                       {
-                                        "@value": "[(7,8)-(7,12)]"
+                                        "@value": "true"
                                       }
                                     ]
                                   }
@@ -210,6 +210,21 @@
                                     "sourcemaps:value": [
                                       {
                                         "@value": "[(7,8)-(8,0)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "sourcemaps:type-property-lexical-info": [
+                                  {
+                                    "@id": "#/web-api/end-points/%2Fhello/get/request/application%2Fjson/schema/source-map/type-property-lexical-info/element_0",
+                                    "sourcemaps:element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml#/web-api/end-points/%2Fhello/get/request/application%2Fjson/schema"
+                                      }
+                                    ],
+                                    "sourcemaps:value": [
+                                      {
+                                        "@value": "[(7,8)-(7,12)]"
                                       }
                                     ]
                                   }
@@ -251,19 +266,6 @@
                         ],
                         "sourcemaps:lexical": [
                           {
-                            "@id": "#/web-api/end-points/%2Fhello/get/request/source-map/lexical/element_1",
-                            "sourcemaps:element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml#/web-api/end-points/%2Fhello/get/request"
-                              }
-                            ],
-                            "sourcemaps:value": [
-                              {
-                                "@value": "[(5,0)-(8,0)]"
-                              }
-                            ]
-                          },
-                          {
                             "@id": "#/web-api/end-points/%2Fhello/get/request/source-map/lexical/element_0",
                             "sourcemaps:element": [
                               {
@@ -286,21 +288,6 @@
                     "@id": "#/web-api/end-points/%2Fhello/get/source-map",
                     "@type": [
                       "sourcemaps:SourceMap"
-                    ],
-                    "sourcemaps:synthesized-field": [
-                      {
-                        "@id": "#/web-api/end-points/%2Fhello/get/source-map/synthesized-field/element_0",
-                        "sourcemaps:element": [
-                          {
-                            "@value": "apiContract:expects"
-                          }
-                        ],
-                        "sourcemaps:value": [
-                          {
-                            "@value": "true"
-                          }
-                        ]
-                      }
                     ],
                     "sourcemaps:lexical": [
                       {
@@ -329,7 +316,7 @@
                 ],
                 "sourcemaps:lexical": [
                   {
-                    "@id": "#/web-api/end-points/%2Fhello/source-map/lexical/element_0",
+                    "@id": "#/web-api/end-points/%2Fhello/source-map/lexical/element_1",
                     "sourcemaps:element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/api.raml#/web-api/end-points/%2Fhello"
@@ -338,6 +325,19 @@
                     "sourcemaps:value": [
                       {
                         "@value": "[(3,0)-(8,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/web-api/end-points/%2Fhello/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "apiContract:path"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(3,0)-(3,6)]"
                       }
                     ]
                   }
@@ -474,7 +474,7 @@
                         ],
                         "sourcemaps:lexical": [
                           {
-                            "@id": "./type.raml#/type/property/name/scalar/name/source-map/lexical/element_0",
+                            "@id": "./type.raml#/type/property/name/scalar/name/source-map/lexical/element_1",
                             "sourcemaps:element": [
                               {
                                 "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/property/name/scalar/name"
@@ -483,6 +483,19 @@
                             "sourcemaps:value": [
                               {
                                 "@value": "[(3,2)-(3,14)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "./type.raml#/type/property/name/scalar/name/source-map/lexical/element_0",
+                            "sourcemaps:element": [
+                              {
+                                "@value": "shacl:datatype"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(3,8)-(3,14)]"
                               }
                             ]
                           }
@@ -507,9 +520,37 @@
                     "@type": [
                       "sourcemaps:SourceMap"
                     ],
+                    "sourcemaps:synthesized-field": [
+                      {
+                        "@id": "./type.raml#/type/property/name/source-map/synthesized-field/element_1",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "shacl:path"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "./type.raml#/type/property/name/source-map/synthesized-field/element_0",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "shacl:minCount"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
+                    ],
                     "sourcemaps:lexical": [
                       {
-                        "@id": "./type.raml#/type/property/name/source-map/lexical/element_0",
+                        "@id": "./type.raml#/type/property/name/source-map/lexical/element_1",
                         "sourcemaps:element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type/property/name"
@@ -518,6 +559,19 @@
                         "sourcemaps:value": [
                           {
                             "@value": "[(3,2)-(3,14)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "./type.raml#/type/property/name/source-map/lexical/element_0",
+                        "sourcemaps:element": [
+                          {
+                            "@value": "raml-shapes:range"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(3,8)-(3,14)]"
                           }
                         ]
                       }
@@ -537,17 +591,17 @@
                 "@type": [
                   "sourcemaps:SourceMap"
                 ],
-                "sourcemaps:source-vendor": [
+                "sourcemaps:synthesized-field": [
                   {
-                    "@id": "./type.raml#/type/source-map/source-vendor/element_0",
+                    "@id": "./type.raml#/type/source-map/synthesized-field/element_0",
                     "sourcemaps:element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type"
+                        "@value": "shacl:closed"
                       }
                     ],
                     "sourcemaps:value": [
                       {
-                        "@value": "RAML 1.0"
+                        "@value": "true"
                       }
                     ]
                   }
@@ -575,7 +629,22 @@
                     ],
                     "sourcemaps:value": [
                       {
-                        "@value": "[(2,0)-(3,14)]"
+                        "@value": "[(2,11)-(3,14)]"
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:source-vendor": [
+                  {
+                    "@id": "./type.raml#/type/source-map/source-vendor/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/resolution/external-data-type/type.raml#/type"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "RAML 1.0"
                       }
                     ]
                   }

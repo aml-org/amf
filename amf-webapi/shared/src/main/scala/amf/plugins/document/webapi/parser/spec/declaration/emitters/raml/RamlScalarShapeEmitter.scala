@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.document.webapi.annotations.Inferred
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.NumberTypeToYTypeConverter
 import amf.plugins.document.webapi.parser.{
@@ -19,7 +19,6 @@ import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.{ScalarShape, TypeDef}
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping}
 import org.yaml.model.YType
-import amf.core.utils.AmfStrings
 
 import scala.collection.mutable.ListBuffer
 
@@ -39,7 +38,7 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     val typeEmitterOption = if (scalar.inherits.isEmpty) {
       fs.entry(ScalarShapeModel.DataType)
         .flatMap(f =>
-          if (!f.value.annotations.contains(classOf[Inferred])) {
+          if (!f.value.isSynthesized) {
             scalar.fields
               .removeField(ShapeModel.Inherits) // for scalar doesn't make any sense to write the inherits, because it will always be another scalar with the same t
             Some(MapEntryEmitter("type", typeDef, position = pos(f.value.annotations)))

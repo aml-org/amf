@@ -144,17 +144,20 @@
                                           }
                                         ],
                                         "smaps": {
-                                          "resolved-link-target": {
-                                            "#29": "amf://id#26"
+                                          "synthesized-field": {
+                                            "doc:recursive": "true"
                                           },
-                                          "lexical": {
-                                            "#29": "[(29,10)-(32,0)]"
+                                          "resolved-link": {
+                                            "#29": "amf://id#30"
                                           },
                                           "type-property-lexical-info": {
                                             "#29": "[(6,9)-(6,15)]"
                                           },
-                                          "resolved-link": {
-                                            "#29": "amf://id#30"
+                                          "lexical": {
+                                            "#29": "[(29,10)-(32,0)]"
+                                          },
+                                          "resolved-link-target": {
+                                            "#29": "amf://id#26"
                                           },
                                           "parsed-json-schema": {
                                             "#29": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -188,6 +191,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:minCount": "true"
+                                  },
                                   "lexical": {
                                     "#27": "[(11,12)-(16,13)]"
                                   }
@@ -271,17 +277,21 @@
                               }
                             ],
                             "smaps": {
-                              "resolved-link-target": {
-                                "#26": "amf://id#26"
+                              "synthesized-field": {
+                                "doc:recursive": "true",
+                                "shacl:closed": "true"
                               },
-                              "lexical": {
-                                "#26": "[(29,10)-(32,0)]"
+                              "resolved-link": {
+                                "#26": "amf://id#30"
                               },
                               "type-property-lexical-info": {
                                 "#26": "[(6,9)-(6,15)]"
                               },
-                              "resolved-link": {
-                                "#26": "amf://id#30"
+                              "lexical": {
+                                "#26": "[(29,10)-(32,0)]"
+                              },
+                              "resolved-link-target": {
+                                "#26": "amf://id#26"
                               },
                               "parsed-json-schema": {
                                 "#26": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -394,6 +404,10 @@
                                                   }
                                                 ],
                                                 "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
                                                   "lexical": {
                                                     "#18": "[(1,0)-(1,0)]"
                                                   }
@@ -406,6 +420,9 @@
                                               }
                                             ],
                                             "smaps": {
+                                              "synthesized-field": {
+                                                "core:name": "true"
+                                              },
                                               "lexical": {
                                                 "data:schema": "[(11,14)-(13,0)]",
                                                 "#17": "[(11,0)-(13,0)]"
@@ -419,6 +436,9 @@
                                           }
                                         ],
                                         "smaps": {
+                                          "synthesized-field": {
+                                            "core:name": "true"
+                                          },
                                           "lexical": {
                                             "data:application%2Fjson": "[(10,12)-(13,0)]",
                                             "#16": "[(10,0)-(13,0)]"
@@ -432,6 +452,9 @@
                                       }
                                     ],
                                     "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true"
+                                      },
                                       "lexical": {
                                         "data:body": "[(9,10)-(13,0)]",
                                         "#15": "[(9,0)-(13,0)]"
@@ -445,6 +468,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true"
+                                  },
                                   "lexical": {
                                     "data:500": "[(8,8)-(13,0)]",
                                     "#14": "[(8,0)-(13,0)]"
@@ -458,6 +484,9 @@
                               }
                             ],
                             "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
                               "lexical": {
                                 "data:responses": "[(7,6)-(13,0)]",
                                 "#13": "[(7,6)-(13,0)]"
@@ -471,7 +500,8 @@
                           },
                           "lexical": {
                             "doc:dataNode": "[(7,6)-(13,0)]",
-                            "#12": "[(6,4)-(13,0)]"
+                            "#12": "[(6,4)-(13,0)]",
+                            "core:name": "[(6,4)-(6,11)]"
                           },
                           "resolved-link": {
                             "#12": "amf://id#19"
@@ -498,6 +528,7 @@
             ],
             "smaps": {
               "lexical": {
+                "apiContract:path": "[(23,0)-(23,10)]",
                 "#21": "[(23,0)-(32,0)]"
               }
             }
@@ -619,17 +650,20 @@
                                           }
                                         ],
                                         "smaps": {
-                                          "resolved-link-target": {
-                                            "#29": "amf://id#26"
+                                          "synthesized-field": {
+                                            "doc:recursive": "true"
                                           },
-                                          "lexical": {
-                                            "#29": "[(29,10)-(32,0)]"
+                                          "resolved-link": {
+                                            "#29": "amf://id#30"
                                           },
                                           "type-property-lexical-info": {
                                             "#29": "[(6,9)-(6,15)]"
                                           },
-                                          "resolved-link": {
-                                            "#29": "amf://id#30"
+                                          "lexical": {
+                                            "#29": "[(29,10)-(32,0)]"
+                                          },
+                                          "resolved-link-target": {
+                                            "#29": "amf://id#26"
                                           },
                                           "parsed-json-schema": {
                                             "#29": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -663,6 +697,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:minCount": "true"
+                                  },
                                   "lexical": {
                                     "#27": "[(11,12)-(16,13)]"
                                   }
@@ -741,11 +778,14 @@
                               }
                             ],
                             "smaps": {
-                              "lexical": {
-                                "#38": "[(38,10)-(40,0)]"
+                              "synthesized-field": {
+                                "shacl:closed": "true"
                               },
                               "type-property-lexical-info": {
                                 "#38": "[(6,9)-(6,15)]"
+                              },
+                              "lexical": {
+                                "#38": "[(38,10)-(40,0)]"
                               },
                               "parsed-json-schema": {
                                 "#38": "{\n   \"$schema\":\"http://json-schema.org/draft-07/schema#\",\n   \"type\":\"object\",\n   \"definitions\":{\n      \"SomeSchema\":{\n         \"type\":\"object\",\n         \"required\":[\n            \"status\"\n         ],\n         \"properties\":{\n            \"causes\":{\n               \"type\":\"array\",\n               \"items\":{\n                  \"$ref\":\"#/definitions/SomeSchema\"\n               }\n            },\n            \"status\":{\n               \"type\": \"string\"\n            }\n         }\n      }\n   },\n   \"$ref\": \"#/definitions/SomeSchema\"\n}"
@@ -874,6 +914,10 @@
                                                   }
                                                 ],
                                                 "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
                                                   "lexical": {
                                                     "#10": "[(1,0)-(1,0)]"
                                                   }
@@ -886,6 +930,9 @@
                                               }
                                             ],
                                             "smaps": {
+                                              "synthesized-field": {
+                                                "core:name": "true"
+                                              },
                                               "lexical": {
                                                 "data:schema": "[(20,16)-(23,0)]",
                                                 "#9": "[(20,0)-(23,0)]"
@@ -899,6 +946,9 @@
                                           }
                                         ],
                                         "smaps": {
+                                          "synthesized-field": {
+                                            "core:name": "true"
+                                          },
                                           "lexical": {
                                             "data:application%2Fjson": "[(19,14)-(23,0)]",
                                             "#8": "[(19,0)-(23,0)]"
@@ -912,6 +962,9 @@
                                       }
                                     ],
                                     "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true"
+                                      },
                                       "lexical": {
                                         "data:body": "[(18,12)-(23,0)]",
                                         "#7": "[(18,0)-(23,0)]"
@@ -925,6 +978,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true"
+                                  },
                                   "lexical": {
                                     "data:500": "[(17,10)-(23,0)]",
                                     "#6": "[(17,0)-(23,0)]"
@@ -938,6 +994,9 @@
                               }
                             ],
                             "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
                               "lexical": {
                                 "data:responses": "[(16,8)-(23,0)]",
                                 "#5": "[(16,0)-(23,0)]"
@@ -951,6 +1010,9 @@
                           }
                         ],
                         "smaps": {
+                          "synthesized-field": {
+                            "core:name": "true"
+                          },
                           "lexical": {
                             "data:post": "[(15,6)-(23,0)]",
                             "#4": "[(15,6)-(23,0)]"
@@ -964,7 +1026,8 @@
                       },
                       "lexical": {
                         "doc:dataNode": "[(15,6)-(23,0)]",
-                        "#3": "[(14,4)-(23,0)]"
+                        "#3": "[(14,4)-(23,0)]",
+                        "core:name": "[(14,4)-(14,8)]"
                       },
                       "resolved-link": {
                         "#3": "amf://id#11"
@@ -982,6 +1045,7 @@
             ],
             "smaps": {
               "lexical": {
+                "apiContract:path": "[(32,0)-(32,10)]",
                 "#33": "[(32,0)-(40,0)]"
               }
             }
@@ -1138,6 +1202,10 @@
                                       }
                                     ],
                                     "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true",
+                                        "shacl:datatype": "true"
+                                      },
                                       "lexical": {
                                         "#10": "[(1,0)-(1,0)]"
                                       }
@@ -1150,6 +1218,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true"
+                                  },
                                   "lexical": {
                                     "data:schema": "[(20,16)-(23,0)]",
                                     "#9": "[(20,0)-(23,0)]"
@@ -1163,6 +1234,9 @@
                               }
                             ],
                             "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
                               "lexical": {
                                 "data:application%2Fjson": "[(19,14)-(23,0)]",
                                 "#8": "[(19,0)-(23,0)]"
@@ -1176,6 +1250,9 @@
                           }
                         ],
                         "smaps": {
+                          "synthesized-field": {
+                            "core:name": "true"
+                          },
                           "lexical": {
                             "data:body": "[(18,12)-(23,0)]",
                             "#7": "[(18,0)-(23,0)]"
@@ -1189,6 +1266,9 @@
                       }
                     ],
                     "smaps": {
+                      "synthesized-field": {
+                        "core:name": "true"
+                      },
                       "lexical": {
                         "data:500": "[(17,10)-(23,0)]",
                         "#6": "[(17,0)-(23,0)]"
@@ -1202,6 +1282,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "core:name": "true"
+                  },
                   "lexical": {
                     "data:responses": "[(16,8)-(23,0)]",
                     "#5": "[(16,0)-(23,0)]"
@@ -1215,6 +1298,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "core:name": "true"
+              },
               "lexical": {
                 "data:post": "[(15,6)-(23,0)]",
                 "#4": "[(15,6)-(23,0)]"
@@ -1228,7 +1314,8 @@
           },
           "lexical": {
             "doc:dataNode": "[(15,6)-(23,0)]",
-            "#3": "[(14,4)-(23,0)]"
+            "#3": "[(14,4)-(23,0)]",
+            "core:name": "[(14,4)-(14,8)]"
           },
           "resolved-link": {
             "#3": "amf://id#11"
@@ -1311,6 +1398,10 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true",
+                                    "shacl:datatype": "true"
+                                  },
                                   "lexical": {
                                     "#18": "[(1,0)-(1,0)]"
                                   }
@@ -1323,6 +1414,9 @@
                               }
                             ],
                             "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
                               "lexical": {
                                 "data:schema": "[(11,14)-(13,0)]",
                                 "#17": "[(11,0)-(13,0)]"
@@ -1336,6 +1430,9 @@
                           }
                         ],
                         "smaps": {
+                          "synthesized-field": {
+                            "core:name": "true"
+                          },
                           "lexical": {
                             "data:application%2Fjson": "[(10,12)-(13,0)]",
                             "#16": "[(10,0)-(13,0)]"
@@ -1349,6 +1446,9 @@
                       }
                     ],
                     "smaps": {
+                      "synthesized-field": {
+                        "core:name": "true"
+                      },
                       "lexical": {
                         "data:body": "[(9,10)-(13,0)]",
                         "#15": "[(9,0)-(13,0)]"
@@ -1362,6 +1462,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "core:name": "true"
+                  },
                   "lexical": {
                     "data:500": "[(8,8)-(13,0)]",
                     "#14": "[(8,0)-(13,0)]"
@@ -1375,6 +1478,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "core:name": "true"
+              },
               "lexical": {
                 "data:responses": "[(7,6)-(13,0)]",
                 "#13": "[(7,6)-(13,0)]"
@@ -1388,7 +1494,8 @@
           },
           "lexical": {
             "doc:dataNode": "[(7,6)-(13,0)]",
-            "#12": "[(6,4)-(13,0)]"
+            "#12": "[(6,4)-(13,0)]",
+            "core:name": "[(6,4)-(6,11)]"
           },
           "resolved-link": {
             "#12": "amf://id#19"

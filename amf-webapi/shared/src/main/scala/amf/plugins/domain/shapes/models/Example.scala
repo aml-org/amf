@@ -33,8 +33,9 @@ class Example(override val fields: Fields, override val annotations: Annotations
   def withDescription(description: String): this.type = set(Description, description)
   def withValue(value: String): this.type             = set(ExternalSourceElementModel.Raw, value)
   def withStructuredValue(value: DataNode): this.type = set(StructuredValue, value)
-  def withStrict(strict: Boolean): this.type          = set(Strict, strict)
-  def withMediaType(mediaType: String): this.type     = set(MediaType, mediaType)
+  def withStrict(strict: Boolean): this.type =
+    set(Strict, strict)
+  def withMediaType(mediaType: String): this.type = set(MediaType, mediaType)
 
   override def linkCopy(): Example = Example().withId(id)
 

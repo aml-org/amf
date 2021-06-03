@@ -137,6 +137,8 @@ types:
           parentId:
             type: string
             description: The ID of the parent.
+          fileId:
+            type: string
         get:
           description: Gets a specific parent reference.
         delete:
@@ -154,6 +156,8 @@ types:
           permissionId:
             type: string
             description: The ID for the permission.
+          fileId:
+            type: string
         get:
           description: Gets a permission by ID.
         put:
@@ -180,6 +184,8 @@ types:
           revisionId:
             type: string
             description: The ID of the revision.
+          fileId:
+            type: string
         get: {}
         put: {}
         delete: {}
@@ -203,6 +209,10 @@ types:
               replyId:
                 type: string
                 description: The ID of the reply.
+              fileId:
+                type: string
+              commentId:
+                type: string
             get:
               description: Gets a reply.
             put:
@@ -233,6 +243,8 @@ types:
           propertyKey:
             type: string
             description: The key of the property.
+          fileId:
+            type: string
         get: {}
         put: {}
         delete: {}
@@ -311,7 +323,6 @@ types:
     uriParameters:
       teamDriveId:
         description: The ID of the Team Drive
-        type: string
     delete:
       description: |
         Permanently deletes a Team Drive for which the user is an organizer. The Team Drive cannot contain any untrashed items.

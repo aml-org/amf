@@ -140,14 +140,19 @@
                           }
                         ],
                         "smaps": {
-                          "declared-element": {
-                            "#4": ""
+                          "synthesized-field": {
+                            "apiContract:explode": "true",
+                            "apiContract:required": "true",
+                            "apiContract:style": "true"
                           },
                           "lexical": {
                             "raml-shapes:schema": "[(21,6)-(23,0)]",
                             "apiContract:paramName": "[(23,6)-(24,0)]",
                             "#4": "[(20,4)-(25,0)]",
                             "apiContract:binding": "[(24,6)-(25,0)]"
+                          },
+                          "declared-element": {
+                            "#4": ""
                           }
                         }
                       }
@@ -224,8 +229,9 @@
                           }
                         ],
                         "smaps": {
-                          "declared-element": {
-                            "#8": ""
+                          "synthesized-field": {
+                            "apiContract:explode": "true",
+                            "apiContract:style": "true"
                           },
                           "lexical": {
                             "raml-shapes:schema": "[(31,6)-(33,0)]",
@@ -233,6 +239,9 @@
                             "#8": "[(30,4)-(36,0)]",
                             "apiContract:paramName": "[(33,6)-(34,0)]",
                             "apiContract:binding": "[(34,6)-(35,0)]"
+                          },
+                          "declared-element": {
+                            "#8": ""
                           }
                         }
                       }
@@ -309,14 +318,19 @@
                           }
                         ],
                         "smaps": {
-                          "declared-element": {
-                            "#10": ""
+                          "synthesized-field": {
+                            "apiContract:explode": "true",
+                            "apiContract:required": "true",
+                            "apiContract:style": "true"
                           },
                           "lexical": {
                             "raml-shapes:schema": "[(37,6)-(39,0)]",
                             "apiContract:paramName": "[(39,6)-(40,0)]",
                             "#10": "[(36,4)-(42,0)]",
                             "apiContract:binding": "[(40,6)-(42,0)]"
+                          },
+                          "declared-element": {
+                            "#10": ""
                           }
                         }
                       }
@@ -440,14 +454,19 @@
                           }
                         ],
                         "smaps": {
-                          "declared-element": {
-                            "#6": ""
+                          "synthesized-field": {
+                            "apiContract:explode": "true",
+                            "apiContract:required": "true",
+                            "apiContract:style": "true"
                           },
                           "lexical": {
                             "raml-shapes:schema": "[(26,6)-(28,0)]",
                             "apiContract:paramName": "[(28,6)-(29,0)]",
                             "#6": "[(25,4)-(30,0)]",
                             "apiContract:binding": "[(29,6)-(30,0)]"
+                          },
+                          "declared-element": {
+                            "#6": ""
                           }
                         }
                       }
@@ -519,14 +538,17 @@
                               }
                             ],
                             "smaps": {
-                              "auto-generated-name": {
-                                "#19": ""
+                              "synthesized-field": {
+                                "shacl:closed": "true"
+                              },
+                              "type-property-lexical-info": {
+                                "#19": "[(58,16)-(58,20)]"
                               },
                               "lexical": {
                                 "#19": "[(57,14)-(59,0)]"
                               },
-                              "type-property-lexical-info": {
-                                "#19": "[(58,16)-(58,20)]"
+                              "auto-generated-name": {
+                                "#19": ""
                               }
                             }
                           }
@@ -553,7 +575,8 @@
                 "smaps": {
                   "lexical": {
                     "apiContract:returns": "[(52,6)-(59,0)]",
-                    "#16": "[(44,4)-(59,0)]"
+                    "#16": "[(44,4)-(59,0)]",
+                    "apiContract:expects": "[(50,6)-(52,0)]"
                   }
                 }
               }
@@ -570,7 +593,7 @@
             "#14": "OAS 3.0"
           },
           "lexical": {
-            "apiContract:endpoint": "[(42,6)-(59,0)]",
+            "apiContract:endpoint": "[(42,0)-(59,0)]",
             "core:name": "[(4,2)-(6,0)]",
             "#14": "[(1,0)-(59,0)]",
             "core:version": "[(3,2)-(4,0)]"
@@ -659,6 +682,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true"
+              },
               "lexical": {
                 "#2": "[(17,8)-(19,0)]"
               }
@@ -676,15 +702,19 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#1": ""
+          "synthesized-field": {
+            "doc:recursive": "true",
+            "shacl:closed": "true"
+          },
+          "type-property-lexical-info": {
+            "#1": "[(15,6)-(15,10)]"
           },
           "lexical": {
             "shacl:name": "[(14,4)-(14,11)]",
             "#1": "[(14,4)-(19,0)]"
           },
-          "type-property-lexical-info": {
-            "#1": "[(15,6)-(15,10)]"
+          "declared-element": {
+            "#1": ""
           }
         }
       },
@@ -769,14 +799,19 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#4": ""
+          "synthesized-field": {
+            "apiContract:explode": "true",
+            "apiContract:required": "true",
+            "apiContract:style": "true"
           },
           "lexical": {
             "raml-shapes:schema": "[(21,6)-(23,0)]",
             "apiContract:paramName": "[(23,6)-(24,0)]",
             "#4": "[(20,4)-(25,0)]",
             "apiContract:binding": "[(24,6)-(25,0)]"
+          },
+          "declared-element": {
+            "#4": ""
           }
         }
       },
@@ -851,14 +886,19 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#6": ""
+          "synthesized-field": {
+            "apiContract:explode": "true",
+            "apiContract:required": "true",
+            "apiContract:style": "true"
           },
           "lexical": {
             "raml-shapes:schema": "[(26,6)-(28,0)]",
             "apiContract:paramName": "[(28,6)-(29,0)]",
             "#6": "[(25,4)-(30,0)]",
             "apiContract:binding": "[(29,6)-(30,0)]"
+          },
+          "declared-element": {
+            "#6": ""
           }
         }
       },
@@ -933,8 +973,9 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#8": ""
+          "synthesized-field": {
+            "apiContract:explode": "true",
+            "apiContract:style": "true"
           },
           "lexical": {
             "raml-shapes:schema": "[(31,6)-(33,0)]",
@@ -942,6 +983,9 @@
             "#8": "[(30,4)-(36,0)]",
             "apiContract:paramName": "[(33,6)-(34,0)]",
             "apiContract:binding": "[(34,6)-(35,0)]"
+          },
+          "declared-element": {
+            "#8": ""
           }
         }
       },
@@ -1016,14 +1060,19 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#10": ""
+          "synthesized-field": {
+            "apiContract:explode": "true",
+            "apiContract:required": "true",
+            "apiContract:style": "true"
           },
           "lexical": {
             "raml-shapes:schema": "[(37,6)-(39,0)]",
             "apiContract:paramName": "[(39,6)-(40,0)]",
             "#10": "[(36,4)-(42,0)]",
             "apiContract:binding": "[(40,6)-(42,0)]"
+          },
+          "declared-element": {
+            "#10": ""
           }
         }
       },
@@ -1122,6 +1171,9 @@
                       }
                     ],
                     "smaps": {
+                      "synthesized-field": {
+                        "shacl:minCount": "true"
+                      },
                       "lexical": {
                         "#2": "[(17,8)-(19,0)]"
                       }
@@ -1139,15 +1191,19 @@
                   }
                 ],
                 "smaps": {
-                  "declared-element": {
-                    "#1": ""
+                  "synthesized-field": {
+                    "doc:recursive": "true",
+                    "shacl:closed": "true"
+                  },
+                  "type-property-lexical-info": {
+                    "#1": "[(15,6)-(15,10)]"
                   },
                   "lexical": {
                     "shacl:name": "[(14,4)-(14,11)]",
                     "#1": "[(14,4)-(19,0)]"
                   },
-                  "type-property-lexical-info": {
-                    "#1": "[(15,6)-(15,10)]"
+                  "declared-element": {
+                    "#1": ""
                   }
                 }
               }
@@ -1166,6 +1222,7 @@
             "#12": ""
           },
           "lexical": {
+            "core:name": "[(8,4)-(8,13)]",
             "#12": "[(8,4)-(13,0)]"
           }
         }

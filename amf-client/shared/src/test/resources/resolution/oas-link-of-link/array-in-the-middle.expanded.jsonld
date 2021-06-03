@@ -101,29 +101,6 @@
                               }
                             ]
                           }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/default/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/default/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/web-api/end-points/%2FendPoint/get/200/default"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(23,10)-(24,35)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
                         ]
                       }
                     ],
@@ -298,7 +275,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(17,6)-(24,35)]"
+                    "@value": "[(17,0)-(24,35)]"
                   }
                 ]
               },
@@ -458,6 +435,21 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
+                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/source-map/synthesized-field/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true"
+                          }
+                        ]
+                      }
+                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/property/parent/source-map/lexical/element_0",
@@ -493,17 +485,30 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/declared-element/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/synthesized-field/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C"
+                        "@value": "http://www.w3.org/ns/shacl#closed"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": ""
+                        "@value": "true"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/document#recursive"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
                       }
                     ]
                   }
@@ -532,6 +537,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(9,2)-(9,3)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C/source-map/declared-element/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/resolution/oas-link-of-link/array-in-the-middle.yaml#/declarations/types/C"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": ""
                       }
                     ]
                   }

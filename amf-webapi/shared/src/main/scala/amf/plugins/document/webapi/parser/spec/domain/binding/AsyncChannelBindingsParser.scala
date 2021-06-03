@@ -36,7 +36,9 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "channelBindings")
     ctx.declarations
       .findChannelBindings(label, SearchScope.Named)
-      .map(channelBindings => nameAndAdopt(channelBindings.link(label), entryLike.key))
+      .map(channelBindings =>
+        nameAndAdopt(channelBindings.link(AmfScalar(label), entryLike.annotations, Annotations.synthesized()),
+                     entryLike.key))
       .getOrElse(remote(fullRef, entryLike, parent))
   }
 
@@ -52,7 +54,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
     // Default channel type is 'routingKey'.
     if (binding.is.isNullOrEmpty) {
-      binding.set(Amqp091ChannelBindingModel.Is, AmfScalar("routingKey"), Annotations(SynthesizedField()))
+      binding.set(Amqp091ChannelBindingModel.Is, AmfScalar("routingKey"), Annotations.synthesized())
     }
     parseQueue(binding, map)
     parseExchange(binding, map)
@@ -107,7 +109,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
     // Default vhost is '/'.
     if (!element.fields.exists(field)) {
-      element.set(field, AmfScalar("/"), Annotations(SynthesizedField()))
+      element.set(field, AmfScalar("/"), Annotations.synthesized())
     }
   }
 

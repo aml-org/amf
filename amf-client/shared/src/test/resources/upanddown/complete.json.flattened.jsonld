@@ -38,6 +38,7 @@
           "@id": "file://amf-client/shared/src/test/resources/upanddown/complete.json#/web-api/creative-work/Home%20documentation"
         }
       ],
+      "http://a.ml/vocabularies/apiContract#endpoint": [],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-client/shared/src/test/resources/upanddown/complete.json#/web-api/source-map"
@@ -269,8 +270,8 @@
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/complete.json#/web-api/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#documentation",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(30,2)-(34,3)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/apiContract#endpoint",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(35,2)-(35,13)]"
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/complete.json#/web-api/source-map/lexical/element_1",
@@ -304,7 +305,7 @@
     },
     {
       "@id": "file://amf-client/shared/src/test/resources/upanddown/complete.json#/web-api/api.example.com%2Fpath/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-client/shared/src/test/resources/upanddown/complete.json#/web-api/api.example.com%2Fpath",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#urlTemplate",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {

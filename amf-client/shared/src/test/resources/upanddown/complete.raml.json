@@ -1,0 +1,36 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "description": "test description",
+    "termsOfService": "terms of service",
+    "version": "1.1",
+    "license": {
+      "url": "licenseUrl",
+      "name": "licenseName"
+    },
+    "contact": {
+      "url": "contactUrl",
+      "name": "contactName",
+      "email": "contactEmail"
+    }
+  },
+  "host": "api.example.com",
+  "basePath": "/path",
+  "consumes": [
+    "application/yaml"
+  ],
+  "produces": [
+    "application/yaml"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "externalDocs": {
+    "url": "externalDocsUrl",
+    "description": "externalDocsDescription",
+    "x-amf-title": "Home documentation"
+  },
+  "paths": {}
+}

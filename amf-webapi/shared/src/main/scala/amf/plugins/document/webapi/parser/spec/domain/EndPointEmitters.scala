@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
+import amf.core.annotations.{SynthesizedField, VirtualElement}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
@@ -10,7 +10,7 @@ import amf.core.utils._
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.ExtendsEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.emitters.annotations.AnnotationsEmitter
-import amf.plugins.domain.webapi.metamodel.EndPointModel
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
@@ -44,7 +44,8 @@ case class Raml10EndPointEmitter(endpoint: EndPoint,
           result ++= OasParametersEmitter("parameters".asRamlAnnotation, other, ordering, references = references)(
             amf.plugins.document.webapi.parser.spec.toOas(spec)).ramlEndpointEmitters()
 
-          if (path.nonEmpty) {
+          val explicitParams = getExplicitParams(path)
+          if (explicitParams.nonEmpty) {
             // TODO just emit other params in other way
             val entry = FieldEntry(EndPointModel.Parameters,
                                    Value(AmfArray(path, f.value.value.annotations), f.value.annotations))
@@ -85,7 +86,8 @@ case class Raml08EndPointEmitter(endpoint: EndPoint,
 
           result += RamlParametersEmitter("uriParameters",
                                           FieldEntry(EndPointModel.Parameters,
-                                                     Value(AmfArray(pathParameters), f.value.annotations)),
+                                                     Value(AmfArray(getExplicitParams(pathParameters)),
+                                                           f.value.annotations)),
                                           ordering,
                                           references)
           result += RamlParametersEmitter("baseUriParameters",
@@ -109,6 +111,9 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
   def endpoint: EndPoint
 
   protected def keyParameter: String
+
+  protected def getExplicitParams(params: Seq[Parameter]): Seq[Parameter] =
+    params.filter(p => !p.fields.getValueAsOption(ParameterModel.Name).exists(_.isSynthesized))
 
   override def emit(b: EntryBuilder): Unit = {
     val fs = endpoint.fields

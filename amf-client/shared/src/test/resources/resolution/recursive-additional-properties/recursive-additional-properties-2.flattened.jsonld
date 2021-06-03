@@ -10,14 +10,16 @@
       ],
       "core:name": "Something API",
       "core:version": "v1",
+      "apiContract:endpoint": [],
       "smaps": {
         "source-vendor": {
           "#10": "OAS 2.0"
         },
         "lexical": {
-          "core:version": "[(3,2)-(4,0)]",
+          "apiContract:endpoint": "[(5,0)-(6,0)]",
+          "core:name": "[(4,2)-(5,0)]",
           "#10": "[(1,0)-(20,71)]",
-          "core:name": "[(4,2)-(5,0)]"
+          "core:version": "[(3,2)-(4,0)]"
         }
       }
     },
@@ -61,21 +63,25 @@
       "doc:recursive": true,
       "shacl:name": "Something.DataContracts.Push.PushOption",
       "smaps": {
-        "resolved-link-target": {
-          "#1": "amf://id#1"
+        "synthesized-field": {
+          "doc:recursive": "true",
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#1": ""
+        "resolved-link": {
+          "#1": "amf://id#8"
+        },
+        "type-property-lexical-info": {
+          "#1": "[(8,4)-(8,8)]"
         },
         "lexical": {
           "shacl:name": "[(7,2)-(7,41)]",
           "#1": "[(7,2)-(14,0)]"
         },
-        "type-property-lexical-info": {
-          "#1": "[(8,4)-(8,8)]"
+        "declared-element": {
+          "#1": ""
         },
-        "resolved-link": {
-          "#1": "amf://id#8"
+        "resolved-link-target": {
+          "#1": "amf://id#1"
         }
       }
     },
@@ -96,21 +102,24 @@
       ],
       "shacl:name": "Something.DataContracts.Push.PushOptionChoice",
       "smaps": {
-        "resolved-link-target": {
-          "#4": "amf://id#4"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#4": ""
+        "resolved-link": {
+          "#4": "amf://id#9"
+        },
+        "type-property-lexical-info": {
+          "#4": "[(15,4)-(15,8)]"
         },
         "lexical": {
           "shacl:name": "[(14,2)-(14,47)]",
           "#4": "[(14,2)-(20,71)]"
         },
-        "type-property-lexical-info": {
-          "#4": "[(15,4)-(15,8)]"
+        "declared-element": {
+          "#4": ""
         },
-        "resolved-link": {
-          "#4": "amf://id#9"
+        "resolved-link-target": {
+          "#4": "amf://id#4"
         }
       }
     },
@@ -133,6 +142,9 @@
       "shacl:minCount": 0,
       "shacl:name": "options",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#2": "[(10,6)-(14,0)]"
         }
@@ -157,6 +169,9 @@
       "shacl:minCount": 0,
       "shacl:name": "properties",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#5": "[(17,6)-(20,71)]"
         }
@@ -200,11 +215,14 @@
       "shacl:property": [],
       "shacl:name": "properties",
       "smaps": {
-        "type-property-lexical-info": {
-          "#6": "[(18,8)-(18,12)]"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
         "lexical": {
           "#6": "[(17,6)-(20,71)]"
+        },
+        "type-property-lexical-info": {
+          "#6": "[(18,8)-(18,12)]"
         }
       }
     },
@@ -224,20 +242,23 @@
       "doc:recursive": true,
       "shacl:name": "Something.DataContracts.Push.PushOption",
       "smaps": {
-        "resolved-link-target": {
-          "#7": "amf://id#1"
+        "synthesized-field": {
+          "doc:recursive": "true"
         },
-        "declared-element": {
-          "#7": ""
-        },
-        "lexical": {
-          "#7": "[(7,2)-(14,0)]"
+        "resolved-link": {
+          "#7": "amf://id#8"
         },
         "type-property-lexical-info": {
           "#7": "[(8,4)-(8,8)]"
         },
-        "resolved-link": {
-          "#7": "amf://id#8"
+        "lexical": {
+          "#7": "[(7,2)-(14,0)]"
+        },
+        "declared-element": {
+          "#7": ""
+        },
+        "resolved-link-target": {
+          "#7": "amf://id#1"
         }
       }
     }

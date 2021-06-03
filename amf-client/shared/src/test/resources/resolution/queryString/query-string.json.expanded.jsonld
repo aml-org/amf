@@ -181,6 +181,21 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/paging/property/page-size/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/paging/property/page-size/source-map/lexical/element_0",
@@ -300,6 +315,21 @@
                                     "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/lat-long/property/long/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/lat-long/property/long/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
@@ -421,6 +451,21 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/paging/property/start/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/paging/property/start/source-map/lexical/element_0",
@@ -541,6 +586,21 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/lat-long/property/lat/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/lat-long/property/lat/source-map/lexical/element_0",
@@ -571,17 +631,17 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_0/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_0/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_0"
+                                        "@value": "http://www.w3.org/ns/shacl#closed"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(39,10)-(39,16)]"
+                                        "@value": "true"
                                       }
                                     ]
                                   }
@@ -597,6 +657,21 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(38,8)-(43,9)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_0/source-map/type-property-lexical-info/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_0"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(39,10)-(39,16)]"
                                       }
                                     ]
                                   }
@@ -721,6 +796,21 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/loc/property/location/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/loc/property/location/source-map/lexical/element_0",
@@ -840,6 +930,21 @@
                                     "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/paging/property/page-size/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/paging/property/page-size/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
@@ -961,6 +1066,21 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/paging/property/start/source-map/synthesized-field/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#minCount"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/declarations/types/paging/property/start/source-map/lexical/element_0",
@@ -991,17 +1111,17 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_1/source-map/type-property-lexical-info/element_0",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_1/source-map/synthesized-field/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_1"
+                                        "@value": "http://www.w3.org/ns/shacl#closed"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(39,10)-(39,16)]"
+                                        "@value": "true"
                                       }
                                     ]
                                   }
@@ -1017,6 +1137,21 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(38,8)-(43,9)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_1/source-map/type-property-lexical-info/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/request/x-amf-queryString_1"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(39,10)-(39,16)]"
                                       }
                                     ]
                                   }
@@ -1086,24 +1221,9 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/source-map/synthesized-field/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/apiContract#expects"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "true"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get"
@@ -1112,6 +1232,19 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(37,6)-(44,7)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/query-string.json#/web-api/end-points/%2Flocations/get/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/apiContract#expects"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(37,13)-(44,7)]"
                           }
                         ]
                       }
@@ -1189,7 +1322,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(35,11)-(46,3)]"
+                    "@value": "[(35,2)-(46,3)]"
                   }
                 ]
               },

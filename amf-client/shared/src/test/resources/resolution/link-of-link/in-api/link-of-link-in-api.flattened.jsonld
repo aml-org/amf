@@ -38,6 +38,7 @@
       ],
       "smaps": {
         "lexical": {
+          "apiContract:path": "[(7,0)-(7,9)]",
           "#10": "[(7,0)-(13,30)]"
         }
       }
@@ -115,23 +116,26 @@
       ],
       "shacl:name": "User",
       "smaps": {
-        "inherited-shapes": {
-          "#4": "amf://id#8"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "resolved-link": {
-          "#4": "amf://id#4"
-        },
-        "type-property-lexical-info": {
-          "#4": "[(11,4)-(11,8)]"
-        },
-        "lexical": {
-          "#4": "[(10,2)-(14,20)]"
+        "resolved-link-target": {
+          "#4": "amf://id#7"
         },
         "declared-element": {
           "#4": ""
         },
-        "resolved-link-target": {
-          "#4": "amf://id#7"
+        "lexical": {
+          "#4": "[(10,2)-(14,20)]"
+        },
+        "type-property-lexical-info": {
+          "#4": "[(11,4)-(11,8)]"
+        },
+        "resolved-link": {
+          "#4": "amf://id#4"
+        },
+        "inherited-shapes": {
+          "#4": "amf://id#8"
         }
       }
     },
@@ -154,7 +158,12 @@
       "shacl:minCount": 1,
       "shacl:name": "identifier",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
+        },
         "lexical": {
+          "raml-shapes:range": "[(13,17)-(14,20)]",
           "#5": "[(13,6)-(14,20)]"
         }
       }
@@ -285,18 +294,21 @@
       ],
       "shacl:name": "Identifier",
       "smaps": {
-        "inherited-shapes": {
-          "#7": "amf://id#8"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "type-property-lexical-info": {
-          "#7": "[(11,4)-(11,8)]"
+        "declared-element": {
+          "#7": ""
         },
         "lexical": {
           "shacl:name": "[(10,2)-(10,12)]",
           "#7": "[(10,2)-(14,20)]"
         },
-        "declared-element": {
-          "#7": ""
+        "type-property-lexical-info": {
+          "#7": "[(11,4)-(11,8)]"
+        },
+        "inherited-shapes": {
+          "#7": "amf://id#8"
         }
       }
     }

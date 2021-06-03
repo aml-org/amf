@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.async.parser
 
+import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -28,7 +29,7 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
     key.foreach(
       k =>
         correlationId
-          .set(CorrelationIdModel.Name, ScalarNode(k).string()))
+          .set(CorrelationIdModel.Name, ScalarNode(k).string(), Annotations(k)))
     correlationId.adopted(parentId).add(entryLike.annotations)
   }
 
@@ -36,7 +37,9 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "correlationIds")
     ctx.declarations
       .findCorrelationId(label, SearchScope.Named)
-      .map(correlationId => nameAndAdopt(correlationId.link(label), entryLike.key))
+      .map(correlationId =>
+        nameAndAdopt(correlationId.link(AmfScalar(label), Annotations(entryLike.value), Annotations.synthesized()),
+                     entryLike.key))
       .getOrElse(remote(fullRef, map))
   }
 
@@ -44,7 +47,7 @@ case class AsyncCorrelationIdParser(entryLike: YMapEntryLike, parentId: String)(
     ctx.obtainRemoteYNode(fullRef) match {
       case Some(correlationIdNode) =>
         val external = AsyncCorrelationIdParser(YMapEntryLike(correlationIdNode), parentId).parse()
-        nameAndAdopt(external.link(fullRef), entryLike.key)
+        nameAndAdopt(external.link(AmfScalar(fullRef), Annotations(map), Annotations.synthesized()), entryLike.key)
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
         val errorCorrelation = new ErrorCorrelationId(fullRef, map)

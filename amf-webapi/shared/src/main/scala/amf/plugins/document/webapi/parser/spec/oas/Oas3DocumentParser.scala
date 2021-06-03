@@ -5,7 +5,7 @@ import amf.core.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser._
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.annotations.DeclarationKey
+import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.YamlTagValidator
 import amf.plugins.document.webapi.parser.spec.declaration.AbstractDeclarationsParser

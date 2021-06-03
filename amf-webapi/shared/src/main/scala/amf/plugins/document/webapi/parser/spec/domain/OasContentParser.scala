@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.TrackedElement
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
+import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.PayloadModel
@@ -62,7 +63,7 @@ case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payloa
 
     OasExamplesParser(map, payload).parse()
     payload.examples.foreach { ex =>
-      payload.mediaType.option().foreach(ex.withMediaType)
+      payload.mediaType.option().foreach(mt => ex.set(ExampleModel.MediaType, mt, Annotations.synthesized()))
       ex.annotations += TrackedElement(payload.id)
     }
 
@@ -71,7 +72,10 @@ case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payloa
       "encoding",
       entry => {
         val encodings = OasEncodingParser(entry.value.as[YMap], payload.withEncoding).parse()
-        payload.setArray(PayloadModel.Encoding, encodings, Annotations(entry))
+        payload.fields.set(payload.id,
+                           PayloadModel.Encoding,
+                           AmfArray(encodings, Annotations(entry.value)),
+                           Annotations(entry))
       }
     )
 

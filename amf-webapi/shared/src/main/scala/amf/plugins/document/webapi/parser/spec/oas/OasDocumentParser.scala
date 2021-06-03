@@ -3,14 +3,14 @@ package amf.plugins.document.webapi.parser.spec.oas
 import amf.core.Root
 import amf.core.annotations._
 import amf.core.metamodel.Field
-import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter}
-import amf.plugins.document.webapi.annotations.DeclarationKey
+import amf.plugins.document.vocabularies.parser.common.DeclarationKey
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
@@ -26,13 +26,12 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.api.WebApi
-import amf.plugins.domain.webapi.models.security.SecurityScheme
+import amf.plugins.domain.webapi.models.security.{SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations._
@@ -95,12 +94,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     parseDeclarations(root, map)
 
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
-    document
-      .withEncodes(api)
-      .adopted(root.location)
+    document.set(DocumentModel.Encodes, api, Annotations.inferred())
 
     addDeclarationsToModel(document)
-    if (references.nonEmpty) document.withReferences(references.baseUnitReferences())
+    if (references.nonEmpty)
+      document.setWithoutId(DocumentModel.References,
+                            AmfArray(references.baseUnitReferences()),
+                            Annotations.synthesized())
 
     ctx.futureDeclarations.resolve()
     document
@@ -241,10 +241,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           .as[YMap]
           .entries
           .foreach(e => {
-            val node = ScalarNode(e.key).text()
+            val node = ScalarNode(e.key)
             ctx.declarations += OasResponseParser(
               e.value.as[YMap], { r: Response =>
-                r.set(ResponseModel.Name, node, Annotations(e.key)).adopted(parentPath).add(DeclaredElement())
+                r.withName(node).adopted(parentPath).add(DeclaredElement())
                 r.annotations ++= Annotations(e)
               }
             ).parse()
@@ -266,11 +266,9 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
     })
 
-    map.key("security", entry => {
-      api.set(WebApiModel.Security, AmfArray(Seq(), Annotations(entry.value)), Annotations(entry))
-      parseSecurity(entry, api)
-    })
-    map.key("security".asOasExtension, entry => { parseSecurity(entry, api) })
+    map.key("security".asOasExtension, entry => { parseSecurity(entry, api) }) // extension needs to go first, so normal security key lexical info will be used if present
+
+    map.key("security", entry => { parseSecurity(entry, api) })
 
     val documentations: mutable.ListBuffer[(CreativeWork, YMapEntry)] = ListBuffer[(CreativeWork, YMapEntry)]()
 
@@ -292,7 +290,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     )
 
     if (documentations.nonEmpty)
-      api.setArray(WebApiModel.Documentations, documentations.map(_._1), Annotations(documentations.map(_._2).head))
+      api.fields.set(api.id,
+                     WebApiModel.Documentations,
+                     AmfArray(documentations.map(_._1), Annotations.virtual()),
+                     Annotations.virtual())
 
     map.key("paths") match {
       case Some(entry) => parseEndpoints(api, entry)
@@ -307,21 +308,23 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     api
   }
 
-  def parseSecurity(entry: YMapEntry, api: WebApi) = {
-    entry.value.tagType match {
+  def parseSecurity(entry: YMapEntry, api: WebApi): Unit = {
+    val requirements: Seq[SecurityRequirement] = entry.value.tagType match {
       case YType.Seq =>
         val idCounter = new IdCounter()
-        val securedBy =
-          entry.value
-            .as[Seq[YNode]]
-            .map(s => OasLikeSecurityRequirementParser(s, api.withSecurity, idCounter).parse()) // todo when generating id for security requirements webapi id is null
-            .collect { case Some(s) => s }
-      //api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)))
+        entry.value
+          .as[Seq[YNode]]
+          .flatMap(s =>
+            OasLikeSecurityRequirementParser(s, (se: SecurityRequirement) => se.adopted(api.id), idCounter)
+              .parse()) // todo when generating id for security requirements webapi id is null
       case _ =>
         ctx.eh.violation(InvalidSecurityRequirementsSeq,
                          entry.value,
                          "'security' must be an array of security requirement object")
+        Nil
     }
+    val extension: Seq[SecurityRequirement] = api.security
+    api.set(WebApiModel.Security, AmfArray(requirements ++ extension, Annotations(entry.value)), Annotations(entry))
   }
 
   private def parseEndpoints(api: WebApi, entry: YMapEntry) = {
@@ -329,9 +332,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     val endpoints =
       paths
         .regex("^/.*")
-        .foldLeft(List[EndPoint]())((acc, curr) =>
-          acc ++ ctx.factory.endPointParser(curr, api.withEndPoint, acc).parse())
-    if (endpoints.nonEmpty) api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
+        .foldLeft(List[EndPoint]())((acc, curr) => acc ++ ctx.factory.endPointParser(curr, api.id, acc).parse())
+    api.set(WebApiModel.EndPoints, AmfArray(endpoints, Annotations(entry.value)), Annotations(entry))
     ctx.closedShape(api.id, paths, "paths")
   }
 }
@@ -381,7 +383,7 @@ abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiB
       ctx.declarations
         .findAnnotation(scalar.text, SearchScope.All)
         .map { a =>
-          val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
+          val copied: CustomDomainProperty = a.link(AmfScalar(scalar.text), Annotations(ast), Annotations(scalar))
           copied.id = null // we reset the ID so ti can be adopted, there's an extra rule where the id is not set
           // because the way they are inserted in the mode later in the parsing
           adopt(copied.withName(annotationName))
@@ -466,7 +468,8 @@ abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiB
           case YType.Str =>
             val text = n.as[YScalar].text
             ctx.declarations.findDocumentations(text, SearchScope.All) match {
-              case Some(doc) => doc.link(text, Annotations(n)).asInstanceOf[CreativeWork]
+              case Some(doc) =>
+                doc.link(AmfScalar(text), Annotations(n), Annotations.synthesized()).asInstanceOf[CreativeWork]
               case _ =>
                 val documentation = RamlCreativeWorkParser(YNode(YMap.empty)).parse()
                 ctx.eh.violation(DeclarationNotFound,

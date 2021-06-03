@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration.external.raml
 
 import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
-import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain.Shape
+import amf.core.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
+import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, Range, ReferenceFragmentPartition}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
@@ -24,7 +24,8 @@ case class RamlXmlSchemaExpression(key: YNode,
       origin.originalUrlText.map(ReferenceFragmentPartition.apply) match {
         case Some((uriWithoutFragment, fragment)) =>
           val optionalReference = ctx.declarations.fragments.get(uriWithoutFragment)
-          val optionalReferenceId = optionalReference.map(_.encoded.id + fragment.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse(""))
+          val optionalReferenceId = optionalReference.map(
+            _.encoded.id + fragment.map(u => if (u.startsWith("/")) u else "/" + u).getOrElse(""))
           val optionalLocation = optionalReference.flatMap(_.location)
           (optionalReferenceId, optionalLocation, fragment)
         case None => (None, None, None)
@@ -34,7 +35,7 @@ case class RamlXmlSchemaExpression(key: YNode,
       case YType.Map =>
         val map = value.as[YMap]
         val parsedSchema = nestedTypeOrSchema(map) match {
-          case Some(typeEntry: YMapEntry)  => buildSchemaShapeFrom(typeEntry)
+          case Some(typeEntry: YMapEntry) => buildSchemaShapeFrom(typeEntry)
           case _ =>
             val shape: SchemaShape = emptySchemaShape
             throwInvalidXmlSchemaFormat(shape)
@@ -52,16 +53,18 @@ case class RamlXmlSchemaExpression(key: YNode,
     }
     maybeReferenceId match {
       case Some(r) => parsed.withReference(r)
-      case _       => parsed.annotations += LexicalInformation(Range(value.range))
+      case _       => parsed.annotations ++= Annotations(value)
     }
-    origin.originalUrlText.foreach(url => parsed.annotations += (ExternalReferenceUrl(url)))
-    parsed.set(SchemaShapeModel.Location, maybeLocation.getOrElse(ctx.loc))
+    origin.originalUrlText.foreach(url => parsed.annotations += ExternalReferenceUrl(url))
+    parsed.set(SchemaShapeModel.Location, maybeLocation.getOrElse(ctx.loc), Annotations.synthesized())
     maybeFragmentLabel.foreach { parsed.annotations += ExternalFragmentRef(_) }
     parsed
   }
 
   private def buildSchemaShapeFrom(scalar: YScalar) = {
-    val shape = SchemaShape().withRaw(scalar.text).withMediaType("application/xml")
+    val shape = SchemaShape()
+      .set(ExternalSourceElementModel.Raw, AmfScalar(scalar.text, Annotations(scalar)), Annotations.inferred())
+      .set(SchemaShapeModel.MediaType, "application/xml", Annotations.synthesized())
     shape.withName(key.as[String])
     adopt(shape)
     shape
@@ -84,17 +87,22 @@ case class RamlXmlSchemaExpression(key: YNode,
   }
 
   private def buildSchemaShapeFrom(typeEntry: YMapEntry) = {
-    val shape = SchemaShape().withRaw(typeEntry.value.toString).withMediaType("application/xml")
-    shape.withName(key.as[String])
+    val shape = SchemaShape()
+    shape
+      .set(ExternalSourceElementModel.Raw,
+           AmfScalar(typeEntry.value.toString, Annotations(typeEntry.value)),
+           Annotations.inferred())
+      .set(SchemaShapeModel.MediaType, "application/xml", Annotations.synthesized())
+    shape.withName(key.as[String], Annotations(key))
     adopt(shape)
     shape
   }
 
   private def throwInvalidXmlSchemaFormat(shape: SchemaShape) = {
     ctx.eh.violation(InvalidXmlSchemaType,
-      shape.id,
-      "Cannot parse XML Schema expression out of a non string value",
-      value)
+                     shape.id,
+                     "Cannot parse XML Schema expression out of a non string value",
+                     value)
   }
 
   private def emptySchemaShape = {

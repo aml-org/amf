@@ -23,7 +23,7 @@
           "#15": "OAS 3.0"
         },
         "lexical": {
-          "apiContract:endpoint": "[(5,6)-(21,0)]",
+          "apiContract:endpoint": "[(5,0)-(21,0)]",
           "core:name": "[(4,2)-(5,0)]",
           "#15": "[(1,0)-(40,0)]",
           "core:version": "[(3,2)-(4,0)]"
@@ -86,7 +86,8 @@
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(10,6)-(13,0)]",
-          "#17": "[(7,4)-(13,0)]"
+          "#17": "[(7,4)-(13,0)]",
+          "apiContract:expects": "[(8,6)-(10,0)]"
         }
       }
     },
@@ -110,7 +111,8 @@
       "smaps": {
         "lexical": {
           "apiContract:returns": "[(17,6)-(21,0)]",
-          "#20": "[(14,4)-(21,0)]"
+          "#20": "[(14,4)-(21,0)]",
+          "apiContract:expects": "[(15,6)-(17,0)]"
         }
       }
     },
@@ -137,7 +139,8 @@
         },
         "lexical": {
           "core:description": "[(32,6)-(33,0)]",
-          "#12": "[(31,4)-(40,0)]"
+          "#12": "[(31,4)-(40,0)]",
+          "core:name": "[(31,4)-(31,13)]"
         },
         "resolved-link": {
           "#12": "amf://id#14"
@@ -224,21 +227,25 @@
         }
       ],
       "smaps": {
-        "resolved-link-target": {
-          "#1": "amf://id#1"
+        "synthesized-field": {
+          "doc:recursive": "true",
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#1": ""
+        "resolved-link": {
+          "#1": "amf://id#11"
+        },
+        "type-property-lexical-info": {
+          "#1": "[(24,6)-(24,10)]"
         },
         "lexical": {
           "shacl:name": "[(23,4)-(23,17)]",
           "#1": "[(23,4)-(30,0)]"
         },
-        "type-property-lexical-info": {
-          "#1": "[(24,6)-(24,10)]"
+        "declared-element": {
+          "#1": ""
         },
-        "resolved-link": {
-          "#1": "amf://id#11"
+        "resolved-link-target": {
+          "#1": "amf://id#1"
         }
       }
     },
@@ -261,6 +268,9 @@
       "shacl:minCount": 0,
       "shacl:name": "status",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#2": "[(26,8)-(28,0)]"
         }
@@ -285,6 +295,9 @@
       "shacl:minCount": 0,
       "shacl:name": "text",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#4": "[(28,8)-(30,0)]"
         }
@@ -304,12 +317,12 @@
       "doc:raw": "status: \"202\"\ntext: \"Aloha\"",
       "smaps": {
         "synthesized-field": {
-          "doc:strict": "true"
+          "doc:raw": "true",
+          "doc:strict": "true",
+          "core:mediaType": "true"
         },
         "lexical": {
-          "doc:raw": "[(38,0)-(40,0)]",
-          "#6": "[(37,18)-(40,0)]",
-          "doc:structuredValue": "[(37,18)-(40,0)]"
+          "#6": "[(37,18)-(40,0)]"
         },
         "tracked-element": {
           "#6": "amf://id#10"
@@ -381,6 +394,9 @@
       },
       "core:name": "object_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:text": "[(39,12)-(40,0)]",
           "#7": "[(38,0)-(40,0)]",
@@ -403,6 +419,10 @@
       ],
       "core:name": "status",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#8": "[(38,20)-(38,25)]"
         }
@@ -423,6 +443,10 @@
       ],
       "core:name": "text",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#9": "[(39,18)-(39,25)]"
         }

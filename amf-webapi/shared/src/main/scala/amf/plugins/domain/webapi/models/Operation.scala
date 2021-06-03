@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models
 
 import amf.core.metamodel.Field
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.core.model.domain.{AmfArray, DomainElement, Linkable, NamedDomainElement}
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
@@ -53,14 +53,15 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withSchemes(schemes: Seq[String]): this.type              = set(Schemes, schemes.toList)
   def withAccepts(accepts: Seq[String]): this.type              = set(Accepts, accepts.toList)
   def withContentType(contentType: Seq[String]): this.type      = set(ContentType, contentType.toList)
-  def withRequest(request: Request): this.type                  = setArray(OperationRequest, Seq(request))
-  def withResponses(responses: Seq[Response]): this.type        = setArray(Responses, responses)
-  def withTags(tags: Seq[Tag]): this.type                       = setArray(Tags, tags)
-  def withCallbacks(callbacks: Seq[Callback]): this.type        = setArray(Callbacks, callbacks)
-  def withServers(servers: Seq[Server]): this.type              = setArray(Servers, servers)
-  def withAbstract(abs: Boolean): this.type                     = set(IsAbstract, abs)
-  def withBindings(bindings: OperationBindings): this.type      = set(Bindings, bindings)
-  def withOperationId(operationId: String): this.type           = set(OperationId, operationId)
+  def withRequest(request: Request): this.type =
+    setArray(OperationRequest, Seq(request))
+  def withResponses(responses: Seq[Response]): this.type   = setArray(Responses, responses)
+  def withTags(tags: Seq[Tag]): this.type                  = setArray(Tags, tags)
+  def withCallbacks(callbacks: Seq[Callback]): this.type   = setArray(Callbacks, callbacks)
+  def withServers(servers: Seq[Server]): this.type         = setArray(Servers, servers)
+  def withAbstract(abs: Boolean): this.type                = set(IsAbstract, abs)
+  def withBindings(bindings: OperationBindings): this.type = set(Bindings, bindings)
+  def withOperationId(operationId: String): this.type      = set(OperationId, operationId)
 
   override def removeServers(): Unit = fields.removeField(OperationModel.Servers)
   def removeName(): fields.type      = fields.removeField(OperationModel.Name)
@@ -74,6 +75,12 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withRequest(): Request = {
     val request = Request()
     setArray(OperationRequest, Seq(request))
+    request
+  }
+
+  def withInferredRequest() = {
+    val request = Request()
+    fields.set(id, OperationRequest, AmfArray(Seq(request), Annotations.inferred()), Annotations.inferred())
     request
   }
 

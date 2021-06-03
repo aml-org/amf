@@ -4,7 +4,7 @@ import amf.core.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
+import amf.core.model.domain.{AmfScalar, DataNode, DomainElement, ObjectNode, Shape}
 import amf.core.parser.{
   Annotations,
   Declarations,
@@ -19,6 +19,7 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.domain.shapes.metamodel.{CreativeWorkModel, ExampleModel}
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
+import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.bindings.{
   ChannelBindingsModel,
   MessageBindingsModel,
@@ -27,7 +28,6 @@ import amf.plugins.domain.webapi.metamodel.bindings.{
 }
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
-import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
@@ -523,6 +523,8 @@ object WebApiDeclarations {
     withId(idPart)
     isAbstract(isAbstract)
 
+    override def linkCopy(): Message = new ErrorMessage(idPart, ast, isAbstract)
+
     override protected def newErrorInstance: ErrorDeclaration[MessageModel.type] =
       new ErrorMessage(idPart, ast, isAbstract)
     override val model: MessageModel.type = MessageModel
@@ -579,6 +581,7 @@ object WebApiDeclarations {
     withId(idPart)
     withAbstract(true)
 
+    override def linkCopy(): ErrorOperationTrait = new ErrorOperationTrait(idPart, ast).withAbstract(true)
     override protected def newErrorInstance: ErrorDeclaration[OperationModel.type] =
       new ErrorOperationTrait(idPart, ast)
     override val model: OperationModel.type = OperationModel

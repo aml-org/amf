@@ -21,7 +21,7 @@
           "#1": "OAS 2.0"
         },
         "lexical": {
-          "apiContract:endpoint": "[(8,6)-(48,28)]",
+          "apiContract:endpoint": "[(8,0)-(48,28)]",
           "core:description": "[(5,2)-(6,0)]",
           "#1": "[(1,0)-(48,28)]",
           "core:name": "[(4,2)-(5,0)]",
@@ -60,10 +60,8 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
+          "apiContract:expects": "[(11,0)-(48,28)]",
           "#3": "[(10,4)-(48,28)]"
         }
       }
@@ -239,11 +237,13 @@
       },
       "doc:raw": "address:\n  street: 12 Oxford St.\n  city: London\nid: 1299\nname: Example",
       "smaps": {
+        "synthesized-field": {
+          "doc:raw": "true"
+        },
         "lexical": {
-          "doc:raw": "[(20,0)-(25,0)]",
-          "doc:strict": "[(18,14)-(19,0)]",
+          "doc:structuredValue": "[(19,14)-(25,0)]",
           "#7": "[(17,12)-(25,0)]",
-          "doc:structuredValue": "[(19,20)-(25,0)]"
+          "doc:strict": "[(18,14)-(19,0)]"
         },
         "tracked-element": {
           "#7": "amf://id#5"
@@ -349,6 +349,9 @@
       },
       "core:name": "object_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:name": "[(24,16)-(25,0)]",
           "data:address": "[(20,16)-(23,0)]",
@@ -422,6 +425,9 @@
       },
       "core:name": "address",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true"
+        },
         "lexical": {
           "data:city": "[(22,18)-(23,0)]",
           "#9": "[(21,0)-(23,0)]",
@@ -444,6 +450,10 @@
       ],
       "core:name": "id",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#12": "[(23,20)-(23,24)]"
         }
@@ -464,6 +474,10 @@
       ],
       "core:name": "name",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#13": "[(24,22)-(24,29)]"
         }
@@ -540,6 +554,10 @@
       ],
       "core:name": "street",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#10": "[(21,26)-(21,39)]"
         }
@@ -560,6 +578,10 @@
       ],
       "core:name": "city",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#11": "[(22,24)-(22,30)]"
         }
@@ -578,12 +600,11 @@
       "doc:raw": "12 Oxford St.",
       "smaps": {
         "synthesized-field": {
+          "doc:raw": "true",
           "doc:strict": "true"
         },
         "lexical": {
-          "doc:raw": "[(40,29)-(40,42)]",
-          "#18": "[(40,29)-(40,42)]",
-          "doc:structuredValue": "[(40,29)-(40,42)]"
+          "#18": "[(40,29)-(40,42)]"
         }
       }
     },
@@ -602,6 +623,10 @@
       ],
       "core:name": "scalar_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#19": "[(40,29)-(40,42)]"
         }

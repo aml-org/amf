@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, _}
 import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
@@ -22,7 +22,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
   private def adopt(request: Request) = {
     request
       .add(Annotations(definitionEntry))
-      .set(RequestModel.Name, ScalarNode(definitionEntry.key).string())
+      .set(RequestModel.Name, ScalarNode(definitionEntry.key).string(), Annotations(definitionEntry.key))
       .adopted(parentId)
   }
 
@@ -47,7 +47,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
                              s"Request body must have a 'content' field defined",
                              map)
         }
-        request.set(ResponseModel.Payloads, AmfArray(payloads))
+        request.set(ResponseModel.Payloads, AmfArray(payloads, Annotations.virtual()), Annotations.inferred())
 
         AnnotationParser(request, map).parse()
         ctx.closedShape(request.id, map, "request")
@@ -59,7 +59,7 @@ case class Oas30RequestParser(map: YMap, parentId: String, definitionEntry: YMap
     val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "requestBodies")
     ctx.declarations
       .findRequestBody(name, SearchScope.Named)
-      .map(req => adopt(req.link(name, Annotations(map))))
+      .map(req => adopt(req.link(AmfScalar(name), Annotations(map), Annotations.synthesized())))
       .getOrElse {
         ctx.navigateToRemoteYNode(fullRef) match {
           case Some(navigation) =>

@@ -257,6 +257,10 @@
                                                   }
                                                 ],
                                                 "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
                                                   "lexical": {
                                                     "#20": "[(16,20)-(16,27)]"
                                                   }
@@ -287,6 +291,10 @@
                                                   }
                                                 ],
                                                 "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
                                                   "lexical": {
                                                     "#21": "[(17,24)-(17,33)]"
                                                   }
@@ -299,6 +307,9 @@
                                               }
                                             ],
                                             "smaps": {
+                                              "synthesized-field": {
+                                                "core:name": "true"
+                                              },
                                               "lexical": {
                                                 "data:examples": "[(17,14)-(18,0)]",
                                                 "#19": "[(16,0)-(18,0)]",
@@ -339,6 +350,10 @@
                                                   }
                                                 ],
                                                 "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
                                                   "lexical": {
                                                     "#23": "[(19,20)-(19,27)]"
                                                   }
@@ -369,6 +384,10 @@
                                                   }
                                                 ],
                                                 "smaps": {
+                                                  "synthesized-field": {
+                                                    "core:name": "true",
+                                                    "shacl:datatype": "true"
+                                                  },
                                                   "lexical": {
                                                     "#24": "[(20,24)-(20,33)]"
                                                   }
@@ -381,6 +400,9 @@
                                               }
                                             ],
                                             "smaps": {
+                                              "synthesized-field": {
+                                                "core:name": "true"
+                                              },
                                               "lexical": {
                                                 "data:examples": "[(20,14)-(22,0)]",
                                                 "#22": "[(19,0)-(22,0)]",
@@ -395,6 +417,9 @@
                                           }
                                         ],
                                         "smaps": {
+                                          "synthesized-field": {
+                                            "core:name": "true"
+                                          },
                                           "lexical": {
                                             "data:application%2Fxml": "[(18,12)-(22,0)]",
                                             "#18": "[(15,0)-(22,0)]",
@@ -409,6 +434,9 @@
                                       }
                                     ],
                                     "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true"
+                                      },
                                       "lexical": {
                                         "data:body": "[(14,10)-(22,0)]",
                                         "#17": "[(14,0)-(22,0)]"
@@ -422,6 +450,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true"
+                                  },
                                   "lexical": {
                                     "data:200": "[(13,8)-(22,0)]",
                                     "#16": "[(13,0)-(22,0)]"
@@ -435,6 +466,9 @@
                               }
                             ],
                             "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
                               "lexical": {
                                 "data:responses": "[(12,6)-(22,0)]",
                                 "#15": "[(12,0)-(22,0)]"
@@ -448,6 +482,9 @@
                           }
                         ],
                         "smaps": {
+                          "synthesized-field": {
+                            "core:name": "true"
+                          },
                           "lexical": {
                             "data:delete": "[(11,4)-(22,0)]",
                             "#14": "[(11,4)-(22,0)]"
@@ -465,8 +502,10 @@
                         "#13": ""
                       },
                       "lexical": {
-                        "doc:dataNode": "[(11,4)-(22,0)]",
-                        "#13": "[(10,2)-(22,0)]"
+                        "doc:variable": "[(10,18)-(22,0)]",
+                        "core:name": "[(10,2)-(10,17)]",
+                        "#13": "[(10,2)-(22,0)]",
+                        "doc:dataNode": "[(11,4)-(22,0)]"
                       }
                     }
                   }
@@ -523,6 +562,10 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true",
+                                    "shacl:datatype": "true"
+                                  },
                                   "lexical": {
                                     "#31": "[(3,8)-(3,17)]"
                                   }
@@ -535,6 +578,9 @@
                               }
                             ],
                             "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
                               "lexical": {
                                 "data:name": "[(3,2)-(3,17)]",
                                 "#30": "[(3,0)-(3,17)]"
@@ -548,6 +594,9 @@
                           }
                         ],
                         "smaps": {
+                          "synthesized-field": {
+                            "core:name": "true"
+                          },
                           "lexical": {
                             "data:someExample": "[(2,0)-(3,17)]",
                             "#29": "[(2,0)-(3,17)]"
@@ -557,6 +606,7 @@
                     ],
                     "smaps": {
                       "lexical": {
+                        "doc:value": "[(2,0)-(3,17)]",
                         "#28": "[(25,6)-(25,39)]"
                       }
                     }
@@ -572,6 +622,7 @@
             ],
             "smaps": {
               "lexical": {
+                "apiContract:path": "[(22,0)-(22,17)]",
                 "#26": "[(22,0)-(25,39)]"
               }
             }
@@ -698,6 +749,7 @@
                 ],
                 "smaps": {
                   "lexical": {
+                    "shacl:datatype": "[(7,12)-(7,18)]",
                     "#5": "[(7,6)-(9,0)]"
                   }
                 }
@@ -714,7 +766,12 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "shacl:minCount": "true",
+                "shacl:path": "true"
+              },
               "lexical": {
+                "raml-shapes:range": "[(7,12)-(7,18)]",
                 "#4": "[(7,6)-(9,0)]"
               }
             }
@@ -774,6 +831,10 @@
                       }
                     ],
                     "smaps": {
+                      "synthesized-field": {
+                        "core:name": "true",
+                        "shacl:datatype": "true"
+                      },
                       "lexical": {
                         "#8": "[(3,8)-(3,17)]"
                       }
@@ -786,6 +847,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "core:name": "true"
+                  },
                   "lexical": {
                     "data:name": "[(3,2)-(3,17)]",
                     "#7": "[(3,2)-(3,17)]"
@@ -800,13 +864,11 @@
             ],
             "smaps": {
               "synthesized-field": {
+                "doc:raw": "true",
                 "doc:strict": "true"
               },
               "lexical": {
-                "doc:raw": "[(3,2)-(3,17)]",
-                "core:name": "[(2,0)-(3,17)]",
-                "#6": "[(2,0)-(3,17)]",
-                "doc:structuredValue": "[(3,2)-(3,17)]"
+                "#6": "[(2,0)-(3,17)]"
               },
               "local-element": {
                 "#6": ""
@@ -818,18 +880,21 @@
           }
         ],
         "smaps": {
-          "resolved-link-target": {
-            "#3": "amf://id#3"
+          "synthesized-field": {
+            "shacl:closed": "true"
           },
-          "declared-element": {
-            "#3": ""
+          "resolved-link": {
+            "#3": "amf://id#12"
           },
           "lexical": {
             "shacl:name": "[(5,2)-(5,9)]",
             "#3": "[(5,2)-(9,0)]"
           },
-          "resolved-link": {
-            "#3": "amf://id#12"
+          "declared-element": {
+            "#3": ""
+          },
+          "resolved-link-target": {
+            "#3": "amf://id#3"
           }
         }
       },
@@ -917,6 +982,10 @@
                                       }
                                     ],
                                     "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true",
+                                        "shacl:datatype": "true"
+                                      },
                                       "lexical": {
                                         "#20": "[(16,20)-(16,27)]"
                                       }
@@ -947,6 +1016,10 @@
                                       }
                                     ],
                                     "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true",
+                                        "shacl:datatype": "true"
+                                      },
                                       "lexical": {
                                         "#21": "[(17,24)-(17,33)]"
                                       }
@@ -959,6 +1032,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true"
+                                  },
                                   "lexical": {
                                     "data:examples": "[(17,14)-(18,0)]",
                                     "#19": "[(16,0)-(18,0)]",
@@ -999,6 +1075,10 @@
                                       }
                                     ],
                                     "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true",
+                                        "shacl:datatype": "true"
+                                      },
                                       "lexical": {
                                         "#23": "[(19,20)-(19,27)]"
                                       }
@@ -1029,6 +1109,10 @@
                                       }
                                     ],
                                     "smaps": {
+                                      "synthesized-field": {
+                                        "core:name": "true",
+                                        "shacl:datatype": "true"
+                                      },
                                       "lexical": {
                                         "#24": "[(20,24)-(20,33)]"
                                       }
@@ -1041,6 +1125,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "core:name": "true"
+                                  },
                                   "lexical": {
                                     "data:examples": "[(20,14)-(22,0)]",
                                     "#22": "[(19,0)-(22,0)]",
@@ -1055,6 +1142,9 @@
                               }
                             ],
                             "smaps": {
+                              "synthesized-field": {
+                                "core:name": "true"
+                              },
                               "lexical": {
                                 "data:application%2Fxml": "[(18,12)-(22,0)]",
                                 "#18": "[(15,0)-(22,0)]",
@@ -1069,6 +1159,9 @@
                           }
                         ],
                         "smaps": {
+                          "synthesized-field": {
+                            "core:name": "true"
+                          },
                           "lexical": {
                             "data:body": "[(14,10)-(22,0)]",
                             "#17": "[(14,0)-(22,0)]"
@@ -1082,6 +1175,9 @@
                       }
                     ],
                     "smaps": {
+                      "synthesized-field": {
+                        "core:name": "true"
+                      },
                       "lexical": {
                         "data:200": "[(13,8)-(22,0)]",
                         "#16": "[(13,0)-(22,0)]"
@@ -1095,6 +1191,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "core:name": "true"
+                  },
                   "lexical": {
                     "data:responses": "[(12,6)-(22,0)]",
                     "#15": "[(12,0)-(22,0)]"
@@ -1108,6 +1207,9 @@
               }
             ],
             "smaps": {
+              "synthesized-field": {
+                "core:name": "true"
+              },
               "lexical": {
                 "data:delete": "[(11,4)-(22,0)]",
                 "#14": "[(11,4)-(22,0)]"
@@ -1125,8 +1227,10 @@
             "#13": ""
           },
           "lexical": {
-            "doc:dataNode": "[(11,4)-(22,0)]",
-            "#13": "[(10,2)-(22,0)]"
+            "doc:variable": "[(10,18)-(22,0)]",
+            "core:name": "[(10,2)-(10,17)]",
+            "#13": "[(10,2)-(22,0)]",
+            "doc:dataNode": "[(11,4)-(22,0)]"
           }
         }
       }

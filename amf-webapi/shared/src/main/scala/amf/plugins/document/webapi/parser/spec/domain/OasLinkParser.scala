@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.annotations.ExternalReferenceUrl
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
@@ -10,14 +11,14 @@ import amf.plugins.domain.webapi.metamodel.{IriTemplateMappingModel, TemplatedLi
 import amf.plugins.domain.webapi.models.{IriTemplateMapping, TemplatedLink}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
-import org.yaml.model.{YMap, YMapEntry}
+import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 
   private def nameAndAdopt(templateLink: TemplatedLink): TemplatedLink = {
     templateLink
-      .set(TemplatedLinkModel.Name, ScalarNode(definitionEntry.key).string())
+      .set(TemplatedLinkModel.Name, ScalarNode(definitionEntry.key).string(), Annotations(definitionEntry.key))
       .adopted(parentId)
       .add(Annotations(definitionEntry))
   }
@@ -27,9 +28,15 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
     ctx.link(map) match {
       case Left(fullRef) =>
         val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "links")
+        val annotations = map
+          .key("$ref")
+          .flatMap(v => v.value.asOption[YScalar])
+          .map(Annotations(_))
+          .getOrElse(Annotations.synthesized())
         ctx.declarations
           .findTemplatedLink(label, SearchScope.Named)
-          .map(templatedLink => nameAndAdopt(templatedLink.link(label)))
+          .map(templatedLink =>
+            nameAndAdopt(templatedLink.link(AmfScalar(label), annotations, Annotations.synthesized())))
           .getOrElse(remote(fullRef, map))
 
       case Right(_) => buildAndPopulate(map)
@@ -81,11 +88,13 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
           val variable   = ScalarNode(entry.key).string()
           val expression = ScalarNode(entry.value).string()
           IriTemplateMapping(Annotations(entry))
-            .set(IriTemplateMappingModel.TemplateVariable, variable)
-            .set(IriTemplateMappingModel.LinkExpression, expression)
+            .set(IriTemplateMappingModel.TemplateVariable, variable, Annotations(entry.key))
+            .set(IriTemplateMappingModel.LinkExpression, expression, Annotations(entry.value))
         }
-        templatedLink.setArray(TemplatedLinkModel.Mapping, parameters, Annotations(entry.value))
-
+        templatedLink.fields.set(templatedLink.id,
+                                 TemplatedLinkModel.Mapping,
+                                 AmfArray(parameters, Annotations(entry.value)),
+                                 Annotations(entry))
       }
     )
 

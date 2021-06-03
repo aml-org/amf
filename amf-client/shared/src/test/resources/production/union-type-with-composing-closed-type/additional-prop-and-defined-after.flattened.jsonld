@@ -40,6 +40,7 @@
       ],
       "smaps": {
         "lexical": {
+          "apiContract:path": "[(23,0)-(23,7)]",
           "#17": "[(23,0)-(27,24)]"
         }
       }
@@ -57,9 +58,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "#18": "[(24,2)-(27,24)]"
         }
@@ -79,8 +77,7 @@
       ],
       "smaps": {
         "lexical": {
-          "apiContract:payload": "[(25,4)-(27,24)]",
-          "#19": "[(25,0)-(27,24)]"
+          "apiContract:payload": "[(25,4)-(27,24)]"
         }
       }
     },
@@ -145,20 +142,23 @@
       ],
       "shacl:name": "closedShapeType",
       "smaps": {
-        "resolved-link-target": {
-          "#10": "amf://id#9"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#10": ""
-        },
-        "lexical": {
-          "#10": "[(19,2)-(23,0)]"
+        "resolved-link": {
+          "#10": "amf://id#12"
         },
         "type-property-lexical-info": {
           "#10": "[(20,4)-(20,8)]"
         },
-        "resolved-link": {
-          "#10": "amf://id#12"
+        "lexical": {
+          "#10": "[(19,2)-(23,0)]"
+        },
+        "declared-element": {
+          "#10": ""
+        },
+        "resolved-link-target": {
+          "#10": "amf://id#9"
         }
       }
     },
@@ -179,20 +179,23 @@
       ],
       "shacl:name": "openShape",
       "smaps": {
-        "resolved-link-target": {
-          "#13": "amf://id#9"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#13": ""
-        },
-        "lexical": {
-          "#13": "[(19,2)-(23,0)]"
+        "resolved-link": {
+          "#13": "amf://id#12"
         },
         "type-property-lexical-info": {
           "#13": "[(20,4)-(20,8)]"
         },
-        "resolved-link": {
-          "#13": "amf://id#12"
+        "lexical": {
+          "#13": "[(19,2)-(23,0)]"
+        },
+        "declared-element": {
+          "#13": ""
+        },
+        "resolved-link-target": {
+          "#13": "amf://id#9"
         }
       }
     },
@@ -215,11 +218,16 @@
       "shacl:minCount": 1,
       "shacl:name": "payment",
       "smaps": {
-        "inheritance-provenance": {
-          "#11": "amf://id#1"
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
         },
         "lexical": {
+          "raml-shapes:range": "[(10,14)-(13,0)]",
           "#11": "[(10,6)-(13,0)]"
+        },
+        "inheritance-provenance": {
+          "#11": "amf://id#1"
         }
       }
     },
@@ -242,11 +250,16 @@
       "shacl:minCount": 1,
       "shacl:name": "order",
       "smaps": {
-        "inheritance-provenance": {
-          "#14": "amf://id#5"
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
         },
         "lexical": {
+          "raml-shapes:range": "[(16,12)-(19,0)]",
           "#14": "[(16,6)-(19,0)]"
+        },
+        "inheritance-provenance": {
+          "#14": "amf://id#5"
         }
       }
     },
@@ -378,21 +391,24 @@
       ],
       "shacl:name": "openShape",
       "smaps": {
-        "resolved-link-target": {
-          "#5": "amf://id#5"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "declared-element": {
-          "#5": ""
+        "resolved-link": {
+          "#5": "amf://id#8"
+        },
+        "type-property-lexical-info": {
+          "#5": "[(14,4)-(14,8)]"
         },
         "lexical": {
           "shacl:name": "[(13,2)-(13,11)]",
           "#5": "[(13,2)-(19,0)]"
         },
-        "type-property-lexical-info": {
-          "#5": "[(14,4)-(14,8)]"
+        "declared-element": {
+          "#5": ""
         },
-        "resolved-link": {
-          "#5": "amf://id#8"
+        "resolved-link-target": {
+          "#5": "amf://id#5"
         }
       }
     },
@@ -415,7 +431,12 @@
       "shacl:minCount": 1,
       "shacl:name": "payment",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
+        },
         "lexical": {
+          "raml-shapes:range": "[(10,14)-(13,0)]",
           "#2": "[(10,6)-(13,0)]"
         }
       }
@@ -439,7 +460,12 @@
       "shacl:minCount": 1,
       "shacl:name": "order",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true",
+          "shacl:path": "true"
+        },
         "lexical": {
+          "raml-shapes:range": "[(16,12)-(19,0)]",
           "#6": "[(16,6)-(19,0)]"
         }
       }

@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{LexicalInformation, SynthesizedField}
+import amf.core.annotations.{LexicalInformation, SynthesizedField, VirtualElement}
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.parser.{Annotations, _}
@@ -17,8 +17,8 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
-import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
+import amf.plugins.domain.webapi.models.templates.ParametrizedResourceType
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import amf.validations.ParserSideValidations.{
   DuplicatedEndpointPath,
@@ -69,7 +69,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     parent.map(p => endpoint.add(ParentEndPoint(p)))
 
     checkBalancedParams(path, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
-    endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
+    endpoint.set(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)), Annotations(entry.key))
 
     if (!TemplateUri.isValid(path))
       ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
@@ -106,10 +106,14 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       "type",
       entry => {
         endpoint.annotations += EndPointResourceTypeEntry(Range(entry.range))
-        ParametrizedDeclarationParser(entry.value,
-                                      endpoint.withResourceType,
-                                      ctx.declarations.findResourceTypeOrError(entry.value))
+        val declaration = ParametrizedDeclarationParser(
+          entry.value,
+          (name: String) => ParametrizedResourceType().withName(name).adopted(endpoint.id),
+          ctx.declarations.findResourceTypeOrError(entry.value))
           .parse()
+        endpoint.set(EndPointModel.Extends,
+                     AmfArray(Seq(declaration) ++ endpoint.traits, Annotations(Annotations.virtual())),
+                     Annotations(Annotations.inferred()))
       }
     )
 
@@ -138,17 +142,17 @@ abstract class RamlEndpointParser(entry: YMapEntry,
                                       ctx.options)
           }
           operationContext.nodeRefIds ++= ctx.nodeRefIds
-          val operation = RamlOperationParser(entry, endpoint.withOperation, parseOptionalOperations)(operationContext)
+          val operation = RamlOperationParser(entry, endpoint.id, parseOptionalOperations)(operationContext)
             .parse()
           operations += operation
           ctx.operationContexts.put(operation.id.stripSuffix("%3F"), operationContext)
         })
-        endpoint.set(EndPointModel.Operations, AmfArray(operations))
+        endpoint.set(EndPointModel.Operations, AmfArray(operations, Annotations.virtual()), Annotations.inferred())
       }
     )
 
     val idCounter         = new IdCounter()
-    val RequirementParser = RamlSecurityRequirementParser.parse(endpoint.withSecurity, idCounter) _
+    val RequirementParser = RamlSecurityRequirementParser.parse(endpoint.id, idCounter) _
     map.key("securedBy", (EndPointModel.Security in endpoint using RequirementParser).allowingSingleValue)
 
     var parameters               = Parameters()
@@ -200,7 +204,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       "payloads".asRamlAnnotation,
       entry => {
         endpoint.set(EndPointModel.Payloads,
-                     AmfArray(Seq(Raml10PayloadParser(entry, endpoint.withPayload).parse()), Annotations(entry.value)),
+                     AmfArray(Seq(Raml10PayloadParser(entry, endpoint.id).parse()), Annotations(entry.value)),
                      Annotations(entry))
       }
     )
@@ -265,9 +269,14 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
     if (operationsDefineParam) None
     else {
-      val pathParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
+      val pathParam = Parameter(Annotations.virtual())
+        .withSynthesizeName(variable)
+        .set(ParameterModel.ParameterName, variable, Annotations.synthesized())
+        .syntheticBinding("path")
+        .set(ParameterModel.Required, AmfScalar(true), Annotations.synthesized())
+      endpoint.add(EndPointModel.Parameters, pathParam)
+
       pathParam.withScalarSchema(variable).withDataType(DataType.String)
-      pathParam.annotations += SynthesizedField()
       Some(pathParam)
     }
   }
@@ -294,7 +303,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
         parentParams.get(variable) match {
           case Some(param) =>
             val pathParam = param.cloneParameter(endpoint.id)
-            pathParam.annotations += SynthesizedField()
+            param.name.option().foreach(n => pathParam.withSynthesizeName(n))
+            pathParam.annotations += VirtualElement()
             Some(pathParam)
           case None =>
             explicitParams.find(p => p.name.value().equals(variable) && p.binding.value().equals("path")) match {

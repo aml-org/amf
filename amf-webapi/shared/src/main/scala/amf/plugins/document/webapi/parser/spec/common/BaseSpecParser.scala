@@ -3,11 +3,10 @@ package amf.plugins.document.webapi.parser.spec.common
 import amf.core.annotations.{DomainExtensionAnnotation, ExplicitField, SingleValueArray}
 import amf.core.metamodel.Type.ArrayLike
 import amf.core.metamodel.{Field, Obj, Type}
-import amf.core.model.document.DeclaresModel
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{ArrayNode => _, ScalarNode => _, _}
 import amf.core.parser._
-import amf.plugins.document.webapi.annotations.{DeclarationKey, DeclarationKeys, Inferred}
+import amf.plugins.document.vocabularies.parser.common.DeclarationKeyCollector
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.validations.ParserSideValidations.{
@@ -21,27 +20,7 @@ import scala.collection.mutable.ListBuffer
 
 trait WebApiBaseSpecParser extends BaseSpecParser with SpecParserOps with DeclarationKeyCollector
 
-trait DeclarationKeyCollector {
-
-  private var declarationKeys: List[DeclarationKey] = List.empty
-
-  def addDeclarationKey(key: DeclarationKey): Unit = {
-    declarationKeys = key :: declarationKeys
-  }
-
-  protected def addDeclarationsToModel(model: DeclaresModel)(implicit ctx: WebApiContext): Unit = {
-
-    val ann        = Annotations(DeclarationKeys(declarationKeys))
-    val declarable = ctx.declarations.declarables()
-
-    if (declarable.isEmpty) ann += Inferred()
-    if (declarable.nonEmpty || declarationKeys.nonEmpty) model.withDeclares(declarable, ann)
-
-  }
-}
-
 trait SpecParserOps {
-
   protected def checkBalancedParams(path: String,
                                     value: YNode,
                                     node: String,

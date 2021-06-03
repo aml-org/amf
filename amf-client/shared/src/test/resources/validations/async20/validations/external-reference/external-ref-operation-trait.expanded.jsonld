@@ -142,6 +142,9 @@
                                   }
                                 ],
                                 "smaps": {
+                                  "synthesized-field": {
+                                    "shacl:minCount": "true"
+                                  },
                                   "lexical": {
                                     "#10": "[(14,12)-(18,0)]"
                                   }
@@ -154,18 +157,22 @@
                               }
                             ],
                             "smaps": {
-                              "type-property-lexical-info": {
-                                "#9": "[(12,10)-(12,14)]"
+                              "synthesized-field": {
+                                "shacl:closed": "true"
                               },
                               "lexical": {
                                 "#9": "[(11,8)-(18,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#9": "[(12,10)-(12,14)]"
                               }
                             }
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "raml-shapes:schema": "[(11,8)-(18,0)]"
+                            "raml-shapes:schema": "[(11,8)-(18,0)]",
+                            "#8": "[(11,0)-(18,0)]"
                           }
                         }
                       }
@@ -187,6 +194,7 @@
             ],
             "smaps": {
               "lexical": {
+                "apiContract:supportedOperation": "[(9,0)-(18,0)]",
                 "#5": "[(8,2)-(18,0)]"
               }
             }
@@ -287,13 +295,16 @@
           }
         ],
         "smaps": {
-          "declared-element": {
-            "#3": ""
+          "synthesized-field": {
+            "apiContract:isAbstract": "true"
           },
           "lexical": {
             "core:description": "[(2,2)-(4,0)]",
             "#3": "[(1,17)-(4,0)]",
             "core:name": "[(1,0)-(1,0)]"
+          },
+          "declared-element": {
+            "#3": ""
           }
         }
       }

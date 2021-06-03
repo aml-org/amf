@@ -1,11 +1,14 @@
 package amf.maker
 
 import amf.core.model.document.Document
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.model.domain.AmfArray
+import amf.core.parser.errorhandler.{AmfParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote._
+import amf.core.validation.AMFValidationResult
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.domain.shapes.models.DomainExtensions._
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.plugins.domain.webapi.metamodel.api.WebApiModel
 import amf.plugins.domain.webapi.models.api.WebApi
 import org.scalatest.{Assertion, Succeeded}
 
@@ -25,6 +28,9 @@ class DocumentMakerTest extends WebApiMakerTest {
   test("Oas declared types ") {
     val doc = documentWithTypes(Oas)
       .withLocation("file://amf-client/shared/src/test/resources/maker/declared-types.json")
+
+    doc.encodes.set(WebApiModel.EndPoints, AmfArray(Seq()))
+
     assertFixture(doc, "declared-types.json", OasJsonHint)
   }
 
@@ -42,7 +48,7 @@ class DocumentMakerTest extends WebApiMakerTest {
 
   private def assertFixture(expected: Document, file: String, hint: Hint): Future[Assertion] = {
     Validation(platform).flatMap { v =>
-      AMFCompiler(basePath + file, platform, hint, eh = UnhandledParserErrorHandler)
+      AMFCompiler(basePath + file, platform, hint, eh = IgnoreErrorHandler)
         .build()
         .map { unit =>
           val actual = unit.asInstanceOf[Document]
@@ -50,6 +56,12 @@ class DocumentMakerTest extends WebApiMakerTest {
           Succeeded
         }
     }
+  }
+  object IgnoreErrorHandler extends AmfParserErrorHandler {
+
+    override def handlerAmfResult(result: AMFValidationResult): Boolean = false
+
+    override private[amf] val parserRun = -1
   }
 
   private def documentWithTypes(vendor: Vendor): Document = {

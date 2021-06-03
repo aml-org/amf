@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.LexicalInformation
-import amf.core.model.domain.{AmfArray, Annotation, DataNode, ExternalDomainElement}
+import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DataNode, ExternalDomainElement}
 import amf.core.parser.errorhandler.{JsonErrorHandler, ParserErrorHandler, WarningOnlyHandler}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.{ExternalReferenceUrl, ParsedJSONExample}
@@ -14,7 +14,8 @@ import amf.plugins.document.webapi.parser.spec.common.{
   AnnotationParser,
   DataNodeParser,
   ExternalFragmentHelper,
-  SpecParserOps
+  SpecParserOps,
+  YMapEntryLike
 }
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
@@ -60,7 +61,7 @@ case class OasExamplesParser(map: YMap, exemplifiedDomainElement: ExemplifiedDom
 
   private def parseExample(yNode: YNode) = {
     val example = Example(yNode).adopted(exemplifiedDomainElement.id)
-    ExampleDataParser(yNode, example, Oas3ExampleOptions).parse()
+    ExampleDataParser(YMapEntryLike(yNode), example, Oas3ExampleOptions).parse()
   }
 }
 
@@ -94,9 +95,9 @@ case class RamlExamplesParser(map: YMap,
       .key(multipleExamplesKey)
       .orElse(map.key(singleExampleKey)) match {
       case Some(e) =>
-        exemplified.set(ExamplesField.Examples, AmfArray(examples), Annotations(e))
+        exemplified.set(ExamplesField.Examples, AmfArray(examples, Annotations(e.value)), Annotations(e))
       case _ if examples.nonEmpty =>
-        exemplified.set(ExamplesField.Examples, AmfArray(examples))
+        exemplified.set(ExamplesField.Examples, AmfArray(examples), Annotations.inferred())
       case _ => // ignore
     }
   }
@@ -112,7 +113,10 @@ case class RamlMultipleExampleParser(key: String,
     map.key(key).foreach { entry =>
       ctx.link(entry.value) match {
         case Left(s) =>
-          examples += ctx.declarations.findNamedExampleOrError(entry.value)(s).link(s)
+          examples += ctx.declarations
+            .findNamedExampleOrError(entry.value)(s)
+            .link(s)
+        // .link(ScalarNode(entry.value), Annotations(entry))
 
         case Right(node) =>
           node.tagType match {
@@ -146,11 +150,11 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
       case Left(s) =>
         ctx.declarations
           .findNamedExample(s)
-          .map(e => e.link(s).asInstanceOf[Example])
+          .map(e => e.link(ScalarNode(entry.value), Annotations(entry)).asInstanceOf[Example])
           .getOrElse(RamlSingleExampleValueParser(entry, simpleProducer, options).parse())
       case Right(_) => RamlSingleExampleValueParser(entry, simpleProducer, options).parse()
     }
-    example.set(ExampleModel.Name, name.text(), Annotations(entry))
+    example.set(ExampleModel.Name, name.text(), Annotations.inferred())
   }
 }
 
@@ -173,7 +177,7 @@ case class RamlSingleExampleParser(key: String,
                                     errMsg,
                                     entry.value
                                 )))
-            .map(e => e.link(s).asInstanceOf[Example])
+            .map(e => e.link(ScalarNode(entry.value), Annotations(entry)).asInstanceOf[Example])
         case Right(node) =>
           node.tagType match {
             case YType.Map =>
@@ -181,7 +185,7 @@ case class RamlSingleExampleParser(key: String,
             case YType.Null => None
             case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
               Option(
-                ExampleDataParser(node, newProducer().add(Annotations(entry.value)), options)
+                ExampleDataParser(YMapEntryLike(node), newProducer().add(Annotations(entry.value)), options)
                   .parse())
           }
       }
@@ -207,15 +211,15 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
           map
             .key("value")
             .foreach { entry =>
-              ExampleDataParser(entry.value, example, options).parse()
+              ExampleDataParser(YMapEntryLike(entry), example, options).parse()
             }
 
           AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
 
           if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
-        } else ExampleDataParser(entry.value, example, options).parse()
+        } else ExampleDataParser(YMapEntryLike(entry.value), example, options).parse()
       case YType.Null => // ignore
-      case _          => ExampleDataParser(entry.value, example, options).parse()
+      case _          => ExampleDataParser(YMapEntryLike(entry.value), example, options).parse()
     }
 
     example
@@ -236,7 +240,7 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
 
   private val keyName = ScalarNode(entry.key)
 
-  private def setName(e: Example): Example = e.set(ExampleModel.Name, keyName.string())
+  private def setName(e: Example): Example = e.set(ExampleModel.Name, keyName.string(), Annotations(entry.key))
 
   private def newExample(ast: YPart): Example =
     setName(Example(entry)).adopted(parentId)
@@ -245,7 +249,7 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
     val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
     ctx.declarations
       .findExample(name, SearchScope.All)
-      .map(found => setName(found.link(name)))
+      .map(found => setName(found.link(AmfScalar(name), Annotations(map), Annotations.synthesized())))
       .getOrElse {
         ctx.obtainRemoteYNode(fullRef) match {
           case Some(exampleNode) =>
@@ -254,7 +258,9 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
               .add(ExternalReferenceUrl(fullRef))
           case None =>
             ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
-            val errorExample = setName(ErrorNamedExample(name, map).link(name)).adopted(parentId)
+            val errorExample =
+              setName(ErrorNamedExample(name, map).link(AmfScalar(name), Annotations(map), Annotations.synthesized()))
+                .adopted(parentId)
             errorExample
         }
       }
@@ -268,12 +274,12 @@ case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleO
     map.key("description", (ExampleModel.Description in example).allowingAnnotations)
     map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
 
-    example.withStrict(options.strictDefault)
+    example.set(ExampleModel.Strict, AmfScalar(options.strictDefault), Annotations.synthesized())
 
     map
       .key("value")
       .foreach { entry =>
-        ExampleDataParser(entry.value, example, options).parse()
+        ExampleDataParser(YMapEntryLike(entry), example, options).parse()
       }
 
     AnnotationParser(example, map, List(VocabularyMappings.example)).parse()

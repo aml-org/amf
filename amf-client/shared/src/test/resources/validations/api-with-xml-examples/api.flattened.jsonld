@@ -103,6 +103,9 @@
       ],
       "sourcemaps:lexical": [
         {
+          "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_1"
+        },
+        {
           "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0"
         }
       ]
@@ -191,9 +194,14 @@
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0",
+      "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_1",
       "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts",
       "sourcemaps:value": "[(21,0)-(34,50)]"
+    },
+    {
+      "@id": "#/web-api/end-points/%2Fcontacts/source-map/lexical/element_0",
+      "sourcemaps:element": "apiContract:path",
+      "sourcemaps:value": "[(21,0)-(21,9)]"
     },
     {
       "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml",
@@ -369,14 +377,22 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
-      "sourcemaps:declared-element": [
+      "sourcemaps:synthesized-field": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0"
+          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
           "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0"
+        }
+      ],
+      "sourcemaps:declared-element": [
+        {
+          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0"
         }
       ]
     },
@@ -405,14 +421,22 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
-      "sourcemaps:declared-element": [
+      "sourcemaps:synthesized-field": [
         {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0"
+          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1"
+        },
+        {
+          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
         {
           "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0"
+        }
+      ],
+      "sourcemaps:declared-element": [
+        {
+          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0"
         }
       ]
     },
@@ -428,13 +452,13 @@
       ],
       "sourcemaps:synthesized-field": [
         {
+          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_1"
+        },
+        {
           "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
-        {
-          "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_1"
-        },
         {
           "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_0"
         }
@@ -446,14 +470,24 @@
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
-      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
-      "sourcemaps:value": ""
+      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1",
+      "sourcemaps:element": "core:mediaType",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "doc:location",
+      "sourcemaps:value": "true"
     },
     {
       "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0",
       "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
       "sourcemaps:value": "[(5,4)-(6,0)]"
+    },
+    {
+      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
+      "sourcemaps:value": ""
     },
     {
       "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map",
@@ -462,13 +496,13 @@
       ],
       "sourcemaps:synthesized-field": [
         {
+          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_1"
+        },
+        {
           "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_0"
         }
       ],
       "sourcemaps:lexical": [
-        {
-          "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_1"
-        },
         {
           "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_0"
         }
@@ -480,9 +514,14 @@
       ]
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
-      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
-      "sourcemaps:value": ""
+      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_1",
+      "sourcemaps:element": "core:mediaType",
+      "sourcemaps:value": "true"
+    },
+    {
+      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "doc:location",
+      "sourcemaps:value": "true"
     },
     {
       "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/lexical/element_0",
@@ -490,18 +529,23 @@
       "sourcemaps:value": "[(5,4)-(6,0)]"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_0",
+      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml/source-map/declared-element/element_0",
+      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/schema/application%2Fatom%2Bxml",
+      "sourcemaps:value": ""
+    },
+    {
+      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_1",
       "sourcemaps:element": "doc:strict",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example",
-      "sourcemaps:value": "[(28,21)-(28,50)]"
+      "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "doc:raw",
+      "sourcemaps:value": "true"
     },
     {
       "@id": "#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_0",
-      "sourcemaps:element": "doc:raw",
+      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example",
       "sourcemaps:value": "[(1,0)-(1,0)]"
     },
     {
@@ -510,18 +554,18 @@
       "sourcemaps:value": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/get/200/application%2Fatom%2Bxml"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_0",
+      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_1",
       "sourcemaps:element": "doc:strict",
       "sourcemaps:value": "true"
     },
     {
-      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_1",
-      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example",
-      "sourcemaps:value": "[(34,21)-(34,50)]"
+      "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/synthesized-field/element_0",
+      "sourcemaps:element": "doc:raw",
+      "sourcemaps:value": "true"
     },
     {
       "@id": "#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example/source-map/lexical/element_0",
-      "sourcemaps:element": "doc:raw",
+      "sourcemaps:element": "file://amf-client/shared/src/test/resources/validations/api-with-xml-examples/api.raml#/web-api/end-points/%2Fcontacts/post/201/application%2Fatom%2Bxml/any/application%2Fatom%2Bxml/example/default-example",
       "sourcemaps:value": "[(1,0)-(1,0)]"
     },
     {

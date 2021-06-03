@@ -26,6 +26,7 @@
             "@value": "1.1.0"
           }
         ],
+        "http://a.ml/vocabularies/apiContract#endpoint": [],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/web-api/source-map",
@@ -49,7 +50,20 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/web-api/source-map/lexical/element_2",
+                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/web-api/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#version"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,2)-(5,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/core#name"
@@ -65,17 +79,17 @@
                 "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/web-api/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/core#version"
+                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,2)-(5,0)]"
+                    "@value": "[(11,0)-(11,9)]"
                   }
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/web-api/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/web-api/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/web-api"
@@ -277,6 +291,47 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal/property/petRef/petRef/source-map/synthesized-field/element_2",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/document#link-label"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal/property/petRef/petRef/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/document#recursive"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal/property/petRef/petRef/source-map/synthesized-field/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/document#link-target"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal/property/petRef/petRef/source-map/lexical/element_0",
@@ -312,6 +367,21 @@
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
+                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal/property/petRef/source-map/synthesized-field/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://www.w3.org/ns/shacl#minCount"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "true"
+                              }
+                            ]
+                          }
+                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal/property/petRef/source-map/lexical/element_0",
@@ -342,17 +412,17 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal/source-map/type-property-lexical-info/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal/source-map/synthesized-field/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal"
+                            "@value": "http://www.w3.org/ns/shacl#closed"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(3,4)-(3,8)]"
+                            "@value": "true"
                           }
                         ]
                       }
@@ -380,7 +450,22 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(4,4)-(6,48)]"
+                            "@value": "[(4,15)-(6,48)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal/source-map/type-property-lexical-info/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/animal"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(3,4)-(3,8)]"
                           }
                         ]
                       }
@@ -404,6 +489,21 @@
                 "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/property/animalRef/source-map/synthesized-field/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
@@ -435,9 +535,24 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/source-map/declared-element/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/source-map/synthesized-field/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#closed"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "true"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet"
@@ -445,7 +560,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "[(7,4)-(7,8)]"
                   }
                 ]
               }
@@ -460,7 +575,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,4)-(11,0)]"
+                    "@value": "[(8,15)-(11,0)]"
                   }
                 ]
               },
@@ -491,9 +606,9 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/source-map/type-property-lexical-info/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/references/oas/oas-references/oas-2-root.yaml#/declarations/types/pet"
@@ -501,7 +616,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,4)-(7,8)]"
+                    "@value": ""
                   }
                 ]
               }

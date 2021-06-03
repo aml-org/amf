@@ -20,7 +20,7 @@
           "#3": "OAS 2.0"
         },
         "lexical": {
-          "apiContract:endpoint": "[(5,6)-(11,54)]",
+          "apiContract:endpoint": "[(5,0)-(11,54)]",
           "core:name": "[(3,2)-(4,0)]",
           "#3": "[(1,0)-(11,54)]",
           "core:version": "[(4,2)-(5,0)]"
@@ -100,8 +100,7 @@
       },
       "smaps": {
         "lexical": {
-          "raml-shapes:schema": "[(14,4)-(15,42)]",
-          "#7": "[(14,4)-(15,42)]"
+          "raml-shapes:schema": "[(14,4)-(15,42)]"
         }
       }
     },
@@ -123,17 +122,20 @@
       "shacl:name": "default",
       "core:description": "The response schema",
       "smaps": {
-        "resolved-link-target": {
-          "#8": "amf://id#8"
+        "synthesized-field": {
+          "shacl:closed": "true"
         },
-        "auto-generated-name": {
-          "#8": ""
+        "resolved-link": {
+          "#8": "amf://id#8"
         },
         "lexical": {
           "core:description": "[(3,4)-(4,0)]",
           "#8": "[(2,2)-(11,0)]"
         },
-        "resolved-link": {
+        "auto-generated-name": {
+          "#8": ""
+        },
+        "resolved-link-target": {
           "#8": "amf://id#8"
         }
       }
@@ -157,6 +159,9 @@
       "shacl:minCount": 0,
       "shacl:name": "status",
       "smaps": {
+        "synthesized-field": {
+          "shacl:minCount": "true"
+        },
         "lexical": {
           "#9": "[(5,6)-(11,0)]"
         }
@@ -210,12 +215,11 @@
       "doc:raw": "400",
       "smaps": {
         "synthesized-field": {
+          "doc:raw": "true",
           "doc:strict": "true"
         },
         "lexical": {
-          "doc:raw": "[(9,17)-(9,22)]",
-          "#11": "[(9,17)-(9,22)]",
-          "doc:structuredValue": "[(9,17)-(9,22)]"
+          "#11": "[(9,17)-(9,22)]"
         }
       }
     },
@@ -234,6 +238,10 @@
       ],
       "core:name": "scalar_1",
       "smaps": {
+        "synthesized-field": {
+          "core:name": "true",
+          "shacl:datatype": "true"
+        },
         "lexical": {
           "#12": "[(9,17)-(9,22)]"
         }

@@ -60,6 +60,7 @@
       ],
       "smaps": {
         "lexical": {
+          "apiContract:path": "[(9,0)-(9,37)]",
           "#2": "[(9,0)-(33,0)]"
         }
       }
@@ -84,7 +85,8 @@
       "smaps": {
         "lexical": {
           "apiContract:parameter": "[(40,16)-(44,0)]",
-          "#13": "[(33,0)-(44,0)]"
+          "#13": "[(33,0)-(44,0)]",
+          "apiContract:path": "[(33,0)-(33,30)]"
         }
       }
     },
@@ -108,9 +110,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "apiContract:returns": "[(18,4)-(21,0)]",
           "core:name": "[(11,4)-(12,0)]",
@@ -139,9 +138,6 @@
         }
       ],
       "smaps": {
-        "synthesized-field": {
-          "apiContract:expects": "true"
-        },
         "lexical": {
           "apiContract:returns": "[(29,4)-(33,0)]",
           "core:name": "[(22,4)-(23,0)]",
@@ -188,6 +184,9 @@
         "@id": "#17"
       },
       "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true"
+        },
         "lexical": {
           "raml-shapes:schema": "[(41,4)-(44,0)]",
           "#16": "[(41,4)-(44,0)]",
@@ -210,8 +209,7 @@
       "apiContract:payload": [],
       "smaps": {
         "lexical": {
-          "apiContract:uriParameter": "[(13,4)-(18,0)]",
-          "#4": "[(11,0)-(21,0)]"
+          "apiContract:uriParameter": "[(13,4)-(18,0)]"
         }
       }
     },
@@ -248,8 +246,7 @@
       "apiContract:payload": [],
       "smaps": {
         "lexical": {
-          "apiContract:uriParameter": "[(24,4)-(29,0)]",
-          "#9": "[(22,0)-(33,0)]"
+          "apiContract:uriParameter": "[(24,4)-(29,0)]"
         }
       }
     },
@@ -331,6 +328,9 @@
         "@id": "#6"
       },
       "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true"
+        },
         "lexical": {
           "raml-shapes:schema": "[(14,6)-(18,0)]",
           "core:description": "[(15,8)-(16,0)]",
@@ -354,6 +354,9 @@
         "@id": "#11"
       },
       "smaps": {
+        "synthesized-field": {
+          "apiContract:binding": "true"
+        },
         "lexical": {
           "raml-shapes:schema": "[(25,6)-(29,0)]",
           "core:description": "[(26,8)-(27,0)]",

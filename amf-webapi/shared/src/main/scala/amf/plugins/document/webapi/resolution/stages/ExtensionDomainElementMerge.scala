@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.SynthesizedField
+import amf.core.annotations.{Inferred, SynthesizedField, VirtualNode}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel.Sources
@@ -10,7 +10,6 @@ import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, FieldEntry, Value}
-import amf.plugins.document.webapi.annotations.{Inferred}
 import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
@@ -45,8 +44,8 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
                          idTracker: IdTracker): Unit = {
     val FieldEntry(field, value) = entry
     master.fields.entry(field) match {
-      case None if restrictions allowsNodeInsertionIn field                => insertNode(master, idTracker, entry)
-      case None if field == ScalarShapeModel.DataType && isInferred(value) => skipNode()
+      case None if restrictions allowsNodeInsertionIn field                  => insertNode(master, idTracker, entry)
+      case None if field == ScalarShapeModel.DataType && value.isSynthesized => skipNode()
       // If the overlay field is a datatype and the type is inferred it must be a type that add only an example
       // Nothing to do
       case None => forbiddenInsertionError(entry)
@@ -101,7 +100,7 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       case amfObject: AmfObject => (amfObject.id, amfObject.annotations)
       case array: AmfArray =>
         val ann =
-          if (value.annotations.nonEmpty) value.annotations
+          if (value.annotations.nonEmpty && !value.annotations.contains(classOf[VirtualNode])) value.annotations
           else array.values.headOption.map(_.annotations).getOrElse(Annotations())
         (field.value.toString, ann)
       case _ => (field.value.toString, entry.element.annotations)
@@ -114,7 +113,6 @@ class ExtensionDomainElementMerge(restrictions: MergingRestrictions,
       annotations
     )
   }
-
   private def isInferred(value: Value) = value.annotations.contains(classOf[Inferred])
 
   private def isSameValue(existing: FieldEntry, master: FieldEntry): Boolean =

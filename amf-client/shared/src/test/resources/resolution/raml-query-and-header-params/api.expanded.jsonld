@@ -62,6 +62,7 @@
             ],
             "smaps": {
               "lexical": {
+                "apiContract:path": "[(7,0)-(7,10)]",
                 "#2": "[(7,0)-(24,0)]"
               }
             }
@@ -161,6 +162,9 @@
                           }
                         ],
                         "smaps": {
+                          "synthesized-field": {
+                            "apiContract:binding": "true"
+                          },
                           "lexical": {
                             "raml-shapes:schema": "[(11,8)-(14,0)]",
                             "#6": "[(11,8)-(14,0)]",
@@ -228,6 +232,9 @@
                           }
                         ],
                         "smaps": {
+                          "synthesized-field": {
+                            "apiContract:binding": "true"
+                          },
                           "lexical": {
                             "raml-shapes:schema": "[(15,8)-(18,0)]",
                             "#8": "[(15,8)-(18,0)]",
@@ -239,7 +246,6 @@
                     "smaps": {
                       "lexical": {
                         "apiContract:header": "[(14,6)-(18,0)]",
-                        "#5": "[(10,0)-(24,0)]",
                         "apiContract:parameter": "[(10,6)-(14,0)]"
                       }
                     }
@@ -325,9 +331,6 @@
                   }
                 ],
                 "smaps": {
-                  "synthesized-field": {
-                    "apiContract:expects": "true"
-                  },
                   "lexical": {
                     "apiContract:returns": "[(19,6)-(24,0)]",
                     "#4": "[(9,4)-(24,0)]",
@@ -341,6 +344,7 @@
                 "#3": "file://amf-client/shared/src/test/resources/resolution/raml-query-and-header-params/api.raml#/web-api/end-points/%2Fcustomers"
               },
               "lexical": {
+                "apiContract:path": "[(8,2)-(8,11)]",
                 "#3": "[(8,2)-(24,0)]"
               }
             }
